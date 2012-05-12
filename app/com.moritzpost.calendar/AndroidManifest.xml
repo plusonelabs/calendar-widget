@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.moritzpost.calendar"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo" >
+        <activity android:name="CalendarConfigurationActivity" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+                <!-- <action android:name="android.intent.action.MAIN" /> -->
+                <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="CalenderAppWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/calendar_appwidget_info" />
+        </receiver>
+        <receiver android:name="CalendarChangedReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PROVIDER_CHANGED" />
+
+                <data android:scheme="content" />
+                <data android:host="com.android.calendar" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="CalendarWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+    </application>
+
+</manifest>

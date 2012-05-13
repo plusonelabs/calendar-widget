@@ -1,0 +1,29 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="General" >
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:summary="Should this be a great pref?"
+            android:title="Great Preference" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Calendar" >
+        <PreferenceScreen
+            android:fragment="com.moritzpost.calendar.prefs.ChooseCalendarPreferencesFragment"
+            android:summary="Choose active Calendar"
+            android:title="Active Calendar" >
+
+            <!-- Arbitrary key/value pairs can be included for fragment arguments -->
+            <extra
+                android:name="someKey"
+                android:value="somePrefValue" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:summary="Go to external website android.com"
+            android:title="Visit android.com" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.android.com" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>

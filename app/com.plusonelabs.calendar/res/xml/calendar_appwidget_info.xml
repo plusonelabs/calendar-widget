@@ -1,0 +1,9 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget"
+    android:minHeight="72dp"
+    android:minWidth="294dp"
+    android:previewImage="@drawable/calendar_widget_preview"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="21600000" >
+
+</appwidget-provider> <!-- android:configure="com.moritzpost.calendar.CalendarConfigurationActivity" -->

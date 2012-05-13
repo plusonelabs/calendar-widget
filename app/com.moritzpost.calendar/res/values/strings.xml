@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World!</string>
-    <string name="app_name">123Calendar</string>
+    <string name="app_name">Calendar Widget</string>
     <string name="today">TODAY</string>
     <string name="tomorrow">TOMORROW</string>
     <string name="no_upcoming_events">No upcoming events</string>

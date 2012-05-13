@@ -15,9 +15,10 @@ public final class R {
         public static final int widget_padding=0x7f050000;
     }
     public static final class drawable {
-        public static final int ic_action_overflow=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int widget_background=0x7f020002;
+        public static final int calendar_widget_preview=0x7f020000;
+        public static final int ic_action_overflow=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int widget_background=0x7f020003;
     }
     public static final class id {
         public static final int action_bar=0x7f070008;
@@ -40,11 +41,10 @@ public final class R {
         public static final int widget=0x7f030002;
     }
     public static final class string {
-        public static final int app_name=0x7f060001;
-        public static final int hello=0x7f060000;
-        public static final int no_upcoming_events=0x7f060004;
-        public static final int today=0x7f060002;
-        public static final int tomorrow=0x7f060003;
+        public static final int app_name=0x7f060000;
+        public static final int no_upcoming_events=0x7f060003;
+        public static final int today=0x7f060001;
+        public static final int tomorrow=0x7f060002;
     }
     public static final class xml {
         public static final int calendar_appwidget_info=0x7f040000;

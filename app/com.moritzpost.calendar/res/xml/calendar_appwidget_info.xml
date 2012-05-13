@@ -2,7 +2,7 @@
     android:initialLayout="@layout/widget"
     android:minHeight="72dp"
     android:minWidth="294dp"
-    android:previewImage="@drawable/ic_launcher"
+    android:previewImage="@drawable/calendar_widget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="21600000" >
 

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>
-
-    <string name="app_name">Calendar Widget</string>
-    <string name="today">HOY</string>
-    <string name="tomorrow">MAÑANA</string>
-    <string name="no_upcoming_events">No hay próximos eventos</string>
-
-</resources>

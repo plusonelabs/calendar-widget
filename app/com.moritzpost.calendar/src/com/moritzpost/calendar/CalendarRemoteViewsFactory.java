@@ -16,11 +16,12 @@ import com.moritzpost.calendar.model.EventEntry;
 
 public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 
-	private static final String SPACED_DASH = " - ";
-	private static final String COMMA_SPACE = ", ";
 	static SimpleDateFormat dayDateFormatter = new SimpleDateFormat("dd. MMMM");
 	static SimpleDateFormat dayStringFormatter = new SimpleDateFormat("EEEE, ");
 	static SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+
+	private static final String SPACED_DASH = " - ";
+	private static final String COMMA_SPACE = ", ";
 
 	private final Context context;
 	private ArrayList<CalenderEntry> calenderEntries;

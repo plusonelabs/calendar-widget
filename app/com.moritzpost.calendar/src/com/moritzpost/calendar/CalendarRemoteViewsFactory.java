@@ -16,6 +16,7 @@ import com.moritzpost.calendar.model.EventEntry;
 
 public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 
+	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
 	static SimpleDateFormat dayDateFormatter = new SimpleDateFormat("dd. MMMM");
 	static SimpleDateFormat dayStringFormatter = new SimpleDateFormat("EEEE, ");
 	static SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
@@ -48,22 +49,18 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public RemoteViews getViewAt(int position) {
-		RemoteViews rv = null;
 		String packageName = context.getPackageName();
 		CalenderEntry entry = calenderEntries.get(position);
 		if (entry instanceof DayHeader) {
-			rv = updateDayHeader(packageName, entry);
+			return updateDayHeader(packageName, (DayHeader) entry);
 		} else if (entry instanceof EventEntry) {
-			rv = updateEventEntry(packageName, entry);
+			return updateEventEntry(packageName, (EventEntry) entry);
 		}
-		return rv;
+		return null;
 	}
 
-	public RemoteViews updateEventEntry(String packageName, CalenderEntry entry) {
-		RemoteViews rv;
-		EventEntry event = (EventEntry) entry;
-		rv = new RemoteViews(packageName, R.layout.event_entry);
-
+	public RemoteViews updateEventEntry(String packageName, EventEntry event) {
+		RemoteViews rv = new RemoteViews(packageName, R.layout.event_entry);
 		Intent intent = CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId());
 		rv.setOnClickFillInIntent(R.id.event_entry_text_layout, intent);
 		rv.setOnClickFillInIntent(R.id.event_entry_color, intent);
@@ -77,14 +74,12 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 			rv.setTextViewText(R.id.event_entry_date, createTimeString(event.getStartDate())
 					+ SPACED_DASH + createTimeString(event.getEndDate()));
 		}
-		rv.setInt(R.id.event_entry_color, "setBackgroundColor", event.getColor());
+		rv.setInt(R.id.event_entry_color, METHOD_SET_BACKGROUND_COLOR, event.getColor());
 		return rv;
 	}
 
-	public RemoteViews updateDayHeader(String packageName, CalenderEntry entry) {
-		RemoteViews rv;
-		DayHeader dayHeader = (DayHeader) entry;
-		rv = new RemoteViews(packageName, R.layout.day_header);
+	public RemoteViews updateDayHeader(String packageName, DayHeader dayHeader) {
+		RemoteViews rv = new RemoteViews(packageName, R.layout.day_header);
 		rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
 		Intent intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context,
 				dayHeader.getStartDate());

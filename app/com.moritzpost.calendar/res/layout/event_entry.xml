@@ -17,24 +17,26 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="vertical" >
-
+
         <TextView
             android:id="@+id/event_entry_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:inputType="text"
-            android:text="Appointment" >
+            android:text="Event"
+            android:textColor="@android:color/white"
+            android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/event_entry_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:inputType="text"
-                android:text="TextView"
-                android:textSize="14dp" />
-        </TextView>
+        <TextView
+            android:id="@+id/event_entry_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:inputType="text"
+            android:text="TextView"
+            android:textColor="#ffbbbbbb"
+            android:textSize="14dp" />
     </LinearLayout>
 
 </LinearLayout>

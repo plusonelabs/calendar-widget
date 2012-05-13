@@ -6,4 +6,4 @@
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="21600000" >
 
-</appwidget-provider> <!-- android:configure="com.moritzpost.calendar.CalendarConfigurationActivity" -->
+</appwidget-provider> <!-- android:configure="com.plusonelabs.calendar.CalendarConfigurationActivity" -->

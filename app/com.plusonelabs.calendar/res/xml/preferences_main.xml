@@ -8,7 +8,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Calendar" >
         <PreferenceScreen
-            android:fragment="com.moritzpost.calendar.prefs.ChooseCalendarPreferencesFragment"
+            android:fragment="com.plusonelabs.calendar.prefs.ChooseCalendarPreferencesFragment"
             android:summary="Choose active Calendar"
             android:title="Active Calendar" >
 

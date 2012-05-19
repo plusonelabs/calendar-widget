@@ -21,7 +21,7 @@
             android:alpha="0.6"
             android:ellipsize="marquee"
             android:gravity="bottom"
-            android:inputType="text"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="14dp"
             android:textStyle="bold" />

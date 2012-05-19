@@ -13,9 +13,9 @@
         android:layout_gravity="right"
         android:ellipsize="marquee"
         android:gravity="right|bottom"
-        android:inputType="text"
         android:paddingBottom="2dp"
         android:paddingRight="10dp"
+        android:singleLine="true"
         android:textColor="#cccccc"
         android:textSize="14dp"
         android:textStyle="bold" />

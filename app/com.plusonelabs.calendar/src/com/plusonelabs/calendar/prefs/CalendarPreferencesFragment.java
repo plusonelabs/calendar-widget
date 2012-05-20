@@ -53,8 +53,8 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 			checkboxPref.setIcon(createDrawable(cursor.getInt(2)));
 			int calendarId = cursor.getInt(0);
 			checkboxPref.getExtras().putInt(CALENDAR_ID, calendarId);
-			checkboxPref.setChecked(activeCalendars != null
-					&& activeCalendars.contains(String.valueOf(calendarId)));
+			checkboxPref.setChecked(activeCalendars == null
+					|| activeCalendars.contains(String.valueOf(calendarId)));
 			getPreferenceScreen().addPreference(checkboxPref);
 		}
 	}

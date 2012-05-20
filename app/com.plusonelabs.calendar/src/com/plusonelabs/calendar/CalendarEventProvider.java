@@ -59,7 +59,6 @@ public class CalendarEventProvider {
 	}
 
 	private Cursor createLoadedCursor() {
-
 		long start = System.currentTimeMillis();
 		long end = start + DateUtils.DAY_IN_MILLIS * 31;
 		Uri.Builder builder = Instances.CONTENT_URI.buildUpon();

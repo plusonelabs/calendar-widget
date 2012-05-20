@@ -2,14 +2,14 @@
 
     <PreferenceCategory android:title="@string/appearance_prefs" >
         <ListPreference
-            android:key="text_size"
+            android:key="textSize"
             android:summary="@string/appearance_text_size_desc"
             android:title="@string/appearance_text_size_title" />
     </PreferenceCategory>
 
     <CheckBoxPreference
         android:defaultValue="true"
-        android:key="show_header"
+        android:key="showHeader"
         android:summary="@string/appearance_display_header_desc"
         android:title="@string/appearance_display_header_title" >
     </CheckBoxPreference>

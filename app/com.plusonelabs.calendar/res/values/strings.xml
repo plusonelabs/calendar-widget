@@ -19,6 +19,7 @@
     <string name="appearance_text_size_title">Text size</string>
     <string name="appearance_display_header_desc">Display the date and settings header</string>
     <string name="appearance_display_header_title">Display header</string>
+    <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>
@@ -27,5 +28,6 @@
     <string name="feedback_github_title">Visit widget on Github</string>
     <string name="feedback_play_store_desc">Rate and comment on Google Play Store</string>
     <string name="feedback_play_store_title">Visit widget on Google Play Store</string>
+    <string name="prefs_add_widget">Add Widget</string>
 
 </resources>

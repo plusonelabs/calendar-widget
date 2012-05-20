@@ -3,7 +3,6 @@ package com.plusonelabs.calendar.prefs;
 import java.util.HashSet;
 import java.util.Set;
 
-import android.appwidget.AppWidgetManager;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -71,8 +70,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		HashSet<String> selectedCalendars = getSelectedCalenders();
 		if (!selectedCalendars.equals(initialActiveCalendars)) {
 			persistSelectedCalendars(selectedCalendars);
-			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
-			CalenderAppWidgetProvider.updateEventListOnAllWidgets(getActivity(), appWidgetManager);
+			CalenderAppWidgetProvider.updateEventList(getActivity());
 		}
 	}
 

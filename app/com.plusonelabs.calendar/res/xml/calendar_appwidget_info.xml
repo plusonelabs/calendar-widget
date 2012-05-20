@@ -1,4 +1,5 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.plusonelabs.calendar.CalendarConfigurationActivity"
     android:initialLayout="@layout/widget"
     android:minHeight="72dp"
     android:minWidth="294dp"
@@ -6,4 +7,4 @@
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="21600000" >
 
-</appwidget-provider> <!-- android:configure="com.plusonelabs.calendar.CalendarConfigurationActivity" -->
+</appwidget-provider>

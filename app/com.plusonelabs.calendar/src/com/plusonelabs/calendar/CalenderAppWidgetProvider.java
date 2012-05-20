@@ -8,8 +8,13 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.RemoteViews;
+
+import com.plusonelabs.calendar.prefs.ICalendarPreferences;
 
 public class CalenderAppWidgetProvider extends AppWidgetProvider {
 
@@ -44,15 +49,39 @@ public class CalenderAppWidgetProvider extends AppWidgetProvider {
 
 			rv.setEmptyView(R.id.event_list, R.id.empty_event_list);
 
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+			if (prefs.getBoolean(ICalendarPreferences.PREF_SHOW_HEADER, true)) {
+				rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
+			} else {
+				rv.setViewVisibility(R.id.action_bar, View.GONE);
+			}
+
 			appWidgetManager.updateAppWidget(widgetId, rv);
 		}
 	}
 
-	public static void updateEventListOnAllWidgets(Context context,
-			AppWidgetManager appWidgetManager) {
+	public static void updateEventList(Context context) {
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 		ComponentName compName = new ComponentName(context, CalenderAppWidgetProvider.class);
 		int[] widgetIds = appWidgetManager.getAppWidgetIds(compName);
 		appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.event_list);
+	}
+
+	public static void updateAllWidgets(Context context) {
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+		ComponentName compName = new ComponentName(context, CalenderAppWidgetProvider.class);
+		Intent intent = new Intent(context, CalenderAppWidgetProvider.class);
+		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
+				appWidgetManager.getAppWidgetIds(compName));
+		context.sendBroadcast(intent);
+	}
+
+	public static void updateWidget(Context context, int appWidgetId) {
+		Intent intent = new Intent(context, CalenderAppWidgetProvider.class);
+		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		context.sendBroadcast(intent);
 	}
 
 }

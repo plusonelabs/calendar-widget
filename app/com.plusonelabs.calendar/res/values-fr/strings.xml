@@ -6,5 +6,6 @@
     <string name="tomorrow">DEMAIN</string>
     <string name="no_upcoming_events">Aucun événement à venir</string>
     <string name="widget_name">Calendar</string>
+    <string name="open_prefs_desc">Ouvrez les paramètres du widget calendrier</string>
 
 </resources>

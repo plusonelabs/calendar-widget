@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/appearance_prefs" >
+        <ListPreference
+            android:key="text_size"
+            android:summary="@string/appearance_text_size_desc"
+            android:title="@string/appearance_text_size_title" />
+    </PreferenceCategory>
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="show_header"
+        android:summary="@string/appearance_display_header_desc"
+        android:title="@string/appearance_display_header_title" >
+    </CheckBoxPreference>
+
+</PreferenceScreen>

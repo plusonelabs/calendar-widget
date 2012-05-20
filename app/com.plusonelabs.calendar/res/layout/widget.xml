@@ -9,8 +9,7 @@
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:paddingBottom="4dp" >
+        android:gravity="bottom" >
 
         <TextView
             android:id="@+id/calendar_current_date"
@@ -21,20 +20,20 @@
             android:alpha="0.6"
             android:ellipsize="marquee"
             android:gravity="bottom"
+            android:paddingBottom="4dp"
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="14dp"
             android:textStyle="bold" />
 
-        <!-- <ImageView -->
-        <!-- android:id="@+id/overflow_menu" -->
-        <!-- android:layout_width="wrap_content" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:layout_weight="0" -->
-        <!-- android:alpha="0.6" -->
-        <!-- android:contentDescription="Open the preferences of the calendar widget" -->
-        <!-- android:src="@drawable/ic_action_overflow" /> -->
-
+        <ImageView
+            android:id="@+id/overflow_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:alpha="0.6"
+            android:contentDescription="@string/open_prefs_desc"
+            android:src="@drawable/ic_action_overflow" />
     </LinearLayout>
 
     <FrameLayout

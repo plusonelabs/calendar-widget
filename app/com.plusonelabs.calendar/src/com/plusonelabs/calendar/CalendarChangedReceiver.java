@@ -10,6 +10,6 @@ public class CalendarChangedReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		CalenderAppWidgetProvider.updateEventList(context, appWidgetManager);
+		CalenderAppWidgetProvider.updateEventListOnAllWidgets(context, appWidgetManager);
 	}
 }

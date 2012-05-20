@@ -6,5 +6,6 @@
     <string name="tomorrow">MAÑANA</string>
     <string name="no_upcoming_events">No hay próximos eventos</string>
     <string name="widget_name">Calendar</string>
+    <string name="open_prefs_desc">Abra la configuración del widget de calendario</string>
 
 </resources>

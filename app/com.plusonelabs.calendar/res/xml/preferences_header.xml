@@ -10,7 +10,7 @@
         android:title="@string/calendars_prefs" />
     <header
         android:fragment="com.plusonelabs.calendar.prefs.FeedbackPreferencesFragment"
-        android:summary="Get in touch with us"
+        android:summary="@string/feedback_prefs_desc"
         android:title="@string/feedback_prefs" />
 
 </preference-headers>

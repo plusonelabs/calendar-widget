@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Kalender Widget</string>
+    <string name="app_name">Calendar Widget</string>
     <string name="today">HEUTE</string>
     <string name="tomorrow">MORGEN</string>
     <string name="no_upcoming_events">Keine anstehenden Termine</string>
     <string name="widget_name">Kalender</string>
-    <string name="open_prefs_desc">Öffne die Einstellungen des Kalender Widgets</string>
+    <string name="open_prefs_desc">Öffnen Sie die Einstellungen des Kalender-Widget</string>
+
+    <!-- Preference calendars -->
+    <string name="calendars_prefs">Kalender</string>
+    <string name="calendars_prefs_desc">Wählen Sie die anzuzeigenden Kalender</string>
+
+    <!-- Preference appearance -->
+    <string name="appearance_prefs">Aussehen</string>
+    <string name="appearance_prefs_desc">Passen Sie das Aussehen des Widgets an</string>
+    <string name="appearance_text_size_desc">Textgröße anpassen</string>
+    <string name="appearance_text_size_title">Textgröße</string>
+    <string name="appearance_display_header_desc">Kopfzeile ein- und ausblenden</string>
+    <string name="appearance_display_header_title">Kopfzeile anzeigen</string>
+    <string name="appearance_display_header_warning">Wenn die Kopfzeile ausgeblendet wird können Sie nicht mehr in die Einstellungen gelangen.</string>
+
+    <!-- Preference feedback -->
+    <string name="feedback_prefs">Feedback</string>
+    <string name="feedback_prefs_desc">Kontakt mit uns aufnehmen</string>
+    <string name="feedback_github_desc">Geben Sie Ihr Feedback auf der Projektseite</string>
+    <string name="feedback_github_title">Besuche Widget auf Github</string>
+    <string name="feedback_play_store_desc">Bewerten und kommentieren im Google Play-Shop</string>
+    <string name="feedback_play_store_title">Besuche Widget im Google Play-Shop</string>
+    <string name="prefs_add_widget">Widget hinzufügen</string>
 
 </resources>

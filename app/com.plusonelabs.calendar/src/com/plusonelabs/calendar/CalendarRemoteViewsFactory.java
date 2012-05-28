@@ -1,11 +1,15 @@
 package com.plusonelabs.calendar;
 
+import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -17,6 +21,8 @@ import com.plusonelabs.calendar.model.EventEntry;
 public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
+	private static final String METHOD_SET_TEXT_SIZE = "setTextSize";
+
 	static SimpleDateFormat dayDateFormatter = new SimpleDateFormat("dd. MMMM");
 	static SimpleDateFormat dayStringFormatter = new SimpleDateFormat("EEEE, ");
 	static SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
@@ -25,6 +31,7 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	private static final String COMMA_SPACE = ", ";
 
 	private final Context context;
+	private SharedPreferences prefs;
 	private ArrayList<CalenderEntry> calenderEntries;
 	private CalendarEventProvider calendarEventProvider;
 
@@ -32,6 +39,7 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 		this.context = context;
 		calendarEventProvider = new CalendarEventProvider(context);
 		calenderEntries = new ArrayList<CalenderEntry>();
+		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
 	public void onCreate() {
@@ -60,7 +68,7 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public RemoteViews updateEventEntry(String packageName, EventEntry event) {
-		RemoteViews rv = new RemoteViews(packageName, R.layout.event_entry);
+		RemoteViews rv = new RemoteViews(packageName, getEventEntryLayout());
 		Intent intent = CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId());
 		rv.setOnClickFillInIntent(R.id.event_entry_text_layout, intent);
 		rv.setOnClickFillInIntent(R.id.event_entry_color, intent);
@@ -79,13 +87,33 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public RemoteViews updateDayHeader(String packageName, DayHeader dayHeader) {
-		RemoteViews rv = new RemoteViews(packageName, R.layout.day_header);
+		RemoteViews rv = new RemoteViews(packageName, getDayHeaderLayout());
 		rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
 		Intent intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context,
 				dayHeader.getStartDate());
 		rv.setOnClickFillInIntent(R.id.day_header_title, intent);
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
+	}
+
+	private int getEventEntryLayout() {
+		String textSize = prefs.getString(PREF_TEXT_SIZE, PREF_TEXT_SIZE_MEDIUM);
+		if (textSize.equals(PREF_TEXT_SIZE_SMALL)) {
+			return R.layout.event_entry_small;
+		} else if (textSize.equals(PREF_TEXT_SIZE_LARGE)) {
+			return R.layout.event_entry_large;
+		}
+		return R.layout.event_entry_medium;
+	}
+
+	private int getDayHeaderLayout() {
+		String textSize = prefs.getString(PREF_TEXT_SIZE, PREF_TEXT_SIZE_MEDIUM);
+		if (textSize.equals(PREF_TEXT_SIZE_SMALL)) {
+			return R.layout.day_header_small;
+		} else if (textSize.equals(PREF_TEXT_SIZE_LARGE)) {
+			return R.layout.day_header_large;
+		}
+		return R.layout.day_header_medium;
 	}
 
 	public String createTimeString(long time) {
@@ -130,7 +158,7 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public int getViewTypeCount() {
-		return 2;
+		return 6;
 	}
 
 	public long getItemId(int position) {

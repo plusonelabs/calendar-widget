@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/day_header"
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:gravity="bottom"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/day_header_title"
+        style="@style/DayHeaderTitle.Medium"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right" />
+
+    <TextView
+        android:id="@+id/day_header_separator"
+        style="@style/DayHeaderSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>

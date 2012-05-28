@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_text_size_entries">
+        <item>@string/appearance_text_size_small</item>
+        <item>@string/appearance_text_size_medium</item>
+        <item>@string/appearance_text_size_large</item>
+    </string-array>
+    <string-array name="pref_text_size_values">
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+    </string-array>
+
+</resources>

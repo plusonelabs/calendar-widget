@@ -35,6 +35,7 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
+		CalenderAppWidgetProvider.updateEventList(getActivity());
 		CalenderAppWidgetProvider.updateAllWidgets(getActivity());
 	}
 }

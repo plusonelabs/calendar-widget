@@ -7,6 +7,7 @@
     <string name="no_upcoming_events">No upcoming events</string>
     <string name="widget_name">Calendar</string>
     <string name="open_prefs_desc">Open the settings of the calendar widget</string>
+    <string name="prefs_add_widget">Add Widget</string>
 
     <!-- Preference calendars -->
     <string name="calendars_prefs">Calendars</string>
@@ -17,6 +18,9 @@
     <string name="appearance_prefs_desc">Adjust the appearance of the widget</string>
     <string name="appearance_text_size_desc">Adjust the text size</string>
     <string name="appearance_text_size_title">Text size</string>
+    <string name="appearance_text_size_small">Small</string>
+    <string name="appearance_text_size_medium">Medium</string>
+    <string name="appearance_text_size_large">Large</string>
     <string name="appearance_display_header_desc">Display the date and settings header</string>
     <string name="appearance_display_header_title">Display header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
@@ -28,6 +32,5 @@
     <string name="feedback_github_title">Visit widget on Github</string>
     <string name="feedback_play_store_desc">Rate and comment on Google Play Store</string>
     <string name="feedback_play_store_title">Visit widget on Google Play Store</string>
-    <string name="prefs_add_widget">Add Widget</string>
 
 </resources>

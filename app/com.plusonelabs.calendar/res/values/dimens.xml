@@ -3,5 +3,17 @@
 
     <dimen name="widget_padding">8dp</dimen>
     <dimen name="calender_padding">8dp</dimen>
+    <dimen name="entry_height_small">38dp</dimen>
+    <dimen name="entry_height_medium">48dp</dimen>
+    <dimen name="entry_height_large">58dp</dimen>
+    <dimen name="day_header_title_small">10dp</dimen>
+    <dimen name="day_header_title_medium">14dp</dimen>
+    <dimen name="day_header_title_large">18dp</dimen>
+    <dimen name="event_entry_title_small">14dp</dimen>
+    <dimen name="event_entry_title_medium">18dp</dimen>
+    <dimen name="event_entry_title_large">22dp</dimen>
+    <dimen name="event_entry_date_small">10dp</dimen>
+    <dimen name="event_entry_date_medium">14dp</dimen>
+    <dimen name="event_entry_date_large">18dp</dimen>
 
 </resources>

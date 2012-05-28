@@ -2,16 +2,19 @@
 
     <PreferenceCategory android:title="@string/appearance_prefs" >
         <ListPreference
+            android:defaultValue="medium"
+            android:entries="@array/pref_text_size_entries"
+            android:entryValues="@array/pref_text_size_values"
             android:key="textSize"
             android:summary="@string/appearance_text_size_desc"
             android:title="@string/appearance_text_size_title" />
-    </PreferenceCategory>
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="showHeader"
-        android:summary="@string/appearance_display_header_desc"
-        android:title="@string/appearance_display_header_title" >
-    </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="showHeader"
+            android:summary="@string/appearance_display_header_desc"
+            android:title="@string/appearance_display_header_title" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
 
 </PreferenceScreen>

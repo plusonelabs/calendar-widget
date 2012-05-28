@@ -14,6 +14,22 @@ h2. Features
 * Fully resizable
 * Supports Android tablets
 
+h2. Changelog
+
+h3. v1.1
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=1&page=1&state=closed
+
+* Added preferences menu
+* Added option to select the active calendars for the widget
+* An new preferens option allows to hide the current date header to have more space for the calendar entries
+* The text size can not be customized as small, medium or large
+* The widget can not be shrinked properly on all devices
+
+h3. v1.0
+
+* Initial Release
+
 h2. Collaborate
 
 We are developing this application in public to bring you a tool that you want to use. If there is anything you would like to see added or want to add yourself please contact us at

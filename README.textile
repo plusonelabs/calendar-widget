@@ -8,8 +8,10 @@ h2. Features
 
 * Displays all events from your calendars
 * Automatically updates when you add/delete/modify an event locally
-* Supports scrolling through a list of upcoming events
-* Fully resizable widget
+* Select only the calendars you want to see in the widget
+* Customize the text size of the widget
+* Scroll through a list of upcoming events
+* Fully resizable
 * Supports Android tablets
 
 h2. Collaborate

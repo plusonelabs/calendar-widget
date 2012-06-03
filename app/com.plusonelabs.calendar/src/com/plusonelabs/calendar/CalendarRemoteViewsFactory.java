@@ -145,24 +145,6 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	public void onDataSetChanged() {
 		calenderEntries.clear();
 		ArrayList<EventEntry> eventList = calendarEventProvider.getEventList();
-		EventEntry entry = new EventEntry();
-		entry.setTitle("Hello World");
-		entry.setAllDay(true);
-		entry.setColor(0xFF00FF00);
-		entry.setEventId(123);
-		entry.setRecurring(true);
-		entry.setStartDate(System.currentTimeMillis() + 3600 * 24 * 5);
-		entry.setAlarmActive(true);
-		eventList.add(entry);
-		entry = new EventEntry();
-		entry.setTitle("Another World");
-		entry.setStartDate(System.currentTimeMillis() + 3600);
-		entry.setEndDate(System.currentTimeMillis() + 3600 * 3);
-		entry.setColor(0xFF00FF00);
-		entry.setEventId(123);
-		entry.setRecurring(true);
-		entry.setAlarmActive(true);
-		eventList.add(entry);
 		updateEntryList(eventList);
 	}
 

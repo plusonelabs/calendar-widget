@@ -26,7 +26,8 @@ public class CalendarEventProvider {
 	private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + "!="
 			+ Attendees.ATTENDEE_STATUS_DECLINED;
 	private static final String[] PROJECTION = new String[] { Instances.EVENT_ID, Instances.TITLE,
-			Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.CALENDAR_COLOR };
+			Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.CALENDAR_COLOR,
+			Instances.HAS_ALARM, Instances.RRULE };
 
 	private final Context context;
 
@@ -53,6 +54,8 @@ public class CalendarEventProvider {
 			eventEntry.setEndDate(calendarCursor.getLong(3));
 			eventEntry.setAllDay(calendarCursor.getInt(4) > 0);
 			eventEntry.setColor(calendarCursor.getInt(5));
+			eventEntry.setAlarmActive(calendarCursor.getInt(6) > 0);
+			eventEntry.setRecurring(calendarCursor.getString(7) != null);
 			eventList.add(eventEntry);
 		}
 		return eventList;

@@ -21,7 +21,6 @@ import com.plusonelabs.calendar.model.EventEntry;
 public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
-	private static final String METHOD_SET_TEXT_SIZE = "setTextSize";
 
 	static SimpleDateFormat dayDateFormatter = new SimpleDateFormat("dd. MMMM");
 	static SimpleDateFormat dayStringFormatter = new SimpleDateFormat("EEEE, ");
@@ -82,6 +81,16 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 			rv.setTextViewText(R.id.event_entry_date, createTimeString(event.getStartDate())
 					+ SPACED_DASH + createTimeString(event.getEndDate()));
 		}
+		if (event.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true)) {
+			rv.setViewVisibility(R.id.event_entry_indicator_alarm, View.VISIBLE);
+		} else {
+			rv.setViewVisibility(R.id.event_entry_indicator_alarm, View.GONE);
+		}
+		if (event.isRecurring() && prefs.getBoolean(PREF_INDICATE_RECURRING, false)) {
+			rv.setViewVisibility(R.id.event_entry_indicator_recurring, View.VISIBLE);
+		} else {
+			rv.setViewVisibility(R.id.event_entry_indicator_recurring, View.GONE);
+		}
 		rv.setInt(R.id.event_entry_color, METHOD_SET_BACKGROUND_COLOR, event.getColor());
 		return rv;
 	}
@@ -136,6 +145,24 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	public void onDataSetChanged() {
 		calenderEntries.clear();
 		ArrayList<EventEntry> eventList = calendarEventProvider.getEventList();
+		EventEntry entry = new EventEntry();
+		entry.setTitle("Hello World");
+		entry.setAllDay(true);
+		entry.setColor(0xFF00FF00);
+		entry.setEventId(123);
+		entry.setRecurring(true);
+		entry.setStartDate(System.currentTimeMillis() + 3600 * 24 * 5);
+		entry.setAlarmActive(true);
+		eventList.add(entry);
+		entry = new EventEntry();
+		entry.setTitle("Another World");
+		entry.setStartDate(System.currentTimeMillis() + 3600);
+		entry.setEndDate(System.currentTimeMillis() + 3600 * 3);
+		entry.setColor(0xFF00FF00);
+		entry.setEventId(123);
+		entry.setRecurring(true);
+		entry.setAlarmActive(true);
+		eventList.add(entry);
 		updateEntryList(eventList);
 	}
 

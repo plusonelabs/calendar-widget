@@ -6,4 +6,9 @@ public class DayHeader extends CalenderEntry {
 		setStartDate(date);
 	}
 
+	@Override
+	public String toString() {
+		return "DayHeader [getStartDate()=" + getStartDate() + "]";
+	}
+
 }

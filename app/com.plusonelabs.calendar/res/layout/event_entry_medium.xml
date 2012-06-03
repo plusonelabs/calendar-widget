@@ -10,25 +10,41 @@
         android:layout_width="8dp"
         android:layout_height="fill_parent" />
 
-    <LinearLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_entry_text_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/event_entry_title"
-            style="@style/EventEntryTitle.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_height="match_parent" >
 
         <TextView
             android:id="@+id/event_entry_date"
             style="@style/EventEntryDate.Medium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref" />
+
+        <TextView
+            android:id="@+id/event_entry_title"
+            style="@style/EventEntryTitle.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/event_entry_date"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref"
+            android:gravity="center_vertical" />
+
+        <include
+            android:id="@+id/event_entry_indicator_layout_ref"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/event_entry_title"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/event_entry_title"
+            layout="@layout/event_entry_indicator" />
+    </RelativeLayout>
 
 </LinearLayout>

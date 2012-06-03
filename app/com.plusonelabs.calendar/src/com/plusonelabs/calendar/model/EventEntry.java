@@ -1,5 +1,8 @@
 package com.plusonelabs.calendar.model;
 
+/**
+ * @author Moritz Post <moritzpost@gmail.com>
+ */
 public class EventEntry extends CalenderEntry implements Comparable<EventEntry> {
 
 	private int eventId;
@@ -7,6 +10,8 @@ public class EventEntry extends CalenderEntry implements Comparable<EventEntry> 
 	private long endDate;
 	private int color;
 	private boolean allDay;
+	private boolean alarmActive;
+	private boolean recurring;
 
 	public EventEntry() {
 
@@ -77,4 +82,28 @@ public class EventEntry extends CalenderEntry implements Comparable<EventEntry> 
 		}
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "EventEntry [eventId=" + eventId + ", title=" + title + ", endDate=" + endDate
+				+ ", color=" + color + ", allDay=" + allDay + ", getStartDate()=" + getStartDate()
+				+ "]";
+	}
+
+	public void setAlarmActive(boolean active) {
+		this.alarmActive = active;
+	}
+
+	public boolean isAlarmActive() {
+		return alarmActive;
+	}
+
+	public void setRecurring(boolean recurring) {
+		this.recurring = recurring;
+	}
+
+	public boolean isRecurring() {
+		return recurring;
+	}
+
 }

@@ -8,6 +8,8 @@
     <string name="widget_name">Calendar</string>
     <string name="open_prefs_desc">Open the settings of the calendar widget</string>
     <string name="prefs_add_widget">Add Widget</string>
+    <string name="indicator_alarm">Indicator if an alarm has been set</string>
+    <string name="indicator_recurring">Indicator if the event is recurring</string>
 
     <!-- Preference calendars -->
     <string name="calendars_prefs">Calendars</string>
@@ -21,9 +23,14 @@
     <string name="appearance_text_size_small">Small</string>
     <string name="appearance_text_size_medium">Medium</string>
     <string name="appearance_text_size_large">Large</string>
-    <string name="appearance_display_header_desc">Display the date and settings header</string>
-    <string name="appearance_display_header_title">Display header</string>
+    <string name="appearance_display_header_desc">Show the date and settings header</string>
+    <string name="appearance_display_header_title">Show header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
+    <string name="appearance_indicators">Indicators</string>
+    <string name="appearance_indicate_alert_desc">Show indicator for alerts</string>
+    <string name="appearance_indicate_alert_title">Alerts</string>
+    <string name="appearance_indicate_recurring_desc">Show indicator for recurring events</string>
+    <string name="appearance_indicate_recurring_title">Recurring events</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>

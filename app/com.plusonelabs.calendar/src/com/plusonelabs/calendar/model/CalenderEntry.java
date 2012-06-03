@@ -38,4 +38,9 @@ public class CalenderEntry {
 				&& cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
 	}
 
+	@Override
+	public String toString() {
+		return "CalenderEntry [startDate=" + startDate + "]";
+	}
+
 }

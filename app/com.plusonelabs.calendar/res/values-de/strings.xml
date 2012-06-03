@@ -8,6 +8,8 @@
     <string name="widget_name">Kalender</string>
     <string name="open_prefs_desc">Öffne die Einstellungen des Kalender-Widget</string>
     <string name="prefs_add_widget">Widget hinzufügen</string>
+    <string name="indicator_alarm">Hinweis ob an dem Ereignis ein Erinnerungen gesetzt wurde</string>
+    <string name="indicator_recurring">Hinweis ob das Ereignis wiederkehrend ist</string>
 
     <!-- Preference calendars -->
     <string name="calendars_prefs">Kalender</string>
@@ -24,6 +26,11 @@
     <string name="appearance_display_header_desc">Kopfzeile ein- und ausblenden</string>
     <string name="appearance_display_header_title">Kopfzeile anzeigen</string>
     <string name="appearance_display_header_warning">Wenn die Kopfzeile ausgeblendet wird können Sie nicht mehr in die Einstellungen gelangen.</string>
+    <string name="appearance_indicators">Hinweise</string>
+    <string name="appearance_indicate_alert_desc">Zeige Hinweise für Erinnerungen</string>
+    <string name="appearance_indicate_alert_title">Erinnerungen</string>
+    <string name="appearance_indicate_recurring_desc">Zeige Hinweise für wiederkehrende Ereignisse</string>
+    <string name="appearance_indicate_recurring_title">Wiederkehrende Ereignisse</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>

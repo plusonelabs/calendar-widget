@@ -8,5 +8,7 @@ public interface ICalendarPreferences {
 	public static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
 	public static final String PREF_SHOW_HEADER = "showHeader";
 	public static final String PREF_TEXT_SIZE = "textSize";
+	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";
+	public static final String PREF_INDICATE_ALERTS = "indicateAlerts";
 
 }

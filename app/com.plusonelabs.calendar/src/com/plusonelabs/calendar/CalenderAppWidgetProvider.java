@@ -21,6 +21,8 @@ public class CalenderAppWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
+		AlarmReceiver.scheduleAlarm(context);
+
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			int widgetId = appWidgetIds[i];
 
@@ -38,9 +40,10 @@ public class CalenderAppWidgetProvider extends AppWidgetProvider {
 					System.currentTimeMillis());
 			rv.setOnClickFillInIntent(R.id.empty_event_list, intent);
 
-			rv.setTextViewText(R.id.calendar_current_date,
-					CalendarRemoteViewsFactory.dayStringFormatter.format(new Date()).toUpperCase()
-							+ CalendarRemoteViewsFactory.dayDateFormatter.format(new Date()));
+			Date curDate = new Date();
+			String formattedDate = CalendarRemoteViewsFactory.dayStringFormatter.format(curDate)
+					+ CalendarRemoteViewsFactory.dayDateFormatter.format(curDate);
+			rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase());
 
 			Intent startConfigIntent = new Intent(context, CalendarConfigurationActivity.class);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,

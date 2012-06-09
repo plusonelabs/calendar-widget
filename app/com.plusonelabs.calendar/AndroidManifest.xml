@@ -45,6 +45,13 @@
                 <data android:host="com.android.calendar" />
             </intent-filter>
         </receiver>
+        <receiver android:name="AlarmReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name="CalendarWidgetService"

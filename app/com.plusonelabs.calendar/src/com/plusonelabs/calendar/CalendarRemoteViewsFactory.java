@@ -22,9 +22,9 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
 
-	static SimpleDateFormat dayDateFormatter = new SimpleDateFormat("dd. MMMM");
-	static SimpleDateFormat dayStringFormatter = new SimpleDateFormat("EEEE, ");
-	static SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+	static SimpleDateFormat dayDateFormatter;
+	static SimpleDateFormat dayStringFormatter;
+	static SimpleDateFormat timeFormatter;
 
 	private static final String SPACED_DASH = " - ";
 	private static final String COMMA_SPACE = ", ";
@@ -33,6 +33,10 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	private SharedPreferences prefs;
 	private ArrayList<CalenderEntry> calenderEntries;
 	private CalendarEventProvider calendarEventProvider;
+
+	static {
+		initiDateFormatter();
+	}
 
 	public CalendarRemoteViewsFactory(Context context) {
 		this.context = context;
@@ -64,6 +68,12 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 			return updateEventEntry(packageName, (EventEntry) entry);
 		}
 		return null;
+	}
+
+	public static void initiDateFormatter() {
+		dayDateFormatter = new SimpleDateFormat("dd. MMMM");
+		dayStringFormatter = new SimpleDateFormat("EEEE, ");
+		timeFormatter = new SimpleDateFormat("HH:mm");
 	}
 
 	public RemoteViews updateEventEntry(String packageName, EventEntry event) {

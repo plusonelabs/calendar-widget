@@ -18,6 +18,21 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.2.1
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=3&state=closed
+
+* Fixed issue where the date in the calendar app would be displayed wrong when opened from the widget
+
+h3. v1.2
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=2&state=closed
+
+* Added indicators for events with an alert
+* Added indicators for recurring events
+* Widget refreshes at midnight
+* Widget handles time, date, timezone and locale changes correctly
+
 h3. v1.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=1&page=1&state=closed

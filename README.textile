@@ -9,11 +9,12 @@ The widget is designed to make use of the new Android 4.0 (Ice Cream Sandwich) A
 h2. Features
 
 * Displays all events from your calendars
-* Automatically updates when you add/delete/modify an event locally
+* Automatically updates when you add/delete/modify an event
 * Select only the calendars you want to see in the widget
+* Scroll through the list of upcoming events
 * Customize the text size of the widget
-* Scroll through a list of upcoming events
-* Fully resizable
+* Fully resizable widget
+* Indicators for alerts and recurring events
 * Supports Android tablets
 
 h2. Changelog

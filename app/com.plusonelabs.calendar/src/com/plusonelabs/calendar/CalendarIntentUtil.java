@@ -12,8 +12,6 @@ public class CalendarIntentUtil {
 
 	private static final String KEY_DETAIL_VIEW = "DETAIL_VIEW";
 	private static final String TIME = "time";
-	private static final String END_TIME = "endTime";
-	private static final String BEGIN_TIME = "beginTime";
 
 	static Intent createOpenCalendarAtDayIntent(Context context, long goToTime) {
 		Intent launchIntent = createOpenCalendarIntent();
@@ -35,8 +33,8 @@ public class CalendarIntentUtil {
 	static Intent createOpenCalendarEventIntent(int eventId, long from, long to) {
 		Intent intent = createOpenCalendarIntent();
 		intent.setData(ContentUris.withAppendedId(Events.CONTENT_URI, eventId));
-		intent.putExtra(BEGIN_TIME, from);
-		intent.putExtra(END_TIME, to);
+		intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, from);
+		intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, to);
 		return intent;
 	}
 

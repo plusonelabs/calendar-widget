@@ -20,14 +20,18 @@ import com.plusonelabs.calendar.model.EventEntry;
 
 public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 
+	private static final String TIME_FORMAT = "HH:mm";
+	private static final String DAY_STRING_FORMAT = "EEEE, ";
+	private static final String DAY_DATE_FORMAT = "dd. MMMM";
+
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
+
+	private static final String SPACED_DASH = " - ";
+	private static final String COMMA_SPACE = ", ";
 
 	static SimpleDateFormat dayDateFormatter;
 	static SimpleDateFormat dayStringFormatter;
 	static SimpleDateFormat timeFormatter;
-
-	private static final String SPACED_DASH = " - ";
-	private static final String COMMA_SPACE = ", ";
 
 	private final Context context;
 	private SharedPreferences prefs;
@@ -71,14 +75,15 @@ public class CalendarRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public static void initiDateFormatter() {
-		dayDateFormatter = new SimpleDateFormat("dd. MMMM");
-		dayStringFormatter = new SimpleDateFormat("EEEE, ");
-		timeFormatter = new SimpleDateFormat("HH:mm");
+		dayDateFormatter = new SimpleDateFormat(DAY_DATE_FORMAT);
+		dayStringFormatter = new SimpleDateFormat(DAY_STRING_FORMAT);
+		timeFormatter = new SimpleDateFormat(TIME_FORMAT);
 	}
 
 	public RemoteViews updateEventEntry(String packageName, EventEntry event) {
 		RemoteViews rv = new RemoteViews(packageName, getEventEntryLayout());
-		Intent intent = CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId());
+		Intent intent = CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
+				event.getStartDate(), event.getEndDate());
 		rv.setOnClickFillInIntent(R.id.event_entry_text_layout, intent);
 		rv.setOnClickFillInIntent(R.id.event_entry_color, intent);
 		rv.setOnClickFillInIntent(R.id.event_entry_title, intent);

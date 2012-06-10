@@ -30,7 +30,7 @@ public class CalendarIntentUtil {
 		return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
-	static Intent createOpenCalendarEventIntent(int eventId, long from, long to) {
+	public static Intent createOpenCalendarEventIntent(int eventId, long from, long to) {
 		Intent intent = createOpenCalendarIntent();
 		intent.setData(ContentUris.withAppendedId(Events.CONTENT_URI, eventId));
 		intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, from);

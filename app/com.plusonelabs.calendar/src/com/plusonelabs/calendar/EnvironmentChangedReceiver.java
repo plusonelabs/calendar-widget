@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-public class CalendarChangedReceiver extends BroadcastReceiver {
+public class EnvironmentChangedReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -13,9 +13,9 @@ public class CalendarChangedReceiver extends BroadcastReceiver {
 				|| action.equals(Intent.ACTION_TIME_CHANGED)
 				|| action.equals(Intent.ACTION_DATE_CHANGED)
 				|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)) {
-			CalendarRemoteViewsFactory.initiDateFormatter();
-			CalenderAppWidgetProvider.updateAllWidgets(context);
+			EventRemoteViewsFactory.initiDateFormatter();
+			EventAppWidgetProvider.updateAllWidgets(context);
 		}
-		CalenderAppWidgetProvider.updateEventList(context);
+		EventAppWidgetProvider.updateEventList(context);
 	}
 }

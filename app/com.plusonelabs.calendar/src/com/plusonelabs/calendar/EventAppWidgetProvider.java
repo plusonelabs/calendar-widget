@@ -16,7 +16,7 @@ import android.widget.RemoteViews;
 
 import com.plusonelabs.calendar.prefs.ICalendarPreferences;
 
-public class CalenderAppWidgetProvider extends AppWidgetProvider {
+public class EventAppWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -28,7 +28,7 @@ public class CalenderAppWidgetProvider extends AppWidgetProvider {
 
 			RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
 
-			Intent intent = new Intent(context, CalendarWidgetService.class);
+			Intent intent = new Intent(context, EventWidgetService.class);
 			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
 			intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 			rv.setRemoteAdapter(R.id.event_list, intent);
@@ -41,11 +41,11 @@ public class CalenderAppWidgetProvider extends AppWidgetProvider {
 			rv.setOnClickFillInIntent(R.id.empty_event_list, intent);
 
 			Date curDate = new Date();
-			String formattedDate = CalendarRemoteViewsFactory.dayStringFormatter.format(curDate)
-					+ CalendarRemoteViewsFactory.dayDateFormatter.format(curDate);
+			String formattedDate = EventRemoteViewsFactory.dayStringFormatter.format(curDate)
+					+ EventRemoteViewsFactory.dayDateFormatter.format(curDate);
 			rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase());
 
-			Intent startConfigIntent = new Intent(context, CalendarConfigurationActivity.class);
+			Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
 					PendingIntent.FLAG_UPDATE_CURRENT);
 			rv.setOnClickPendingIntent(R.id.overflow_menu, pendingIntent);
@@ -65,15 +65,15 @@ public class CalenderAppWidgetProvider extends AppWidgetProvider {
 
 	public static void updateEventList(Context context) {
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		ComponentName compName = new ComponentName(context, CalenderAppWidgetProvider.class);
+		ComponentName compName = new ComponentName(context, EventAppWidgetProvider.class);
 		int[] widgetIds = appWidgetManager.getAppWidgetIds(compName);
 		appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.event_list);
 	}
 
 	public static void updateAllWidgets(Context context) {
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		ComponentName compName = new ComponentName(context, CalenderAppWidgetProvider.class);
-		Intent intent = new Intent(context, CalenderAppWidgetProvider.class);
+		ComponentName compName = new ComponentName(context, EventAppWidgetProvider.class);
+		Intent intent = new Intent(context, EventAppWidgetProvider.class);
 		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
 				appWidgetManager.getAppWidgetIds(compName));
@@ -81,7 +81,7 @@ public class CalenderAppWidgetProvider extends AppWidgetProvider {
 	}
 
 	public static void updateWidget(Context context, int appWidgetId) {
-		Intent intent = new Intent(context, CalenderAppWidgetProvider.class);
+		Intent intent = new Intent(context, EventAppWidgetProvider.class);
 		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		context.sendBroadcast(intent);

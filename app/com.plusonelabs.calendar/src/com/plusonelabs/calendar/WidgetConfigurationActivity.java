@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class CalendarConfigurationActivity extends PreferenceActivity {
+public class WidgetConfigurationActivity extends PreferenceActivity {
 
 	private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
@@ -31,7 +31,7 @@ public class CalendarConfigurationActivity extends PreferenceActivity {
 					Intent resultValue = new Intent();
 					resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 					setResult(RESULT_OK, resultValue);
-					CalenderAppWidgetProvider.updateWidget(CalendarConfigurationActivity.this,
+					EventAppWidgetProvider.updateWidget(WidgetConfigurationActivity.this,
 							appWidgetId);
 					finish();
 				}

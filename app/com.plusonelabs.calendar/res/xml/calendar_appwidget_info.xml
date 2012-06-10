@@ -1,5 +1,5 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="com.plusonelabs.calendar.CalendarConfigurationActivity"
+    android:configure="com.plusonelabs.calendar.WidgetConfigurationActivity"
     android:initialLayout="@layout/widget"
     android:minHeight="110dp"
     android:minResizeHeight="40dp"

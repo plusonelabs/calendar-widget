@@ -7,7 +7,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 
-import com.plusonelabs.calendar.CalenderAppWidgetProvider;
+import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.R;
 
 public class AppearancePreferencesFragment extends PreferenceFragment {
@@ -35,7 +35,7 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-		CalenderAppWidgetProvider.updateEventList(getActivity());
-		CalenderAppWidgetProvider.updateAllWidgets(getActivity());
+		EventAppWidgetProvider.updateEventList(getActivity());
+		EventAppWidgetProvider.updateAllWidgets(getActivity());
 	}
 }

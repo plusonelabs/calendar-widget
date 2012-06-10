@@ -1,6 +1,6 @@
 package com.plusonelabs.calendar.model;
 
-public class DayHeader extends CalenderEntry {
+public class DayHeader extends EventEntry {
 
 	public DayHeader(long date) {
 		setStartDate(date);

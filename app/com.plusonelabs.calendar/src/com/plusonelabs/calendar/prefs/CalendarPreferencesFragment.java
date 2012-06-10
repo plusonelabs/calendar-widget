@@ -19,7 +19,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.CalendarContract.Calendars;
 
-import com.plusonelabs.calendar.CalenderAppWidgetProvider;
+import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.R;
 
 public class CalendarPreferencesFragment extends PreferenceFragment {
@@ -70,7 +70,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		HashSet<String> selectedCalendars = getSelectedCalenders();
 		if (!selectedCalendars.equals(initialActiveCalendars)) {
 			persistSelectedCalendars(selectedCalendars);
-			CalenderAppWidgetProvider.updateEventList(getActivity());
+			EventAppWidgetProvider.updateEventList(getActivity());
 		}
 	}
 

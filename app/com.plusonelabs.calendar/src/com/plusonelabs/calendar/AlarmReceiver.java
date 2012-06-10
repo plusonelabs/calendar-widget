@@ -12,8 +12,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		CalenderAppWidgetProvider.updateAllWidgets(context);
-		CalenderAppWidgetProvider.updateEventList(context);
+		EventAppWidgetProvider.updateAllWidgets(context);
+		EventAppWidgetProvider.updateEventList(context);
 		scheduleAlarm(context);
 	}
 

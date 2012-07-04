@@ -40,10 +40,13 @@ public class CalendarContentProvider {
 
 	public ArrayList<CalendarEntry> getEvents() {
 		Cursor cursor = createLoadedCursor();
-		ArrayList<CalendarEntry> eventList = createEventList(cursor);
-		cursor.close();
-		Collections.sort(eventList);
-		return eventList;
+		if (cursor != null) {
+			ArrayList<CalendarEntry> eventList = createEventList(cursor);
+			cursor.close();
+			Collections.sort(eventList);
+			return eventList;
+		}
+		return new ArrayList<CalendarEntry>();
 	}
 
 	private ArrayList<CalendarEntry> createEventList(Cursor calendarCursor) {

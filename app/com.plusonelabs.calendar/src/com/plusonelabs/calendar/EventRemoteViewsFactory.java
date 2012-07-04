@@ -66,7 +66,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		}
 		for (int i = 0; i < eventProviders.size(); i++) {
 			IEventProvider<?> eventProvider = eventProviders.get(i);
-			if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryTypes())) {
+			if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryType())) {
 				return eventProvider.getRemoteView(entry);
 			}
 		}

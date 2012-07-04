@@ -89,7 +89,7 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 		return calendarContentProvider.getEvents();
 	}
 
-	public Class<? extends CalendarEntry> getSupportedEventEntryTypes() {
+	public Class<? extends CalendarEntry> getSupportedEventEntryType() {
 		return CalendarEntry.class;
 	}
 

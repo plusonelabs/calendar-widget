@@ -14,6 +14,6 @@ public interface IEventProvider<T extends EventEntry> {
 
 	ArrayList<T> getEventEntries();
 
-	Class<? extends T> getSupportedEventEntryTypes();
+	Class<? extends T> getSupportedEventEntryType();
 
 }

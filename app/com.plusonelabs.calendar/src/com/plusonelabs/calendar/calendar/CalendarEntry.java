@@ -15,6 +15,7 @@ public class CalendarEntry extends EventEntry {
 	private boolean alarmActive;
 	private boolean recurring;
 	private boolean spansMultipleDays;
+	private CalendarEntry originalEvent;
 
 	public int getEventId() {
 		return eventId;
@@ -86,6 +87,14 @@ public class CalendarEntry extends EventEntry {
 
 	public boolean spansFullDay() {
 		return getStartDate() + DateUtils.DAY_IN_MILLIS == endDate;
+	}
+
+	public void setOriginalEvent(CalendarEntry originalEvent) {
+		this.originalEvent = originalEvent;
+	}
+
+	public CalendarEntry getOriginalEvent() {
+		return originalEvent;
 	}
 
 	public int compareTo(CalendarEntry otherEntry) {

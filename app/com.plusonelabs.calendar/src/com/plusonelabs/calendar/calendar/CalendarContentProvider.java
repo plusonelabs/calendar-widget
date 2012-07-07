@@ -69,6 +69,7 @@ public class CalendarContentProvider {
 				CalendarEntry clone = eventEntry.clone();
 				clone.setEndDate(today + DateUtils.DAY_IN_MILLIS);
 				clone.setSpansMultipleDays(true);
+				clone.setOriginalEvent(eventEntry);
 				eventList.add(clone);
 			} else {
 				eventList.add(eventEntry);
@@ -92,11 +93,12 @@ public class CalendarContentProvider {
 	}
 
 	public CalendarEntry cloneAsSpanningEvent(CalendarEntry eventEntry, long startDate, long endDate) {
-		CalendarEntry spanningEvent = eventEntry.clone();
-		spanningEvent.setStartDate(startDate);
-		spanningEvent.setEndDate(endDate);
-		spanningEvent.setSpansMultipleDays(true);
-		return spanningEvent;
+		CalendarEntry clone = eventEntry.clone();
+		clone.setStartDate(startDate);
+		clone.setEndDate(endDate);
+		clone.setSpansMultipleDays(true);
+		clone.setOriginalEvent(eventEntry);
+		return clone;
 	}
 
 	private CalendarEntry createCalendarEvent(Cursor calendarCursor) {

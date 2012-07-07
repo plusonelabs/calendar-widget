@@ -66,6 +66,10 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 	}
 
 	public Intent createOnItemClickIntent(CalendarEntry event) {
+		CalendarEntry originalEvent = event.getOriginalEvent();
+		if (originalEvent != null) {
+			event = originalEvent;
+		}
 		return CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
 				event.getStartDate(), event.getEndDate());
 	}

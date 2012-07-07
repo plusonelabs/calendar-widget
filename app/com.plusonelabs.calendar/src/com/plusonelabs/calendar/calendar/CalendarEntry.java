@@ -1,5 +1,8 @@
 package com.plusonelabs.calendar.calendar;
 
+import android.text.format.DateUtils;
+import android.util.FloatMath;
+
 import com.plusonelabs.calendar.model.EventEntry;
 
 public class CalendarEntry extends EventEntry {
@@ -11,10 +14,7 @@ public class CalendarEntry extends EventEntry {
 	private boolean allDay;
 	private boolean alarmActive;
 	private boolean recurring;
-
-	public CalendarEntry() {
-
-	}
+	private boolean spansMultipleDays;
 
 	public int getEventId() {
 		return eventId;
@@ -22,16 +22,6 @@ public class CalendarEntry extends EventEntry {
 
 	public void setEventId(int eventId) {
 		this.eventId = eventId;
-	}
-
-	public CalendarEntry(String title, long startDate) {
-		this.title = title;
-		setStartDate(startDate);
-	}
-
-	public CalendarEntry(String title, long startDate, long endDate) {
-		this(title, startDate);
-		this.endDate = endDate;
 	}
 
 	public String getTitle() {
@@ -66,24 +56,6 @@ public class CalendarEntry extends EventEntry {
 		this.allDay = allDay;
 	}
 
-	public int compareTo(CalendarEntry otherEntry) {
-		if (isSameDay(otherEntry.getStartDate())) {
-			if (allDay) {
-				return -1;
-			} else if (otherEntry.allDay) {
-				return 1;
-			}
-		}
-		return super.compareTo(otherEntry);
-	}
-
-	@Override
-	public String toString() {
-		return "EventEntry [eventId=" + eventId + ", title=" + title + ", endDate=" + endDate
-				+ ", color=" + color + ", allDay=" + allDay + ", getStartDate()=" + getStartDate()
-				+ "]";
-	}
-
 	public void setAlarmActive(boolean active) {
 		this.alarmActive = active;
 	}
@@ -98,6 +70,56 @@ public class CalendarEntry extends EventEntry {
 
 	public boolean isRecurring() {
 		return recurring;
+	}
+
+	public boolean isPartOfMultiDayEvent() {
+		return spansMultipleDays;
+	}
+
+	public void setSpansMultipleDays(boolean spansMultipleDays) {
+		this.spansMultipleDays = spansMultipleDays;
+	}
+
+	public int daysCovered() {
+		return (int) FloatMath.ceil((endDate - getStartDate()) / (1000f * 60f * 60f * 24f));
+	}
+
+	public boolean spansFullDay() {
+		return getStartDate() + DateUtils.DAY_IN_MILLIS == endDate;
+	}
+
+	public int compareTo(CalendarEntry otherEntry) {
+		if (isSameDay(otherEntry.getStartDate())) {
+			if (allDay) {
+				return -1;
+			} else if (otherEntry.allDay) {
+				return 1;
+			}
+		}
+		return super.compareTo(otherEntry);
+	}
+
+	@Override
+	protected CalendarEntry clone() {
+		CalendarEntry clone = new CalendarEntry();
+		clone.setStartDate(getStartDate());
+		clone.endDate = endDate;
+		clone.eventId = eventId;
+		clone.title = title;
+		clone.allDay = allDay;
+		clone.color = color;
+		clone.alarmActive = alarmActive;
+		clone.recurring = recurring;
+		clone.spansMultipleDays = spansMultipleDays;
+		return clone;
+	}
+
+	@Override
+	public String toString() {
+		return "CalendarEntry [eventId=" + eventId + ", title=" + title + ", endDate=" + endDate
+				+ ", color=" + color + ", allDay=" + allDay + ", alarmActive=" + alarmActive
+				+ ", recurring=" + recurring + ", spansMultipleDays=" + spansMultipleDays
+				+ ", getStartDate()=" + getStartDate() + "]";
 	}
 
 }

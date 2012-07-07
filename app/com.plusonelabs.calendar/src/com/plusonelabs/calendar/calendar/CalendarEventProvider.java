@@ -14,12 +14,16 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.plusonelabs.calendar.CalendarIntentUtil;
+import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventProvider;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.model.EventEntry;
 
 public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 
+	private static final String SPACE_ARROW = " →";
+	private static final String ARROW_SPACE = "→ ";
+	private static final String EMPTY_STRING = "";
 	private static final String TIME_FORMAT = "HH:mm";
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
 	private static final String SPACED_DASH = " - ";
@@ -45,13 +49,12 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 		rv.setOnClickFillInIntent(R.id.event_entry_color, intent);
 		rv.setOnClickFillInIntent(R.id.event_entry_title, intent);
 		rv.setTextViewText(R.id.event_entry_title, event.getTitle());
-		if (event.isAllDay()) {
+		if (event.isAllDay() || event.spansFullDay()) {
 			rv.setViewVisibility(R.id.event_entry_date, View.GONE);
 		} else {
 			rv.setViewVisibility(R.id.event_entry_date, View.VISIBLE);
 			rv.setOnClickFillInIntent(R.id.event_entry_date, intent);
-			rv.setTextViewText(R.id.event_entry_date, createTimeString(event.getStartDate())
-					+ SPACED_DASH + createTimeString(event.getEndDate()));
+			rv.setTextViewText(R.id.event_entry_date, createTimeSpanString(event));
 		}
 		if (event.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true)) {
 			rv.setViewVisibility(R.id.event_entry_indicator_alarm, View.VISIBLE);
@@ -65,6 +68,25 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 		}
 		rv.setInt(R.id.event_entry_color, METHOD_SET_BACKGROUND_COLOR, event.getColor());
 		return rv;
+	}
+
+	public String createTimeSpanString(CalendarEntry event) {
+		String startStr = null;
+		String endStr = null;
+		String separator = SPACED_DASH;
+		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getStartDate())) {
+			startStr = ARROW_SPACE;
+			separator = EMPTY_STRING;
+		} else {
+			startStr = createTimeString(event.getStartDate());
+		}
+		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())) {
+			endStr = SPACE_ARROW;
+			separator = EMPTY_STRING;
+		} else {
+			endStr = createTimeString(event.getEndDate());
+		}
+		return startStr + separator + endStr;
 	}
 
 	public String createTimeString(long time) {

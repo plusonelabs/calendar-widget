@@ -2,9 +2,9 @@ package com.plusonelabs.calendar.model;
 
 import java.util.Calendar;
 
-public class EventEntry implements Comparable<EventEntry> {
+import android.text.format.DateUtils;
 
-	private static final long ONE_DAY = 86400000;
+public class EventEntry implements Comparable<EventEntry> {
 
 	private long startDate;
 
@@ -33,7 +33,7 @@ public class EventEntry implements Comparable<EventEntry> {
 		Calendar cal1 = Calendar.getInstance();
 		Calendar cal2 = Calendar.getInstance();
 		cal1.setTimeInMillis(getStartDate());
-		cal2.setTimeInMillis(System.currentTimeMillis() + ONE_DAY);
+		cal2.setTimeInMillis(System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS);
 		return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
 				&& cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
 	}

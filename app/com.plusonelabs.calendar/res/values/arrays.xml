@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string-array name="pref_text_size_entries">
         <item>@string/appearance_text_size_small</item>
         <item>@string/appearance_text_size_medium</item>
         <item>@string/appearance_text_size_large</item>
     </string-array>
-    <string-array name="pref_text_size_values">
+    <string-array name="pref_text_size_values" tools:ignore="MissingTranslation">
         <item>small</item>
         <item>medium</item>
         <item>large</item>

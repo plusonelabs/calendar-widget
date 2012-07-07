@@ -17,6 +17,7 @@ import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.text.format.DateUtils;
 
+import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.prefs.ICalendarPreferences;
 
 public class CalendarContentProvider {
@@ -53,18 +54,62 @@ public class CalendarContentProvider {
 		ArrayList<CalendarEntry> eventList = new ArrayList<CalendarEntry>();
 		for (int i = 0; i < calendarCursor.getCount(); i++) {
 			calendarCursor.moveToPosition(i);
-			CalendarEntry eventEntry = new CalendarEntry();
-			eventEntry.setEventId(calendarCursor.getInt(0));
-			eventEntry.setTitle(calendarCursor.getString(1));
-			eventEntry.setStartDate(calendarCursor.getLong(2));
-			eventEntry.setEndDate(calendarCursor.getLong(3));
-			eventEntry.setAllDay(calendarCursor.getInt(4) > 0);
-			eventEntry.setColor(calendarCursor.getInt(5));
-			eventEntry.setAlarmActive(calendarCursor.getInt(6) > 0);
-			eventEntry.setRecurring(calendarCursor.getString(7) != null);
-			eventList.add(eventEntry);
+			CalendarEntry eventEntry = createCalendarEvent(calendarCursor);
+			setupDayOneEntry(eventList, eventEntry);
+			createFollowingEntries(eventList, eventEntry);
 		}
 		return eventList;
+	}
+
+	public void setupDayOneEntry(ArrayList<CalendarEntry> eventList, CalendarEntry eventEntry) {
+		long today = DateUtil.toMidnight(System.currentTimeMillis());
+		int daysCovered = eventEntry.daysCovered();
+		if (eventEntry.getStartDate() >= today) {
+			if (daysCovered > 1) {
+				CalendarEntry clone = eventEntry.clone();
+				clone.setEndDate(today + DateUtils.DAY_IN_MILLIS);
+				clone.setSpansMultipleDays(true);
+				eventList.add(clone);
+			} else {
+				eventList.add(eventEntry);
+			}
+		}
+	}
+
+	public void createFollowingEntries(ArrayList<CalendarEntry> eventList, CalendarEntry eventEntry) {
+		int daysCovered = eventEntry.daysCovered();
+		for (int j = 1; j < daysCovered; j++) {
+			long startDate = DateUtil.toMidnight(eventEntry.getStartDate()
+					+ DateUtils.DAY_IN_MILLIS * j);
+			long endDate;
+			if (j == daysCovered - 1) {
+				endDate = eventEntry.getEndDate();
+			} else {
+				endDate = startDate + DateUtils.DAY_IN_MILLIS;
+			}
+			eventList.add(cloneAsSpanningEvent(eventEntry, startDate, endDate));
+		}
+	}
+
+	public CalendarEntry cloneAsSpanningEvent(CalendarEntry eventEntry, long startDate, long endDate) {
+		CalendarEntry spanningEvent = eventEntry.clone();
+		spanningEvent.setStartDate(startDate);
+		spanningEvent.setEndDate(endDate);
+		spanningEvent.setSpansMultipleDays(true);
+		return spanningEvent;
+	}
+
+	private CalendarEntry createCalendarEvent(Cursor calendarCursor) {
+		CalendarEntry eventEntry = new CalendarEntry();
+		eventEntry.setEventId(calendarCursor.getInt(0));
+		eventEntry.setTitle(calendarCursor.getString(1));
+		eventEntry.setStartDate(calendarCursor.getLong(2));
+		eventEntry.setEndDate(calendarCursor.getLong(3));
+		eventEntry.setAllDay(calendarCursor.getInt(4) > 0);
+		eventEntry.setColor(calendarCursor.getInt(5));
+		eventEntry.setAlarmActive(calendarCursor.getInt(6) > 0);
+		eventEntry.setRecurring(calendarCursor.getString(7) != null);
+		return eventEntry;
 	}
 
 	private Cursor createLoadedCursor() {

@@ -43,17 +43,12 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 	public RemoteViews getRemoteView(EventEntry eventEntry) {
 		CalendarEntry event = (CalendarEntry) eventEntry;
 		RemoteViews rv = new RemoteViews(context.getPackageName(), getEventEntryLayout());
-		Intent intent = CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
-				event.getStartDate(), event.getEndDate());
-		rv.setOnClickFillInIntent(R.id.event_entry_text_layout, intent);
-		rv.setOnClickFillInIntent(R.id.event_entry_color, intent);
-		rv.setOnClickFillInIntent(R.id.event_entry_title, intent);
+		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
 		rv.setTextViewText(R.id.event_entry_title, event.getTitle());
 		if (event.isAllDay() || event.spansFullDay()) {
 			rv.setViewVisibility(R.id.event_entry_date, View.GONE);
 		} else {
 			rv.setViewVisibility(R.id.event_entry_date, View.VISIBLE);
-			rv.setOnClickFillInIntent(R.id.event_entry_date, intent);
 			rv.setTextViewText(R.id.event_entry_date, createTimeSpanString(event));
 		}
 		if (event.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true)) {
@@ -68,6 +63,11 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 		}
 		rv.setInt(R.id.event_entry_color, METHOD_SET_BACKGROUND_COLOR, event.getColor());
 		return rv;
+	}
+
+	public Intent createOnItemClickIntent(CalendarEntry event) {
+		return CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
+				event.getStartDate(), event.getEndDate());
 	}
 
 	public String createTimeSpanString(CalendarEntry event) {

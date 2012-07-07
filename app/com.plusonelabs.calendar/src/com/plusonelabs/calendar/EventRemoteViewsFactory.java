@@ -19,6 +19,7 @@ import com.plusonelabs.calendar.model.EventEntry;
 
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
+	private static final String EMPTY_STRING = "";
 	private static final String DAY_STRING_FORMAT = "EEEE, ";
 	private static final String DAY_DATE_FORMAT = "dd. MMMM";
 
@@ -83,7 +84,6 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
 		Intent intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context,
 				dayHeader.getStartDate());
-		rv.setOnClickFillInIntent(R.id.day_header_title, intent);
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
 	}
@@ -100,7 +100,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	public String createDayEntryString(DayHeader dayEntry) {
 		long date = dayEntry.getStartDate();
-		String prefix = "";
+		String prefix = EMPTY_STRING;
 		if (dayEntry.isToday()) {
 			prefix = context.getString(R.string.today) + COMMA_SPACE;
 		} else if (dayEntry.isTomorrow()) {

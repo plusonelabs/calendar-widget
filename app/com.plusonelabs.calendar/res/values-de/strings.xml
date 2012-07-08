@@ -23,6 +23,11 @@
     <string name="appearance_text_size_small">Klein</string>
     <string name="appearance_text_size_medium">Mittel</string>
     <string name="appearance_text_size_large">Groß</string>
+    <string name="appearance_date_format_desc">Anzeige in am/pm oder 24 Stunden Format</string>
+    <string name="appearance_date_format_title">Datumsformat </string>
+    <string name="appearance_date_format_auto">Automatisch</string>
+    <string name="appearance_date_format_24">17:00</string>
+    <string name="appearance_date_format_12">5:00 pm</string>
     <string name="appearance_display_header_desc">Kopfzeile ein- und ausblenden</string>
     <string name="appearance_display_header_title">Kopfzeile anzeigen</string>
     <string name="appearance_display_header_warning">Wenn die Kopfzeile ausgeblendet wird können Sie nicht mehr in die Einstellungen gelangen.</string>

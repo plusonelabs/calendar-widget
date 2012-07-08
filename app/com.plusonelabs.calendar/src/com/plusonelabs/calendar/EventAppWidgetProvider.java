@@ -59,6 +59,16 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 				rv.setViewVisibility(R.id.action_bar, View.GONE);
 			}
 
+			float backgroundTransparency = prefs.getFloat(
+					ICalendarPreferences.PREF_BACKGROUND_TRANSPARENCY, 0.5f);
+			try {
+
+				rv.setInt(R.id.widget_background, "setAlpha", 128);
+			} catch (Throwable e) {
+				System.out.println(e);
+				// TODO: handle exception
+			}
+
 			appWidgetManager.updateAppWidget(widgetId, rv);
 		}
 	}

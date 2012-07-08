@@ -15,6 +15,12 @@
         android:title="@string/appearance_display_header_title" >
     </CheckBoxPreference>
 
+    <Preference
+        android:defaultValue="0.5"
+        android:key="backgroundTransparency"
+        android:summary="@string/appearance_background_transparency_desc"
+        android:title="@string/appearance_background_transparency_title" />
+
     <PreferenceCategory android:title="@string/appearance_indicators" >
         <CheckBoxPreference
             android:defaultValue="true"

@@ -31,6 +31,8 @@
     <string name="appearance_indicate_alert_title">Alerts</string>
     <string name="appearance_indicate_recurring_desc">Show indicator for recurring events</string>
     <string name="appearance_indicate_recurring_title">Recurring events</string>
+    <string name="appearance_background_transparency_title">Background transparency </string>
+    <string name="appearance_background_transparency_desc">Adjust the transparency of the background</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>

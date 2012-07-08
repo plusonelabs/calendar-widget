@@ -1,18 +1,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceScreen
+    <Preference
         android:summary="@string/feedback_github_desc"
         android:title="@string/feedback_github_title" >
         <intent
             android:action="android.intent.action.VIEW"
             android:data="https://github.com/plusonelabs/calendar-widget" />
-    </PreferenceScreen>
-    <PreferenceScreen
+    </Preference>
+    <Preference
         android:summary="@string/feedback_play_store_desc"
         android:title="@string/feedback_play_store_title" >
         <intent
             android:action="android.intent.action.VIEW"
             android:data="https://play.google.com/store/apps/details?id=com.plusonelabs.calendar" />
-    </PreferenceScreen>
+    </Preference>
 
 </PreferenceScreen>

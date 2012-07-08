@@ -12,6 +12,8 @@ import com.plusonelabs.calendar.R;
 
 public class AppearancePreferencesFragment extends PreferenceFragment {
 
+	private static final String BACKGROUND_TRANSPARENCY_DIALOG = "backgroundTransparencyDialog";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,6 +30,10 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 							Toast.LENGTH_LONG).show();
 				}
 			}
+		}
+		if (preference.getKey().equals(ICalendarPreferences.PREF_BACKGROUND_TRANSPARENCY)) {
+			new BackgroundTransparencyDialog().show(getFragmentManager(),
+					BACKGROUND_TRANSPARENCY_DIALOG);
 		}
 		return super.onPreferenceTreeClick(preferenceScreen, preference);
 	}

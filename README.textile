@@ -19,6 +19,14 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.3.1
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=5&state=closed
+
+* Fixed problem where noon was display as 0:00 pm instead of 12:00 pm
+* Fixed issue when no calendar is present on the device
+
+
 h3. v1.3
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=4&state=closed

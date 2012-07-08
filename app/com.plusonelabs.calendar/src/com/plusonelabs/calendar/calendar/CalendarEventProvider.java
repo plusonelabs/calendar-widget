@@ -22,13 +22,15 @@ import com.plusonelabs.calendar.model.EventEntry;
 
 public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 
+	private static final String TWELVE_PM = "12:00 pm";
+	private static final String ZERO_PM = "0:00 pm";
 	private static final String TWELVE = "12";
 	private static final String AUTO = "auto";
 	private static final String SPACE_ARROW = " →";
 	private static final String ARROW_SPACE = "→ ";
 	private static final String EMPTY_STRING = "";
 	private static final String TIME_FORMAT_24 = "HH:mm";
-	private static final String TIME_FORMAT_12 = "K:mm aa";
+	private static final String TIME_FORMAT_12 = "h:mm aa";
 	private static final String SPACED_DASH = " - ";
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
 

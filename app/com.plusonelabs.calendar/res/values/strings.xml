@@ -25,7 +25,7 @@
     <string name="appearance_text_size_medium">Medium</string>
     <string name="appearance_text_size_large">Large</string>
     <string name="appearance_date_format_desc">Show dates in am/pm or 24 hours format</string>
-    <string name="appearance_date_format_title">Date Format</string>
+    <string name="appearance_date_format_title">Date format</string>
     <string name="appearance_date_format_auto">Automatic</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>

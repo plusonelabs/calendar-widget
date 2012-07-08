@@ -16,7 +16,7 @@
         android:title="@string/appearance_date_format_title" />
 
     <CheckBoxPreference
-        android:defaultValue="ue"
+        android:defaultValue="true"
         android:key="showHeader"
         android:summary="@string/appearance_display_header_desc"
         android:title="@string/appearance_display_header_title" >

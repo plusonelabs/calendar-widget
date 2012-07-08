@@ -7,14 +7,6 @@
         android:key="textSize"
         android:summary="@string/appearance_text_size_desc"
         android:title="@string/appearance_text_size_title" />
-
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="showHeader"
-        android:summary="@string/appearance_display_header_desc"
-        android:title="@string/appearance_display_header_title" >
-    </CheckBoxPreference>
-
     <ListPreference
         android:defaultValue="auto"
         android:entries="@array/pref_date_format_entries"
@@ -22,6 +14,13 @@
         android:key="dateFormat"
         android:summary="@string/appearance_date_format_desc"
         android:title="@string/appearance_date_format_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="ue"
+        android:key="showHeader"
+        android:summary="@string/appearance_display_header_desc"
+        android:title="@string/appearance_display_header_title" >
+    </CheckBoxPreference>
 
     <PreferenceCategory android:title="@string/appearance_indicators" >
         <CheckBoxPreference

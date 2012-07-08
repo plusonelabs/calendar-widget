@@ -49,7 +49,11 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 		CalendarEntry event = (CalendarEntry) eventEntry;
 		RemoteViews rv = new RemoteViews(context.getPackageName(), getEventEntryLayout());
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
-		rv.setTextViewText(R.id.event_entry_title, event.getTitle());
+		String title = event.getTitle();
+		if (title.equals(EMPTY_STRING)) {
+			title = context.getResources().getString(R.string.no_title);
+		}
+		rv.setTextViewText(R.id.event_entry_title, title);
 		if (event.isAllDay() || event.spansFullDay()) {
 			rv.setViewVisibility(R.id.event_entry_date, View.GONE);
 		} else {

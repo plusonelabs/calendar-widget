@@ -10,6 +10,7 @@
     <string name="prefs_add_widget">Widget hinzufügen</string>
     <string name="indicator_alarm">Hinweis ob an dem Ereignis ein Erinnerungen gesetzt wurde</string>
     <string name="indicator_recurring">Hinweis ob das Ereignis wiederkehrend ist</string>
+    <string name="no_title">(Kein Titel)</string>
 
     <!-- Preference calendars -->
     <string name="calendars_prefs">Kalender</string>

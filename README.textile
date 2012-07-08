@@ -19,6 +19,16 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.3
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=4&state=closed
+
+* Added support for the am/pm date format
+* Events that span multiple days now create multiple entries in the widget
+* Touching a calendar entry now provides visual touch feedback
+* Events without title now indicate that there is no title
+
+
 h3. v1.2.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=3&state=closed

@@ -82,13 +82,15 @@ public class CalendarContentProvider {
 		for (int j = 1; j < daysCovered; j++) {
 			long startDate = DateUtil.toMidnight(eventEntry.getStartDate()
 					+ DateUtils.DAY_IN_MILLIS * j);
-			long endDate;
-			if (j == daysCovered - 1) {
-				endDate = eventEntry.getEndDate();
-			} else {
-				endDate = startDate + DateUtils.DAY_IN_MILLIS;
+			if (startDate >= DateUtil.toMidnight(System.currentTimeMillis())) {
+				long endDate;
+				if (j == daysCovered - 1) {
+					endDate = eventEntry.getEndDate();
+				} else {
+					endDate = startDate + DateUtils.DAY_IN_MILLIS;
+				}
+				eventList.add(cloneAsSpanningEvent(eventEntry, startDate, endDate));
 			}
-			eventList.add(cloneAsSpanningEvent(eventEntry, startDate, endDate));
 		}
 	}
 

@@ -46,6 +46,9 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 
 	public void populatePreferenceScreen(Set<String> activeCalendars) {
 		Cursor cursor = createLoadedCursor();
+		if (cursor == null) {
+			return;
+		}
 		for (int i = 0; i < cursor.getCount(); i++) {
 			cursor.moveToPosition(i);
 			CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());

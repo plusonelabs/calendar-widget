@@ -1,5 +1,7 @@
 package com.plusonelabs.calendar.calendar;
 
+import static android.graphics.Color.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -110,10 +112,16 @@ public class CalendarContentProvider {
 		eventEntry.setStartDate(calendarCursor.getLong(2));
 		eventEntry.setEndDate(calendarCursor.getLong(3));
 		eventEntry.setAllDay(calendarCursor.getInt(4) > 0);
-		eventEntry.setColor(calendarCursor.getInt(5));
+		eventEntry.setColor(getAsOpaque(calendarCursor.getInt(5)));
 		eventEntry.setAlarmActive(calendarCursor.getInt(6) > 0);
 		eventEntry.setRecurring(calendarCursor.getString(7) != null);
+
+		System.out.println(eventEntry.getColor());
 		return eventEntry;
+	}
+
+	private int getAsOpaque(int color) {
+		return argb(255, red(color), green(color), blue(color));
 	}
 
 	private Cursor createLoadedCursor() {

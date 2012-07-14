@@ -29,7 +29,7 @@ public class CalendarContentProvider {
 			+ Attendees.ATTENDEE_STATUS_DECLINED;
 	private static final String[] PROJECTION = new String[] { Instances.EVENT_ID, Instances.TITLE,
 			Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.CALENDAR_COLOR,
-			Instances.HAS_ALARM, Instances.RRULE };
+			Instances.EVENT_COLOR, Instances.HAS_ALARM, Instances.RRULE };
 	private static final String CLOSING_BRACKET = " )";
 	private static final String OR = " OR ";
 	private static final String EQUALS = " = ";
@@ -112,12 +112,18 @@ public class CalendarContentProvider {
 		eventEntry.setStartDate(calendarCursor.getLong(2));
 		eventEntry.setEndDate(calendarCursor.getLong(3));
 		eventEntry.setAllDay(calendarCursor.getInt(4) > 0);
-		eventEntry.setColor(getAsOpaque(calendarCursor.getInt(5)));
-		eventEntry.setAlarmActive(calendarCursor.getInt(6) > 0);
-		eventEntry.setRecurring(calendarCursor.getString(7) != null);
-
-		System.out.println(eventEntry.getColor());
+		eventEntry.setColor(getAsOpaque(getEntryColor(calendarCursor)));
+		eventEntry.setAlarmActive(calendarCursor.getInt(7) > 0);
+		eventEntry.setRecurring(calendarCursor.getString(8) != null);
 		return eventEntry;
+	}
+
+	public int getEntryColor(Cursor calendarCursor) {
+		int eventColor = calendarCursor.getInt(6);
+		if (eventColor > 0) {
+			return eventColor;
+		}
+		return calendarCursor.getInt(5);
 	}
 
 	private int getAsOpaque(int color) {

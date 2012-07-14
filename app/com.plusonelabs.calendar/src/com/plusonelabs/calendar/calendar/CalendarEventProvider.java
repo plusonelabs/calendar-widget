@@ -22,8 +22,6 @@ import com.plusonelabs.calendar.model.EventEntry;
 
 public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 
-	private static final String TWELVE_PM = "12:00 pm";
-	private static final String ZERO_PM = "0:00 pm";
 	private static final String TWELVE = "12";
 	private static final String AUTO = "auto";
 	private static final String SPACE_ARROW = " →";

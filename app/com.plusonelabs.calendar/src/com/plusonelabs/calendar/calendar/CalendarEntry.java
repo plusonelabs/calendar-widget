@@ -3,6 +3,7 @@ package com.plusonelabs.calendar.calendar;
 import android.text.format.DateUtils;
 import android.util.FloatMath;
 
+import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.model.EventEntry;
 
 public class CalendarEntry extends EventEntry {
@@ -81,8 +82,14 @@ public class CalendarEntry extends EventEntry {
 		this.spansMultipleDays = spansMultipleDays;
 	}
 
-	public int daysCovered() {
-		return (int) FloatMath.ceil((endDate - getStartDate()) / (1000f * 60f * 60f * 24f));
+	public int daysSpanned() {
+		long timeSpanned = endDate - getStartDate();
+		int result = (int) FloatMath.ceil(timeSpanned / DateUtils.DAY_IN_MILLIS);
+		if (timeSpanned % DateUtils.DAY_IN_MILLIS == 0 && !DateUtil.isMidnight(getStartDate())
+				&& !allDay) {
+			result++;
+		}
+		return result;
 	}
 
 	public boolean spansFullDay() {

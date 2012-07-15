@@ -19,6 +19,16 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.3.2
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=6&state=closed
+
+* Added support for custom event colors
+* Calendar colors are now correctly shown on Jelly Bean
+* Fixed issue when opening the calendar selection preference activity
+* Fixed problem with events that span multiple days
+
+
 h3. v1.3.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=5&state=closed

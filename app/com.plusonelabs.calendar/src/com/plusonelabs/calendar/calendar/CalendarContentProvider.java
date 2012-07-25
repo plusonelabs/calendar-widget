@@ -1,5 +1,7 @@
 package com.plusonelabs.calendar.calendar;
 
+import static android.graphics.Color.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -27,7 +29,7 @@ public class CalendarContentProvider {
 			+ Attendees.ATTENDEE_STATUS_DECLINED;
 	private static final String[] PROJECTION = new String[] { Instances.EVENT_ID, Instances.TITLE,
 			Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.CALENDAR_COLOR,
-			Instances.HAS_ALARM, Instances.RRULE };
+			Instances.EVENT_COLOR, Instances.HAS_ALARM, Instances.RRULE };
 	private static final String CLOSING_BRACKET = " )";
 	private static final String OR = " OR ";
 	private static final String EQUALS = " = ";
@@ -63,11 +65,12 @@ public class CalendarContentProvider {
 
 	public void setupDayOneEntry(ArrayList<CalendarEntry> eventList, CalendarEntry eventEntry) {
 		long today = DateUtil.toMidnight(System.currentTimeMillis());
-		int daysCovered = eventEntry.daysCovered();
+		int daysSpanned = eventEntry.daysSpanned();
 		if (eventEntry.getStartDate() >= today) {
-			if (daysCovered > 1) {
+			if (daysSpanned > 1) {
 				CalendarEntry clone = eventEntry.clone();
-				clone.setEndDate(today + DateUtils.DAY_IN_MILLIS);
+				clone.setEndDate(DateUtil.toMidnight(eventEntry.getStartDate())
+						+ DateUtils.DAY_IN_MILLIS);
 				clone.setSpansMultipleDays(true);
 				clone.setOriginalEvent(eventEntry);
 				eventList.add(clone);
@@ -78,17 +81,19 @@ public class CalendarContentProvider {
 	}
 
 	public void createFollowingEntries(ArrayList<CalendarEntry> eventList, CalendarEntry eventEntry) {
-		int daysCovered = eventEntry.daysCovered();
+		int daysCovered = eventEntry.daysSpanned();
 		for (int j = 1; j < daysCovered; j++) {
 			long startDate = DateUtil.toMidnight(eventEntry.getStartDate()
 					+ DateUtils.DAY_IN_MILLIS * j);
-			long endDate;
-			if (j == daysCovered - 1) {
-				endDate = eventEntry.getEndDate();
-			} else {
-				endDate = startDate + DateUtils.DAY_IN_MILLIS;
+			if (startDate >= DateUtil.toMidnight(System.currentTimeMillis())) {
+				long endDate;
+				if (j == daysCovered - 1) {
+					endDate = eventEntry.getEndDate();
+				} else {
+					endDate = startDate + DateUtils.DAY_IN_MILLIS;
+				}
+				eventList.add(cloneAsSpanningEvent(eventEntry, startDate, endDate));
 			}
-			eventList.add(cloneAsSpanningEvent(eventEntry, startDate, endDate));
 		}
 	}
 
@@ -108,10 +113,22 @@ public class CalendarContentProvider {
 		eventEntry.setStartDate(calendarCursor.getLong(2));
 		eventEntry.setEndDate(calendarCursor.getLong(3));
 		eventEntry.setAllDay(calendarCursor.getInt(4) > 0);
-		eventEntry.setColor(calendarCursor.getInt(5));
-		eventEntry.setAlarmActive(calendarCursor.getInt(6) > 0);
-		eventEntry.setRecurring(calendarCursor.getString(7) != null);
+		eventEntry.setColor(getAsOpaque(getEntryColor(calendarCursor)));
+		eventEntry.setAlarmActive(calendarCursor.getInt(7) > 0);
+		eventEntry.setRecurring(calendarCursor.getString(8) != null);
 		return eventEntry;
+	}
+
+	public int getEntryColor(Cursor calendarCursor) {
+		int eventColor = calendarCursor.getInt(6);
+		if (eventColor > 0) {
+			return eventColor;
+		}
+		return calendarCursor.getInt(5);
+	}
+
+	private int getAsOpaque(int color) {
+		return argb(255, red(color), green(color), blue(color));
 	}
 
 	private Cursor createLoadedCursor() {

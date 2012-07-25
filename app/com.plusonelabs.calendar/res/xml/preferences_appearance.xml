@@ -7,6 +7,13 @@
         android:key="textSize"
         android:summary="@string/appearance_text_size_desc"
         android:title="@string/appearance_text_size_title" />
+    <ListPreference
+        android:defaultValue="auto"
+        android:entries="@array/pref_date_format_entries"
+        android:entryValues="@array/pref_date_format_values"
+        android:key="dateFormat"
+        android:summary="@string/appearance_date_format_desc"
+        android:title="@string/appearance_date_format_title" />
 
     <CheckBoxPreference
         android:defaultValue="true"

@@ -5,6 +5,7 @@ import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,14 +22,18 @@ import com.plusonelabs.calendar.model.EventEntry;
 
 public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 
+	private static final String TWELVE = "12";
+	private static final String AUTO = "auto";
 	private static final String SPACE_ARROW = " →";
 	private static final String ARROW_SPACE = "→ ";
 	private static final String EMPTY_STRING = "";
-	private static final String TIME_FORMAT = "HH:mm";
-	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
+	private static final String TIME_FORMAT_24 = "HH:mm";
+	private static final String TIME_FORMAT_12 = "h:mm aa";
 	private static final String SPACED_DASH = " - ";
+	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
 
-	private SimpleDateFormat timeFormatter = new SimpleDateFormat(TIME_FORMAT);
+	private SimpleDateFormat timeFormatter12 = new SimpleDateFormat(TIME_FORMAT_12);
+	private SimpleDateFormat timeFormatter24 = new SimpleDateFormat(TIME_FORMAT_24);
 
 	private final Context context;
 	private CalendarContentProvider calendarContentProvider;
@@ -44,7 +49,11 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 		CalendarEntry event = (CalendarEntry) eventEntry;
 		RemoteViews rv = new RemoteViews(context.getPackageName(), getEventEntryLayout());
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
-		rv.setTextViewText(R.id.event_entry_title, event.getTitle());
+		String title = event.getTitle();
+		if (title.equals(EMPTY_STRING)) {
+			title = context.getResources().getString(R.string.no_title);
+		}
+		rv.setTextViewText(R.id.event_entry_title, title);
 		if (event.isAllDay() || event.spansFullDay()) {
 			rv.setViewVisibility(R.id.event_entry_date, View.GONE);
 		} else {
@@ -94,7 +103,13 @@ public class CalendarEventProvider implements IEventProvider<CalendarEntry> {
 	}
 
 	public String createTimeString(long time) {
-		return timeFormatter.format(new Date(time));
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		String dateFormat = prefs.getString(PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
+		if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
+				|| dateFormat.equals(TWELVE)) {
+			return timeFormatter12.format(new Date(time)).toLowerCase();
+		}
+		return timeFormatter24.format(new Date(time));
 	}
 
 	private int getEventEntryLayout() {

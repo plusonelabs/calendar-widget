@@ -33,11 +33,6 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences_calendars);
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
 		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
 		initialActiveCalendars = prefs.getStringSet(ICalendarPreferences.PREF_ACTIVE_CALENDARS,
 				null);
@@ -46,6 +41,9 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 
 	public void populatePreferenceScreen(Set<String> activeCalendars) {
 		Cursor cursor = createLoadedCursor();
+		if (cursor == null) {
+			return;
+		}
 		for (int i = 0; i < cursor.getCount(); i++) {
 			cursor.moveToPosition(i);
 			CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());

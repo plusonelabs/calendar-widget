@@ -30,23 +30,19 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/widget_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/widget_background_50"
         android:padding="@dimen/calender_padding" >
-
-        <ImageView
-            android:id="@+id/widget_background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/widget_background"
-            tools:ignore="ContentDescription" />
 
         <ListView
             android:id="@+id/event_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@android:color/transparent"
-            android:dividerHeight="2dp" />
+            android:dividerHeight="2dp" >
+        </ListView>
 
         <TextView
             android:id="@+id/empty_event_list"

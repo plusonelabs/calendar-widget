@@ -23,7 +23,7 @@
     </CheckBoxPreference>
 
     <Preference
-        android:defaultValue="0.5"
+        android:defaultValue="50"
         android:key="backgroundTransparency"
         android:summary="@string/appearance_background_transparency_desc"
         android:title="@string/appearance_background_transparency_title" />

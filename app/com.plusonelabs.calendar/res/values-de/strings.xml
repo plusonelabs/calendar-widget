@@ -37,6 +37,8 @@
     <string name="appearance_indicate_alert_title">Erinnerungen</string>
     <string name="appearance_indicate_recurring_desc">Zeige Hinweise für wiederkehrende Ereignisse</string>
     <string name="appearance_indicate_recurring_title">Wiederkehrende Ereignisse</string>
+    <string name="appearance_background_transparency_title">Hintergrund Transparenz</string>
+    <string name="appearance_background_transparency_desc">Passe die Transparenz des Hintergrundes an</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>

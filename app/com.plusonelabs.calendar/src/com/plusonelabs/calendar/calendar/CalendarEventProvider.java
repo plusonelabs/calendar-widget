@@ -57,8 +57,6 @@ public class CalendarEventProvider {
 		for (int i = 0; i < calendarCursor.getCount(); i++) {
 			calendarCursor.moveToPosition(i);
 			CalendarEntry eventEntry = createCalendarEvent(calendarCursor);
-			System.out.println(eventEntry);
-
 			setupDayOneEntry(eventList, eventEntry);
 			createFollowingEntries(eventList, eventEntry);
 		}

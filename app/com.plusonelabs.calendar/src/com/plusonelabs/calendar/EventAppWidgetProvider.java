@@ -73,7 +73,8 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 	}
 
 	private int transparencyToDrawableRes(int bgTrans) {
-		switch (bgTrans) {
+		int opacity = (bgTrans - 100) * -1;
+		switch (opacity) {
 			case 0:
 				return R.drawable.widget_background_0;
 			case 10:

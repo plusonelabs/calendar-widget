@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import android.text.format.Time;
+
 import com.plusonelabs.calendar.model.EventEntry;
 
 public class DateUtil {
@@ -16,6 +18,16 @@ public class DateUtil {
 
 	public static long toMidnight(long date) {
 		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTimeInMillis();
+	}
+
+	public static long toUtcMidnight(long date) {
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(Time.TIMEZONE_UTC));
 		calendar.setTimeInMillis(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);

@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.format.Time;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -119,16 +118,6 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 			events.addAll(eventProviders.get(i).getEventEntries());
 		}
 		updateEntryList(events);
-	}
-
-	public static long convertAlldayLocalToUTC(Time recycle, long localTime, String tz) {
-		if (recycle == null) {
-			recycle = new Time();
-		}
-		recycle.timezone = tz;
-		recycle.set(localTime);
-		recycle.timezone = Time.TIMEZONE_UTC;
-		return recycle.normalize(true);
 	}
 
 	public void updateEntryList(ArrayList<EventEntry> eventList) {

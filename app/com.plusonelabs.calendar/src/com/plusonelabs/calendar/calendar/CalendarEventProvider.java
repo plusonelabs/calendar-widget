@@ -66,8 +66,7 @@ public class CalendarEventProvider {
 	public void setupDayOneEntry(ArrayList<CalendarEntry> eventList, CalendarEntry eventEntry) {
 		long today = DateUtil.toMidnight(System.currentTimeMillis());
 		int daysSpanned = eventEntry.daysSpanned();
-		long startInUTC = DateUtil.getStartDateInUTC(eventEntry);
-		if (startInUTC >= today) {
+		if (DateUtil.getStartDateInUTC(eventEntry) >= today) {
 			if (daysSpanned > 1) {
 				CalendarEntry clone = eventEntry.clone();
 				clone.setEndDate(DateUtil.toMidnight(eventEntry.getStartDate())
@@ -84,9 +83,9 @@ public class CalendarEventProvider {
 	public void createFollowingEntries(ArrayList<CalendarEntry> eventList, CalendarEntry eventEntry) {
 		int daysCovered = eventEntry.daysSpanned();
 		for (int j = 1; j < daysCovered; j++) {
-			long startDate = DateUtil.toMidnight(eventEntry.getStartDate()
-					+ DateUtils.DAY_IN_MILLIS * j);
-			if (startDate >= DateUtil.toMidnight(System.currentTimeMillis())) {
+			long startDate = DateUtil.toUtcMidnight(eventEntry.getStartDate())
+					+ DateUtils.DAY_IN_MILLIS * j;
+			if (startDate >= DateUtil.toUtcMidnight(System.currentTimeMillis())) {
 				long endDate;
 				if (j == daysCovered - 1) {
 					endDate = eventEntry.getEndDate();

@@ -6,7 +6,7 @@ import android.widget.RemoteViews;
 
 import com.plusonelabs.calendar.model.EventEntry;
 
-public interface IEventProvider<T extends EventEntry> {
+public interface IEventVisualizer<T extends EventEntry> {
 
 	RemoteViews getRemoteView(EventEntry eventEntry);
 

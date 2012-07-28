@@ -10,10 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.format.Time;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
-import com.plusonelabs.calendar.calendar.CalendarEventProvider;
+import com.plusonelabs.calendar.calendar.CalendarEventVisualizer;
 import com.plusonelabs.calendar.model.DayHeader;
 import com.plusonelabs.calendar.model.EventEntry;
 
@@ -32,7 +33,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	private SharedPreferences prefs;
 	private ArrayList<EventEntry> eventEntries;
 
-	private ArrayList<IEventProvider<?>> eventProviders;
+	private ArrayList<IEventVisualizer<?>> eventProviders;
 
 	static {
 		initiDateFormatter();
@@ -40,8 +41,8 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
-		eventProviders = new ArrayList<IEventProvider<?>>();
-		eventProviders.add(new CalendarEventProvider(context));
+		eventProviders = new ArrayList<IEventVisualizer<?>>();
+		eventProviders.add(new CalendarEventVisualizer(context));
 		eventEntries = new ArrayList<EventEntry>();
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
@@ -66,7 +67,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 			return updateDayHeader((DayHeader) entry);
 		}
 		for (int i = 0; i < eventProviders.size(); i++) {
-			IEventProvider<?> eventProvider = eventProviders.get(i);
+			IEventVisualizer<?> eventProvider = eventProviders.get(i);
 			if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryType())) {
 				return eventProvider.getRemoteView(entry);
 			}
@@ -113,20 +114,32 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	public void onDataSetChanged() {
 		eventEntries.clear();
-		ArrayList<EventEntry> eventEntries = new ArrayList<EventEntry>();
+		ArrayList<EventEntry> events = new ArrayList<EventEntry>();
 		for (int i = 0; i < eventProviders.size(); i++) {
-			eventEntries.addAll(eventProviders.get(i).getEventEntries());
+			events.addAll(eventProviders.get(i).getEventEntries());
 		}
-		updateEntryList(eventEntries);
+		updateEntryList(events);
+	}
+
+	public static long convertAlldayLocalToUTC(Time recycle, long localTime, String tz) {
+		if (recycle == null) {
+			recycle = new Time();
+		}
+		recycle.timezone = tz;
+		recycle.set(localTime);
+		recycle.timezone = Time.TIMEZONE_UTC;
+		return recycle.normalize(true);
 	}
 
 	public void updateEntryList(ArrayList<EventEntry> eventList) {
 		if (!eventList.isEmpty()) {
-			DayHeader curDayBucket = new DayHeader(eventList.get(0).getStartDate());
+			EventEntry entry = eventList.get(0);
+			DayHeader curDayBucket = new DayHeader(DateUtil.getStartDateInUTC(entry));
 			eventEntries.add(curDayBucket);
 			for (EventEntry event : eventList) {
-				if (!event.isSameDay(curDayBucket.getStartDate())) {
-					curDayBucket = new DayHeader(event.getStartDate());
+				long startDateInUTC = DateUtil.getStartDateInUTC(event);
+				if (!DateUtil.isSameDay(startDateInUTC, curDayBucket.getStartDate())) {
+					curDayBucket = new DayHeader(startDateInUTC);
 					eventEntries.add(curDayBucket);
 				}
 				eventEntries.add(event);
@@ -141,7 +154,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	public int getViewTypeCount() {
 		int result = 0;
 		for (int i = 0; i < eventProviders.size(); i++) {
-			IEventProvider<?> eventProvider = eventProviders.get(i);
+			IEventVisualizer<?> eventProvider = eventProviders.get(i);
 			result += eventProvider.getViewTypeCount();
 		}
 		return result;

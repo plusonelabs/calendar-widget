@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -19,7 +22,6 @@ import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.text.format.DateUtils;
 
-import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.prefs.ICalendarPreferences;
 
 public class CalendarEventProvider {
@@ -41,64 +43,66 @@ public class CalendarEventProvider {
 		this.context = context;
 	}
 
-	public ArrayList<CalendarEntry> getEvents() {
+	public ArrayList<CalendarEvent> getEvents() {
 		Cursor cursor = createLoadedCursor();
 		if (cursor != null) {
-			ArrayList<CalendarEntry> eventList = createEventList(cursor);
+			ArrayList<CalendarEvent> eventList = createEventList(cursor);
 			cursor.close();
 			Collections.sort(eventList);
 			return eventList;
 		}
-		return new ArrayList<CalendarEntry>();
+		return new ArrayList<CalendarEvent>();
 	}
 
-	private ArrayList<CalendarEntry> createEventList(Cursor calendarCursor) {
-		ArrayList<CalendarEntry> eventList = new ArrayList<CalendarEntry>();
+	private ArrayList<CalendarEvent> createEventList(Cursor calendarCursor) {
+		ArrayList<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
 		for (int i = 0; i < calendarCursor.getCount(); i++) {
 			calendarCursor.moveToPosition(i);
-			CalendarEntry eventEntry = createCalendarEvent(calendarCursor);
-			setupDayOneEntry(eventList, eventEntry);
-			createFollowingEntries(eventList, eventEntry);
+			CalendarEvent event = createCalendarEvent(calendarCursor);
+			setupDayOneEntry(eventList, event);
+			createFollowingEntries(eventList, event);
 		}
 		return eventList;
 	}
 
-	public void setupDayOneEntry(ArrayList<CalendarEntry> eventList, CalendarEntry eventEntry) {
-		long today = DateUtil.toMidnight(System.currentTimeMillis());
-		int daysSpanned = eventEntry.daysSpanned();
-		if (DateUtil.getStartDateInUTC(eventEntry) >= today) {
-			if (daysSpanned > 1) {
-				CalendarEntry clone = eventEntry.clone();
-				clone.setEndDate(DateUtil.toMidnight(eventEntry.getStartDate())
-						+ DateUtils.DAY_IN_MILLIS);
+	public void setupDayOneEntry(ArrayList<CalendarEvent> eventList, CalendarEvent event) {
+		if (isEqualOrAfterTodayAtMidnight(event.getStartDate())) {
+			if (event.daysSpanned() > 1) {
+				CalendarEvent clone = event.clone();
+				clone.setEndDate(event.getStartDate().plusDays(1).toDateMidnight().toDateTime());
 				clone.setSpansMultipleDays(true);
-				clone.setOriginalEvent(eventEntry);
+				clone.setOriginalEvent(event);
 				eventList.add(clone);
 			} else {
-				eventList.add(eventEntry);
+				eventList.add(event);
 			}
 		}
 	}
 
-	public void createFollowingEntries(ArrayList<CalendarEntry> eventList, CalendarEntry eventEntry) {
-		int daysCovered = eventEntry.daysSpanned();
+	public void createFollowingEntries(ArrayList<CalendarEvent> eventList, CalendarEvent event) {
+		int daysCovered = event.daysSpanned();
 		for (int j = 1; j < daysCovered; j++) {
-			long startDate = DateUtil.toUtcMidnight(eventEntry.getStartDate())
-					+ DateUtils.DAY_IN_MILLIS * j;
-			if (startDate >= DateUtil.toUtcMidnight(System.currentTimeMillis())) {
-				long endDate;
-				if (j == daysCovered - 1) {
-					endDate = eventEntry.getEndDate();
+			DateTime startDate = event.getStartDate().toDateMidnight().plusDays(j).toDateTime();
+			if (isEqualOrAfterTodayAtMidnight(startDate)) {
+				DateTime endDate;
+				if (j < daysCovered - 1) {
+					endDate = startDate.plusDays(1);
 				} else {
-					endDate = startDate + DateUtils.DAY_IN_MILLIS;
+					endDate = event.getEndDate();
 				}
-				eventList.add(cloneAsSpanningEvent(eventEntry, startDate, endDate));
+				eventList.add(cloneAsSpanningEvent(event, startDate, endDate));
 			}
 		}
 	}
 
-	public CalendarEntry cloneAsSpanningEvent(CalendarEntry eventEntry, long startDate, long endDate) {
-		CalendarEntry clone = eventEntry.clone();
+	public boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
+		DateMidnight midnight = new DateMidnight();
+		return startDate.isEqual(midnight) || startDate.isAfter(midnight);
+	}
+
+	public CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,
+			DateTime endDate) {
+		CalendarEvent clone = eventEntry.clone();
 		clone.setStartDate(startDate);
 		clone.setEndDate(endDate);
 		clone.setSpansMultipleDays(true);
@@ -106,17 +110,25 @@ public class CalendarEventProvider {
 		return clone;
 	}
 
-	private CalendarEntry createCalendarEvent(Cursor calendarCursor) {
-		CalendarEntry eventEntry = new CalendarEntry();
-		eventEntry.setEventId(calendarCursor.getInt(0));
-		eventEntry.setTitle(calendarCursor.getString(1));
-		eventEntry.setStartDate(calendarCursor.getLong(2));
-		eventEntry.setEndDate(calendarCursor.getLong(3));
-		eventEntry.setAllDay(calendarCursor.getInt(4) > 0);
-		eventEntry.setColor(getAsOpaque(getEntryColor(calendarCursor)));
-		eventEntry.setAlarmActive(calendarCursor.getInt(7) > 0);
-		eventEntry.setRecurring(calendarCursor.getString(8) != null);
-		return eventEntry;
+	private CalendarEvent createCalendarEvent(Cursor calendarCursor) {
+		CalendarEvent event = new CalendarEvent();
+		event.setEventId(calendarCursor.getInt(0));
+		event.setTitle(calendarCursor.getString(1));
+		event.setStartDate(new DateTime(calendarCursor.getLong(2)));
+		event.setEndDate(new DateTime(calendarCursor.getLong(3)));
+		event.setAllDay(calendarCursor.getInt(4) > 0);
+		event.setColor(getAsOpaque(getEntryColor(calendarCursor)));
+		event.setAlarmActive(calendarCursor.getInt(7) > 0);
+		event.setRecurring(calendarCursor.getString(8) != null);
+		if (event.isAllDay()) {
+			DateTime startDate = event.getStartDate();
+			long converted = startDate.getZone().convertLocalToUTC(startDate.getMillis(), true);
+			event.setStartDate(new DateTime(converted));
+			DateTime endDate = event.getEndDate();
+			converted = endDate.getZone().convertLocalToUTC(endDate.getMillis(), true);
+			event.setEndDate(new DateTime(converted));
+		}
+		return event;
 	}
 
 	public int getEntryColor(Cursor calendarCursor) {

@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +17,7 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import com.plusonelabs.calendar.calendar.CalendarEventVisualizer;
 import com.plusonelabs.calendar.model.DayHeader;
-import com.plusonelabs.calendar.model.EventEntry;
+import com.plusonelabs.calendar.model.Event;
 
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
@@ -30,7 +32,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	private final Context context;
 	private SharedPreferences prefs;
-	private ArrayList<EventEntry> eventEntries;
+	private ArrayList<Event> eventEntries;
 
 	private ArrayList<IEventVisualizer<?>> eventProviders;
 
@@ -42,7 +44,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		this.context = context;
 		eventProviders = new ArrayList<IEventVisualizer<?>>();
 		eventProviders.add(new CalendarEventVisualizer(context));
-		eventEntries = new ArrayList<EventEntry>();
+		eventEntries = new ArrayList<Event>();
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
@@ -64,7 +66,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		if (position >= eventEntries.size()) {
 			return null;
 		}
-		EventEntry entry = eventEntries.get(position);
+		Event entry = eventEntries.get(position);
 		if (entry instanceof DayHeader) {
 			return updateDayHeader((DayHeader) entry);
 		}
@@ -102,36 +104,37 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public String createDayEntryString(DayHeader dayEntry) {
-		long date = dayEntry.getStartDate();
+		Date date = dayEntry.getStartDate().toDate();
 		String prefix = EMPTY_STRING;
 		if (dayEntry.isToday()) {
 			prefix = context.getString(R.string.today) + COMMA_SPACE;
 		} else if (dayEntry.isTomorrow()) {
 			prefix = context.getString(R.string.tomorrow) + COMMA_SPACE;
 		} else {
-			prefix = dayStringFormatter.format(new Date(date)).toUpperCase();
+			prefix = dayStringFormatter.format(date).toUpperCase();
 		}
-		return prefix + dayDateFormatter.format(new Date(date)).toUpperCase();
+		return prefix + dayDateFormatter.format(date).toUpperCase();
 	}
 
 	public void onDataSetChanged() {
 		eventEntries.clear();
-		ArrayList<EventEntry> events = new ArrayList<EventEntry>();
+		ArrayList<Event> events = new ArrayList<Event>();
 		for (int i = 0; i < eventProviders.size(); i++) {
 			events.addAll(eventProviders.get(i).getEventEntries());
 		}
 		updateEntryList(events);
 	}
 
-	public void updateEntryList(ArrayList<EventEntry> eventList) {
+	public void updateEntryList(ArrayList<Event> eventList) {
 		if (!eventList.isEmpty()) {
-			EventEntry entry = eventList.get(0);
-			DayHeader curDayBucket = new DayHeader(DateUtil.getStartDateInUTC(entry));
+			Event firstEvent = eventList.get(0);
+			DayHeader curDayBucket = new DayHeader(firstEvent.getStartDate());
 			eventEntries.add(curDayBucket);
-			for (EventEntry event : eventList) {
-				long startDateInUTC = DateUtil.getStartDateInUTC(event);
-				if (!DateUtil.isSameDay(startDateInUTC, curDayBucket.getStartDate())) {
-					curDayBucket = new DayHeader(startDateInUTC);
+			for (Event event : eventList) {
+				DateTime startDate = event.getStartDate();
+				if (!startDate.toDateMidnight().isEqual(
+						curDayBucket.getStartDate().toDateMidnight())) {
+					curDayBucket = new DayHeader(startDate);
 					eventEntries.add(curDayBucket);
 				}
 				eventEntries.add(event);

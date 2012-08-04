@@ -4,8 +4,9 @@ import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
+
+import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,9 +19,9 @@ import com.plusonelabs.calendar.CalendarIntentUtil;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
-import com.plusonelabs.calendar.model.EventEntry;
+import com.plusonelabs.calendar.model.Event;
 
-public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
+public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> {
 
 	private static final String TWELVE = "12";
 	private static final String AUTO = "auto";
@@ -45,8 +46,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
-	public RemoteViews getRemoteView(EventEntry eventEntry) {
-		CalendarEntry event = (CalendarEntry) eventEntry;
+	public RemoteViews getRemoteView(Event eventEntry) {
+		CalendarEvent event = (CalendarEvent) eventEntry;
 		RemoteViews rv = new RemoteViews(context.getPackageName(), getEventEntryLayout());
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
 		String title = event.getTitle();
@@ -54,7 +55,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 			title = context.getResources().getString(R.string.no_title);
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);
-		if (event.isAllDay() || event.spansFullDay()) {
+		if (event.isAllDay() || event.spansOneFullDay()) {
 			rv.setViewVisibility(R.id.event_entry_date, View.GONE);
 		} else {
 			rv.setViewVisibility(R.id.event_entry_date, View.VISIBLE);
@@ -74,8 +75,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 		return rv;
 	}
 
-	public Intent createOnItemClickIntent(CalendarEntry event) {
-		CalendarEntry originalEvent = event.getOriginalEvent();
+	public Intent createOnItemClickIntent(CalendarEvent event) {
+		CalendarEvent originalEvent = event.getOriginalEvent();
 		if (originalEvent != null) {
 			event = originalEvent;
 		}
@@ -83,7 +84,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 				event.getStartDate(), event.getEndDate());
 	}
 
-	public String createTimeSpanString(CalendarEntry event) {
+	public String createTimeSpanString(CalendarEvent event) {
 		String startStr = null;
 		String endStr = null;
 		String separator = SPACED_DASH;
@@ -102,14 +103,14 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 		return startStr + separator + endStr;
 	}
 
-	public String createTimeString(long time) {
+	public String createTimeString(DateTime time) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		String dateFormat = prefs.getString(PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
 		if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
 				|| dateFormat.equals(TWELVE)) {
-			return timeFormatter12.format(new Date(time)).toLowerCase();
+			return timeFormatter12.format(time.toDate()).toLowerCase();
 		}
-		return timeFormatter24.format(new Date(time));
+		return timeFormatter24.format(time.toDate());
 	}
 
 	private int getEventEntryLayout() {
@@ -126,12 +127,12 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 		return 6;
 	}
 
-	public ArrayList<CalendarEntry> getEventEntries() {
+	public ArrayList<CalendarEvent> getEventEntries() {
 		return calendarContentProvider.getEvents();
 	}
 
-	public Class<? extends CalendarEntry> getSupportedEventEntryType() {
-		return CalendarEntry.class;
+	public Class<? extends CalendarEvent> getSupportedEventEntryType() {
+		return CalendarEvent.class;
 	}
 
 }

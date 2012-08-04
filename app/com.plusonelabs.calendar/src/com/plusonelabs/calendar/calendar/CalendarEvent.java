@@ -1,22 +1,22 @@
 package com.plusonelabs.calendar.calendar;
 
-import android.text.format.DateUtils;
-import android.util.FloatMath;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+import org.joda.time.Duration;
 
-import com.plusonelabs.calendar.DateUtil;
-import com.plusonelabs.calendar.model.EventEntry;
+import com.plusonelabs.calendar.model.Event;
 
-public class CalendarEntry extends EventEntry {
+public class CalendarEvent extends Event {
 
 	private int eventId;
 	private String title;
-	private long endDate;
+	private DateTime endDate;
 	private int color;
 	private boolean allDay;
 	private boolean alarmActive;
 	private boolean recurring;
 	private boolean spansMultipleDays;
-	private CalendarEntry originalEvent;
+	private CalendarEvent originalEvent;
 
 	public int getEventId() {
 		return eventId;
@@ -34,11 +34,11 @@ public class CalendarEntry extends EventEntry {
 		this.title = title;
 	}
 
-	public long getEndDate() {
+	public DateTime getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(long endDate) {
+	public void setEndDate(DateTime endDate) {
 		this.endDate = endDate;
 	}
 
@@ -83,28 +83,23 @@ public class CalendarEntry extends EventEntry {
 	}
 
 	public int daysSpanned() {
-		long timeSpanned = endDate - getStartDate();
-		int result = (int) FloatMath.ceil(timeSpanned / DateUtils.DAY_IN_MILLIS);
-		if (timeSpanned % DateUtils.DAY_IN_MILLIS == 0 && !DateUtil.isMidnight(getStartDate())
-				&& !allDay) {
-			result++;
-		}
-		return result;
+		long durationInMillis = new Duration(getStartDate(), getEndDate()).getMillis();
+		return (int) Math.ceil(durationInMillis / (double) DateTimeConstants.MILLIS_PER_DAY);
 	}
 
-	public boolean spansFullDay() {
-		return getStartDate() + DateUtils.DAY_IN_MILLIS == endDate;
+	public boolean spansOneFullDay() {
+		return getStartDate().plusDays(1).isEqual(endDate);
 	}
 
-	public void setOriginalEvent(CalendarEntry originalEvent) {
+	public void setOriginalEvent(CalendarEvent originalEvent) {
 		this.originalEvent = originalEvent;
 	}
 
-	public CalendarEntry getOriginalEvent() {
+	public CalendarEvent getOriginalEvent() {
 		return originalEvent;
 	}
 
-	public int compareTo(CalendarEntry otherEntry) {
+	public int compareTo(CalendarEvent otherEntry) {
 		if (isSameDay(otherEntry.getStartDate())) {
 			if (allDay) {
 				return -1;
@@ -116,8 +111,8 @@ public class CalendarEntry extends EventEntry {
 	}
 
 	@Override
-	protected CalendarEntry clone() {
-		CalendarEntry clone = new CalendarEntry();
+	protected CalendarEvent clone() {
+		CalendarEvent clone = new CalendarEvent();
 		clone.setStartDate(getStartDate());
 		clone.endDate = endDate;
 		clone.eventId = eventId;

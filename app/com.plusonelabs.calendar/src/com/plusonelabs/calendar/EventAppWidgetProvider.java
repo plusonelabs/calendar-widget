@@ -4,6 +4,8 @@ import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -40,8 +42,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 			rv.setPendingIntentTemplate(R.id.event_list,
 					CalendarIntentUtil.createOpenCalendarEventPendingIntent(context));
 
-			intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context,
-					System.currentTimeMillis());
+			intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context, new DateTime());
 			rv.setOnClickFillInIntent(R.id.empty_event_list, intent);
 
 			Date curDate = new Date();

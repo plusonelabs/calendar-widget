@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import android.widget.RemoteViews;
 
-import com.plusonelabs.calendar.model.EventEntry;
+import com.plusonelabs.calendar.model.Event;
 
-public interface IEventVisualizer<T extends EventEntry> {
+public interface IEventVisualizer<T extends Event> {
 
-	RemoteViews getRemoteView(EventEntry eventEntry);
+	RemoteViews getRemoteView(Event eventEntry);
 
 	int getViewTypeCount();
 

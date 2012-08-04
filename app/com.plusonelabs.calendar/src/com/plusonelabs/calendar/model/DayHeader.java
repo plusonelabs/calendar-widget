@@ -1,8 +1,10 @@
 package com.plusonelabs.calendar.model;
 
-public class DayHeader extends EventEntry {
+import org.joda.time.DateTime;
 
-	public DayHeader(long date) {
+public class DayHeader extends Event {
+
+	public DayHeader(DateTime date) {
 		setStartDate(date);
 	}
 

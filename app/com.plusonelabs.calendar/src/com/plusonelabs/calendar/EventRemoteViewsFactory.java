@@ -61,6 +61,9 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public RemoteViews getViewAt(int position) {
+		if (position >= eventEntries.size()) {
+			return null;
+		}
 		EventEntry entry = eventEntries.get(position);
 		if (entry instanceof DayHeader) {
 			return updateDayHeader((DayHeader) entry);

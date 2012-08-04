@@ -19,6 +19,13 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.4
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=7&state=closed
+
+* Fixed critical issue where an all-day event would be displayed one day to early in certain timezones
+* Added ability to configure the transparency of the widget background
+
 h3. v1.3.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=6&state=closed

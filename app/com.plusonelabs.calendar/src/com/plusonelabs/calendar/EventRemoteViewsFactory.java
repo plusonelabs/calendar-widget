@@ -4,6 +4,7 @@ import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -95,15 +96,16 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 			prefix = context.getString(R.string.today) + COMMA_SPACE;
 			return prefix
 					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
-							.toUpperCase();
+							.toUpperCase(Locale.getDefault());
 		} else if (dayEntry.isTomorrow()) {
 			prefix = context.getString(R.string.tomorrow) + COMMA_SPACE;
 			return prefix
 					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
-							.toUpperCase();
+							.toUpperCase(Locale.getDefault());
 		}
 		return DateUtils.formatDateTime(context, date.getTime(),
-				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY).toUpperCase();
+				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY).toUpperCase(
+				Locale.getDefault());
 	}
 
 	public void onDataSetChanged() {

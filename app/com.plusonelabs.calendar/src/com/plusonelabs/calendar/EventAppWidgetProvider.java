@@ -3,6 +3,7 @@ package com.plusonelabs.calendar;
 import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
 import java.util.Date;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -48,7 +49,8 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 			Date curDate = new Date();
 			String formattedDate = DateUtils.formatDateTime(context, curDate.getTime(),
 					DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
-			rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase());
+			rv.setTextViewText(R.id.calendar_current_date,
+					formattedDate.toUpperCase(Locale.getDefault()));
 
 			Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,

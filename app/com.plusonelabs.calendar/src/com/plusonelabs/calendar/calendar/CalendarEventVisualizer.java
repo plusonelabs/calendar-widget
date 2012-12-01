@@ -51,7 +51,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		RemoteViews rv = new RemoteViews(context.getPackageName(), getEventEntryLayout());
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
 		String title = event.getTitle();
-		if (title.equals(EMPTY_STRING)) {
+		if (title == null || title.equals(EMPTY_STRING)) {
 			title = context.getResources().getString(R.string.no_title);
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);

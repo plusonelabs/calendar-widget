@@ -43,7 +43,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		rv.setPendingIntentTemplate(R.id.event_list,
 				CalendarIntentUtil.createOpenCalendarEventPendingIntent(context));
 	}
-	
+
 	public void onDestroy() {
 		eventEntries.clear();
 	}
@@ -93,16 +93,17 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		String prefix = EMPTY_STRING;
 		if (dayEntry.isToday()) {
 			prefix = context.getString(R.string.today) + COMMA_SPACE;
-			return prefix + DateUtils.formatDateTime(context, date.getTime(),
-				    DateUtils.FORMAT_SHOW_DATE).toUpperCase();
+			return prefix
+					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
+							.toUpperCase();
 		} else if (dayEntry.isTomorrow()) {
 			prefix = context.getString(R.string.tomorrow) + COMMA_SPACE;
-			return prefix + DateUtils.formatDateTime(context, date.getTime(),
-				    DateUtils.FORMAT_SHOW_DATE).toUpperCase();
+			return prefix
+					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
+							.toUpperCase();
 		}
 		return DateUtils.formatDateTime(context, date.getTime(),
-			    DateUtils.FORMAT_SHOW_DATE |
-			    DateUtils.FORMAT_SHOW_WEEKDAY).toUpperCase();
+				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY).toUpperCase();
 	}
 
 	public void onDataSetChanged() {

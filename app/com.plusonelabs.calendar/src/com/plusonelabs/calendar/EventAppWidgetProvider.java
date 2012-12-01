@@ -47,8 +47,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
 			Date curDate = new Date();
 			String formattedDate = DateUtils.formatDateTime(context, curDate.getTime(),
-				    DateUtils.FORMAT_SHOW_DATE |
-				    DateUtils.FORMAT_SHOW_WEEKDAY);
+					DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
 			rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase());
 
 			Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);

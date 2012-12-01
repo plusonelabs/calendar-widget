@@ -2,7 +2,6 @@ package com.plusonelabs.calendar.calendar;
 
 import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -106,12 +105,10 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
 				|| dateFormat.equals(TWELVE)) {
 			return DateUtils.formatDateTime(context, time.toDate().getTime(),
-				    DateUtils.FORMAT_SHOW_TIME |
-				    DateUtils.FORMAT_12HOUR);
+					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
 		}
 		return DateUtils.formatDateTime(context, time.toDate().getTime(),
-			    DateUtils.FORMAT_SHOW_TIME |
-			    DateUtils.FORMAT_24HOUR);
+				DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
 	}
 
 	private int getEventEntryLayout() {

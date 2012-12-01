@@ -18,7 +18,6 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
 				|| action.equals(Intent.ACTION_DATE_CHANGED)
 				|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)) {
 			DateTimeZone.setDefault(DateTimeZone.forID(TimeZone.getDefault().getID()));
-			EventRemoteViewsFactory.initiDateFormatter();
 			EventAppWidgetProvider.updateAllWidgets(context);
 		}
 		EventAppWidgetProvider.updateEventList(context);

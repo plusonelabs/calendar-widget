@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -28,7 +29,6 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
 		AlarmReceiver.scheduleAlarm(context);
-
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			int widgetId = appWidgetIds[i];
 
@@ -46,8 +46,9 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 			rv.setOnClickFillInIntent(R.id.empty_event_list, intent);
 
 			Date curDate = new Date();
-			String formattedDate = EventRemoteViewsFactory.dayStringFormatter.format(curDate)
-					+ EventRemoteViewsFactory.dayDateFormatter.format(curDate);
+			String formattedDate = DateUtils.formatDateTime(context, curDate.getTime(),
+				    DateUtils.FORMAT_SHOW_DATE |
+				    DateUtils.FORMAT_SHOW_WEEKDAY);
 			rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase());
 
 			Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);

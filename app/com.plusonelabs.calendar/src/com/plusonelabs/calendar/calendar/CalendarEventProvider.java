@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 
 import android.content.ContentResolver;
@@ -59,55 +58,38 @@ public class CalendarEventProvider {
 		for (int i = 0; i < calendarCursor.getCount(); i++) {
 			calendarCursor.moveToPosition(i);
 			CalendarEvent event = createCalendarEvent(calendarCursor);
-			setupDayOneEntry(eventList, event);
-			createFollowingEntries(eventList, event);
+			setupEntries(eventList, event);
 		}
 		return eventList;
 	}
 
-	public void setupDayOneEntry(ArrayList<CalendarEvent> eventList, CalendarEvent event) {
-		if (isEqualOrAfterTodayAtMidnight(event.getStartDate())) {
-			if (event.daysSpanned() > 1) {
-				CalendarEvent clone = event.clone();
-				clone.setEndDate(event.getStartDate().plusDays(1).toDateMidnight().toDateTime());
-				clone.setSpansMultipleDays(true);
-				clone.setOriginalEvent(event);
-				eventList.add(clone);
+	public void setupEntries(ArrayList<CalendarEvent> eventList, CalendarEvent event) {
+		if (event.daysSpanned() == 1) {
+			eventList.add(event);
+			return;
+		} else {
+			DateTime boundary = null;
+			if(event.isAllDay()) {
+				boundary = event.getStartDate().plusDays(1);
 			} else {
+				boundary = event.getStartDate().plusDays(1).withTimeAtStartOfDay();
+			}
+			CalendarEvent cloneEvent = event.clone();
+			cloneEvent.setStartDate(boundary);
+			cloneEvent.setEndDate(event.getEndDate());
+			cloneEvent.setSpansMultipleDays(true); // necessary for daysSpanned() becomes 1
+
+			if(boundary.isAfterNow()) {
+				if(event.getEndDate().isAfter(boundary)) {
+					event.setEndDate(boundary);
+				}
+				event.setSpansMultipleDays(true);
+//				event.setOriginalEvent(event);
 				eventList.add(event);
 			}
+
+			setupEntries(eventList, cloneEvent);
 		}
-	}
-
-	public void createFollowingEntries(ArrayList<CalendarEvent> eventList, CalendarEvent event) {
-		int daysCovered = event.daysSpanned();
-		for (int j = 1; j < daysCovered; j++) {
-			DateTime startDate = event.getStartDate().toDateMidnight().plusDays(j).toDateTime();
-			if (isEqualOrAfterTodayAtMidnight(startDate)) {
-				DateTime endDate;
-				if (j < daysCovered - 1) {
-					endDate = startDate.plusDays(1);
-				} else {
-					endDate = event.getEndDate();
-				}
-				eventList.add(cloneAsSpanningEvent(event, startDate, endDate));
-			}
-		}
-	}
-
-	public boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
-		DateMidnight midnight = new DateMidnight();
-		return startDate.isEqual(midnight) || startDate.isAfter(midnight);
-	}
-
-	public CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,
-			DateTime endDate) {
-		CalendarEvent clone = eventEntry.clone();
-		clone.setStartDate(startDate);
-		clone.setEndDate(endDate);
-		clone.setSpansMultipleDays(true);
-		clone.setOriginalEvent(eventEntry);
-		return clone;
 	}
 
 	private CalendarEvent createCalendarEvent(Cursor calendarCursor) {

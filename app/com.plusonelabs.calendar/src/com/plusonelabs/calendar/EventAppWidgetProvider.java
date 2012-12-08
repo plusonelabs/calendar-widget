@@ -1,8 +1,9 @@
 package com.plusonelabs.calendar;
 
+import static com.plusonelabs.calendar.CalendarIntentUtil.*;
 import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
-import java.util.Date;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -15,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -26,51 +28,53 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
 		AlarmReceiver.scheduleAlarm(context);
-
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			int widgetId = appWidgetIds[i];
-
 			RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
-
-			Intent intent = new Intent(context, EventWidgetService.class);
-			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-			intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-			rv.setRemoteAdapter(R.id.event_list, intent);
-
-			rv.setPendingIntentTemplate(R.id.event_list,
-					CalendarIntentUtil.createOpenCalendarEventPendingIntent(context));
-
-			intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context, new DateTime());
-			rv.setOnClickFillInIntent(R.id.empty_event_list, intent);
-
-			Date curDate = new Date();
-			String formattedDate = EventRemoteViewsFactory.dayStringFormatter.format(curDate)
-					+ EventRemoteViewsFactory.dayDateFormatter.format(curDate);
-			rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase());
-
-			Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
-			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
-					PendingIntent.FLAG_UPDATE_CURRENT);
-			rv.setOnClickPendingIntent(R.id.overflow_menu, pendingIntent);
-
-			rv.setEmptyView(R.id.event_list, R.id.empty_event_list);
-
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-			if (prefs.getBoolean(ICalendarPreferences.PREF_SHOW_HEADER, true)) {
-				rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
-			} else {
-				rv.setViewVisibility(R.id.action_bar, View.GONE);
-			}
-
-			int bgTrans = prefs.getInt(ICalendarPreferences.PREF_BACKGROUND_TRANSPARENCY,
-					PREF_BACKGROUND_TRANSPARENCY_DEFAULT);
-			rv.setInt(R.id.widget_background, METHOD_SET_BACKGROUND_RESOURCE,
-					transparencyToDrawableRes(bgTrans));
-
+			configureBackground(context, rv);
+			configureActionBar(context, rv);
+			configureList(context, widgetId, rv);
 			appWidgetManager.updateAppWidget(widgetId, rv);
 		}
+	}
+
+	public void configureBackground(Context context, RemoteViews rv) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		if (prefs.getBoolean(ICalendarPreferences.PREF_SHOW_HEADER, true)) {
+			rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
+		} else {
+			rv.setViewVisibility(R.id.action_bar, View.GONE);
+		}
+		int bgTrans = prefs.getInt(ICalendarPreferences.PREF_BACKGROUND_TRANSPARENCY,
+				PREF_BACKGROUND_TRANSPARENCY_DEFAULT);
+		rv.setInt(R.id.widget_background, METHOD_SET_BACKGROUND_RESOURCE,
+				transparencyToDrawableRes(bgTrans));
+	}
+
+	public void configureActionBar(Context context, RemoteViews rv) {
+		String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
+				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
+		rv.setTextViewText(R.id.calendar_current_date,
+				formattedDate.toUpperCase(Locale.getDefault()));
+		Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
+		PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
+		PendingIntent addEventPendingIntent = CalendarIntentUtil
+				.createNewEventPendingIntent(context);
+		rv.setOnClickPendingIntent(R.id.add_event, addEventPendingIntent);
+	}
+
+	public void configureList(Context context, int widgetId, RemoteViews rv) {
+		Intent intent = new Intent(context, EventWidgetService.class);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+		rv.setRemoteAdapter(R.id.event_list, intent);
+		rv.setEmptyView(R.id.event_list, R.id.empty_event_list);
+		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
+		rv.setOnClickFillInIntent(R.id.empty_event_list,
+				createOpenCalendarAtDayIntent(context, new DateTime()));
 	}
 
 	private int transparencyToDrawableRes(int bgTrans) {

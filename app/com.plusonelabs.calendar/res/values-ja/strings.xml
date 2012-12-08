@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">カレンダーウィジェット</string>
+    <string name="today">今日</string>
+    <string name="tomorrow">明日</string>
+    <string name="no_upcoming_events">直近のイベントはありません</string>
+    <string name="widget_name">カレンダー</string>
+    <string name="open_prefs_desc">カレンダーウィジェットの設定を開きます</string>
+    <string name="add_event_desc">新しいカレンダーイベントを追加します</string>
+    <string name="prefs_add_widget">ウィジェットを追加</string>
+    <string name="indicator_alarm">アラームが設定されていたらインジケータ</string>
+    <string name="indicator_recurring">イベントが繰り返しだったらインジケータ</string>
+    <string name="no_title">(タイトルなし)</string>
+
+    <!-- Preference calendars -->
+    <string name="calendars_prefs">カレンダー</string>
+    <string name="calendars_prefs_desc">表示するカレンダーを選択します</string>
+
+    <!-- Preference appearance -->
+    <string name="appearance_prefs">外観</string>
+    <string name="appearance_prefs_desc">ウィジェットの外観を調整します</string>
+    <string name="appearance_text_size_desc">文字サイズを調整します</string>
+    <string name="appearance_text_size_title">文字サイズ</string>
+    <string name="appearance_text_size_small">小</string>
+    <string name="appearance_text_size_medium">中</string>
+    <string name="appearance_text_size_large">大</string>
+    <string name="appearance_date_format_desc">時刻をAM/PMまたは24時間形式で表示します</string>
+    <string name="appearance_date_format_title">時刻の形式</string>
+    <string name="appearance_date_format_auto">自動</string>
+    <string name="appearance_date_format_24">17:00</string>
+    <string name="appearance_date_format_12">5:00PM</string>
+    <string name="appearance_display_header_title">ウィジェットのヘッダ表示</string>
+    <string name="appearance_display_header_desc">日付と設定のヘッダを表示します</string>
+    <string name="appearance_display_header_warning">ヘッダを非表示にしてしまうと、プリファレンスに戻ってくることもできなくなります。</string>
+    <string name="appearance_indicators">インジケータ</string>
+    <string name="appearance_indicate_alert_desc">アラートのインジケータを表示します</string>
+    <string name="appearance_indicate_alert_title">アラート</string>
+    <string name="appearance_indicate_recurring_desc">繰り返しイベントのインジケータを表示します</string>
+    <string name="appearance_indicate_recurring_title">繰り返しイベント</string>
+    <string name="appearance_background_transparency_title">背景の透明度</string>
+    <string name="appearance_background_transparency_desc">背景の透明度を調整します</string>
+
+    <!-- Preference feedback -->
+    <string name="feedback_prefs">フィードバック</string>
+    <string name="feedback_prefs_desc">私たちに連絡をください</string>
+    <string name="feedback_github_desc">プロジェクトページにフィードバックをお寄せください</string>
+    <string name="feedback_github_title">Githubに行く</string>
+    <string name="feedback_play_store_desc">Googleプレイストアに評価／コメントしてください</string>
+    <string name="feedback_play_store_title">Googleプレイストアに行く</string>
+
+</resources>

@@ -2,7 +2,6 @@ package com.plusonelabs.calendar.calendar;
 
 import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -12,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -28,13 +28,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	private static final String SPACE_ARROW = " →";
 	private static final String ARROW_SPACE = "→ ";
 	private static final String EMPTY_STRING = "";
-	private static final String TIME_FORMAT_24 = "HH:mm";
-	private static final String TIME_FORMAT_12 = "h:mm aa";
 	private static final String SPACED_DASH = " - ";
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
-
-	private SimpleDateFormat timeFormatter12 = new SimpleDateFormat(TIME_FORMAT_12);
-	private SimpleDateFormat timeFormatter24 = new SimpleDateFormat(TIME_FORMAT_24);
 
 	private final Context context;
 	private CalendarEventProvider calendarContentProvider;
@@ -51,7 +46,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		RemoteViews rv = new RemoteViews(context.getPackageName(), getEventEntryLayout());
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
 		String title = event.getTitle();
-		if (title.equals(EMPTY_STRING)) {
+		if (title == null || title.equals(EMPTY_STRING)) {
 			title = context.getResources().getString(R.string.no_title);
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);
@@ -88,6 +83,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		String startStr = null;
 		String endStr = null;
 		String separator = SPACED_DASH;
+
 		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getStartDate())) {
 			startStr = ARROW_SPACE;
 			separator = EMPTY_STRING;
@@ -108,9 +104,11 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		String dateFormat = prefs.getString(PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
 		if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
 				|| dateFormat.equals(TWELVE)) {
-			return timeFormatter12.format(time.toDate()).toLowerCase();
+			return DateUtils.formatDateTime(context, time.toDate().getTime(),
+					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
 		}
-		return timeFormatter24.format(time.toDate());
+		return DateUtils.formatDateTime(context, time.toDate().getTime(),
+				DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
 	}
 
 	private int getEventEntryLayout() {

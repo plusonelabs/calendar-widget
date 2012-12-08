@@ -19,6 +19,15 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.5
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=8&state=closed
+
+* Enabled support to place the calendar widget on the lock screen
+* Calendar events can now be added directly from the widget
+* Added japanese translations (Thanks to Sakuma)
+* Fixed several stability issues
+
 h3. v1.4
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=7&state=closed

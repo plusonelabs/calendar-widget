@@ -7,6 +7,7 @@
     <string name="no_upcoming_events">No upcoming events</string>
     <string name="widget_name">Calendar</string>
     <string name="open_prefs_desc">Open the settings of the calendar widget</string>
+    <string name="add_event_desc">Add new calender event</string>
     <string name="prefs_add_widget">Add Widget</string>
     <string name="indicator_alarm">Indicator if an alarm has been set</string>
     <string name="indicator_recurring">Indicator if the event is recurring</string>

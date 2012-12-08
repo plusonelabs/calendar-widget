@@ -7,6 +7,7 @@
     <string name="no_upcoming_events">Keine anstehenden Termine</string>
     <string name="widget_name">Kalender</string>
     <string name="open_prefs_desc">Öffne die Einstellungen des Kalender-Widget</string>
+    <string name="add_event_desc">Neuen Kalendereintrag erstellen</string>
     <string name="prefs_add_widget">Widget hinzufügen</string>
     <string name="indicator_alarm">Hinweis ob an dem Ereignis ein Erinnerungen gesetzt wurde</string>
     <string name="indicator_recurring">Hinweis ob das Ereignis wiederkehrend ist</string>

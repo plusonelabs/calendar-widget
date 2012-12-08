@@ -20,6 +20,15 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:id="@+id/add_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:alpha="0.6"
+            android:contentDescription="@string/add_event_desc"
+            android:src="@drawable/ic_action_add_event" />
+
+        <ImageView
             android:id="@+id/overflow_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -2,9 +2,9 @@ package com.plusonelabs.calendar;
 
 import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -22,23 +23,13 @@ import com.plusonelabs.calendar.model.Event;
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	private static final String EMPTY_STRING = "";
-	private static final String DAY_STRING_FORMAT = "EEEE, ";
-	private static final String DAY_DATE_FORMAT = "dd. MMMM";
-
 	private static final String COMMA_SPACE = ", ";
-
-	static SimpleDateFormat dayDateFormatter;
-	static SimpleDateFormat dayStringFormatter;
 
 	private final Context context;
 	private SharedPreferences prefs;
 	private ArrayList<Event> eventEntries;
 
 	private ArrayList<IEventVisualizer<?>> eventProviders;
-
-	static {
-		initiDateFormatter();
-	}
 
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
@@ -79,11 +70,6 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		return null;
 	}
 
-	public static void initiDateFormatter() {
-		dayDateFormatter = new SimpleDateFormat(DAY_DATE_FORMAT);
-		dayStringFormatter = new SimpleDateFormat(DAY_STRING_FORMAT);
-	}
-
 	public RemoteViews updateDayHeader(DayHeader dayHeader) {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), getDayHeaderLayout());
 		rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
@@ -108,12 +94,18 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		String prefix = EMPTY_STRING;
 		if (dayEntry.isToday()) {
 			prefix = context.getString(R.string.today) + COMMA_SPACE;
+			return prefix
+					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
+							.toUpperCase(Locale.getDefault());
 		} else if (dayEntry.isTomorrow()) {
 			prefix = context.getString(R.string.tomorrow) + COMMA_SPACE;
-		} else {
-			prefix = dayStringFormatter.format(date).toUpperCase();
+			return prefix
+					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
+							.toUpperCase(Locale.getDefault());
 		}
-		return prefix + dayDateFormatter.format(date).toUpperCase();
+		return DateUtils.formatDateTime(context, date.getTime(),
+				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY).toUpperCase(
+				Locale.getDefault());
 	}
 
 	public void onDataSetChanged() {

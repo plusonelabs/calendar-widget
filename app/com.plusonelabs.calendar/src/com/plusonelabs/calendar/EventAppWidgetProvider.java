@@ -3,6 +3,7 @@ package com.plusonelabs.calendar;
 import static com.plusonelabs.calendar.CalendarIntentUtil.*;
 import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
@@ -14,6 +15,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
@@ -61,9 +64,22 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
-		PendingIntent addEventPendingIntent = CalendarIntentUtil
-				.createNewEventPendingIntent(context);
-		rv.setOnClickPendingIntent(R.id.add_event, addEventPendingIntent);
+		Intent intent = CalendarIntentUtil.createNewEventIntent();
+		if (isIntentAvailable(context, intent)) {
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			rv.setOnClickPendingIntent(R.id.add_event, pendingIntent);
+		} else {
+			rv.setViewVisibility(R.id.add_event, View.GONE);
+		}
+	}
+
+	public static boolean isIntentAvailable(Context context, Intent intent) {
+		PackageManager packageManager = context.getPackageManager();
+		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
+				PackageManager.MATCH_DEFAULT_ONLY);
+		System.out.println(list);
+		return list.size() > 0;
 	}
 
 	public void configureList(Context context, int widgetId, RemoteViews rv) {

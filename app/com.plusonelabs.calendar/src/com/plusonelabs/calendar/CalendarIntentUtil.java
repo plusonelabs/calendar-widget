@@ -12,6 +12,7 @@ import android.provider.CalendarContract.Events;
 
 public class CalendarIntentUtil {
 
+	private static final String INTENT_TYPE_EVENT = "vnd.android.cursor.item/event";
 	private static final String KEY_DETAIL_VIEW = "DETAIL_VIEW";
 	private static final String TIME = "time";
 
@@ -49,8 +50,13 @@ public class CalendarIntentUtil {
 	}
 
 	public static PendingIntent createNewEventPendingIntent(Context context) {
-		Intent intent = createCalendarIntent(Intent.ACTION_INSERT);
-		intent.setData(Events.CONTENT_URI);
+		Intent intent = createNewEventIntent();
 		return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+	}
+
+	public static Intent createNewEventIntent() {
+		Intent intent = new Intent(Intent.ACTION_EDIT);
+		intent.setType(INTENT_TYPE_EVENT);
+		return intent;
 	}
 }

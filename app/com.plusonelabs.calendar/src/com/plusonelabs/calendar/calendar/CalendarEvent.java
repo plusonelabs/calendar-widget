@@ -134,13 +134,14 @@ public class CalendarEvent extends Event {
 	protected CalendarEvent clone2() {
 		CalendarEvent clone = new CalendarEvent();
 		clone.setStartDate(this.getSpannedDate());
-		clone.endDate = endDate;
-		clone.eventId = eventId;
-		clone.title = title;
-		clone.allDay = allDay;
-		clone.color = color;
-		clone.alarmActive = alarmActive;
-		clone.recurring = recurring;
+		clone.endDate = this.endDate;
+		clone.eventId = this.eventId;
+		clone.title = this.title;
+		clone.allDay = this.allDay;
+		clone.color = this.color;
+		clone.alarmActive = this.alarmActive;
+		clone.recurring = this.recurring;
+		clone.originalEvent = this.originalEvent;
 		clone.spansMultipleDays = true;
 		return clone;
 	}

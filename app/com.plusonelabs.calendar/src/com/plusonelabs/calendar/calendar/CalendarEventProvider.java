@@ -58,6 +58,7 @@ public class CalendarEventProvider {
 		for (int i = 0; i < calendarCursor.getCount(); i++) {
 			calendarCursor.moveToPosition(i);
 			CalendarEvent event = createCalendarEvent(calendarCursor);
+			event.setOriginalEvent(event.clone());
 			setupEntries(eventList, event);
 		}
 		return eventList;

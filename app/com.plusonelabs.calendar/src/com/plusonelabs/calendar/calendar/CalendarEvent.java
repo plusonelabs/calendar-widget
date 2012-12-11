@@ -1,8 +1,6 @@
 package com.plusonelabs.calendar.calendar;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
-
 import com.plusonelabs.calendar.model.Event;
 
 public class CalendarEvent extends Event {
@@ -82,7 +80,17 @@ public class CalendarEvent extends Event {
 	}
 
 	public int daysSpanned() {
-		return Days.daysBetween(getStartDate(), endDate).getDays();
+		int days = 0;
+		if (allDay) {
+			while(endDate.isAfter(getStartDate().plusDays(days))) {
+				days++;
+			}
+		} else {
+			while(endDate.isAfter(getStartDate().plusDays(days).toDateMidnight())) {
+				days++;
+			}
+		}
+		return days;
 	}
 
 	public boolean spansOneFullDay() {
@@ -119,9 +127,37 @@ public class CalendarEvent extends Event {
 		clone.color = color;
 		clone.alarmActive = alarmActive;
 		clone.recurring = recurring;
-//		clone.spansMultipleDays = spansMultipleDays;
+		clone.spansMultipleDays = spansMultipleDays;
+		return clone;
+	}
+
+	protected CalendarEvent clone2() {
+		CalendarEvent clone = new CalendarEvent();
+		clone.setStartDate(this.getSpannedDate());
+		clone.endDate = endDate;
+		clone.eventId = eventId;
+		clone.title = title;
+		clone.allDay = allDay;
+		clone.color = color;
+		clone.alarmActive = alarmActive;
+		clone.recurring = recurring;
 		clone.spansMultipleDays = true;
 		return clone;
+	}
+
+	private DateTime getSpannedDate() {
+		DateTime spannedDate = null;
+		if(this.allDay) {
+			spannedDate = this.getStartDate().plusDays(1);
+		} else {
+			spannedDate = this.getStartDate().plusDays(1).withTimeAtStartOfDay();
+		}
+		return spannedDate;
+	}
+
+	public void toSingleDateEvent() {
+		this.endDate = this.getSpannedDate();
+		this.spansMultipleDays = true;
 	}
 
 	@Override

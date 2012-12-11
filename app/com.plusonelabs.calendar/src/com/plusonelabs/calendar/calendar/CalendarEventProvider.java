@@ -64,28 +64,14 @@ public class CalendarEventProvider {
 	}
 
 	public void setupEntries(ArrayList<CalendarEvent> eventList, CalendarEvent event) {
-		if (event.daysSpanned() < 1) {
+		if (event.daysSpanned() == 1) {
 			eventList.add(event);
 			return;
 		}
 
-		CalendarEvent cloneEvent = event.clone();
-		DateTime next = null;
-		
-		if(event.isAllDay()) {
-			next = event.getStartDate().plusDays(1);
-		} else {
-			next = event.getStartDate().plusDays(1).withTimeAtStartOfDay();
-		}
-		cloneEvent.setStartDate(next);
-		cloneEvent.setEndDate(event.getEndDate());
-
-		if(next.isAfterNow()) {
-			if(event.getEndDate().isAfter(next)) {
-				event.setEndDate(next);
-			}
-			event.setSpansMultipleDays(true);
-//			event.setOriginalEvent(event);
+		CalendarEvent cloneEvent = event.clone2();
+		event.toSingleDateEvent();
+		if(event.getStartDate().isAfterNow()) {
 			eventList.add(event);
 		}
 
@@ -102,14 +88,6 @@ public class CalendarEventProvider {
 		event.setColor(getAsOpaque(getEntryColor(calendarCursor)));
 		event.setAlarmActive(calendarCursor.getInt(7) > 0);
 		event.setRecurring(calendarCursor.getString(8) != null);
-//		if (event.isAllDay()) {
-//			DateTime startDate = event.getStartDate();
-//			long converted = startDate.getZone().convertLocalToUTC(startDate.getMillis(), true);
-//			event.setStartDate(new DateTime(converted));
-//			DateTime endDate = event.getEndDate();
-//			converted = endDate.getZone().convertLocalToUTC(endDate.getMillis(), true);
-//			event.setEndDate(new DateTime(converted));
-//		}
 		return event;
 	}
 

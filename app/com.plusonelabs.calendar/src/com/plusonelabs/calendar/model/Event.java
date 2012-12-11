@@ -1,7 +1,6 @@
 package com.plusonelabs.calendar.model;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 
 public class Event implements Comparable<Event> {
 

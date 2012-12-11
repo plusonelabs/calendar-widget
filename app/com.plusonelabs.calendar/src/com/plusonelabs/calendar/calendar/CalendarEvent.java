@@ -1,8 +1,7 @@
 package com.plusonelabs.calendar.calendar;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.Duration;
+import org.joda.time.Days;
 
 import com.plusonelabs.calendar.model.Event;
 
@@ -83,8 +82,12 @@ public class CalendarEvent extends Event {
 	}
 
 	public int daysSpanned() {
-		long durationInMillis = new Duration(getStartDate(), getEndDate()).getMillis();
-		return (int) Math.ceil(durationInMillis / (double) DateTimeConstants.MILLIS_PER_DAY);
+		int days = Days.daysBetween(getStartDate().toDateMidnight(), getEndDate().toDateMidnight())
+				.getDays();
+		if (!isAllDay()) {
+			days++;
+		}
+		return days;
 	}
 
 	public boolean spansOneFullDay() {

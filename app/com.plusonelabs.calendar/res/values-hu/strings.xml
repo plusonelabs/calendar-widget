@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Naptár modul</string>
+    <string name="today">MA</string>
+    <string name="tomorrow">HOLNAP</string>
+    <string name="no_upcoming_events">Nincs közelgő esemény</string>
+    <string name="widget_name">Naptár</string>
+    <string name="open_prefs_desc">A naptár modul beállításainak megnyitása</string>
+    <string name="add_event_desc">Új esemény</string>
+    <string name="prefs_add_widget">Modul hozzáadása</string>
+    <string name="indicator_alarm">Jelölő emlékeztető beállításánál</string>
+    <string name="indicator_recurring">Jelölő ismétlődő eseménynél</string>
+    <string name="no_title">(Üres esemény név)</string>
+
+    <!-- Preference calendars -->
+    <string name="calendars_prefs">Naptárak</string>
+    <string name="calendars_prefs_desc">Válassza ki a naptárakat</string>
+
+    <!-- Preference appearance -->
+    <string name="appearance_prefs">Megjelenés</string>
+    <string name="appearance_prefs_desc">A modul megjelenésének beállítása</string>
+    <string name="appearance_text_size_desc">Szövegméret beállítása</string>
+    <string name="appearance_text_size_title">Szövegméret</string>
+    <string name="appearance_text_size_small">Kicsi</string>
+    <string name="appearance_text_size_medium">Közepes</string>
+    <string name="appearance_text_size_large">Nagy</string>
+    <string name="appearance_date_format_desc">Válassza ki az idő formátumát</string>
+    <string name="appearance_date_format_title">Idő formátum</string>
+    <string name="appearance_date_format_auto">Alapértelmezett</string>
+    <string name="appearance_date_format_24">17:00</string>
+    <string name="appearance_date_format_12">5:00</string>
+    <string name="appearance_display_header_title">Mutassa a modul fejlécét</string>
+    <string name="appearance_display_header_desc">Mutassa a dátumot és a parancs ikonokat a fejlécben</string>
+    <string name="appearance_display_header_warning">A fejléc elrejtése után a modulból nem fogja elérni a beállításokat.</string>
+    <string name="appearance_indicators">Jelölések</string>
+    <string name="appearance_indicate_alert_desc">Jelölje meg az emlékeztetővel rendelkező eseményeket</string>
+    <string name="appearance_indicate_alert_title">Emlékeztetők</string>
+    <string name="appearance_indicate_recurring_desc">Jelölje meg az ismétlődő eseményeket</string>
+    <string name="appearance_indicate_recurring_title">Ismétlődő események</string>
+    <string name="appearance_background_transparency_title">Háttér átlátszóság </string>
+    <string name="appearance_background_transparency_desc">A háttér átlátszóság beállítása</string>
+
+    <!-- Preference feedback -->
+    <string name="feedback_prefs">Visszajelzés</string>
+    <string name="feedback_prefs_desc">Lépjen kapcsolatba velünk</string>
+    <string name="feedback_github_desc">Visszajelzés a projekt oldalán</string>
+    <string name="feedback_github_title">A modul a Github-on</string>
+    <string name="feedback_play_store_desc">Értékelés a Google Play-en</string>
+    <string name="feedback_play_store_title">Modul a Google Play-en</string>
+
+</resources>

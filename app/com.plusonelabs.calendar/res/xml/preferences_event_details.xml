@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="30"
+        android:entries="@array/pref_event_range_entries"
+        android:entryValues="@array/pref_event_range_values"
+        android:key="eventRange"
+        android:summary="@string/event_details_event_range_desc"
+        android:title="@string/event_details_event_range_title" />
+
+    <PreferenceCategory android:title="@string/event_details_indicators" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="indicateAlerts"
+            android:summary="@string/event_details_indicate_alert_desc"
+            android:title="@string/event_details_indicate_alert_title" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="indicateRecurring"
+            android:summary="@string/event_details_indicate_recurring_desc"
+            android:title="@string/event_details_indicate_recurring_title" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

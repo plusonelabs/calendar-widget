@@ -6,7 +6,7 @@
         <item>@string/appearance_text_size_medium</item>
         <item>@string/appearance_text_size_large</item>
     </string-array>
-    <string-array name="pref_text_size_values" tools:ignore="MissingTranslation">
+    <string-array name="pref_text_size_values">
         <item>small</item>
         <item>medium</item>
         <item>large</item>
@@ -16,10 +16,28 @@
         <item>@string/appearance_date_format_24</item>
         <item>@string/appearance_date_format_12</item>
     </string-array>
-    <string-array name="pref_date_format_values" tools:ignore="MissingTranslation">
+    <string-array name="pref_date_format_values">
         <item>auto</item>
         <item>24</item>
         <item>12</item>
+    </string-array>
+    <string-array name="pref_event_range_entries">
+        <item>@string/event_range_one_week</item>
+        <item>@string/event_range_two_weeks</item>
+        <item>@string/event_range_one_month</item>
+        <item>@string/event_range_two_months</item>
+        <item>@string/event_range_three_months</item>
+        <item>@string/event_range_six_months</item>
+        <item>@string/event_range_one_year</item>
+    </string-array>
+    <string-array name="pref_event_range_values">
+        <item>7</item>
+        <item>14</item>
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>180</item>
+        <item>365</item>
     </string-array>
 
 </resources>

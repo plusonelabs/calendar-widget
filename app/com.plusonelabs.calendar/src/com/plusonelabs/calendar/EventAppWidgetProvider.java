@@ -1,7 +1,7 @@
 package com.plusonelabs.calendar;
 
 import static com.plusonelabs.calendar.CalendarIntentUtil.*;
-import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +23,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.plusonelabs.calendar.prefs.ICalendarPreferences;
+import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
 
@@ -44,12 +44,12 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
 	public void configureBackground(Context context, RemoteViews rv) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		if (prefs.getBoolean(ICalendarPreferences.PREF_SHOW_HEADER, true)) {
+		if (prefs.getBoolean(CalendarPreferences.PREF_SHOW_HEADER, true)) {
 			rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
 		} else {
 			rv.setViewVisibility(R.id.action_bar, View.GONE);
 		}
-		int bgTrans = prefs.getInt(ICalendarPreferences.PREF_BACKGROUND_TRANSPARENCY,
+		int bgTrans = prefs.getInt(CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY,
 				PREF_BACKGROUND_TRANSPARENCY_DEFAULT);
 		rv.setInt(R.id.widget_background, METHOD_SET_BACKGROUND_RESOURCE,
 				transparencyToDrawableRes(bgTrans));

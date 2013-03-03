@@ -33,13 +33,26 @@
     <string name="appearance_display_header_title">Show widget header</string>
     <string name="appearance_display_header_desc">Show the date and settings header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
-    <string name="appearance_indicators">Indicators</string>
-    <string name="appearance_indicate_alert_desc">Show indicator for alerts</string>
-    <string name="appearance_indicate_alert_title">Alerts</string>
-    <string name="appearance_indicate_recurring_desc">Show indicator for recurring events</string>
-    <string name="appearance_indicate_recurring_title">Recurring events</string>
     <string name="appearance_background_transparency_title">Background transparency </string>
     <string name="appearance_background_transparency_desc">Adjust the transparency of the background</string>
+
+    <!-- Preferences event details -->
+    <string name="event_details_prefs">Events</string>
+    <string name="event_details_prefs_desc">Configure what details to show for an event</string>
+    <string name="event_details_event_range_title">Date range</string>
+    <string name="event_details_event_range_desc">Configure the number of events to display</string>
+    <string name="event_range_one_week">One week</string>
+    <string name="event_range_two_weeks">Two weeks</string>
+    <string name="event_range_one_month">One month</string>
+    <string name="event_range_two_months">Two months</string>
+    <string name="event_range_three_months">Three months</string>
+    <string name="event_range_six_months">Six months</string>
+    <string name="event_range_one_year">One year</string>
+    <string name="event_details_indicators">Indicators</string>
+    <string name="event_details_indicate_alert_desc">Show indicator for alerts</string>
+    <string name="event_details_indicate_alert_title">Alerts</string>
+    <string name="event_details_indicate_recurring_desc">Show indicator for recurring events</string>
+    <string name="event_details_indicate_recurring_title">Recurring events</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>

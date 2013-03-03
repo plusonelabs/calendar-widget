@@ -22,7 +22,7 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-		if (preference.getKey().equals(ICalendarPreferences.PREF_SHOW_HEADER)) {
+		if (preference.getKey().equals(CalendarPreferences.PREF_SHOW_HEADER)) {
 			if (preference instanceof CheckBoxPreference) {
 				CheckBoxPreference checkPref = (CheckBoxPreference) preference;
 				if (!checkPref.isChecked()) {
@@ -31,7 +31,7 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 				}
 			}
 		}
-		if (preference.getKey().equals(ICalendarPreferences.PREF_BACKGROUND_TRANSPARENCY)) {
+		if (preference.getKey().equals(CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY)) {
 			new BackgroundTransparencyDialog().show(getFragmentManager(),
 					BACKGROUND_TRANSPARENCY_DIALOG);
 		}

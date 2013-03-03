@@ -1,6 +1,6 @@
 package com.plusonelabs.calendar.calendar;
 
-import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 
 import java.util.ArrayList;
 import java.util.Locale;

@@ -1,6 +1,7 @@
 package com.plusonelabs.calendar.calendar;
 
 import static android.graphics.Color.*;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +23,7 @@ import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.text.format.DateUtils;
 
-import com.plusonelabs.calendar.prefs.ICalendarPreferences;
+import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 public class CalendarEventProvider {
 
@@ -144,8 +145,11 @@ public class CalendarEventProvider {
 	}
 
 	private Cursor createLoadedCursor() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		int dateRange = Integer
+				.valueOf(prefs.getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
 		long start = System.currentTimeMillis();
-		long end = start + DateUtils.DAY_IN_MILLIS * 31;
+		long end = start + DateUtils.DAY_IN_MILLIS * dateRange;
 		Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
 		ContentUris.appendId(builder, start);
 		ContentUris.appendId(builder, end);
@@ -157,8 +161,8 @@ public class CalendarEventProvider {
 
 	private String createSelectionClause() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		Set<String> activeCalenders = prefs.getStringSet(
-				ICalendarPreferences.PREF_ACTIVE_CALENDARS, new HashSet<String>());
+		Set<String> activeCalenders = prefs.getStringSet(CalendarPreferences.PREF_ACTIVE_CALENDARS,
+				new HashSet<String>());
 		if (activeCalenders.isEmpty()) {
 			return EVENT_SELECTION;
 		}

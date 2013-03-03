@@ -33,13 +33,26 @@
     <string name="appearance_display_header_desc">Kopfzeile ein- und ausblenden</string>
     <string name="appearance_display_header_title">Kopfzeile anzeigen</string>
     <string name="appearance_display_header_warning">Wenn die Kopfzeile ausgeblendet wird können Sie nicht mehr in die Einstellungen gelangen.</string>
-    <string name="appearance_indicators">Hinweise</string>
-    <string name="appearance_indicate_alert_desc">Zeige Hinweise für Erinnerungen</string>
-    <string name="appearance_indicate_alert_title">Erinnerungen</string>
-    <string name="appearance_indicate_recurring_desc">Zeige Hinweise für wiederkehrende Ereignisse</string>
-    <string name="appearance_indicate_recurring_title">Wiederkehrende Ereignisse</string>
     <string name="appearance_background_transparency_title">Hintergrund Transparenz</string>
     <string name="appearance_background_transparency_desc">Passe die Transparenz des Hintergrundes an</string>
+
+    <!-- Preferences event details -->
+    <string name="event_details_prefs">Termine</string>
+    <string name="event_details_prefs_desc">Details die zu einem Termin angezeigt werden</string>
+    <string name="event_details_event_range_title">Zeitraum</string>
+    <string name="event_details_event_range_desc">Wieviele Termine werden angezeigt</string>
+    <string name="event_range_one_week">Eine Woche</string>
+    <string name="event_range_two_weeks">Zwei Wochen</string>
+    <string name="event_range_one_month">Ein Monat</string>
+    <string name="event_range_two_months">Zwei Monate</string>
+    <string name="event_range_three_months">Drei Monate</string>
+    <string name="event_range_six_months">Sechs Monate</string>
+    <string name="event_range_one_year">Ein Jahr</string>
+    <string name="event_details_indicators">Hinweise</string>
+    <string name="event_details_indicate_alert_desc">Zeige Hinweise für Erinnerungen</string>
+    <string name="event_details_indicate_alert_title">Erinnerungen</string>
+    <string name="event_details_indicate_recurring_desc">Zeige Hinweise für wiederkehrende Ereignisse</string>
+    <string name="event_details_indicate_recurring_title">Wiederkehrende Ereignisse</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>

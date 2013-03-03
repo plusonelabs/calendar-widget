@@ -1,6 +1,6 @@
 package com.plusonelabs.calendar.prefs;
 
-public interface ICalendarPreferences {
+public class CalendarPreferences {
 
 	public static final String PREF_TEXT_SIZE_LARGE = "large";
 	public static final String PREF_TEXT_SIZE_MEDIUM = "medium";
@@ -14,5 +14,10 @@ public interface ICalendarPreferences {
 	public static final int PREF_BACKGROUND_TRANSPARENCY_DEFAULT = 50;
 	public static final String PREF_DATE_FORMAT = "dateFormat";
 	public static final String PREF_DATE_FORMAT_DEFAULT = "auto";
+	public static final String PREF_EVENT_RANGE = "eventRange";
+	public static final String PREF_EVENT_RANGE_DEFAULT = "30";
 
+	private CalendarPreferences() {
+		// prohibit instantiation
+	}
 }

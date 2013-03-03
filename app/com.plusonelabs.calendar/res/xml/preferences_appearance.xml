@@ -28,19 +28,4 @@
         android:summary="@string/appearance_background_transparency_desc"
         android:title="@string/appearance_background_transparency_title" />
 
-    <PreferenceCategory android:title="@string/appearance_indicators" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="indicateAlerts"
-            android:summary="@string/appearance_indicate_alert_desc"
-            android:title="@string/appearance_indicate_alert_title" >
-        </CheckBoxPreference>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="indicateRecurring"
-            android:summary="@string/appearance_indicate_recurring_desc"
-            android:title="@string/appearance_indicate_recurring_title" >
-        </CheckBoxPreference>
-    </PreferenceCategory>
-
 </PreferenceScreen>

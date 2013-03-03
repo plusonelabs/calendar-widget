@@ -34,7 +34,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences_calendars);
 		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-		initialActiveCalendars = prefs.getStringSet(ICalendarPreferences.PREF_ACTIVE_CALENDARS,
+		initialActiveCalendars = prefs.getStringSet(CalendarPreferences.PREF_ACTIVE_CALENDARS,
 				null);
 		populatePreferenceScreen(initialActiveCalendars);
 	}
@@ -75,7 +75,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 	public void persistSelectedCalendars(HashSet<String> prefValues) {
 		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
 		Editor editor = prefs.edit();
-		editor.putStringSet(ICalendarPreferences.PREF_ACTIVE_CALENDARS, prefValues);
+		editor.putStringSet(CalendarPreferences.PREF_ACTIVE_CALENDARS, prefValues);
 		editor.commit();
 	}
 

@@ -33,13 +33,15 @@
     <string name="appearance_display_header_title">ウィジェットのヘッダ表示</string>
     <string name="appearance_display_header_desc">日付と設定のヘッダを表示します</string>
     <string name="appearance_display_header_warning">ヘッダを非表示にしてしまうと、プリファレンスに戻ってくることもできなくなります。</string>
-    <string name="appearance_indicators">インジケータ</string>
-    <string name="appearance_indicate_alert_desc">アラートのインジケータを表示します</string>
-    <string name="appearance_indicate_alert_title">アラート</string>
-    <string name="appearance_indicate_recurring_desc">繰り返しイベントのインジケータを表示します</string>
-    <string name="appearance_indicate_recurring_title">繰り返しイベント</string>
     <string name="appearance_background_transparency_title">背景の透明度</string>
     <string name="appearance_background_transparency_desc">背景の透明度を調整します</string>
+
+    <!-- Preference event details -->
+    <string name="event_details_indicators">インジケータ</string>
+    <string name="event_details_indicate_alert_desc">アラートのインジケータを表示します</string>
+    <string name="event_details_indicate_alert_title">アラート</string>
+    <string name="event_details_indicate_recurring_desc">繰り返しイベントのインジケータを表示します</string>
+    <string name="event_details_indicate_recurring_title">繰り返しイベント</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">フィードバック</string>

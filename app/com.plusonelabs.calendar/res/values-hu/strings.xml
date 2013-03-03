@@ -33,13 +33,15 @@
     <string name="appearance_display_header_title">Mutassa a modul fejlécét</string>
     <string name="appearance_display_header_desc">Mutassa a dátumot és a parancs ikonokat a fejlécben</string>
     <string name="appearance_display_header_warning">A fejléc elrejtése után a modulból nem fogja elérni a beállításokat.</string>
-    <string name="appearance_indicators">Jelölések</string>
-    <string name="appearance_indicate_alert_desc">Jelölje meg az emlékeztetővel rendelkező eseményeket</string>
-    <string name="appearance_indicate_alert_title">Emlékeztetők</string>
-    <string name="appearance_indicate_recurring_desc">Jelölje meg az ismétlődő eseményeket</string>
-    <string name="appearance_indicate_recurring_title">Ismétlődő események</string>
     <string name="appearance_background_transparency_title">Háttér átlátszóság </string>
     <string name="appearance_background_transparency_desc">A háttér átlátszóság beállítása</string>
+
+    <!-- Event details -->
+    <string name="event_details_indicators">Jelölések</string>
+    <string name="event_details_indicate_alert_desc">Jelölje meg az emlékeztetővel rendelkező eseményeket</string>
+    <string name="event_details_indicate_alert_title">Emlékeztetők</string>
+    <string name="event_details_indicate_recurring_desc">Jelölje meg az ismétlődő eseményeket</string>
+    <string name="event_details_indicate_recurring_title">Ismétlődő események</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Visszajelzés</string>

@@ -1,6 +1,6 @@
 package com.plusonelabs.calendar.prefs;
 
-import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;

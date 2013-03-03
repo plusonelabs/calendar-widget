@@ -33,13 +33,15 @@
     <string name="appearance_display_header_title">Zobrazit záhlaví</string>
     <string name="appearance_display_header_desc">Zobrazit nastavení data a záhlaví</string>
     <string name="appearance_display_header_warning">Skrytí záhlaví znemožní přístup do nastavení widgetu přes tlačítko.</string>
-    <string name="appearance_indicators">Ikonky</string>
-    <string name="appearance_indicate_alert_desc">Zobrazit ikonku upozornění</string>
-    <string name="appearance_indicate_alert_title">Upozornění</string>
-    <string name="appearance_indicate_recurring_desc">Zobrazit ikonku u opakujících se událostí</string>
-    <string name="appearance_indicate_recurring_title">Opakující se události</string>
     <string name="appearance_background_transparency_title">Průhlednost pozadí </string>
     <string name="appearance_background_transparency_desc">Nastavit průhlednost pozadí</string>
+
+    <!-- Preference event details -->
+    <string name="event_details_indicators">Ikonky</string>
+    <string name="event_details_indicate_alert_desc">Zobrazit ikonku upozornění</string>
+    <string name="event_details_indicate_alert_title">Upozornění</string>
+    <string name="event_details_indicate_recurring_desc">Zobrazit ikonku u opakujících se událostí</string>
+    <string name="event_details_indicate_recurring_title">Opakující se události</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Zpětná vazba</string>

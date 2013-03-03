@@ -33,13 +33,15 @@
     <string name="appearance_display_header_title">Отображать заголовок виджета</string>
     <string name="appearance_display_header_desc">Отображать заголовок дата и настройки</string>
     <string name="appearance_display_header_warning">Убрав заголовок, вы не сможете вернуться в настройки.</string>
-    <string name="appearance_indicators">Индикаторы</string>
-    <string name="appearance_indicate_alert_desc">Отображать индикатор для оповещений</string>
-    <string name="appearance_indicate_alert_title">Оповещения</string>
-    <string name="appearance_indicate_recurring_desc">Отображать индикатор для повторяющихся мероприятий</string>
-    <string name="appearance_indicate_recurring_title">Повторяющиеся мероприятия</string>
     <string name="appearance_background_transparency_title">Прозрачность фона</string>
     <string name="appearance_background_transparency_desc">Изменить прозрачность фона</string>
+
+    <!-- Preference event details -->
+    <string name="event_details_indicators">Индикаторы</string>
+    <string name="event_details_indicate_alert_desc">Отображать индикатор для оповещений</string>
+    <string name="event_details_indicate_alert_title">Оповещения</string>
+    <string name="event_details_indicate_recurring_desc">Отображать индикатор для повторяющихся мероприятий</string>
+    <string name="event_details_indicate_recurring_title">Повторяющиеся мероприятия</string>
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Отзывы</string>

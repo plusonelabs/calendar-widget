@@ -48,6 +48,8 @@
     <string name="event_range_three_months">Drei Monate</string>
     <string name="event_range_six_months">Sechs Monate</string>
     <string name="event_range_one_year">Ein Jahr</string>
+    <string name="event_details_show_location_title">Ort</string>
+    <string name="event_details_show_location_desc">Zeige den Ort des Termins</string>
     <string name="event_details_indicators">Hinweise</string>
     <string name="event_details_indicate_alert_desc">Zeige Hinweise für Erinnerungen</string>
     <string name="event_details_indicate_alert_title">Erinnerungen</string>

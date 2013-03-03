@@ -12,6 +12,7 @@ public class CalendarEvent extends Event {
 	private DateTime endDate;
 	private int color;
 	private boolean allDay;
+	private String location;
 	private boolean alarmActive;
 	private boolean recurring;
 	private boolean spansMultipleDays;
@@ -55,6 +56,14 @@ public class CalendarEvent extends Event {
 
 	public void setAllDay(boolean allDay) {
 		this.allDay = allDay;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getLocation() {
+		return location;
 	}
 
 	public void setAlarmActive(boolean active) {
@@ -130,10 +139,13 @@ public class CalendarEvent extends Event {
 
 	@Override
 	public String toString() {
-		return "CalendarEntry [eventId=" + eventId + ", title=" + title + ", endDate=" + endDate
-				+ ", color=" + color + ", allDay=" + allDay + ", alarmActive=" + alarmActive
-				+ ", recurring=" + recurring + ", spansMultipleDays=" + spansMultipleDays
-				+ ", getStartDate()=" + getStartDate() + "]";
+		return "CalendarEvent [eventId=" + eventId + ", "
+				+ (title != null ? "title=" + title + ", " : "")
+				+ (endDate != null ? "endDate=" + endDate + ", " : "") + "color=" + color
+				+ ", allDay=" + allDay + ", alarmActive=" + alarmActive + ", recurring="
+				+ recurring + ", spansMultipleDays=" + spansMultipleDays + ", "
+				+ (originalEvent != null ? "originalEvent=" + originalEvent + ", " : "")
+				+ (location != null ? "location=" + location : "") + "]";
 	}
 
 }

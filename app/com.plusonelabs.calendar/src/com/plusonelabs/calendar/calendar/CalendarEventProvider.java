@@ -32,7 +32,7 @@ public class CalendarEventProvider {
 			+ Attendees.ATTENDEE_STATUS_DECLINED;
 	private static final String[] PROJECTION = new String[] { Instances.EVENT_ID, Instances.TITLE,
 			Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.CALENDAR_COLOR,
-			Instances.EVENT_COLOR, Instances.HAS_ALARM, Instances.RRULE };
+			Instances.EVENT_COLOR, Instances.EVENT_LOCATION, Instances.HAS_ALARM, Instances.RRULE };
 	private static final String CLOSING_BRACKET = " )";
 	private static final String OR = " OR ";
 	private static final String EQUALS = " = ";
@@ -119,8 +119,9 @@ public class CalendarEventProvider {
 		event.setEndDate(new DateTime(calendarCursor.getLong(3)));
 		event.setAllDay(calendarCursor.getInt(4) > 0);
 		event.setColor(getAsOpaque(getEntryColor(calendarCursor)));
-		event.setAlarmActive(calendarCursor.getInt(7) > 0);
-		event.setRecurring(calendarCursor.getString(8) != null);
+		event.setLocation(calendarCursor.getString(7));
+		event.setAlarmActive(calendarCursor.getInt(8) > 0);
+		event.setRecurring(calendarCursor.getString(9) != null);
 		if (event.isAllDay()) {
 			DateTime startDate = event.getStartDate();
 			long converted = startDate.getZone().convertLocalToUTC(startDate.getMillis(), true);

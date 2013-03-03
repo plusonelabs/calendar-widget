@@ -28,12 +28,13 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	private static final String SPACE_ARROW = " →";
 	private static final String ARROW_SPACE = "→ ";
 	private static final String EMPTY_STRING = "";
-	private static final String SPACED_DASH = " - ";
+	private static final String SPACE_DASH_SPACE = " - ";
+	private static final String SPACE_PIPE_SPACE = "  |  ";
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
 
 	private final Context context;
-	private CalendarEventProvider calendarContentProvider;
-	private SharedPreferences prefs;
+	private final CalendarEventProvider calendarContentProvider;
+	private final SharedPreferences prefs;
 
 	public CalendarEventVisualizer(Context context) {
 		this.context = context;
@@ -45,29 +46,54 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		CalendarEvent event = (CalendarEvent) eventEntry;
 		RemoteViews rv = new RemoteViews(context.getPackageName(), getEventEntryLayout());
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
+		setTitle(event, rv);
+		setEventDetails(event, rv);
+		setAlarmActive(event, rv);
+		setRecurring(event, rv);
+		setColor(event, rv);
+		return rv;
+	}
+
+	private void setTitle(CalendarEvent event, RemoteViews rv) {
 		String title = event.getTitle();
 		if (title == null || title.equals(EMPTY_STRING)) {
 			title = context.getResources().getString(R.string.no_title);
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);
+	}
+
+	private void setEventDetails(CalendarEvent event, RemoteViews rv) {
 		if (event.isAllDay() || event.spansOneFullDay()) {
-			rv.setViewVisibility(R.id.event_entry_date, View.GONE);
+			rv.setViewVisibility(R.id.event_entry_details, View.GONE);
 		} else {
-			rv.setViewVisibility(R.id.event_entry_date, View.VISIBLE);
-			rv.setTextViewText(R.id.event_entry_date, createTimeSpanString(event));
+			String eventDetails = createTimeSpanString(event);
+			boolean showLocation = prefs.getBoolean(PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
+			if (showLocation && event.getLocation() != null && !event.getLocation().isEmpty()) {
+				eventDetails += SPACE_PIPE_SPACE + event.getLocation();
+			}
+			rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
+			rv.setTextViewText(R.id.event_entry_details, eventDetails);
 		}
+	}
+
+	private void setAlarmActive(CalendarEvent event, RemoteViews rv) {
 		if (event.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true)) {
 			rv.setViewVisibility(R.id.event_entry_indicator_alarm, View.VISIBLE);
 		} else {
 			rv.setViewVisibility(R.id.event_entry_indicator_alarm, View.GONE);
 		}
+	}
+
+	private void setRecurring(CalendarEvent event, RemoteViews rv) {
 		if (event.isRecurring() && prefs.getBoolean(PREF_INDICATE_RECURRING, false)) {
 			rv.setViewVisibility(R.id.event_entry_indicator_recurring, View.VISIBLE);
 		} else {
 			rv.setViewVisibility(R.id.event_entry_indicator_recurring, View.GONE);
 		}
+	}
+
+	private void setColor(CalendarEvent event, RemoteViews rv) {
 		rv.setInt(R.id.event_entry_color, METHOD_SET_BACKGROUND_COLOR, event.getColor());
-		return rv;
 	}
 
 	public Intent createOnItemClickIntent(CalendarEvent event) {
@@ -82,7 +108,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	public String createTimeSpanString(CalendarEvent event) {
 		String startStr = null;
 		String endStr = null;
-		String separator = SPACED_DASH;
+		String separator = SPACE_DASH_SPACE;
 
 		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getStartDate())) {
 			startStr = ARROW_SPACE;

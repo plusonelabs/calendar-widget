@@ -16,6 +16,8 @@ public class CalendarPreferences {
 	public static final String PREF_DATE_FORMAT_DEFAULT = "auto";
 	public static final String PREF_EVENT_RANGE = "eventRange";
 	public static final String PREF_EVENT_RANGE_DEFAULT = "30";
+	public static final String PREF_SHOW_LOCATION = "showLocation";
+	public static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
 
 	private CalendarPreferences() {
 		// prohibit instantiation

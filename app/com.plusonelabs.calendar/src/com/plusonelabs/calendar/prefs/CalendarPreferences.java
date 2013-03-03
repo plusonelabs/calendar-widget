@@ -4,6 +4,8 @@ public class CalendarPreferences {
 
 	public static final String PREF_TEXT_SIZE = "textSize";
 	public static final String PREF_TEXT_SIZE_DEFAULT = "1.0";
+	public static final String PREF_MULTILINE_TITLE = "multiline_title";
+	public static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
 	public static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
 	public static final String PREF_SHOW_HEADER = "showHeader";
 	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";

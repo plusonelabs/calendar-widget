@@ -14,6 +14,7 @@ public class RemoteViewsUtil {
 
 	private static final String METHOD_SET_TEXT_SIZE = "setTextSize";
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
+	private static final String METHOD_SET_SINGLE_LINE = "setSingleLine";
 
 	private RemoteViewsUtil() {
 		// prohibit instantion
@@ -66,5 +67,9 @@ public class RemoteViewsUtil {
 			// resource might not exist
 			return 0f;
 		}
+	}
+
+	public static void setSingleLine(RemoteViews rv, int viewId, boolean singleLine) {
+		rv.setBoolean(viewId, METHOD_SET_SINGLE_LINE, singleLine);
 	}
 }

@@ -7,6 +7,14 @@
         android:key="textSize"
         android:summary="@string/appearance_text_size_desc"
         android:title="@string/appearance_text_size_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="multiline_title"
+        android:summary="@string/appearance_multiline_title_desc"
+        android:title="@string/appearance_multiline_title_title" >
+    </CheckBoxPreference>
+
     <ListPreference
         android:defaultValue="auto"
         android:entries="@array/pref_date_format_entries"

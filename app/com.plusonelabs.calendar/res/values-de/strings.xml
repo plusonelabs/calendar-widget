@@ -27,6 +27,8 @@
     <string name="appearance_text_size_medium">Mittel</string>
     <string name="appearance_text_size_large">Groß</string>
     <string name="appearance_text_size_very_large">Sehr groß</string>
+    <string name="appearance_multiline_title_title">Mehrzeiliger Titel</string>
+    <string name="appearance_multiline_title_desc">Zeige Termintitel über mehrere Zeilen an</string>
     <string name="appearance_date_format_desc">Anzeige in am/pm oder 24 Stunden Format</string>
     <string name="appearance_date_format_title">Datumsformat </string>
     <string name="appearance_date_format_auto">Automatisch</string>

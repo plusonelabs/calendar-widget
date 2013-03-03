@@ -61,6 +61,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);
 		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
+		setSingleLine(rv, R.id.event_entry_title,
+				!prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
 	}
 
 	private void setEventDetails(CalendarEvent event, RemoteViews rv) {

@@ -1,5 +1,6 @@
 package com.plusonelabs.calendar.calendar;
 
+import static com.plusonelabs.calendar.RemoteViewsUtil.*;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	private static final String EMPTY_STRING = "";
 	private static final String SPACE_DASH_SPACE = " - ";
 	private static final String SPACE_PIPE_SPACE = "  |  ";
-	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
 
 	private final Context context;
 	private final CalendarEventProvider calendarContentProvider;
@@ -44,7 +44,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 
 	public RemoteViews getRemoteView(Event eventEntry) {
 		CalendarEvent event = (CalendarEvent) eventEntry;
-		RemoteViews rv = new RemoteViews(context.getPackageName(), getEventEntryLayout());
+		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.event_entry);
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
 		setTitle(event, rv);
 		setEventDetails(event, rv);
@@ -60,6 +60,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 			title = context.getResources().getString(R.string.no_title);
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);
+		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
 	}
 
 	private void setEventDetails(CalendarEvent event, RemoteViews rv) {
@@ -73,6 +74,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 			}
 			rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
 			rv.setTextViewText(R.id.event_entry_details, eventDetails);
+			setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
 		}
 	}
 
@@ -93,7 +95,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	}
 
 	private void setColor(CalendarEvent event, RemoteViews rv) {
-		rv.setInt(R.id.event_entry_color, METHOD_SET_BACKGROUND_COLOR, event.getColor());
+		setBackgroundColor(rv, R.id.event_entry_color, event.getColor());
 	}
 
 	public Intent createOnItemClickIntent(CalendarEvent event) {
@@ -137,18 +139,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 				DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
 	}
 
-	private int getEventEntryLayout() {
-		String textSize = prefs.getString(PREF_TEXT_SIZE, PREF_TEXT_SIZE_MEDIUM);
-		if (textSize.equals(PREF_TEXT_SIZE_SMALL)) {
-			return R.layout.event_entry_small;
-		} else if (textSize.equals(PREF_TEXT_SIZE_LARGE)) {
-			return R.layout.event_entry_large;
-		}
-		return R.layout.event_entry_medium;
-	}
-
 	public int getViewTypeCount() {
-		return 6;
+		return 2;
 	}
 
 	public ArrayList<CalendarEvent> getEventEntries() {

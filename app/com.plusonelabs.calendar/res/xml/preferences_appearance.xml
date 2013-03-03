@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ListPreference
-        android:defaultValue="medium"
+        android:defaultValue="1.0"
         android:entries="@array/pref_text_size_entries"
         android:entryValues="@array/pref_text_size_values"
         android:key="textSize"

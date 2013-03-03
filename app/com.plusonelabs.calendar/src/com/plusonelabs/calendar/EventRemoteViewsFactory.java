@@ -1,6 +1,7 @@
 package com.plusonelabs.calendar;
 
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
+import static com.plusonelabs.calendar.CalendarIntentUtil.*;
+import static com.plusonelabs.calendar.RemoteViewsUtil.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,8 +11,6 @@ import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -26,23 +25,20 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	private static final String COMMA_SPACE = ", ";
 
 	private final Context context;
-	private SharedPreferences prefs;
-	private ArrayList<Event> eventEntries;
+	private final ArrayList<Event> eventEntries;
 
-	private ArrayList<IEventVisualizer<?>> eventProviders;
+	private final ArrayList<IEventVisualizer<?>> eventProviders;
 
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
 		eventProviders = new ArrayList<IEventVisualizer<?>>();
 		eventProviders.add(new CalendarEventVisualizer(context));
 		eventEntries = new ArrayList<Event>();
-		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
 	public void onCreate() {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
-		rv.setPendingIntentTemplate(R.id.event_list,
-				CalendarIntentUtil.createOpenCalendarEventPendingIntent(context));
+		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
 	}
 
 	public void onDestroy() {
@@ -54,39 +50,30 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public RemoteViews getViewAt(int position) {
-		if (position >= eventEntries.size()) {
-			return null;
-		}
-		Event entry = eventEntries.get(position);
-		if (entry instanceof DayHeader) {
-			return updateDayHeader((DayHeader) entry);
-		}
-		for (int i = 0; i < eventProviders.size(); i++) {
-			IEventVisualizer<?> eventProvider = eventProviders.get(i);
-			if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryType())) {
-				return eventProvider.getRemoteView(entry);
+		if (position < eventEntries.size()) {
+			Event entry = eventEntries.get(position);
+			if (entry instanceof DayHeader) {
+				return updateDayHeader((DayHeader) entry);
+			}
+			for (int i = 0; i < eventProviders.size(); i++) {
+				IEventVisualizer<?> eventProvider = eventProviders.get(i);
+				if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryType())) {
+					return eventProvider.getRemoteView(entry);
+				}
 			}
 		}
 		return null;
 	}
 
 	public RemoteViews updateDayHeader(DayHeader dayHeader) {
-		RemoteViews rv = new RemoteViews(context.getPackageName(), getDayHeaderLayout());
+		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.day_header);
 		rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
-		Intent intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context,
-				dayHeader.getStartDate());
+		setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
+		setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
+				R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
+		Intent intent = createOpenCalendarAtDayIntent(context, dayHeader.getStartDate());
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
-	}
-
-	private int getDayHeaderLayout() {
-		String textSize = prefs.getString(PREF_TEXT_SIZE, PREF_TEXT_SIZE_MEDIUM);
-		if (textSize.equals(PREF_TEXT_SIZE_SMALL)) {
-			return R.layout.day_header_small;
-		} else if (textSize.equals(PREF_TEXT_SIZE_LARGE)) {
-			return R.layout.day_header_large;
-		}
-		return R.layout.day_header_medium;
 	}
 
 	public String createDayEntryString(DayHeader dayEntry) {

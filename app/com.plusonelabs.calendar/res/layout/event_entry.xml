@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/event_entry"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/entry_height_medium" >
+    android:layout_height="wrap_content" >
 
     <TextView
         android:id="@+id/event_entry_color"
         style="@style/EventEntryColor"
         android:layout_width="8dp"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        tools:ignore="SelectableText" />
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_entry_text_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/event_entry_details"
-            style="@style/EventEntryDate.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref" />
-
-        <TextView
             android:id="@+id/event_entry_title"
-            style="@style/EventEntryTitle.Medium"
+            style="@style/EventEntryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/event_entry_details"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignWithParentIfMissing="true"
             android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            tools:ignore="SelectableText" />
+
+        <TextView
+            android:id="@+id/event_entry_details"
+            style="@style/EventEntryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/event_entry_title"
+            android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref"
+            tools:ignore="SelectableText" />
 
         <include
             android:id="@+id/event_entry_indicator_layout_ref"

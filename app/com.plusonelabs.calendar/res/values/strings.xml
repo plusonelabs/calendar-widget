@@ -22,9 +22,11 @@
     <string name="appearance_prefs_desc">Adjust the appearance of the widget</string>
     <string name="appearance_text_size_desc">Adjust the text size</string>
     <string name="appearance_text_size_title">Text size</string>
+    <string name="appearance_text_size_very_small">Very small</string>
     <string name="appearance_text_size_small">Small</string>
     <string name="appearance_text_size_medium">Medium</string>
     <string name="appearance_text_size_large">Large</string>
+    <string name="appearance_text_size_very_large">Very large</string>
     <string name="appearance_date_format_desc">Show dates in am/pm or 24 hours format</string>
     <string name="appearance_date_format_title">Date format</string>
     <string name="appearance_date_format_auto">Automatic</string>

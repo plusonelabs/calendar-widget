@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <style name="HeaderCurrentDate" parent="android:Widget.Holo.TextView">
         <item name="android:alpha">0.6</item>
@@ -9,69 +9,34 @@
         <item name="android:paddingBottom">4dp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">#ffffff</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="DayHeaderTitle" parent="android:Widget.Holo.TextView">
         <item name="android:ellipsize">marquee</item>
         <item name="android:gravity">right|bottom</item>
-        <item name="android:paddingBottom">2dp</item>
-        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">@dimen/day_header_padding_bottom</item>
+        <item name="android:paddingRight">@dimen/day_header_padding_right</item>
+        <item name="android:paddingTop">@dimen/day_header_padding_top</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">#cccccc</item>
-        <item name="android:textSize">@dimen/day_header_title_medium</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="DayHeaderTitle.Small">
-        <item name="android:textSize">@dimen/day_header_title_small</item>
-    </style>
-
-    <style name="DayHeaderTitle.Medium">
-        <item name="android:textSize">@dimen/day_header_title_medium</item>
-    </style>
-
-    <style name="DayHeaderTitle.Large">
-        <item name="android:textSize">@dimen/day_header_title_large</item>
+        <item name="android:textSize">@dimen/day_header_title</item>
     </style>
 
     <style name="EventEntryTitle" parent="android:Widget.Holo.TextView">
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/event_entry_title_medium</item>
-    </style>
-
-    <style name="EventEntryTitle.Small">
-        <item name="android:textSize">@dimen/event_entry_title_small</item>
-    </style>
-
-    <style name="EventEntryTitle.Medium">
-        <item name="android:textSize">@dimen/event_entry_title_medium</item>
-    </style>
-
-    <style name="EventEntryTitle.Large">
-        <item name="android:textSize">@dimen/event_entry_title_large</item>
+        <item name="android:textSize">@dimen/event_entry_title</item>
     </style>
 
     <style name="EventEntryDate" parent="android:Widget.Holo.TextView">
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">#ffbbbbbb</item>
-        <item name="android:textSize">@dimen/event_entry_date_medium</item>
-    </style>
-
-    <style name="EventEntryDate.Small">
-        <item name="android:textSize">@dimen/event_entry_date_small</item>
-    </style>
-
-    <style name="EventEntryDate.Medium">
-        <item name="android:textSize">@dimen/event_entry_date_medium</item>
-    </style>
-
-    <style name="EventEntryDate.Large">
-        <item name="android:textSize">@dimen/event_entry_date_large</item>
+        <item name="android:textSize">@dimen/event_entry_details</item>
     </style>
 
     <style name="DayHeaderSeparator" parent="android:Widget.Holo.TextView">
@@ -82,4 +47,5 @@
         <item name="android:background">@android:color/holo_green_dark</item>
         <item name="android:layout_marginRight">8dp</item>
     </style>
+
 </resources>

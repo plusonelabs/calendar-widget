@@ -19,6 +19,11 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.6.1
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=12&state=closed
+
+* Fixed a crash of Samsungs S Planner when creating new event
 
 h3. v1.6
 

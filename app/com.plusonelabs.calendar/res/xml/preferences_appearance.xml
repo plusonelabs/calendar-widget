@@ -4,7 +4,7 @@
         android:defaultValue="1.0"
         android:entries="@array/pref_text_size_entries"
         android:entryValues="@array/pref_text_size_values"
-        android:key="textSize"
+        android:key="textSizeScale"
         android:summary="@string/appearance_text_size_desc"
         android:title="@string/appearance_text_size_title" />
 

@@ -48,7 +48,8 @@ public class RemoteViewsUtil {
 	private static float getScaledValueInPixel(Context context, int dimenId) {
 		float resValue = getResourceValue(context, dimenId);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE, PREF_TEXT_SIZE_DEFAULT));
+		float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
+				PREF_TEXT_SIZE_SCALE_DEFAULT));
 		return resValue * prefTextScale;
 	}
 
@@ -56,7 +57,8 @@ public class RemoteViewsUtil {
 		float resValue = getResourceValue(context, dimenId);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		float density = context.getResources().getDisplayMetrics().density;
-		float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE, PREF_TEXT_SIZE_DEFAULT));
+		float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
+				PREF_TEXT_SIZE_SCALE_DEFAULT));
 		return resValue * prefTextScale / density;
 	}
 

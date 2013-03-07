@@ -49,8 +49,12 @@ public class CalendarIntentUtil {
 	}
 
 	public static Intent createNewEventIntent() {
-		Intent intent = new Intent(Intent.ACTION_EDIT);
-		intent.setType(INTENT_TYPE_EVENT);
+		DateTime beginTime = new DateTime().plusHours(1).withMinuteOfHour(0).withSecondOfMinute(0)
+				.withMillisOfSecond(0);
+		DateTime endTime = beginTime.plusHours(1);
+		Intent intent = new Intent(Intent.ACTION_INSERT).setData(Events.CONTENT_URI)
+				.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getMillis())
+				.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getMillis());
 		return intent;
 	}
 }

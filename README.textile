@@ -19,6 +19,16 @@ h2. Features
 
 h2. Changelog
 
+
+h3. v1.6
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=11&state=closed
+
+* Added option to show the event location
+* Added option to span title over multiple lines
+* Added abililty to choose from more font sizes
+* Added option to set the event date range
+
 h3. v1.5.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=10&state=closed

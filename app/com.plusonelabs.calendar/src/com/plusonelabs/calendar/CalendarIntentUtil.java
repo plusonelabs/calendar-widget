@@ -42,16 +42,10 @@ public class CalendarIntentUtil {
 	}
 
 	private static Intent createCalendarIntent(String action) {
-		Intent intent = new Intent();
-		intent.setAction(action);
+		Intent intent = new Intent(action);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
 				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		return intent;
-	}
-
-	public static PendingIntent createNewEventPendingIntent(Context context) {
-		Intent intent = createNewEventIntent();
-		return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
 	public static Intent createNewEventIntent() {

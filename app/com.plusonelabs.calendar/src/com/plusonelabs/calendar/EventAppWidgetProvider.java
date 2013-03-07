@@ -78,7 +78,6 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		PackageManager packageManager = context.getPackageManager();
 		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
 				PackageManager.MATCH_DEFAULT_ONLY);
-		System.out.println(list);
 		return list.size() > 0;
 	}
 

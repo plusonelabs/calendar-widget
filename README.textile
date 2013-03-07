@@ -19,6 +19,12 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.6.2
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=13&state=closed
+
+* Fixed serious crash when preferences from older installations were present
+
 h3. v1.6.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=12&state=closed

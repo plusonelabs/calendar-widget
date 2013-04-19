@@ -2,15 +2,15 @@
 <resources>
 
     <string name="app_name">Calendar Widget</string>
-    <string name="today">AUJOURD'HUI</string>
+    <string name="today">"AUJOURD\'HUI</string>
     <string name="tomorrow">DEMAIN</string>
     <string name="no_upcoming_events">Aucun événement à venir</string>
     <string name="widget_name">Calendrier</string>
     <string name="open_prefs_desc">Ouvrir les paramètres du widget calendrier</string>
     <string name="add_event_desc">Ajouter un nouvel événement</string>
     <string name="prefs_add_widget">Ajouter le widget</string>
-    <string name="indicator_alarm">Indicator d'alarme</string>
-    <string name="indicator_recurring">Indicateur d'événement récurent</string>
+    <string name="indicator_alarm">Indicator d\'alarme</string>
+    <string name="indicator_recurring">Indicateur d\'événement récurent</string>
     <string name="no_title">(Sans titre)</string>
 
     <!-- Preference calendars -->
@@ -19,7 +19,7 @@
 
     <!-- Preference appearance -->
     <string name="appearance_prefs">Apparence</string>
-    <string name="appearance_prefs_desc">Ajuster l'apparence du widget</string>
+    <string name="appearance_prefs_desc">Ajuster l\'apparence du widget</string>
     <string name="appearance_text_size_title">Taille de police</string>
     <string name="appearance_text_size_desc">Ajuster la taille de police</string>
     <string name="appearance_text_size_very_small">Très petit</string>
@@ -28,15 +28,15 @@
     <string name="appearance_text_size_large">Gros</string>
     <string name="appearance_text_size_very_large">Très gros</string>
     <string name="appearance_multiline_title_title">Titre multiligne</string>
-    <string name="appearance_multiline_title_desc">Etendre le titre de l'événement sur plusieurs lignes</string>
+    <string name="appearance_multiline_title_desc">Etendre le titre de l\'événement sur plusieurs lignes</string>
     <string name="appearance_date_format_desc">Montrer les dates au format 12 ou 24 heures</string>
     <string name="appearance_date_format_title">Format de date</string>
     <string name="appearance_date_format_auto">Automatique</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>
-    <string name="appearance_display_header_title">Montrer l'en-tête du widget</string>
+    <string name="appearance_display_header_title">Montrer l\'en-tête du widget</string>
     <string name="appearance_display_header_desc">Montrer les en-têtes date et paramètres</string>
-    <string name="appearance_display_header_warning">Cacher l'en-tête vous empêchera aussi de retourner dans les préférences.</string>
+    <string name="appearance_display_header_warning">Cacher l\'en-tête vous empêchera aussi de retourner dans les préférences.</string>
     <string name="appearance_background_transparency_title">Transparence du fond</string>
     <string name="appearance_background_transparency_desc">Ajuster la transparence du fond</string>
 
@@ -44,7 +44,7 @@
     <string name="event_details_prefs">Evénements</string>
     <string name="event_details_prefs_desc">Configurez quelles informations voir pour un événement</string>
     <string name="event_details_event_range_title">Intervale de date</string>
-    <string name="event_details_event_range_desc">Configuez le nombre d'événements à afficher</string>
+    <string name="event_details_event_range_desc">Configuez le nombre d\'événements à afficher</string>
     <string name="event_range_one_week">Une semaine</string>
     <string name="event_range_two_weeks">Deux semaines</string>
     <string name="event_range_one_month">Un mois</string>
@@ -53,11 +53,11 @@
     <string name="event_range_six_months">Six mois</string>
     <string name="event_range_one_year">Un an</string>
     <string name="event_details_show_location_title">Montrer le lieu</string>
-    <string name="event_details_show_location_desc">Cacher ou montrer le lieu de l'événement</string>
+    <string name="event_details_show_location_desc">Cacher ou montrer le lieu de l\'événement</string>
     <string name="event_details_indicators">Indicateurs</string>
-    <string name="event_details_indicate_alert_desc">Montrer l'indicateur pour les alertes</string>
+    <string name="event_details_indicate_alert_desc">Montrer l\'indicateur pour les alertes</string>
     <string name="event_details_indicate_alert_title">Alertes</string>
-    <string name="event_details_indicate_recurring_desc">Montrer l'indicateur pour les événements récurrents</string>
+    <string name="event_details_indicate_recurring_desc">Montrer l\'indicateur pour les événements récurrents</string>
     <string name="event_details_indicate_recurring_title">Evénements récurrents</string>
 
     <!-- Preference feedback -->

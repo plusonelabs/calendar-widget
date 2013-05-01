@@ -15,6 +15,7 @@ public class CalendarPreferences {
 	public static final int PREF_BACKGROUND_TRANSPARENCY_DEFAULT = 50;
 	public static final String PREF_DATE_FORMAT = "dateFormat";
 	public static final String PREF_DATE_FORMAT_DEFAULT = "auto";
+	public static final String PREF_SHOW_NEARBY_DOW = "showNearbyDOW";
 	public static final String PREF_EVENT_RANGE = "eventRange";
 	public static final String PREF_EVENT_RANGE_DEFAULT = "30";
 	public static final String PREF_SHOW_LOCATION = "showLocation";

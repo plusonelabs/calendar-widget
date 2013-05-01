@@ -85,17 +85,22 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public String createDayEntryString(DayHeader dayEntry) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		int nearbyDateFormat = DateUtils.FORMAT_SHOW_DATE;
+		if (prefs.getBoolean(CalendarPreferences.PREF_SHOW_NEARBY_DOW, false)) {
+			nearbyDateFormat |= DateUtils.FORMAT_SHOW_WEEKDAY;
+		}
 		Date date = dayEntry.getStartDate().toDate();
 		String prefix = EMPTY_STRING;
 		if (dayEntry.isToday()) {
 			prefix = context.getString(R.string.today) + COMMA_SPACE;
 			return prefix
-					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
+					+ DateUtils.formatDateTime(context, date.getTime(), nearbyDateFormat)
 							.toUpperCase(Locale.getDefault());
 		} else if (dayEntry.isTomorrow()) {
 			prefix = context.getString(R.string.tomorrow) + COMMA_SPACE;
 			return prefix
-					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
+					+ DateUtils.formatDateTime(context, date.getTime(), nearbyDateFormat)
 							.toUpperCase(Locale.getDefault());
 		}
 		return DateUtils.formatDateTime(context, date.getTime(),

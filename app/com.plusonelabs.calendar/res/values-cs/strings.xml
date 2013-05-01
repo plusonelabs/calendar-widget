@@ -31,6 +31,8 @@
     <string name="appearance_date_format_auto">Automatický</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>
+    <string name="appearance_show_nearby_dow_title">Zobrazit blízké dny v týdnu</string>
+    <string name="appearance_show_nearby_dow_desc">Spolu s „dnes“ a „zítra“ zobrazit také den v týdnu.</string>
     <string name="appearance_display_header_title">Zobrazit záhlaví</string>
     <string name="appearance_display_header_desc">Zobrazit nastavení data a záhlaví</string>
     <string name="appearance_display_header_warning">Skrytí záhlaví znemožní přístup do nastavení widgetu přes tlačítko.</string>

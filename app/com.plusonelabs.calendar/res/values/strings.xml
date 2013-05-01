@@ -5,6 +5,7 @@
     <string name="today">TODAY</string>
     <string name="tomorrow">TOMORROW</string>
     <string name="no_upcoming_events">No upcoming events</string>
+    <string name="no_today_events">Nothing is happening today</string>
     <string name="widget_name">Calendar</string>
     <string name="open_prefs_desc">Open the settings of the calendar widget</string>
     <string name="add_event_desc">Add new calender event</string>
@@ -37,6 +38,8 @@
     <string name="appearance_display_header_title">Show widget header</string>
     <string name="appearance_display_header_desc">Show the date and settings header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
+    <string name="appearance_show_today_title">Always show today</string>
+    <string name="appearance_show_today_desc">Show today even if there are no events. Good if you hide header with current date.</string>
     <string name="appearance_background_transparency_title">Background transparency </string>
     <string name="appearance_background_transparency_desc">Adjust the transparency of the background</string>
 

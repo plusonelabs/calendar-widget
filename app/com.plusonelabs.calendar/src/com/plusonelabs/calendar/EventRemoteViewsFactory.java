@@ -11,6 +11,8 @@ import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -18,6 +20,7 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 import com.plusonelabs.calendar.calendar.CalendarEventVisualizer;
 import com.plusonelabs.calendar.model.DayHeader;
 import com.plusonelabs.calendar.model.Event;
+import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
@@ -71,6 +74,11 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
 		setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
 				R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
+		setVisibility(rv, R.id.no_today_events_text, dayHeader.isEmptyToday());
+		setTextSize(context, rv, R.id.no_today_events_text, R.dimen.no_today_events_text);
+		setPadding(context, rv, R.id.no_today_events_text,
+				R.dimen.no_today_events_text, R.dimen.no_today_events_text,
+				R.dimen.no_today_events_text, R.dimen.no_today_events_text);
 		Intent intent = createOpenCalendarAtDayIntent(context, dayHeader.getStartDate());
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
@@ -105,8 +113,16 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public void updateEntryList(ArrayList<Event> eventList) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		if (!eventList.isEmpty()) {
 			Event firstEvent = eventList.get(0);
+			if (prefs.getBoolean(CalendarPreferences.PREF_SHOW_TODAY, false)
+					&& !firstEvent.getStartDate().toDateMidnight().isEqual(DateTime.now().toDateMidnight()))
+			{
+				DayHeader todayEmptyBucket = new DayHeader(DateTime.now());
+				todayEmptyBucket.setEmptyToday(true);
+				eventEntries.add(todayEmptyBucket);
+			}
 			DayHeader curDayBucket = new DayHeader(firstEvent.getStartDate());
 			eventEntries.add(curDayBucket);
 			for (Event event : eventList) {

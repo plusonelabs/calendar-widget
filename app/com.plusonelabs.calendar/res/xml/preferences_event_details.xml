@@ -8,7 +8,7 @@
         android:summary="@string/event_details_event_range_desc"
         android:title="@string/event_details_event_range_title" />
 
-    <CheckBoxPreference
+    <CheckBoxPreference android:key="showEndTime" android:title="@string/event_details_show_end_time_title" android:summary="@string/event_details_show_end_time_desc" android:defaultValue="true"/><CheckBoxPreference
         android:defaultValue="true"
         android:key="showLocation"
         android:summary="@string/event_details_show_location_desc"
@@ -29,5 +29,6 @@
             android:title="@string/event_details_indicate_recurring_title" >
         </CheckBoxPreference>
     </PreferenceCategory>
+    
 
 </PreferenceScreen>

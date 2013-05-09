@@ -120,11 +120,17 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		} else {
 			startStr = createTimeString(event.getStartDate());
 		}
-		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())) {
-			endStr = SPACE_ARROW;
-			separator = EMPTY_STRING;
+
+		if (prefs.getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT)) {
+			if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())) {
+				endStr = SPACE_ARROW;
+				separator = EMPTY_STRING;
+			} else {
+				endStr = createTimeString(event.getEndDate());
+			}
 		} else {
-			endStr = createTimeString(event.getEndDate());
+			separator = EMPTY_STRING;
+			endStr = EMPTY_STRING;
 		}
 		return startStr + separator + endStr;
 	}

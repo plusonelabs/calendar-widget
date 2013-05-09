@@ -48,7 +48,7 @@ public class BackgroundTransparencyDialog extends DialogFragment {
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				percentage.setText(roundToTen(progress) + PERCENT_STR);
+				percentage.setText(roundToFive(progress) + PERCENT_STR);
 			}
 
 		});
@@ -67,14 +67,17 @@ public class BackgroundTransparencyDialog extends DialogFragment {
 				SharedPreferences prefs = PreferenceManager
 						.getDefaultSharedPreferences(getActivity());
 				Editor editor = prefs.edit();
-				editor.putInt(PREF_BACKGROUND_TRANSPARENCY, roundToTen(slider.getProgress()));
+				editor.putInt(PREF_BACKGROUND_TRANSPARENCY, roundToFive(slider.getProgress()));
 				editor.commit();
 			}
 		});
 		return builder.create();
 	}
 
-	private int roundToTen(int x) {
-		return (x + 5) / 10 * 10;
+	private static int roundToFive(int x) {
+		int diff = x % 5;
+		return diff == 0 ? x :
+			   diff < 3  ? x - diff :
+						   x + (5 - diff);
 	}
 }

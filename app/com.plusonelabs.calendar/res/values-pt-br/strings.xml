@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Calendar Widget</string>
+    <string name="today">HOJE</string>
+    <string name="tomorrow">AMANHÃ</string>
+    <string name="no_upcoming_events">Sem novos eventos</string>
+    <string name="widget_name">Calendário</string>
+    <string name="open_prefs_desc">Configurações do widget do calendário</string>
+    <string name="add_event_desc">Adicionar novo evento</string>
+    <string name="prefs_add_widget">Adicionar Widget</string>
+    <string name="indicator_alarm">Indicador se um alarme foi definido</string>
+    <string name="indicator_recurring">Indicador se um evento é recorrente</string>
+    <string name="no_title">(Sem título)</string>
+
+    <!-- Preference calendars -->
+    <string name="calendars_prefs">Calendários</string>
+    <string name="calendars_prefs_desc">Selecione os calendários a mostrar</string>
+
+    <!-- Preference appearance -->
+    <string name="appearance_prefs">Aparência</string>
+    <string name="appearance_prefs_desc">Ajustar a aparência do widget</string>
+    <string name="appearance_text_size_title">Tamanho do texto</string>
+    <string name="appearance_text_size_desc">Adjustar o tamnho do texto</string>
+    <string name="appearance_text_size_very_small">Muito pequeno</string>
+    <string name="appearance_text_size_small">Pequeno</string>
+    <string name="appearance_text_size_medium">Médio</string>
+    <string name="appearance_text_size_large">Grande</string>
+    <string name="appearance_text_size_very_large">Muito Grande</string>
+    <string name="appearance_multiline_title_title">Título em múltiplas linhas</string>
+    <string name="appearance_multiline_title_desc">Título do evento distribuído por várias linhas</string>
+    <string name="appearance_date_format_desc">Mostrar hora no formato am/pm ou 24 horas</string>
+    <string name="appearance_date_format_title">Formato da hora</string>
+    <string name="appearance_date_format_auto">Automático</string>
+    <string name="appearance_date_format_24">17:00</string>
+    <string name="appearance_date_format_12">5:00 pm</string>
+    <string name="appearance_display_header_title">Mostrar cabeçalho do widget</string>
+    <string name="appearance_display_header_desc">Mostrar data e configurações no cabeçalho</string>
+    <string name="appearance_display_header_warning">Esconder o cabeçalho impede de voltar para as configurações.</string>
+    <string name="appearance_background_transparency_title">Transparência do fundo</string>
+    <string name="appearance_background_transparency_desc">Ajustar a trasparência do fundo</string>
+
+    <!-- Preferences event details -->
+    <string name="event_details_prefs">Eventos</string>
+    <string name="event_details_prefs_desc">Configurar quais detalhes do evento mostrar</string>
+    <string name="event_details_event_range_title">Período</string>
+    <string name="event_details_event_range_desc">Configurar o número de eventos a mostrar</string>
+    <string name="event_range_one_week">Uma semana</string>
+    <string name="event_range_two_weeks">Duas semanas</string>
+    <string name="event_range_one_month">Um mês</string>
+    <string name="event_range_two_months">Dois meses</string>
+    <string name="event_range_three_months">Três meses</string>
+    <string name="event_range_six_months">Seis meses</string>
+    <string name="event_range_one_year">Um ano</string>
+    <string name="event_details_show_location_title">Mostrar Local</string>
+    <string name="event_details_show_location_desc">Mostrar ou ocultar o local do evento</string>
+    <string name="event_details_indicators">Indicadores</string>
+    <string name="event_details_indicate_alert_desc">Mostrar indicador de alertas</string>
+    <string name="event_details_indicate_alert_title">Alertas</string>
+    <string name="event_details_indicate_recurring_desc">Mostrar indicador para eventos recorrentes</string>
+    <string name="event_details_indicate_recurring_title">Eventos recorrentes</string>
+
+    <!-- Preference feedback -->
+    <string name="feedback_prefs">Feedback</string>
+    <string name="feedback_prefs_desc">Entre em contato conosco</string>
+    <string name="feedback_github_desc">Sua opinião sobre o projeto</string>
+    <string name="feedback_github_title">Visite a página do widget no Github</string>
+    <string name="feedback_play_store_desc">Avalie e comente no Google Play Store</string>
+    <string name="feedback_play_store_title">Visite-nos na Google Play Store</string>
+
+</resources>

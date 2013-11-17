@@ -66,7 +66,9 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	}
 
 	private void setEventDetails(CalendarEvent event, RemoteViews rv) {
-		if (event.isAllDay() || event.spansOneFullDay()) {
+		if (event.spansOneFullDay()
+				&& !(event.isStartOfMultiDayEvent() || event.isEndOfMultiDayEvent())
+				|| event.isAllDay()) {
 			rv.setViewVisibility(R.id.event_entry_details, View.GONE);
 		} else {
 			String eventDetails = createTimeSpanString(event);
@@ -114,7 +116,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		String endStr = null;
 		String separator = SPACE_DASH_SPACE;
 
-		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getStartDate())) {
+		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getStartDate())
+				&& !event.isStartOfMultiDayEvent()) {
 			startStr = ARROW_SPACE;
 			separator = EMPTY_STRING;
 		} else {
@@ -122,7 +125,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		}
 
 		if (prefs.getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT)) {
-			if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())) {
+			if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())
+					&& !event.isEndOfMultiDayEvent()) {
 				endStr = SPACE_ARROW;
 				separator = EMPTY_STRING;
 			} else {

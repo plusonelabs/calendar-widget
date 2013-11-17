@@ -52,8 +52,8 @@
     <string name="event_range_three_months">Three months</string>
     <string name="event_range_six_months">Six months</string>
     <string name="event_range_one_year">One year</string>
-    <string name="event_details_show_end_time_title">Show end time</string>
-    <string name="event_details_show_end_time_desc">Show or hide the event ending time</string>
+    <string name="event_details_show_end_time_title">End time</string>
+    <string name="event_details_show_end_time_desc">Show the event ending time</string>
     <string name="event_details_show_location_title">Show location</string>
     <string name="event_details_show_location_desc">Show or hide event location</string>
     <string name="event_details_indicators">Indicators</string>

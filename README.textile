@@ -19,7 +19,18 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.6.3
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=14&state=closed
+
+* Adds support for multiple languages: Spanish, French, Italian and brazilian Portuguese
+* Adds option to hide end date (contributed by ultraq)
+* Background transparency is set in 5% increments instead of 10% (contributed by ultraq)
+* Fixed bug where events starting or ending at midnight would not show their time correctly
+
 h3. v1.6.2
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=13&state=closed
 
 * Fixed serious crash when preferences from older installations were present
 

@@ -5,6 +5,7 @@
     <string name="today">DNES</string>
     <string name="tomorrow">ZÍTRA</string>
     <string name="no_upcoming_events">Žádné nadcházející události</string>
+    <string name="no_today_events">Dnes se nic neděje</string>
     <string name="widget_name">Kalendář</string>
     <string name="open_prefs_desc">Otevřít nastavení widgetu</string>
     <string name="add_event_desc">Přidat novou událost</string>
@@ -30,9 +31,13 @@
     <string name="appearance_date_format_auto">Automatický</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>
+    <string name="appearance_show_nearby_dow_title">Zobrazit blízké dny v týdnu</string>
+    <string name="appearance_show_nearby_dow_desc">Spolu s „dnes“ a „zítra“ zobrazit také den v týdnu.</string>
     <string name="appearance_display_header_title">Zobrazit záhlaví</string>
     <string name="appearance_display_header_desc">Zobrazit nastavení data a záhlaví</string>
     <string name="appearance_display_header_warning">Skrytí záhlaví znemožní přístup do nastavení widgetu přes tlačítko.</string>
+    <string name="appearance_show_today_title">Vždy zobraz dnešek</string>
+    <string name="appearance_show_today_desc">Dnešní den bude zobrazen i v případě, že nejsou naplánovány žádné události. To se hodí, pokud je skryto záhlaví s aktuálním datem.</string>
     <string name="appearance_background_transparency_title">Průhlednost pozadí </string>
     <string name="appearance_background_transparency_desc">Nastavit průhlednost pozadí</string>
 

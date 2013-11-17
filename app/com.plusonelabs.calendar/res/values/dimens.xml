@@ -5,6 +5,7 @@
     <dimen name="calender_padding">8dp</dimen>
     <dimen name="entry_height">48dp</dimen>
     <dimen name="day_header_title">14dp</dimen>
+    <dimen name="no_today_events_text">18dp</dimen>
     <dimen name="event_entry_title">18dp</dimen>
     <dimen name="event_entry_details">14dp</dimen>
     <dimen name="day_header_padding_bottom">2dp</dimen>

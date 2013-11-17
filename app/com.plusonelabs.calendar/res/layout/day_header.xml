@@ -22,4 +22,13 @@
         android:layout_height="1dp"
         tools:ignore="SelectableText" />
 
+    <TextView
+        android:id="@+id/no_today_events_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/no_today_events"
+        tools:ignore="SelectableText" />
+
 </LinearLayout>

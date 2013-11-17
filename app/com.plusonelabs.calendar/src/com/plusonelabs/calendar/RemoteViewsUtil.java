@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources.NotFoundException;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.RemoteViews;
 
 public class RemoteViewsUtil {
@@ -38,6 +39,11 @@ public class RemoteViewsUtil {
 
 	public static void setBackgroundColor(RemoteViews rv, int viewId, int color) {
 		rv.setInt(viewId, METHOD_SET_BACKGROUND_COLOR, color);
+	}
+
+	public static void setVisibility(RemoteViews rv, int viewId, boolean visible)
+	{
+		rv.setInt(viewId, "setVisibility", visible ? View.VISIBLE : View.GONE);
 	}
 
 	public static void setHeight(Context context, RemoteViews rv, int viewId, int dimenId) {

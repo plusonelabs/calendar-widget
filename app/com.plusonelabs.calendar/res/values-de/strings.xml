@@ -52,6 +52,8 @@
     <string name="event_range_three_months">Drei Monate</string>
     <string name="event_range_six_months">Sechs Monate</string>
     <string name="event_range_one_year">Ein Jahr</string>
+    <string name="event_details_show_end_time_title">Zeige Endzeitpunkt</string>
+    <string name="event_details_show_end_time_desc">Zeige Uhrzeit an dennen ein Termin endet</string>
     <string name="event_details_show_location_title">Ort</string>
     <string name="event_details_show_location_desc">Zeige den Ort des Termins</string>
     <string name="event_details_indicators">Hinweise</string>

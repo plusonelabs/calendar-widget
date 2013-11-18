@@ -2,7 +2,7 @@ h2. Android Calendar Widget
 
 The Android calendar widget is home screen widget for your Android device. It displays a list of upcoming calendar events so that you can easily have a glimpse at your upcoming appointments.
 
-The widget is designed to make use of the new Android 4.0 (Ice Cream Sandwich) APIs and will therefore only work on Android 4.0.3+ devices. 
+The widget is designed to make use of the Android 4.0 (Ice Cream Sandwich) APIs and will therefore only work on Android 4.0.3+ devices. 
 
 !https://github.com/plusonelabs/calendar-widget/raw/master/assets/screenshots/widget-device.png!
 
@@ -18,6 +18,13 @@ h2. Features
 * Supports Android tablets
 
 h2. Changelog
+
+h3. v1.6.4
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=15&state=closed
+
+* Updates czech translation
+* Fixes critical bug on Android 4.4
 
 h3. v1.6.3
 

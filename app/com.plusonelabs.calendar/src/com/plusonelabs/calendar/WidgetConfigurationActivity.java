@@ -12,6 +12,8 @@ import android.widget.Button;
 
 public class WidgetConfigurationActivity extends PreferenceActivity {
 
+	private static final String PREFERENCES_PACKAGE_NAME = "com.plusonelabs.calendar.prefs";
+
 	private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
 	@Override
@@ -43,5 +45,13 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
 	@Override
 	public void onBuildHeaders(List<Header> target) {
 		loadHeadersFromResource(R.xml.preferences_header, target);
+	}
+
+	@Override
+	protected boolean isValidFragment(String fragmentName) {
+		if (fragmentName.startsWith(PREFERENCES_PACKAGE_NAME)) {
+			return true;
+		}
+		return super.isValidFragment(fragmentName);
 	}
 }

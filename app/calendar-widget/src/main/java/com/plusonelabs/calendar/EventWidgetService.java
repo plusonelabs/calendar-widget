@@ -1,8 +1,9 @@
 package com.plusonelabs.calendar;
 
-import static com.plusonelabs.calendar.EventAppWidgetProvider.*;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
+
+import static com.plusonelabs.calendar.EventAppWidgetProvider.getThemedContext;
 
 public class EventWidgetService extends RemoteViewsService {
 

@@ -27,7 +27,7 @@ import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
 
-	private static final String METHOD_SET_BACKGROUND_RESOURCE = "setBackgroundResource";
+	private static final String METHOD_SET_ALPHA = "setAlpha";
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -51,8 +51,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		}
 		int bgTrans = prefs.getInt(CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY,
 				PREF_BACKGROUND_TRANSPARENCY_DEFAULT);
-		rv.setInt(R.id.widget_background, METHOD_SET_BACKGROUND_RESOURCE,
-				transparencyToDrawableRes(bgTrans));
+		rv.setInt(R.id.background_image, METHOD_SET_ALPHA, Math.round(bgTrans / 100f * 255f));
 	}
 
 	public void configureActionBar(Context context, RemoteViews rv) {
@@ -90,35 +89,6 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
 		rv.setOnClickFillInIntent(R.id.empty_event_list,
 				createOpenCalendarAtDayIntent(context, new DateTime()));
-	}
-
-	private int transparencyToDrawableRes(int bgTrans) {
-		int opacity = (bgTrans - 100) * -1;
-		switch (opacity) {
-			case 0:
-				return R.drawable.widget_background_0;
-			case 10:
-				return R.drawable.widget_background_10;
-			case 20:
-				return R.drawable.widget_background_20;
-			case 30:
-				return R.drawable.widget_background_30;
-			case 40:
-				return R.drawable.widget_background_40;
-			case 50:
-				return R.drawable.widget_background_50;
-			case 60:
-				return R.drawable.widget_background_60;
-			case 70:
-				return R.drawable.widget_background_70;
-			case 80:
-				return R.drawable.widget_background_80;
-			case 90:
-				return R.drawable.widget_background_90;
-			case 100:
-				return R.drawable.widget_background_100;
-		}
-		return R.drawable.widget_background_50;
 	}
 
 	public static void updateEventList(Context context) {

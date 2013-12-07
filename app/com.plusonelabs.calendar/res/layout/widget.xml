@@ -41,23 +41,29 @@
     <FrameLayout
         android:id="@+id/widget_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/widget_background_50"
-        android:padding="@dimen/calender_padding" >
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/background_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/widget_background"
+            tools:ignore="ContentDescription" />
 
         <ListView
             android:id="@+id/event_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@android:color/transparent"
-            android:dividerHeight="2dp" >
-        </ListView>
+            android:dividerHeight="2dp"
+            android:padding="@dimen/calender_padding" />
 
         <TextView
             android:id="@+id/empty_event_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:padding="@dimen/calender_padding"
             android:text="@string/no_upcoming_events"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </FrameLayout>

@@ -1,0 +1,54 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.+'
+    }
+}
+
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile 'joda-time:joda-time:2.3'
+}
+
+android {
+
+    compileSdkVersion 19
+    buildToolsVersion "19.0.0"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 19
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+    }
+
+    if (project.hasProperty('calendarStoreFile')) {
+	    signingConfigs {
+	        releaseConfig {
+	            storeFile file(calendarStoreFile)
+	            storePassword calendarStorePassword
+	            keyAlias calendarKeyAlias
+	            keyPassword calendarKeyPassword
+	        }
+	    }
+    	buildTypes.release.signingConfig signingConfigs.releaseConfig
+    }
+}

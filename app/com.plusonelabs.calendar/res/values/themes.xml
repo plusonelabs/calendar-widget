@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Theme.Calendar" parent="android:Theme.Holo">
+        <item name="dayHeaderTitle">@color/day_header_title</item>
+        <item name="dayHeaderSeparator">@color/day_header_separator</item>
+        <item name="eventEntryTitle">@color/event_entry_title</item>
+        <item name="eventEntryDetails">@color/event_entry_details</item>
+    </style>
+
+    <style name="Theme.Calendar.Light" parent="android:Theme.Holo.Light">
+        <item name="dayHeaderTitle">@color/day_header_title_light</item>
+        <item name="dayHeaderSeparator">@color/day_header_separator_light</item>
+        <item name="eventEntryTitle">@color/event_entry_title_light</item>
+        <item name="eventEntryDetails">@color/event_entry_details_light</item>
+    </style>
+
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <attr name="dayHeaderTitle" format="reference|color" />
+    <attr name="dayHeaderSeparator" format="reference|color" />
+    <attr name="eventEntryTitle" format="reference|color" />
+    <attr name="eventEntryDetails" format="reference|color" />
+
+</resources>

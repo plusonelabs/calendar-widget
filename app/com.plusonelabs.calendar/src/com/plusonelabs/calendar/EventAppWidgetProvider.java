@@ -1,6 +1,7 @@
 package com.plusonelabs.calendar;
 
 import static com.plusonelabs.calendar.CalendarIntentUtil.*;
+import static com.plusonelabs.calendar.RemoteViewsUtil.*;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 
 import java.util.List;
@@ -20,17 +21,15 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
-
 public class EventAppWidgetProvider extends AppWidgetProvider {
 
-	private static final String METHOD_SET_ALPHA = "setAlpha";
-
 	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+	public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+		Context context = getThemedContext(baseContext);
 		AlarmReceiver.scheduleAlarm(context);
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			int widgetId = appWidgetIds[i];
@@ -42,16 +41,26 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
+	public static ContextThemeWrapper getThemedContext(Context context) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		Theme theme = Theme.valueOf(prefs.getString(PREF_THEME, PREF_THEME_DEFAULT));
+		int themeId = R.style.Theme_Calendar;
+		if (theme == Theme.LIGHT) {
+			themeId = R.style.Theme_Calendar_Light;
+		}
+		return new ContextThemeWrapper(context, themeId);
+	}
+
 	public void configureBackground(Context context, RemoteViews rv) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		if (prefs.getBoolean(CalendarPreferences.PREF_SHOW_HEADER, true)) {
+		if (prefs.getBoolean(PREF_SHOW_HEADER, true)) {
 			rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
 		} else {
 			rv.setViewVisibility(R.id.action_bar, View.GONE);
 		}
-		int bgTrans = prefs.getInt(CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY,
+		int bgTrans = prefs.getInt(PREF_BACKGROUND_TRANSPARENCY,
 				PREF_BACKGROUND_TRANSPARENCY_DEFAULT);
-		rv.setInt(R.id.background_image, METHOD_SET_ALPHA, Math.round(bgTrans / 100f * 255f));
+		setAlpha(rv, R.id.background_image, Math.round(bgTrans / 100f * 255f));
 	}
 
 	public void configureActionBar(Context context, RemoteViews rv) {
@@ -89,6 +98,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
 		rv.setOnClickFillInIntent(R.id.empty_event_list,
 				createOpenCalendarAtDayIntent(context, new DateTime()));
+		setTextColorRes(context, rv, R.id.empty_event_list, R.attr.eventEntryTitle);
 	}
 
 	public static void updateEventList(Context context) {

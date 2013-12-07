@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Dark -->
+    <color name="header_current_date">#9affffff</color>
+    <color name="day_header_title">#cccccc</color>
+    <color name="day_header_separator">#4cffffff</color>
+    <color name="event_entry_title">#ffffff</color>
+    <color name="event_entry_details">#bbbbbb</color>
+
+    <!-- Light -->
+    <color name="header_current_date_light">#9a000000</color>
+    <color name="day_header_title_light">#777777</color>
+    <color name="day_header_separator_light">#4c000000</color>
+    <color name="event_entry_title_light">#555555</color>
+    <color name="event_entry_details_light">#999999</color>
+
+</resources>

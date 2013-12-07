@@ -1,5 +1,7 @@
 package com.plusonelabs.calendar.prefs;
 
+import com.plusonelabs.calendar.Theme;
+
 public class CalendarPreferences {
 
 	public static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
@@ -20,6 +22,8 @@ public class CalendarPreferences {
 	public static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
 	public static final String PREF_SHOW_LOCATION = "showLocation";
 	public static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
+	public static final String PREF_THEME = "theme";
+	public static final String PREF_THEME_DEFAULT = Theme.DARK.name();
 
 	private CalendarPreferences() {
 		// prohibit instantiation

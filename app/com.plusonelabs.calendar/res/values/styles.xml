@@ -2,13 +2,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <style name="HeaderCurrentDate" parent="android:Widget.Holo.TextView">
-        <item name="android:alpha">0.6</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:gravity">bottom</item>
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:paddingBottom">4dp</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColor">@color/header_current_date</item>
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -20,9 +19,13 @@
         <item name="android:paddingRight">@dimen/day_header_padding_right</item>
         <item name="android:paddingTop">@dimen/day_header_padding_top</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">#cccccc</item>
+        <item name="android:textColor">@color/day_header_title</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/day_header_title</item>
+    </style>
+
+    <style name="DayHeaderSeparator" parent="android:Widget.Holo.TextView">
+        <item name="android:background">@color/day_header_separator</item>
     </style>
 
     <style name="EventEntryTitle" parent="android:Widget.Holo.TextView">
@@ -32,15 +35,11 @@
         <item name="android:textSize">@dimen/event_entry_title</item>
     </style>
 
-    <style name="EventEntryDate" parent="android:Widget.Holo.TextView">
+    <style name="EventEntryDetails" parent="android:Widget.Holo.TextView">
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">#ffbbbbbb</item>
+        <item name="android:textColor">@color/event_entry_details</item>
         <item name="android:textSize">@dimen/event_entry_details</item>
-    </style>
-
-    <style name="DayHeaderSeparator" parent="android:Widget.Holo.TextView">
-        <item name="android:background">#4cffffff</item>
     </style>
 
     <style name="EventEntryColor" parent="android:Widget.Holo.TextView">

@@ -61,6 +61,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);
 		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
+		setTextColorRes(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
 		setSingleLine(rv, R.id.event_entry_title,
 				!prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
 	}
@@ -79,6 +80,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 			rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
 			rv.setTextViewText(R.id.event_entry_details, eventDetails);
 			setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
+			setTextColorRes(context, rv, R.id.event_entry_details, R.attr.eventEntryDetails);
 		}
 	}
 

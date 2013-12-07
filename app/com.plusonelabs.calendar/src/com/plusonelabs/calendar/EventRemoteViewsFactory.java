@@ -32,7 +32,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
 		eventProviders = new ArrayList<IEventVisualizer<?>>();
-		eventProviders.add(new CalendarEventVisualizer(context));
+		eventProviders.add(new CalendarEventVisualizer(this.context));
 		eventEntries = new ArrayList<Event>();
 	}
 
@@ -69,6 +69,8 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.day_header);
 		rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
 		setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
+		setTextColorRes(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
+		setBackgroundColorRes(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
 		setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
 				R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
 		Intent intent = createOpenCalendarAtDayIntent(context, dayHeader.getStartDate());

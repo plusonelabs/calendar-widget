@@ -12,7 +12,6 @@ import android.provider.CalendarContract.Events;
 
 public class CalendarIntentUtil {
 
-	private static final String INTENT_TYPE_EVENT = "vnd.android.cursor.item/event";
 	private static final String KEY_DETAIL_VIEW = "DETAIL_VIEW";
 	private static final String TIME = "time";
 

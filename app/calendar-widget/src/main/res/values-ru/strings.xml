@@ -33,8 +33,8 @@
     <string name="appearance_display_header_title">Отображать заголовок виджета</string>
     <string name="appearance_display_header_desc">Отображать заголовок дата и настройки</string>
     <string name="appearance_display_header_warning">Убрав заголовок, вы не сможете вернуться в настройки.</string>
-    <string name="appearance_background_transparency_title">Прозрачность фона</string>
-    <string name="appearance_background_transparency_desc">Изменить прозрачность фона</string>
+    <string name="appearance_background_color_title">Прозрачность фона</string>
+    <string name="appearance_background_color_desc">Изменить прозрачность фона</string>
 
     <!-- Preference event details -->
     <string name="event_details_indicators">Индикаторы</string>

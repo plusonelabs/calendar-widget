@@ -37,8 +37,8 @@
     <string name="appearance_display_header_title">Zobrazit záhlaví</string>
     <string name="appearance_display_header_desc">Zobrazit nastavení data a záhlaví</string>
     <string name="appearance_display_header_warning">Skrytí záhlaví znemožní přístup do nastavení widgetu přes tlačítko.</string>
-    <string name="appearance_background_transparency_title">Průhlednost pozadí </string>
-    <string name="appearance_background_transparency_desc">Nastavit průhlednost pozadí</string>
+    <string name="appearance_background_color_title">Průhlednost pozadí </string>
+    <string name="appearance_background_color_desc">Nastavit průhlednost pozadí</string>
 
     <!-- Preference event details -->
     <string name="event_details_prefs">Události</string>

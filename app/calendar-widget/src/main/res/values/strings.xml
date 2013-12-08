@@ -37,8 +37,8 @@
     <string name="appearance_display_header_title">Show widget header</string>
     <string name="appearance_display_header_desc">Show the date and settings header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
-    <string name="appearance_background_transparency_title">Background transparency </string>
-    <string name="appearance_background_transparency_desc">Adjust the transparency of the background</string>
+    <string name="appearance_background_color_title">Background color</string>
+    <string name="appearance_background_color_desc">Adjust the color of the background</string>
 
     <!-- Preferences event details -->
     <string name="event_details_prefs">Events</string>

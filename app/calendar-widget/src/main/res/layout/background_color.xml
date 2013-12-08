@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp">
+
+        <com.larswerkman.holocolorpicker.ColorPicker
+            android:id="@+id/background_color_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.larswerkman.holocolorpicker.SVBar
+            android:id="@+id/background_color_svbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+        <com.larswerkman.holocolorpicker.OpacityBar
+            android:id="@+id/background_color_opacitybar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>

@@ -37,8 +37,8 @@
     <string name="appearance_display_header_title">Mostra intestazione widget</string>
     <string name="appearance_display_header_desc">Mostra data e strumenti nell\'intestazione</string>
     <string name="appearance_display_header_warning">Nascondendo l\'intestazione non si potrà accedere ai settaggi del widget.</string>
-    <string name="appearance_background_transparency_title">Sfondo trasparente</string>
-    <string name="appearance_background_transparency_desc">Imposta la trasparenza dello sfondo</string>
+    <string name="appearance_background_color_title">Sfondo trasparente</string>
+    <string name="appearance_background_color_desc">Imposta la trasparenza dello sfondo</string>
 
     <!-- Preferences event details -->
     <string name="event_details_prefs">Eventi</string>

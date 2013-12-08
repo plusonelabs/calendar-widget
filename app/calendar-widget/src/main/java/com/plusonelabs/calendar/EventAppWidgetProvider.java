@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
@@ -26,8 +27,8 @@ import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEven
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_HEADER;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
@@ -52,13 +53,14 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		} else {
 			rv.setViewVisibility(R.id.action_bar, View.GONE);
 		}
-		int bgTrans = prefs.getInt(PREF_BACKGROUND_TRANSPARENCY,
-				PREF_BACKGROUND_TRANSPARENCY_DEFAULT);
-		setAlpha(rv, R.id.background_image, Math.round(bgTrans / 100f * 255f));
-	}
+        int color = prefs.getInt(PREF_BACKGROUND_COLOR, PREF_BACKGROUND_COLOR_DEFAULT);
+        System.out.println(color);
+        rv.setInt(R.id.background_image, "setColorFilter", color);
+        setAlpha(rv, R.id.background_image, Color.alpha(color));
+    }
 
-	public void configureActionBar(Context context, RemoteViews rv) {
-		String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
+    public void configureActionBar(Context context, RemoteViews rv) {
+        String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
 				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
 		rv.setTextViewText(R.id.calendar_current_date,
 				formattedDate.toUpperCase(Locale.getDefault()));

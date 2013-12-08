@@ -12,7 +12,7 @@ import com.plusonelabs.calendar.R;
 
 public class AppearancePreferencesFragment extends PreferenceFragment {
 
-	private static final String BACKGROUND_TRANSPARENCY_DIALOG = "backgroundTransparencyDialog";
+	private static final String BACKGROUND_COLOR_DIALOG = "backgroundColorDialog";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,9 +31,9 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 				}
 			}
 		}
-		if (preference.getKey().equals(CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY)) {
+		if (preference.getKey().equals(CalendarPreferences.PREF_BACKGROUND_COLOR)) {
 			new BackgroundTransparencyDialog().show(getFragmentManager(),
-					BACKGROUND_TRANSPARENCY_DIALOG);
+                    BACKGROUND_COLOR_DIALOG);
 		}
 		return super.onPreferenceTreeClick(preferenceScreen, preference);
 	}

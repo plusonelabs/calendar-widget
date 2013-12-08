@@ -32,10 +32,10 @@
     </CheckBoxPreference>
 
     <Preference
-        android:defaultValue="50"
-        android:key="backgroundTransparency"
-        android:summary="@string/appearance_background_transparency_desc"
-        android:title="@string/appearance_background_transparency_title" />
+        android:defaultValue="3187671040"
+        android:key="backgroundColor"
+        android:summary="@string/appearance_background_color_desc"
+        android:title="@string/appearance_background_color_title" />
 
     <ListPreference
         android:defaultValue="DARK"

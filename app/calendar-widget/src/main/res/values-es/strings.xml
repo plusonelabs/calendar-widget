@@ -37,8 +37,8 @@
     <string name="appearance_display_header_title">Mostrar cabecera del widget</string>
     <string name="appearance_display_header_desc">Mostrar la fecha y ajustes en cabecera</string>
     <string name="appearance_display_header_warning">Ocultar la cabecera impedirá volver a entrar en los ajustes.</string>
-    <string name="appearance_background_transparency_title">Transparencia del fondo </string>
-    <string name="appearance_background_transparency_desc">Ajustar el nivel de transparencia del fondo</string>
+    <string name="appearance_background_color_title">Transparencia del fondo </string>
+    <string name="appearance_background_color_desc">Ajustar el nivel de transparencia del fondo</string>
 
     <!-- Preferences event details -->
     <string name="event_details_prefs">Eventos</string>

@@ -37,8 +37,8 @@
     <string name="appearance_display_header_title">Mostrar cabeçalho do widget</string>
     <string name="appearance_display_header_desc">Mostrar data e configurações no cabeçalho</string>
     <string name="appearance_display_header_warning">Esconder o cabeçalho impede de voltar para as configurações.</string>
-    <string name="appearance_background_transparency_title">Transparência do fundo</string>
-    <string name="appearance_background_transparency_desc">Ajustar a trasparência do fundo</string>
+    <string name="appearance_background_color_title">Transparência do fundo</string>
+    <string name="appearance_background_color_desc">Ajustar a trasparência do fundo</string>
 
     <!-- Preferences event details -->
     <string name="event_details_prefs">Eventos</string>

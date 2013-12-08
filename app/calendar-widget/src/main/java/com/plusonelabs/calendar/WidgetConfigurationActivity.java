@@ -1,14 +1,16 @@
 package com.plusonelabs.calendar;
 
-import java.util.List;
-
+import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import java.util.List;
 
 public class WidgetConfigurationActivity extends PreferenceActivity {
 
@@ -47,11 +49,12 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
 		loadHeadersFromResource(R.xml.preferences_header, target);
 	}
 
-	@Override
-	protected boolean isValidFragment(String fragmentName) {
-		if (fragmentName.startsWith(PREFERENCES_PACKAGE_NAME)) {
-			return true;
-		}
-		return super.isValidFragment(fragmentName);
-	}
+    @Override
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    protected boolean isValidFragment(String fragmentName) {
+        if (fragmentName.startsWith(PREFERENCES_PACKAGE_NAME)) {
+            return true;
+        }
+        return super.isValidFragment(fragmentName);
+    }
 }

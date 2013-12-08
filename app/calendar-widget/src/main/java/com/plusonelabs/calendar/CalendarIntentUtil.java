@@ -1,7 +1,5 @@
 package com.plusonelabs.calendar;
 
-import org.joda.time.DateTime;
-
 import android.app.PendingIntent;
 import android.content.ContentUris;
 import android.content.Context;
@@ -9,6 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+
+import org.joda.time.DateTime;
 
 public class CalendarIntentUtil {
 
@@ -51,9 +51,8 @@ public class CalendarIntentUtil {
 		DateTime beginTime = new DateTime().plusHours(1).withMinuteOfHour(0).withSecondOfMinute(0)
 				.withMillisOfSecond(0);
 		DateTime endTime = beginTime.plusHours(1);
-		Intent intent = new Intent(Intent.ACTION_INSERT).setData(Events.CONTENT_URI)
-				.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getMillis())
-				.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getMillis());
-		return intent;
+        return new Intent(Intent.ACTION_INSERT).setData(Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getMillis());
 	}
 }

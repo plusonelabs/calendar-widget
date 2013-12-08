@@ -1,14 +1,5 @@
 package com.plusonelabs.calendar;
 
-import static com.plusonelabs.calendar.CalendarIntentUtil.*;
-import static com.plusonelabs.calendar.RemoteViewsUtil.*;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
-
-import java.util.List;
-import java.util.Locale;
-
-import org.joda.time.DateTime;
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -25,31 +16,34 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import org.joda.time.DateTime;
+
+import java.util.List;
+import java.util.Locale;
+
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
+import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_HEADER;
+
 public class EventAppWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		Context context = getThemedContext(baseContext);
-		AlarmReceiver.scheduleAlarm(context);
-		for (int i = 0; i < appWidgetIds.length; i++) {
-			int widgetId = appWidgetIds[i];
-			RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
-			configureBackground(context, rv);
-			configureActionBar(context, rv);
-			configureList(context, widgetId, rv);
-			appWidgetManager.updateAppWidget(widgetId, rv);
-		}
-	}
-
-	public static ContextThemeWrapper getThemedContext(Context context) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		Theme theme = Theme.valueOf(prefs.getString(PREF_THEME, PREF_THEME_DEFAULT));
-		int themeId = R.style.Theme_Calendar;
-		if (theme == Theme.LIGHT) {
-			themeId = R.style.Theme_Calendar_Light;
-		}
-		return new ContextThemeWrapper(context, themeId);
-	}
+        Context context = new ContextThemeWrapper(baseContext, getCurrentThemeId(baseContext));
+        AlarmReceiver.scheduleAlarm(context);
+        for (int widgetId : appWidgetIds) {
+            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
+            configureBackground(context, rv);
+            configureActionBar(context, rv);
+            configureList(context, widgetId, rv);
+            appWidgetManager.updateAppWidget(widgetId, rv);
+        }
+    }
 
 	public void configureBackground(Context context, RemoteViews rv) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

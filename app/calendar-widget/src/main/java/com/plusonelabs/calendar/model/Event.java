@@ -31,6 +31,7 @@ public class Event implements Comparable<Event> {
 		return "CalenderEntry [startDate=" + startDate + "]";
 	}
 
+    @Override
 	public int compareTo(Event otherEvent) {
 		if (getStartDate().isAfter(otherEvent.getStartDate())) {
 			return 1;

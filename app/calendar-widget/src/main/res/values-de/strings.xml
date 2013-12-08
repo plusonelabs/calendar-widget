@@ -39,6 +39,11 @@
     <string name="appearance_display_header_warning">Wenn die Kopfzeile ausgeblendet wird können Sie nicht mehr in die Einstellungen gelangen.</string>
     <string name="appearance_background_transparency_title">Hintergrund Transparenz</string>
     <string name="appearance_background_transparency_desc">Passe die Transparenz des Hintergrundes an</string>
+    <string name="appearance_entry_theme_dark">Hell</string>
+    <string name="appearance_entry_theme_light">Dunkel</string>
+    <string name="appearance_entries_theme_title">Ereignis Textfarbe</string>
+    <string name="appearance_entries_theme_desc">Zeige Ereignisse in heller oder dunkler Farbe</string>
+
 
     <!-- Preferences event details -->
     <string name="event_details_prefs">Termine</string>

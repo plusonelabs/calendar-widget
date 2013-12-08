@@ -1,17 +1,5 @@
 package com.plusonelabs.calendar.calendar;
 
-import static android.graphics.Color.*;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.joda.time.DateMidnight;
-import org.joda.time.DateTime;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -24,6 +12,23 @@ import android.provider.CalendarContract.Instances;
 import android.text.format.DateUtils;
 
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
+
+import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import static android.graphics.Color.argb;
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENT_RANGE;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENT_RANGE_DEFAULT;
 
 public class CalendarEventProvider {
 
@@ -44,20 +49,20 @@ public class CalendarEventProvider {
 		this.context = context;
 	}
 
-	public ArrayList<CalendarEvent> getEvents() {
+	public List<CalendarEvent> getEvents() {
 		Cursor cursor = createLoadedCursor();
 		if (cursor != null) {
-			ArrayList<CalendarEvent> eventList = createEventList(cursor);
+			List<CalendarEvent> eventList = createEventList(cursor);
 			cursor.close();
 			Collections.sort(eventList);
 			return eventList;
 		}
-		return new ArrayList<CalendarEvent>();
-	}
+        return new ArrayList<>();
+    }
 
-	private ArrayList<CalendarEvent> createEventList(Cursor calendarCursor) {
-		ArrayList<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
-		for (int i = 0; i < calendarCursor.getCount(); i++) {
+	private List<CalendarEvent> createEventList(Cursor calendarCursor) {
+        List<CalendarEvent> eventList = new ArrayList<>();
+        for (int i = 0; i < calendarCursor.getCount(); i++) {
 			calendarCursor.moveToPosition(i);
 			CalendarEvent event = createCalendarEvent(calendarCursor);
 			setupDayOneEntry(eventList, event);
@@ -66,7 +71,7 @@ public class CalendarEventProvider {
 		return eventList;
 	}
 
-	public void setupDayOneEntry(ArrayList<CalendarEvent> eventList, CalendarEvent event) {
+	public void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {
 		if (isEqualOrAfterTodayAtMidnight(event.getStartDate())) {
 			if (event.daysSpanned() > 1) {
 				CalendarEvent clone = event.clone();
@@ -80,7 +85,7 @@ public class CalendarEventProvider {
 		}
 	}
 
-	public void createFollowingEntries(ArrayList<CalendarEvent> eventList, CalendarEvent event) {
+	public void createFollowingEntries(List<CalendarEvent> eventList, CalendarEvent event) {
 		int daysCovered = event.daysSpanned();
 		for (int j = 1; j < daysCovered; j++) {
 			DateTime startDate = event.getStartDate().toDateMidnight().plusDays(j).toDateTime();
@@ -156,9 +161,8 @@ public class CalendarEventProvider {
 		ContentUris.appendId(builder, end);
 		String selection = createSelectionClause();
 		ContentResolver contentResolver = context.getContentResolver();
-		return contentResolver
-				.query(builder.build(), PROJECTION, selection, null, EVENT_SORT_ORDER);
-	}
+        return contentResolver.query(builder.build(), PROJECTION, selection, null, EVENT_SORT_ORDER);
+    }
 
 	private String createSelectionClause() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -167,19 +171,19 @@ public class CalendarEventProvider {
 		if (activeCalenders.isEmpty()) {
 			return EVENT_SELECTION;
 		}
-		StringBuffer strBuf = new StringBuffer();
-		strBuf.append(AND_BRACKET);
-		Iterator<String> iter = activeCalenders.iterator();
-		while (iter.hasNext()) {
-			String calendarId = iter.next();
-			strBuf.append(Instances.CALENDAR_ID);
-			strBuf.append(EQUALS);
-			strBuf.append(calendarId);
-			if (iter.hasNext()) {
-				strBuf.append(OR);
-			}
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(AND_BRACKET);
+        Iterator<String> iterator = activeCalenders.iterator();
+		while (iterator.hasNext()) {
+			String calendarId = iterator.next();
+            stringBuilder.append(Instances.CALENDAR_ID);
+            stringBuilder.append(EQUALS);
+            stringBuilder.append(calendarId);
+            if (iterator.hasNext()) {
+                stringBuilder.append(OR);
+            }
 		}
-		strBuf.append(CLOSING_BRACKET);
-		return EVENT_SELECTION + strBuf.toString();
-	}
+        stringBuilder.append(CLOSING_BRACKET);
+        return EVENT_SELECTION + stringBuilder.toString();
+    }
 }

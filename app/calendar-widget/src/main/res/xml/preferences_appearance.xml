@@ -23,6 +23,7 @@
         android:summary="@string/appearance_date_format_desc"
         android:title="@string/appearance_date_format_title" />
 
+
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="showHeader"
@@ -35,5 +36,13 @@
         android:key="backgroundTransparency"
         android:summary="@string/appearance_background_transparency_desc"
         android:title="@string/appearance_background_transparency_title" />
+
+    <ListPreference
+        android:defaultValue="DARK"
+        android:entries="@array/pref_entry_theme_entries"
+        android:entryValues="@array/pref_entry_theme_values"
+        android:key="entryTheme"
+        android:summary="@string/appearance_entries_theme_desc"
+        android:title="@string/appearance_entries_theme_title" />
 
 </PreferenceScreen>

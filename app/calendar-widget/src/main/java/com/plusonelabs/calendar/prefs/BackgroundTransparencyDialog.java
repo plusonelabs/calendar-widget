@@ -1,10 +1,8 @@
 package com.plusonelabs.calendar.prefs;
 
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
@@ -19,6 +17,9 @@ import android.widget.TextView;
 
 import com.plusonelabs.calendar.R;
 
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_TRANSPARENCY_DEFAULT;
+
 public class BackgroundTransparencyDialog extends DialogFragment {
 
 	private static final String PERCENT_STR = "%";
@@ -27,8 +28,7 @@ public class BackgroundTransparencyDialog extends DialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
 		View layout = inflater.inflate(R.layout.background_transparency, null);
 		percentage = (TextView) layout.findViewById(R.id.background_transparency_percent);
 		initSlider(layout);

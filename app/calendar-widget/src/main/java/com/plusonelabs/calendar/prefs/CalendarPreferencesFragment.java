@@ -1,8 +1,5 @@
 package com.plusonelabs.calendar.prefs;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -22,6 +19,11 @@ import android.provider.CalendarContract.Calendars;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.R;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ACTIVE_CALENDARS;
+
 public class CalendarPreferencesFragment extends PreferenceFragment {
 
 	private static final String CALENDAR_ID = "calendarId";
@@ -34,7 +36,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences_calendars);
 		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-		initialActiveCalendars = prefs.getStringSet(CalendarPreferences.PREF_ACTIVE_CALENDARS,
+		initialActiveCalendars = prefs.getStringSet(PREF_ACTIVE_CALENDARS,
 				null);
 		populatePreferenceScreen(initialActiveCalendars);
 	}
@@ -75,7 +77,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 	public void persistSelectedCalendars(HashSet<String> prefValues) {
 		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
 		Editor editor = prefs.edit();
-		editor.putStringSet(CalendarPreferences.PREF_ACTIVE_CALENDARS, prefValues);
+        editor.putStringSet(PREF_ACTIVE_CALENDARS, prefValues);
 		editor.commit();
 	}
 

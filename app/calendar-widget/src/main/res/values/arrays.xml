@@ -20,6 +20,14 @@
         <item>@string/appearance_date_format_24</item>
         <item>@string/appearance_date_format_12</item>
     </string-array>
+    <string-array name="pref_entry_theme_entries">
+        <item>@string/appearance_entry_theme_dark</item>
+        <item>@string/appearance_entry_theme_light</item>
+    </string-array>
+    <string-array name="pref_entry_theme_values">
+        <item>DARK</item>
+        <item>LIGHT</item>
+    </string-array>
     <string-array name="pref_date_format_values">
         <item>auto</item>
         <item>24</item>

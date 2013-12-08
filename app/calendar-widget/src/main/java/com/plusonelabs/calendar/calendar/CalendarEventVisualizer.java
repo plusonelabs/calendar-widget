@@ -1,13 +1,5 @@
 package com.plusonelabs.calendar.calendar;
 
-import static com.plusonelabs.calendar.RemoteViewsUtil.*;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
-
-import java.util.ArrayList;
-import java.util.Locale;
-
-import org.joda.time.DateTime;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +13,26 @@ import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.model.Event;
+
+import org.joda.time.DateTime;
+
+import java.util.List;
+import java.util.Locale;
+
+import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setSingleLine;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMAT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMAT_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_ALERTS;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_RECURRING;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_END_TIME;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_END_TIME_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_LOCATION;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_LOCATION_DEFAULT;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> {
 
@@ -114,10 +126,9 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	}
 
 	public String createTimeSpanString(CalendarEvent event) {
-		String startStr = null;
-		String endStr = null;
+		String startStr;
+		String endStr;
 		String separator = SPACE_DASH_SPACE;
-
 		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getStartDate())
 				&& !event.isStartOfMultiDayEvent()) {
 			startStr = ARROW_SPACE;
@@ -125,7 +136,6 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		} else {
 			startStr = createTimeString(event.getStartDate());
 		}
-
 		if (prefs.getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT)) {
 			if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())
 					&& !event.isEndOfMultiDayEvent()) {
@@ -157,7 +167,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		return 2;
 	}
 
-	public ArrayList<CalendarEvent> getEventEntries() {
+	public List<CalendarEvent> getEventEntries() {
 		return calendarContentProvider.getEvents();
 	}
 

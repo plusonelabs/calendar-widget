@@ -1,7 +1,5 @@
 package com.plusonelabs.calendar;
 
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
-import static java.lang.Float.*;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,9 +9,12 @@ import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_TEXT_SIZE_SCALE;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
+import static java.lang.Float.parseFloat;
+
 public class RemoteViewsUtil {
 
-	private static final String METHOD_SET_HEIGHT = "setHeight";
 	private static final String METHOD_SET_TEXT_SIZE = "setTextSize";
 	private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
 	private static final String METHOD_SET_SINGLE_LINE = "setSingleLine";
@@ -44,8 +45,8 @@ public class RemoteViewsUtil {
 	}
 
 	public static void setTextColorRes(Context context, RemoteViews rv, int viewId, int colorAttrId) {
-		rv.setTextColor(viewId, getColorValue(context, colorAttrId));
-	}
+        rv.setTextColor(viewId, getColorValue(context, colorAttrId));
+    }
 
 	public static void setBackgroundColor(RemoteViews rv, int viewId, int color) {
 		rv.setInt(viewId, METHOD_SET_BACKGROUND_COLOR, color);
@@ -56,15 +57,10 @@ public class RemoteViewsUtil {
 		setBackgroundColor(rv, viewId, getColorValue(context, colorAttrId));
 	}
 
-	public static void setHeight(Context context, RemoteViews rv, int viewId, int dimenId) {
-		float height = getScaledValueInPixel(context, dimenId);
-		rv.setInt(viewId, METHOD_SET_HEIGHT, Math.round(height));
-	}
-
 	private static float getScaledValueInPixel(Context context, int dimenId) {
-		float resValue = getResourceValue(context, dimenId);
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
+        float resValue = getResourceValue(context, dimenId);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
 				PREF_TEXT_SIZE_SCALE_DEFAULT));
 		return resValue * prefTextScale;
 	}

@@ -1,17 +1,9 @@
 package com.plusonelabs.calendar;
 
-import static com.plusonelabs.calendar.CalendarIntentUtil.*;
-import static com.plusonelabs.calendar.RemoteViewsUtil.*;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
-import org.joda.time.DateTime;
-
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateUtils;
+import android.view.ContextThemeWrapper;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -19,9 +11,22 @@ import com.plusonelabs.calendar.calendar.CalendarEventVisualizer;
 import com.plusonelabs.calendar.model.DayHeader;
 import com.plusonelabs.calendar.model.Event;
 
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColorRes;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
+import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
+
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
-	private static final String EMPTY_STRING = "";
 	private static final String COMMA_SPACE = ", ";
 
 	private final Context context;
@@ -31,12 +36,12 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
-		eventProviders = new ArrayList<IEventVisualizer<?>>();
-		eventProviders.add(new CalendarEventVisualizer(this.context));
-		eventEntries = new ArrayList<Event>();
-	}
+        eventProviders = new ArrayList<>();
+        eventProviders.add(new CalendarEventVisualizer(context));
+        eventEntries = new ArrayList<>();
+    }
 
-	public void onCreate() {
+    public void onCreate() {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
 	}
@@ -55,12 +60,11 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 			if (entry instanceof DayHeader) {
 				return updateDayHeader((DayHeader) entry);
 			}
-			for (int i = 0; i < eventProviders.size(); i++) {
-				IEventVisualizer<?> eventProvider = eventProviders.get(i);
-				if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryType())) {
-					return eventProvider.getRemoteView(entry);
-				}
-			}
+            for (IEventVisualizer<?> eventProvider : eventProviders) {
+                if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryType())) {
+                    return eventProvider.getRemoteView(entry);
+                }
+            }
 		}
 		return null;
 	}
@@ -80,33 +84,32 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	public String createDayEntryString(DayHeader dayEntry) {
 		Date date = dayEntry.getStartDate().toDate();
-		String prefix = EMPTY_STRING;
-		if (dayEntry.isToday()) {
-			prefix = context.getString(R.string.today) + COMMA_SPACE;
-			return prefix
-					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
-							.toUpperCase(Locale.getDefault());
-		} else if (dayEntry.isTomorrow()) {
-			prefix = context.getString(R.string.tomorrow) + COMMA_SPACE;
-			return prefix
-					+ DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
-							.toUpperCase(Locale.getDefault());
-		}
-		return DateUtils.formatDateTime(context, date.getTime(),
+        if (dayEntry.isToday()) {
+            return createDateString(date, context.getString(R.string.today));
+        } else if (dayEntry.isTomorrow()) {
+            return createDateString(date, context.getString(R.string.tomorrow));
+        }
+        return DateUtils.formatDateTime(context, date.getTime(),
 				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY).toUpperCase(
 				Locale.getDefault());
 	}
 
-	public void onDataSetChanged() {
-		eventEntries.clear();
-		ArrayList<Event> events = new ArrayList<Event>();
-		for (int i = 0; i < eventProviders.size(); i++) {
-			events.addAll(eventProviders.get(i).getEventEntries());
-		}
-		updateEntryList(events);
-	}
+    private String createDateString(Date date, String text) {
+        return text + COMMA_SPACE + DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
+                .toUpperCase(Locale.getDefault());
+    }
 
-	public void updateEntryList(ArrayList<Event> eventList) {
+    public void onDataSetChanged() {
+        context.setTheme(getCurrentThemeId(context));
+        eventEntries.clear();
+        ArrayList<Event> events = new ArrayList<>();
+        for (IEventVisualizer<?> eventProvider : eventProviders) {
+            events.addAll(eventProvider.getEventEntries());
+        }
+        updateEntryList(events);
+    }
+
+	private void updateEntryList(ArrayList<Event> eventList) {
 		if (!eventList.isEmpty()) {
 			Event firstEvent = eventList.get(0);
 			DayHeader curDayBucket = new DayHeader(firstEvent.getStartDate());
@@ -129,10 +132,9 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	public int getViewTypeCount() {
 		int result = 0;
-		for (int i = 0; i < eventProviders.size(); i++) {
-			IEventVisualizer<?> eventProvider = eventProviders.get(i);
-			result += eventProvider.getViewTypeCount();
-		}
+        for (IEventVisualizer<?> eventProvider : eventProviders) {
+            result += eventProvider.getViewTypeCount();
+        }
 		return result;
 	}
 

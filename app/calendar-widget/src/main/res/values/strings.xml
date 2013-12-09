@@ -37,8 +37,17 @@
     <string name="appearance_display_header_title">Show widget header</string>
     <string name="appearance_display_header_desc">Show the date and settings header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
+    <string name="appearance_group_color_title">Colors</string>
     <string name="appearance_background_color_title">Background color</string>
     <string name="appearance_background_color_desc">Adjust the color of the background</string>
+    <string name="appearance_header_theme_title">Widget header shading</string>
+    <string name="appearance_header_theme_desc">Show the header of the widget in dark or light shade</string>
+    <string name="appearance_entries_theme_title">Event shading</string>
+    <string name="appearance_entries_theme_desc">Show event text in dark or light shade</string>
+    <string name="appearance_theme_black">White</string>
+    <string name="appearance_theme_dark">Light</string>
+    <string name="appearance_theme_light">Dark</string>
+    <string name="appearance_theme_white">Black</string>
 
     <!-- Preferences event details -->
     <string name="event_details_prefs">Events</string>
@@ -61,10 +70,7 @@
     <string name="event_details_indicate_alert_title">Alerts</string>
     <string name="event_details_indicate_recurring_desc">Show indicator for recurring events</string>
     <string name="event_details_indicate_recurring_title">Recurring events</string>
-    <string name="appearance_entry_theme_dark">Light</string>
-    <string name="appearance_entry_theme_light">Dark</string>
-    <string name="appearance_entries_theme_title">Event text color</string>
-    <string name="appearance_entries_theme_desc">Show event text in dark or light color</string>
+
 
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>

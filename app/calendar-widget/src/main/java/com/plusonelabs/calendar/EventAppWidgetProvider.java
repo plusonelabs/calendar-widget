@@ -25,17 +25,21 @@ import java.util.Locale;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setColorFilter;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_HEADER;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Context context = new ContextThemeWrapper(baseContext, getCurrentThemeId(baseContext));
+        int themeId = getCurrentThemeId(baseContext, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT);
+        Context context = new ContextThemeWrapper(baseContext, themeId);
         AlarmReceiver.scheduleAlarm(context);
         for (int widgetId : appWidgetIds) {
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -54,18 +58,17 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 			rv.setViewVisibility(R.id.action_bar, View.GONE);
 		}
         int color = prefs.getInt(PREF_BACKGROUND_COLOR, PREF_BACKGROUND_COLOR_DEFAULT);
-        System.out.println(color);
-        rv.setInt(R.id.background_image, "setColorFilter", color);
+        setColorFilter(rv, R.id.background_image, color);
         setAlpha(rv, R.id.background_image, Color.alpha(color));
     }
 
     public void configureActionBar(Context context, RemoteViews rv) {
         String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
 				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
-		rv.setTextViewText(R.id.calendar_current_date,
-				formattedDate.toUpperCase(Locale.getDefault()));
-		Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
-		PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
+        rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase(Locale.getDefault()));
+        setTextColorRes(context, rv, R.id.calendar_current_date, R.attr.header);
+        Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
+        PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
 		Intent intent = CalendarIntentUtil.createNewEventIntent();

@@ -4,22 +4,22 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_THEME;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_THEME_DEFAULT;
-
 public enum Theme {
 
-	LIGHT,
-	DARK;
+    WHITE(R.style.Theme_Calendar_White),
+    LIGHT(R.style.Theme_Calendar_Light),
+    DARK(R.style.Theme_Calendar_Dark),
+    BLACK(R.style.Theme_Calendar_Black);
 
-    public static int getCurrentThemeId(Context context) {
+    private int themeResId;
+
+    private Theme(int themeResId) {
+        this.themeResId = themeResId;
+    }
+
+    public static int getCurrentThemeId(Context context, String prefKey, String prefDefault) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        Theme theme = Theme.valueOf(prefs.getString(PREF_THEME, PREF_THEME_DEFAULT));
-        int themeId = R.style.Theme_Calendar;
-        if (theme == Theme.LIGHT) {
-            themeId = R.style.Theme_Calendar_Light;
-        }
-        return themeId;
+        return Theme.valueOf(prefs.getString(prefKey, prefDefault)).themeResId;
     }
 
 }

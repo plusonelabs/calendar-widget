@@ -7,7 +7,7 @@
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:paddingBottom">4dp</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/header_current_date</item>
+        <item name="android:textColor">@color/header_current_date_black</item>
         <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -19,13 +19,13 @@
         <item name="android:paddingRight">@dimen/day_header_padding_right</item>
         <item name="android:paddingTop">@dimen/day_header_padding_top</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/day_header_title</item>
+        <item name="android:textColor">@color/day_header_title_black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/day_header_title</item>
     </style>
 
     <style name="DayHeaderSeparator" parent="android:Widget.Holo.TextView">
-        <item name="android:background">@color/day_header_separator</item>
+        <item name="android:background">@color/day_header_separator_black</item>
     </style>
 
     <style name="EventEntryTitle" parent="android:Widget.Holo.TextView">
@@ -38,7 +38,7 @@
     <style name="EventEntryDetails" parent="android:Widget.Holo.TextView">
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/event_entry_details</item>
+        <item name="android:textColor">@color/event_entry_details_black</item>
         <item name="android:textSize">@dimen/event_entry_details</item>
     </style>
 

@@ -3,7 +3,6 @@ package com.plusonelabs.calendar;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateUtils;
-import android.view.ContextThemeWrapper;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -24,6 +23,8 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
 
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
@@ -100,7 +101,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     }
 
     public void onDataSetChanged() {
-        context.setTheme(getCurrentThemeId(context));
+        context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT));
         eventEntries.clear();
         ArrayList<Event> events = new ArrayList<>();
         for (IEventVisualizer<?> eventProvider : eventProviders) {

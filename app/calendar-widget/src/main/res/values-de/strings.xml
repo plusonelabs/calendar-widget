@@ -36,13 +36,18 @@
     <string name="appearance_date_format_12">5:00 pm</string>
     <string name="appearance_display_header_desc">Kopfzeile ein- und ausblenden</string>
     <string name="appearance_display_header_title">Kopfzeile anzeigen</string>
-    <string name="appearance_display_header_warning">Wenn die Kopfzeile ausgeblendet wird können Sie nicht mehr in die Einstellungen gelangen.</string>
-    <string name="appearance_background_color_title">Hintergrund Farbe</string>
+    <string name="appearance_display_header_warning">Wenn die Kopfzeile ausgeblendet wird kannst du nicht mehr in die Einstellungen gelangen.</string>
+    <string name="appearance_group_color_title">Farben</string>
+    <string name="appearance_background_color_title">Hintergrundfarbe</string>
     <string name="appearance_background_color_desc">Passe die Farbe des Hintergrundes an</string>
-    <string name="appearance_entry_theme_dark">Hell</string>
-    <string name="appearance_entry_theme_light">Dunkel</string>
-    <string name="appearance_entries_theme_title">Ereignis Textfarbe</string>
-    <string name="appearance_entries_theme_desc">Zeige Ereignisse in heller oder dunkler Farbe</string>
+    <string name="appearance_header_theme_title">Schattierung der Kopfzeile</string>
+    <string name="appearance_header_theme_desc">Zeige die Kopfzeile des Widgets in heller oder dunkler Schattierung an</string>
+    <string name="appearance_entries_theme_title">Schattierung der Ereignisse</string>
+    <string name="appearance_entries_theme_desc">Zeige Ereignisse in heller oder dunkler Schattierung an</string>
+    <string name="appearance_theme_black">Weiß</string>
+    <string name="appearance_theme_dark">Hell</string>
+    <string name="appearance_theme_light">Dunkel</string>
+    <string name="appearance_theme_white">Schwarz</string>
 
 
     <!-- Preferences event details -->

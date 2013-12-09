@@ -22,8 +22,10 @@ public class CalendarPreferences {
 	public static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
 	public static final String PREF_SHOW_LOCATION = "showLocation";
 	public static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
-	public static final String PREF_THEME = "entryTheme";
-	public static final String PREF_THEME_DEFAULT = Theme.DARK.name();
+	public static final String PREF_ENTRY_THEME = "entryTheme";
+	public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
+	public static final String PREF_HEADER_THEME = "headerTheme";
+	public static final String PREF_HEADER_THEME_DEFAULT = Theme.BLACK.name();
 
 	private CalendarPreferences() {
 		// prohibit instantiation

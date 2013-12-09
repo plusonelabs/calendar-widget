@@ -31,18 +31,28 @@
         android:title="@string/appearance_display_header_title" >
     </CheckBoxPreference>
 
-    <Preference
-        android:defaultValue="3187671040"
-        android:key="backgroundColor"
-        android:summary="@string/appearance_background_color_desc"
-        android:title="@string/appearance_background_color_title" />
+    <PreferenceCategory android:title="@string/appearance_group_color_title">
+        <ListPreference
+            android:defaultValue="BLACK"
+            android:entries="@array/pref_theme_entries"
+            android:entryValues="@array/pref_theme_values"
+            android:key="headerTheme"
+            android:summary="@string/appearance_header_theme_desc"
+            android:title="@string/appearance_header_theme_title" />
 
-    <ListPreference
-        android:defaultValue="DARK"
-        android:entries="@array/pref_entry_theme_entries"
-        android:entryValues="@array/pref_entry_theme_values"
-        android:key="entryTheme"
-        android:summary="@string/appearance_entries_theme_desc"
-        android:title="@string/appearance_entries_theme_title" />
+        <Preference
+            android:defaultValue="3187671040"
+            android:key="backgroundColor"
+            android:summary="@string/appearance_background_color_desc"
+            android:title="@string/appearance_background_color_title" />
+
+        <ListPreference
+            android:defaultValue="BLACK"
+            android:entries="@array/pref_theme_entries"
+            android:entryValues="@array/pref_theme_values"
+            android:key="entryTheme"
+            android:summary="@string/appearance_entries_theme_desc"
+            android:title="@string/appearance_entries_theme_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

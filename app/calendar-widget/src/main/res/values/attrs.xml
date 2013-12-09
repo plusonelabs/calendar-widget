@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="header" format="reference|color" />
     <attr name="dayHeaderTitle" format="reference|color" />
     <attr name="dayHeaderSeparator" format="reference|color" />
     <attr name="eventEntryTitle" format="reference|color" />

@@ -2,9 +2,13 @@
 <resources>
 
     <attr name="header" format="reference|color" />
+    <attr name="header_action_overflow" format="reference" />
+    <attr name="header_action_add_event" format="reference" />
     <attr name="dayHeaderTitle" format="reference|color" />
     <attr name="dayHeaderSeparator" format="reference|color" />
     <attr name="eventEntryTitle" format="reference|color" />
     <attr name="eventEntryDetails" format="reference|color" />
+    <attr name="eventEntryAlarm" format="reference" />
+    <attr name="eventEntryRecurring" format="reference" />
 
 </resources>

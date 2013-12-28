@@ -32,7 +32,9 @@ public class BackgroundTransparencyDialog extends DialogFragment {
         picker.addSVBar((SVBar) layout.findViewById(R.id.background_color_svbar));
         picker.addOpacityBar((OpacityBar) layout.findViewById(R.id.background_color_opacitybar));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        picker.setColor(prefs.getInt(PREF_BACKGROUND_COLOR, PREF_BACKGROUND_COLOR_DEFAULT));
+        int color = prefs.getInt(PREF_BACKGROUND_COLOR, PREF_BACKGROUND_COLOR_DEFAULT);
+        picker.setColor(color);
+        picker.setOldCenterColor(color);
         return createDialog(layout);
     }
 

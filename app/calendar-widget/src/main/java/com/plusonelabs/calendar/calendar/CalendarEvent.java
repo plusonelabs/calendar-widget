@@ -152,7 +152,7 @@ public class CalendarEvent extends Event {
 		return "CalendarEvent [eventId=" + eventId + ", "
 				+ (title != null ? "title=" + title + ", " : "")
 				+ (endDate != null ? "endDate=" + endDate + ", " : "") + "color=" + color
-				+ ", allDay=" + allDay + ", alarmActive=" + alarmActive + ", recurring="
+				+ ", allDay=" + allDay + ", alarmActive=" + alarmActive + ", ic_recurring_light="
 				+ recurring + ", spansMultipleDays=" + spansMultipleDays + ", "
 				+ (originalEvent != null ? "originalEvent=" + originalEvent + ", " : "")
 				+ (location != null ? "location=" + location : "") + "]";

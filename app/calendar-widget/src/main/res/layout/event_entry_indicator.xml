@@ -10,13 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/indicator_alarm"
-        android:src="@drawable/alarm" />
+        android:src="@drawable/ic_alarm_light" />
 
     <ImageView
         android:id="@+id/event_entry_indicator_recurring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/indicator_recurring"
-        android:src="@drawable/recurring" />
+        android:src="@drawable/ic_recurring_light" />
 
 </LinearLayout>

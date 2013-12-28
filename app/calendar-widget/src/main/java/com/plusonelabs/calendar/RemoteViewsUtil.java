@@ -49,21 +49,22 @@ public class RemoteViewsUtil {
 		rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValue(context, dimenId));
 	}
 
-	public static void setTextColorRes(Context context, RemoteViews rv, int viewId, int colorAttrId) {
+    public static void setTextColorFromAttr(Context context, RemoteViews rv, int viewId, int colorAttrId) {
         rv.setTextColor(viewId, getColorValue(context, colorAttrId));
+    }
+
+    public static void setBackgroundColorFromAttr(Context context, RemoteViews rv, int viewId,
+                                                  int colorAttrId) {
+        setBackgroundColor(rv, viewId, getColorValue(context, colorAttrId));
     }
 
 	public static void setBackgroundColor(RemoteViews rv, int viewId, int color) {
 		rv.setInt(viewId, METHOD_SET_BACKGROUND_COLOR, color);
 	}
 
-	public static void setBackgroundColorRes(Context context, RemoteViews rv, int viewId,
-			int colorAttrId) {
-		setBackgroundColor(rv, viewId, getColorValue(context, colorAttrId));
-	}
 
-	private static float getScaledValueInPixel(Context context, int dimenId) {
-        float resValue = getResourceValue(context, dimenId);
+    private static float getScaledValueInPixel(Context context, int dimenId) {
+        float resValue = getDimension(context, dimenId);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
 				PREF_TEXT_SIZE_SCALE_DEFAULT));
@@ -71,10 +72,10 @@ public class RemoteViewsUtil {
 	}
 
 	private static float getScaledValue(Context context, int dimenId) {
-		float resValue = getResourceValue(context, dimenId);
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		float density = context.getResources().getDisplayMetrics().density;
-		float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
+        float resValue = getDimension(context, dimenId);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        float density = context.getResources().getDisplayMetrics().density;
+        float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
 				PREF_TEXT_SIZE_SCALE_DEFAULT));
 		return resValue * prefTextScale / density;
 	}
@@ -86,10 +87,10 @@ public class RemoteViewsUtil {
 		return context.getResources().getColor(colorId);
 	}
 
-	private static float getResourceValue(Context context, int dimenId) {
-		try {
-			return context.getResources().getDimension(dimenId);
-		} catch (NotFoundException e) {
+    private static float getDimension(Context context, int dimenId) {
+        try {
+            return context.getResources().getDimension(dimenId);
+        } catch (NotFoundException e) {
 			// resource might not exist
 			return 0f;
 		}
@@ -98,4 +99,14 @@ public class RemoteViewsUtil {
 	public static void setSingleLine(RemoteViews rv, int viewId, boolean singleLine) {
 		rv.setBoolean(viewId, METHOD_SET_SINGLE_LINE, singleLine);
 	}
+
+    public static void setImageFromAttr(Context context, RemoteViews rv, int viewId, int attrResId) {
+        TypedValue outValue = new TypedValue();
+        context.getTheme().resolveAttribute(attrResId, outValue, true);
+        setImage(rv, viewId, outValue.resourceId);
+    }
+
+    public static void setImage(RemoteViews rv, int viewId, int resId) {
+        rv.setImageViewResource(viewId, resId);
+    }
 }

@@ -26,7 +26,8 @@ import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDa
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setColorFilter;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
@@ -66,7 +67,8 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
 				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
         rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase(Locale.getDefault()));
-        setTextColorRes(context, rv, R.id.calendar_current_date, R.attr.header);
+        setTextColorFromAttr(context, rv, R.id.calendar_current_date, R.attr.header);
+        setActionIcons(context, rv);
         Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
         PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
@@ -81,12 +83,24 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
-	private static boolean isIntentAvailable(Context context, Intent intent) {
-		PackageManager packageManager = context.getPackageManager();
-		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
-				PackageManager.MATCH_DEFAULT_ONLY);
-		return list.size() > 0;
-	}
+    private void setActionIcons(Context context, RemoteViews rv) {
+        setImageFromAttr(context, rv, R.id.add_event, R.attr.header_action_add_event);
+        setImageFromAttr(context, rv, R.id.overflow_menu, R.attr.header_action_overflow);
+        int themeId = getCurrentThemeId(context, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT);
+        int alpha = 255;
+        if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
+            alpha = 154;
+        }
+        setAlpha(rv, R.id.add_event, alpha);
+        setAlpha(rv, R.id.overflow_menu, alpha);
+    }
+
+    private static boolean isIntentAvailable(Context context, Intent intent) {
+        PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
+    }
 
 	private void configureList(Context context, int widgetId, RemoteViews rv) {
 		Intent intent = new Intent(context, EventWidgetService.class);
@@ -97,10 +111,10 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
 		rv.setOnClickFillInIntent(R.id.empty_event_list,
 				createOpenCalendarAtDayIntent(new DateTime()));
-		setTextColorRes(context, rv, R.id.empty_event_list, R.attr.eventEntryTitle);
-	}
+        setTextColorFromAttr(context, rv, R.id.empty_event_list, R.attr.eventEntryTitle);
+    }
 
-	public static void updateEventList(Context context) {
+    public static void updateEventList(Context context) {
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 		ComponentName compName = new ComponentName(context, EventAppWidgetProvider.class);
 		int[] widgetIds = appWidgetManager.getAppWidgetIds(compName);

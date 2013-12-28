@@ -19,12 +19,17 @@ import org.joda.time.DateTime;
 import java.util.List;
 import java.util.Locale;
 
+import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setSingleLine;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
+import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMAT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMAT_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_ALERTS;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_RECURRING;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE;
@@ -73,10 +78,10 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);
 		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
-		setTextColorRes(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
-		setSingleLine(rv, R.id.event_entry_title,
-				!prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
-	}
+        setTextColorFromAttr(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
+        setSingleLine(rv, R.id.event_entry_title,
+                !prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
+    }
 
 	private void setEventDetails(CalendarEvent event, RemoteViews rv) {
 		if (event.spansOneFullDay()
@@ -92,31 +97,40 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 			rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
 			rv.setTextViewText(R.id.event_entry_details, eventDetails);
 			setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
-			setTextColorRes(context, rv, R.id.event_entry_details, R.attr.eventEntryDetails);
-		}
-	}
+            setTextColorFromAttr(context, rv, R.id.event_entry_details, R.attr.eventEntryDetails);
+        }
+    }
 
-	private void setAlarmActive(CalendarEvent event, RemoteViews rv) {
-		if (event.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true)) {
-			rv.setViewVisibility(R.id.event_entry_indicator_alarm, View.VISIBLE);
-		} else {
-			rv.setViewVisibility(R.id.event_entry_indicator_alarm, View.GONE);
-		}
+    private void setAlarmActive(CalendarEvent event, RemoteViews rv) {
+        boolean showIndication = event.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true);
+        setIndicator(rv, showIndication, R.id.event_entry_indicator_alarm, R.attr.eventEntryAlarm);
 	}
 
 	private void setRecurring(CalendarEvent event, RemoteViews rv) {
-		if (event.isRecurring() && prefs.getBoolean(PREF_INDICATE_RECURRING, false)) {
-			rv.setViewVisibility(R.id.event_entry_indicator_recurring, View.VISIBLE);
-		} else {
-			rv.setViewVisibility(R.id.event_entry_indicator_recurring, View.GONE);
-		}
-	}
+        boolean showIndication = event.isRecurring() && prefs.getBoolean(PREF_INDICATE_RECURRING, false);
+        setIndicator(rv, showIndication, R.id.event_entry_indicator_recurring, R.attr.eventEntryRecurring);
+    }
 
-	private void setColor(CalendarEvent event, RemoteViews rv) {
-		setBackgroundColor(rv, R.id.event_entry_color, event.getColor());
-	}
+    private void setIndicator(RemoteViews rv, boolean showIndication, int viewId, int imageAttrId) {
+        if (showIndication) {
+            rv.setViewVisibility(viewId, View.VISIBLE);
+            setImageFromAttr(context, rv, viewId, imageAttrId);
+            int themeId = getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
+            int alpha = 255;
+            if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
+                alpha = 128;
+            }
+            setAlpha(rv, viewId, alpha);
+        } else {
+            rv.setViewVisibility(viewId, View.GONE);
+        }
+    }
 
-	private Intent createOnItemClickIntent(CalendarEvent event) {
+    private void setColor(CalendarEvent event, RemoteViews rv) {
+        setBackgroundColor(rv, R.id.event_entry_color, event.getColor());
+    }
+
+    private Intent createOnItemClickIntent(CalendarEvent event) {
 		CalendarEvent originalEvent = event.getOriginalEvent();
 		if (originalEvent != null) {
 			event = originalEvent;

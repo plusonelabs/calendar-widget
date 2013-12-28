@@ -18,9 +18,9 @@ import java.util.Locale;
 
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColorRes;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorRes;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
@@ -74,8 +74,8 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.day_header);
 		rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
 		setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
-		setTextColorRes(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
-		setBackgroundColorRes(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
+		setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
+		setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
 		setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
 				R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
 		Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());

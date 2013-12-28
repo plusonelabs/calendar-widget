@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-	compile 'joda-time:joda-time:2.3'
+    compile 'joda-time:joda-time:2.3'
     compile 'com.larswerkman:HoloColorPicker:1.1'
 }
 

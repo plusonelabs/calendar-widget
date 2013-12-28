@@ -101,12 +101,12 @@ public class CalendarEventProvider {
 		}
 	}
 
-	public boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
+	private boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
 		DateMidnight midnight = new DateMidnight();
 		return startDate.isEqual(midnight) || startDate.isAfter(midnight);
 	}
 
-	public CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,
+	private CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,
 			DateTime endDate) {
 		CalendarEvent clone = eventEntry.clone();
 		clone.setStartDate(startDate);
@@ -138,7 +138,7 @@ public class CalendarEventProvider {
 		return event;
 	}
 
-	public int getEntryColor(Cursor calendarCursor) {
+	private int getEntryColor(Cursor calendarCursor) {
 		int eventColor = calendarCursor.getInt(6);
 		if (eventColor > 0) {
 			return eventColor;

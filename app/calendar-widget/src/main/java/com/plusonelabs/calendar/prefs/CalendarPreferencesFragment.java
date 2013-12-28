@@ -4,10 +4,8 @@ import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.LightingColorFilter;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -41,8 +39,8 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		populatePreferenceScreen(initialActiveCalendars);
 	}
 
-	public void populatePreferenceScreen(Set<String> activeCalendars) {
-		Cursor cursor = createLoadedCursor();
+    private void populatePreferenceScreen(Set<String> activeCalendars) {
+        Cursor cursor = createLoadedCursor();
 		if (cursor == null) {
 			return;
 		}
@@ -74,18 +72,18 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		}
 	}
 
-	public void persistSelectedCalendars(HashSet<String> prefValues) {
-		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+    private void persistSelectedCalendars(HashSet<String> prefValues) {
+        SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
 		Editor editor = prefs.edit();
         editor.putStringSet(PREF_ACTIVE_CALENDARS, prefValues);
 		editor.commit();
 	}
 
-	public HashSet<String> getSelectedCalenders() {
-		PreferenceScreen preferenceScreen = getPreferenceScreen();
+    private HashSet<String> getSelectedCalenders() {
+        PreferenceScreen preferenceScreen = getPreferenceScreen();
 		int prefCount = preferenceScreen.getPreferenceCount();
-		HashSet<String> prefValues = new HashSet<String>();
-		for (int i = 0; i < prefCount; i++) {
+        HashSet<String> prefValues = new HashSet<>();
+        for (int i = 0; i < prefCount; i++) {
 			Preference pref = preferenceScreen.getPreference(i);
 			if (pref instanceof CheckBoxPreference) {
 				CheckBoxPreference checkPref = (CheckBoxPreference) pref;
@@ -97,15 +95,13 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		return prefValues;
 	}
 
-	public BitmapDrawable createDrawable(int color) {
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-				R.drawable.prefs_calendar_color);
-		BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
-		drawable.setColorFilter(new LightingColorFilter(0x0, color));
-		return drawable;
-	}
+    private Drawable createDrawable(int color) {
+        Drawable drawable = getResources().getDrawable(R.drawable.prefs_calendar_entry);
+        drawable.setColorFilter(new LightingColorFilter(0x0, color));
+        return drawable;
+    }
 
-	private Cursor createLoadedCursor() {
+    private Cursor createLoadedCursor() {
 		Uri.Builder builder = Calendars.CONTENT_URI.buildUpon();
 		ContentResolver contentResolver = getActivity().getContentResolver();
 		return contentResolver.query(builder.build(), PROJECTION, null, null, null);

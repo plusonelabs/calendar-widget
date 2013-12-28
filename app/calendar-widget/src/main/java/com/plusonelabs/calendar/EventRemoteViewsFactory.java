@@ -78,12 +78,12 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		setBackgroundColorRes(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
 		setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
 				R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
-		Intent intent = createOpenCalendarAtDayIntent(context, dayHeader.getStartDate());
+		Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
 	}
 
-	public String createDayEntryString(DayHeader dayEntry) {
+	private String createDayEntryString(DayHeader dayEntry) {
 		Date date = dayEntry.getStartDate().toDate();
         if (dayEntry.isToday()) {
             return createDateString(date, context.getString(R.string.today));
@@ -95,7 +95,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 				Locale.getDefault());
 	}
 
-    private String createDateString(Date date, String text) {
+    protected String createDateString(Date date, String text) {
         return text + COMMA_SPACE + DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
                 .toUpperCase(Locale.getDefault());
     }

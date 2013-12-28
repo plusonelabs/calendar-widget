@@ -50,7 +50,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         }
     }
 
-	public void configureBackground(Context context, RemoteViews rv) {
+	private void configureBackground(Context context, RemoteViews rv) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		if (prefs.getBoolean(PREF_SHOW_HEADER, true)) {
 			rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
@@ -62,7 +62,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         setAlpha(rv, R.id.background_image, Color.alpha(color));
     }
 
-    public void configureActionBar(Context context, RemoteViews rv) {
+    private void configureActionBar(Context context, RemoteViews rv) {
         String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
 				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
         rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase(Locale.getDefault()));
@@ -81,14 +81,14 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
-	public static boolean isIntentAvailable(Context context, Intent intent) {
+	private static boolean isIntentAvailable(Context context, Intent intent) {
 		PackageManager packageManager = context.getPackageManager();
 		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
 				PackageManager.MATCH_DEFAULT_ONLY);
 		return list.size() > 0;
 	}
 
-	public void configureList(Context context, int widgetId, RemoteViews rv) {
+	private void configureList(Context context, int widgetId, RemoteViews rv) {
 		Intent intent = new Intent(context, EventWidgetService.class);
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
 		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
@@ -96,7 +96,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		rv.setEmptyView(R.id.event_list, R.id.empty_event_list);
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
 		rv.setOnClickFillInIntent(R.id.empty_event_list,
-				createOpenCalendarAtDayIntent(context, new DateTime()));
+				createOpenCalendarAtDayIntent(new DateTime()));
 		setTextColorRes(context, rv, R.id.empty_event_list, R.attr.eventEntryTitle);
 	}
 

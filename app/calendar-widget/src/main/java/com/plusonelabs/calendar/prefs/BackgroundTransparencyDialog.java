@@ -37,7 +37,7 @@ public class BackgroundTransparencyDialog extends DialogFragment {
     }
 
 
-    public Dialog createDialog(View layout) {
+    private Dialog createDialog(View layout) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.appearance_background_color_title);
         builder.setView(layout);

@@ -116,7 +116,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		setBackgroundColor(rv, R.id.event_entry_color, event.getColor());
 	}
 
-	public Intent createOnItemClickIntent(CalendarEvent event) {
+	private Intent createOnItemClickIntent(CalendarEvent event) {
 		CalendarEvent originalEvent = event.getOriginalEvent();
 		if (originalEvent != null) {
 			event = originalEvent;
@@ -125,7 +125,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 				event.getStartDate(), event.getEndDate());
 	}
 
-	public String createTimeSpanString(CalendarEvent event) {
+	private String createTimeSpanString(CalendarEvent event) {
 		String startStr;
 		String endStr;
 		String separator = SPACE_DASH_SPACE;
@@ -151,7 +151,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 		return startStr + separator + endStr;
 	}
 
-	public String createTimeString(DateTime time) {
+	private String createTimeString(DateTime time) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		String dateFormat = prefs.getString(PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
 		if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)

@@ -11,7 +11,7 @@ public enum Theme {
     DARK(R.style.Theme_Calendar_Dark),
     BLACK(R.style.Theme_Calendar_Black);
 
-    private int themeResId;
+    private final int themeResId;
 
     private Theme(int themeResId) {
         this.themeResId = themeResId;

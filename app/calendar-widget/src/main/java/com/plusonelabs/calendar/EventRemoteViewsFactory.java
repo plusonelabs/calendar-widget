@@ -72,7 +72,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	public RemoteViews updateDayHeader(DayHeader dayHeader) {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.day_header);
-		rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
+        rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
 		setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
 		setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
 		setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);

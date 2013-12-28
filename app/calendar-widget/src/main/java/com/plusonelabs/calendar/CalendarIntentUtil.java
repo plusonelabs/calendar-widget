@@ -16,15 +16,15 @@ public class CalendarIntentUtil {
 	private static final String TIME = "time";
 
 	static Intent createOpenCalendarAtDayIntent(DateTime goToTime) {
-		Intent launchIntent = createCalendarIntent();
+		Intent intent = createCalendarIntent();
 		Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
 		builder.appendPath(TIME);
 		if (goToTime.getMillis() != 0) {
-			launchIntent.putExtra(KEY_DETAIL_VIEW, true);
+			intent.putExtra(KEY_DETAIL_VIEW, true);
 			ContentUris.appendId(builder, goToTime.getMillis());
 		}
-		launchIntent.setData(builder.build());
-		return launchIntent;
+		intent.setData(builder.build());
+		return intent;
 	}
 
 	static PendingIntent createOpenCalendarEventPendingIntent(Context context) {
@@ -32,15 +32,20 @@ public class CalendarIntentUtil {
 		return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
-	public static Intent createOpenCalendarEventIntent(int eventId, DateTime from, DateTime to) {
-		Intent intent = createCalendarIntent();
-		intent.setData(ContentUris.withAppendedId(Events.CONTENT_URI, eventId));
-		intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, from.getMillis());
-		intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, to.getMillis());
-		return intent;
-	}
+    static PendingIntent createOpenCalendarPendingIntent(Context context) {
+        Intent intent = createOpenCalendarAtDayIntent(new DateTime());
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 
-	private static Intent createCalendarIntent() {
+    public static Intent createOpenCalendarEventIntent(int eventId, DateTime from, DateTime to) {
+        Intent intent = createCalendarIntent();
+        intent.setData(ContentUris.withAppendedId(Events.CONTENT_URI, eventId));
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, from.getMillis());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, to.getMillis());
+        return intent;
+    }
+
+    private static Intent createCalendarIntent() {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
 				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -51,7 +56,7 @@ public class CalendarIntentUtil {
 		DateTime beginTime = new DateTime().plusHours(1).withMinuteOfHour(0).withSecondOfMinute(0)
 				.withMillisOfSecond(0);
 		DateTime endTime = beginTime.plusHours(1);
-        return new Intent(Intent.ACTION_INSERT).setData(Events.CONTENT_URI)
+        return new Intent(Intent.ACTION_INSERT, Events.CONTENT_URI)
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getMillis())
                 .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getMillis());
 	}

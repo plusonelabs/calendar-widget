@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarPendingIntent;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setColorFilter;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
@@ -64,6 +65,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void configureActionBar(Context context, RemoteViews rv) {
+        rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(context));
         String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
 				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
         rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase(Locale.getDefault()));
@@ -109,8 +111,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		rv.setRemoteAdapter(R.id.event_list, intent);
 		rv.setEmptyView(R.id.event_list, R.id.empty_event_list);
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
-		rv.setOnClickFillInIntent(R.id.empty_event_list,
-				createOpenCalendarAtDayIntent(new DateTime()));
+        rv.setOnClickFillInIntent(R.id.empty_event_list, createOpenCalendarAtDayIntent(new DateTime()));
         setTextColorFromAttr(context, rv, R.id.empty_event_list, R.attr.eventEntryTitle);
     }
 

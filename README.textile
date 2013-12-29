@@ -24,6 +24,13 @@ h2. Features
 
 h2. Changelog
 
+h3. v1.7.1
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=17&state=closed
+
+* Fixes critical bug on Android 4.0 devices
+* Completes czech translation (thanks hermajan)
+
 h3. v1.7
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=16&state=closed

@@ -36,10 +36,10 @@ public class CalendarEventProvider {
 	private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + "!="
 			+ Attendees.ATTENDEE_STATUS_DECLINED;
 	private static final String[] PROJECTION = new String[] { Instances.EVENT_ID, Instances.TITLE,
-			Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.CALENDAR_COLOR,
-			Instances.EVENT_COLOR, Instances.EVENT_LOCATION, Instances.HAS_ALARM, Instances.RRULE };
-	private static final String CLOSING_BRACKET = " )";
-	private static final String OR = " OR ";
+            Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.DISPLAY_COLOR,
+            Instances.EVENT_LOCATION, Instances.HAS_ALARM, Instances.RRULE};
+    private static final String CLOSING_BRACKET = " )";
+    private static final String OR = " OR ";
 	private static final String EQUALS = " = ";
 	private static final String AND_BRACKET = " AND (";
 
@@ -123,10 +123,10 @@ public class CalendarEventProvider {
 		event.setStartDate(new DateTime(calendarCursor.getLong(2)));
 		event.setEndDate(new DateTime(calendarCursor.getLong(3)));
 		event.setAllDay(calendarCursor.getInt(4) > 0);
-		event.setColor(getAsOpaque(getEntryColor(calendarCursor)));
-		event.setLocation(calendarCursor.getString(7));
-		event.setAlarmActive(calendarCursor.getInt(8) > 0);
-		event.setRecurring(calendarCursor.getString(9) != null);
+		event.setColor(getAsOpaque(calendarCursor.getInt(5)));
+		event.setLocation(calendarCursor.getString(6));
+		event.setAlarmActive(calendarCursor.getInt(7) > 0);
+		event.setRecurring(calendarCursor.getString(8) != null);
 		if (event.isAllDay()) {
 			DateTime startDate = event.getStartDate();
 			long converted = startDate.getZone().convertLocalToUTC(startDate.getMillis(), true);
@@ -136,14 +136,6 @@ public class CalendarEventProvider {
 			event.setEndDate(new DateTime(converted));
 		}
 		return event;
-	}
-
-	private int getEntryColor(Cursor calendarCursor) {
-		int eventColor = calendarCursor.getInt(6);
-		if (eventColor > 0) {
-			return eventColor;
-		}
-		return calendarCursor.getInt(5);
 	}
 
 	private int getAsOpaque(int color) {

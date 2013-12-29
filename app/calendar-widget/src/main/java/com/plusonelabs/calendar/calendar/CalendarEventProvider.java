@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
@@ -35,9 +36,12 @@ public class CalendarEventProvider {
 	private static final String EVENT_SORT_ORDER = "startDay ASC, allDay DESC, begin ASC ";
 	private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + "!="
 			+ Attendees.ATTENDEE_STATUS_DECLINED;
-	private static final String[] PROJECTION = new String[] { Instances.EVENT_ID, Instances.TITLE,
-            Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.DISPLAY_COLOR,
-            Instances.EVENT_LOCATION, Instances.HAS_ALARM, Instances.RRULE};
+    private static final String[] PROJECTION_4_0 = new String[]{Instances.EVENT_ID, Instances.TITLE,
+            Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
+            Instances.HAS_ALARM, Instances.RRULE, Instances.CALENDAR_COLOR, Instances.EVENT_COLOR};
+    private static final String[] PROJECTION_4_1 = new String[]{Instances.EVENT_ID, Instances.TITLE,
+            Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
+            Instances.HAS_ALARM, Instances.RRULE, Instances.DISPLAY_COLOR};
     private static final String CLOSING_BRACKET = " )";
     private static final String OR = " OR ";
 	private static final String EQUALS = " = ";
@@ -123,11 +127,11 @@ public class CalendarEventProvider {
 		event.setStartDate(new DateTime(calendarCursor.getLong(2)));
 		event.setEndDate(new DateTime(calendarCursor.getLong(3)));
 		event.setAllDay(calendarCursor.getInt(4) > 0);
-		event.setColor(getAsOpaque(calendarCursor.getInt(5)));
-		event.setLocation(calendarCursor.getString(6));
-		event.setAlarmActive(calendarCursor.getInt(7) > 0);
-		event.setRecurring(calendarCursor.getString(8) != null);
-		if (event.isAllDay()) {
+        event.setLocation(calendarCursor.getString(5));
+        event.setAlarmActive(calendarCursor.getInt(6) > 0);
+        event.setRecurring(calendarCursor.getString(7) != null);
+        event.setColor(getAsOpaque(getEventColor(calendarCursor)));
+        if (event.isAllDay()) {
 			DateTime startDate = event.getStartDate();
 			long converted = startDate.getZone().convertLocalToUTC(startDate.getMillis(), true);
 			event.setStartDate(new DateTime(converted));
@@ -138,8 +142,20 @@ public class CalendarEventProvider {
 		return event;
 	}
 
-	private int getAsOpaque(int color) {
-		return argb(255, red(color), green(color), blue(color));
+    private int getEventColor(Cursor calendarCursor) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return calendarCursor.getInt(8);
+        } else {
+            int eventColor = calendarCursor.getInt(9);
+            if (eventColor > 0) {
+                return eventColor;
+            }
+            return calendarCursor.getInt(8);
+        }
+    }
+
+    private int getAsOpaque(int color) {
+        return argb(255, red(color), green(color), blue(color));
 	}
 
 	private Cursor createLoadedCursor() {
@@ -153,10 +169,17 @@ public class CalendarEventProvider {
 		ContentUris.appendId(builder, end);
 		String selection = createSelectionClause();
 		ContentResolver contentResolver = context.getContentResolver();
-        return contentResolver.query(builder.build(), PROJECTION, selection, null, EVENT_SORT_ORDER);
+        return contentResolver.query(builder.build(), getProjection(), selection, null, EVENT_SORT_ORDER);
     }
 
-	private String createSelectionClause() {
+    private String[] getProjection() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return PROJECTION_4_1;
+        }
+        return PROJECTION_4_0;
+    }
+
+    private String createSelectionClause() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		Set<String> activeCalenders = prefs.getStringSet(CalendarPreferences.PREF_ACTIVE_CALENDARS,
 				new HashSet<String>());

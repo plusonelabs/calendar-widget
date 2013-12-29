@@ -35,10 +35,19 @@
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>
     <string name="appearance_display_header_title">Zobrazit záhlaví</string>
-    <string name="appearance_display_header_desc">Zobrazit nastavení data a záhlaví</string>
+    <string name="appearance_display_header_desc">Zobrazit datum a nastavení v záhlaví</string>
     <string name="appearance_display_header_warning">Skrytí záhlaví znemožní přístup do nastavení widgetu přes tlačítko.</string>
-    <string name="appearance_background_color_title">Průhlednost pozadí </string>
-    <string name="appearance_background_color_desc">Nastavit průhlednost pozadí</string>
+    <string name="appearance_group_color_title">Barvy</string>
+    <string name="appearance_background_color_title">Barva pozadí </string>
+    <string name="appearance_background_color_desc">Nastavit barvu pozadí</string>
+    <string name="appearance_header_theme_title">Odstín záhlaví widgetu</string>
+    <string name="appearance_header_theme_desc">Zobrazit záhlaví widgetu ve tmavém nebo světlém odstínu</string>
+    <string name="appearance_entries_theme_title">Odstín události</string>
+    <string name="appearance_entries_theme_desc">Zobrazit název události ve tmavém nebo světlém odstínu</string>
+    <string name="appearance_theme_black">Bílý</string>
+    <string name="appearance_theme_dark">Světlý</string>
+    <string name="appearance_theme_light">Tmavý</string>
+    <string name="appearance_theme_white">Černý</string>
 
     <!-- Preference event details -->
     <string name="event_details_prefs">Události</string>

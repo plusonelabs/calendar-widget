@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.plusonelabs.calendar"
-    android:versionCode="17"
-    android:versionName="1.7" >
+    android:versionCode="18"
+    android:versionName="1.7.1" >
 
     <uses-sdk
         android:minSdkVersion="15"

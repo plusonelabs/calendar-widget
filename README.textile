@@ -6,7 +6,7 @@ The Android calendar widget is home screen widget for your Android device. It di
   <img alt="Get it on Google Play" src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
 </a>
 
-The widget is designed to make use of the Android 4.0 (Ice Cream Sandwich) APIs and will therefore only work on Android 4.0.3+ devices. 
+The widget is designed to make use of the Android 4.0 (Ice Cream Sandwich) APIs and will therefore work on Android 4.0.3+ devices. 
 
 !https://github.com/plusonelabs/calendar-widget/raw/master/assets/screenshots/widget-device.png!
 
@@ -15,6 +15,7 @@ h2. Features
 * Displays all events from your calendars
 * Automatically updates when you add/delete/modify an event
 * Select only the calendars you want to see in the widget
+* Customize colors of the widget background and texts
 * Scroll through the list of upcoming events
 * Customize the text size of the widget
 * Fully resizable widget
@@ -22,6 +23,14 @@ h2. Features
 * Supports Android tablets
 
 h2. Changelog
+
+h3. v1.7
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=16&state=closed
+
+* Adds theming capabilites to the widget background and texts
+* Taping on current date header now opens calendar app
+* Calendar events can now show their event specific color
 
 h3. v1.6.4
 

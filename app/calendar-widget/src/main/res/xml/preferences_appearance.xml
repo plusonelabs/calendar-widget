@@ -33,7 +33,7 @@
 
     <PreferenceCategory android:title="@string/appearance_group_color_title">
         <ListPreference
-            android:defaultValue="BLACK"
+            android:defaultValue="DARK"
             android:entries="@array/pref_theme_entries"
             android:entryValues="@array/pref_theme_values"
             android:key="headerTheme"

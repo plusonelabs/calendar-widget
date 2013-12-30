@@ -6,8 +6,7 @@ The Android calendar widget is home screen widget for your Android device. It di
   <img alt="Get it on Google Play" src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
 </a>
 
-The widget is designed to make use of the Android 4.0 (Ice Cream Sandwich) APIs and will therefore work on Android 4.0.3+ devices. 
-
+Want to contribute to the project? Start by translating the widget to another language. Visit the "project at crowdin.net":http://crowdin.net/project/plusonelabs-calendar-widget and be part of the next release. :)
 !https://github.com/plusonelabs/calendar-widget/raw/master/assets/screenshots/widget-device.png!
 
 h2. Features
@@ -22,7 +21,18 @@ h2. Features
 * Indicators for alerts and recurring events
 * Supports Android tablets
 
+h2. Collaborate
+
+We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open issues and provide pull requests. We are especially looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
+
 h2. Changelog
+
+h3. v1.7.2
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=18&state=closed
+
+* Fine tunes the shading of the text colors
+* Fixes tinting issue of background color
 
 h3. v1.7.1
 
@@ -162,9 +172,3 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=1&page=1&state=c
 h3. v1.0
 
 * Initial Release
-
-h2. Collaborate
-
-We are developing this application in public to bring you a tool that you want to use. If there is anything you would like to see added or want to add yourself please contact us at
-
-plus1labs@gmail.com

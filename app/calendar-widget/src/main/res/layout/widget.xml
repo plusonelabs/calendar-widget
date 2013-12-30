@@ -16,6 +16,8 @@
             android:id="@+id/calendar_current_date"
             style="@style/HeaderCurrentDate"
             android:layout_width="0dp"
+            android:gravity="center_vertical"
+            android:paddingTop="4dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 

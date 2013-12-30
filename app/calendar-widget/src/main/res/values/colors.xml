@@ -4,28 +4,28 @@
     <!-- Black -->
     <color name="header_current_date_black">#dcffffff</color>
     <color name="day_header_title_black">#ccc</color>
-    <color name="day_header_separator_black">#555</color>
+    <color name="day_header_separator_black">#55ffffff</color>
     <color name="event_entry_title_black">#fff</color>
     <color name="event_entry_details_black">#bbb</color>
 
     <!-- Dark -->
     <color name="header_current_date_dark">#9affffff</color>
     <color name="day_header_title_dark">#aaa</color>
-    <color name="day_header_separator_dark">#555</color>
+    <color name="day_header_separator_dark">#33ffffff</color>
     <color name="event_entry_title_dark">#ccc</color>
     <color name="event_entry_details_dark">#999</color>
 
     <!-- Light -->
     <color name="header_current_date_light">#99000000</color>
-    <color name="day_header_title_light">#777</color>
-    <color name="day_header_separator_light">#aaa</color>
+    <color name="day_header_title_light">#999</color>
+    <color name="day_header_separator_light">#22000000</color>
     <color name="event_entry_title_light">#555</color>
     <color name="event_entry_details_light">#999</color>
 
     <!-- White -->
     <color name="header_current_date_white">#cc000000</color>
-    <color name="day_header_title_white">#333</color>
-    <color name="day_header_separator_white">#999</color>
+    <color name="day_header_title_white">#777</color>
+    <color name="day_header_separator_white">#33000000</color>
     <color name="event_entry_title_white">#000</color>
     <color name="event_entry_details_white">#555</color>
 

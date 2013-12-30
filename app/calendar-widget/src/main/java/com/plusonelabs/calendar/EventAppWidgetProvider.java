@@ -22,6 +22,10 @@ import org.joda.time.DateTime;
 import java.util.List;
 import java.util.Locale;
 
+import static android.graphics.Color.alpha;
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarPendingIntent;
@@ -60,8 +64,9 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 			rv.setViewVisibility(R.id.action_bar, View.GONE);
 		}
         int color = prefs.getInt(PREF_BACKGROUND_COLOR, PREF_BACKGROUND_COLOR_DEFAULT);
-        setColorFilter(rv, R.id.background_image, color);
-        setAlpha(rv, R.id.background_image, Color.alpha(color));
+        int opaqueColor = Color.rgb(red(color), green(color), blue(color));
+        setColorFilter(rv, R.id.background_image, opaqueColor);
+        setAlpha(rv, R.id.background_image, alpha(color));
     }
 
     private void configureActionBar(Context context, RemoteViews rv) {

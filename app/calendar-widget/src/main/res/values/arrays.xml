@@ -20,6 +20,16 @@
         <item>@string/appearance_date_format_24</item>
         <item>@string/appearance_date_format_12</item>
     </string-array>
+    <string-array name="pref_day_header_alignment_entries">
+        <item>@string/appearance_day_header_alignment_left</item>
+        <item>@string/appearance_day_header_alignment_center</item>
+        <item>@string/appearance_day_header_alignment_right</item>
+    </string-array>
+    <string-array name="pref_day_header_alignment_values" tools:ignore="MissingTranslation">
+        <item>LEFT</item>
+        <item>CENTER</item>
+        <item>RIGHT</item>
+    </string-array>
     <string-array name="pref_theme_entries">
         <item>@string/appearance_theme_black</item>
         <item>@string/appearance_theme_dark</item>

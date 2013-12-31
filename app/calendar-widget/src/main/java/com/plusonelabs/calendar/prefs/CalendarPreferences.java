@@ -1,5 +1,6 @@
 package com.plusonelabs.calendar.prefs;
 
+import com.plusonelabs.calendar.Alignment;
 import com.plusonelabs.calendar.Theme;
 
 public class CalendarPreferences {
@@ -26,6 +27,8 @@ public class CalendarPreferences {
 	public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
 	public static final String PREF_HEADER_THEME = "headerTheme";
 	public static final String PREF_HEADER_THEME_DEFAULT = Theme.DARK.name();
+	public static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
+	public static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
 
 	private CalendarPreferences() {
 		// prohibit instantiation

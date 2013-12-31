@@ -2,6 +2,8 @@ package com.plusonelabs.calendar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -14,8 +16,10 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import static com.plusonelabs.calendar.Alignment.valueOf;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColorFromAttr;
@@ -23,6 +27,8 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DAY_HEADER_ALIGNMENT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
 
@@ -71,7 +77,9 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public RemoteViews updateDayHeader(DayHeader dayHeader) {
-		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.day_header);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String alignment = prefs.getString(PREF_DAY_HEADER_ALIGNMENT, PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
+        RemoteViews rv = new RemoteViews(context.getPackageName(), valueOf(alignment).getLayoutId());
         rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
 		setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
 		setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
@@ -103,16 +111,16 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     public void onDataSetChanged() {
         context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT));
         eventEntries.clear();
-        ArrayList<Event> events = new ArrayList<>();
+        List<Event> events = new ArrayList<>();
         for (IEventVisualizer<?> eventProvider : eventProviders) {
             events.addAll(eventProvider.getEventEntries());
         }
         updateEntryList(events);
     }
 
-	private void updateEntryList(ArrayList<Event> eventList) {
-		if (!eventList.isEmpty()) {
-			Event firstEvent = eventList.get(0);
+    private void updateEntryList(List<Event> eventList) {
+        if (!eventList.isEmpty()) {
+            Event firstEvent = eventList.get(0);
 			DayHeader curDayBucket = new DayHeader(firstEvent.getStartDate());
 			eventEntries.add(curDayBucket);
 			for (Event event : eventList) {
@@ -132,7 +140,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public int getViewTypeCount() {
-		int result = 0;
+		int result = 3;
         for (IEventVisualizer<?> eventProvider : eventProviders) {
             result += eventProvider.getViewTypeCount();
         }

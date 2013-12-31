@@ -40,6 +40,11 @@
     <string name="appearance_group_color_title">Colors</string>
     <string name="appearance_background_color_title">Background color</string>
     <string name="appearance_background_color_desc">Adjust the color of the background</string>
+    <string name="appearance_day_header_alignment_desc">Set the alignment of the day header</string>
+    <string name="appearance_day_header_alignment_title">Day header alignment</string>
+    <string name="appearance_day_header_alignment_left">Left</string>
+    <string name="appearance_day_header_alignment_center">Center</string>
+    <string name="appearance_day_header_alignment_right">Right</string>
     <string name="appearance_header_theme_title">Widget header shading</string>
     <string name="appearance_header_theme_desc">Show the header of the widget in dark or light shade</string>
     <string name="appearance_entries_theme_title">Event shading</string>

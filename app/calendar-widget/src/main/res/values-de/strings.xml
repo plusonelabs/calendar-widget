@@ -40,6 +40,11 @@
     <string name="appearance_group_color_title">Farben</string>
     <string name="appearance_background_color_title">Hintergrundfarbe</string>
     <string name="appearance_background_color_desc">Passe die Farbe des Hintergrundes an</string>
+    <string name="appearance_day_header_alignment_desc">Bestimme die Ausrichtung des Tagesdatums</string>
+    <string name="appearance_day_header_alignment_title">Datumsausrichtung</string>
+    <string name="appearance_day_header_alignment_left">Links</string>
+    <string name="appearance_day_header_alignment_center">Mitte</string>
+    <string name="appearance_day_header_alignment_right">Rechts</string>
     <string name="appearance_header_theme_title">Schattierung der Kopfzeile</string>
     <string name="appearance_header_theme_desc">Zeige die Kopfzeile des Widgets in heller oder dunkler Schattierung an</string>
     <string name="appearance_entries_theme_title">Schattierung der Ereignisse</string>

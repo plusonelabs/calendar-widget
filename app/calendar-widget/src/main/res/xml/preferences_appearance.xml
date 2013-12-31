@@ -23,6 +23,13 @@
         android:summary="@string/appearance_date_format_desc"
         android:title="@string/appearance_date_format_title" />
 
+    <ListPreference
+        android:defaultValue="RIGHT"
+        android:entries="@array/pref_day_header_alignment_entries"
+        android:entryValues="@array/pref_day_header_alignment_values"
+        android:key="dayHeaderAlignment"
+        android:summary="@string/appearance_day_header_alignment_desc"
+        android:title="@string/appearance_day_header_alignment_title" />
 
     <CheckBoxPreference
         android:defaultValue="true"

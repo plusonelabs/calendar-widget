@@ -14,7 +14,7 @@
         style="@style/DayHeaderTitle"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="right"
+        android:gravity="left"
         tools:ignore="SelectableText" />
 
     <TextView

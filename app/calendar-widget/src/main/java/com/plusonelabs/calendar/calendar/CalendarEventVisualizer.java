@@ -178,7 +178,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	}
 
 	public int getViewTypeCount() {
-		return 2;
+		return 1;
 	}
 
 	public List<CalendarEvent> getEventEntries() {

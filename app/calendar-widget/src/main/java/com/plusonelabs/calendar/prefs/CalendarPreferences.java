@@ -14,7 +14,7 @@ public class CalendarPreferences {
 	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";
 	public static final String PREF_INDICATE_ALERTS = "indicateAlerts";
 	public static final String PREF_BACKGROUND_COLOR = "backgroundColor";
-	public static final int PREF_BACKGROUND_COLOR_DEFAULT = 0xbe000000;
+	public static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
 	public static final String PREF_DATE_FORMAT = "dateFormat";
 	public static final String PREF_DATE_FORMAT_DEFAULT = "auto";
 	public static final String PREF_EVENT_RANGE = "eventRange";

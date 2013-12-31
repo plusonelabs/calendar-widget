@@ -48,7 +48,7 @@
             android:title="@string/appearance_header_theme_title" />
 
         <Preference
-            android:defaultValue="3187671040"
+            android:defaultValue="2147483648"
             android:key="backgroundColor"
             android:summary="@string/appearance_background_color_desc"
             android:title="@string/appearance_background_color_title" />

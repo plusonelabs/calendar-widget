@@ -1,10 +1,9 @@
 package com.plusonelabs.calendar.calendar;
 
-import org.joda.time.DateMidnight;
+import com.plusonelabs.calendar.model.Event;
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-
-import com.plusonelabs.calendar.model.Event;
 
 public class CalendarEvent extends Event {
 
@@ -92,8 +91,8 @@ public class CalendarEvent extends Event {
 	}
 
 	public int daysSpanned() {
-		DateMidnight startMidnight = getStartDate().toDateMidnight();
-		DateMidnight endMidnight = getEndDate().toDateMidnight();
+		DateTime startMidnight = getStartDate().withTimeAtStartOfDay();
+		DateTime endMidnight = getEndDate().withTimeAtStartOfDay();
 		int days = Days.daysBetween(startMidnight, endMidnight).getDays();
 		if (!isAllDay() && !getEndDate().equals(endMidnight)) {
 			days++;

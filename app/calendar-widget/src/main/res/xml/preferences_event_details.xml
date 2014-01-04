@@ -8,26 +8,35 @@
         android:summary="@string/event_details_event_range_desc"
         android:title="@string/event_details_event_range_title" />
 
-    <CheckBoxPreference android:key="showEndTime" android:title="@string/event_details_show_end_time_title" android:summary="@string/event_details_show_end_time_desc" android:defaultValue="true"/><CheckBoxPreference
+    <CheckBoxPreference
+        android:key="showEndTime"
+        android:title="@string/event_details_show_end_time_title"
+        android:summary="@string/event_details_show_end_time_desc"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
         android:defaultValue="true"
         android:key="showLocation"
         android:summary="@string/event_details_show_location_desc"
-        android:title="@string/event_details_show_location_title" >
-    </CheckBoxPreference>
+        android:title="@string/event_details_show_location_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="fillAllDay"
+        android:summary="@string/event_details_fill_all_day_events_desc"
+        android:title="@string/event_details_fill_all_day_events_title" />
 
     <PreferenceCategory android:title="@string/event_details_indicators" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="indicateAlerts"
             android:summary="@string/event_details_indicate_alert_desc"
-            android:title="@string/event_details_indicate_alert_title" >
-        </CheckBoxPreference>
+            android:title="@string/event_details_indicate_alert_title" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="indicateRecurring"
             android:summary="@string/event_details_indicate_recurring_desc"
-            android:title="@string/event_details_indicate_recurring_title" >
-        </CheckBoxPreference>
+            android:title="@string/event_details_indicate_recurring_title" />
     </PreferenceCategory>
     
 

@@ -15,7 +15,7 @@ public class Event implements Comparable<Event> {
 	}
 
 	public boolean isSameDay(DateTime otherDate) {
-		return startDate.toDateMidnight().isEqual(otherDate.toDateMidnight());
+		return startDate.withTimeAtStartOfDay().isEqual(otherDate.withTimeAtStartOfDay());
 	}
 
 	public boolean isToday() {

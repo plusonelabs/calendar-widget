@@ -14,7 +14,6 @@ import android.text.format.DateUtils;
 
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -30,6 +29,8 @@ import static android.graphics.Color.green;
 import static android.graphics.Color.red;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENT_RANGE;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENT_RANGE_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY_DEFAULT;
 
 public class CalendarEventProvider {
 
@@ -65,25 +66,29 @@ public class CalendarEventProvider {
     }
 
 	private List<CalendarEvent> createEventList(Cursor calendarCursor) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean fillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
         List<CalendarEvent> eventList = new ArrayList<>();
         for (int i = 0; i < calendarCursor.getCount(); i++) {
 			calendarCursor.moveToPosition(i);
 			CalendarEvent event = createCalendarEvent(calendarCursor);
 			setupDayOneEntry(eventList, event);
-			createFollowingEntries(eventList, event);
-		}
-		return eventList;
-	}
+            if (!event.isAllDay() || fillAllDayEvents) {
+                createFollowingEntries(eventList, event);
+            }
+        }
+        return eventList;
+    }
 
 	public void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {
 		if (isEqualOrAfterTodayAtMidnight(event.getStartDate())) {
 			if (event.daysSpanned() > 1) {
 				CalendarEvent clone = event.clone();
-				clone.setEndDate(event.getStartDate().plusDays(1).toDateMidnight().toDateTime());
-				clone.setSpansMultipleDays(true);
-				clone.setOriginalEvent(event);
-				eventList.add(clone);
-			} else {
+                clone.setEndDate(event.getStartDate().plusDays(1).withTimeAtStartOfDay());
+                clone.setSpansMultipleDays(true);
+                clone.setOriginalEvent(event);
+                eventList.add(clone);
+            } else {
 				eventList.add(event);
 			}
 		}
@@ -92,11 +97,11 @@ public class CalendarEventProvider {
 	public void createFollowingEntries(List<CalendarEvent> eventList, CalendarEvent event) {
 		int daysCovered = event.daysSpanned();
 		for (int j = 1; j < daysCovered; j++) {
-			DateTime startDate = event.getStartDate().toDateMidnight().plusDays(j).toDateTime();
-			if (isEqualOrAfterTodayAtMidnight(startDate)) {
-				DateTime endDate;
-				if (j < daysCovered - 1) {
-					endDate = startDate.plusDays(1);
+            DateTime startDate = event.getStartDate().withTimeAtStartOfDay().plusDays(j);
+            if (isEqualOrAfterTodayAtMidnight(startDate)) {
+                DateTime endDate;
+                if (j < daysCovered - 1) {
+                    endDate = startDate.plusDays(1);
 				} else {
 					endDate = event.getEndDate();
 				}
@@ -106,13 +111,13 @@ public class CalendarEventProvider {
 	}
 
 	private boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
-		DateMidnight midnight = new DateMidnight();
-		return startDate.isEqual(midnight) || startDate.isAfter(midnight);
-	}
+        DateTime startOfDay = DateTime.now().withTimeAtStartOfDay();
+        return startDate.isEqual(startOfDay) || startDate.isAfter(startOfDay);
+    }
 
-	private CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,
-			DateTime endDate) {
-		CalendarEvent clone = eventEntry.clone();
+    private CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,
+                                               DateTime endDate) {
+        CalendarEvent clone = eventEntry.clone();
 		clone.setStartDate(startDate);
 		clone.setEndDate(endDate);
 		clone.setSpansMultipleDays(true);

@@ -34,12 +34,9 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEM
 
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
-	private static final String COMMA_SPACE = ", ";
-
 	private final Context context;
-	private final ArrayList<Event> eventEntries;
-
-	private final ArrayList<IEventVisualizer<?>> eventProviders;
+	private final List<Event> eventEntries;
+	private final List<IEventVisualizer<?>> eventProviders;
 
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
@@ -80,33 +77,18 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String alignment = prefs.getString(PREF_DAY_HEADER_ALIGNMENT, PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
         RemoteViews rv = new RemoteViews(context.getPackageName(), valueOf(alignment).getLayoutId());
-        rv.setTextViewText(R.id.day_header_title, createDayEntryString(dayHeader));
-		setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
-		setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
-		setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
-		setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
-				R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
+        String dateString = DateUtil.createDateString(context, dayHeader.getStartDate())
+                .toUpperCase(Locale.getDefault());
+        rv.setTextViewText(R.id.day_header_title, dateString);
+        setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
+        setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
+        setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
+        setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
+                R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
 		Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
 	}
-
-	private String createDayEntryString(DayHeader dayEntry) {
-		Date date = dayEntry.getStartDate().toDate();
-        if (dayEntry.isToday()) {
-            return createDateString(date, context.getString(R.string.today));
-        } else if (dayEntry.isTomorrow()) {
-            return createDateString(date, context.getString(R.string.tomorrow));
-        }
-        return DateUtils.formatDateTime(context, date.getTime(),
-				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY).toUpperCase(
-				Locale.getDefault());
-	}
-
-    protected String createDateString(Date date, String text) {
-        return text + COMMA_SPACE + DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE)
-                .toUpperCase(Locale.getDefault());
-    }
 
     public void onDataSetChanged() {
         context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT));
@@ -125,8 +107,8 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 			eventEntries.add(curDayBucket);
 			for (Event event : eventList) {
 				DateTime startDate = event.getStartDate();
-				if (!startDate.toDateMidnight().isEqual(
-						curDayBucket.getStartDate().toDateMidnight())) {
+				if (!startDate.withTimeAtStartOfDay().isEqual(
+						curDayBucket.getStartDate().withTimeAtStartOfDay())) {
 					curDayBucket = new DayHeader(startDate);
 					eventEntries.add(curDayBucket);
 				}
@@ -140,7 +122,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public int getViewTypeCount() {
-		int result = 3;
+		int result = 3; // we have 3 because of the "left", "right" and "center" day headers
         for (IEventVisualizer<?> eventProvider : eventProviders) {
             result += eventProvider.getViewTypeCount();
         }

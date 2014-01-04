@@ -1,19 +1,24 @@
 package com.plusonelabs.calendar;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Locale;
+import android.content.Context;
+import android.text.format.DateUtils;
 
 import org.joda.time.DateTime;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Locale;
 
 public class DateUtil {
 
 	private static final String TWELVE = "12";
 	private static final String NOON_AM = "12:00 AM";
 	private static final String EMPTY_STRING = "";
+    private static final String COMMA_SPACE = ", ";
 
 	public static boolean isMidnight(DateTime date) {
-		return date.isEqual(date.toDateMidnight());
+		return date.isEqual(date.withTimeAtStartOfDay());
 	}
 
 	public static boolean hasAmPmClock(Locale locale) {
@@ -28,4 +33,17 @@ public class DateUtil {
 		return midnight.contains(TWELVE);
 	}
 
+    public static String createDateString(Context context, DateTime dateTime) {
+        if (dateTime.withTimeAtStartOfDay().isEqual(DateTime.now())) {
+            return createDateString(context, dateTime.toDate(), context.getString(R.string.today));
+        } else if (dateTime.withTimeAtStartOfDay().isEqual(DateTime.now().plusDays(1))) {
+            return createDateString(context, dateTime.toDate(), context.getString(R.string.tomorrow));
+        }
+        return DateUtils.formatDateTime(context, dateTime.toDate().getTime(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
+    }
+
+    private static String createDateString(Context context, Date date, String prefix) {
+        return prefix + COMMA_SPACE + DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE);
+    }
 }

@@ -30,6 +30,8 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMA
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMAT_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_ALERTS;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_RECURRING;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE;
@@ -84,19 +86,20 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
     }
 
 	private void setEventDetails(CalendarEvent event, RemoteViews rv) {
-		if (event.spansOneFullDay()
-				&& !(event.isStartOfMultiDayEvent() || event.isEndOfMultiDayEvent())
-				|| event.isAllDay()) {
-			rv.setViewVisibility(R.id.event_entry_details, View.GONE);
-		} else {
-			String eventDetails = createTimeSpanString(event);
-			boolean showLocation = prefs.getBoolean(PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
-			if (showLocation && event.getLocation() != null && !event.getLocation().isEmpty()) {
-				eventDetails += SPACE_PIPE_SPACE + event.getLocation();
-			}
-			rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
-			rv.setTextViewText(R.id.event_entry_details, eventDetails);
-			setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
+        boolean fillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
+        if (event.spansOneFullDay() && !(event.isStartOfMultiDayEvent()
+                || event.isEndOfMultiDayEvent())
+                || event.isAllDay() && fillAllDayEvents) {
+            rv.setViewVisibility(R.id.event_entry_details, View.GONE);
+        } else {
+            String eventDetails = createTimeSpanString(event);
+            boolean showLocation = prefs.getBoolean(PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
+            if (showLocation && event.getLocation() != null && !event.getLocation().isEmpty()) {
+                eventDetails += SPACE_PIPE_SPACE + event.getLocation();
+            }
+            rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
+            rv.setTextViewText(R.id.event_entry_details, eventDetails);
+            setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
             setTextColorFromAttr(context, rv, R.id.event_entry_details, R.attr.eventEntryDetails);
         }
     }
@@ -140,45 +143,54 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	}
 
 	private String createTimeSpanString(CalendarEvent event) {
-		String startStr;
-		String endStr;
-		String separator = SPACE_DASH_SPACE;
-		if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getStartDate())
-				&& !event.isStartOfMultiDayEvent()) {
-			startStr = ARROW_SPACE;
-			separator = EMPTY_STRING;
-		} else {
-			startStr = createTimeString(event.getStartDate());
-		}
-		if (prefs.getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT)) {
-			if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())
-					&& !event.isEndOfMultiDayEvent()) {
-				endStr = SPACE_ARROW;
-				separator = EMPTY_STRING;
-			} else {
-				endStr = createTimeString(event.getEndDate());
-			}
-		} else {
-			separator = EMPTY_STRING;
-			endStr = EMPTY_STRING;
-		}
-		return startStr + separator + endStr;
-	}
+        if (event.isAllDay() && !prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT)) {
+            DateTime dateTime = event.getOriginalEvent().getEndDate().minusDays(1);
+            return ARROW_SPACE + EMPTY_STRING + DateUtil.createDateString(context, dateTime);
+        } else {
+            return createTimeStringForEventEntry(event);
+        }
+    }
 
-	private String createTimeString(DateTime time) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		String dateFormat = prefs.getString(PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
-		if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
-				|| dateFormat.equals(TWELVE)) {
-			return DateUtils.formatDateTime(context, time.toDate().getTime(),
-					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
-		}
-		return DateUtils.formatDateTime(context, time.toDate().getTime(),
-				DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
-	}
+    private String createTimeStringForEventEntry(CalendarEvent event) {
+        String startStr;
+        String endStr;
+        String separator = SPACE_DASH_SPACE;
+        if (event.isPartOfMultiDayEvent()&& DateUtil.isMidnight(event.getStartDate())
+                && !event.isStartOfMultiDayEvent()) {
+            startStr = ARROW_SPACE;
+            separator = EMPTY_STRING;
+        } else {
+            startStr = createTimeString(event.getStartDate());
+        }
+        if (prefs.getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT)) {
+            if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())
+                    && !event.isEndOfMultiDayEvent()) {
+                endStr = SPACE_ARROW;
+                separator = EMPTY_STRING;
+            } else {
+                endStr = createTimeString(event.getEndDate());
+            }
+        } else {
+            separator = EMPTY_STRING;
+            endStr = EMPTY_STRING;
+        }
+        return startStr + separator + endStr;
+    }
 
-	public int getViewTypeCount() {
-		return 1;
+    private String createTimeString(DateTime time) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String dateFormat = prefs.getString(PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
+        if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
+                || dateFormat.equals(TWELVE)) {
+            return DateUtils.formatDateTime(context, time.toDate().getTime(),
+                    DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
+        }
+        return DateUtils.formatDateTime(context, time.toDate().getTime(),
+                DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
+    }
+
+    public int getViewTypeCount() {
+        return 1;
 	}
 
 	public List<CalendarEvent> getEventEntries() {

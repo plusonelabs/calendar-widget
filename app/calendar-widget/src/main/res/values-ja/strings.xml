@@ -44,6 +44,7 @@
     <string name="event_details_prefs_desc">表示するイベントの詳細を設定します</string>
     <string name="event_details_event_range_title">期間</string>
     <string name="event_details_event_range_desc">イベントを表示する日数を設定します</string>
+    <string name="event_range_one_day">1日</string>
     <string name="event_range_one_week">1週</string>
     <string name="event_range_two_weeks">2週</string>
     <string name="event_range_one_month">1ヵ月</string>

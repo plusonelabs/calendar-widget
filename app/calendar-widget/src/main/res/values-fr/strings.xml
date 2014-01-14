@@ -44,6 +44,7 @@
     <string name="event_details_prefs_desc">Configurez quelles informations voir pour un événement</string>
     <string name="event_details_event_range_title">Intervale de date</string>
     <string name="event_details_event_range_desc">Configuez le nombre d\'événements à afficher</string>
+    <string name="event_range_one_day">Un jour</string>
     <string name="event_range_one_week">Une semaine</string>
     <string name="event_range_two_weeks">Deux semaines</string>
     <string name="event_range_one_month">Un mois</string>

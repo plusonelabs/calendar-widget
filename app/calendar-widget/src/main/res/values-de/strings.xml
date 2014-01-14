@@ -53,6 +53,7 @@
     <string name="event_details_prefs_desc">Details die zu einem Termin angezeigt werden</string>
     <string name="event_details_event_range_title">Zeitraum</string>
     <string name="event_details_event_range_desc">Wieviele Termine werden angezeigt</string>
+    <string name="event_range_one_day">Eine Tag</string>
     <string name="event_range_one_week">Eine Woche</string>
     <string name="event_range_two_weeks">Zwei Wochen</string>
     <string name="event_range_one_month">Ein Monat</string>

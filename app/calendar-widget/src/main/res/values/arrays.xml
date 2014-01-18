@@ -48,6 +48,7 @@
         <item>12</item>
     </string-array>
     <string-array name="pref_event_range_entries">
+        <item>@string/event_range_one_day</item>
         <item>@string/event_range_one_week</item>
         <item>@string/event_range_two_weeks</item>
         <item>@string/event_range_one_month</item>
@@ -57,6 +58,7 @@
         <item>@string/event_range_one_year</item>
     </string-array>
     <string-array name="pref_event_range_values" tools:ignore="MissingTranslation">
+        <item>1</item>
         <item>7</item>
         <item>14</item>
         <item>30</item>

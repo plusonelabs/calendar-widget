@@ -38,6 +38,7 @@
     <string name="appearance_theme_dark">Fény</string>
     <string name="appearance_theme_light">Sötét</string>
     <string name="appearance_theme_white">Fekete</string>
+    <string name="event_range_one_day">Egy nap</string>
     <string name="event_range_one_week">Egy hét</string>
     <string name="event_range_two_weeks">Két hét</string>
     <string name="event_range_one_month">Egy hónap</string>

@@ -38,6 +38,7 @@
     <string name="appearance_theme_dark">Свет</string>
     <string name="appearance_theme_light">Темный</string>
     <string name="appearance_theme_white">Черный</string>
+    <string name="event_range_one_day">Один день<string>
     <string name="event_range_one_week">Одна неделя</string>
     <string name="event_range_two_weeks">Две недели</string>
     <string name="event_range_one_month">Один месяц</string>

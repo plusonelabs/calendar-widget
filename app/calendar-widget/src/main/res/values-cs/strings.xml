@@ -48,6 +48,7 @@
     <string name="event_details_prefs_desc">Nastavení detailů pro zobrazovanou událost</string>
     <string name="event_details_event_range_title">Časové období</string>
     <string name="event_details_event_range_desc">Nastavení počtu událostí k zobrazení</string>
+    <string name="event_range_one_day">1 den</string>
     <string name="event_range_one_week">1 týden</string>
     <string name="event_range_two_weeks">2 týdny</string>
     <string name="event_range_one_month">1 měsíc</string>

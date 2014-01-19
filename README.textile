@@ -27,6 +27,10 @@ We are developing this application in public to bring you a tool that _you_ want
 
 h2. Changelog
 
+h3. v1.8
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=19&state=closed
+
 h3. v1.7.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=18&state=closed

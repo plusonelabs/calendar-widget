@@ -7,7 +7,8 @@
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/calender_padding"
-    android:paddingRight="@dimen/calender_padding" >
+    android:paddingRight="@dimen/calender_padding"
+    android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
         android:id="@+id/day_header_title"

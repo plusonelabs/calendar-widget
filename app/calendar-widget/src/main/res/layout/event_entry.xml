@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/calender_padding"
-    android:paddingRight="@dimen/calender_padding" >
+    android:paddingRight="@dimen/calender_padding"
+    android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
         android:id="@+id/event_entry_color"

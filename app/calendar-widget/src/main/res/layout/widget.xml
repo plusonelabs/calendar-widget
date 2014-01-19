@@ -54,10 +54,8 @@
             android:id="@+id/event_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="2dp"
-            android:paddingBottom="@dimen/calender_padding"
-            android:paddingTop="@dimen/calender_padding" />
+            android:divider="@null"
+            android:dividerHeight="0dp" />
 
         <TextView
             android:id="@+id/empty_event_list"

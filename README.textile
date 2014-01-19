@@ -33,10 +33,10 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=19&state=closed
 
 * Adds option to align the date header left, right and center
 * Allows to show events spreading over multiple days only on the first day
-* The date range of events to show can be limited to only one day (thanks jganetsk)
+* Enables to show only events in a one day date range (thanks jganetsk)
 * Adds new translations in dutch and polish
 * A big thanks to at all the people who have helped with translations on crowdin.net
-  * blancazert, deamn, emes2, gabrielemariotti, hermajan, jagoda1-72, k.schasfoort, moritzpost
+** blancazert, deamn, emes2, gabrielemariotti, hermajan, jagoda1-72, k.schasfoort, moritzpost
 
 h3. v1.7.2
 

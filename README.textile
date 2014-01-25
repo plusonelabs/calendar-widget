@@ -27,6 +27,13 @@ We are developing this application in public to bring you a tool that _you_ want
 
 h2. Changelog
 
+h3. v1.8.1
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=20&state=closed
+
+* Fixes issue where the date headers for "Today" and "Tomorrow" where not show correctly
+* Updates translations and adds partial support for hebrew (thanks bomba6)
+
 h3. v1.8
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=19&state=closed

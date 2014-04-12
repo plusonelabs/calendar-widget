@@ -36,7 +36,9 @@
   <string name="appearance_group_color_title">色</string>
   <string name="appearance_background_color_title">背景の透明度</string>
   <string name="appearance_background_color_desc">背景の透明度を調整します</string>
-  <string name="appearance_theme_black">ホワイト</string>
+    <string name="appearance_day_header_alignment_center">中央</string>
+    <string name="appearance_day_header_alignment_right">右</string>
+    <string name="appearance_theme_black">ホワイト</string>
   <string name="appearance_theme_dark">光</string>
   <string name="appearance_theme_light">暗い</string>
   <string name="appearance_theme_white">ブラック</string>

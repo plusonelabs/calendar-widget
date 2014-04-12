@@ -27,6 +27,12 @@ We are developing this application in public to bring you a tool that _you_ want
 
 h2. Changelog
 
+h3. v1.8.2
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=21&state=closed
+
+* Updates translations and adds support for simplified chinese, bulgarian and norwegian
+
 h3. v1.8.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=20&state=closed

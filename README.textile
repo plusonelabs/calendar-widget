@@ -27,18 +27,25 @@ We are developing this application in public to bring you a tool that _you_ want
 
 h2. Changelog
 
+h3. v1.8.3
+
+https://github.com/plusonelabs/calendar-widget/issues?milestone=22&state=closed
+
+* Adds Korean translation
+* Fixes problem where the Norwegian translation was not visible to users
+
 h3. v1.8.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=21&state=closed
 
-* Updates translations and adds support for simplified chinese, bulgarian and norwegian
+* Updates translations and adds support for simplified Chinese, Bulgarian and Norwegian
 
 h3. v1.8.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=20&state=closed
 
 * Fixes issue where the date headers for "Today" and "Tomorrow" where not show correctly
-* Updates translations and adds partial support for hebrew (thanks bomba6)
+* Updates translations and adds partial support for Hebrew (thanks bomba6)
 
 h3. v1.8
 
@@ -47,7 +54,7 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=19&state=closed
 * Adds option to align the date header left, right and center
 * Allows to show events spreading over multiple days only on the first day
 * Enables to show only events in a one day date range (thanks jganetsk)
-* Adds new translations in dutch and polish
+* Adds new translations in Dutch and polish
 * A big thanks to at all the people who have helped with translations on crowdin.net
 ** blancazert, deamn, emes2, gabrielemariotti, hermajan, jagoda1-72, k.schasfoort, moritzpost
 
@@ -63,13 +70,13 @@ h3. v1.7.1
 https://github.com/plusonelabs/calendar-widget/issues?milestone=17&state=closed
 
 * Fixes critical bug on Android 4.0 devices
-* Completes czech translation (thanks hermajan)
+* Completes Czech translation (thanks hermajan)
 
 h3. v1.7
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=16&state=closed
 
-* Adds theming capabilites to the widget background and texts
+* Adds theming capabilities to the widget background and texts
 * Taping on current date header now opens calendar app
 * Calendar events can now show their event specific color
 
@@ -77,14 +84,14 @@ h3. v1.6.4
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=15&state=closed
 
-* Updates czech translation
+* Updates Czech translation
 * Fixes critical bug on Android 4.4
 
 h3. v1.6.3
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=14&state=closed
 
-* Adds support for multiple languages: Spanish, French, Italian and brazilian Portuguese
+* Adds support for multiple languages: Spanish, French, Italian and Brazilian Portuguese
 * Adds option to hide end date (contributed by ultraq)
 * Background transparency is set in 5% increments instead of 10% (contributed by ultraq)
 * Fixed bug where events starting or ending at midnight would not show their time correctly
@@ -107,7 +114,7 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=11&state=closed
 
 * Added option to show the event location
 * Added option to span title over multiple lines
-* Added abililty to choose from more font sizes
+* Added ability to choose from more font sizes
 * Added option to set the event date range
 
 h3. v1.5.2
@@ -121,7 +128,7 @@ h3. v1.5.1
 https://github.com/plusonelabs/calendar-widget/issues?milestone=9&state=closed
 
 * Added support for Czech language
-* Fixed crahses when adding event on certain devices
+* Fixed crashes when adding event on certain devices
 * Fixed issue with spanning events
 
 h3. v1.5
@@ -130,7 +137,7 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=8&state=closed
 
 * Enabled support to place the calendar widget on the lock screen
 * Calendar events can now be added directly from the widget
-* Added japanese translations (Thanks to Sakuma)
+* Added Japanese translations (Thanks to Sakuma)
 * Fixed several stability issues
 
 h3. v1.4
@@ -189,7 +196,7 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=1&page=1&state=c
 
 * Added preferences menu
 * Added option to select the active calendars for the widget
-* An new preferens option allows to hide the current date header to have more space for the calendar entries
+* An new preferences option allows to hide the current date header to have more space for the calendar entries
 * The text size can not be customized as small, medium or large
 * The widget can not be shrinked properly on all devices
 

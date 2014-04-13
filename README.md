@@ -1,15 +1,15 @@
-h2. Android Calendar Widget
+# Android Calendar Widget
 
 The Android calendar widget is home screen widget for your Android device. It displays a list of upcoming calendar events so that you can easily have a glimpse at your upcoming appointments.
 
 <a href="https://play.google.com/store/apps/details?id=com.plusonelabs.calendar">
-  <img alt="Get it on Google Play" src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
+<img alt="Get it on Google Play" src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
 </a>
 
-Want to contribute to the project? Start by translating the widget to another language. Visit the "project at crowdin.net":http://crowdin.net/project/plusonelabs-calendar-widget and be part of the next release. :)
-!https://github.com/plusonelabs/calendar-widget/raw/master/assets/screenshots/widget-device.png!
+Want to contribute to the project? Start by translating the widget to another language. Visit the [project at crowdin.net](http://crowdin.net/project/plusonelabs-calendar-widget) and be part of the next release. :)
+![Calendar Widget Screenshots](https://github.com/plusonelabs/calendar-widget/raw/master/assets/screenshots/widget-device.png)
 
-h2. Features
+## Features
 
 * Displays all events from your calendars
 * Automatically updates when you add/delete/modify an event
@@ -21,33 +21,33 @@ h2. Features
 * Indicators for alerts and recurring events
 * Supports Android tablets
 
-h2. Collaborate
+## Collaborate
 
 We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open issues and provide pull requests. We are especially looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
 
-h2. Changelog
+## Changelog
 
-h3. v1.8.3
+### v1.8.3
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=22&state=closed
 
 * Adds Korean translation
 * Fixes problem where the Norwegian translation was not visible to users
 
-h3. v1.8.2
+### v1.8.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=21&state=closed
 
 * Updates translations and adds support for simplified Chinese, Bulgarian and Norwegian
 
-h3. v1.8.1
+### v1.8.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=20&state=closed
 
 * Fixes issue where the date headers for "Today" and "Tomorrow" where not show correctly
 * Updates translations and adds partial support for Hebrew (thanks bomba6)
 
-h3. v1.8
+### v1.8
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=19&state=closed
 
@@ -58,21 +58,21 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=19&state=closed
 * A big thanks to at all the people who have helped with translations on crowdin.net
 ** blancazert, deamn, emes2, gabrielemariotti, hermajan, jagoda1-72, k.schasfoort, moritzpost
 
-h3. v1.7.2
+### v1.7.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=18&state=closed
 
 * Fine tunes the shading of the text colors
 * Fixes tinting issue of background color
 
-h3. v1.7.1
+### v1.7.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=17&state=closed
 
 * Fixes critical bug on Android 4.0 devices
 * Completes Czech translation (thanks hermajan)
 
-h3. v1.7
+### v1.7
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=16&state=closed
 
@@ -80,14 +80,14 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=16&state=closed
 * Taping on current date header now opens calendar app
 * Calendar events can now show their event specific color
 
-h3. v1.6.4
+### v1.6.4
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=15&state=closed
 
 * Updates Czech translation
 * Fixes critical bug on Android 4.4
 
-h3. v1.6.3
+### v1.6.3
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=14&state=closed
 
@@ -96,19 +96,19 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=14&state=closed
 * Background transparency is set in 5% increments instead of 10% (contributed by ultraq)
 * Fixed bug where events starting or ending at midnight would not show their time correctly
 
-h3. v1.6.2
+### v1.6.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=13&state=closed
 
 * Fixed serious crash when preferences from older installations were present
 
-h3. v1.6.1
+### v1.6.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=12&state=closed
 
 * Fixed a crash of Samsungs S Planner when creating new event
 
-h3. v1.6
+### v1.6
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=11&state=closed
 
@@ -117,13 +117,13 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=11&state=closed
 * Added ability to choose from more font sizes
 * Added option to set the event date range
 
-h3. v1.5.2
+### v1.5.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=10&state=closed
 
 * Added support for Hungarian and Russian language
 
-h3. v1.5.1
+### v1.5.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=9&state=closed
 
@@ -131,7 +131,7 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=9&state=closed
 * Fixed crashes when adding event on certain devices
 * Fixed issue with spanning events
 
-h3. v1.5
+### v1.5
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=8&state=closed
 
@@ -140,14 +140,14 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=8&state=closed
 * Added Japanese translations (Thanks to Sakuma)
 * Fixed several stability issues
 
-h3. v1.4
+### v1.4
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=7&state=closed
 
 * Fixed critical issue where an all-day event would be displayed one day to early in certain timezones
 * Added ability to configure the transparency of the widget background
 
-h3. v1.3.2
+### v1.3.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=6&state=closed
 
@@ -157,7 +157,7 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=6&state=closed
 * Fixed problem with events that span multiple days
 
 
-h3. v1.3.1
+### v1.3.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=5&state=closed
 
@@ -165,7 +165,7 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=5&state=closed
 * Fixed issue when no calendar is present on the device
 
 
-h3. v1.3
+### v1.3
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=4&state=closed
 
@@ -175,13 +175,13 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=4&state=closed
 * Events without title now indicate that there is no title
 
 
-h3. v1.2.1
+### v1.2.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=3&state=closed
 
 * Fixed issue where the date in the calendar app would be displayed wrong when opened from the widget
 
-h3. v1.2
+### v1.2
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=2&state=closed
 
@@ -190,7 +190,7 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=2&state=closed
 * Widget refreshes at midnight
 * Widget handles time, date, timezone and locale changes correctly
 
-h3. v1.1
+### v1.1
 
 https://github.com/plusonelabs/calendar-widget/issues?milestone=1&page=1&state=closed
 
@@ -200,6 +200,6 @@ https://github.com/plusonelabs/calendar-widget/issues?milestone=1&page=1&state=c
 * The text size can not be customized as small, medium or large
 * The widget can not be shrinked properly on all devices
 
-h3. v1.0
+### v1.0
 
 * Initial Release

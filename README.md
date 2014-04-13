@@ -48,7 +48,7 @@ We are developing this application in public to bring you a tool that _you_ want
 * Enables to show only events in a one day date range (thanks jganetsk)
 * Adds new translations in Dutch and polish
 * A big thanks to at all the people who have helped with translations on crowdin.net
-** blancazert, deamn, emes2, gabrielemariotti, hermajan, jagoda1-72, k.schasfoort, moritzpost
+ * blancazert, deamn, emes2, gabrielemariotti, hermajan, jagoda1-72, k.schasfoort, moritzpost
 
 ### [v1.7.2](https://github.com/plusonelabs/calendar-widget/issues?milestone=18&state=closed)
 

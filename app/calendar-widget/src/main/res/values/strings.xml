@@ -12,6 +12,7 @@
     <string name="indicator_alarm">Indicator if an alarm has been set</string>
     <string name="indicator_recurring">Indicator if the event is recurring</string>
     <string name="no_title">(No title)</string>
+    <string name="account_prefix">Account:</string>
 
     <!-- Preference calendars -->
     <string name="calendars_prefs">Calendars</string>

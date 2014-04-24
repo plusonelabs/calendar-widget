@@ -12,7 +12,6 @@
     <string name="indicator_alarm">Hinweis ob an dem Ereignis ein Erinnerungen gesetzt wurde</string>
     <string name="indicator_recurring">Hinweis ob das Ereignis wiederkehrend ist</string>
     <string name="no_title">(Kein Titel)</string>
-    <string name="account_prefix">Konto:</string>
     <string name="calendars_prefs">Kalender</string>
     <string name="calendars_prefs_desc">Wählen Sie die anzuzeigenden Kalender</string>
     <string name="appearance_prefs">Aussehen</string>

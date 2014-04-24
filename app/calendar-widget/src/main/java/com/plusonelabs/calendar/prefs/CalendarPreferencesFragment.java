@@ -45,15 +45,11 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		if (cursor == null) {
 			return;
 		}
-		String account_prefix = getResources().getString(R.string.account_prefix);
-		if ( account_prefix != null && !account_prefix.isEmpty() )
-			account_prefix += " ";
-
 		for (int i = 0; i < cursor.getCount(); i++) {
 			cursor.moveToPosition(i);
 			CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
 			checkboxPref.setTitle(cursor.getString(1));
-			checkboxPref.setSummary(account_prefix + cursor.getString(3));
+			checkboxPref.setSummary(cursor.getString(3));
 			checkboxPref.setIcon(createDrawable(cursor.getInt(2)));
 			int calendarId = cursor.getInt(0);
 			checkboxPref.getExtras().putInt(CALENDAR_ID, calendarId);

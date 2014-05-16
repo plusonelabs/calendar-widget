@@ -117,7 +117,7 @@ public class CalendarEventProvider {
 
     private CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,
                                                DateTime endDate) {
-        CalendarEvent clone = eventEntry.clone();
+ 		CalendarEvent clone = eventEntry.clone();
 		clone.setStartDate(startDate);
 		clone.setEndDate(endDate);
 		clone.setSpansMultipleDays(true);
@@ -129,21 +129,18 @@ public class CalendarEventProvider {
 		CalendarEvent event = new CalendarEvent();
 		event.setEventId(calendarCursor.getInt(0));
 		event.setTitle(calendarCursor.getString(1));
-		event.setStartDate(new DateTime(calendarCursor.getLong(2)));
+		
+		// #51: No conversion anymore for all-day time stamps since they're passed via CalendarIntent and may not differ from original DB values.
+		// All-day events begin and end at 0:00, are TZ independent and thus can internally be mapped to local time zone.
+		// see also: http://developer.android.com/reference/android/provider/CalendarContract.Events.html
+		event.setStartDate(new DateTime(calendarCursor.getLong(2)));            
 		event.setEndDate(new DateTime(calendarCursor.getLong(3)));
+		                
 		event.setAllDay(calendarCursor.getInt(4) > 0);
-        event.setLocation(calendarCursor.getString(5));
-        event.setAlarmActive(calendarCursor.getInt(6) > 0);
-        event.setRecurring(calendarCursor.getString(7) != null);
-        event.setColor(getAsOpaque(getEventColor(calendarCursor)));
-        if (event.isAllDay()) {
-			DateTime startDate = event.getStartDate();
-			long converted = startDate.getZone().convertLocalToUTC(startDate.getMillis(), true);
-			event.setStartDate(new DateTime(converted));
-			DateTime endDate = event.getEndDate();
-			converted = endDate.getZone().convertLocalToUTC(endDate.getMillis(), true);
-			event.setEndDate(new DateTime(converted));
-		}
+		event.setLocation(calendarCursor.getString(5));
+		event.setAlarmActive(calendarCursor.getInt(6) > 0);
+		event.setRecurring(calendarCursor.getString(7) != null);
+		event.setColor(getAsOpaque(getEventColor(calendarCursor)));
 		return event;
 	}
 
@@ -207,3 +204,4 @@ public class CalendarEventProvider {
         return EVENT_SELECTION + stringBuilder.toString();
     }
 }
+ 

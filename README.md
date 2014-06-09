@@ -30,7 +30,7 @@ We are developing this application in public to bring you a tool that _you_ want
 ### [v1.8.4](https://github.com/plusonelabs/calendar-widget/issues?milestone=23&state=closed)
 
 * The calendar selection preferences now show the account a calendar comes from (thanks @thknepper)
-* Fixes issue where the date shown in the widget and in calendar app would deviate (thanks @schmaller)
+* Fixes issue where the date shown in the widget and in a calendar app would deviate (thanks @schmaller)
 * Adds translation for Portuguese, Romanian and Greek
 * Updates several other other translations
 

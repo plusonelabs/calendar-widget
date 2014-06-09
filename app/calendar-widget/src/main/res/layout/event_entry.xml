@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/event_entry"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/calender_padding"
-    android:paddingRight="@dimen/calender_padding"
-    android:paddingBottom="@dimen/entry_bottom_padding">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/event_entry"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="@dimen/calender_padding"
+              android:paddingRight="@dimen/calender_padding"
+              android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
         android:id="@+id/event_entry_color"
@@ -18,7 +18,7 @@
     <RelativeLayout
         android:id="@+id/event_entry_text_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/event_entry_title"

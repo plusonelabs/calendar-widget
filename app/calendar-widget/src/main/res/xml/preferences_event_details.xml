@@ -1,4 +1,4 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
         android:defaultValue="30"
@@ -26,7 +26,7 @@
         android:summary="@string/event_details_fill_all_day_events_desc"
         android:title="@string/event_details_fill_all_day_events_title" />
 
-    <PreferenceCategory android:title="@string/event_details_indicators" >
+    <PreferenceCategory android:title="@string/event_details_indicators">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="indicateAlerts"
@@ -38,6 +38,5 @@
             android:summary="@string/event_details_indicate_recurring_desc"
             android:title="@string/event_details_indicate_recurring_title" />
     </PreferenceCategory>
-    
 
 </PreferenceScreen>

@@ -27,6 +27,13 @@ We are developing this application in public to bring you a tool that _you_ want
 
 ## Changelog
 
+### [v1.8.4](https://github.com/plusonelabs/calendar-widget/issues?milestone=23&state=closed)
+
+* Adds translation for Portuguese, Romanian and Greek
+* Updates several other other translations
+* The calendar selection preferences now show the account a calendar comes from (thanks @thknepper)
+* Fixes problem where the date shown in the widget and in a calendar app would deviate (thanks @schmaller)
+
 ### [v1.8.3](https://github.com/plusonelabs/calendar-widget/issues?milestone=22&state=closed)
 
 * Adds Korean translation

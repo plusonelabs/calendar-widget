@@ -25,7 +25,7 @@
     <string name="appearance_text_size_very_large">Sehr groß</string>
     <string name="appearance_multiline_title_title">Mehrzeiliger Titel</string>
     <string name="appearance_multiline_title_desc">Zeige Termintitel über mehrere Zeilen an</string>
-    <string name="appearance_date_format_desc">Anzeige in am/pm oder 24 Stunden Format</string>
+    <string name="appearance_date_format_desc">Anzeige in am/pm oder 24-Stunden-Format</string>
     <string name="appearance_date_format_title">Datumsformat </string>
     <string name="appearance_date_format_auto">Automatisch</string>
     <string name="appearance_date_format_24">17:00</string>
@@ -62,7 +62,7 @@
     <string name="event_range_six_months">Sechs Monate</string>
     <string name="event_range_one_year">Ein Jahr</string>
     <string name="event_details_show_end_time_title">Endzeitpunkt</string>
-    <string name="event_details_show_end_time_desc">Zeige Uhrzeit an dennen ein Termin endet</string>
+    <string name="event_details_show_end_time_desc">Zeige Uhrzeit an der ein Termin endet</string>
     <string name="event_details_show_location_title">Ort</string>
     <string name="event_details_show_location_desc">Zeige den Ort des Termins</string>
     <string name="event_details_fill_all_day_events_title">Mehrtägige Termine auffüllen</string>

@@ -27,6 +27,10 @@ We are developing this application in public to bring you a tool that _you_ want
 
 ## Changelog
 
+### [v1.8.5](https://github.com/plusonelabs/calendar-widget/issues?milestone=24&state=closed)
+
+* Fixes problem where all day events would be shown one day off
+
 ### [v1.8.4](https://github.com/plusonelabs/calendar-widget/issues?milestone=23&state=closed)
 
 * The calendar selection preferences now show the account a calendar comes from (thanks @thknepper)

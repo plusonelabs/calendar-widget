@@ -3,12 +3,14 @@ package com.plusonelabs.calendar.prefs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -23,6 +25,14 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND
 public class BackgroundTransparencyDialog extends DialogFragment {
 
     private ColorPicker picker;
+    private int widgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+
+    @Override
+    public void setArguments(Bundle args) {
+        if (args != null) {
+            widgetId = args.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
+        }
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -31,27 +41,24 @@ public class BackgroundTransparencyDialog extends DialogFragment {
         picker = (ColorPicker) layout.findViewById(R.id.background_color_picker);
         picker.addSVBar((SVBar) layout.findViewById(R.id.background_color_svbar));
         picker.addOpacityBar((OpacityBar) layout.findViewById(R.id.background_color_opacitybar));
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences prefs = UniquePreferencesFragment.getPreferences(getActivity().getApplicationContext(), widgetId);
         int color = prefs.getInt(PREF_BACKGROUND_COLOR, PREF_BACKGROUND_COLOR_DEFAULT);
         picker.setColor(color);
         picker.setOldCenterColor(color);
-        return createDialog(layout);
+        return createDialog(layout, prefs);
     }
 
-
-    private Dialog createDialog(View layout) {
+    private Dialog createDialog(View layout, final SharedPreferences prefs) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.appearance_background_color_title);
         builder.setView(layout);
         builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				SharedPreferences prefs = PreferenceManager
-						.getDefaultSharedPreferences(getActivity());
 				Editor editor = prefs.edit();
                 editor.putInt(PREF_BACKGROUND_COLOR, picker.getColor());
                 editor.commit();
-            }
+                }
 		});
 		return builder.create();
 	}

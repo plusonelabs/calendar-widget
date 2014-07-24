@@ -1,16 +1,16 @@
 package com.plusonelabs.calendar.prefs;
 
+import android.appwidget.AppWidgetManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 
 import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.R;
 
-public class AppearancePreferencesFragment extends PreferenceFragment {
+public class AppearancePreferencesFragment extends UniquePreferencesFragment {
 
 	private static final String BACKGROUND_COLOR_DIALOG = "backgroundColorDialog";
 
@@ -32,8 +32,11 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 			}
 		}
 		if (preference.getKey().equals(CalendarPreferences.PREF_BACKGROUND_COLOR)) {
-			new BackgroundTransparencyDialog().show(getFragmentManager(),
-                    BACKGROUND_COLOR_DIALOG);
+            BackgroundTransparencyDialog btd = new BackgroundTransparencyDialog();
+            Bundle args = new Bundle();
+            args.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, this.appWidgetId);
+            btd.setArguments(args);
+            btd.show(getFragmentManager(), BACKGROUND_COLOR_DIALOG);
 		}
 		return super.onPreferenceTreeClick(preferenceScreen, preference);
 	}

@@ -17,8 +17,7 @@ public enum Theme {
         this.themeResId = themeResId;
     }
 
-    public static int getCurrentThemeId(Context context, String prefKey, String prefDefault) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public static int getCurrentThemeId(Context context, String prefKey, String prefDefault, SharedPreferences prefs) {
         return Theme.valueOf(prefs.getString(prefKey, prefDefault)).themeResId;
     }
 

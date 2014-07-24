@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,9 +14,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import com.plusonelabs.calendar.prefs.UniquePreferencesFragment;
 
 import org.joda.time.DateTime;
 
@@ -44,20 +48,23 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        int themeId = getCurrentThemeId(baseContext, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT);
-        Context context = new ContextThemeWrapper(baseContext, themeId);
-        AlarmReceiver.scheduleAlarm(context);
         for (int widgetId : appWidgetIds) {
+            int themeId = getCurrentThemeId(
+                    baseContext, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT,
+                    UniquePreferencesFragment.getPreferences(baseContext, widgetId)
+            );
+            Context context = new ContextThemeWrapper(baseContext, themeId);
+            AlarmReceiver.scheduleAlarm(context);
+            SharedPreferences prefs = UniquePreferencesFragment.getPreferences(context, widgetId);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
-            configureBackground(context, rv);
-            configureActionBar(context, rv);
+            configureBackground(context, rv, prefs);
+            configureActionBar(context, rv, widgetId, prefs);
             configureList(context, widgetId, rv);
             appWidgetManager.updateAppWidget(widgetId, rv);
         }
     }
 
-	private void configureBackground(Context context, RemoteViews rv) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+	private void configureBackground(Context context, RemoteViews rv, SharedPreferences prefs) {
 		if (prefs.getBoolean(PREF_SHOW_HEADER, true)) {
 			rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
 		} else {
@@ -69,14 +76,17 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         setAlpha(rv, R.id.background_image, alpha(color));
     }
 
-    private void configureActionBar(Context context, RemoteViews rv) {
+    private void configureActionBar(Context context, RemoteViews rv, int widgetId, SharedPreferences prefs) {
         rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(context));
         String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
 				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
         rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase(Locale.getDefault()));
         setTextColorFromAttr(context, rv, R.id.calendar_current_date, R.attr.header);
-        setActionIcons(context, rv);
+        setActionIcons(context, rv, prefs);
         Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
+        startConfigIntent.setData(ContentUris.withAppendedId(Uri.EMPTY, widgetId));
+        startConfigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        startConfigIntent.putExtra(WidgetConfigurationActivity.WIDGET_INIT, false);
         PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
@@ -90,10 +100,10 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
-    private void setActionIcons(Context context, RemoteViews rv) {
+    private void setActionIcons(Context context, RemoteViews rv, SharedPreferences prefs) {
         setImageFromAttr(context, rv, R.id.add_event, R.attr.header_action_add_event);
         setImageFromAttr(context, rv, R.id.overflow_menu, R.attr.header_action_overflow);
-        int themeId = getCurrentThemeId(context, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT);
+        int themeId = getCurrentThemeId(context, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT, prefs);
         int alpha = 255;
         if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
             alpha = 154;

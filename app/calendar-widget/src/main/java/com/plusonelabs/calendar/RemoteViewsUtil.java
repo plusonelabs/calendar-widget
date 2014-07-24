@@ -27,12 +27,12 @@ public class RemoteViewsUtil {
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	public static void setPadding(Context context, RemoteViews rv, int viewId, int leftDimenId,
-			int topDimenId, int rightDimenId, int bottomDimenId) {
+			int topDimenId, int rightDimenId, int bottomDimenId, SharedPreferences prefs) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			int leftPadding = Math.round(getScaledValueInPixel(context, leftDimenId));
-			int topPadding = Math.round(getScaledValueInPixel(context, topDimenId));
-			int rightPadding = Math.round(getScaledValueInPixel(context, rightDimenId));
-			int bottomPadding = Math.round(getScaledValueInPixel(context, bottomDimenId));
+			int leftPadding = Math.round(getScaledValueInPixel(context, leftDimenId, prefs));
+			int topPadding = Math.round(getScaledValueInPixel(context, topDimenId, prefs));
+			int rightPadding = Math.round(getScaledValueInPixel(context, rightDimenId, prefs));
+			int bottomPadding = Math.round(getScaledValueInPixel(context, bottomDimenId, prefs));
 			rv.setViewPadding(viewId, leftPadding, topPadding, rightPadding, bottomPadding);
 		}
 	}
@@ -45,8 +45,8 @@ public class RemoteViewsUtil {
 		rv.setInt(viewId, METHOD_SET_COLOR_FILTER, color);
 	}
 
-	public static void setTextSize(Context context, RemoteViews rv, int viewId, int dimenId) {
-		rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValue(context, dimenId));
+	public static void setTextSize(Context context, RemoteViews rv, int viewId, int dimenId, SharedPreferences prefs) {
+		rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValue(context, dimenId, prefs));
 	}
 
     public static void setTextColorFromAttr(Context context, RemoteViews rv, int viewId, int colorAttrId) {
@@ -63,17 +63,15 @@ public class RemoteViewsUtil {
 	}
 
 
-    private static float getScaledValueInPixel(Context context, int dimenId) {
+    private static float getScaledValueInPixel(Context context, int dimenId, SharedPreferences prefs) {
         float resValue = getDimension(context, dimenId);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
 				PREF_TEXT_SIZE_SCALE_DEFAULT));
 		return resValue * prefTextScale;
 	}
 
-	private static float getScaledValue(Context context, int dimenId) {
+	private static float getScaledValue(Context context, int dimenId, SharedPreferences prefs) {
         float resValue = getDimension(context, dimenId);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         float density = context.getResources().getDisplayMetrics().density;
         float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
 				PREF_TEXT_SIZE_SCALE_DEFAULT));

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,20 +20,41 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 public class WidgetConfigurationActivity extends PreferenceActivity {
 
     private static final String PREFERENCES_PACKAGE_NAME = "com.plusonelabs.calendar.prefs";
+    public static final String WIDGET_INIT = "widgetInit";
 
-    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    public int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private boolean init = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
+        if (savedInstanceState != null) {
+            appWidgetId = savedInstanceState.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
+            init = savedInstanceState.getBoolean(WidgetConfigurationActivity.WIDGET_INIT);
+        } else {
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                        AppWidgetManager.INVALID_APPWIDGET_ID);
+                init = extras.getBoolean(WidgetConfigurationActivity.WIDGET_INIT, true);
+            }
         }
-        if (hasHeaders() && appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (init && appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID && hasHeaders()) {
             createAddButton();
         }
+    }
+
+    @Override
+    public Intent onBuildStartFragmentIntent (String fragmentName, Bundle args, int titleRes, int shortTitleRes) {
+        Intent intent = super.onBuildStartFragmentIntent(fragmentName, args, titleRes, shortTitleRes);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, this.appWidgetId);
+        return intent;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        outState.putBoolean(WidgetConfigurationActivity.WIDGET_INIT, init);
     }
 
     private void createAddButton() {

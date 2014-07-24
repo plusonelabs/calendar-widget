@@ -1,12 +1,11 @@
 package com.plusonelabs.calendar.prefs;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 
 import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.R;
 
-public class EventDetailsPreferencesFragment extends PreferenceFragment {
+public class EventDetailsPreferencesFragment extends UniquePreferencesFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

@@ -13,6 +13,7 @@ import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.model.Event;
+import com.plusonelabs.calendar.prefs.UniquePreferencesFragment;
 
 import org.joda.time.DateTime;
 
@@ -55,10 +56,10 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	private final CalendarEventProvider calendarContentProvider;
 	private final SharedPreferences prefs;
 
-	public CalendarEventVisualizer(Context context) {
+	public CalendarEventVisualizer(Context context, SharedPreferences prefs) {
 		this.context = context;
-		calendarContentProvider = new CalendarEventProvider(context);
-		prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.prefs = prefs;
+		calendarContentProvider = new CalendarEventProvider(context, prefs);
 	}
 
 	public RemoteViews getRemoteView(Event eventEntry) {
@@ -79,7 +80,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 			title = context.getResources().getString(R.string.no_title);
 		}
 		rv.setTextViewText(R.id.event_entry_title, title);
-		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
+		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title, prefs);
         setTextColorFromAttr(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
         setSingleLine(rv, R.id.event_entry_title,
                 !prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
@@ -99,7 +100,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
             }
             rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
             rv.setTextViewText(R.id.event_entry_details, eventDetails);
-            setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
+            setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details, prefs);
             setTextColorFromAttr(context, rv, R.id.event_entry_details, R.attr.eventEntryDetails);
         }
     }
@@ -118,7 +119,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
         if (showIndication) {
             rv.setViewVisibility(viewId, View.VISIBLE);
             setImageFromAttr(context, rv, viewId, imageAttrId);
-            int themeId = getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
+            int themeId = getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT, prefs);
             int alpha = 255;
             if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
                 alpha = 128;
@@ -178,7 +179,6 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
     }
 
     private String createTimeString(DateTime time) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String dateFormat = prefs.getString(PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
         if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
                 || dateFormat.equals(TWELVE)) {

@@ -49,9 +49,11 @@ public class CalendarEventProvider {
     private static final String AND_BRACKET = " AND (";
 
     private final Context context;
+    private final SharedPreferences prefs;
 
-    public CalendarEventProvider(Context context) {
+    public CalendarEventProvider(Context context, SharedPreferences prefs) {
         this.context = context;
+        this.prefs = prefs;
     }
 
     public List<CalendarEvent> getEvents() {
@@ -66,7 +68,6 @@ public class CalendarEventProvider {
     }
 
     private List<CalendarEvent> createEventList(Cursor calendarCursor) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean fillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
         List<CalendarEvent> eventList = new ArrayList<>();
         for (int i = 0; i < calendarCursor.getCount(); i++) {
@@ -164,7 +165,6 @@ public class CalendarEventProvider {
     }
 
     private Cursor createLoadedCursor() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int dateRange = Integer
                 .valueOf(prefs.getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
         long start = System.currentTimeMillis();
@@ -185,7 +185,6 @@ public class CalendarEventProvider {
     }
 
     private String createSelectionClause() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> activeCalenders = prefs.getStringSet(CalendarPreferences.PREF_ACTIVE_CALENDARS,
                 new HashSet<String>());
         if (activeCalenders.isEmpty()) {

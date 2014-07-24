@@ -4,18 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import com.plusonelabs.calendar.calendar.CalendarEventVisualizer;
 import com.plusonelabs.calendar.model.DayHeader;
 import com.plusonelabs.calendar.model.Event;
+import com.plusonelabs.calendar.prefs.UniquePreferencesFragment;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,11 +36,13 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	private final Context context;
 	private final List<Event> eventEntries;
 	private final List<IEventVisualizer<?>> eventProviders;
+	private final SharedPreferences prefs;
 
-	public EventRemoteViewsFactory(Context context) {
+	public EventRemoteViewsFactory(Context context, SharedPreferences prefs) {
 		this.context = context;
+        this.prefs = prefs;
         eventProviders = new ArrayList<>();
-        eventProviders.add(new CalendarEventVisualizer(context));
+        eventProviders.add(new CalendarEventVisualizer(context, prefs));
         eventEntries = new ArrayList<>();
     }
 
@@ -74,24 +75,23 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public RemoteViews updateDayHeader(DayHeader dayHeader) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String alignment = prefs.getString(PREF_DAY_HEADER_ALIGNMENT, PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
         RemoteViews rv = new RemoteViews(context.getPackageName(), valueOf(alignment).getLayoutId());
         String dateString = DateUtil.createDateString(context, dayHeader.getStartDate())
                 .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
-        setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
+        setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title, prefs);
         setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
         setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
-                R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
+                R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom, prefs);
 		Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
 	}
 
     public void onDataSetChanged() {
-        context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT));
+        context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT, prefs));
         eventEntries.clear();
         List<Event> events = new ArrayList<>();
         for (IEventVisualizer<?> eventProvider : eventProviders) {

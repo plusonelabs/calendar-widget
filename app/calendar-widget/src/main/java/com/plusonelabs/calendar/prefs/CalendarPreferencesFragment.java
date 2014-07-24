@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.CalendarContract.Calendars;
 
@@ -22,7 +21,7 @@ import java.util.Set;
 
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ACTIVE_CALENDARS;
 
-public class CalendarPreferencesFragment extends PreferenceFragment {
+public class CalendarPreferencesFragment extends UniquePreferencesFragment {
 
 	private static final String CALENDAR_ID = "calendarId";
 	private static final String[] PROJECTION = new String[] { Calendars._ID,
@@ -35,8 +34,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences_calendars);
 		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-		initialActiveCalendars = prefs.getStringSet(PREF_ACTIVE_CALENDARS,
-				null);
+		initialActiveCalendars = prefs.getStringSet(PREF_ACTIVE_CALENDARS, null);
 		populatePreferenceScreen(initialActiveCalendars);
 	}
 

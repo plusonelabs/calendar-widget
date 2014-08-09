@@ -61,8 +61,8 @@
     <string name="event_details_show_end_time_desc">הצג את שעת סיום האירוע</string>
     <string name="event_details_show_location_title">הצג מיקום</string>
     <string name="event_details_show_location_desc">הצגה או הסתרה של מיקום האירוע</string>
-    <string name="event_details_fill_all_day_events_title">אירועים הנמשכים ימים שלמים</string>
-    <string name="event_details_fill_all_day_events_desc">עבור אירועים הנמשכים יום שלם, הצג רשומה נפרדת לכל יום</string>
+    <string name="event_details_fill_all_day_events_title">אירועים הנמשכים מספר ימים</string>
+    <string name="event_details_fill_all_day_events_desc">הצג רשומה נפרדת לכל יום עבור אירועים הנמשכים מספר ימים</string>
     <string name="event_details_indicators">חיוויים</string>
     <string name="event_details_indicate_alert_desc">הצג חיווי להתראות</string>
     <string name="event_details_indicate_alert_title">התראות</string>

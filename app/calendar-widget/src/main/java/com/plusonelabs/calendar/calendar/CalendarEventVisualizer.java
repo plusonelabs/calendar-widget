@@ -13,6 +13,7 @@ import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.model.Event;
+import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
 
@@ -54,6 +55,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	private final Context context;
 	private final CalendarEventProvider calendarContentProvider;
 	private final SharedPreferences prefs;
+	private int pastEventsBackgroundColor = 0xFF000000;
 
 	public CalendarEventVisualizer(Context context) {
 		this.context = context;
@@ -131,6 +133,11 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 
     private void setColor(CalendarEvent event, RemoteViews rv) {
         setBackgroundColor(rv, R.id.event_entry_color, event.getColor());
+        if (event.getEndDate().isBeforeNow()) {
+            setBackgroundColor(rv, R.id.event_entry, pastEventsBackgroundColor);
+        } else {
+            setBackgroundColor(rv, R.id.event_entry, 0);
+        }
     }
 
     private Intent createOnItemClickIntent(CalendarEvent event) {
@@ -194,6 +201,9 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	}
 
 	public List<CalendarEvent> getEventEntries() {
+        pastEventsBackgroundColor = prefs.getInt(
+                CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR,
+                CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT);
 		return calendarContentProvider.getEvents();
 	}
 

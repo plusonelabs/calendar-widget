@@ -157,4 +157,23 @@ public class CalendarEvent extends Event {
 				+ (location != null ? "location=" + location : "") + "]";
 	}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CalendarEvent that = (CalendarEvent) o;
+        if (eventId != that.eventId) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return eventId;
+    }
 }

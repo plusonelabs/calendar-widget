@@ -31,6 +31,9 @@ public class CalendarPreferences {
 	public static final String PREF_HEADER_THEME_DEFAULT = Theme.DARK.name();
 	public static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
 	public static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
+    public static final String PREF_SHOW_PAST_EVENTS_WITH_COLOR = "showPastEventsWithColor";
+    public static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
+    public static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x8000FF00;
 
 	private CalendarPreferences() {
 		// prohibit instantiation

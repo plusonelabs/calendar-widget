@@ -53,6 +53,12 @@
             android:summary="@string/appearance_background_color_desc"
             android:title="@string/appearance_background_color_title" />
 
+        <Preference
+            android:defaultValue="2147548928"
+            android:key="pastEventsBackgroundColor"
+            android:summary="@string/appearance_past_events_background_color_desc"
+            android:title="@string/appearance_past_events_background_color_title" />
+        
         <ListPreference
             android:defaultValue="BLACK"
             android:entries="@array/pref_theme_entries"

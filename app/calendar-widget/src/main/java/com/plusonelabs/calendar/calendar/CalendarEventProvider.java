@@ -40,31 +40,116 @@ public class CalendarEventProvider {
     private static final String[] PROJECTION_4_0 = new String[]{Instances.EVENT_ID, Instances.TITLE,
             Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
             Instances.HAS_ALARM, Instances.RRULE, Instances.CALENDAR_COLOR, Instances.EVENT_COLOR};
+    private static final int CURSOR_COLUMN_CALENDAR_COLOR = 8;
+    private static final int CURSOR_COLUMN_EVENT_COLOR = 9;
     private static final String[] PROJECTION_4_1 = new String[]{Instances.EVENT_ID, Instances.TITLE,
             Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
             Instances.HAS_ALARM, Instances.RRULE, Instances.DISPLAY_COLOR};
+    private static final int CURSOR_COLUMN_DISPLAY_COLOR = 8;
     private static final String CLOSING_BRACKET = " )";
     private static final String OR = " OR ";
     private static final String EQUALS = " = ";
+    private static final String NOT_EQUALS = " != ";
     private static final String AND_BRACKET = " AND (";
 
     private final Context context;
 
+    private enum ShowPastEventsWithColorEnum{
+        NONE,
+        SAME,
+        OTHER
+    }
+    /**
+     * This helps migrating to the "Calendar Widget" from "Jorte Calendar",
+     * where "[C]" title suffix means "Completed event"
+     */
+    private static final String PAST_EVENTS_TITLE_SUFFIX_TO_SKIP = "[C]";
+    
     public CalendarEventProvider(Context context) {
         this.context = context;
     }
 
     public List<CalendarEvent> getEvents() {
-        Cursor cursor = createLoadedCursor();
-        if (cursor != null) {
-            List<CalendarEvent> eventList = createEventList(cursor);
-            cursor.close();
-            Collections.sort(eventList);
-            return eventList;
-        }
-        return new ArrayList<>();
+        List<CalendarEvent> eventList = getCurrentEventList();
+        addPastEvents(eventList);
+        Collections.sort(eventList);
+        return eventList;
     }
 
+    private List<CalendarEvent> getCurrentEventList() {
+        List<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
+        Cursor cursor = createLoadedCursor();
+        if (cursor != null) {
+            eventList = createEventList(cursor);
+            cursor.close();
+        }
+        return eventList;
+    }
+
+    private void addPastEvents(List<CalendarEvent> eventList) {
+        List<CalendarEvent> pastEventList = getPastEventList();
+        for (CalendarEvent event : pastEventList) {
+            if (!event.getTitle().endsWith(PAST_EVENTS_TITLE_SUFFIX_TO_SKIP)
+                    && !eventList.contains(event)) {
+                eventList.add(event);
+            }
+        }
+    }
+
+    private List<CalendarEvent> getPastEventList() {
+        List<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
+        ShowPastEventsWithColorEnum showPastEventsWithColor = ShowPastEventsWithColorEnum
+                .valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(
+                        CalendarPreferences.PREF_SHOW_PAST_EVENTS_WITH_COLOR,
+                        ShowPastEventsWithColorEnum.NONE.name()));
+        if (showPastEventsWithColor != ShowPastEventsWithColorEnum.NONE) {
+            Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
+            ContentUris.appendId(builder, 0);
+            ContentUris.appendId(builder, System.currentTimeMillis());
+            String selection = createSelectionClause()
+                    + createSelectionClauseForPastEvents(showPastEventsWithColor);
+            ContentResolver contentResolver = context.getContentResolver();
+            Cursor cursor = contentResolver.query(builder.build(), getProjection(), selection, null,
+                    EVENT_SORT_ORDER);
+            if (cursor != null) {
+                eventList = createPastEventsList(cursor);
+                cursor.close();
+            }
+        }
+        return eventList;
+    }
+
+    private String createSelectionClauseForPastEvents(
+            ShowPastEventsWithColorEnum showPastEventsWithColor) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(AND_BRACKET);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            stringBuilder.append(Instances.DISPLAY_COLOR);
+            stringBuilder
+                    .append(showPastEventsWithColor == ShowPastEventsWithColorEnum.SAME ? EQUALS
+                            : NOT_EQUALS);
+            stringBuilder.append(Instances.CALENDAR_COLOR);
+        } else {
+            stringBuilder.append(Instances.EVENT_COLOR);
+            stringBuilder
+                    .append(showPastEventsWithColor == ShowPastEventsWithColorEnum.SAME ? EQUALS
+                            : NOT_EQUALS);
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(CLOSING_BRACKET);
+        return stringBuilder.toString();
+    }
+
+    private List<CalendarEvent> createPastEventsList(Cursor calendarCursor) {
+        List<CalendarEvent> eventList = new ArrayList<>();
+        for (int i = 0; i < calendarCursor.getCount(); i++) {
+            calendarCursor.moveToPosition(i);
+            CalendarEvent event = createCalendarEvent(calendarCursor);
+            eventList.add(event);
+        }
+        return eventList;
+    }
+    
     private List<CalendarEvent> createEventList(Cursor calendarCursor) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean fillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
@@ -149,13 +234,13 @@ public class CalendarEventProvider {
 
     private int getEventColor(Cursor calendarCursor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return calendarCursor.getInt(8);
+            return calendarCursor.getInt(CURSOR_COLUMN_DISPLAY_COLOR);
         } else {
-            int eventColor = calendarCursor.getInt(9);
+            int eventColor = calendarCursor.getInt(CURSOR_COLUMN_EVENT_COLOR);
             if (eventColor > 0) {
                 return eventColor;
             }
-            return calendarCursor.getInt(8);
+            return calendarCursor.getInt(CURSOR_COLUMN_CALENDAR_COLOR);
         }
     }
 

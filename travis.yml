@@ -1,0 +1,22 @@
+language: android
+android:
+  components:
+    - build-tools-20.0.0
+
+notifications:
+  email: false
+
+before_install:
+
+  # for gradle output style
+  - export TERM=dumb
+
+  # environment info
+  - ./gradlew -v
+  - uname -a
+
+  # move to app directory
+  - cd app/calendar-widget
+
+# Let's build...
+script: ./gradlew clean build

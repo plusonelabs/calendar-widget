@@ -6,13 +6,15 @@ android:
 notifications:
   email: false
 
+
 before_install:
 
   # for gradle output style
   - export TERM=dumb
 
-  # move to app directory
+  # move to app directory and make gradle executable
   - cd app/calendar-widget
+  - chmod +x gradlew
 
   # environment info
   - ./gradlew -v

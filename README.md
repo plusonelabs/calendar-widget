@@ -1,5 +1,7 @@
 # Android Calendar Widget
 
+[![Build Status](https://travis-ci.org/plusonelabs/calendar-widget.svg?branch=master)](https://travis-ci.org/plusonelabs/calendar-widget)
+
 The Android calendar widget is home screen widget for your Android device. It displays a list of upcoming calendar events so that you can easily have a glimpse at your upcoming appointments.
 
 <a href="https://play.google.com/store/apps/details?id=com.plusonelabs.calendar">

@@ -10,6 +10,7 @@ public class CalendarPreferences {
 	public static final String PREF_MULTILINE_TITLE = "multiline_title";
 	public static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
 	public static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
+	public static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
 	public static final String PREF_SHOW_HEADER = "showHeader";
 	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";
 	public static final String PREF_INDICATE_ALERTS = "indicateAlerts";

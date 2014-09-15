@@ -27,6 +27,7 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DAY_HEADER_ALIGNMENT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
@@ -100,22 +101,48 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         updateEntryList(events);
     }
 
+    /**
+     * Add empty day headers between (but not including) two dates.
+     */
+    private void addEmptyDayEntries(DateTime fromExclusive, DateTime toExclusive) {
+        DateTime d0 = fromExclusive.withTimeAtStartOfDay();
+        DateTime dEnd = toExclusive.withTimeAtStartOfDay();
+        for (DateTime emptyDay = d0.plusDays(1);
+             emptyDay.isBefore(dEnd);
+             emptyDay = emptyDay.plusDays(1).withTimeAtStartOfDay()) {
+            eventEntries.add(new DayHeader(emptyDay));
+        }
+    }
+
     private void updateEntryList(List<Event> eventList) {
-        if (!eventList.isEmpty()) {
-            Event firstEvent = eventList.get(0);
-			DayHeader curDayBucket = new DayHeader(firstEvent.getStartDate());
-			eventEntries.add(curDayBucket);
-			for (Event event : eventList) {
-				DateTime startDate = event.getStartDate();
-				if (!startDate.withTimeAtStartOfDay().isEqual(
-						curDayBucket.getStartDate().withTimeAtStartOfDay())) {
-					curDayBucket = new DayHeader(startDate);
-					eventEntries.add(curDayBucket);
-				}
-				eventEntries.add(event);
-			}
-		}
-	}
+        if (eventList.isEmpty()) {
+            return;
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean showDaysWithoutEvents = prefs.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
+
+        Event firstEvent = eventList.get(0);
+        if (showDaysWithoutEvents) {
+            // Add initial empty day buckets until first event
+            addEmptyDayEntries(DateTime.now().minusDays(1), firstEvent.getStartDate());
+        }
+
+        DayHeader curDayBucket = new DayHeader(firstEvent.getStartDate());
+        eventEntries.add(curDayBucket);
+        for (Event event : eventList) {
+            DateTime startDate = event.getStartDate();
+            if (!startDate.withTimeAtStartOfDay().isEqual(
+                    curDayBucket.getStartDate().withTimeAtStartOfDay())) {
+                if (showDaysWithoutEvents) {
+                    addEmptyDayEntries(curDayBucket.getStartDate(), startDate);
+                }
+                curDayBucket = new DayHeader(startDate);
+                eventEntries.add(curDayBucket);
+            }
+            eventEntries.add(event);
+        }
+    }
 
 	public RemoteViews getLoadingView() {
 		return null;

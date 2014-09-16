@@ -174,6 +174,11 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
             separator = EMPTY_STRING;
             endStr = EMPTY_STRING;
         }
+
+        if (startStr.equals(endStr)) {
+            return startStr;
+        }
+        
         return startStr + separator + endStr;
     }
 

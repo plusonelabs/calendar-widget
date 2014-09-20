@@ -157,6 +157,7 @@ public class CalendarEventProvider {
         columnNames.add(Instances.EVENT_LOCATION);
         columnNames.add(Instances.HAS_ALARM);
         columnNames.add(Instances.RRULE);
+        columnNames.add(Instances.SELF_ATTENDEE_STATUS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             columnNames.add(Instances.DISPLAY_COLOR);
         } else {
@@ -206,6 +207,7 @@ public class CalendarEventProvider {
         event.setLocation(cursor.getString(cursor.getColumnIndex(Instances.EVENT_LOCATION)));
         event.setAlarmActive(cursor.getInt(cursor.getColumnIndex(Instances.HAS_ALARM)) > 0);
         event.setRecurring(cursor.getString(cursor.getColumnIndex(Instances.RRULE)) != null);
+        event.setUndecided(isUndecided(cursor));
         event.setColor(getAsOpaque(getEventColor(cursor)));
         if (event.isAllDay()) {
             fixAllDayEvent(event);
@@ -250,6 +252,26 @@ public class CalendarEventProvider {
             throw new org.joda.time.IllegalInstantException(msgLog + " caused by: " + e);
         }
         return fixed;
+    }
+
+    private boolean isUndecided(Cursor calendarCursor) {
+        switch (calendarCursor.getInt(calendarCursor.getColumnIndex(Instances.SELF_ATTENDEE_STATUS))) {
+            case Attendees.ATTENDEE_STATUS_INVITED:
+            case Attendees.ATTENDEE_STATUS_TENTATIVE:
+                return true;
+
+            case Attendees.ATTENDEE_STATUS_ACCEPTED:
+            case Attendees.ATTENDEE_STATUS_DECLINED:
+                return false;
+
+            case Attendees.ATTENDEE_STATUS_NONE:
+                // We created the event ourselves
+                return false;
+
+            default:
+                // Future unsupported ATTENDEE_STATUS
+                return false;
+        }
     }
 
     private int getEventColor(Cursor cursor) {

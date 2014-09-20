@@ -14,6 +14,7 @@ public class CalendarEvent {
 	private String location;
 	private boolean alarmActive;
 	private boolean recurring;
+	private boolean undecided;
 
     private DateTime startDate;
 
@@ -109,6 +110,14 @@ public class CalendarEvent {
 				+ ", alarmActive=" + alarmActive
 				+ ", recurring=" + recurring
 				+ (location != null ? ", location=" + location : "") + "]";
+	}
+
+	public boolean isUndecided() {
+		return undecided;
+	}
+
+	public void setUndecided(boolean undecided) {
+		this.undecided = undecided;
 	}
 
     @Override

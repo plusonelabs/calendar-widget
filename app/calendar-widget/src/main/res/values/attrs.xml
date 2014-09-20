@@ -11,5 +11,6 @@
     <attr name="eventEntryDetails" format="reference|color" />
     <attr name="eventEntryAlarm" format="reference" />
     <attr name="eventEntryRecurring" format="reference" />
+    <attr name="eventEntryUndecided" format="reference" />
 
 </resources>

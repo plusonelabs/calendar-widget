@@ -19,4 +19,10 @@
         android:contentDescription="@string/indicator_recurring"
         android:src="@drawable/ic_recurring_light" />
 
+    <ImageView
+        android:id="@+id/event_entry_indicator_undecided"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/indicator_undecided"
+        android:src="@drawable/ic_undecided_light" />
 </LinearLayout>

@@ -44,14 +44,14 @@ public class DateUtil {
             return createDateString(context, dateTime.toDate(), context.getString(R.string.tomorrow));
         }
         return DateUtils.formatDateTime(context, dateTime.toDate().getTime(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY) + PRE_DAYS + daysBetween(DateTime.now().toDate(), dateTime.toDate()) + POST_DAYS;
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY) + PRE_DAYS + countDays(DateTime.now(), dateTime) + POST_DAYS;
     }
 
     private static String createDateString(Context context, Date date, String prefix) {
         return prefix + COMMA_SPACE + DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_SHOW_DATE);
     }
     
-    private static String daysBetween(Date start, Date end) {
+    private static String countDays(DateTime start, DateTime end) {
         return String.valueOf( Days.daysBetween( start.toDateMidnight(), end.toDateMidnight() ).getDays() );
     }
 }

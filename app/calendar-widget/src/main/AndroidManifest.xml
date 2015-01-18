@@ -9,8 +9,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo" >
-        <activity
+        android:theme="@style/Theme.CalendarConfiguration.Dark">
+    <activity
             android:name="WidgetConfigurationActivity"
             android:exported="true"
             tools:ignore="ExportedActivity" >

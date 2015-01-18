@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.CalendarConfiguration.Dark" parent="android:Theme.Holo">
+    <style name="Theme.CalendarConfiguration.Dark" parent="android:Theme.Material">
     </style>
 
     <style name="Theme.Calendar.Black" parent="android:Theme.Holo">

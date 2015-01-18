@@ -22,23 +22,11 @@ import org.joda.time.DateTime;
 import java.util.List;
 import java.util.Locale;
 
-import static android.graphics.Color.alpha;
-import static android.graphics.Color.blue;
-import static android.graphics.Color.green;
-import static android.graphics.Color.red;
-import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
-import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
-import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarPendingIntent;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setColorFilter;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
+import static android.graphics.Color.*;
+import static com.plusonelabs.calendar.CalendarIntentUtil.*;
+import static com.plusonelabs.calendar.RemoteViewsUtil.*;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_HEADER;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
 
@@ -134,13 +122,6 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
 				appWidgetManager.getAppWidgetIds(compName));
-		context.sendBroadcast(intent);
-	}
-
-	public static void updateWidget(Context context, int appWidgetId) {
-		Intent intent = new Intent(context, EventAppWidgetProvider.class);
-		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		context.sendBroadcast(intent);
 	}
 

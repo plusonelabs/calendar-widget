@@ -34,7 +34,7 @@ We are developing this application in public to bring you a tool that _you_ want
 * Add styling for Android 5.0 (Lollipop)
 * Adding widget to home screen instantly adds it without showing settings ui
 * Add launcher entry to more easily access the settings of the widget
-* Add support for new languages swedish, ukraine, vietnamese and traditional chinese, finish (thanks to all contributors)
+* Add support for new languages swedish, ukraine, vietnamese, traditional chinese and finish (thanks to all contributors)
 
 ### [v1.8.5](https://github.com/plusonelabs/calendar-widget/issues?milestone=24&state=closed)
 

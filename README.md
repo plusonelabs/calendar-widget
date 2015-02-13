@@ -29,6 +29,13 @@ We are developing this application in public to bring you a tool that _you_ want
 
 ## Changelog
 
+### [v1.8.5](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.8.6+is%3Aclosed)
+
+* Add styling for Android 5.0 (Lollipop)
+* Adding widget to home screen instantly adds it without showing settings ui
+* Add launcher entry to more easily access the settings of the widget
+* Add support for new languages swedish, ukraine, vietnamese and traditional chinese, finish (thanks to all contributors)
+
 ### [v1.8.5](https://github.com/plusonelabs/calendar-widget/issues?milestone=24&state=closed)
 
 * Fixes problem where all day events would be shown one day off

@@ -29,7 +29,7 @@ We are developing this application in public to bring you a tool that _you_ want
 
 ## Changelog
 
-### [v1.8.5](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.8.6+is%3Aclosed)
+### [v1.8.6](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.8.6+is%3Aclosed)
 
 * Add styling for Android 5.0 (Lollipop)
 * Adding widget to home screen instantly adds it without showing settings ui

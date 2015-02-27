@@ -39,6 +39,8 @@
     <string name="appearance_group_color_title">Colors</string>
     <string name="appearance_background_color_title">Background color</string>
     <string name="appearance_background_color_desc">Adjust the color of the background</string>
+    <string name="appearance_past_events_background_color_title">Past events background color</string>
+    <string name="appearance_past_events_background_color_desc">Adjust background color of past events</string>
     <string name="appearance_day_header_alignment_desc">Set the alignment of the day header</string>
     <string name="appearance_day_header_alignment_title">Day header alignment</string>
     <string name="appearance_day_header_alignment_left">Left</string>
@@ -77,7 +79,12 @@
     <string name="event_details_indicate_alert_title">Alerts</string>
     <string name="event_details_indicate_recurring_desc">Show indicator for recurring events</string>
     <string name="event_details_indicate_recurring_title">Recurring events</string>
-
+    <string name="show_past_events_with_color_title">Show past events with color</string>
+    <string name="show_past_events_with_color_desc">Allows you to see past events, which require your attention</string>
+    <string name="show_past_events_with_color_none">(this option is turned off)</string>
+    <string name="show_past_events_with_color_same">The same as default calendar color</string>
+    <string name="show_past_events_with_color_other">Other than default calendar color</string>
+        
     <!-- Preference feedback -->
     <string name="feedback_prefs">Feedback</string>
     <string name="feedback_prefs_desc">Get in touch with us</string>

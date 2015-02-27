@@ -17,12 +17,10 @@ import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
 import com.plusonelabs.calendar.R;
 
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
-
 public class BackgroundTransparencyDialog extends DialogFragment {
 
     private ColorPicker picker;
+    private String prefKey;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -32,7 +30,14 @@ public class BackgroundTransparencyDialog extends DialogFragment {
         picker.addSVBar((SVBar) layout.findViewById(R.id.background_color_svbar));
         picker.addOpacityBar((OpacityBar) layout.findViewById(R.id.background_color_opacitybar));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int color = prefs.getInt(PREF_BACKGROUND_COLOR, PREF_BACKGROUND_COLOR_DEFAULT);
+        prefKey = getTag().equals(CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR) 
+                ? CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR
+                : CalendarPreferences.PREF_BACKGROUND_COLOR;
+        int color = prefs
+                .getInt(prefKey,
+                        getTag().equals(CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR) 
+                                ? CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT
+                                : CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT);
         picker.setColor(color);
         picker.setOldCenterColor(color);
         return createDialog(layout);
@@ -41,7 +46,9 @@ public class BackgroundTransparencyDialog extends DialogFragment {
 
     private Dialog createDialog(View layout) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.appearance_background_color_title);
+        builder.setTitle(getTag().equals(CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR) 
+                ? R.string.appearance_past_events_background_color_title
+                : R.string.appearance_background_color_title);
         builder.setView(layout);
         builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 
@@ -49,7 +56,7 @@ public class BackgroundTransparencyDialog extends DialogFragment {
 				SharedPreferences prefs = PreferenceManager
 						.getDefaultSharedPreferences(getActivity());
 				Editor editor = prefs.edit();
-                editor.putInt(PREF_BACKGROUND_COLOR, picker.getColor());
+                editor.putInt(prefKey, picker.getColor());
                 editor.commit();
             }
 		});

@@ -1,21 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:defaultValue="30"
-        android:entries="@array/pref_event_range_entries"
-        android:entryValues="@array/pref_event_range_values"
-        android:key="eventRange"
-        android:summary="@string/event_details_event_range_desc"
-        android:title="@string/event_details_event_range_title" />
-
-    <ListPreference
-        android:defaultValue="none"
-        android:entries="@array/pref_show_past_events_with_color_entries"
-        android:entryValues="@array/pref_show_past_events_with_color_values"
-        android:key="showPastEventsWithColor"
-        android:summary="@string/show_past_events_with_color_desc"
-        android:title="@string/show_past_events_with_color_title" />
-
     <CheckBoxPreference
         android:key="showEndTime"
         android:title="@string/event_details_show_end_time_title"

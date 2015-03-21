@@ -67,12 +67,12 @@
         <item>180</item>
         <item>365</item>
     </string-array>
-    <string-array name="pref_show_past_events_with_color_entries">
-        <item>@string/show_past_events_with_color_none</item>
-        <item>@string/show_past_events_with_color_same</item>
-        <item>@string/show_past_events_with_color_other</item>
+    <string-array name="pref_show_events_with_color_entries">
+        <item>@string/show_events_with_color_none</item>
+        <item>@string/show_events_with_color_same</item>
+        <item>@string/show_events_with_color_other</item>
     </string-array>
-    <string-array name="pref_show_past_events_with_color_values" tools:ignore="MissingTranslation">
+    <string-array name="pref_show_events_with_color_values" tools:ignore="MissingTranslation">
         <item>NONE</item>
         <item>SAME</item>
         <item>OTHER</item>

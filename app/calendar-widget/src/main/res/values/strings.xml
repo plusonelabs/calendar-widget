@@ -12,11 +12,11 @@
     <string name="indicator_recurring">Indicator if the event is recurring</string>
     <string name="no_title">(No title)</string>
 
-    <!-- Preference calendars -->
+    <!-- Preference header: Calendars -->
     <string name="calendars_prefs">Calendars</string>
     <string name="calendars_prefs_desc">Select the calendars to display</string>
 
-    <!-- Preference appearance -->
+    <!-- Preference header: Appearance -->
     <string name="appearance_prefs">Appearance</string>
     <string name="appearance_prefs_desc">Adjust the appearance of the widget</string>
     <string name="appearance_text_size_title">Text size</string>
@@ -33,6 +33,8 @@
     <string name="appearance_date_format_auto">Automatic</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>
+    <string name="appearance_show_days_without_events_title">Show days without events</string>
+    <string name="appearance_show_days_without_events_desc">Show day headers for days without events</string>
     <string name="appearance_display_header_title">Show widget header</string>
     <string name="appearance_display_header_desc">Show the date and settings header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
@@ -55,19 +57,9 @@
     <string name="appearance_theme_light">Dark</string>
     <string name="appearance_theme_white">Black</string>
 
-    <!-- Preferences event details -->
-    <string name="event_details_prefs">Events</string>
+    <!-- Preference header: Event details -->
+    <string name="event_details_prefs">Event details</string>
     <string name="event_details_prefs_desc">Configure what details to show for an event</string>
-    <string name="event_details_event_range_title">Date range</string>
-    <string name="event_details_event_range_desc">Configure the number of events to display</string>
-    <string name="event_range_one_day">One day</string>
-    <string name="event_range_one_week">One week</string>
-    <string name="event_range_two_weeks">Two weeks</string>
-    <string name="event_range_one_month">One month</string>
-    <string name="event_range_two_months">Two months</string>
-    <string name="event_range_three_months">Three months</string>
-    <string name="event_range_six_months">Six months</string>
-    <string name="event_range_one_year">One year</string>
     <string name="event_details_show_end_time_title">End time</string>
     <string name="event_details_show_end_time_desc">Show the event ending time</string>
     <string name="event_details_show_location_title">Show location</string>
@@ -79,13 +71,29 @@
     <string name="event_details_indicate_alert_title">Alerts</string>
     <string name="event_details_indicate_recurring_desc">Show indicator for recurring events</string>
     <string name="event_details_indicate_recurring_title">Recurring events</string>
+
+    <!-- Preference header: Event filters -->
+    <string name="event_filters_prefs">Event filters</string>
+    <string name="event_filters_prefs_desc">Which current, future and past events to show</string>
+    <string name="current_and_future_events">Current and future events</string>
+    <string name="past_events">Past events</string>
+    <string name="event_details_event_range_title">Date range</string>
+    <string name="event_details_event_range_desc">Configure the number of events to display</string>
+    <string name="event_range_one_day">One day</string>
+    <string name="event_range_one_week">One week</string>
+    <string name="event_range_two_weeks">Two weeks</string>
+    <string name="event_range_one_month">One month</string>
+    <string name="event_range_two_months">Two months</string>
+    <string name="event_range_three_months">Three months</string>
+    <string name="event_range_six_months">Six months</string>
+    <string name="event_range_one_year">One year</string>
     <string name="show_past_events_with_color_title">Show past events with color</string>
     <string name="show_past_events_with_color_desc">Allows you to see past events, which require your attention</string>
-    <string name="show_past_events_with_color_none">(this option is turned off)</string>
-    <string name="show_past_events_with_color_same">The same as default calendar color</string>
-    <string name="show_past_events_with_color_other">Other than default calendar color</string>
-        
-    <!-- Preference feedback -->
+    <string name="show_events_with_color_none">(this option is turned off)</string>
+    <string name="show_events_with_color_same">The same as default calendar color</string>
+    <string name="show_events_with_color_other">Other than default calendar color</string>
+
+    <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>
     <string name="feedback_prefs_desc">Get in touch with us</string>
     <string name="feedback_github_desc">Provide feedback on the project page</string>

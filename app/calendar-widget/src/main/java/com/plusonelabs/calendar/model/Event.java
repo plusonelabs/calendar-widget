@@ -14,16 +14,20 @@ public class Event implements Comparable<Event> {
 		this.startDate = startDate;
 	}
 
-	public boolean isSameDay(DateTime otherDate) {
-		return startDate.withTimeAtStartOfDay().isEqual(otherDate.withTimeAtStartOfDay());
+    public DateTime getStartDay() {
+        return getStartDate().withTimeAtStartOfDay();
+    }
+
+	public boolean startsSameDay(DateTime otherDate) {
+		return getStartDay().isEqual(otherDate.withTimeAtStartOfDay());
 	}
 
-	public boolean isToday() {
-		return isSameDay(new DateTime());
+	public boolean startsToday() {
+		return startsSameDay(new DateTime());
 	}
 
-	public boolean isTomorrow() {
-		return isSameDay(new DateTime().plusDays(1));
+	public boolean startsTomorrow() {
+		return startsSameDay(new DateTime().plusDays(1));
 	}
 
 	@Override

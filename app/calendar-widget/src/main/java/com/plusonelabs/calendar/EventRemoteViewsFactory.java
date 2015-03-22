@@ -3,25 +3,26 @@ package com.plusonelabs.calendar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import com.plusonelabs.calendar.calendar.CalendarEventVisualizer;
 import com.plusonelabs.calendar.model.DayHeader;
 import com.plusonelabs.calendar.model.Event;
+import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import static com.plusonelabs.calendar.Alignment.valueOf;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
@@ -38,6 +39,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	private final Context context;
 	private final List<Event> eventEntries;
 	private final List<IEventVisualizer<?>> eventProviders;
+    private int pastEventsBackgroundColor = 0xFF000000;
 
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
@@ -49,6 +51,9 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     public void onCreate() {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
+        pastEventsBackgroundColor = PreferenceManager.getDefaultSharedPreferences(context).getInt(
+                CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR,
+                CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT);
 	}
 
 	public void onDestroy() {
@@ -83,9 +88,10 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
         setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
+        setBackgroundColor(rv, R.id.day_header,
+                dayHeader.getStartDay().plusDays(1).isBeforeNow() ? pastEventsBackgroundColor : Color.TRANSPARENT);
         setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
-        setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
-                R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
+        setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top, R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
 		Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
@@ -101,16 +107,15 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         updateEntryList(events);
     }
 
-    /**
-     * Add empty day headers between (but not including) two dates.
-     */
-    private void addEmptyDayEntries(DateTime fromExclusive, DateTime toExclusive) {
-        DateTime d0 = fromExclusive.withTimeAtStartOfDay();
-        DateTime dEnd = toExclusive.withTimeAtStartOfDay();
-        for (DateTime emptyDay = d0.plusDays(1);
-             emptyDay.isBefore(dEnd);
-             emptyDay = emptyDay.plusDays(1).withTimeAtStartOfDay()) {
+    private void addEmptyDayHeadersBetweenTwoDays(DateTime fromDayExclusive, DateTime toDayExclusive) {
+        DateTime emptyDay = fromDayExclusive.plusDays(1);
+        DateTime today = DateTime.now().withTimeAtStartOfDay();
+        if (emptyDay.isBefore(today)) {
+            emptyDay = today;
+        }
+        while (emptyDay.isBefore(toDayExclusive)) {
             eventEntries.add(new DayHeader(emptyDay));
+            emptyDay = emptyDay.plusDays(1);
         }
     }
 
@@ -118,29 +123,22 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         if (eventList.isEmpty()) {
             return;
         }
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean showDaysWithoutEvents = prefs.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
-
-        Event firstEvent = eventList.get(0);
-        if (showDaysWithoutEvents) {
-            // Add initial empty day buckets until first event
-            addEmptyDayEntries(DateTime.now().minusDays(1), firstEvent.getStartDate());
-        }
-
-        DayHeader curDayBucket = new DayHeader(firstEvent.getStartDate());
-        eventEntries.add(curDayBucket);
+        boolean showDaysWithoutEvents = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
+        DayHeader curDayBucket = new DayHeader(new DateTime(0));
         for (Event event : eventList) {
-            DateTime startDate = event.getStartDate();
-            if (!startDate.withTimeAtStartOfDay().isEqual(
-                    curDayBucket.getStartDate().withTimeAtStartOfDay())) {
+            DateTime nextStartOfDay = event.getStartDay();
+            if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
                 if (showDaysWithoutEvents) {
-                    addEmptyDayEntries(curDayBucket.getStartDate(), startDate);
+                    addEmptyDayHeadersBetweenTwoDays(curDayBucket.getStartDay(), nextStartOfDay);
                 }
-                curDayBucket = new DayHeader(startDate);
+                curDayBucket = new DayHeader(nextStartOfDay);
                 eventEntries.add(curDayBucket);
             }
             eventEntries.add(event);
+        }
+        if (eventEntries.isEmpty()) {
+            eventEntries.add(new DayHeader(DateTime.now()));
         }
     }
 

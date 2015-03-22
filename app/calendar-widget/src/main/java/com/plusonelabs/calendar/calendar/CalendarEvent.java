@@ -91,7 +91,7 @@ public class CalendarEvent extends Event {
 	}
 
 	public int daysSpanned() {
-		DateTime startMidnight = getStartDate().withTimeAtStartOfDay();
+		DateTime startMidnight = getStartDay();
 		DateTime endMidnight = getEndDate().withTimeAtStartOfDay();
 		int days = Days.daysBetween(startMidnight, endMidnight).getDays();
 		if (!isAllDay() && !getEndDate().equals(endMidnight)) {
@@ -121,7 +121,7 @@ public class CalendarEvent extends Event {
 	}
 
 	public int compareTo(CalendarEvent otherEntry) {
-		if (isSameDay(otherEntry.getStartDate())) {
+		if (startsSameDay(otherEntry.getStartDate())) {
 			if (allDay) {
 				return -1;
 			} else if (otherEntry.allDay) {

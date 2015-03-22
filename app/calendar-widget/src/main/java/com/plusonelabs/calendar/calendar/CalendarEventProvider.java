@@ -169,7 +169,7 @@ public class CalendarEventProvider {
         if (isEqualOrAfterTodayAtMidnight(event.getStartDate())) {
             if (event.daysSpanned() > 1) {
                 CalendarEvent clone = event.clone();
-                clone.setEndDate(event.getStartDate().plusDays(1).withTimeAtStartOfDay());
+                clone.setEndDate(event.getStartDay().plusDays(1));
                 clone.setSpansMultipleDays(true);
                 clone.setOriginalEvent(event);
                 eventList.add(clone);
@@ -182,7 +182,7 @@ public class CalendarEventProvider {
     public void createFollowingEntries(List<CalendarEvent> eventList, CalendarEvent event) {
         int daysCovered = event.daysSpanned();
         for (int j = 1; j < daysCovered; j++) {
-            DateTime startDate = event.getStartDate().withTimeAtStartOfDay().plusDays(j);
+            DateTime startDate = event.getStartDay().plusDays(j);
             if (isEqualOrAfterTodayAtMidnight(startDate)) {
                 DateTime endDate;
                 if (j < daysCovered - 1) {

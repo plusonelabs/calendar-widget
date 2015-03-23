@@ -1,5 +1,8 @@
 package com.plusonelabs.calendar.prefs;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 import com.plusonelabs.calendar.Alignment;
 import com.plusonelabs.calendar.Theme;
 
@@ -39,4 +42,10 @@ public class CalendarPreferences {
 	private CalendarPreferences() {
 		// prohibit instantiation
 	}
+
+    public static int getPastEventsBackgroundColor(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(
+                PREF_PAST_EVENTS_BACKGROUND_COLOR,
+                PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT);
+    }
 }

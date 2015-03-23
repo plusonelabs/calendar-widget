@@ -39,7 +39,6 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	private final Context context;
 	private final List<Event> eventEntries;
 	private final List<IEventVisualizer<?>> eventProviders;
-    private int pastEventsBackgroundColor = 0xFF000000;
 
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
@@ -51,9 +50,6 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     public void onCreate() {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
-        pastEventsBackgroundColor = PreferenceManager.getDefaultSharedPreferences(context).getInt(
-                CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR,
-                CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT);
 	}
 
 	public void onDestroy() {
@@ -89,7 +85,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
         setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
         setBackgroundColor(rv, R.id.day_header,
-                dayHeader.getStartDay().plusDays(1).isBeforeNow() ? pastEventsBackgroundColor : Color.TRANSPARENT);
+                dayHeader.getStartDay().plusDays(1).isBeforeNow() ? CalendarPreferences.getPastEventsBackgroundColor(context) : Color.TRANSPARENT);
         setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top, R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
 		Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());

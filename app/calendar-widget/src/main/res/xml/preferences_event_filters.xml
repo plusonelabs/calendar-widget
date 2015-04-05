@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/past_events">
         <ListPreference
-            android:defaultValue="none"
+            android:defaultValue="NONE"
             android:entries="@array/pref_show_events_with_color_entries"
             android:entryValues="@array/pref_show_events_with_color_values"
             android:key="showPastEventsWithColor"

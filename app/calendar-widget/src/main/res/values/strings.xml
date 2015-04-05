@@ -100,5 +100,6 @@
     <string name="feedback_github_title">Visit widget on Github</string>
     <string name="feedback_play_store_desc">Rate and comment on Google Play Store</string>
     <string name="feedback_play_store_title">Visit widget on Google Play Store</string>
+    <string name="refresh_desc">Refresh</string>
 
 </resources>

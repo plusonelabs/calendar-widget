@@ -29,6 +29,8 @@ import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
+    private static final String PACKAGE = EventAppWidgetProvider.class.getPackage().getName();
+    private static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
 
 	@Override
 	public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -58,28 +60,24 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void configureActionBar(Context context, RemoteViews rv) {
+        configureCurrentDate(context, rv);
+        setActionIcons(context, rv);
+        configureAddEvent(context, rv);
+        configureRefresh(context, rv);
+        configureOverflowMenu(context, rv);
+	}
+
+    private void configureCurrentDate(Context context, RemoteViews rv) {
         rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(context));
         String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
-				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
         rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase(Locale.getDefault()));
         setTextColorFromAttr(context, rv, R.id.calendar_current_date, R.attr.header);
-        setActionIcons(context, rv);
-        Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
-        PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
-		Intent intent = CalendarIntentUtil.createNewEventIntent();
-		if (isIntentAvailable(context, intent)) {
-			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
-					PendingIntent.FLAG_UPDATE_CURRENT);
-			rv.setOnClickPendingIntent(R.id.add_event, pendingIntent);
-		} else {
-			rv.setViewVisibility(R.id.add_event, View.GONE);
-		}
-	}
+    }
 
     private void setActionIcons(Context context, RemoteViews rv) {
         setImageFromAttr(context, rv, R.id.add_event, R.attr.header_action_add_event);
+        setImageFromAttr(context, rv, R.id.refresh, R.attr.header_action_refresh);
         setImageFromAttr(context, rv, R.id.overflow_menu, R.attr.header_action_overflow);
         int themeId = getCurrentThemeId(context, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT);
         int alpha = 255;
@@ -87,7 +85,32 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
             alpha = 154;
         }
         setAlpha(rv, R.id.add_event, alpha);
+        setAlpha(rv, R.id.refresh, alpha);
         setAlpha(rv, R.id.overflow_menu, alpha);
+    }
+
+    private void configureAddEvent(Context context, RemoteViews rv) {
+        Intent intent = CalendarIntentUtil.createNewEventIntent();
+        if (isIntentAvailable(context, intent)) {
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            rv.setOnClickPendingIntent(R.id.add_event, pendingIntent);
+        } else {
+            rv.setViewVisibility(R.id.add_event, View.GONE);
+        }
+    }
+
+    private void configureRefresh(Context context, RemoteViews rv) {
+        Intent intent = new Intent(ACTION_REFRESH);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        rv.setOnClickPendingIntent(R.id.refresh, pendingIntent);
+    }
+
+    private void configureOverflowMenu(Context context, RemoteViews rv) {
+        Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
+        PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
     }
 
     private static boolean isIntentAvailable(Context context, Intent intent) {

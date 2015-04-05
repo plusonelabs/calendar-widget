@@ -4,6 +4,7 @@
     <attr name="header" format="reference|color" />
     <attr name="header_action_overflow" format="reference" />
     <attr name="header_action_add_event" format="reference" />
+    <attr name="header_action_refresh" format="reference" />
     <attr name="dayHeaderTitle" format="reference|color" />
     <attr name="dayHeaderSeparator" format="reference|color" />
     <attr name="eventEntryTitle" format="reference|color" />

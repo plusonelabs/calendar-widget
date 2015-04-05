@@ -44,9 +44,11 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PROVIDER_CHANGED" />
-
                 <data android:scheme="content" />
                 <data android:host="com.android.calendar" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.plusonelabs.calendar.action.REFRESH" />
             </intent-filter>
         </receiver>
         <receiver android:name="AlarmReceiver" >

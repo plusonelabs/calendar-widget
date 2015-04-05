@@ -30,6 +30,14 @@
             android:src="@drawable/ic_action_add_event_light" />
 
         <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:contentDescription="@string/refresh_desc"
+            android:src="@drawable/ic_action_refresh_light" />
+
+        <ImageView
             android:id="@+id/overflow_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -38,6 +38,7 @@ public class BackgroundTransparencyDialog extends DialogFragment {
                         getTag().equals(CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR) 
                                 ? CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT
                                 : CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT);
+        // android.util.Log.v("Color", "key:" + prefKey + "; color:0x" + Integer.toString(color, 16));
         picker.setColor(color);
         picker.setOldCenterColor(color);
         return createDialog(layout);

@@ -77,7 +77,7 @@ public class CalendarEventProvider {
     }
 
     private List<CalendarEvent> getCurrentEventList() {
-        List<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
+        List<CalendarEvent> eventList = new ArrayList<>();
         Cursor cursor = createLoadedCursor();
         if (cursor != null) {
             eventList = createEventList(cursor);
@@ -253,7 +253,9 @@ public class CalendarEventProvider {
         int dateRange = Integer
                 .valueOf(prefs.getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
         long start = System.currentTimeMillis();
-        long end = start + DateUtils.DAY_IN_MILLIS * dateRange;
+        long end = dateRange > 0
+                ? start + DateUtils.DAY_IN_MILLIS * dateRange
+                : new DateTime(start).withTimeAtStartOfDay().plusDays(1).getMillis();
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(builder, start);
         ContentUris.appendId(builder, end);

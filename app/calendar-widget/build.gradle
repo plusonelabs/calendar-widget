@@ -50,4 +50,9 @@ android {
         }
         buildTypes.release.signingConfig signingConfigs.releaseConfig
     }
+    // See https://www.timroes.de/2013/09/22/handling-signing-configs-with-gradle/
+    if(project.hasProperty("calendar-widget.signing")
+            && new File(project.property("calendar-widget.signing").toString() + ".gradle").exists()) {
+        apply from: project.property("calendar-widget.signing") + ".gradle";
+    }
 }

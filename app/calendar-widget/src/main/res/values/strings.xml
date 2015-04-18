@@ -94,7 +94,7 @@
     <string name="show_events_with_color_same">The same as default calendar color</string>
     <string name="show_events_with_color_other">Other than default calendar color</string>
     <string name="pref_events_ended_title">Events that ended recently</string>
-    <string name="pref_events_ended_desc">Select a time range to show events, which ended several hours ago. Or turn this option off</string>
+    <string name="pref_events_ended_desc">Select a time range to show events, which ended several hours ago</string>
     <string name="ended_one_hour_ago">Ended one hour ago</string>
     <string name="ended_two_hours_ago">Ended two hours ago</string>
     <string name="ended_four_hours_ago">Ended four hours ago</string>

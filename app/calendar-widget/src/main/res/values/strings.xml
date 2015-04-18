@@ -88,11 +88,18 @@
     <string name="event_range_three_months">Three months</string>
     <string name="event_range_six_months">Six months</string>
     <string name="event_range_one_year">One year</string>
-    <string name="show_past_events_with_color_title">Show past events with color</string>
-    <string name="show_past_events_with_color_desc">Allows you to see past events, which require your attention</string>
+    <string name="show_past_events_with_color_title">Past events with color</string>
+    <string name="show_past_events_with_color_desc">Optionally show events, which occurred any time in the past, based on their color</string>
     <string name="show_events_with_color_none">(this option is turned off)</string>
     <string name="show_events_with_color_same">The same as default calendar color</string>
     <string name="show_events_with_color_other">Other than default calendar color</string>
+    <string name="pref_events_ended_title">Events that ended recently</string>
+    <string name="pref_events_ended_desc">Select a time range to show events, which ended several hours ago. Or turn this option off</string>
+    <string name="ended_one_hour_ago">Ended one hour ago</string>
+    <string name="ended_two_hours_ago">Ended two hours ago</string>
+    <string name="ended_four_hours_ago">Ended four hours ago</string>
+    <string name="ended_today">Ended today</string>
+    <string name="ended_one_day_ago">Ended one day ago</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>

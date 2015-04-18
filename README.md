@@ -13,8 +13,8 @@ Want to contribute to the project? Start by translating the widget to another la
 
 ## Features
 
-* Displays all events from your calendars
-* Automatically updates when you add/delete/modify an event
+* Displays all events from your calendars. Optionally shows past events
+* Automatically updates when you add/delete/modify an event. Or you may update the list instantly
 * Select only the calendars you want to see in the widget
 * Customize colors of the widget background and texts
 * Scroll through the list of upcoming events
@@ -28,6 +28,16 @@ Want to contribute to the project? Start by translating the widget to another la
 We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open issues and provide pull requests. We are especially looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
 
 ## Changelog
+
+### [v1.9.0](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9) "Showing past events"
+
+* New group of preferences created: "Event filters". It holds already existed "Date range" preference and new options, allowing to show past events.
+* Added "Events that ended recently" option. It allows to show events, which ended several hours ago, today or one day ago. [#122](https://github.com/plusonelabs/calendar-widget/issues/122)
+* Added "Past events with color" option. Show events, which occurred any time in the past, based on their color (the same as default Calendar color or not the same). Actually this option allows to treat calendar events as Tasks and mark their completion by changing event's color. [#138](https://github.com/plusonelabs/calendar-widget/issues/138)
+* Added "Past events background color" option.
+* Added "Today" option to a "Date range", so you may see current and future events for today only [#156](https://github.com/plusonelabs/calendar-widget/issues/156) (The same "Today" option exists for past events also)
+* New icon added to the header allowing instantly refresh list of events in the widget [#120](https://github.com/plusonelabs/calendar-widget/issues/120)
+* Added "Show days without events" option.
 
 ### [v1.8.6](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.8.6+is%3Aclosed)
 

@@ -23,6 +23,7 @@ public class CalendarPreferences {
 	public static final String PREF_DATE_FORMAT_DEFAULT = "auto";
 	public static final String PREF_EVENT_RANGE = "eventRange";
 	public static final String PREF_EVENT_RANGE_DEFAULT = "30";
+	public static final String PREF_EVENTS_ENDED = "eventsEnded";
 	public static final String PREF_SHOW_END_TIME = "showEndTime";
 	public static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
 	public static final String PREF_SHOW_LOCATION = "showLocation";

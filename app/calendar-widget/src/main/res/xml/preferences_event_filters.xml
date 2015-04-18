@@ -2,6 +2,13 @@
     <PreferenceCategory android:title="@string/past_events">
         <ListPreference
             android:defaultValue="NONE"
+            android:entries="@array/pref_events_ended_entries"
+            android:entryValues="@array/pref_events_ended_values"
+            android:key="eventsEnded"
+            android:summary="@string/pref_events_ended_desc"
+            android:title="@string/pref_events_ended_title" />
+        <ListPreference
+            android:defaultValue="NONE"
             android:entries="@array/pref_show_events_with_color_entries"
             android:entryValues="@array/pref_show_events_with_color_values"
             android:key="showPastEventsWithColor"

@@ -71,6 +71,7 @@
   <string name="past_events">Vergangene Termine</string>
   <string name="event_details_event_range_title">Zeitraum</string>
   <string name="event_details_event_range_desc">Wieviele Termine werden angezeigt</string>
+  <string name="event_range_today">Heute</string>
   <string name="event_range_one_day">Ein Tag</string>
   <string name="event_range_one_week">Eine Woche</string>
   <string name="event_range_two_weeks">Zwei Wochen</string>
@@ -79,15 +80,23 @@
   <string name="event_range_three_months">Drei Monate</string>
   <string name="event_range_six_months">Sechs Monate</string>
   <string name="event_range_one_year">Ein Jahr</string>
-  <string name="show_past_events_with_color_title">Hebe vergangene Termine farblich hervor</string>
-  <string name="show_past_events_with_color_desc">Erlaubt vergangene Termine die deine Aufmerksamkeit brauchen farblich hervorzuheben</string>
+  <string name="show_past_events_with_color_title">Vergangene Ereignisse einfärben</string>
+  <string name="show_past_events_with_color_desc">Zeige Ereignisse in der Vergangenheit eingefärbt an</string>
   <string name="show_events_with_color_none">(Diese Option ist deaktiviert)</string>
   <string name="show_events_with_color_same">Gleiche Farbe wie der Standard-Kalender</string>
   <string name="show_events_with_color_other">Andere Farbe als der Standard-Kalender</string>
+  <string name="pref_events_ended_title">Ereignisse, die vor kurzem endeten</string>
+  <string name="pref_events_ended_desc">Wähle Zeitspanne wie weit in die Vergangenheit abgeschlossene Ereignisse angezeigt werden</string>
+  <string name="ended_one_hour_ago">Vor einer Stunden geendet</string>
+  <string name="ended_two_hours_ago">Vor 2 Stunden geendet</string>
+  <string name="ended_four_hours_ago">Vor 4 Stunden geendet</string>
+  <string name="ended_today">Heute geendet</string>
+  <string name="ended_one_day_ago">Vor einem Tag geendet</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Kontakt mit uns aufnehmen</string>
   <string name="feedback_github_desc">Feedback auf der Projektseite hinterlassen</string>
   <string name="feedback_github_title">Widget auf Github</string>
   <string name="feedback_play_store_desc">Bewerten und kommentieren im Google Play-Shop</string>
   <string name="feedback_play_store_title">Widget im Google Play-Store</string>
+  <string name="refresh_desc">Aktualisieren</string>
 </resources>

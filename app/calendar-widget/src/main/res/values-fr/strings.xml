@@ -71,6 +71,7 @@
   <string name="past_events">Événements passés</string>
   <string name="event_details_event_range_title">Intervale de date</string>
   <string name="event_details_event_range_desc">Configuez le nombre d\'événements à afficher</string>
+  <string name="event_range_today">Aujourd\'hui</string>
   <string name="event_range_one_day">Un jour</string>
   <string name="event_range_one_week">Une semaine</string>
   <string name="event_range_two_weeks">Deux semaines</string>
@@ -79,15 +80,23 @@
   <string name="event_range_three_months">Trois mois</string>
   <string name="event_range_six_months">Six mois</string>
   <string name="event_range_one_year">Un an</string>
-  <string name="show_past_events_with_color_title">Afficher les événements passés avec couleur</string>
-  <string name="show_past_events_with_color_desc">Permet de consulter les précédents événements qui requièrent votre attention</string>
+  <string name="show_past_events_with_color_title">Événements passés en couleur</string>
+  <string name="show_past_events_with_color_desc">Voir les événements passés basés sur leur couleur de manière optionelle</string>
   <string name="show_events_with_color_none">(cette option est désactivée)</string>
   <string name="show_events_with_color_same">La même que la couleur de calendrier par défaut</string>
   <string name="show_events_with_color_other">Autre que la couleur de calendrier par défaut</string>
+  <string name="pref_events_ended_title">Événements qui se sont terminés récemment</string>
+  <string name="pref_events_ended_desc">Sélectionnez un intervalle de temps pour voir les événements récemment terminés</string>
+  <string name="ended_one_hour_ago">Terminé il y a une heure</string>
+  <string name="ended_two_hours_ago">Terminé il y a deux heures</string>
+  <string name="ended_four_hours_ago">Terminé il y a quatre heures</string>
+  <string name="ended_today">Terminé aujourd\'hui</string>
+  <string name="ended_one_day_ago">Terminé hier</string>
   <string name="feedback_prefs">Retours</string>
   <string name="feedback_prefs_desc">Entrer en contact avec nous</string>
   <string name="feedback_github_desc">Faire un retour sur la page du projet</string>
   <string name="feedback_github_title">Vister le widget sur Github</string>
   <string name="feedback_play_store_desc">Noter et commenter sur le Google Play Store</string>
   <string name="feedback_play_store_title">Visiter le widget sur le Google Play Store</string>
+  <string name="refresh_desc">Rafraichir</string>
 </resources>

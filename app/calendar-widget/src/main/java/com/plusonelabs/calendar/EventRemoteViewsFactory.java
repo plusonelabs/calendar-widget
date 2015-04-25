@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -95,7 +96,6 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
     public void onDataSetChanged() {
         context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT));
-        eventEntries.clear();
         List<Event> events = new ArrayList<>();
         for (IEventVisualizer<?> eventProvider : eventProviders) {
             events.addAll(eventProvider.getEventEntries());
@@ -103,19 +103,8 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         updateEntryList(events);
     }
 
-    private void addEmptyDayHeadersBetweenTwoDays(DateTime fromDayExclusive, DateTime toDayExclusive) {
-        DateTime emptyDay = fromDayExclusive.plusDays(1);
-        DateTime today = DateTime.now().withTimeAtStartOfDay();
-        if (emptyDay.isBefore(today)) {
-            emptyDay = today;
-        }
-        while (emptyDay.isBefore(toDayExclusive)) {
-            eventEntries.add(new DayHeader(emptyDay));
-            emptyDay = emptyDay.plusDays(1);
-        }
-    }
-
     private void updateEntryList(List<Event> eventList) {
+        eventEntries.clear();
         if (eventList.isEmpty()) {
             return;
         }
@@ -133,13 +122,24 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
             }
             eventEntries.add(event);
         }
-        if (eventEntries.isEmpty()) {
-            eventEntries.add(new DayHeader(DateTime.now()));
+        Log.v("Event list", eventList.toString());
+        Log.v("Event entries", eventEntries.toString());
+}
+
+    private void addEmptyDayHeadersBetweenTwoDays(DateTime fromDayExclusive, DateTime toDayExclusive) {
+        DateTime emptyDay = fromDayExclusive.plusDays(1);
+        DateTime today = DateTime.now().withTimeAtStartOfDay();
+        if (emptyDay.isBefore(today)) {
+            emptyDay = today;
+        }
+        while (emptyDay.isBefore(toDayExclusive)) {
+            eventEntries.add(new DayHeader(emptyDay));
+            emptyDay = emptyDay.plusDays(1);
         }
     }
 
 	public RemoteViews getLoadingView() {
-		return null;
+        return null;
 	}
 
 	public int getViewTypeCount() {

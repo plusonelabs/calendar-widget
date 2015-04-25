@@ -32,7 +32,7 @@ public class Event implements Comparable<Event> {
 
 	@Override
 	public String toString() {
-		return "CalenderEntry [startDate=" + startDate + "]";
+		return this.getClass().getSimpleName() + " [startDate=" + startDate + "]";
 	}
 
     @Override

@@ -8,9 +8,4 @@ public class DayHeader extends Event {
 		setStartDate(date.withTimeAtStartOfDay());
 	}
 
-	@Override
-	public String toString() {
-		return "DayHeader [getStartDate()=" + getStartDate() + "]";
-	}
-
 }

@@ -82,11 +82,7 @@
     <string name="event_past_events">Past events</string>
     <string name="event_pref_events_ended_title">Timespan for previous events</string>
     <string name="event_pref_events_ended_desc">Period in which to show past events</string>
-    <string name="event_show_past_events_with_color_title">Past events color</string>
-    <string name="event_show_past_events_with_color_desc">Configure the color of past events</string>
-    <string name="event_disabled"><![CDATA[<Disabled>]]></string>
-    <string name="event_show_events_with_color_same">The same as default calendar color</string>
-    <string name="event_show_events_with_color_other">Other than default calendar color</string>
+    <string name="event_no_previous_events"><![CDATA[<No previous events>]]></string>
     <string name="event_range_today">Today</string>
     <string name="event_range_one_day">One day</string>
     <string name="event_range_one_week">One week</string>

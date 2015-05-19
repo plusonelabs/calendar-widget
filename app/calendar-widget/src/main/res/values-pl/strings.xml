@@ -82,7 +82,7 @@
   <string name="event_range_one_year">Rok</string>
   <string name="event_show_past_events_with_color_title">Przeszłe wydarzenia z kolorowym</string>
   <string name="event_show_past_events_with_color_desc">Opcjonalnie pokaż wydarzenia, które miały miejsce kiedyś w przeszłości, bazując na ich kolorze</string>
-  <string name="event_disabled">(Ta opcja jest wyłączona)</string>
+  <string name="event_no_previous_events">(Ta opcja jest wyłączona)</string>
   <string name="event_show_events_with_color_same">Takim samym jak domyślny kolor kalendarza</string>
   <string name="event_show_events_with_color_other">Innym niż domyślny kolor kalendarza</string>
   <string name="event_pref_events_ended_title">Wydarzenia, które zakończyły się ostatnio</string>

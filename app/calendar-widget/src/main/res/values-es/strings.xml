@@ -70,7 +70,7 @@
   <string name="event_range_three_months">Tres meses</string>
   <string name="event_range_six_months">Seis meses</string>
   <string name="event_range_one_year">Un año</string>
-  <string name="event_disabled">(Esta opción está desactivada)</string>
+  <string name="event_no_previous_events">(Esta opción está desactivada)</string>
   <string name="event_show_events_with_color_same">Lo mismo que el color por defecto del calendario</string>
   <string name="event_show_events_with_color_other">Distinto al color por defecto del calendario</string>
   <string name="event_pref_events_ended_title">Eventos que terminaron recientemente</string>

@@ -82,7 +82,7 @@
   <string name="event_range_one_year">Один год</string>
   <string name="event_show_past_events_with_color_title">Прошедшие события, имеющие цвет</string>
   <string name="event_show_past_events_with_color_desc">Можно показать события, которые произошли в любое время в прошлом, на основе их цвета</string>
-  <string name="event_disabled">(эта опция выключена)</string>
+  <string name="event_no_previous_events">(эта опция выключена)</string>
   <string name="event_show_events_with_color_same">Такой же, как и цвет календаря по умолчанию</string>
   <string name="event_show_events_with_color_other">Отличающийся от цвета календаря по умолчанию</string>
   <string name="event_pref_events_ended_title">События, которые завершились недавно</string>

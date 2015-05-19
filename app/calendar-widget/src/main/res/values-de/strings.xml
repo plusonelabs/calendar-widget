@@ -82,7 +82,7 @@
   <string name="event_range_one_year">Ein Jahr</string>
   <string name="event_show_past_events_with_color_title">Vergangene Ereignisse einfärben</string>
   <string name="event_show_past_events_with_color_desc">Zeige Ereignisse in der Vergangenheit eingefärbt an</string>
-  <string name="event_disabled">(Diese Option ist deaktiviert)</string>
+  <string name="event_no_previous_events">(Diese Option ist deaktiviert)</string>
   <string name="event_show_events_with_color_same">Gleiche Farbe wie der Standard-Kalender</string>
   <string name="event_show_events_with_color_other">Andere Farbe als der Standard-Kalender</string>
   <string name="event_pref_events_ended_title">Ereignisse, die vor kurzem endeten</string>

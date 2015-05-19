@@ -82,7 +82,7 @@
   <string name="event_range_one_year">Една година</string>
   <string name="event_show_past_events_with_color_title">Цвят за минали събития</string>
   <string name="event_show_past_events_with_color_desc">Показва минали събития с определен цвят</string>
-  <string name="event_disabled">(тази опция е неактивна)</string>
+  <string name="event_no_previous_events">(тази опция е неактивна)</string>
   <string name="event_show_events_with_color_same">Същото като цвета по подразбиране за календара</string>
   <string name="event_show_events_with_color_other">Различен цвят от зададения по подразбиране</string>
   <string name="event_pref_events_ended_title">Събития, приключили наскоро</string>

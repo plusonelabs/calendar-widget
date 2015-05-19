@@ -80,7 +80,7 @@
   <string name="event_range_six_months">Zes maanden</string>
   <string name="event_range_one_year">Een jaar</string>
   <string name="event_show_past_events_with_color_title">Evenementen in het verleden met kleur</string>
-  <string name="event_disabled">(deze optie is uitgeschakeld)</string>
+  <string name="event_no_previous_events">(deze optie is uitgeschakeld)</string>
   <string name="event_show_events_with_color_same">De standaardkleur van de kalender</string>
   <string name="event_pref_events_ended_title">Recent beëindigde evenementen</string>
   <string name="event_ended_one_hour_ago">1 uur geleden beëindigd</string>

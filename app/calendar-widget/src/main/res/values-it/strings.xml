@@ -81,7 +81,7 @@
   <string name="event_range_one_year">Un anno</string>
   <string name="event_show_past_events_with_color_title">Visualizza gli eventi passati con un colore diverso</string>
   <string name="event_show_past_events_with_color_desc">Consente di vedere gli eventi passati che richiedono la tua attenzione</string>
-  <string name="event_disabled">(questa opzione è disattivata)</string>
+  <string name="event_no_previous_events">(questa opzione è disattivata)</string>
   <string name="event_show_events_with_color_same">Lo stesso colore del calendario predefinito</string>
   <string name="event_show_events_with_color_other">Un colore differente rispetto al calendario predefinito</string>
   <string name="feedback_prefs">Feedback</string>

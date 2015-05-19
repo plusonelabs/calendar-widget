@@ -82,7 +82,7 @@
   <string name="event_range_one_year">Yksi vuosi</string>
   <string name="event_show_past_events_with_color_title">Menneet tapahtumat, joilla on väri</string>
   <string name="event_show_past_events_with_color_desc">Näytä menneet tapahtumat värin perusteella</string>
-  <string name="event_disabled">(tämä asetus ei ole käytettävissä)</string>
+  <string name="event_no_previous_events">(tämä asetus ei ole käytettävissä)</string>
   <string name="event_show_events_with_color_same">Kalenterin oletusväri</string>
   <string name="event_show_events_with_color_other">Muu kuin kalenterin oletusväri</string>
   <string name="event_pref_events_ended_title">Äskettäin päättyneet tapahtumat</string>

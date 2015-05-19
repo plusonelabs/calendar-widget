@@ -67,8 +67,8 @@
   <string name="event_details_indicate_recurring_title">Eventi ricorrenti</string>
   <string name="event_filters_prefs">Filtri per gli eventi</string>
   <string name="event_filters_prefs_desc">Eventi attuali, futuri e passati da mostrare</string>
-  <string name="current_and_future_events">Eventi attuali e futuri</string>
-  <string name="past_events">Eventi passati</string>
+  <string name="event_current_and_future_events">Eventi attuali e futuri</string>
+  <string name="event_past_events">Eventi passati</string>
   <string name="event_details_event_range_title">Intervallo date</string>
   <string name="event_details_event_range_desc">Imposta il numero di eventi da mostrare</string>
   <string name="event_range_one_day">Un giorno</string>
@@ -79,11 +79,11 @@
   <string name="event_range_three_months">Tre mesi</string>
   <string name="event_range_six_months">Sei mesi</string>
   <string name="event_range_one_year">Un anno</string>
-  <string name="show_past_events_with_color_title">Visualizza gli eventi passati con un colore diverso</string>
-  <string name="show_past_events_with_color_desc">Consente di vedere gli eventi passati che richiedono la tua attenzione</string>
-  <string name="show_events_with_color_none">(questa opzione è disattivata)</string>
-  <string name="show_events_with_color_same">Lo stesso colore del calendario predefinito</string>
-  <string name="show_events_with_color_other">Un colore differente rispetto al calendario predefinito</string>
+  <string name="event_show_past_events_with_color_title">Visualizza gli eventi passati con un colore diverso</string>
+  <string name="event_show_past_events_with_color_desc">Consente di vedere gli eventi passati che richiedono la tua attenzione</string>
+  <string name="event_disabled">(questa opzione è disattivata)</string>
+  <string name="event_show_events_with_color_same">Lo stesso colore del calendario predefinito</string>
+  <string name="event_show_events_with_color_other">Un colore differente rispetto al calendario predefinito</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Entra in contatto con noi</string>
   <string name="feedback_github_desc">Fornisci un feedback sulla pagina del progetto</string>

@@ -1,21 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/past_events">
-        <ListPreference
-            android:defaultValue="NONE"
-            android:entries="@array/pref_events_ended_entries"
-            android:entryValues="@array/pref_events_ended_values"
-            android:key="eventsEnded"
-            android:summary="@string/pref_events_ended_desc"
-            android:title="@string/pref_events_ended_title" />
-        <ListPreference
-            android:defaultValue="NONE"
-            android:entries="@array/pref_show_events_with_color_entries"
-            android:entryValues="@array/pref_show_events_with_color_values"
-            android:key="showPastEventsWithColor"
-            android:summary="@string/show_past_events_with_color_desc"
-            android:title="@string/show_past_events_with_color_title" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/current_and_future_events">
+    <PreferenceCategory android:title="@string/event_current_and_future_events">
         <ListPreference
             android:defaultValue="30"
             android:entries="@array/pref_event_range_entries"
@@ -23,5 +7,21 @@
             android:key="eventRange"
             android:summary="@string/event_details_event_range_desc"
             android:title="@string/event_details_event_range_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/event_past_events">
+        <ListPreference
+            android:defaultValue="NONE"
+            android:entries="@array/pref_events_ended_entries"
+            android:entryValues="@array/pref_events_ended_values"
+            android:key="eventsEnded"
+            android:summary="@string/event_pref_events_ended_desc"
+            android:title="@string/event_pref_events_ended_title" />
+        <ListPreference
+            android:defaultValue="NONE"
+            android:entries="@array/pref_show_events_with_color_entries"
+            android:entryValues="@array/pref_show_events_with_color_values"
+            android:key="showPastEventsWithColor"
+            android:summary="@string/event_show_past_events_with_color_desc"
+            android:title="@string/event_show_past_events_with_color_title" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -11,6 +11,7 @@ import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.text.format.DateUtils;
 
+import com.plusonelabs.calendar.PastTime;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
@@ -71,15 +72,9 @@ public class CalendarEventProvider {
         return eventList;
     }
 
-    private long getStartOfTimeRange(long millisNow) {
+    private long getStartOfTimeRange(long time) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int period = Integer.valueOf(prefs.getString(PREF_EVENTS_START, PREF_EVENTS_START_DEFAULT));
-        if (period == PREF_EVENTS_START_TODAY) {
-            return new DateTime(millisNow).withTimeAtStartOfDay().getMillis();
-        } else if (period == 0) {
-            return millisNow;
-        }
-        return new DateTime(millisNow).minusHours(period).getMillis();
+        return PastTime.fromValue(prefs.getString(PREF_EVENTS_START, null)).getTime(time);
     }
 
     private long getEndOfTimeRange(long millisNow) {

@@ -10,7 +10,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/event_past_events">
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="ONE_HOUR"
             android:entries="@array/pref_events_start_entries"
             android:entryValues="@array/pref_events_start_values"
             android:key="eventsStart"

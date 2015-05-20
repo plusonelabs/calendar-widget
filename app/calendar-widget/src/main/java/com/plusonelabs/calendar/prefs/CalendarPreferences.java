@@ -24,8 +24,6 @@ public class CalendarPreferences {
     public static final String PREF_EVENT_RANGE = "eventRange";
     public static final String PREF_EVENT_RANGE_DEFAULT = "30";
     public static final String PREF_EVENTS_START = "eventsStart";
-    public static final String PREF_EVENTS_START_DEFAULT = "0";
-    public static final int PREF_EVENTS_START_TODAY = -1;
     public static final String PREF_SHOW_END_TIME = "showEndTime";
     public static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
     public static final String PREF_SHOW_LOCATION = "showLocation";

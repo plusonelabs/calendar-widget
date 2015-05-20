@@ -78,11 +78,11 @@
         <item>@string/event_ended_one_day_ago</item>
     </string-array>
     <string-array name="pref_events_start_values" tools:ignore="MissingTranslation">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>4</item>
-        <item>-1</item>
-        <item>24</item>
+        <item>NONE</item>
+        <item>ONE_HOUR</item>
+        <item>TWO_HOURS</item>
+        <item>FOUR_HOURS</item>
+        <item>TODAY</item>
+        <item>ONE_DAY</item>
     </string-array>
 </resources>

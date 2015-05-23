@@ -10,7 +10,6 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
-import android.text.format.DateUtils;
 
 import com.plusonelabs.calendar.PastTime;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
@@ -67,8 +66,8 @@ public class CalendarEventProvider {
     private List<CalendarEvent> getTimeFilteredEventList() {
         long millisNow = System.currentTimeMillis();
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
-        ContentUris.appendId(builder, getStartOfTimeRange(millisNow));
-        ContentUris.appendId(builder, getEndOfTimeRange(millisNow));
+        ContentUris.appendId(builder, getStartOfPeriod(millisNow).getMillis());
+        ContentUris.appendId(builder, getEndOfPeriod(millisNow).getMillis());
         Cursor cursor = context.getContentResolver().query(
                 builder.build(), getProjection(), getCalendarSelection(), null, EVENT_SORT_ORDER);
         List<CalendarEvent> eventList = new ArrayList<>();
@@ -79,17 +78,17 @@ public class CalendarEventProvider {
         return eventList;
     }
 
-    private long getStartOfTimeRange(long time) {
+    private DateTime getStartOfPeriod(long time) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return PastTime.fromValue(prefs.getString(PREF_EVENTS_START, null)).getTime(time);
+        return PastTime.fromValue(prefs.getString(PREF_EVENTS_START, null)).getDateTime(time);
     }
 
-    private long getEndOfTimeRange(long millisNow) {
+    private DateTime getEndOfPeriod(long millisNow) {
         int dateRange = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
         return dateRange > 0
-                ? millisNow + DateUtils.DAY_IN_MILLIS * dateRange
-                : new DateTime(millisNow).withTimeAtStartOfDay().plusDays(1).getMillis();
+                ? new DateTime(millisNow).plusDays(dateRange)
+                : new DateTime(millisNow).withTimeAtStartOfDay().plusDays(1);
     }
 
     private String[] getProjection() {
@@ -180,7 +179,7 @@ public class CalendarEventProvider {
     }
 
     private void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {
-        if (isEqualOrAfterTodayAtMidnight(event.getStartDate())) {
+        if (isEqualOrAfterStartOfPeriod(event.getStartDate())) {
             if (event.daysSpanned() > 1) {
                 CalendarEvent clone = event.clone();
                 clone.setEndDate(event.getStartDay().plusDays(1));
@@ -197,7 +196,7 @@ public class CalendarEventProvider {
         int daysCovered = event.daysSpanned();
         for (int j = 1; j < daysCovered; j++) {
             DateTime startDate = event.getStartDay().plusDays(j);
-            if (isEqualOrAfterTodayAtMidnight(startDate)) {
+            if (isEqualOrAfterStartOfPeriod(startDate)) {
                 DateTime endDate;
                 if (j < daysCovered - 1) {
                     endDate = startDate.plusDays(1);
@@ -209,9 +208,9 @@ public class CalendarEventProvider {
         }
     }
 
-    private boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
-        DateTime startOfDay = DateTime.now().withTimeAtStartOfDay();
-        return startDate.isEqual(startOfDay) || startDate.isAfter(startOfDay);
+    private boolean isEqualOrAfterStartOfPeriod(DateTime date) {
+        DateTime startOfPeriod = getStartOfPeriod(System.currentTimeMillis());
+        return date.isEqual(startOfPeriod) || date.isAfter(startOfPeriod);
     }
 
     private CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,

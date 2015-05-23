@@ -10,8 +10,8 @@ public enum PastTime {
     ONE_DAY(24),
     TODAY(0) {
         @Override
-        public long getTime(long millisNow) {
-            return new DateTime(millisNow).withTimeAtStartOfDay().getMillis();
+        public DateTime getDateTime(long millisNow) {
+            return new DateTime(millisNow).withTimeAtStartOfDay();
         }
     };
 
@@ -21,8 +21,8 @@ public enum PastTime {
         this.hoursAgo = hoursAgo;
     }
 
-    public long getTime(long millisNow) {
-        return new DateTime(millisNow).minusHours(hoursAgo).getMillis();
+    public DateTime getDateTime(long millisNow) {
+        return new DateTime(millisNow).minusHours(hoursAgo);
     }
 
     public static PastTime fromValue(String value) {

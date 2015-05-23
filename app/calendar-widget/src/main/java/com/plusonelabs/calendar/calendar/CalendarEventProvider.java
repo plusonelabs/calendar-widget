@@ -1,5 +1,6 @@
 package com.plusonelabs.calendar.calendar;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -29,7 +30,7 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 public class CalendarEventProvider {
 
     private static final String EVENT_SORT_ORDER = "startDay ASC, allDay DESC, begin ASC ";
-    private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + "!="
+    private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + " != "
             + Attendees.ATTENDEE_STATUS_DECLINED;
     private static final String[] PROJECTION_4_0 = new String[]{Instances.EVENT_ID, Instances.TITLE,
             Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
@@ -43,6 +44,7 @@ public class CalendarEventProvider {
     private static final String CLOSING_BRACKET = " )";
     private static final String OR = " OR ";
     private static final String EQUALS = " = ";
+    private static final String NOT_EQUALS = " != ";
     private static final String AND_BRACKET = " AND (";
 
     private final Context context;
@@ -53,6 +55,11 @@ public class CalendarEventProvider {
 
     public List<CalendarEvent> getEvents() {
         List<CalendarEvent> eventList = getTimeFilteredEventList();
+        for (CalendarEvent event : getPastEventsWithCustomColor()) {
+            if (!eventList.contains(event)) {
+                eventList.add(event);
+            }
+        }
         Collections.sort(eventList);
         return eventList;
     }
@@ -124,6 +131,50 @@ public class CalendarEventProvider {
             if (!event.isAllDay() || fillAllDayEvents) {
                 createFollowingEntries(eventList, event);
             }
+        }
+        return eventList;
+    }
+
+    private List<CalendarEvent> getPastEventsWithCustomColor() {
+        List<CalendarEvent> eventList = new ArrayList<>();
+        if (PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_PAST_EVENTS_WITH_COLOR, PREF_SHOW_PAST_EVENTS_WITH_COLOR_DEFAULT)) {
+            Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
+            ContentUris.appendId(builder, 0);
+            ContentUris.appendId(builder, System.currentTimeMillis());
+            ContentResolver contentResolver = context.getContentResolver();
+            Cursor cursor = contentResolver.query(builder.build(), getProjection(),
+                    getPastEventsWithCustomColorSelection(),
+                    null, EVENT_SORT_ORDER);
+            if (cursor != null) {
+                eventList = cursorToPastEventsWithCustomColor(cursor);
+                cursor.close();
+            }
+        }
+        return eventList;
+    }
+
+    private String getPastEventsWithCustomColorSelection() {
+        StringBuilder stringBuilder = new StringBuilder(getCalendarSelection());
+        stringBuilder.append(AND_BRACKET);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            stringBuilder.append(Instances.DISPLAY_COLOR);
+            stringBuilder.append(NOT_EQUALS);
+            stringBuilder.append(Instances.CALENDAR_COLOR);
+        } else {
+            stringBuilder.append(Instances.EVENT_COLOR);
+            stringBuilder.append(NOT_EQUALS);
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(CLOSING_BRACKET);
+        return stringBuilder.toString();
+    }
+
+    private List<CalendarEvent> cursorToPastEventsWithCustomColor(Cursor calendarCursor) {
+        List<CalendarEvent> eventList = new ArrayList<>();
+        for (int i = 0; i < calendarCursor.getCount(); i++) {
+            calendarCursor.moveToPosition(i);
+            eventList.add(createCalendarEvent(calendarCursor));
         }
         return eventList;
     }

@@ -82,6 +82,8 @@
     <string name="event_past_events">Past events</string>
     <string name="event_pref_events_ended_title">Timespan for previous events</string>
     <string name="event_pref_events_ended_desc">Period in which to show past events</string>
+    <string name="event_pref_past_events_custom_color_title">Show events with custom color</string>
+    <string name="event_pref_past_events_custom_color_desc">Show all paste events with a custom color</string>
     <string name="event_no_previous_events"><![CDATA[<No previous events>]]></string>
     <string name="event_range_today">Today</string>
     <string name="event_range_one_day">One day</string>

@@ -16,5 +16,10 @@
             android:key="eventsStart"
             android:summary="@string/event_pref_events_ended_desc"
             android:title="@string/event_pref_events_ended_title" />
+        <CheckBoxPreference
+            android:title="@string/event_pref_past_events_custom_color_title"
+            android:summary="@string/event_pref_past_events_custom_color_desc"
+            android:key="showPastEventsWithCustomColor"
+            />
     </PreferenceCategory>
 </PreferenceScreen>

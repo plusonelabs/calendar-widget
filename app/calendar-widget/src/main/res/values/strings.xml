@@ -8,7 +8,6 @@
     <string name="widget_name">Calendar</string>
     <string name="open_prefs_desc">Open the settings of the calendar widget</string>
     <string name="add_event_desc">Add new calender event</string>
-    <string name="refresh_desc">Refresh</string>
     <string name="indicator_alarm">Indicator if an alarm has been set</string>
     <string name="indicator_recurring">Indicator if the event is recurring</string>
     <string name="no_title">(No title)</string>
@@ -75,16 +74,11 @@
 
     <!-- Preference header: Event filters -->
     <string name="event_filters_prefs">Event filters</string>
-    <string name="event_filters_prefs_desc">Configure which events to show</string>
-    <string name="event_current_and_future_events">Upcoming events</string>
+    <string name="event_filters_prefs_desc">Which current, future and past events to show</string>
+    <string name="current_and_future_events">Current and future events</string>
+    <string name="past_events">Past events</string>
     <string name="event_details_event_range_title">Date range</string>
-    <string name="event_details_event_range_desc">Configure the timespan of events to show</string>
-    <string name="event_past_events">Past events</string>
-    <string name="event_pref_events_ended_title">Timespan for previous events</string>
-    <string name="event_pref_events_ended_desc">Period in which to show past events</string>
-    <string name="event_pref_past_events_custom_color_title">Show events with custom color</string>
-    <string name="event_pref_past_events_custom_color_desc">Show all paste events with a custom color</string>
-    <string name="event_no_previous_events"><![CDATA[<No previous events>]]></string>
+    <string name="event_details_event_range_desc">Configure the number of events to display</string>
     <string name="event_range_today">Today</string>
     <string name="event_range_one_day">One day</string>
     <string name="event_range_one_week">One week</string>
@@ -94,11 +88,18 @@
     <string name="event_range_three_months">Three months</string>
     <string name="event_range_six_months">Six months</string>
     <string name="event_range_one_year">One year</string>
-    <string name="event_ended_one_hour_ago">Ended one hour ago</string>
-    <string name="event_ended_two_hours_ago">Ended two hours ago</string>
-    <string name="event_ended_four_hours_ago">Ended four hours ago</string>
-    <string name="event_ended_today">Ended today</string>
-    <string name="event_ended_one_day_ago">Ended one day ago</string>
+    <string name="show_past_events_with_color_title">Past events with color</string>
+    <string name="show_past_events_with_color_desc">Optionally show events, which occurred any time in the past, based on their color</string>
+    <string name="show_events_with_color_none">(this option is turned off)</string>
+    <string name="show_events_with_color_same">The same as default calendar color</string>
+    <string name="show_events_with_color_other">Other than default calendar color</string>
+    <string name="pref_events_ended_title">Events that ended recently</string>
+    <string name="pref_events_ended_desc">Select a time range to show events, which ended several hours ago</string>
+    <string name="ended_one_hour_ago">Ended one hour ago</string>
+    <string name="ended_two_hours_ago">Ended two hours ago</string>
+    <string name="ended_four_hours_ago">Ended four hours ago</string>
+    <string name="ended_today">Ended today</string>
+    <string name="ended_one_day_ago">Ended one day ago</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>
@@ -107,5 +108,6 @@
     <string name="feedback_github_title">Visit widget on Github</string>
     <string name="feedback_play_store_desc">Rate and comment on Google Play Store</string>
     <string name="feedback_play_store_title">Visit widget on Google Play Store</string>
+    <string name="refresh_desc">Refresh</string>
 
 </resources>

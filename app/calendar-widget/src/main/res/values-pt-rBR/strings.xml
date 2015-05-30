@@ -67,8 +67,8 @@
   <string name="event_details_indicate_recurring_title">Eventos recorrentes</string>
   <string name="event_filters_prefs">Filtros de evento</string>
   <string name="event_filters_prefs_desc">Quais eventos atuais, futuros e passados exibir</string>
-  <string name="event_current_and_future_events">Eventos atuais e futuros</string>
-  <string name="event_past_events">Eventos passados</string>
+  <string name="current_and_future_events">Eventos atuais e futuros</string>
+  <string name="past_events">Eventos passados</string>
   <string name="event_details_event_range_title">Período</string>
   <string name="event_details_event_range_desc">Configurar o número de eventos a mostrar</string>
   <string name="event_range_one_day">Um dia</string>
@@ -79,11 +79,11 @@
   <string name="event_range_three_months">Três meses</string>
   <string name="event_range_six_months">Seis meses</string>
   <string name="event_range_one_year">Um ano</string>
-  <string name="event_show_past_events_with_color_title">Exibir eventos passados com cor</string>
-  <string name="event_show_past_events_with_color_desc">Permitir exibição de eventos passados, que requerem sua atenção</string>
-  <string name="event_no_previous_events">(essa opção está desligada)</string>
-  <string name="event_show_events_with_color_same">A mesma cor do calendário padrão</string>
-  <string name="event_show_events_with_color_other">Cor diferente do calendário padrão</string>
+  <string name="show_past_events_with_color_title">Exibir eventos passados com cor</string>
+  <string name="show_past_events_with_color_desc">Permitir exibição de eventos passados, que requerem sua atenção</string>
+  <string name="show_events_with_color_none">(essa opção está desligada)</string>
+  <string name="show_events_with_color_same">A mesma cor do calendário padrão</string>
+  <string name="show_events_with_color_other">Cor diferente do calendário padrão</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Entre em contato conosco</string>
   <string name="feedback_github_desc">Sua opinião sobre o projeto</string>

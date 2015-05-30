@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -20,10 +21,19 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.plusonelabs.calendar.Alignment.valueOf;
-import static com.plusonelabs.calendar.CalendarIntentUtil.*;
-import static com.plusonelabs.calendar.RemoteViewsUtil.*;
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColorFromAttr;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DAY_HEADER_ALIGNMENT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
 
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
@@ -112,6 +122,8 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
             }
             eventEntries.add(event);
         }
+        Log.v("Event list", eventList.toString());
+        Log.v("Event entries", eventEntries.toString());
 }
 
     private void addEmptyDayHeadersBetweenTwoDays(DateTime fromDayExclusive, DateTime toDayExclusive) {

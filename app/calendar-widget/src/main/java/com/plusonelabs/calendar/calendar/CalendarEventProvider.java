@@ -1,5 +1,6 @@
 package com.plusonelabs.calendar.calendar;
 
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -10,8 +11,9 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
+import android.text.format.DateUtils;
 
-import com.plusonelabs.calendar.PastTime;
+import com.plusonelabs.calendar.EndedSometimeAgo;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
@@ -23,22 +25,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import static android.graphics.Color.*;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
+import static android.graphics.Color.argb;
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENTS_ENDED;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENT_RANGE;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENT_RANGE_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY_DEFAULT;
 
 public class CalendarEventProvider {
 
     private static final String EVENT_SORT_ORDER = "startDay ASC, allDay DESC, begin ASC ";
-    private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + " != "
+    private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + "!="
             + Attendees.ATTENDEE_STATUS_DECLINED;
     private static final String[] PROJECTION_4_0 = new String[]{Instances.EVENT_ID, Instances.TITLE,
             Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
             Instances.HAS_ALARM, Instances.RRULE, Instances.CALENDAR_COLOR, Instances.EVENT_COLOR};
+    private static final int CURSOR_COLUMN_CALENDAR_COLOR = 8;
+    private static final int CURSOR_COLUMN_EVENT_COLOR = 9;
     private static final String[] PROJECTION_4_1 = new String[]{Instances.EVENT_ID, Instances.TITLE,
             Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
             Instances.HAS_ALARM, Instances.RRULE, Instances.DISPLAY_COLOR};
-    private static final int CURSOR_COLUMN_CALENDAR_COLOR = 8;
-    private static final int CURSOR_COLUMN_EVENT_COLOR = 9;
     private static final int CURSOR_COLUMN_DISPLAY_COLOR = 8;
     private static final String CLOSING_BRACKET = " )";
     private static final String OR = " OR ";
@@ -48,13 +57,36 @@ public class CalendarEventProvider {
 
     private final Context context;
 
+    private enum ShowPastEventsWithColorEnum{
+        NONE,
+        SAME,
+        OTHER;
+
+        public static ShowPastEventsWithColorEnum fromValue(String valueIn) {
+            ShowPastEventsWithColorEnum element = NONE;
+            for (ShowPastEventsWithColorEnum item : ShowPastEventsWithColorEnum.values()) {
+                if (item.name().equals(valueIn)) {
+                    element = item;
+                    break;
+                }
+            }
+            return element;
+        }
+
+    }
+    /**
+     * This helps migrating to the "Calendar Widget" from "Jorte Calendar",
+     * where "[C]" title suffix means "Completed event"
+     */
+    private static final String PAST_EVENTS_TITLE_SUFFIX_TO_SKIP = "[C]";
+    
     public CalendarEventProvider(Context context) {
         this.context = context;
     }
 
     public List<CalendarEvent> getEvents() {
         List<CalendarEvent> eventList = getTimeFilteredEventList();
-        for (CalendarEvent event : getPastEventsWithCustomColor()) {
+        for (CalendarEvent event : getPastEventWithColorList()) {
             if (!eventList.contains(event)) {
                 eventList.add(event);
             }
@@ -66,29 +98,29 @@ public class CalendarEventProvider {
     private List<CalendarEvent> getTimeFilteredEventList() {
         long millisNow = System.currentTimeMillis();
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
-        ContentUris.appendId(builder, getStartOfPeriod(millisNow).getMillis());
-        ContentUris.appendId(builder, getEndOfPeriod(millisNow).getMillis());
+        ContentUris.appendId(builder, getStartOfTimeRange(millisNow));
+        ContentUris.appendId(builder, getEndOfTimeRange(millisNow));
         Cursor cursor = context.getContentResolver().query(
                 builder.build(), getProjection(), getCalendarSelection(), null, EVENT_SORT_ORDER);
         List<CalendarEvent> eventList = new ArrayList<>();
         if (cursor != null) {
-            eventList = cursorToTimeFilteredEventList(cursor);
+            eventList = cursor2TimeFilteredEventList(cursor);
             cursor.close();
         }
         return eventList;
     }
 
-    private DateTime getStartOfPeriod(long time) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return PastTime.fromValue(prefs.getString(PREF_EVENTS_START, null)).getDateTime(time);
+    private long getStartOfTimeRange(long millisNow) {
+        return EndedSometimeAgo.fromValue(PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_EVENTS_ENDED, "")).endedAt(millisNow);
     }
 
-    private DateTime getEndOfPeriod(long millisNow) {
+    private long getEndOfTimeRange(long millisNow) {
         int dateRange = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
         return dateRange > 0
-                ? new DateTime(millisNow).plusDays(dateRange)
-                : new DateTime(millisNow).withTimeAtStartOfDay().plusDays(1);
+                ? millisNow + DateUtils.DAY_IN_MILLIS * dateRange
+                : new DateTime(millisNow).withTimeAtStartOfDay().plusDays(1).getMillis();
     }
 
     private String[] getProjection() {
@@ -119,7 +151,7 @@ public class CalendarEventProvider {
         return stringBuilder.toString();
     }
 
-    private List<CalendarEvent> cursorToTimeFilteredEventList(Cursor calendarCursor) {
+    private List<CalendarEvent> cursor2TimeFilteredEventList(Cursor calendarCursor) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean fillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
         List<CalendarEvent> eventList = new ArrayList<>();
@@ -134,52 +166,62 @@ public class CalendarEventProvider {
         return eventList;
     }
 
-    private List<CalendarEvent> getPastEventsWithCustomColor() {
-        List<CalendarEvent> eventList = new ArrayList<>();
-        if (PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_PAST_EVENTS_WITH_COLOR, PREF_SHOW_PAST_EVENTS_WITH_COLOR_DEFAULT)) {
+    private List<CalendarEvent> getPastEventWithColorList() {
+        List<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
+        ShowPastEventsWithColorEnum showPastEventsWithColor = ShowPastEventsWithColorEnum.fromValue(
+                PreferenceManager.getDefaultSharedPreferences(context).getString(
+                        CalendarPreferences.PREF_SHOW_PAST_EVENTS_WITH_COLOR, ""));
+        if (showPastEventsWithColor != ShowPastEventsWithColorEnum.NONE) {
             Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
             ContentUris.appendId(builder, 0);
             ContentUris.appendId(builder, System.currentTimeMillis());
             ContentResolver contentResolver = context.getContentResolver();
             Cursor cursor = contentResolver.query(builder.build(), getProjection(),
-                    getPastEventsWithCustomColorSelection(),
+                    getPastEventsWithColorSelection(showPastEventsWithColor),
                     null, EVENT_SORT_ORDER);
             if (cursor != null) {
-                eventList = cursorToPastEventsWithCustomColor(cursor);
+                eventList = cursor2PastEventWithColorList(cursor);
                 cursor.close();
             }
         }
         return eventList;
     }
 
-    private String getPastEventsWithCustomColorSelection() {
+    private String getPastEventsWithColorSelection(
+            ShowPastEventsWithColorEnum showPastEventsWithColor) {
         StringBuilder stringBuilder = new StringBuilder(getCalendarSelection());
         stringBuilder.append(AND_BRACKET);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             stringBuilder.append(Instances.DISPLAY_COLOR);
-            stringBuilder.append(NOT_EQUALS);
+            stringBuilder
+                    .append(showPastEventsWithColor == ShowPastEventsWithColorEnum.SAME ? EQUALS
+                            : NOT_EQUALS);
             stringBuilder.append(Instances.CALENDAR_COLOR);
         } else {
             stringBuilder.append(Instances.EVENT_COLOR);
-            stringBuilder.append(NOT_EQUALS);
+            stringBuilder
+                    .append(showPastEventsWithColor == ShowPastEventsWithColorEnum.SAME ? EQUALS
+                            : NOT_EQUALS);
             stringBuilder.append("0");
         }
         stringBuilder.append(CLOSING_BRACKET);
         return stringBuilder.toString();
     }
 
-    private List<CalendarEvent> cursorToPastEventsWithCustomColor(Cursor calendarCursor) {
+    private List<CalendarEvent> cursor2PastEventWithColorList(Cursor calendarCursor) {
         List<CalendarEvent> eventList = new ArrayList<>();
         for (int i = 0; i < calendarCursor.getCount(); i++) {
             calendarCursor.moveToPosition(i);
-            eventList.add(createCalendarEvent(calendarCursor));
+            CalendarEvent event = createCalendarEvent(calendarCursor);
+            if (!event.getTitle().endsWith(PAST_EVENTS_TITLE_SUFFIX_TO_SKIP)) {
+                eventList.add(event);
+            }
         }
         return eventList;
     }
 
     private void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {
-        if (isEqualOrAfterStartOfPeriod(event.getStartDate())) {
+        if (isEqualOrAfterTodayAtMidnight(event.getStartDate())) {
             if (event.daysSpanned() > 1) {
                 CalendarEvent clone = event.clone();
                 clone.setEndDate(event.getStartDay().plusDays(1));
@@ -196,7 +238,7 @@ public class CalendarEventProvider {
         int daysCovered = event.daysSpanned();
         for (int j = 1; j < daysCovered; j++) {
             DateTime startDate = event.getStartDay().plusDays(j);
-            if (isEqualOrAfterStartOfPeriod(startDate)) {
+            if (isEqualOrAfterTodayAtMidnight(startDate)) {
                 DateTime endDate;
                 if (j < daysCovered - 1) {
                     endDate = startDate.plusDays(1);
@@ -208,9 +250,9 @@ public class CalendarEventProvider {
         }
     }
 
-    private boolean isEqualOrAfterStartOfPeriod(DateTime date) {
-        DateTime startOfPeriod = getStartOfPeriod(System.currentTimeMillis());
-        return date.isEqual(startOfPeriod) || date.isAfter(startOfPeriod);
+    private boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
+        DateTime startOfDay = DateTime.now().withTimeAtStartOfDay();
+        return startDate.isEqual(startOfDay) || startDate.isAfter(startOfDay);
     }
 
     private CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,

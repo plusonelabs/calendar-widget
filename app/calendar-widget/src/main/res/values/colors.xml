@@ -29,4 +29,9 @@
     <color name="event_entry_title_white">#000</color>
     <color name="event_entry_details_white">#555</color>
 
+    <!-- Preferences -->
+    <color name="colorPrimary">#455a63</color>
+    <color name="colorPrimaryDark">#37474f</color>
+    <color name="colorAccent">#009688</color>
+
 </resources>

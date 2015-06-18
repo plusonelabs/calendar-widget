@@ -99,7 +99,7 @@
     <string name="ended_two_hours_ago">Ended two hours ago</string>
     <string name="ended_four_hours_ago">Ended four hours ago</string>
     <string name="ended_today">Ended today</string>
-    <string name="ended_one_day_ago">Ended one day ago</string>
+    <string name="ended_yesterday">Ended yesterday</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>

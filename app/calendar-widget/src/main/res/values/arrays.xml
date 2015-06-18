@@ -85,7 +85,7 @@
         <item>@string/ended_two_hours_ago</item>
         <item>@string/ended_four_hours_ago</item>
         <item>@string/ended_today</item>
-        <item>@string/ended_one_day_ago</item>
+        <item>@string/ended_yesterday</item>
     </string-array>
     <string-array name="pref_events_ended_values" tools:ignore="MissingTranslation">
         <item>NONE</item>
@@ -93,6 +93,6 @@
         <item>TWO_HOURS</item>
         <item>FOUR_HOURS</item>
         <item>TODAY</item>
-        <item>ONE_DAY</item>
+        <item>YESTERDAY</item>
     </string-array>
 </resources>

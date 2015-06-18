@@ -152,18 +152,26 @@ public class CalendarEventProvider {
     }
 
     private List<CalendarEvent> cursor2TimeFilteredEventList(Cursor calendarCursor) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean fillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
+        boolean fillAllDayEvents = fillAllDayEvents();
         List<CalendarEvent> eventList = new ArrayList<>();
         for (int i = 0; i < calendarCursor.getCount(); i++) {
             calendarCursor.moveToPosition(i);
             CalendarEvent event = createCalendarEvent(calendarCursor);
-            setupDayOneEntry(eventList, event);
-            if (!event.isAllDay() || fillAllDayEvents) {
-                createFollowingEntries(eventList, event);
-            }
+            addEventToList(eventList, event, fillAllDayEvents);
         }
         return eventList;
+    }
+
+    private boolean fillAllDayEvents() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
+    }
+
+    private void addEventToList(List<CalendarEvent> eventList, CalendarEvent event, boolean fillAllDayEvents) {
+        setupDayOneEntry(eventList, event);
+        if (!event.isAllDay() || fillAllDayEvents) {
+            createFollowingEntries(eventList, event);
+        }
     }
 
     private List<CalendarEvent> getPastEventWithColorList() {
@@ -209,28 +217,27 @@ public class CalendarEventProvider {
     }
 
     private List<CalendarEvent> cursor2PastEventWithColorList(Cursor calendarCursor) {
+        boolean fillAllDayEvents = fillAllDayEvents();
         List<CalendarEvent> eventList = new ArrayList<>();
         for (int i = 0; i < calendarCursor.getCount(); i++) {
             calendarCursor.moveToPosition(i);
             CalendarEvent event = createCalendarEvent(calendarCursor);
             if (!event.getTitle().endsWith(PAST_EVENTS_TITLE_SUFFIX_TO_SKIP)) {
-                eventList.add(event);
+                addEventToList(eventList, event, fillAllDayEvents);
             }
         }
         return eventList;
     }
 
     private void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {
-        if (isEqualOrAfterTodayAtMidnight(event.getStartDate())) {
-            if (event.daysSpanned() > 1) {
-                CalendarEvent clone = event.clone();
-                clone.setEndDate(event.getStartDay().plusDays(1));
-                clone.setSpansMultipleDays(true);
-                clone.setOriginalEvent(event);
-                eventList.add(clone);
-            } else {
-                eventList.add(event);
-            }
+        if (event.daysSpanned() > 1) {
+            CalendarEvent clone = event.clone();
+            clone.setEndDate(event.getStartDay().plusDays(1));
+            clone.setSpansMultipleDays(true);
+            clone.setOriginalEvent(event);
+            eventList.add(clone);
+        } else {
+            eventList.add(event);
         }
     }
 

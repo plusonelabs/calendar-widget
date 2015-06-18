@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.plusonelabs.calendar.Alignment.valueOf;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
@@ -79,7 +78,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	public RemoteViews updateDayHeader(DayHeader dayHeader) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String alignment = prefs.getString(PREF_DAY_HEADER_ALIGNMENT, PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
-        RemoteViews rv = new RemoteViews(context.getPackageName(), valueOf(alignment).getLayoutId());
+        RemoteViews rv = new RemoteViews(context.getPackageName(), Alignment.valueOf(alignment).getLayoutId());
         String dateString = DateUtil.createDateString(context, dayHeader.getStartDate())
                 .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);

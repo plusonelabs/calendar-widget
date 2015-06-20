@@ -34,4 +34,20 @@ public class KeywordsFilter {
         }
         return false;
     }
+
+    public boolean isEmpty() {
+        return keywords.isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (String keyword : keywords) {
+            if (builder.length() > 0) {
+                builder.append(", ");
+            }
+            builder.append("\"" + keyword + "\"");
+        }
+        return builder.toString();
+    }
 }

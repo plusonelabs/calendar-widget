@@ -32,9 +32,10 @@ We are developing this application in public to bring you a tool that _you_ want
 ### [v1.9.0](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9) "Showing past events"
 
 * New group of preferences created: "Event filters". It holds already existed "Date range" preference and new options, allowing to show past events.
-* Added "Events that ended recently" option. It allows to show events, which ended several hours ago, today or one day ago. [#122](https://github.com/plusonelabs/calendar-widget/issues/122)
-* Added "Past events with color" option. Show events, which occurred any time in the past, based on their color (the same as default Calendar color or not the same). Actually this option allows to treat calendar events as Tasks and mark their completion by changing event's color. [#138](https://github.com/plusonelabs/calendar-widget/issues/138)
+* Added "Events that ended recently" option. It allows to show events, which ended several hours ago, today or yesterday. [#122](https://github.com/plusonelabs/calendar-widget/issues/122)
+* Added "Show all past events with Default color" option. Turning this option on will show you all past events, which have Default color. This option may be used to treat calendar events as Tasks and mark their completion by changing event's color. [#138](https://github.com/plusonelabs/calendar-widget/issues/138)
 * Added "Past events background color" option.
+* Added "Hide based on keywords in a title" option, which acts on all events. You may type several keywords, separated by spaces or commas.
 * Added "Today" option to a "Date range", so you may see current and future events for today only [#156](https://github.com/plusonelabs/calendar-widget/issues/156) (The same "Today" option exists for past events also)
 * "Refresh" icon added to the widget's Header allowing instantly refresh list of events in the widget [#120](https://github.com/plusonelabs/calendar-widget/issues/120)
 * Added "Show days without events" option.

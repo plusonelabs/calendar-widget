@@ -72,7 +72,6 @@
   <string name="event_range_one_year">Un año</string>
   <string name="this_option_is_turned_off">(Esta opción está desactivada)</string>
   <string name="pref_events_ended_title">Eventos que terminaron recientemente</string>
-  <string name="pref_events_ended_desc">Seleccione un rango de tiempo para mostrar los eventos, que terminaron hace varias horas</string>
   <string name="ended_one_hour_ago">Terminó hace una hora</string>
   <string name="ended_two_hours_ago">Terminó hace dos horas</string>
   <string name="ended_four_hours_ago">Terminó hace cuatro horas</string>

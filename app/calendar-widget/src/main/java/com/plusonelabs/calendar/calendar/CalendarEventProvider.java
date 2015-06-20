@@ -1,6 +1,5 @@
 package com.plusonelabs.calendar.calendar;
 
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -54,26 +53,30 @@ public class CalendarEventProvider {
     private static final String AND_BRACKET = " AND (";
 
     private final Context context;
+    private KeywordsFilter mKeywordsFilter;
+    private boolean mFillAllDayEvents;
 
-    /**
-     * This helps migrating to the "Calendar Widget" from "Jorte Calendar",
-     * where "[C]" title suffix means "Completed event"
-     */
-    private static final String PAST_EVENTS_TITLE_SUFFIX_TO_SKIP = "[C]";
-    
     public CalendarEventProvider(Context context) {
         this.context = context;
     }
 
     public List<CalendarEvent> getEvents() {
+        initialiseParameters();
         List<CalendarEvent> eventList = getTimeFilteredEventList();
         for (CalendarEvent event : getPastEventWithColorList()) {
             if (!eventList.contains(event)) {
                 eventList.add(event);
             }
         }
+        eventList = expandEventList(eventList);
         Collections.sort(eventList);
         return eventList;
+    }
+
+    private void initialiseParameters() {
+        mKeywordsFilter = new KeywordsFilter(CalendarPreferences.getHideBasedOnKeywords(context));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mFillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
     }
 
     private List<CalendarEvent> getTimeFilteredEventList() {
@@ -81,14 +84,7 @@ public class CalendarEventProvider {
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(builder, getStartOfTimeRange(millisNow));
         ContentUris.appendId(builder, getEndOfTimeRange(millisNow));
-        Cursor cursor = context.getContentResolver().query(
-                builder.build(), getProjection(), getCalendarSelection(), null, EVENT_SORT_ORDER);
-        List<CalendarEvent> eventList = new ArrayList<>();
-        if (cursor != null) {
-            eventList = cursor2TimeFilteredEventList(cursor);
-            cursor.close();
-        }
-        return eventList;
+        return queryList(builder.build(), getCalendarSelection());
     }
 
     private long getStartOfTimeRange(long millisNow) {
@@ -102,13 +98,6 @@ public class CalendarEventProvider {
         return dateRange > 0
                 ? millisNow + DateUtils.DAY_IN_MILLIS * dateRange
                 : new DateTime(millisNow).withTimeAtStartOfDay().plusDays(1).getMillis();
-    }
-
-    private String[] getProjection() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return PROJECTION_4_1;
-        }
-        return PROJECTION_4_0;
     }
 
     private String getCalendarSelection() {
@@ -132,45 +121,42 @@ public class CalendarEventProvider {
         return stringBuilder.toString();
     }
 
-    private List<CalendarEvent> cursor2TimeFilteredEventList(Cursor calendarCursor) {
-        boolean fillAllDayEvents = fillAllDayEvents();
+    private List<CalendarEvent> queryList(Uri uri, String selection) {
         List<CalendarEvent> eventList = new ArrayList<>();
-        for (int i = 0; i < calendarCursor.getCount(); i++) {
-            calendarCursor.moveToPosition(i);
-            CalendarEvent event = createCalendarEvent(calendarCursor);
-            addEventToList(eventList, event, fillAllDayEvents);
+        Cursor cursor = null;
+        try {
+            cursor = context.getContentResolver().query(uri, getProjection(),
+                    selection, null, EVENT_SORT_ORDER);
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToPosition(i);
+                CalendarEvent event = createCalendarEvent(cursor);
+                if (!eventList.contains(event) && !mKeywordsFilter.matched(event.getTitle())) {
+                    eventList.add(event);
+                }
+            }
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
         return eventList;
     }
 
-    private boolean fillAllDayEvents() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
-    }
-
-    private void addEventToList(List<CalendarEvent> eventList, CalendarEvent event, boolean fillAllDayEvents) {
-        setupDayOneEntry(eventList, event);
-        if (!event.isAllDay() || fillAllDayEvents) {
-            createFollowingEntries(eventList, event);
+    private String[] getProjection() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return PROJECTION_4_1;
         }
+        return PROJECTION_4_0;
     }
 
     private List<CalendarEvent> getPastEventWithColorList() {
         List<CalendarEvent> eventList = new ArrayList<>();
-        boolean showPastEventsWithColor = PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(CalendarPreferences.SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false);
-        if (showPastEventsWithColor) {
+        if (PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(CalendarPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false)) {
             Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
             ContentUris.appendId(builder, 0);
             ContentUris.appendId(builder, System.currentTimeMillis());
-            ContentResolver contentResolver = context.getContentResolver();
-            Cursor cursor = contentResolver.query(builder.build(), getProjection(),
-                    getPastEventsWithColorSelection(),
-                    null, EVENT_SORT_ORDER);
-            if (cursor != null) {
-                eventList = cursor2PastEventWithColorList(cursor);
-                cursor.close();
-            }
+            eventList = queryList(builder.build(), getPastEventsWithColorSelection());
         }
         return eventList;
     }
@@ -191,17 +177,15 @@ public class CalendarEventProvider {
         return stringBuilder.toString();
     }
 
-    private List<CalendarEvent> cursor2PastEventWithColorList(Cursor calendarCursor) {
-        boolean fillAllDayEvents = fillAllDayEvents();
-        List<CalendarEvent> eventList = new ArrayList<>();
-        for (int i = 0; i < calendarCursor.getCount(); i++) {
-            calendarCursor.moveToPosition(i);
-            CalendarEvent event = createCalendarEvent(calendarCursor);
-            if (!event.getTitle().endsWith(PAST_EVENTS_TITLE_SUFFIX_TO_SKIP)) {
-                addEventToList(eventList, event, fillAllDayEvents);
+    private List<CalendarEvent> expandEventList(List<CalendarEvent> eventList) {
+        List<CalendarEvent> expandedList = new ArrayList<>();
+        for (CalendarEvent event : eventList) {
+            setupDayOneEntry(expandedList, event);
+            if (!event.isAllDay() || mFillAllDayEvents) {
+                createFollowingEntries(expandedList, event);
             }
         }
-        return eventList;
+        return expandedList;
     }
 
     private void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {

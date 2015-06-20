@@ -84,7 +84,6 @@
   <string name="show_past_events_with_default_color_desc">必要に応じて、過去に発生したイベントに色をつけて表示します</string>
   <string name="this_option_is_turned_off">(このオプションはオフです)</string>
   <string name="pref_events_ended_title">最近終了したイベント</string>
-  <string name="pref_events_ended_desc">最近終了したイベントを表示します。時間の範囲を選択します。</string>
   <string name="ended_one_hour_ago">1 時間前に終了</string>
   <string name="ended_two_hours_ago">2 時間前に終了</string>
   <string name="ended_four_hours_ago">4 時間前に終了</string>

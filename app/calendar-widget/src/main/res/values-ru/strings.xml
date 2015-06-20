@@ -84,7 +84,6 @@
   <string name="show_past_events_with_default_color_desc">Можно показать события, которые произошли в любое время в прошлом, на основе их цвета</string>
   <string name="this_option_is_turned_off">(эта опция выключена)</string>
   <string name="pref_events_ended_title">События, которые завершились недавно</string>
-  <string name="pref_events_ended_desc">Выберите диапазон времени для показа событий, которые завершились несколько часов назад</string>
   <string name="ended_one_hour_ago">Завершились час назад</string>
   <string name="ended_two_hours_ago">Завершились два часа назад</string>
   <string name="ended_four_hours_ago">Завершились четыре часа назад</string>

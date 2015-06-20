@@ -75,6 +75,7 @@
     <!-- Preference header: Event filters -->
     <string name="event_filters_prefs">Event filters</string>
     <string name="event_filters_prefs_desc">Which current, future and past events to show</string>
+    <string name="all_events">All events</string>
     <string name="current_and_future_events">Current and future events</string>
     <string name="past_events">Past events</string>
     <string name="event_details_event_range_title">Date range</string>
@@ -91,13 +92,13 @@
     <string name="show_past_events_with_default_color_title">Show all past events with Default color</string>
     <string name="show_past_events_with_default_color_desc">Optionally show events, which occurred any time in the past and have Default color</string>
     <string name="this_option_is_turned_off">(this option is turned off)</string>
-    <string name="pref_events_ended_title">Events that ended recently</string>
-    <string name="pref_events_ended_desc">Select a time range to show events, which ended several hours ago</string>
+    <string name="pref_events_ended_title">Show events that ended recently</string>
     <string name="ended_one_hour_ago">Ended one hour ago</string>
     <string name="ended_two_hours_ago">Ended two hours ago</string>
     <string name="ended_four_hours_ago">Ended four hours ago</string>
     <string name="ended_today">Ended today</string>
     <string name="ended_yesterday">Ended yesterday</string>
+    <string name="pref_hide_based_on_keywords_title">Hide based on keywords in a title</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>

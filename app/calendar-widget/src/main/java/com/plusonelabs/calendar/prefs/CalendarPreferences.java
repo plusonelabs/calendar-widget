@@ -36,9 +36,10 @@ public class CalendarPreferences {
 	public static final String PREF_HEADER_THEME_DEFAULT = Theme.DARK.name();
 	public static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
 	public static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
-    public static final String SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
+    public static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
     public static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
     public static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
+	public static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
 
 	private CalendarPreferences() {
 		// prohibit instantiation
@@ -48,5 +49,11 @@ public class CalendarPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(
                 PREF_PAST_EVENTS_BACKGROUND_COLOR,
                 PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT);
+    }
+
+    public static String getHideBasedOnKeywords(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(
+                PREF_HIDE_BASED_ON_KEYWORDS,
+                "");
     }
 }

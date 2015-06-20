@@ -5,12 +5,12 @@
             android:entries="@array/pref_events_ended_entries"
             android:entryValues="@array/pref_events_ended_values"
             android:key="eventsEnded"
-            android:summary="@string/pref_events_ended_desc"
+            android:summary="@string/this_option_is_turned_off"
             android:title="@string/pref_events_ended_title" />
-        <CheckBoxPreference
+        <com.plusonelabs.calendar.prefs.MultilineCheckBoxPreference
             android:defaultValue="false"
             android:key="showPastEventsWithDefaultColor"
-            android:summary="@string/show_past_events_with_default_color_desc"
+            android:summary="@string/this_option_is_turned_off"
             android:title="@string/show_past_events_with_default_color_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/current_and_future_events">
@@ -19,7 +19,13 @@
             android:entries="@array/pref_event_range_entries"
             android:entryValues="@array/pref_event_range_values"
             android:key="eventRange"
-            android:summary="@string/event_details_event_range_desc"
+            android:summary="@string/event_range_one_month"
             android:title="@string/event_details_event_range_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/all_events">
+        <EditTextPreference
+            android:key="hideBasedOnKeywords"
+            android:summary="@string/this_option_is_turned_off"
+            android:title="@string/pref_hide_based_on_keywords_title" />
     </PreferenceCategory>
 </PreferenceScreen>

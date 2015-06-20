@@ -79,15 +79,13 @@
   <string name="event_range_three_months">Drie maanden</string>
   <string name="event_range_six_months">Zes maanden</string>
   <string name="event_range_one_year">Een jaar</string>
-  <string name="show_past_events_with_color_title">Evenementen in het verleden met kleur</string>
-  <string name="show_events_with_color_none">(deze optie is uitgeschakeld)</string>
-  <string name="show_events_with_color_same">De standaardkleur van de kalender</string>
+  <string name="show_past_events_with_default_color_title">Evenementen in het verleden met kleur</string>
+  <string name="this_option_is_turned_off">(deze optie is uitgeschakeld)</string>
   <string name="pref_events_ended_title">Recent beëindigde evenementen</string>
   <string name="ended_one_hour_ago">1 uur geleden beëindigd</string>
   <string name="ended_two_hours_ago">Twee uur geleden beëindigd</string>
   <string name="ended_four_hours_ago">Vier uur geleden beëindigd</string>
   <string name="ended_today">Vandaag beëindigd</string>
-  <string name="ended_one_day_ago">Een dag geleden beëindigd</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Neem contact met ons op</string>
   <string name="feedback_github_desc">Feedback geven op de projectpagina</string>

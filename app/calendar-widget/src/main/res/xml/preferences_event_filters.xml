@@ -7,13 +7,11 @@
             android:key="eventsEnded"
             android:summary="@string/pref_events_ended_desc"
             android:title="@string/pref_events_ended_title" />
-        <ListPreference
-            android:defaultValue="NONE"
-            android:entries="@array/pref_show_events_with_color_entries"
-            android:entryValues="@array/pref_show_events_with_color_values"
-            android:key="showPastEventsWithColor"
-            android:summary="@string/show_past_events_with_color_desc"
-            android:title="@string/show_past_events_with_color_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="showPastEventsWithDefaultColor"
+            android:summary="@string/show_past_events_with_default_color_desc"
+            android:title="@string/show_past_events_with_default_color_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/current_and_future_events">
         <ListPreference

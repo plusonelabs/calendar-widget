@@ -79,11 +79,9 @@
   <string name="event_range_three_months">Tre mesi</string>
   <string name="event_range_six_months">Sei mesi</string>
   <string name="event_range_one_year">Un anno</string>
-  <string name="show_past_events_with_color_title">Visualizza gli eventi passati con un colore diverso</string>
-  <string name="show_past_events_with_color_desc">Consente di vedere gli eventi passati che richiedono la tua attenzione</string>
-  <string name="show_events_with_color_none">(questa opzione è disattivata)</string>
-  <string name="show_events_with_color_same">Lo stesso colore del calendario predefinito</string>
-  <string name="show_events_with_color_other">Un colore differente rispetto al calendario predefinito</string>
+  <string name="show_past_events_with_default_color_title">Visualizza gli eventi passati con un colore diverso</string>
+  <string name="show_past_events_with_default_color_desc">Consente di vedere gli eventi passati che richiedono la tua attenzione</string>
+  <string name="this_option_is_turned_off">(questa opzione è disattivata)</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Entra in contatto con noi</string>
   <string name="feedback_github_desc">Fornisci un feedback sulla pagina del progetto</string>

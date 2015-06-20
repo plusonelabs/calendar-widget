@@ -1,6 +1,5 @@
 package com.plusonelabs.calendar.calendar;
 
-import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -52,28 +51,10 @@ public class CalendarEventProvider {
     private static final String CLOSING_BRACKET = " )";
     private static final String OR = " OR ";
     private static final String EQUALS = " = ";
-    private static final String NOT_EQUALS = " != ";
     private static final String AND_BRACKET = " AND (";
 
     private final Context context;
 
-    private enum ShowPastEventsWithColorEnum{
-        NONE,
-        SAME,
-        OTHER;
-
-        public static ShowPastEventsWithColorEnum fromValue(String valueIn) {
-            ShowPastEventsWithColorEnum element = NONE;
-            for (ShowPastEventsWithColorEnum item : ShowPastEventsWithColorEnum.values()) {
-                if (item.name().equals(valueIn)) {
-                    element = item;
-                    break;
-                }
-            }
-            return element;
-        }
-
-    }
     /**
      * This helps migrating to the "Calendar Widget" from "Jorte Calendar",
      * where "[C]" title suffix means "Completed event"
@@ -175,17 +156,16 @@ public class CalendarEventProvider {
     }
 
     private List<CalendarEvent> getPastEventWithColorList() {
-        List<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
-        ShowPastEventsWithColorEnum showPastEventsWithColor = ShowPastEventsWithColorEnum.fromValue(
-                PreferenceManager.getDefaultSharedPreferences(context).getString(
-                        CalendarPreferences.PREF_SHOW_PAST_EVENTS_WITH_COLOR, ""));
-        if (showPastEventsWithColor != ShowPastEventsWithColorEnum.NONE) {
+        List<CalendarEvent> eventList = new ArrayList<>();
+        boolean showPastEventsWithColor = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(CalendarPreferences.SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false);
+        if (showPastEventsWithColor) {
             Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
             ContentUris.appendId(builder, 0);
             ContentUris.appendId(builder, System.currentTimeMillis());
             ContentResolver contentResolver = context.getContentResolver();
             Cursor cursor = contentResolver.query(builder.build(), getProjection(),
-                    getPastEventsWithColorSelection(showPastEventsWithColor),
+                    getPastEventsWithColorSelection(),
                     null, EVENT_SORT_ORDER);
             if (cursor != null) {
                 eventList = cursor2PastEventWithColorList(cursor);
@@ -195,21 +175,16 @@ public class CalendarEventProvider {
         return eventList;
     }
 
-    private String getPastEventsWithColorSelection(
-            ShowPastEventsWithColorEnum showPastEventsWithColor) {
+    private String getPastEventsWithColorSelection() {
         StringBuilder stringBuilder = new StringBuilder(getCalendarSelection());
         stringBuilder.append(AND_BRACKET);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             stringBuilder.append(Instances.DISPLAY_COLOR);
-            stringBuilder
-                    .append(showPastEventsWithColor == ShowPastEventsWithColorEnum.SAME ? EQUALS
-                            : NOT_EQUALS);
+            stringBuilder.append(EQUALS);
             stringBuilder.append(Instances.CALENDAR_COLOR);
         } else {
             stringBuilder.append(Instances.EVENT_COLOR);
-            stringBuilder
-                    .append(showPastEventsWithColor == ShowPastEventsWithColorEnum.SAME ? EQUALS
-                            : NOT_EQUALS);
+            stringBuilder.append(EQUALS);
             stringBuilder.append("0");
         }
         stringBuilder.append(CLOSING_BRACKET);

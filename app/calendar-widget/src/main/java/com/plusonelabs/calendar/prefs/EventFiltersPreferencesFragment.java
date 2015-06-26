@@ -28,7 +28,6 @@ public class EventFiltersPreferencesFragment extends PreferenceFragment implemen
 
 	private void showStatus() {
         showEventsEnded();
-        showPastEventsWithDefaultColor();
         showEvenRange();
         showHideBasedOnKeywords();
 	}
@@ -36,15 +35,6 @@ public class EventFiltersPreferencesFragment extends PreferenceFragment implemen
     private void showEventsEnded() {
         ListPreference preference = (ListPreference) findPreference(CalendarPreferences.PREF_EVENTS_ENDED);
         preference.setSummary(preference.getEntry());
-    }
-
-    private void showPastEventsWithDefaultColor() {
-        CheckBoxPreference preference = (CheckBoxPreference) findPreference(CalendarPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR);
-        if (preference.isChecked()) {
-            preference.setSummary("");
-        } else {
-            preference.setSummary(R.string.this_option_is_turned_off);
-        }
     }
 
     private void showEvenRange() {

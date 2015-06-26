@@ -10,7 +10,6 @@
         <com.plusonelabs.calendar.prefs.MultilineCheckBoxPreference
             android:defaultValue="false"
             android:key="showPastEventsWithDefaultColor"
-            android:summary="@string/this_option_is_turned_off"
             android:title="@string/show_past_events_with_default_color_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/current_and_future_events">

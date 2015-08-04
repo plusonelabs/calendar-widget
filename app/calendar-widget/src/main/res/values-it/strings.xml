@@ -67,10 +67,12 @@
   <string name="event_details_indicate_recurring_title">Eventi ricorrenti</string>
   <string name="event_filters_prefs">Filtri per gli eventi</string>
   <string name="event_filters_prefs_desc">Eventi attuali, futuri e passati da mostrare</string>
+  <string name="all_events">Tutti gli eventi</string>
   <string name="current_and_future_events">Eventi attuali e futuri</string>
   <string name="past_events">Eventi passati</string>
   <string name="event_details_event_range_title">Intervallo date</string>
   <string name="event_details_event_range_desc">Imposta il numero di eventi da mostrare</string>
+  <string name="event_range_today">Oggi</string>
   <string name="event_range_one_day">Un giorno</string>
   <string name="event_range_one_week">Una settimana</string>
   <string name="event_range_two_weeks">Due settimane</string>
@@ -79,13 +81,20 @@
   <string name="event_range_three_months">Tre mesi</string>
   <string name="event_range_six_months">Sei mesi</string>
   <string name="event_range_one_year">Un anno</string>
-  <string name="show_past_events_with_default_color_title">Visualizza gli eventi passati con un colore diverso</string>
-  <string name="show_past_events_with_default_color_desc">Consente di vedere gli eventi passati che richiedono la tua attenzione</string>
-  <string name="this_option_is_turned_off">(questa opzione è disattivata)</string>
+  <string name="show_past_events_with_default_color_title">Visualizza tutti gli eventi passati con il colore predefinito</string>
+  <string name="this_option_is_turned_off">(disabilitato)</string>
+  <string name="pref_events_ended_title">Visualizza gli eventi conclusi di recente</string>
+  <string name="ended_one_hour_ago">Concluso un ora fa</string>
+  <string name="ended_two_hours_ago">Concluso due ore fa</string>
+  <string name="ended_four_hours_ago">Concluso quattro ore fa</string>
+  <string name="ended_today">Concluso oggi</string>
+  <string name="ended_yesterday">Conclusi ieri</string>
+  <string name="pref_hide_based_on_keywords_title">Nascondi in base alla parole chiave nel titolo</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Entra in contatto con noi</string>
   <string name="feedback_github_desc">Fornisci un feedback sulla pagina del progetto</string>
   <string name="feedback_github_title">Visita su Github</string>
   <string name="feedback_play_store_desc">Vota e commenta su Google Play Store</string>
   <string name="feedback_play_store_title">Visita su Google Play Store</string>
+  <string name="refresh_desc">Aggiorna</string>
 </resources>

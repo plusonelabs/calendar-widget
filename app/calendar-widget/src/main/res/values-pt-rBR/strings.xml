@@ -67,10 +67,12 @@
   <string name="event_details_indicate_recurring_title">Eventos recorrentes</string>
   <string name="event_filters_prefs">Filtros de evento</string>
   <string name="event_filters_prefs_desc">Quais eventos atuais, futuros e passados exibir</string>
+  <string name="all_events">Todos os eventos</string>
   <string name="current_and_future_events">Eventos atuais e futuros</string>
   <string name="past_events">Eventos passados</string>
   <string name="event_details_event_range_title">Período</string>
   <string name="event_details_event_range_desc">Configurar o número de eventos a mostrar</string>
+  <string name="event_range_today">Hoje</string>
   <string name="event_range_one_day">Um dia</string>
   <string name="event_range_one_week">Uma semana</string>
   <string name="event_range_two_weeks">Duas semanas</string>
@@ -79,13 +81,20 @@
   <string name="event_range_three_months">Três meses</string>
   <string name="event_range_six_months">Seis meses</string>
   <string name="event_range_one_year">Um ano</string>
-  <string name="show_past_events_with_default_color_title">Exibir eventos passados com cor</string>
-  <string name="show_past_events_with_default_color_desc">Permitir exibição de eventos passados, que requerem sua atenção</string>
-  <string name="this_option_is_turned_off">(essa opção está desligada)</string>
+  <string name="show_past_events_with_default_color_title">Mostrar todos os últimos eventos na cor padrão</string>
+  <string name="this_option_is_turned_off">(desativado)</string>
+  <string name="pref_events_ended_title">Mostrar os eventos que terminaram recentemente</string>
+  <string name="ended_one_hour_ago">Terminado há uma hora atrás</string>
+  <string name="ended_two_hours_ago">Terminado há duas horas atrás</string>
+  <string name="ended_four_hours_ago">Terminado há quatro horas atrás</string>
+  <string name="ended_today">Terminado hoje</string>
+  <string name="ended_yesterday">Terminou ontem</string>
+  <string name="pref_hide_based_on_keywords_title">Ocultar baseado em palavras-chave em um título</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Entre em contato conosco</string>
   <string name="feedback_github_desc">Sua opinião sobre o projeto</string>
   <string name="feedback_github_title">Visite a página do widget no Github</string>
   <string name="feedback_play_store_desc">Avalie e comente no Google Play Store</string>
   <string name="feedback_play_store_title">Visite-nos na Google Play Store</string>
+  <string name="refresh_desc">Atualizar</string>
 </resources>

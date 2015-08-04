@@ -38,7 +38,7 @@
   <string name="appearance_background_color_title">Kolor tła</string>
   <string name="appearance_background_color_desc">Dostosuj kolor tła</string>
   <string name="appearance_past_events_background_color_title">Kolor tła przeszłych wydarzeń</string>
-  <string name="appearance_past_events_background_color_desc">Modyfikuje kolor tła przeszłych wydarzeń</string>
+  <string name="appearance_past_events_background_color_desc">Modyfikuj kolor tła przeszłych wydarzeń</string>
   <string name="appearance_day_header_alignment_desc">Ustaw wyrównanie nagłówka dnia</string>
   <string name="appearance_day_header_alignment_title">Wyrównanie nagłówka dnia</string>
   <string name="appearance_day_header_alignment_left">z lewej strony</string>
@@ -66,7 +66,7 @@
   <string name="event_details_indicate_recurring_desc">Pokaż wskaźnik dla wydarzeń cyklicznych</string>
   <string name="event_details_indicate_recurring_title">Wydarzenia cykliczne</string>
   <string name="event_filters_prefs">Filtry wydarzenia</string>
-  <string name="event_filters_prefs_desc">Które pokazują wydarzenia bieżące, przyszłe lub przeszłe</string>
+  <string name="event_filters_prefs_desc">Które wydarzenia bieżące, przyszłe lub przeszłe pokazać</string>
   <string name="current_and_future_events">Bieżące i przyszłe wydarzenia</string>
   <string name="past_events">Przeszłe wydarzenia</string>
   <string name="event_details_event_range_title">Zakres dat</string>
@@ -80,10 +80,6 @@
   <string name="event_range_three_months">Trzy miesiące</string>
   <string name="event_range_six_months">Sześć miesięcy</string>
   <string name="event_range_one_year">Rok</string>
-  <string name="show_past_events_with_default_color_title">Przeszłe wydarzenia z kolorowym</string>
-  <string name="show_past_events_with_default_color_desc">Opcjonalnie pokaż wydarzenia, które miały miejsce kiedyś w przeszłości, bazując na ich kolorze</string>
-  <string name="this_option_is_turned_off">(Ta opcja jest wyłączona)</string>
-  <string name="pref_events_ended_title">Wydarzenia, które zakończyły się ostatnio</string>
   <string name="ended_one_hour_ago">Zakończyły się godzinę temu</string>
   <string name="ended_two_hours_ago">Zakończyły się dwie godziny temu</string>
   <string name="ended_four_hours_ago">Zakończyły się cztery godziny temu</string>

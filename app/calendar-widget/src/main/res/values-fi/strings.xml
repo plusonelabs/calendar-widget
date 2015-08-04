@@ -67,6 +67,7 @@
   <string name="event_details_indicate_recurring_title">Toistuvat tapahtumat</string>
   <string name="event_filters_prefs">Tapahtuman suodattimet</string>
   <string name="event_filters_prefs_desc">Mitkä nykyiset, tulevat ja menneet tapahtumat näytetään</string>
+  <string name="all_events">Kaikki tapahtumat</string>
   <string name="current_and_future_events">Nykyiset ja tulevat tapahtumat</string>
   <string name="past_events">Menneet tapahtumat</string>
   <string name="event_details_event_range_title">Ajanjakso</string>
@@ -80,14 +81,15 @@
   <string name="event_range_three_months">Kolme kuukautta</string>
   <string name="event_range_six_months">Puoli vuotta</string>
   <string name="event_range_one_year">Yksi vuosi</string>
-  <string name="show_past_events_with_default_color_title">Menneet tapahtumat, joilla on väri</string>
-  <string name="show_past_events_with_default_color_desc">Näytä menneet tapahtumat värin perusteella</string>
-  <string name="this_option_is_turned_off">(tämä asetus ei ole käytettävissä)</string>
-  <string name="pref_events_ended_title">Äskettäin päättyneet tapahtumat</string>
+  <string name="show_past_events_with_default_color_title">Näytä kaikki menneet tapahtumat, joilla on oletusväri</string>
+  <string name="this_option_is_turned_off">(ei käytössä)</string>
+  <string name="pref_events_ended_title">Näytä äskettäin päättyneet tapahtumat</string>
   <string name="ended_one_hour_ago">Päättyi tunti sitten</string>
   <string name="ended_two_hours_ago">Päättyi kaksi tuntia sitten</string>
   <string name="ended_four_hours_ago">Päättyi neljä tuntia sitten</string>
   <string name="ended_today">Päättyi tänään</string>
+  <string name="ended_yesterday">Päättyi eilen</string>
+  <string name="pref_hide_based_on_keywords_title">Piilota otsikon avainsanan perusteella</string>
   <string name="feedback_prefs">Palaute</string>
   <string name="feedback_prefs_desc">Ota yhteyttä</string>
   <string name="feedback_github_desc">Anna palautetta projektin sivulla</string>

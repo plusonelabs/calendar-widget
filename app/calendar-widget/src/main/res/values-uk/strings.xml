@@ -67,6 +67,7 @@
   <string name="event_details_indicate_recurring_title">Події, що повторюються</string>
   <string name="event_filters_prefs">Фільтри події</string>
   <string name="event_filters_prefs_desc">Які поточні, майбутні і минулі події відображати</string>
+  <string name="all_events">Усі події</string>
   <string name="current_and_future_events">Поточні та майбутні події</string>
   <string name="past_events">Минулі події</string>
   <string name="event_details_event_range_title">Діапазон дат</string>
@@ -80,14 +81,15 @@
   <string name="event_range_three_months">Три місяці</string>
   <string name="event_range_six_months">Шість місяців</string>
   <string name="event_range_one_year">Один рік</string>
-  <string name="show_past_events_with_default_color_title">Минулі події з кольором</string>
-  <string name="show_past_events_with_default_color_desc">За бажанням відображати події, які сталися будь-коли раніше, на основі їх кольорів</string>
-  <string name="this_option_is_turned_off">(цей параметр вимкнуто)</string>
-  <string name="pref_events_ended_title">Події, що завершились нещодавно</string>
+  <string name="show_past_events_with_default_color_title">Відображати усі минулі події, що мають типовий колір</string>
+  <string name="this_option_is_turned_off">(вимкнуто)</string>
+  <string name="pref_events_ended_title">Відображати події, що завершились недавно</string>
   <string name="ended_one_hour_ago">Завершились 1 годину назад</string>
   <string name="ended_two_hours_ago">Завершились 2 години назад</string>
   <string name="ended_four_hours_ago">Завершились 4 години назад</string>
   <string name="ended_today">Завершились сьогодні</string>
+  <string name="ended_yesterday">Завершились вчора</string>
+  <string name="pref_hide_based_on_keywords_title">Приховати на основі ключових слів у заголовку</string>
   <string name="feedback_prefs">Зворотній зв\'язок</string>
   <string name="feedback_prefs_desc">Зв\'яжіться з нами</string>
   <string name="feedback_github_desc">Залишити відгук на сторінці проекту</string>

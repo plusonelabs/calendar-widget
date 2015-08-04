@@ -67,6 +67,7 @@
   <string name="event_details_indicate_recurring_title">Wiederkehrende Ereignisse</string>
   <string name="event_filters_prefs">Terminfilter</string>
   <string name="event_filters_prefs_desc">Aus welchem Zeitraum sollen Termine angezeigt werden</string>
+  <string name="all_events">Alle Termine</string>
   <string name="current_and_future_events">Aktuelle und zukünftige Termine</string>
   <string name="past_events">Vergangene Termine</string>
   <string name="event_details_event_range_title">Zeitraum</string>
@@ -80,14 +81,15 @@
   <string name="event_range_three_months">Drei Monate</string>
   <string name="event_range_six_months">Sechs Monate</string>
   <string name="event_range_one_year">Ein Jahr</string>
-  <string name="show_past_events_with_default_color_title">Vergangene Ereignisse einfärben</string>
-  <string name="show_past_events_with_default_color_desc">Zeige Ereignisse in der Vergangenheit eingefärbt an</string>
-  <string name="this_option_is_turned_off">(Diese Option ist deaktiviert)</string>
-  <string name="pref_events_ended_title">Ereignisse, die vor kurzem endeten</string>
+  <string name="show_past_events_with_default_color_title">Zeige alle vergangenen Termine mit Standardfarbe</string>
+  <string name="this_option_is_turned_off">(deaktiviert)</string>
+  <string name="pref_events_ended_title">Zeige Termine die vor kurzem geendet sind</string>
   <string name="ended_one_hour_ago">Vor einer Stunden geendet</string>
   <string name="ended_two_hours_ago">Vor 2 Stunden geendet</string>
   <string name="ended_four_hours_ago">Vor 4 Stunden geendet</string>
   <string name="ended_today">Heute geendet</string>
+  <string name="ended_yesterday">Gestern geendet</string>
+  <string name="pref_hide_based_on_keywords_title">Ausblenden basierend auf Schlüsselwörtern in Titel</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Kontakt mit uns aufnehmen</string>
   <string name="feedback_github_desc">Feedback auf der Projektseite hinterlassen</string>

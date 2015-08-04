@@ -29,12 +29,15 @@
   <string name="appearance_date_format_auto">Automat</string>
   <string name="appearance_date_format_24">17:00</string>
   <string name="appearance_date_format_12">5:00 pm</string>
+  <string name="appearance_show_days_without_events_title">Arată zile fără evenimente</string>
+  <string name="appearance_show_days_without_events_desc">Arată anteturile zilelor, fără evenimente</string>
   <string name="appearance_display_header_title">Afisare antet widget</string>
   <string name="appearance_display_header_desc">Afisare data si setari in antet</string>
   <string name="appearance_display_header_warning">Ascunde antet, ascunde acces preferinte.</string>
   <string name="appearance_group_color_title">Culori</string>
   <string name="appearance_background_color_title">Culoare fundal</string>
   <string name="appearance_background_color_desc">Ajustare culori fundal</string>
+  <string name="appearance_past_events_background_color_title">Culoarea de fundal a evenimentelor trecute</string>
   <string name="appearance_day_header_alignment_desc">Setare aliniere zi in antet</string>
   <string name="appearance_day_header_alignment_title">Aliniere zi in antet</string>
   <string name="appearance_day_header_alignment_left">Stanga</string>
@@ -70,10 +73,15 @@
   <string name="event_range_three_months">Trei luni</string>
   <string name="event_range_six_months">Sase luni</string>
   <string name="event_range_one_year">Un an</string>
+  <string name="ended_one_hour_ago">Încheiat acum o oră</string>
+  <string name="ended_two_hours_ago">Încheiat acum două ore</string>
+  <string name="ended_four_hours_ago">Încheiat acum patru ore</string>
+  <string name="ended_today">Încheiat astăzi</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Luati legatura cu noi</string>
   <string name="feedback_github_desc">Furnizarea de feedback-ul pe pagina proiectului</string>
   <string name="feedback_github_title">Vizitați widget pe Github</string>
   <string name="feedback_play_store_desc">Evaluare si comentariu pe Google Play Store</string>
   <string name="feedback_play_store_title">Vizitati widget pe Google Play Store</string>
+  <string name="refresh_desc">Reîncarcă</string>
 </resources>

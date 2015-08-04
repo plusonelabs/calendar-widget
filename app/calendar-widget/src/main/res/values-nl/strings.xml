@@ -66,6 +66,8 @@
   <string name="event_details_indicate_recurring_desc">Indicator voor terugkerende gebeurtenissen weergeven</string>
   <string name="event_details_indicate_recurring_title">Terugkerende gebeurtenissen</string>
   <string name="event_filters_prefs">Evenement filters</string>
+  <string name="event_filters_prefs_desc">Welke huidige, toekomstige en evenementen in het verleden moeten getoond worden</string>
+  <string name="all_events">Alle evenementen</string>
   <string name="current_and_future_events">Huidige en toekomstige evenementen</string>
   <string name="past_events">Evenementen in het verleden</string>
   <string name="event_details_event_range_title">Datumbereik</string>
@@ -79,13 +81,15 @@
   <string name="event_range_three_months">Drie maanden</string>
   <string name="event_range_six_months">Zes maanden</string>
   <string name="event_range_one_year">Een jaar</string>
-  <string name="show_past_events_with_default_color_title">Evenementen in het verleden met kleur</string>
-  <string name="this_option_is_turned_off">(deze optie is uitgeschakeld)</string>
-  <string name="pref_events_ended_title">Recent beëindigde evenementen</string>
+  <string name="show_past_events_with_default_color_title">Toon alle beëindigde evenementen met de standaardkleur</string>
+  <string name="this_option_is_turned_off">(uitgeschakeld)</string>
+  <string name="pref_events_ended_title">Toon recent geëindigde evenementen</string>
   <string name="ended_one_hour_ago">1 uur geleden beëindigd</string>
   <string name="ended_two_hours_ago">Twee uur geleden beëindigd</string>
   <string name="ended_four_hours_ago">Vier uur geleden beëindigd</string>
   <string name="ended_today">Vandaag beëindigd</string>
+  <string name="ended_yesterday">Gisteren geëindigd</string>
+  <string name="pref_hide_based_on_keywords_title">Verbergen op basis van zoekwoorden in een titel</string>
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Neem contact met ons op</string>
   <string name="feedback_github_desc">Feedback geven op de projectpagina</string>

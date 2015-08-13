@@ -148,9 +148,10 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 				event.getStartDate(), event.getEndDate());
 	}
 
-	private String createTimeSpanString(CalendarEvent event) {
+	// This method has default protection for testability
+	String createTimeSpanString(CalendarEvent event) {
         if (event.isAllDay() && !prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT)) {
-            DateTime dateTime = event.getOriginalEvent().getEndDate().minusDays(1);
+            DateTime dateTime = event.getEndDate().minusDays(1);
             return ARROW_SPACE + EMPTY_STRING + DateUtil.createDateString(context, dateTime);
         } else {
             return createTimeStringForEventEntry(event);

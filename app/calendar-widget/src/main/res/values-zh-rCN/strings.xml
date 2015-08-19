@@ -60,8 +60,11 @@
   <string name="event_details_indicate_alert_title">响闹</string>
   <string name="event_details_indicate_recurring_desc">显示重复的日程提示</string>
   <string name="event_details_indicate_recurring_title">重复的日程</string>
+  <string name="all_events">所有活动</string>
+  <string name="past_events">过去的事件</string>
   <string name="event_details_event_range_title">日期范围</string>
   <string name="event_details_event_range_desc">配置日程显示条数</string>
+  <string name="event_range_today">今天</string>
   <string name="event_range_one_day">一天</string>
   <string name="event_range_one_week">一周</string>
   <string name="event_range_two_weeks">两周</string>
@@ -70,10 +73,15 @@
   <string name="event_range_three_months">三个月</string>
   <string name="event_range_six_months">六个月</string>
   <string name="event_range_one_year">一年</string>
+  <string name="pref_events_ended_title">显示最近结束的事件</string>
+  <string name="ended_one_hour_ago">一小时前结束</string>
+  <string name="ended_two_hours_ago">两小时前结束</string>
+  <string name="ended_four_hours_ago">四小时前结束</string>
   <string name="feedback_prefs">反馈</string>
   <string name="feedback_prefs_desc">联系我们</string>
   <string name="feedback_github_desc">在项目页面上提供反馈</string>
   <string name="feedback_github_title">在Github上访问小部件</string>
   <string name="feedback_play_store_desc">于 Google Play 商店上评分及评论</string>
   <string name="feedback_play_store_title">在Google Play商店访问小部件</string>
+  <string name="refresh_desc">刷新</string>
 </resources>

@@ -67,6 +67,7 @@
   <string name="event_details_indicate_recurring_title">Sự kiện theo định kỳ</string>
   <string name="event_filters_prefs">Bộ lọc sự kiện</string>
   <string name="event_filters_prefs_desc">Hiển thị sự kiện hiện tại, sắp tới và đã qua</string>
+  <string name="all_events">Tất cả sự kiện</string>
   <string name="current_and_future_events">Sự kiện hôm nay và sắp tới</string>
   <string name="past_events">Những sự kiện đã qua</string>
   <string name="event_details_event_range_title">Phạm vi ngày</string>
@@ -80,10 +81,15 @@
   <string name="event_range_three_months">Ba tháng</string>
   <string name="event_range_six_months">Sáu tháng</string>
   <string name="event_range_one_year">Một năm</string>
+  <string name="show_past_events_with_default_color_title">Hiển thị tất cả các sự kiện đã xảy ra có màu mặc định</string>
+  <string name="this_option_is_turned_off">(vô hiệu)</string>
+  <string name="pref_events_ended_title">Hiển thị sự kiện kết thúc gần đây</string>
   <string name="ended_one_hour_ago">Kết thúc một giờ trước</string>
   <string name="ended_two_hours_ago">Kết thúc hai giờ trước</string>
   <string name="ended_four_hours_ago">Kết thúc bốn giờ trước</string>
   <string name="ended_today">Kết thúc ngày hôm nay</string>
+  <string name="ended_yesterday">Đã kết thúc hôm qua</string>
+  <string name="pref_hide_based_on_keywords_title">Ẩn dựa vào từ khoá trong tiêu đề</string>
   <string name="feedback_prefs">Phản hồi</string>
   <string name="feedback_prefs_desc">Liên lạc với chúng tôi</string>
   <string name="feedback_github_desc">Phản hồi trên trang web của dự án</string>

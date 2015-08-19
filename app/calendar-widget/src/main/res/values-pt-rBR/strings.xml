@@ -37,7 +37,7 @@
   <string name="appearance_group_color_title">Cores</string>
   <string name="appearance_background_color_title">Cor do fundo</string>
   <string name="appearance_background_color_desc">Ajustar a cor de fundo</string>
-  <string name="appearance_past_events_background_color_title">Cor de fundo dos eventos passados</string>
+  <string name="appearance_past_events_background_color_title">Cor de fundo de eventos passados</string>
   <string name="appearance_past_events_background_color_desc">Ajustar cor de fundo dos eventos passados</string>
   <string name="appearance_day_header_alignment_desc">Ajustar alinhamento do Dia no cabeçalho</string>
   <string name="appearance_day_header_alignment_title">Alinhamento do Cabeçalho do Dia</string>
@@ -83,7 +83,7 @@
   <string name="event_range_one_year">Um ano</string>
   <string name="show_past_events_with_default_color_title">Mostrar todos os últimos eventos na cor padrão</string>
   <string name="this_option_is_turned_off">(desativado)</string>
-  <string name="pref_events_ended_title">Mostrar os eventos que terminaram recentemente</string>
+  <string name="pref_events_ended_title">Mostrar os eventos terminados recentemente</string>
   <string name="ended_one_hour_ago">Terminado há uma hora atrás</string>
   <string name="ended_two_hours_ago">Terminado há duas horas atrás</string>
   <string name="ended_four_hours_ago">Terminado há quatro horas atrás</string>

@@ -105,16 +105,6 @@ public class CalendarEventVisualizerTest {
     }
 
     @Test
-    public void testCreateTimeSpanStringNoFill() throws Exception {
-        CalendarEvent multiDayAllDay = new CalendarEvent();
-        multiDayAllDay.setAllDay(true);
-        multiDayAllDay.setStartDate(T_2015_JUL_9);
-        multiDayAllDay.setEndDate(T_2015_JUL_15);
-
-        Assert.assertEquals("→ Tue, Jul 14", createTimeSpanString(multiDayAllDay, false));
-    }
-
-    @Test
     public void testCreateTimeSpanStringFill() throws Exception {
         CalendarEvent multiDayAllDay = new CalendarEvent();
         multiDayAllDay.setAllDay(true);

@@ -190,15 +190,15 @@ public class CalendarEventProvider {
     }
 
     private void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {
+        CalendarEvent clone = event.clone();
+        clone.setOriginalEvent(event);
+
         if (event.daysSpanned() > 1) {
-            CalendarEvent clone = event.clone();
             clone.setEndDate(event.getStartDay().plusDays(1));
             clone.setSpansMultipleDays(true);
-            clone.setOriginalEvent(event);
-            eventList.add(clone);
-        } else {
-            eventList.add(event);
         }
+
+        eventList.add(clone);
     }
 
     private void createFollowingEntries(List<CalendarEvent> eventList, CalendarEvent event) {

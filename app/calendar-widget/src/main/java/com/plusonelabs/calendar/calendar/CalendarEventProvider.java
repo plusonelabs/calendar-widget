@@ -177,7 +177,8 @@ public class CalendarEventProvider {
         return stringBuilder.toString();
     }
 
-    private List<CalendarEvent> expandEventList(List<CalendarEvent> eventList) {
+    // This method has default protection for testability
+    List<CalendarEvent> expandEventList(List<CalendarEvent> eventList) {
         List<CalendarEvent> expandedList = new ArrayList<>();
         for (CalendarEvent event : eventList) {
             setupDayOneEntry(expandedList, event);

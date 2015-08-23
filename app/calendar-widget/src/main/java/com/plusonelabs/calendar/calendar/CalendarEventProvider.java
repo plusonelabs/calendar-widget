@@ -127,11 +127,13 @@ public class CalendarEventProvider {
         try {
             cursor = context.getContentResolver().query(uri, getProjection(),
                     selection, null, EVENT_SORT_ORDER);
-            for (int i = 0; i < cursor.getCount(); i++) {
-                cursor.moveToPosition(i);
-                CalendarEvent event = createCalendarEvent(cursor);
-                if (!eventList.contains(event) && !mKeywordsFilter.matched(event.getTitle())) {
-                    eventList.add(event);
+            if (cursor != null) {
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    cursor.moveToPosition(i);
+                    CalendarEvent event = createCalendarEvent(cursor);
+                    if (!eventList.contains(event) && !mKeywordsFilter.matched(event.getTitle())) {
+                        eventList.add(event);
+                    }
                 }
             }
         } finally {

@@ -37,14 +37,13 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEM
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	private final Context context;
-	private final List<Event> eventEntries;
+	private volatile List<Event> mEventEntries = new ArrayList<>();
 	private final List<IEventVisualizer<?>> eventProviders;
 
 	public EventRemoteViewsFactory(Context context) {
 		this.context = context;
         eventProviders = new ArrayList<>();
         eventProviders.add(new CalendarEventVisualizer(context));
-        eventEntries = new ArrayList<>();
     }
 
     public void onCreate() {
@@ -53,14 +52,15 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public void onDestroy() {
-		eventEntries.clear();
+		// Empty
 	}
 
 	public int getCount() {
-		return eventEntries.size();
+		return mEventEntries.size();
 	}
 
 	public RemoteViews getViewAt(int position) {
+        List<Event> eventEntries = mEventEntries;
 		if (position < eventEntries.size()) {
 			Event entry = eventEntries.get(position);
 			if (entry instanceof DayHeader) {
@@ -103,29 +103,29 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     }
 
     private void updateEntryList(List<Event> eventList) {
-        eventEntries.clear();
-        if (eventList.isEmpty()) {
-            return;
-        }
-        boolean showDaysWithoutEvents = PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
-        DayHeader curDayBucket = new DayHeader(new DateTime(0));
-        for (Event event : eventList) {
-            DateTime nextStartOfDay = event.getStartDay();
-            if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
-                if (showDaysWithoutEvents) {
-                    addEmptyDayHeadersBetweenTwoDays(curDayBucket.getStartDay(), nextStartOfDay);
+        List<Event> eventEntries = new ArrayList<>();
+        if (!eventList.isEmpty()) {
+            boolean showDaysWithoutEvents = PreferenceManager.getDefaultSharedPreferences(context)
+                    .getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
+            DayHeader curDayBucket = new DayHeader(new DateTime(0));
+            for (Event event : eventList) {
+                DateTime nextStartOfDay = event.getStartDay();
+                if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
+                    if (showDaysWithoutEvents) {
+                        addEmptyDayHeadersBetweenTwoDays(eventEntries, curDayBucket.getStartDay(), nextStartOfDay);
+                    }
+                    curDayBucket = new DayHeader(nextStartOfDay);
+                    eventEntries.add(curDayBucket);
                 }
-                curDayBucket = new DayHeader(nextStartOfDay);
-                eventEntries.add(curDayBucket);
+                eventEntries.add(event);
             }
-            eventEntries.add(event);
+            Log.v("Event list", eventList.toString());
+            Log.v("Event entries", eventEntries.toString());
         }
-        Log.v("Event list", eventList.toString());
-        Log.v("Event entries", eventEntries.toString());
+        mEventEntries = eventEntries;
 }
 
-    private void addEmptyDayHeadersBetweenTwoDays(DateTime fromDayExclusive, DateTime toDayExclusive) {
+    private void addEmptyDayHeadersBetweenTwoDays(List<Event> eventEntries, DateTime fromDayExclusive, DateTime toDayExclusive) {
         DateTime emptyDay = fromDayExclusive.plusDays(1);
         DateTime today = DateTime.now().withTimeAtStartOfDay();
         if (emptyDay.isBefore(today)) {

@@ -117,7 +117,7 @@ public class CalendarEvent extends Event {
 	}
 
 	public CalendarEvent getOriginalEvent() {
-		return originalEvent;
+		return originalEvent != null ? originalEvent : this;
 	}
 
 	public int compareTo(CalendarEvent otherEntry) {

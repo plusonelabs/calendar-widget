@@ -65,7 +65,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	public RemoteViews getRemoteView(Event eventEntry) {
 		CalendarEvent event = (CalendarEvent) eventEntry;
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.event_entry);
-		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event));
+		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getOriginalEvent()));
 		setTitle(event, rv);
 		setEventDetails(event, rv);
 		setAlarmActive(event, rv);
@@ -139,13 +139,9 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
         }
     }
 
-    private Intent createOnItemClickIntent(CalendarEvent event) {
-		CalendarEvent originalEvent = event.getOriginalEvent();
-		if (originalEvent != null) {
-			event = originalEvent;
-		}
-		return CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
-				event.getStartDate(), event.getEndDate());
+    private Intent createOnItemClickIntent(CalendarEvent originalEvent) {
+		return CalendarIntentUtil.createOpenCalendarEventIntent(originalEvent.getEventId(),
+                originalEvent.getStartDate(), originalEvent.getEndDate());
 	}
 
 	private String createTimeSpanString(CalendarEvent event) {

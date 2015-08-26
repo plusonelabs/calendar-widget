@@ -166,7 +166,7 @@ public class CalendarEvent extends Event {
             return false;
         }
         CalendarEvent that = (CalendarEvent) o;
-        if (eventId != that.eventId) {
+        if (eventId != that.eventId || !getStartDate().equals(that.getStartDate())) {
             return false;
         }
         return true;

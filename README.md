@@ -9,7 +9,7 @@ The Android calendar widget is home screen widget for your Android device. It di
 </a>
 
 Want to contribute to the project? Start by translating the widget to another language. Visit the [project at crowdin.net](http://crowdin.net/project/plusonelabs-calendar-widget) and be part of the next release. :)
-![Calendar Widget Screenshots](https://github.com/plusonelabs/calendar-widget/raw/master/assets/screenshots/widget-device.png)
+![Calendar Widget Screenshots](assets/screenshots/widget-device.png)
 
 ## Features
 
@@ -25,18 +25,24 @@ Want to contribute to the project? Start by translating the widget to another la
 
 ## Collaborate
 
-We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open issues and provide pull requests. We are especially looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
+We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open [issues](https://github.com/plusonelabs/calendar-widget/issues) and provide [pull requests](https://github.com/plusonelabs/calendar-widget/pulls). To get timely feedback we are also making use of the open beta feature in the Google Play Store. Please [opt-in here](https://github.com/plusonelabs/calendar-widget/pulls).
+
+We are also looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
 
 ## Changelog
 
-### [v1.9.0](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9) "Showing past events"
+### [v1.9.1](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.1)
+
+* Bugfixes for the 1.9 release
+
+### [v1.9.0](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9)
 
 * New preferences to filter the events shown by the widget
   * New "Show events that ended recently" option allows to show events, which ended several hours ago, today or yesterday. [#122](https://github.com/plusonelabs/calendar-widget/issues/122)
   * New "Show all past events having default color" optionshows all past events, which have 'Default color'. This option may be used to treat calendar events as Tasks and mark their completion by changing event's color. [#138](https://github.com/plusonelabs/calendar-widget/issues/138)
   * New "Hide based on keywords in a title" option, which acts on all events. Multiple keywords may be seperated by spaces or commas.
 * Add "Past events background color" option.
-* Add "Today" option to "Date range", so you can see current and future events for today only (The same "Today" option exists for past events also) [#156](https://github.com/plusonelabs/calendar-widget/issues/156) 
+* Add "Today" option to "Date range", so you can see current and future events for today only (The same "Today" option exists for past events also) [#156](https://github.com/plusonelabs/calendar-widget/issues/156)
 * Add "Refresh" button to widget header to refresh the list of events [#120](https://github.com/plusonelabs/calendar-widget/issues/120)
 * Add "Show days without events" option
 

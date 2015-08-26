@@ -37,7 +37,7 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEM
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	private final Context context;
-	private volatile List<Event> mEventEntries = new ArrayList<>();
+	private volatile List<Event> mWidgetEntries = new ArrayList<>();
 	private final List<IEventVisualizer<?>> eventProviders;
 
 	public EventRemoteViewsFactory(Context context) {
@@ -56,15 +56,15 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public int getCount() {
-		return mEventEntries.size();
+		return mWidgetEntries.size();
 	}
 
 	public RemoteViews getViewAt(int position) {
-        List<Event> eventEntries = mEventEntries;
-		if (position < eventEntries.size()) {
-			Event entry = eventEntries.get(position);
+        List<Event> widgetEntries = mWidgetEntries;
+		if (position < widgetEntries.size()) {
+			Event entry = widgetEntries.get(position);
 			if (entry instanceof DayHeader) {
-				return updateDayHeader((DayHeader) entry);
+				return getRemoteView((DayHeader) entry);
 			}
             for (IEventVisualizer<?> eventProvider : eventProviders) {
                 if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryType())) {
@@ -75,7 +75,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 		return null;
 	}
 
-	public RemoteViews updateDayHeader(DayHeader dayHeader) {
+	private RemoteViews getRemoteView(DayHeader dayHeader) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String alignment = prefs.getString(PREF_DAY_HEADER_ALIGNMENT, PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
         RemoteViews rv = new RemoteViews(context.getPackageName(), Alignment.valueOf(alignment).getLayoutId());
@@ -95,35 +95,47 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
     public void onDataSetChanged() {
         context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT));
+        mWidgetEntries = addDayHeaders(getEventEntries());
+    }
+
+    private List<Event> getEventEntries() {
         List<Event> events = new ArrayList<>();
         for (IEventVisualizer<?> eventProvider : eventProviders) {
             events.addAll(eventProvider.getEventEntries());
         }
-        updateEntryList(events);
+        if (BuildConfig.BUILD_TYPE.equals("debug")) {
+            Log.v("Event entries", events.toString());
+        }
+        return events;
     }
 
-    private void updateEntryList(List<Event> eventList) {
-        List<Event> eventEntries = new ArrayList<>();
-        if (!eventList.isEmpty()) {
+    private List<Event> addDayHeaders(List<Event> listIn) {
+        List<Event> listOut = new ArrayList<>();
+        if (!listIn.isEmpty()) {
             boolean showDaysWithoutEvents = PreferenceManager.getDefaultSharedPreferences(context)
                     .getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
             DayHeader curDayBucket = new DayHeader(new DateTime(0));
-            for (Event event : eventList) {
+            for (Event event : listIn) {
                 DateTime nextStartOfDay = event.getStartDay();
                 if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
                     if (showDaysWithoutEvents) {
-                        addEmptyDayHeadersBetweenTwoDays(eventEntries, curDayBucket.getStartDay(), nextStartOfDay);
+                        addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getStartDay(), nextStartOfDay);
                     }
                     curDayBucket = new DayHeader(nextStartOfDay);
-                    eventEntries.add(curDayBucket);
+                    listOut.add(curDayBucket);
                 }
-                eventEntries.add(event);
+                listOut.add(event);
             }
-            Log.v("Event list", eventList.toString());
-            Log.v("Event entries", eventEntries.toString());
         }
-        mEventEntries = eventEntries;
-}
+        if (BuildConfig.BUILD_TYPE.equals("debug")) {
+            Log.v("Headers added", listOut.toString());
+        }
+        return listOut;
+    }
+
+    List<Event> getWidgetEntries() {
+        return mWidgetEntries;
+    }
 
     private void addEmptyDayHeadersBetweenTwoDays(List<Event> eventEntries, DateTime fromDayExclusive, DateTime toDayExclusive) {
         DateTime emptyDay = fromDayExclusive.plusDays(1);

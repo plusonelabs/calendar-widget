@@ -25,7 +25,7 @@ Want to contribute to the project? Start by translating the widget to another la
 
 ## Collaborate
 
-We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open [issues](https://github.com/plusonelabs/calendar-widget/issues) and provide [pull requests](https://github.com/plusonelabs/calendar-widget/pulls). To get timely feedback we are also making use of the open beta feature in the Google Play Store. Please [opt-in here](https://github.com/plusonelabs/calendar-widget/pulls).
+We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open [issues](https://github.com/plusonelabs/calendar-widget/issues) and provide [pull requests](https://github.com/plusonelabs/calendar-widget/pulls). To get timely feedback we are also making use of the open beta feature in the Google Play Store. Please [opt-in here](https://play.google.com/apps/testing/com.plusonelabs.calendar).
 
 We are also looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
 
@@ -33,7 +33,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ### [v1.9.1](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.1)
 
-* Bugfixes for the 1.9 release
+* Bugfixes for 1.9 release
 
 ### [v1.9.0](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9)
 

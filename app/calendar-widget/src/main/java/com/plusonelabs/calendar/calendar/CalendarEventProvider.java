@@ -18,9 +18,11 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static android.graphics.Color.argb;
@@ -41,16 +43,15 @@ public class CalendarEventProvider {
     private static final String[] PROJECTION_4_0 = new String[]{Instances.EVENT_ID, Instances.TITLE,
             Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
             Instances.HAS_ALARM, Instances.RRULE, Instances.CALENDAR_COLOR, Instances.EVENT_COLOR};
-    private static final int CURSOR_COLUMN_CALENDAR_COLOR = 8;
-    private static final int CURSOR_COLUMN_EVENT_COLOR = 9;
     private static final String[] PROJECTION_4_1 = new String[]{Instances.EVENT_ID, Instances.TITLE,
             Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
             Instances.HAS_ALARM, Instances.RRULE, Instances.DISPLAY_COLOR};
-    private static final int CURSOR_COLUMN_DISPLAY_COLOR = 8;
     private static final String CLOSING_BRACKET = " )";
     private static final String OR = " OR ";
     private static final String EQUALS = " = ";
     private static final String AND_BRACKET = " AND (";
+
+    private final Map<String, Integer> COLS;
 
     private final Context context;
     private KeywordsFilter mKeywordsFilter;
@@ -58,6 +59,12 @@ public class CalendarEventProvider {
 
     public CalendarEventProvider(Context context) {
         this.context = context;
+
+        Map<String, Integer> columnNameMap = new HashMap<>();
+        for (int i = 0; i < getProjection().length; i++) {
+            columnNameMap.put(getProjection()[i], i);
+        }
+        COLS = columnNameMap;
     }
 
     public List<CalendarEvent> getEvents() {
@@ -235,14 +242,14 @@ public class CalendarEventProvider {
 
     private CalendarEvent createCalendarEvent(Cursor calendarCursor) {
         CalendarEvent event = new CalendarEvent();
-        event.setEventId(calendarCursor.getInt(0));
-        event.setTitle(calendarCursor.getString(1));
-        event.setStartDate(new DateTime(calendarCursor.getLong(2)));
-        event.setEndDate(new DateTime(calendarCursor.getLong(3)));
-        event.setAllDay(calendarCursor.getInt(4) > 0);
-        event.setLocation(calendarCursor.getString(5));
-        event.setAlarmActive(calendarCursor.getInt(6) > 0);
-        event.setRecurring(calendarCursor.getString(7) != null);
+        event.setEventId(calendarCursor.getInt(COLS.get(Instances.EVENT_ID)));
+        event.setTitle(calendarCursor.getString(COLS.get(Instances.TITLE)));
+        event.setStartDate(new DateTime(calendarCursor.getLong(COLS.get(Instances.BEGIN))));
+        event.setEndDate(new DateTime(calendarCursor.getLong(COLS.get(Instances.END))));
+        event.setAllDay(calendarCursor.getInt(COLS.get(Instances.ALL_DAY)) > 0);
+        event.setLocation(calendarCursor.getString(COLS.get(Instances.EVENT_LOCATION)));
+        event.setAlarmActive(calendarCursor.getInt(COLS.get(Instances.HAS_ALARM)) > 0);
+        event.setRecurring(calendarCursor.getString(COLS.get(Instances.RRULE)) != null);
         event.setColor(getAsOpaque(getEventColor(calendarCursor)));
         if (event.isAllDay()) {
             DateTime startDate = event.getStartDate();
@@ -257,13 +264,13 @@ public class CalendarEventProvider {
 
     private int getEventColor(Cursor calendarCursor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return calendarCursor.getInt(CURSOR_COLUMN_DISPLAY_COLOR);
+            return calendarCursor.getInt(COLS.get(Instances.DISPLAY_COLOR));
         } else {
-            int eventColor = calendarCursor.getInt(CURSOR_COLUMN_EVENT_COLOR);
+            int eventColor = calendarCursor.getInt(COLS.get(Instances.EVENT_COLOR));
             if (eventColor > 0) {
                 return eventColor;
             }
-            return calendarCursor.getInt(CURSOR_COLUMN_CALENDAR_COLOR);
+            return calendarCursor.getInt(COLS.get(Instances.CALENDAR_COLOR));
         }
     }
 

@@ -179,7 +179,8 @@ public class CalendarEventProvider {
         return stringBuilder.toString();
     }
 
-    private List<CalendarEvent> expandEventList(List<CalendarEvent> eventList) {
+    // This method has default protection for testability
+    List<CalendarEvent> expandEventList(List<CalendarEvent> eventList) {
         List<CalendarEvent> expandedList = new ArrayList<>();
         for (CalendarEvent event : eventList) {
             setupDayOneEntry(expandedList, event);
@@ -191,15 +192,15 @@ public class CalendarEventProvider {
     }
 
     private void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {
+        CalendarEvent clone = event.clone();
+        clone.setOriginalEvent(event);
+
         if (event.daysSpanned() > 1) {
-            CalendarEvent clone = event.clone();
             clone.setEndDate(event.getStartDay().plusDays(1));
             clone.setSpansMultipleDays(true);
-            clone.setOriginalEvent(event);
-            eventList.add(clone);
-        } else {
-            eventList.add(event);
         }
+
+        eventList.add(clone);
     }
 
     private void createFollowingEntries(List<CalendarEvent> eventList, CalendarEvent event) {

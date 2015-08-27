@@ -109,6 +109,12 @@ public class CalendarEvent extends Event {
 	}
 
 	public boolean spansOneFullDay() {
+		if (isAllDay() && getStartDate().isEqual(endDate)) {
+			// In some cases it's possible to get an all day event into the calendar that spans
+			// zero days (starts and ends at the same timestamp). Google Calendar's web UI renders
+			// such events as spanning one full day, so we should do that as well.
+			return true;
+		}
 		return getStartDate().plusDays(1).isEqual(endDate);
 	}
 

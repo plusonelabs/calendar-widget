@@ -12,6 +12,7 @@ import com.plusonelabs.calendar.EventRemoteViewsFactory;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +40,8 @@ public class CalendarQueryStoredResults {
     private static final String KEY_ANDROID_MANUFACTURE = "buildManufacturer";
     private static final String KEY_ANDROID_BRAND = "buildBrand";
     private static final String KEY_ANDROID_MODEL = "buildModel";
+
+    private static final String KEY_TIME_ZONE_ID = "timeZoneId";
 
     private static volatile CalendarQueryStoredResults storedResults = null;
 
@@ -157,6 +160,7 @@ public class CalendarQueryStoredResults {
         jso.put(KEY_ANDROID_MANUFACTURE, Build.MANUFACTURER);
         jso.put(KEY_ANDROID_BRAND, Build.BRAND);
         jso.put(KEY_ANDROID_MODEL, Build.MODEL);
+        jso.put(KEY_TIME_ZONE_ID, DateTime.now().getZone().getID());
         return jso;
     }
 

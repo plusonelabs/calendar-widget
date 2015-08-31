@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -28,7 +27,6 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DAY_HEADER_ALIGNMENT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
@@ -103,17 +101,13 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         for (IEventVisualizer<?> eventProvider : eventProviders) {
             events.addAll(eventProvider.getEventEntries());
         }
-        if (BuildConfig.BUILD_TYPE.equals("debug")) {
-            Log.v("Event entries", events.toString());
-        }
         return events;
     }
 
     private List<Event> addDayHeaders(List<Event> listIn) {
         List<Event> listOut = new ArrayList<>();
         if (!listIn.isEmpty()) {
-            boolean showDaysWithoutEvents = PreferenceManager.getDefaultSharedPreferences(context)
-                    .getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
+            boolean showDaysWithoutEvents = CalendarPreferences.getShowDaysWithoutEvents(context);
             DayHeader curDayBucket = new DayHeader(new DateTime(0));
             for (Event event : listIn) {
                 DateTime nextStartOfDay = event.getStartDay();
@@ -127,9 +121,6 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
                 listOut.add(event);
             }
         }
-        if (BuildConfig.BUILD_TYPE.equals("debug")) {
-            Log.v("Headers added", listOut.toString());
-        }
         return listOut;
     }
 
@@ -139,7 +130,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
     private void addEmptyDayHeadersBetweenTwoDays(List<Event> eventEntries, DateTime fromDayExclusive, DateTime toDayExclusive) {
         DateTime emptyDay = fromDayExclusive.plusDays(1);
-        DateTime today = DateTime.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now().withTimeAtStartOfDay();
         if (emptyDay.isBefore(today)) {
             emptyDay = today;
         }

@@ -1,8 +1,6 @@
 package com.plusonelabs.calendar.prefs;
 
 import android.content.ContentResolver;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
@@ -20,8 +18,6 @@ import com.plusonelabs.calendar.R;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ACTIVE_CALENDARS;
-
 public class CalendarPreferencesFragment extends PreferenceFragment {
 
 	private static final String CALENDAR_ID = "calendarId";
@@ -34,9 +30,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences_calendars);
-		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-		initialActiveCalendars = prefs.getStringSet(PREF_ACTIVE_CALENDARS,
-				null);
+		initialActiveCalendars = CalendarPreferences.getActiveCalendars(getActivity());
 		populatePreferenceScreen(initialActiveCalendars);
 	}
 
@@ -53,15 +47,10 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 			checkboxPref.setIcon(createDrawable(cursor.getInt(2)));
 			int calendarId = cursor.getInt(0);
 			checkboxPref.getExtras().putInt(CALENDAR_ID, calendarId);
-			checkboxPref.setChecked(activeCalendars == null
+			checkboxPref.setChecked(activeCalendars.isEmpty()
 					|| activeCalendars.contains(String.valueOf(calendarId)));
 			getPreferenceScreen().addPreference(checkboxPref);
 		}
-	}
-
-	@Override
-	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-		return true;
 	}
 
 	@Override
@@ -69,16 +58,9 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		super.onPause();
 		HashSet<String> selectedCalendars = getSelectedCalenders();
 		if (!selectedCalendars.equals(initialActiveCalendars)) {
-			persistSelectedCalendars(selectedCalendars);
+			CalendarPreferences.setActiveCalendars(getActivity(), selectedCalendars);
 			EventAppWidgetProvider.updateEventList(getActivity());
 		}
-	}
-
-    private void persistSelectedCalendars(HashSet<String> prefValues) {
-        SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-		Editor editor = prefs.edit();
-        editor.putStringSet(PREF_ACTIVE_CALENDARS, prefValues);
-		editor.commit();
 	}
 
     private HashSet<String> getSelectedCalenders() {

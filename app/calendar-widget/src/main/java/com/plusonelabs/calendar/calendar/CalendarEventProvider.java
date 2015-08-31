@@ -2,15 +2,14 @@ package com.plusonelabs.calendar.calendar;
 
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.text.format.DateUtils;
 
+import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EndedSometimeAgo;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
@@ -18,7 +17,6 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -27,15 +25,10 @@ import static android.graphics.Color.argb;
 import static android.graphics.Color.blue;
 import static android.graphics.Color.green;
 import static android.graphics.Color.red;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENTS_ENDED;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENT_RANGE;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_EVENT_RANGE_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY_DEFAULT;
 
 public class CalendarEventProvider {
 
-    private static final String EVENT_SORT_ORDER = "startDay ASC, allDay DESC, begin ASC ";
+    public static final String EVENT_SORT_ORDER = "startDay ASC, allDay DESC, begin ASC ";
     private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + "!="
             + Attendees.ATTENDEE_STATUS_DECLINED;
     private static final String[] PROJECTION_4_0 = new String[]{Instances.EVENT_ID, Instances.TITLE,
@@ -75,12 +68,11 @@ public class CalendarEventProvider {
 
     private void initialiseParameters() {
         mKeywordsFilter = new KeywordsFilter(CalendarPreferences.getHideBasedOnKeywords(context));
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mFillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
+        mFillAllDayEvents = CalendarPreferences.getFillAllDayEvents(context);
     }
 
     private List<CalendarEvent> getTimeFilteredEventList() {
-        long millisNow = System.currentTimeMillis();
+        long millisNow = DateUtil.now().getMillis();
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(builder, getStartOfTimeRange(millisNow));
         ContentUris.appendId(builder, getEndOfTimeRange(millisNow));
@@ -88,21 +80,19 @@ public class CalendarEventProvider {
     }
 
     private long getStartOfTimeRange(long millisNow) {
-        return EndedSometimeAgo.fromValue(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREF_EVENTS_ENDED, "")).endedAt(millisNow);
+        return EndedSometimeAgo.fromValue(CalendarPreferences.getEventsEnded(context))
+                .endedAt(millisNow);
     }
 
     private long getEndOfTimeRange(long millisNow) {
-        int dateRange = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
+        int dateRange = CalendarPreferences.getEventRange(context);
         return dateRange > 0
                 ? millisNow + DateUtils.DAY_IN_MILLIS * dateRange
                 : new DateTime(millisNow).withTimeAtStartOfDay().plusDays(1).getMillis();
     }
 
     private String getCalendarSelection() {
-        Set<String> activeCalenders = PreferenceManager.getDefaultSharedPreferences(context)
-                .getStringSet(CalendarPreferences.PREF_ACTIVE_CALENDARS, new HashSet<String>());
+        Set<String> activeCalenders = CalendarPreferences.getActiveCalendars(context);
         StringBuilder stringBuilder = new StringBuilder(EVENT_SELECTION);
         if (!activeCalenders.isEmpty()) {
             stringBuilder.append(AND_BRACKET);
@@ -123,6 +113,7 @@ public class CalendarEventProvider {
 
     private List<CalendarEvent> queryList(Uri uri, String selection) {
         List<CalendarEvent> eventList = new ArrayList<>();
+        CalendarQueryResult result = new CalendarQueryResult(uri, getProjection(), selection, null, EVENT_SORT_ORDER);
         Cursor cursor = null;
         try {
             cursor = context.getContentResolver().query(uri, getProjection(),
@@ -130,6 +121,9 @@ public class CalendarEventProvider {
             if (cursor != null) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
+                    if (CalendarQueryStoredResults.getNeedToStoreResults()) {
+                        result.addRow(cursor);
+                    }
                     CalendarEvent event = createCalendarEvent(cursor);
                     if (!eventList.contains(event) && !mKeywordsFilter.matched(event.getTitle())) {
                         eventList.add(event);
@@ -141,10 +135,11 @@ public class CalendarEventProvider {
                 cursor.close();
             }
         }
+        CalendarQueryStoredResults.store(result);
         return eventList;
     }
 
-    private String[] getProjection() {
+    public static String[] getProjection() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             return PROJECTION_4_1;
         }
@@ -153,11 +148,10 @@ public class CalendarEventProvider {
 
     private List<CalendarEvent> getPastEventWithColorList() {
         List<CalendarEvent> eventList = new ArrayList<>();
-        if (PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(CalendarPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false)) {
+        if (CalendarPreferences.getShowPastEventsWithDefaultColor(context)) {
             Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
             ContentUris.appendId(builder, 0);
-            ContentUris.appendId(builder, System.currentTimeMillis());
+            ContentUris.appendId(builder, DateUtil.now().getMillis());
             eventList = queryList(builder.build(), getPastEventsWithColorSelection());
         }
         return eventList;
@@ -219,7 +213,7 @@ public class CalendarEventProvider {
     }
 
     private boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
-        DateTime startOfDay = DateTime.now().withTimeAtStartOfDay();
+        DateTime startOfDay = DateUtil.now().withTimeAtStartOfDay();
         return startDate.isEqual(startOfDay) || startDate.isAfter(startOfDay);
     }
 

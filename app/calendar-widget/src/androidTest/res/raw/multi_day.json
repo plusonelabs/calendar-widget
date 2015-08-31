@@ -1,0 +1,82 @@
+{
+  "results": [
+    {
+      "executedAt": 1441009880961,
+      "selectionArgs": [],
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/1441009880960\/1443601880960",
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 3 )",
+      "rows": [
+        {
+          "title": {
+            "value": "Multiple days event",
+            "type": 3
+          },
+          "eventLocation": {
+            "value": "",
+            "type": 3
+          },
+          "allDay": {
+            "value": 1,
+            "type": 1
+          },
+          "displayColor": {
+            "value": -6299161,
+            "type": 1
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "value": 1013,
+            "type": 1
+          },
+          "hasAlarm": {
+            "value": 0,
+            "type": 1
+          },
+          "end": {
+            "value": 1443916800000,
+            "type": 1
+          },
+          "begin": {
+            "value": 1440720000000,
+            "type": 1
+          }
+        }
+      ],
+      "projection": [
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor"
+      ]
+    }
+  ],
+  "applicationInfo": {
+    "versionCode": 28,
+    "preferences": {
+      "showDaysWithoutEvents": false,
+      "hideBasedOnKeywords": "",
+      "eventRange": 30,
+      "showPastEventsWithDefaultColor": false,
+      "fillAllDay": true,
+      "eventsEnded": "NONE"
+    },
+    "versionName": "1.9.1"
+  },
+  "resultsVersion": 1,
+  "deviceInfo": {
+    "buildManufacturer": "samsung",
+    "versionCode": 19,
+    "buildBrand": "samsung",
+    "versionCodename": "REL",
+    "buildModel": "SM-T525",
+    "versionRelease": "4.4.2"
+  }
+}

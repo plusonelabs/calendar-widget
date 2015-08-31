@@ -120,17 +120,6 @@ public class CalendarEvent extends Event {
 		return originalEvent != null ? originalEvent : this;
 	}
 
-	public int compareTo(CalendarEvent otherEntry) {
-		if (startsSameDay(otherEntry.getStartDate())) {
-			if (allDay) {
-				return -1;
-			} else if (otherEntry.allDay) {
-				return 1;
-			}
-		}
-		return super.compareTo(otherEntry);
-	}
-
 	@Override
 	protected CalendarEvent clone() {
 		CalendarEvent clone = new CalendarEvent();
@@ -148,13 +137,17 @@ public class CalendarEvent extends Event {
 
 	@Override
 	public String toString() {
-		return "CalendarEvent [eventId=" + eventId + ", "
-				+ (title != null ? "title=" + title + ", " : "")
-				+ (endDate != null ? "endDate=" + endDate + ", " : "") + "color=" + color
-				+ ", allDay=" + allDay + ", alarmActive=" + alarmActive + ", ic_recurring_light="
-				+ recurring + ", spansMultipleDays=" + spansMultipleDays + ", "
-				+ (originalEvent != null ? "originalEvent=" + originalEvent + ", " : "")
-				+ (location != null ? "location=" + location : "") + "]";
+		return "CalendarEvent [eventId=" + eventId
+				+ (title != null ? ", title=" + title : "")
+				+ ", startDate=" + getStartDate()
+				+ (endDate != null ? ", endDate=" + endDate : "")
+				+ ", color=" + color
+				+ ", allDay=" + allDay
+				+ ", alarmActive=" + alarmActive
+				+ ", ic_recurring_light=" + recurring
+				+ ", spansMultipleDays=" + spansMultipleDays
+				+ (originalEvent != null ? ", originalEvent=" + originalEvent : "")
+				+ (location != null ? ", location=" + location : "") + "]";
 	}
 
     @Override

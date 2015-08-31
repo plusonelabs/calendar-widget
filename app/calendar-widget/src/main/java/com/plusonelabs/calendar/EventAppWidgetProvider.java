@@ -30,7 +30,7 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
     private static final String PACKAGE = EventAppWidgetProvider.class.getPackage().getName();
-    private static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
+    public static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
 
 	@Override
 	public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -69,7 +69,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
     private void configureCurrentDate(Context context, RemoteViews rv) {
         rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(context));
-        String formattedDate = DateUtils.formatDateTime(context, System.currentTimeMillis(),
+        String formattedDate = DateUtils.formatDateTime(context, DateUtil.now().getMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
         rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase(Locale.getDefault()));
         setTextColorFromAttr(context, rv, R.id.calendar_current_date, R.attr.header);

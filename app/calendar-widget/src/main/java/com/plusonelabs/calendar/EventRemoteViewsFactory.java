@@ -83,7 +83,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
         setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
         setBackgroundColor(rv, R.id.day_header,
-                dayHeader.getStartDay().plusDays(1).isBeforeNow() ? CalendarPreferences.getPastEventsBackgroundColor(context) : Color.TRANSPARENT);
+                dayHeader.getStartDay().plusDays(1).isBefore(DateUtil.now()) ? CalendarPreferences.getPastEventsBackgroundColor(context) : Color.TRANSPARENT);
         setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top, R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
 		Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());

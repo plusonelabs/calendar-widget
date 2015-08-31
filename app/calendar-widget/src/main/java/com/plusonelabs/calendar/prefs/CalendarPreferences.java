@@ -20,7 +20,7 @@ public class CalendarPreferences {
 	public static final String PREF_MULTILINE_TITLE = "multiline_title";
 	public static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
 	private static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
-	public static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
+	private static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
 	public static final String PREF_SHOW_HEADER = "showHeader";
 	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";
 	public static final String PREF_INDICATE_ALERTS = "indicateAlerts";
@@ -35,8 +35,8 @@ public class CalendarPreferences {
 	public static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
 	public static final String PREF_SHOW_LOCATION = "showLocation";
 	public static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
-	public static final String PREF_FILL_ALL_DAY = "fillAllDay";
-	public static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
+	private static final String PREF_FILL_ALL_DAY = "fillAllDay";
+	private static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
 	public static final String PREF_ENTRY_THEME = "entryTheme";
 	public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
 	public static final String PREF_HEADER_THEME = "headerTheme";

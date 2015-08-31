@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
-import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.plusonelabs.calendar.BuildConfig;
@@ -52,6 +51,8 @@ public class CalendarEventProvider {
     private final Context context;
     private KeywordsFilter mKeywordsFilter;
     private boolean mFillAllDayEvents;
+    private DateTime mStartOfTimeRange;
+    private DateTime mEndOfTimeRange;
 
     public CalendarEventProvider(Context context) {
         this.context = context;
@@ -61,38 +62,37 @@ public class CalendarEventProvider {
         initialiseParameters();
         List<CalendarEvent> eventList = getTimeFilteredEventList();
         for (CalendarEvent event : getPastEventWithColorList()) {
-            if (!eventList.contains(event)) {
-                eventList.add(event);
+            if (eventList.contains(event)) {
+                eventList.remove(event);
             }
+            eventList.add(event);
         }
-        eventList = expandEventList(eventList);
-        Collections.sort(eventList);
-        return eventList;
+        List<CalendarEvent> entryList = createEntryList(eventList);
+        Collections.sort(entryList);
+        return entryList;
     }
 
     private void initialiseParameters() {
         mKeywordsFilter = new KeywordsFilter(CalendarPreferences.getHideBasedOnKeywords(context));
         mFillAllDayEvents = CalendarPreferences.getFillAllDayEvents(context);
+        // TODO: These values are not exactly correct for AllDay events: for them the filter time should be moved by a time zone... (i.e. by several hours)
+        mStartOfTimeRange = EndedSometimeAgo.fromValue(CalendarPreferences.getEventsEnded(context))
+                .endedAt(DateUtil.now());
+        mEndOfTimeRange = getEndOfTimeRange(DateUtil.now());
+    }
+
+    private DateTime getEndOfTimeRange(DateTime now) {
+        int dateRange = CalendarPreferences.getEventRange(context);
+        return dateRange > 0
+                ? now.plusDays(dateRange)
+                : now.withTimeAtStartOfDay().plusDays(1);
     }
 
     private List<CalendarEvent> getTimeFilteredEventList() {
-        long millisNow = DateUtil.now().getMillis();
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
-        ContentUris.appendId(builder, getStartOfTimeRange(millisNow));
-        ContentUris.appendId(builder, getEndOfTimeRange(millisNow));
+        ContentUris.appendId(builder, mStartOfTimeRange.getMillis());
+        ContentUris.appendId(builder, mEndOfTimeRange.getMillis());
         return queryList(builder.build(), getCalendarSelection());
-    }
-
-    private long getStartOfTimeRange(long millisNow) {
-        return EndedSometimeAgo.fromValue(CalendarPreferences.getEventsEnded(context))
-                .endedAt(millisNow);
-    }
-
-    private long getEndOfTimeRange(long millisNow) {
-        int dateRange = CalendarPreferences.getEventRange(context);
-        return dateRange > 0
-                ? millisNow + DateUtils.DAY_IN_MILLIS * dateRange
-                : new DateTime(millisNow).withTimeAtStartOfDay().plusDays(1).getMillis();
     }
 
     private String getCalendarSelection() {
@@ -157,6 +157,9 @@ public class CalendarEventProvider {
             ContentUris.appendId(builder, 0);
             ContentUris.appendId(builder, DateUtil.now().getMillis());
             eventList = queryList(builder.build(), getPastEventsWithColorSelection());
+            for (CalendarEvent event : eventList) {
+                event.setDefaultCalendarColor();
+            }
         }
         return eventList;
     }
@@ -177,58 +180,60 @@ public class CalendarEventProvider {
         return stringBuilder.toString();
     }
 
-    private List<CalendarEvent> expandEventList(List<CalendarEvent> eventList) {
-        List<CalendarEvent> expandedList = new ArrayList<>();
+    // TODO: Move this code to the UI level. "Filling all days" and breaking events into days depend on a layout
+    private List<CalendarEvent> createEntryList(List<CalendarEvent> eventList) {
+        List<CalendarEvent> entryList = new ArrayList<>();
         for (CalendarEvent event : eventList) {
-            setupDayOneEntry(expandedList, event);
-            if (!event.isAllDay() || mFillAllDayEvents) {
-                createFollowingEntries(expandedList, event);
+            CalendarEvent dayOneEntry = setupDayOneEntry(entryList, event);
+            if (mFillAllDayEvents) {
+                createFollowingEntries(entryList, dayOneEntry);
             }
         }
-        return expandedList;
+        return entryList;
     }
 
-    private void setupDayOneEntry(List<CalendarEvent> eventList, CalendarEvent event) {
-        if (event.daysSpanned() > 1) {
-            CalendarEvent clone = event.clone();
-            clone.setEndDate(event.getStartDay().plusDays(1));
-            clone.setSpansMultipleDays(true);
-            clone.setOriginalEvent(event);
-            eventList.add(clone);
-        } else {
-            eventList.add(event);
-        }
-    }
-
-    private void createFollowingEntries(List<CalendarEvent> eventList, CalendarEvent event) {
-        int daysCovered = event.daysSpanned();
-        for (int j = 1; j < daysCovered; j++) {
-            DateTime startDate = event.getStartDay().plusDays(j);
-            if (isEqualOrAfterTodayAtMidnight(startDate)) {
-                DateTime endDate;
-                if (j < daysCovered - 1) {
-                    endDate = startDate.plusDays(1);
-                } else {
-                    endDate = event.getEndDate();
-                }
-                eventList.add(cloneAsSpanningEvent(event, startDate, endDate));
+    private CalendarEvent setupDayOneEntry(List<CalendarEvent> entryList, CalendarEvent event) {
+        CalendarEvent dayOneEntry = event.newWidgetEntry();
+        DateTime firstDate = dayOneEntry.getStartDate();
+        if (!event.isDefaultCalendarColor() && firstDate.isBefore(mStartOfTimeRange) && event.getEndDate().isAfter(mStartOfTimeRange)) {
+            if (event.isAllDay()) {
+                firstDate = mStartOfTimeRange.withTimeAtStartOfDay();
+            } else {
+                firstDate = mStartOfTimeRange;
             }
         }
+        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        if (event.isActive() && firstDate.isBefore(today)) {
+            firstDate = today;
+        }
+        dayOneEntry.setStartDate(firstDate);
+        DateTime nextDay = dayOneEntry.getStartDay().plusDays(1);
+        boolean spanMoreDays = event.getEndDate().isAfter(nextDay);
+        if (spanMoreDays) {
+            dayOneEntry.setSpansMultipleDays();
+            dayOneEntry.setEndDate(nextDay);
+        }
+        entryList.add(dayOneEntry);
+        return dayOneEntry;
     }
 
-    private boolean isEqualOrAfterTodayAtMidnight(DateTime startDate) {
-        DateTime startOfDay = DateUtil.now().withTimeAtStartOfDay();
-        return startDate.isEqual(startOfDay) || startDate.isAfter(startOfDay);
-    }
-
-    private CalendarEvent cloneAsSpanningEvent(CalendarEvent eventEntry, DateTime startDate,
-                                               DateTime endDate) {
-        CalendarEvent clone = eventEntry.clone();
-        clone.setStartDate(startDate);
-        clone.setEndDate(endDate);
-        clone.setSpansMultipleDays(true);
-        clone.setOriginalEvent(eventEntry);
-        return clone;
+    private void createFollowingEntries(List<CalendarEvent> entryList, CalendarEvent dayOneEntry) {
+        DateTime endDate = dayOneEntry.getOriginalEvent().getEndDate();
+        if (endDate.isAfter(mEndOfTimeRange)) {
+            endDate = mEndOfTimeRange;
+        }
+        DateTime nextDay = dayOneEntry.getStartDay().plusDays(1).withTimeAtStartOfDay();
+        while (nextDay.isBefore(endDate)) {
+            CalendarEvent nextEntry = dayOneEntry.newWidgetEntry();
+            nextEntry.setStartDate(nextDay);
+            if (endDate.isAfter(nextDay)) {
+                nextEntry.setEndDate(nextDay);
+            } else {
+                nextEntry.setEndDate(endDate);
+            }
+            entryList.add(nextEntry);
+            nextDay = nextDay.plusDays(1);
+        }
     }
 
     private CalendarEvent createCalendarEvent(Cursor calendarCursor) {

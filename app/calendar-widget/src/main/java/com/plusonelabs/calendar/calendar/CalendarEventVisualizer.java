@@ -31,8 +31,6 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMA
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMAT_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_FILL_ALL_DAY_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_ALERTS;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_RECURRING;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE;
@@ -87,7 +85,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
     }
 
 	private void setEventDetails(CalendarEvent event, RemoteViews rv) {
-        boolean fillAllDayEvents = prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
+        boolean fillAllDayEvents = CalendarPreferences.getFillAllDayEvents(context);
         if (event.spansOneFullDay() && !(event.isStartOfMultiDayEvent()
                 || event.isEndOfMultiDayEvent())
                 || event.isAllDay() && fillAllDayEvents) {
@@ -132,7 +130,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 
     private void setColor(CalendarEvent event, RemoteViews rv) {
         setBackgroundColor(rv, R.id.event_entry_color, event.getColor());
-        if (event.getEndDate().isBeforeNow()) {
+        if (event.getEndDate().isBefore(DateUtil.now())) {
             setBackgroundColor(rv, R.id.event_entry, CalendarPreferences.getPastEventsBackgroundColor(context));
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);
@@ -145,9 +143,9 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	}
 
 	private String createTimeSpanString(CalendarEvent event) {
-        if (event.isAllDay() && !prefs.getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT)) {
+        if (event.isAllDay() && !CalendarPreferences.getFillAllDayEvents(context)) {
             DateTime dateTime = event.getOriginalEvent().getEndDate().minusDays(1);
-            return ARROW_SPACE + EMPTY_STRING + DateUtil.createDateString(context, dateTime);
+            return ARROW_SPACE + DateUtil.createDateString(context, dateTime);
         } else {
             return createTimeStringForEventEntry(event);
         }

@@ -74,8 +74,10 @@ public class BirthdayTest extends InstrumentationTestCase {
         assertEquals(numberOfEntriesExpected, factory.getWidgetEntries().size());
         if (numberOfEntriesExpected > 0) {
             CalendarEvent birthday = (CalendarEvent) factory.getWidgetEntries().get(1);
-            assertEquals(9, birthday.getStartDay().dayOfMonth().get());
-            assertEquals(0, birthday.getStartDay().hourOfDay().get());
+            assertEquals(9, birthday.getStartDate().dayOfMonth().get());
+            assertEquals(0, birthday.getStartDate().hourOfDay().get());
+            assertEquals(0, birthday.getStartDate().minuteOfHour().get());
+            assertEquals(0, birthday.getStartDate().millisOfDay().get());
             assertEquals(true, birthday.isAllDay());
         }
     }

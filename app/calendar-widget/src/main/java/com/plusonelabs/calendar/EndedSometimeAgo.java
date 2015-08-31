@@ -6,8 +6,8 @@ public enum EndedSometimeAgo {
     NONE("NONE", 0),
     TODAY("TODAY", 0) {
         @Override
-        public long endedAt(long millisNow) {
-            return new DateTime(millisNow).withTimeAtStartOfDay().getMillis();
+        public DateTime endedAt(DateTime now) {
+            return now.withTimeAtStartOfDay();
         }
     },
     ONE_HOUR("ONE_HOUR", 1),
@@ -15,21 +15,21 @@ public enum EndedSometimeAgo {
     FOUR_HOURS("FOUR_HOURS", 4),
     YESTERDAY("YESTERDAY", 0) {
         @Override
-        public long endedAt(long millisNow) {
-            return new DateTime(millisNow).withTimeAtStartOfDay().minusDays(1).getMillis();
+        public DateTime endedAt(DateTime now) {
+            return now.withTimeAtStartOfDay().minusDays(1);
         }
     };
 
     private final String value;
     private final int hoursAgo;
 
-    private EndedSometimeAgo(String valueIn, int hoursAgo) {
+    EndedSometimeAgo(String valueIn, int hoursAgo) {
         this.value = valueIn;
         this.hoursAgo = hoursAgo;
     }
 
-    public long endedAt(long millisNow) {
-        return new DateTime(millisNow).minusHours(hoursAgo).getMillis();
+    public DateTime endedAt(DateTime now) {
+        return now.minusHours(hoursAgo);
     }
 
     public static EndedSometimeAgo fromValue(String valueIn) {

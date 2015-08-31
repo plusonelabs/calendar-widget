@@ -8,12 +8,16 @@ import android.os.Build;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.text.format.DateUtils;
+import android.util.Log;
 
+import com.plusonelabs.calendar.BuildConfig;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EndedSometimeAgo;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -239,14 +243,45 @@ public class CalendarEventProvider {
         event.setRecurring(calendarCursor.getString(7) != null);
         event.setColor(getAsOpaque(getEventColor(calendarCursor)));
         if (event.isAllDay()) {
-            DateTime startDate = event.getStartDate();
-            long converted = startDate.getZone().convertLocalToUTC(startDate.getMillis(), true);
-            event.setStartDate(new DateTime(converted));
-            DateTime endDate = event.getEndDate();
-            converted = endDate.getZone().convertLocalToUTC(endDate.getMillis(), true);
-            event.setEndDate(new DateTime(converted));
+            fixAllDayEvent(event);
         }
         return event;
+    }
+
+    private void fixAllDayEvent(CalendarEvent event) {
+        event.setStartDate(fixTimeOfAllDayEvent(event.getStartDate()));
+        event.setEndDate(fixTimeOfAllDayEvent(event.getEndDate()));
+        if (!event.getEndDate().isAfter(event.getStartDate())) {
+            event.setEndDate(event.getStartDate().plusDays(1));
+        }
+    }
+
+    private DateTime fixTimeOfAllDayEvent(DateTime date) {
+        String msgLog = "";
+        DateTime fixed;
+        try {
+            DateTimeZone zone = date.getZone();
+            msgLog += "date=" + date + " ( " + zone + ")";
+            DateTime utcDate = date.toDateTime(DateTimeZone.UTC);
+            LocalDateTime ldt = new LocalDateTime()
+                    .withYear(utcDate.getYear())
+                    .withMonthOfYear(utcDate.getMonthOfYear())
+                    .withDayOfMonth(utcDate.getDayOfMonth())
+                    .withMillisOfDay(0);
+            int hour = 0;
+            while (zone.isLocalDateTimeGap(ldt)) {
+                Log.v("fixTimeOfAllDayEvent", "Local Date Time Gap: " + ldt + "; " + msgLog);
+                ldt = ldt.withHourOfDay(++hour);
+            }
+            fixed = ldt.toDateTime();
+            msgLog += " -> " + fixed;
+            if (BuildConfig.DEBUG) {
+                Log.v("fixTimeOfAllDayEvent", msgLog);
+            }
+        } catch (org.joda.time.IllegalInstantException e) {
+            throw new org.joda.time.IllegalInstantException(msgLog + " caused by: " + e);
+        }
+        return fixed;
     }
 
     private int getEventColor(Cursor calendarCursor) {

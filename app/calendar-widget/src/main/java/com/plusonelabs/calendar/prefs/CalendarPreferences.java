@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.plusonelabs.calendar.Alignment;
+import com.plusonelabs.calendar.EndedSometimeAgo;
 import com.plusonelabs.calendar.Theme;
 
 import org.json.JSONException;
@@ -63,6 +64,15 @@ public class CalendarPreferences {
         return jso;
     }
 
+    public static void fromJson(Context context, JSONObject jso) throws JSONException {
+        setEventRange(context, jso.getInt(PREF_EVENT_RANGE));
+        setEventsEnded(context, EndedSometimeAgo.fromValue(jso.getString(PREF_EVENTS_ENDED)));
+        setFillAllDayEvents(context, jso.getBoolean(PREF_FILL_ALL_DAY));
+        setHideBasedOnKeywords(context, jso.getString(PREF_HIDE_BASED_ON_KEYWORDS));
+        setShowDaysWithoutEvents(context, jso.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS));
+        setShowPastEventsWithDefaultColor(context, jso.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR));
+    }
+
     public static Set<String> getActiveCalendars(Context context) {
         Set<String> activeCalendars = PreferenceManager.getDefaultSharedPreferences(context)
                 .getStringSet(PREF_ACTIVE_CALENDARS, null);
@@ -91,9 +101,16 @@ public class CalendarPreferences {
         editor.apply();
     }
 
-    public static String getEventsEnded(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(
-                PREF_EVENTS_ENDED, "");
+    public static EndedSometimeAgo getEventsEnded(Context context) {
+        return EndedSometimeAgo.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
+                PREF_EVENTS_ENDED, ""));
+    }
+
+    private static void setEventsEnded(Context context, EndedSometimeAgo value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(PREF_EVENTS_ENDED, value.save());
+        editor.apply();
     }
 
     public static boolean getFillAllDayEvents(Context context) {
@@ -101,10 +118,21 @@ public class CalendarPreferences {
                 .getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
     }
 
+    private static void setFillAllDayEvents(Context context, boolean value) {
+        setBooleanPreference(context, PREF_FILL_ALL_DAY, value);
+    }
+
     public static String getHideBasedOnKeywords(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(
                 PREF_HIDE_BASED_ON_KEYWORDS,
                 "");
+    }
+
+    private static void setHideBasedOnKeywords(Context context, String value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(PREF_HIDE_BASED_ON_KEYWORDS, value);
+        editor.apply();
     }
 
     public static int getPastEventsBackgroundColor(Context context) {
@@ -118,8 +146,24 @@ public class CalendarPreferences {
                 .getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
     }
 
+    private static void setShowDaysWithoutEvents(Context context, boolean value) {
+        setBooleanPreference(context, PREF_SHOW_DAYS_WITHOUT_EVENTS, value);
+    }
+
     public static boolean getShowPastEventsWithDefaultColor(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false);
     }
+
+    private static void setShowPastEventsWithDefaultColor(Context context, boolean value) {
+        setBooleanPreference(context, PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, value);
+    }
+
+    private static void setBooleanPreference(Context context, String key, boolean value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
 }

@@ -13,6 +13,9 @@ import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,14 +28,15 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     private int mQueriesCount = 0;
     private final List<CalendarQueryResult> mResults = new ArrayList<>();
-    private Set<String> storedCalendars = null;
+    private final Set<String> storedCalendars;
+    private final JSONObject storedPreferences;
 
     public void refreshWidget() {
         Intent intent = new Intent(EventAppWidgetProvider.ACTION_REFRESH);
         getContext().sendBroadcast(intent);
     }
 
-    public static MockCalendarContentProvider getContentProvider(InstrumentationTestCase testCase) {
+    public static MockCalendarContentProvider getContentProvider(InstrumentationTestCase testCase) throws JSONException {
         MockContentResolver mockResolver = new MockContentResolver();
         Context isolatedContext = new IsolatedContext(mockResolver, testCase.getInstrumentation().getTargetContext());
         MockCalendarContentProvider contentProvider = new MockCalendarContentProvider(isolatedContext);
@@ -40,16 +44,31 @@ public class MockCalendarContentProvider extends MockContentProvider {
         return contentProvider;
     }
 
-    public MockCalendarContentProvider(Context context) {
+    public MockCalendarContentProvider(Context context) throws JSONException {
         super(context);
         storedCalendars = CalendarPreferences.getActiveCalendars(context);
+        storedPreferences = CalendarPreferences.toJson(context);
+        setPreferences(context);
+    }
+
+    void setPreferences(Context context) throws JSONException {
         Set<String> calendars = new HashSet<>();
         calendars.add("1");
         CalendarPreferences.setActiveCalendars(context, calendars);
+        CalendarPreferences.fromJson(context,
+                new JSONObject("{" +
+                " \"showDaysWithoutEvents\": false," +
+                " \"hideBasedOnKeywords\": \"\"," +
+                " \"eventRange\": 30," +
+                " \"showPastEventsWithDefaultColor\": false," +
+                " \"fillAllDay\": true," +
+                " \"eventsEnded\": \"\"" +
+                "}"));
     }
 
-    public void tearDown() {
+    public void tearDown() throws JSONException {
         CalendarPreferences.setActiveCalendars(getContext(), storedCalendars);
+        CalendarPreferences.fromJson(getContext(), storedPreferences);
     }
 
     @Override

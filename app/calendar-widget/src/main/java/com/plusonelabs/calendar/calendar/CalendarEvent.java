@@ -1,23 +1,29 @@
 package com.plusonelabs.calendar.calendar;
 
 import com.plusonelabs.calendar.DateUtil;
-import com.plusonelabs.calendar.model.Event;
-
 import org.joda.time.DateTime;
 
-public class CalendarEvent extends Event {
+public class CalendarEvent {
 
 	private int eventId;
 	private String title;
 	private DateTime endDate;
 	private int color;
-    private boolean mIsDefaultCalendarColor;
+    private boolean mHasDefaultCalendarColor;
 	private boolean allDay;
 	private String location;
 	private boolean alarmActive;
 	private boolean recurring;
-	private boolean spansMultipleDays;
-	private CalendarEvent originalEvent;
+
+    private DateTime startDate;
+
+    public DateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(DateTime startDate) {
+        this.startDate = startDate;
+    }
 
 	public int getEventId() {
 		return eventId;
@@ -51,12 +57,12 @@ public class CalendarEvent extends Event {
 		this.color = color;
 	}
 
-    public boolean isDefaultCalendarColor() {
-        return mIsDefaultCalendarColor;
+    public boolean hasDefaultCalendarColor() {
+        return mHasDefaultCalendarColor;
     }
 
     public void setDefaultCalendarColor() {
-        mIsDefaultCalendarColor = true;
+        mHasDefaultCalendarColor = true;
     }
 
 	public boolean isAllDay() {
@@ -91,46 +97,6 @@ public class CalendarEvent extends Event {
 		return recurring;
 	}
 
-	public boolean isPartOfMultiDayEvent() {
-		return spansMultipleDays;
-	}
-
-	public void setSpansMultipleDays() {
-		this.spansMultipleDays = true;
-	}
-
-	public boolean isStartOfMultiDayEvent() {
-		return isPartOfMultiDayEvent() && getOriginalEvent().getStartDate().equals(getStartDate());
-	}
-
-	public boolean isEndOfMultiDayEvent() {
-		return isPartOfMultiDayEvent() && getOriginalEvent().getEndDate().equals(getEndDate());
-	}
-
-	public boolean spansOneFullDay() {
-		return getStartDate().plusDays(1).isEqual(endDate);
-	}
-
-	public CalendarEvent getOriginalEvent() {
-		return originalEvent != null ? originalEvent : this;
-	}
-
-	protected CalendarEvent newWidgetEntry() {
-		CalendarEvent clone = new CalendarEvent();
-		clone.setStartDate(getStartDate());
-		clone.endDate = endDate;
-		clone.eventId = eventId;
-		clone.title = title;
-		clone.allDay = allDay;
-		clone.color = color;
-        clone.mIsDefaultCalendarColor = mIsDefaultCalendarColor;
-		clone.alarmActive = alarmActive;
-		clone.recurring = recurring;
-		clone.spansMultipleDays = spansMultipleDays;
-        clone.originalEvent = getOriginalEvent();
-		return clone;
-	}
-
 	@Override
 	public String toString() {
 		return "CalendarEvent [eventId=" + eventId
@@ -138,12 +104,10 @@ public class CalendarEvent extends Event {
 				+ ", startDate=" + getStartDate()
 				+ (endDate != null ? ", endDate=" + endDate : "")
 				+ ", color=" + color
-                + (mIsDefaultCalendarColor ? " is default" : "")
+                + (mHasDefaultCalendarColor ? " is default" : "")
 				+ ", allDay=" + allDay
 				+ ", alarmActive=" + alarmActive
-				+ ", ic_recurring_light=" + recurring
-				+ ", spansMultipleDays=" + spansMultipleDays
-				+ (originalEvent != null ? ", originalEvent=" + originalEvent : "")
+				+ ", recurring=" + recurring
 				+ (location != null ? ", location=" + location : "") + "]";
 	}
 
@@ -164,7 +128,9 @@ public class CalendarEvent extends Event {
 
     @Override
     public int hashCode() {
-        return eventId;
+        int result = eventId;
+        result += 31 * startDate.hashCode();
+        return result;
     }
 
     public boolean isActive() {

@@ -1,8 +1,8 @@
-package com.plusonelabs.calendar.model;
+package com.plusonelabs.calendar.widget;
 
 import org.joda.time.DateTime;
 
-public class Event implements Comparable<Event> {
+public class WidgetEntry implements Comparable<WidgetEntry> {
 
 	private DateTime startDate;
 
@@ -18,25 +18,13 @@ public class Event implements Comparable<Event> {
         return getStartDate().withTimeAtStartOfDay();
     }
 
-	public boolean startsSameDay(DateTime otherDate) {
-		return getStartDay().isEqual(otherDate.withTimeAtStartOfDay());
-	}
-
-	public boolean startsToday() {
-		return startsSameDay(new DateTime());
-	}
-
-	public boolean startsTomorrow() {
-		return startsSameDay(new DateTime().plusDays(1));
-	}
-
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName() + " [startDate=" + startDate + "]";
 	}
 
     @Override
-	public int compareTo(Event otherEvent) {
+	public int compareTo(WidgetEntry otherEvent) {
 		if (getStartDate().isAfter(otherEvent.getStartDate())) {
 			return 1;
 		} else if (getStartDate().isBefore(otherEvent.getStartDate())) {

@@ -3,12 +3,12 @@ package com.plusonelabs.calendar;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import com.plusonelabs.calendar.calendar.CalendarEvent;
 import com.plusonelabs.calendar.calendar.CalendarQueryStoredResults;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
-import com.plusonelabs.calendar.model.Event;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 import com.plusonelabs.calendar.util.RawResourceUtils;
+import com.plusonelabs.calendar.widget.CalendarEntry;
+import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -68,12 +68,12 @@ public class BirthdayTest extends InstrumentationTestCase {
         DateUtil.setNow(now);
         factory.onDataSetChanged();
         for (int ind=0; ind < factory.getWidgetEntries().size(); ind++) {
-            Event widgetEntry = factory.getWidgetEntries().get(ind);
+            WidgetEntry widgetEntry = factory.getWidgetEntries().get(ind);
             Log.v(TAG, String.format("%02d ", ind) + widgetEntry.toString());
         }
         assertEquals(numberOfEntriesExpected, factory.getWidgetEntries().size());
         if (numberOfEntriesExpected > 0) {
-            CalendarEvent birthday = (CalendarEvent) factory.getWidgetEntries().get(1);
+            CalendarEntry birthday = (CalendarEntry) factory.getWidgetEntries().get(1);
             assertEquals(9, birthday.getStartDate().dayOfMonth().get());
             assertEquals(0, birthday.getStartDate().hourOfDay().get());
             assertEquals(0, birthday.getStartDate().minuteOfHour().get());

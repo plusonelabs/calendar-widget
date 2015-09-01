@@ -11,7 +11,6 @@ import android.util.Log;
 
 import com.plusonelabs.calendar.BuildConfig;
 import com.plusonelabs.calendar.DateUtil;
-import com.plusonelabs.calendar.EndedSometimeAgo;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
@@ -19,7 +18,6 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -50,7 +48,6 @@ public class CalendarEventProvider {
 
     private final Context context;
     private KeywordsFilter mKeywordsFilter;
-    private boolean mFillAllDayEvents;
     private DateTime mStartOfTimeRange;
     private DateTime mEndOfTimeRange;
 
@@ -67,18 +64,23 @@ public class CalendarEventProvider {
             }
             eventList.add(event);
         }
-        List<CalendarEvent> entryList = createEntryList(eventList);
-        Collections.sort(entryList);
-        return entryList;
+        return eventList;
     }
 
     private void initialiseParameters() {
         mKeywordsFilter = new KeywordsFilter(CalendarPreferences.getHideBasedOnKeywords(context));
-        mFillAllDayEvents = CalendarPreferences.getFillAllDayEvents(context);
         // TODO: These values are not exactly correct for AllDay events: for them the filter time should be moved by a time zone... (i.e. by several hours)
-        mStartOfTimeRange = EndedSometimeAgo.fromValue(CalendarPreferences.getEventsEnded(context))
+        mStartOfTimeRange = CalendarPreferences.getEventsEnded(context)
                 .endedAt(DateUtil.now());
         mEndOfTimeRange = getEndOfTimeRange(DateUtil.now());
+    }
+
+    public DateTime getEndOfTimeRange() {
+        return mEndOfTimeRange;
+    }
+
+    public DateTime getStartOfTimeRange() {
+        return mStartOfTimeRange;
     }
 
     private DateTime getEndOfTimeRange(DateTime now) {
@@ -178,62 +180,6 @@ public class CalendarEventProvider {
         }
         stringBuilder.append(CLOSING_BRACKET);
         return stringBuilder.toString();
-    }
-
-    // TODO: Move this code to the UI level. "Filling all days" and breaking events into days depend on a layout
-    private List<CalendarEvent> createEntryList(List<CalendarEvent> eventList) {
-        List<CalendarEvent> entryList = new ArrayList<>();
-        for (CalendarEvent event : eventList) {
-            CalendarEvent dayOneEntry = setupDayOneEntry(entryList, event);
-            if (mFillAllDayEvents) {
-                createFollowingEntries(entryList, dayOneEntry);
-            }
-        }
-        return entryList;
-    }
-
-    private CalendarEvent setupDayOneEntry(List<CalendarEvent> entryList, CalendarEvent event) {
-        CalendarEvent dayOneEntry = event.newWidgetEntry();
-        DateTime firstDate = dayOneEntry.getStartDate();
-        if (!event.isDefaultCalendarColor() && firstDate.isBefore(mStartOfTimeRange) && event.getEndDate().isAfter(mStartOfTimeRange)) {
-            if (event.isAllDay()) {
-                firstDate = mStartOfTimeRange.withTimeAtStartOfDay();
-            } else {
-                firstDate = mStartOfTimeRange;
-            }
-        }
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
-        if (event.isActive() && firstDate.isBefore(today)) {
-            firstDate = today;
-        }
-        dayOneEntry.setStartDate(firstDate);
-        DateTime nextDay = dayOneEntry.getStartDay().plusDays(1);
-        boolean spanMoreDays = event.getEndDate().isAfter(nextDay);
-        if (spanMoreDays) {
-            dayOneEntry.setSpansMultipleDays();
-            dayOneEntry.setEndDate(nextDay);
-        }
-        entryList.add(dayOneEntry);
-        return dayOneEntry;
-    }
-
-    private void createFollowingEntries(List<CalendarEvent> entryList, CalendarEvent dayOneEntry) {
-        DateTime endDate = dayOneEntry.getOriginalEvent().getEndDate();
-        if (endDate.isAfter(mEndOfTimeRange)) {
-            endDate = mEndOfTimeRange;
-        }
-        DateTime nextDay = dayOneEntry.getStartDay().plusDays(1).withTimeAtStartOfDay();
-        while (nextDay.isBefore(endDate)) {
-            CalendarEvent nextEntry = dayOneEntry.newWidgetEntry();
-            nextEntry.setStartDate(nextDay);
-            if (endDate.isAfter(nextDay)) {
-                nextEntry.setEndDate(nextDay);
-            } else {
-                nextEntry.setEndDate(endDate);
-            }
-            entryList.add(nextEntry);
-            nextDay = nextDay.plusDays(1);
-        }
     }
 
     private CalendarEvent createCalendarEvent(Cursor calendarCursor) {

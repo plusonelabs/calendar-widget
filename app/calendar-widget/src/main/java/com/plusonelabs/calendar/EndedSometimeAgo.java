@@ -42,4 +42,8 @@ public enum EndedSometimeAgo {
         }
         return ended;
     }
+
+    public String save() {
+        return value;
+    }
 }

@@ -5,10 +5,10 @@ import android.util.Log;
 
 import com.plusonelabs.calendar.calendar.CalendarQueryStoredResults;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
-import com.plusonelabs.calendar.model.DayHeader;
-import com.plusonelabs.calendar.model.Event;
+import com.plusonelabs.calendar.widget.DayHeader;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 import com.plusonelabs.calendar.util.RawResourceUtils;
+import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -52,7 +52,7 @@ public class MultidayEventTest extends InstrumentationTestCase {
         int dayOfEventEntryPrev = 0;
         int dayOfHeaderPrev = 0;
         for (int ind=0; ind < factory.getWidgetEntries().size(); ind++) {
-            Event entry = factory.getWidgetEntries().get(ind);
+            WidgetEntry entry = factory.getWidgetEntries().get(ind);
             String logMsg = method + "; " + String.format("%02d ", ind) + entry.toString();
             Log.v(TAG, logMsg);
             if (entry.getStartDay().isBefore(today)) {

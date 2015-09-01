@@ -2,7 +2,7 @@ package com.plusonelabs.calendar;
 
 import com.plusonelabs.calendar.calendar.CalendarQueryRow;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
-import com.plusonelabs.calendar.model.Event;
+import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import android.test.InstrumentationTestCase;
 import android.util.Log;
@@ -53,14 +53,14 @@ public class WidgetEntriesTest extends InstrumentationTestCase {
      * I couldn't reproduce the problem though.
      */
     public void testIllegalInstantDueToTimeZoneOffsetTransition() {
-        assertTrue(reproducedTimeZoneOffsetTransitionException());
+        reproducedTimeZoneOffsetTransitionException();
         oneTimeDst("2014-09-07T00:00:00+00:00");
         oneTimeDst("2015-03-29T00:00:00+00:00");
         oneTimeDst("2015-10-25T00:00:00+00:00");
         oneTimeDst("2011-03-27T00:00:00+00:00");
         oneTimeDst("1980-04-06T00:00:00+00:00");
         factory.onDataSetChanged();
-        for (Event event : factory.getWidgetEntries()) {
+        for (WidgetEntry event : factory.getWidgetEntries()) {
             Log.v("TimeZoneOffsetTrans", event.toString());
         }
         assertEquals(1, mProvider.getQueriesCount());
@@ -78,7 +78,7 @@ public class WidgetEntriesTest extends InstrumentationTestCase {
     /**
      * from http://stackoverflow.com/a/5451245/297710
      */
-    private boolean reproducedTimeZoneOffsetTransitionException() {
+    private void reproducedTimeZoneOffsetTransitionException() {
         boolean exceptionReproduced = false;
         final DateTimeZone dtz = DateTimeZone.forID("CET");
         LocalDateTime ldt = new LocalDateTime(dtz)
@@ -93,7 +93,6 @@ public class WidgetEntriesTest extends InstrumentationTestCase {
             DateTime myDateBroken = ldt.toDateTime(dtz);
             fail("No exception for " + ldt + " -> " + myDateBroken);
         } catch (IllegalArgumentException iae) {
-            exceptionReproduced = true;
             Log.v(TAG, "Sure enough, invalid instant due to time zone offset transition: " + ldt);
         }
 
@@ -103,7 +102,6 @@ public class WidgetEntriesTest extends InstrumentationTestCase {
 
         DateTime myDate = ldt.toDateTime(dtz);
         System.out.println("No problem with this date: " + myDate);
-        return exceptionReproduced;
     }
 
     /**
@@ -129,7 +127,7 @@ public class WidgetEntriesTest extends InstrumentationTestCase {
                     .setBegin(millis).setEnd(millis + TimeUnit.HOURS.toMillis(9)));
         }
         factory.onDataSetChanged();
-        for (Event event : factory.getWidgetEntries()) {
+        for (WidgetEntry event : factory.getWidgetEntries()) {
             Log.v("ShowRecurringEvents", event.toString());
         }
         assertTrue("Entries: " + factory.getWidgetEntries().size(), factory.getWidgetEntries().size() > 15);

@@ -12,11 +12,14 @@ import com.plusonelabs.calendar.CalendarIntentUtil;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
-import com.plusonelabs.calendar.model.Event;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.widget.CalendarEntry;
+import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,7 +43,7 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_END_T
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_LOCATION;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_LOCATION_DEFAULT;
 
-public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> {
+public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
 
 	private static final String TWELVE = "12";
 	private static final String AUTO = "auto";
@@ -54,25 +57,25 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 	private final CalendarEventProvider calendarContentProvider;
 	private final SharedPreferences prefs;
 
-	public CalendarEventVisualizer(Context context) {
+    public CalendarEventVisualizer(Context context) {
 		this.context = context;
 		calendarContentProvider = new CalendarEventProvider(context);
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
-	public RemoteViews getRemoteView(Event eventEntry) {
-		CalendarEvent event = (CalendarEvent) eventEntry;
+	public RemoteViews getRemoteView(WidgetEntry eventEntry) {
+		CalendarEntry event = (CalendarEntry) eventEntry;
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.event_entry);
-		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getOriginalEvent()));
-		setTitle(event, rv);
+		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getEvent()));
+        setTitle(event, rv);
 		setEventDetails(event, rv);
 		setAlarmActive(event, rv);
-		setRecurring(event, rv);
+        setRecurring(event, rv);
 		setColor(event, rv);
 		return rv;
 	}
 
-	private void setTitle(CalendarEvent event, RemoteViews rv) {
+	private void setTitle(CalendarEntry event, RemoteViews rv) {
 		String title = event.getTitle();
 		if (title == null || title.equals(EMPTY_STRING)) {
 			title = context.getResources().getString(R.string.no_title);
@@ -84,17 +87,17 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
                 !prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
     }
 
-	private void setEventDetails(CalendarEvent event, RemoteViews rv) {
+	private void setEventDetails(CalendarEntry entry, RemoteViews rv) {
         boolean fillAllDayEvents = CalendarPreferences.getFillAllDayEvents(context);
-        if (event.spansOneFullDay() && !(event.isStartOfMultiDayEvent()
-                || event.isEndOfMultiDayEvent())
-                || event.isAllDay() && fillAllDayEvents) {
+        if (entry.spansOneFullDay() && !(entry.isStartOfMultiDayEvent()
+                || entry.isEndOfMultiDayEvent())
+                || entry.isAllDay() && fillAllDayEvents) {
             rv.setViewVisibility(R.id.event_entry_details, View.GONE);
         } else {
-            String eventDetails = createTimeSpanString(event);
+            String eventDetails = createTimeSpanString(entry);
             boolean showLocation = prefs.getBoolean(PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
-            if (showLocation && event.getLocation() != null && !event.getLocation().isEmpty()) {
-                eventDetails += SPACE_PIPE_SPACE + event.getLocation();
+            if (showLocation && entry.getLocation() != null && !entry.getLocation().isEmpty()) {
+                eventDetails += SPACE_PIPE_SPACE + entry.getLocation();
             }
             rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
             rv.setTextViewText(R.id.event_entry_details, eventDetails);
@@ -103,13 +106,13 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
         }
     }
 
-    private void setAlarmActive(CalendarEvent event, RemoteViews rv) {
-        boolean showIndication = event.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true);
+    private void setAlarmActive(CalendarEntry entry, RemoteViews rv) {
+        boolean showIndication = entry.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true);
         setIndicator(rv, showIndication, R.id.event_entry_indicator_alarm, R.attr.eventEntryAlarm);
 	}
 
-	private void setRecurring(CalendarEvent event, RemoteViews rv) {
-        boolean showIndication = event.isRecurring() && prefs.getBoolean(PREF_INDICATE_RECURRING, false);
+	private void setRecurring(CalendarEntry entry, RemoteViews rv) {
+        boolean showIndication = entry.isRecurring() && prefs.getBoolean(PREF_INDICATE_RECURRING, false);
         setIndicator(rv, showIndication, R.id.event_entry_indicator_recurring, R.attr.eventEntryRecurring);
     }
 
@@ -128,47 +131,47 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
         }
     }
 
-    private void setColor(CalendarEvent event, RemoteViews rv) {
-        setBackgroundColor(rv, R.id.event_entry_color, event.getColor());
-        if (event.getEndDate().isBefore(DateUtil.now())) {
+    private void setColor(CalendarEntry entry, RemoteViews rv) {
+        setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
+        if (entry.getEndDate().isBefore(DateUtil.now())) {
             setBackgroundColor(rv, R.id.event_entry, CalendarPreferences.getPastEventsBackgroundColor(context));
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);
         }
     }
 
-    private Intent createOnItemClickIntent(CalendarEvent originalEvent) {
-		return CalendarIntentUtil.createOpenCalendarEventIntent(originalEvent.getEventId(),
-                originalEvent.getStartDate(), originalEvent.getEndDate());
+    private Intent createOnItemClickIntent(CalendarEvent event) {
+		return CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
+                event.getStartDate(), event.getEndDate());
 	}
 
-	private String createTimeSpanString(CalendarEvent event) {
-        if (event.isAllDay() && !CalendarPreferences.getFillAllDayEvents(context)) {
-            DateTime dateTime = event.getOriginalEvent().getEndDate().minusDays(1);
+	private String createTimeSpanString(CalendarEntry entry) {
+        if (entry.isAllDay() && !CalendarPreferences.getFillAllDayEvents(context)) {
+            DateTime dateTime = entry.getEvent().getEndDate().minusDays(1);
             return ARROW_SPACE + DateUtil.createDateString(context, dateTime);
         } else {
-            return createTimeStringForEventEntry(event);
+            return createTimeStringForCalendarEntry(entry);
         }
     }
 
-    private String createTimeStringForEventEntry(CalendarEvent event) {
+    private String createTimeStringForCalendarEntry(CalendarEntry entry) {
         String startStr;
         String endStr;
         String separator = SPACE_DASH_SPACE;
-        if (event.isPartOfMultiDayEvent()&& DateUtil.isMidnight(event.getStartDate())
-                && !event.isStartOfMultiDayEvent()) {
+        if (entry.isPartOfMultiDayEvent()&& DateUtil.isMidnight(entry.getStartDate())
+                && !entry.isStartOfMultiDayEvent()) {
             startStr = ARROW_SPACE;
             separator = EMPTY_STRING;
         } else {
-            startStr = createTimeString(event.getStartDate());
+            startStr = createTimeString(entry.getStartDate());
         }
         if (prefs.getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT)) {
-            if (event.isPartOfMultiDayEvent() && DateUtil.isMidnight(event.getEndDate())
-                    && !event.isEndOfMultiDayEvent()) {
+            if (entry.isPartOfMultiDayEvent() && DateUtil.isMidnight(entry.getEndDate())
+                    && !entry.isEndOfMultiDayEvent()) {
                 endStr = SPACE_ARROW;
                 separator = EMPTY_STRING;
             } else {
-                endStr = createTimeString(event.getEndDate());
+                endStr = createTimeString(entry.getEndDate());
             }
         } else {
             separator = EMPTY_STRING;
@@ -193,12 +196,72 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
         return 1;
 	}
 
-	public List<CalendarEvent> getEventEntries() {
-		return calendarContentProvider.getEvents();
+	public List<CalendarEntry> getEventEntries() {
+        List<CalendarEntry> entries = createEntryList(calendarContentProvider.getEvents());
+        Collections.sort(entries);
+        return entries;
 	}
 
-	public Class<? extends CalendarEvent> getSupportedEventEntryType() {
-		return CalendarEvent.class;
+    private List<CalendarEntry> createEntryList(List<CalendarEvent> eventList) {
+        boolean fillAllDayEvents = CalendarPreferences.getFillAllDayEvents(context);
+        List<CalendarEntry> entryList = new ArrayList<>();
+        for (CalendarEvent event : eventList) {
+            CalendarEntry dayOneEntry = setupDayOneEntry(entryList, event);
+            if (fillAllDayEvents) {
+                createFollowingEntries(entryList, dayOneEntry);
+            }
+        }
+        return entryList;
+    }
+
+    private CalendarEntry setupDayOneEntry(List<CalendarEntry> entryList, CalendarEvent event) {
+        CalendarEntry dayOneEntry = CalendarEntry.fromEvent(event);
+        DateTime firstDate = dayOneEntry.getStartDate();
+        if (!event.hasDefaultCalendarColor()
+                && firstDate.isBefore(calendarContentProvider.getStartOfTimeRange())
+                && event.getEndDate().isAfter(calendarContentProvider.getStartOfTimeRange())) {
+            if (event.isAllDay()) {
+                firstDate = calendarContentProvider.getStartOfTimeRange().withTimeAtStartOfDay();
+            } else {
+                firstDate = calendarContentProvider.getStartOfTimeRange();
+            }
+        }
+        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        if (event.isActive() && firstDate.isBefore(today)) {
+            firstDate = today;
+        }
+        dayOneEntry.setStartDate(firstDate);
+        DateTime nextDay = dayOneEntry.getStartDay().plusDays(1);
+        boolean spanMoreDays = event.getEndDate().isAfter(nextDay);
+        if (spanMoreDays) {
+            dayOneEntry.setSpansMultipleDays();
+            dayOneEntry.setEndDate(nextDay);
+        }
+        entryList.add(dayOneEntry);
+        return dayOneEntry;
+    }
+
+    private void createFollowingEntries(List<CalendarEntry> entryList, CalendarEntry dayOneEntry) {
+        DateTime endDate = dayOneEntry.getEvent().getEndDate();
+        if (endDate.isAfter(calendarContentProvider.getEndOfTimeRange())) {
+            endDate = calendarContentProvider.getEndOfTimeRange();
+        }
+        DateTime nextDay = dayOneEntry.getStartDay().plusDays(1).withTimeAtStartOfDay();
+        while (nextDay.isBefore(endDate)) {
+            CalendarEntry nextEntry = CalendarEntry.fromEvent(dayOneEntry.getEvent());
+            nextEntry.setStartDate(nextDay);
+            if (endDate.isAfter(nextDay)) {
+                nextEntry.setEndDate(nextDay);
+            } else {
+                nextEntry.setEndDate(endDate);
+            }
+            entryList.add(nextEntry);
+            nextDay = nextDay.plusDays(1);
+        }
+    }
+
+	public Class<? extends CalendarEntry> getSupportedEventEntryType() {
+		return CalendarEntry.class;
 	}
 
 }

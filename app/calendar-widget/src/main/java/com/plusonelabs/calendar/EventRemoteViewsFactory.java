@@ -9,9 +9,9 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import com.plusonelabs.calendar.calendar.CalendarEventVisualizer;
-import com.plusonelabs.calendar.model.DayHeader;
-import com.plusonelabs.calendar.model.Event;
+import com.plusonelabs.calendar.widget.DayHeader;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
 
@@ -35,7 +35,7 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEM
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	private final Context context;
-	private volatile List<Event> mWidgetEntries = new ArrayList<>();
+	private volatile List<WidgetEntry> mWidgetEntries = new ArrayList<>();
 	private final List<IEventVisualizer<?>> eventProviders;
 
 	public EventRemoteViewsFactory(Context context) {
@@ -58,9 +58,9 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	public RemoteViews getViewAt(int position) {
-        List<Event> widgetEntries = mWidgetEntries;
+        List<WidgetEntry> widgetEntries = mWidgetEntries;
 		if (position < widgetEntries.size()) {
-			Event entry = widgetEntries.get(position);
+            WidgetEntry entry = widgetEntries.get(position);
 			if (entry instanceof DayHeader) {
 				return getRemoteView((DayHeader) entry);
 			}
@@ -96,21 +96,21 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         mWidgetEntries = addDayHeaders(getEventEntries());
     }
 
-    private List<Event> getEventEntries() {
-        List<Event> events = new ArrayList<>();
+    private List<WidgetEntry> getEventEntries() {
+        List<WidgetEntry> entries = new ArrayList<>();
         for (IEventVisualizer<?> eventProvider : eventProviders) {
-            events.addAll(eventProvider.getEventEntries());
+            entries.addAll(eventProvider.getEventEntries());
         }
-        return events;
+        return entries;
     }
 
-    private List<Event> addDayHeaders(List<Event> listIn) {
-        List<Event> listOut = new ArrayList<>();
+    private List<WidgetEntry> addDayHeaders(List<WidgetEntry> listIn) {
+        List<WidgetEntry> listOut = new ArrayList<>();
         if (!listIn.isEmpty()) {
             boolean showDaysWithoutEvents = CalendarPreferences.getShowDaysWithoutEvents(context);
             DayHeader curDayBucket = new DayHeader(new DateTime(0));
-            for (Event event : listIn) {
-                DateTime nextStartOfDay = event.getStartDay();
+            for (WidgetEntry entry : listIn) {
+                DateTime nextStartOfDay = entry.getStartDay();
                 if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
                     if (showDaysWithoutEvents) {
                         addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getStartDay(), nextStartOfDay);
@@ -118,24 +118,24 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
                     curDayBucket = new DayHeader(nextStartOfDay);
                     listOut.add(curDayBucket);
                 }
-                listOut.add(event);
+                listOut.add(entry);
             }
         }
         return listOut;
     }
 
-    List<Event> getWidgetEntries() {
+    List<WidgetEntry> getWidgetEntries() {
         return mWidgetEntries;
     }
 
-    private void addEmptyDayHeadersBetweenTwoDays(List<Event> eventEntries, DateTime fromDayExclusive, DateTime toDayExclusive) {
+    private void addEmptyDayHeadersBetweenTwoDays(List<WidgetEntry> entries, DateTime fromDayExclusive, DateTime toDayExclusive) {
         DateTime emptyDay = fromDayExclusive.plusDays(1);
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
         if (emptyDay.isBefore(today)) {
             emptyDay = today;
         }
         while (emptyDay.isBefore(toDayExclusive)) {
-            eventEntries.add(new DayHeader(emptyDay));
+            entries.add(new DayHeader(emptyDay));
             emptyDay = emptyDay.plusDays(1);
         }
     }

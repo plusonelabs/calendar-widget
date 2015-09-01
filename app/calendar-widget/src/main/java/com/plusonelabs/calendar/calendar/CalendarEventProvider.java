@@ -32,15 +32,6 @@ public class CalendarEventProvider {
     public static final String EVENT_SORT_ORDER = "startDay ASC, allDay DESC, begin ASC ";
     private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + "!="
             + Attendees.ATTENDEE_STATUS_DECLINED;
-    private static final String[] PROJECTION_4_0 = new String[]{Instances.EVENT_ID, Instances.TITLE,
-            Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
-            Instances.HAS_ALARM, Instances.RRULE, Instances.CALENDAR_COLOR, Instances.EVENT_COLOR};
-    private static final int CURSOR_COLUMN_CALENDAR_COLOR = 8;
-    private static final int CURSOR_COLUMN_EVENT_COLOR = 9;
-    private static final String[] PROJECTION_4_1 = new String[]{Instances.EVENT_ID, Instances.TITLE,
-            Instances.BEGIN, Instances.END, Instances.ALL_DAY, Instances.EVENT_LOCATION,
-            Instances.HAS_ALARM, Instances.RRULE, Instances.DISPLAY_COLOR};
-    private static final int CURSOR_COLUMN_DISPLAY_COLOR = 8;
     private static final String CLOSING_BRACKET = " )";
     private static final String OR = " OR ";
     private static final String EQUALS = " = ";
@@ -146,10 +137,22 @@ public class CalendarEventProvider {
     }
 
     public static String[] getProjection() {
+        List<String> columnNames = new ArrayList<>();
+        columnNames.add(Instances.EVENT_ID);
+        columnNames.add(Instances.TITLE);
+        columnNames.add(Instances.BEGIN);
+        columnNames.add(Instances.END);
+        columnNames.add(Instances.ALL_DAY);
+        columnNames.add(Instances.EVENT_LOCATION);
+        columnNames.add(Instances.HAS_ALARM);
+        columnNames.add(Instances.RRULE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return PROJECTION_4_1;
+            columnNames.add(Instances.DISPLAY_COLOR);
+        } else {
+            columnNames.add(Instances.CALENDAR_COLOR);
+            columnNames.add(Instances.EVENT_COLOR);
         }
-        return PROJECTION_4_0;
+        return columnNames.toArray(new String[columnNames.size()]);
     }
 
     private List<CalendarEvent> getPastEventWithColorList() {
@@ -182,17 +185,17 @@ public class CalendarEventProvider {
         return stringBuilder.toString();
     }
 
-    private CalendarEvent createCalendarEvent(Cursor calendarCursor) {
+    private CalendarEvent createCalendarEvent(Cursor cursor) {
         CalendarEvent event = new CalendarEvent();
-        event.setEventId(calendarCursor.getInt(0));
-        event.setTitle(calendarCursor.getString(1));
-        event.setStartDate(new DateTime(calendarCursor.getLong(2)));
-        event.setEndDate(new DateTime(calendarCursor.getLong(3)));
-        event.setAllDay(calendarCursor.getInt(4) > 0);
-        event.setLocation(calendarCursor.getString(5));
-        event.setAlarmActive(calendarCursor.getInt(6) > 0);
-        event.setRecurring(calendarCursor.getString(7) != null);
-        event.setColor(getAsOpaque(getEventColor(calendarCursor)));
+        event.setEventId(cursor.getInt(cursor.getColumnIndex(Instances.EVENT_ID)));
+        event.setTitle(cursor.getString(cursor.getColumnIndex(Instances.TITLE)));
+        event.setStartDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.BEGIN))));
+        event.setEndDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.END))));
+        event.setAllDay(cursor.getInt(cursor.getColumnIndex(Instances.ALL_DAY)) > 0);
+        event.setLocation(cursor.getString(cursor.getColumnIndex(Instances.EVENT_LOCATION)));
+        event.setAlarmActive(cursor.getInt(cursor.getColumnIndex(Instances.HAS_ALARM)) > 0);
+        event.setRecurring(cursor.getString(cursor.getColumnIndex(Instances.RRULE)) != null);
+        event.setColor(getAsOpaque(getEventColor(cursor)));
         if (event.isAllDay()) {
             fixAllDayEvent(event);
         }
@@ -207,6 +210,9 @@ public class CalendarEventProvider {
         }
     }
 
+    /**
+     * Implemented based on this answer: http://stackoverflow.com/a/5451245/297710
+     */
     private DateTime fixTimeOfAllDayEvent(DateTime date) {
         String msgLog = "";
         DateTime fixed;
@@ -235,15 +241,15 @@ public class CalendarEventProvider {
         return fixed;
     }
 
-    private int getEventColor(Cursor calendarCursor) {
+    private int getEventColor(Cursor cursor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return calendarCursor.getInt(CURSOR_COLUMN_DISPLAY_COLOR);
+            return cursor.getInt(cursor.getColumnIndex(Instances.DISPLAY_COLOR));
         } else {
-            int eventColor = calendarCursor.getInt(CURSOR_COLUMN_EVENT_COLOR);
+            int eventColor = cursor.getInt(cursor.getColumnIndex(Instances.EVENT_COLOR));
             if (eventColor > 0) {
                 return eventColor;
             }
-            return calendarCursor.getInt(CURSOR_COLUMN_CALENDAR_COLOR);
+            return cursor.getInt(cursor.getColumnIndex(Instances.CALENDAR_COLOR));
         }
     }
 

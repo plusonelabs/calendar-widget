@@ -205,7 +205,11 @@ public class CalendarQueryRow {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public CalendarQueryRow setDisplayColor(Object obj) {
-        return setColumn(CalendarContract.Instances.DISPLAY_COLOR, obj);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return setColumn(CalendarContract.Instances.DISPLAY_COLOR, obj);
+        } else {
+            return setColumn(CalendarContract.Instances.EVENT_COLOR, obj);
+        }
     }
 
     public Object[] getArray(String[] projection) {

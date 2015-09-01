@@ -13,6 +13,8 @@ import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,9 +33,13 @@ public class MockCalendarContentProvider extends MockContentProvider {
     private final Set<String> storedCalendars;
     private final JSONObject storedPreferences;
 
-    public void refreshWidget() {
-        Intent intent = new Intent(EventAppWidgetProvider.ACTION_REFRESH);
-        getContext().sendBroadcast(intent);
+    private static DateTime fixDateForCalendar(DateTime date, boolean isAllDay) {
+        if (!isAllDay) {
+            return date;
+        }
+        return new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(),
+                date.getHourOfDay(), date.getMinuteOfHour(),
+                DateTimeZone.UTC);
     }
 
     public static MockCalendarContentProvider getContentProvider(InstrumentationTestCase testCase) throws JSONException {
@@ -51,19 +57,19 @@ public class MockCalendarContentProvider extends MockContentProvider {
         setPreferences(context);
     }
 
-    void setPreferences(Context context) throws JSONException {
+    private void setPreferences(Context context) throws JSONException {
         Set<String> calendars = new HashSet<>();
         calendars.add("1");
         CalendarPreferences.setActiveCalendars(context, calendars);
         CalendarPreferences.fromJson(context,
                 new JSONObject("{" +
-                " \"showDaysWithoutEvents\": false," +
-                " \"hideBasedOnKeywords\": \"\"," +
-                " \"eventRange\": 30," +
-                " \"showPastEventsWithDefaultColor\": false," +
-                " \"fillAllDay\": true," +
-                " \"eventsEnded\": \"\"" +
-                "}"));
+                        " \"showDaysWithoutEvents\": false," +
+                        " \"hideBasedOnKeywords\": \"\"," +
+                        " \"eventRange\": 30," +
+                        " \"showPastEventsWithDefaultColor\": false," +
+                        " \"fillAllDay\": true," +
+                        " \"eventsEnded\": \"\"" +
+                        "}"));
     }
 
     public void tearDown() throws JSONException {
@@ -96,6 +102,20 @@ public class MockCalendarContentProvider extends MockContentProvider {
         mResults.add(result);
     }
 
+    public void addRow(CalendarEvent event) {
+        addRow(new CalendarQueryRow()
+                        .setEventId(event.getEventId())
+                        .setTitle(event.getTitle())
+                        .setBegin(fixDateForCalendar(event.getStartDate(), event.isAllDay()).getMillis())
+                        .setEnd(fixDateForCalendar(event.getEndDate(), event.isAllDay()).getMillis())
+                        .setDisplayColor(event.getColor())
+                        .setAllDay(event.isAllDay() ? 1 : 0)
+                        .setEventLocation(event.getLocation())
+                        .setHasAlarm(event.isAlarmActive() ? 1 : 0)
+                        .setRRule(event.isRecurring() ? 1 : null)
+        );
+    }
+
     public void addRow(CalendarQueryRow calendarQueryRow) {
         if(mResults.isEmpty()) {
             addResult(new CalendarQueryResult(DateUtil.now()));
@@ -111,4 +131,10 @@ public class MockCalendarContentProvider extends MockContentProvider {
     public int getQueriesCount() {
         return mQueriesCount;
     }
+
+    public void refreshWidget() {
+        Intent intent = new Intent(EventAppWidgetProvider.ACTION_REFRESH);
+        getContext().sendBroadcast(intent);
+    }
+
 }

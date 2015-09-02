@@ -109,6 +109,7 @@ public class CalendarEvent {
 				+ ", allDay=" + allDay
 				+ ", alarmActive=" + alarmActive
 				+ ", recurring=" + recurring
+				+ ", undecided=" + undecided
 				+ (location != null ? ", location=" + location : "") + "]";
 	}
 

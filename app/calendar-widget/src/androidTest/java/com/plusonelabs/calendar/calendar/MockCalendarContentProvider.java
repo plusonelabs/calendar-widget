@@ -88,7 +88,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         if (mResults.size() < mQueriesCount) {
             return null;
         } else {
-            return mResults.get(mQueriesCount - 1).query(uri, projection, selection, selectionArgs, sortOrder);
+            return mResults.get(mQueriesCount - 1).query(projection);
         }
     }
 

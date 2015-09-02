@@ -26,6 +26,7 @@ public class CalendarQueryResult {
     private static final String KEY_EXECUTED_AT = "executedAt";
     private static final String KEY_TIME_ZONE_ID = "timeZoneId";
     private static final String KEY_MILLIS_OFFSET_FROM_UTC_TO_LOCAL = "millisOffsetUtcToLocal";
+    private static final String KEY_STANDARD_MILLIS_OFFSET_FROM_UTC_TO_LOCAL = "standardMillisOffsetUtcToLocal";
     private static final String KEY_URI = "uri";
     private static final String KEY_PROJECTION = "projection";
     private static final String KEY_SELECTION = "selection";
@@ -80,7 +81,7 @@ public class CalendarQueryResult {
         return array;
     }
 
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(String[] projection) {
         MatrixCursor cursor = new MatrixCursor(projection);
         for (CalendarQueryRow row : mRows) {
             cursor.addRow(row.getArray(projection));
@@ -159,6 +160,7 @@ public class CalendarQueryResult {
         DateTimeZone zone = mExecutedAt.getZone();
         jso.put(KEY_TIME_ZONE_ID, zone.getID());
         jso.put(KEY_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getOffset(mExecutedAt));
+        jso.put(KEY_STANDARD_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getStandardOffset(mExecutedAt.getMillis()));
         jso.put(KEY_URI, mUri != null ? mUri.toString() : "");
         jso.put(KEY_PROJECTION, arrayOfStingsToJson(mProjection));
         jso.put(KEY_SELECTION, mSelection != null ? mSelection : "");

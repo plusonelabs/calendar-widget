@@ -60,7 +60,6 @@ public class CalendarEventProvider {
 
     private void initialiseParameters() {
         mKeywordsFilter = new KeywordsFilter(CalendarPreferences.getHideBasedOnKeywords(context));
-        // TODO: These values are not exactly correct for AllDay events: for them the filter time should be moved by a time zone... (i.e. by several hours)
         mStartOfTimeRange = CalendarPreferences.getEventsEnded(context)
                 .endedAt(DateUtil.now());
         mEndOfTimeRange = getEndOfTimeRange(DateUtil.now());
@@ -85,7 +84,19 @@ public class CalendarEventProvider {
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(builder, mStartOfTimeRange.getMillis());
         ContentUris.appendId(builder, mEndOfTimeRange.getMillis());
-        return queryList(builder.build(), getCalendarSelection());
+        List<CalendarEvent> eventList = queryList(builder.build(), getCalendarSelection());
+        // Above filters are not exactly correct for AllDay events: for them that filter
+        // time should be moved by a time zone... (i.e. by several hours)
+        // This is why we need to do additional filtering after querying a Content Provider:
+        for(Iterator<CalendarEvent> it = eventList.iterator(); it.hasNext(); ) {
+            CalendarEvent event = it.next();
+            if (!event.getEndDate().isAfter(mStartOfTimeRange)
+                    || !mEndOfTimeRange.isAfter(event.getStartDate()) ) {
+                // We remove using Iterator to avoid ConcurrentModificationException
+                it.remove();
+            }
+        }
+        return eventList;
     }
 
     private String getCalendarSelection() {

@@ -39,27 +39,48 @@ public class BirthdayTest extends InstrumentationTestCase {
                         com.plusonelabs.calendar.tests.R.raw.birthday)
         );
 
-        // TODO: In order for this to have effect, we should use Content provider,
-        // which parses "selection" argument
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.NONE);
+        CalendarPreferences.setShowPastEventsWithDefaultColor(mProvider.getContext(), false);
         CalendarPreferences.setEventRange(mProvider.getContext(), 30);
+        playAtOneTime(inputs, new DateTime(2015, 8, 1, 17, 0), 0);
+        playAtOneTime(inputs, new DateTime(2015, 8,  9, 23, 59), 0);
+        playAtOneTime(inputs, new DateTime(2015, 8, 10,  0,  0), 0);
+        playAtOneTime(inputs, new DateTime(2015, 8, 10,  0,  1), 2);
 
-        playAtOneTime(inputs, new DateTime(2015, 8, 1, 17,  0), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 8, 17,  0), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 8, 23, 30), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 9,  0, 30), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 9, 11,  0), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 9, 17,  0), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 9, 23, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 0, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10,11,  0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10,17,  0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10,23, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 11, 0, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 11,11,  0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 11,17,  0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 11,23, 30), 2);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 0, 30), 0);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 11, 0), 0);
 
-        // TODO: This also doesn't work yet. We need to inject a Mock content provider deeper...
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.ONE_HOUR);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 0, 30), 2);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 0);
+
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.TODAY);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 0);
+
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.FOUR_HOURS);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 2);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 3, 59), 2);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 4,  0), 0);
+
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.YESTERDAY);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 4, 0), 2);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10,11,  0), 2);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10, 17, 0), 2);
+        playAtOneTime(inputs, new DateTime(2015, 9, 10,23, 30), 2);
+        playAtOneTime(inputs, new DateTime(2015, 9, 11, 0,  0), 0);
+        playAtOneTime(inputs, new DateTime(2015, 9, 11, 0, 30), 0);
+
+        CalendarPreferences.setShowPastEventsWithDefaultColor(mProvider.getContext(), true);
+        playAtOneTime(inputs, new DateTime(2015, 9, 11, 0, 30), 0);
+
+        // TODO: This doesn't work yet. We need to inject a MockCalendarContentProvider deeper,
+        // so it could work in a normal Context also
         mProvider.refreshWidget();
     }
 

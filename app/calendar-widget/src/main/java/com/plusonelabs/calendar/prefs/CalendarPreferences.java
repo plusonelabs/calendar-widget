@@ -106,7 +106,7 @@ public class CalendarPreferences {
                 PREF_EVENTS_ENDED, ""));
     }
 
-    private static void setEventsEnded(Context context, EndedSometimeAgo value) {
+    public static void setEventsEnded(Context context, EndedSometimeAgo value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PREF_EVENTS_ENDED, value.save());
@@ -155,7 +155,7 @@ public class CalendarPreferences {
                 .getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false);
     }
 
-    private static void setShowPastEventsWithDefaultColor(Context context, boolean value) {
+    public static void setShowPastEventsWithDefaultColor(Context context, boolean value) {
         setBooleanPreference(context, PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, value);
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.CalendarContract;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.util.Log;
@@ -158,6 +159,7 @@ public class CalendarEventProvider {
         columnNames.add(Instances.HAS_ALARM);
         columnNames.add(Instances.RRULE);
         columnNames.add(Instances.SELF_ATTENDEE_STATUS);
+        columnNames.add(Instances.CALENDAR_ACCESS_LEVEL);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             columnNames.add(Instances.DISPLAY_COLOR);
         } else {
@@ -255,6 +257,13 @@ public class CalendarEventProvider {
     }
 
     private boolean isUndecided(Cursor calendarCursor) {
+        if (calendarCursor.getInt(calendarCursor.getColumnIndex(Instances.CALENDAR_ACCESS_LEVEL))
+                < Instances.CAL_ACCESS_RESPOND)
+        {
+            // We don't have permissions to decide, no need to nag about this
+            return false;
+        }
+
         switch (calendarCursor.getInt(calendarCursor.getColumnIndex(Instances.SELF_ATTENDEE_STATUS))) {
             case Attendees.ATTENDEE_STATUS_INVITED:
             case Attendees.ATTENDEE_STATUS_TENTATIVE:

@@ -115,7 +115,6 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
     @Override
     protected void tearDown() throws Exception {
         CalendarQueryStoredResults.setNeedStoreResults(false);
-        DateUtil.setNow(null);
         mProvider.tearDown();
         super.tearDown();
     }

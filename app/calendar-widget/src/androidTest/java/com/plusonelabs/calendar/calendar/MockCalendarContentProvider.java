@@ -75,6 +75,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     public void tearDown() throws JSONException {
         CalendarPreferences.setActiveCalendars(getContext(), storedCalendars);
         CalendarPreferences.fromJson(getContext(), storedPreferences);
+        DateUtil.setNow(null);
     }
 
     @Override
@@ -112,7 +113,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
                         .setAllDay(event.isAllDay() ? 1 : 0)
                         .setEventLocation(event.getLocation())
                         .setHasAlarm(event.isAlarmActive() ? 1 : 0)
-                        .setRRule(event.isRecurring() ? 1 : null)
+                        .setRRule(event.isRecurring() ? "FREQ=WEEKLY;WKST=MO;BYDAY=MO,WE,FR" : null)
         );
     }
 

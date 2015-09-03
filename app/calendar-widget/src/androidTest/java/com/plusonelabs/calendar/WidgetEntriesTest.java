@@ -40,6 +40,7 @@ public class WidgetEntriesTest extends InstrumentationTestCase {
 
     public void testSingleEvent() {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateUtil.setNow(today.plusHours(10));
         CalendarEvent event = new CalendarEvent();
         event.setEventId(++mEventId);
         event.setTitle("Single Event today with all known attributes");

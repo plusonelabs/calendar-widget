@@ -107,7 +107,7 @@
     <string name="feedback_play_store_desc">Rate and comment on Google Play Store</string>
     <string name="feedback_play_store_title">Visit widget on Google Play Store</string>
     <string name="refresh_desc">Refresh</string>
-    <string name="share_events_for_debugging_desc">Create data, which will allow you to communicate easily your wishes or problems to developers</string>
+    <string name="share_events_for_debugging_desc">Create a report to help developers troubleshoot problems</string>
     <string name="share_events_for_debugging_title">Share events for debugging</string>
 
 </resources>

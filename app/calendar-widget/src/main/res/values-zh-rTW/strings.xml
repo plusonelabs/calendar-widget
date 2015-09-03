@@ -52,7 +52,7 @@
   <string name="appearance_theme_dark">淺色</string>
   <string name="appearance_theme_light">深色</string>
   <string name="appearance_theme_white">黑色</string>
-  <string name="event_details_prefs">事件详情</string>
+  <string name="event_details_prefs">活動詳細資訊</string>
   <string name="event_details_prefs_desc">設置活動需要顯示的細節</string>
   <string name="event_details_show_end_time_title">結束時間</string>
   <string name="event_details_show_end_time_desc">顯示活動的結束時間</string>
@@ -89,12 +89,12 @@
   <string name="ended_four_hours_ago">四小時前完結</string>
   <string name="ended_today">今日完結</string>
   <string name="ended_yesterday">昨日完結</string>
-  <string name="pref_hide_based_on_keywords_title">基於標題中的關鍵字而進行隱藏</string>
+  <string name="pref_hide_based_on_keywords_title">根據標題中的關鍵字隱藏活動</string>
   <string name="feedback_prefs">反饋</string>
   <string name="feedback_prefs_desc">與我們聯絡</string>
   <string name="feedback_github_desc">在項目頁面上提供反饋</string>
   <string name="feedback_github_title">於 Github 上檢視小工具</string>
   <string name="feedback_play_store_desc">於 Google Play 商店上評分及評論</string>
   <string name="feedback_play_store_title">於 Google Play 商店上檢視小工具</string>
-  <string name="refresh_desc">刷新</string>
+  <string name="refresh_desc">重新整理</string>
 </resources>

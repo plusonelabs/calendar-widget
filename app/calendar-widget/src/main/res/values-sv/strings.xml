@@ -24,7 +24,7 @@
   <string name="appearance_text_size_very_large">Mycket stor</string>
   <string name="appearance_multiline_title_title">Flerradig titel</string>
   <string name="appearance_multiline_title_desc">Fördela titeln över flera rader</string>
-  <string name="appearance_date_format_desc">Visa datum som 12 eller 24 timmarsformat</string>
+  <string name="appearance_date_format_desc">Visa tid i 24 timmars eller fm/em-format</string>
   <string name="appearance_date_format_title">Datumformat</string>
   <string name="appearance_date_format_auto">Automatiskt</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -97,4 +97,6 @@
   <string name="feedback_play_store_desc">Recensera på Google Play Store</string>
   <string name="feedback_play_store_title">Gå till applikationen på Google Play Store</string>
   <string name="refresh_desc">Uppdatera</string>
+  <string name="share_events_for_debugging_desc">Skapa data, vilket gör att du kan kommunicera dina önskemål eller problem till utvecklarna enkelt</string>
+  <string name="share_events_for_debugging_title">Dela händelser för felsökning</string>
 </resources>

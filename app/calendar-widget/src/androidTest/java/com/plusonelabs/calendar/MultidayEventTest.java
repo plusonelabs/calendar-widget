@@ -88,7 +88,6 @@ public class MultidayEventTest extends InstrumentationTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        DateUtil.setNow(null);
         CalendarPreferences.setEventRange(mProvider.getContext(), eventRangeStored);
         mProvider.tearDown();
         super.tearDown();

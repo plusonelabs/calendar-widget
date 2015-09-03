@@ -24,7 +24,7 @@
   <string name="appearance_text_size_very_large">Очень большой</string>
   <string name="appearance_multiline_title_title">Многострочный заголовок</string>
   <string name="appearance_multiline_title_desc">Длинные заголовки событий продолжаются на несколько строк</string>
-  <string name="appearance_date_format_desc">Формат даты am/pm или 24 часа</string>
+  <string name="appearance_date_format_desc">Формат времени am/pm или 24 часа</string>
   <string name="appearance_date_format_title">Формат даты</string>
   <string name="appearance_date_format_auto">Автоматический</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -97,4 +97,6 @@
   <string name="feedback_play_store_desc">Рейтинг и комментарии на Google Play Store</string>
   <string name="feedback_play_store_title">Виджет на Google Play Store</string>
   <string name="refresh_desc">Обновить</string>
+  <string name="share_events_for_debugging_desc">Создать отчёт, который поможет разработчикам устранить проблемы</string>
+  <string name="share_events_for_debugging_title">Поделиться событиями виджета для отладки</string>
 </resources>

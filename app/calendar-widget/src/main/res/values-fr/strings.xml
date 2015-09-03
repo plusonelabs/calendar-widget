@@ -67,6 +67,7 @@
   <string name="event_details_indicate_recurring_title">Evénements récurrents</string>
   <string name="event_filters_prefs">Filtres d\'événement</string>
   <string name="event_filters_prefs_desc">Quels événements courants, futurs et passés sont à montrer</string>
+  <string name="all_events">Tous les événements</string>
   <string name="current_and_future_events">Événements actuels et futurs</string>
   <string name="past_events">Événements passés</string>
   <string name="event_details_event_range_title">Intervale de date</string>
@@ -80,10 +81,13 @@
   <string name="event_range_three_months">Trois mois</string>
   <string name="event_range_six_months">Six mois</string>
   <string name="event_range_one_year">Un an</string>
+  <string name="this_option_is_turned_off">(désactivé)</string>
+  <string name="pref_events_ended_title">Montrer les événements récemment terminés</string>
   <string name="ended_one_hour_ago">Terminé il y a une heure</string>
   <string name="ended_two_hours_ago">Terminé il y a deux heures</string>
   <string name="ended_four_hours_ago">Terminé il y a quatre heures</string>
   <string name="ended_today">Terminé aujourd\'hui</string>
+  <string name="ended_yesterday">Terminé hier</string>
   <string name="feedback_prefs">Retours</string>
   <string name="feedback_prefs_desc">Entrer en contact avec nous</string>
   <string name="feedback_github_desc">Faire un retour sur la page du projet</string>

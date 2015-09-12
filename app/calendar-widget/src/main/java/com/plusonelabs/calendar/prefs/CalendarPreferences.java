@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.plusonelabs.calendar.Alignment;
-import com.plusonelabs.calendar.EndedSomeTimeAgoB;
+import com.plusonelabs.calendar.EndedSomeTimeAgo;
 import com.plusonelabs.calendar.Theme;
 
 import org.json.JSONException;
@@ -67,7 +67,7 @@ public class CalendarPreferences {
 
     public static void fromJson(Context context, JSONObject jso) throws JSONException {
         setEventRange(context, jso.getInt(PREF_EVENT_RANGE));
-        setEventsEnded(context, EndedSomeTimeAgoB.fromValue(jso.getString(PREF_EVENTS_ENDED)));
+        setEventsEnded(context, EndedSomeTimeAgo.fromValue(jso.getString(PREF_EVENTS_ENDED)));
         setFillAllDayEvents(context, jso.getBoolean(PREF_FILL_ALL_DAY));
         setHideBasedOnKeywords(context, jso.getString(PREF_HIDE_BASED_ON_KEYWORDS));
         setShowDaysWithoutEvents(context, jso.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS));
@@ -102,12 +102,12 @@ public class CalendarPreferences {
         editor.apply();
     }
 
-    public static EndedSomeTimeAgoB getEventsEnded(Context context) {
-        return EndedSomeTimeAgoB.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
+    public static EndedSomeTimeAgo getEventsEnded(Context context) {
+        return EndedSomeTimeAgo.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
                 PREF_EVENTS_ENDED, ""));
     }
 
-    public static void setEventsEnded(Context context, EndedSomeTimeAgoB value) {
+    public static void setEventsEnded(Context context, EndedSomeTimeAgo value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PREF_EVENTS_ENDED, value.save());

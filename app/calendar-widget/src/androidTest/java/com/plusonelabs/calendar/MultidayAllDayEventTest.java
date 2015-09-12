@@ -18,19 +18,26 @@ import java.io.IOException;
 /**
  * @author yvolk@yurivolkov.com
  */
-public class MultidayEventTest extends InstrumentationTestCase {
-    private static final String TAG = MultidayEventTest.class.getSimpleName();
+public class MultidayAllDayEventTest extends InstrumentationTestCase {
+    private static final String TAG = MultidayAllDayEventTest.class.getSimpleName();
 
     private MockCalendarContentProvider mProvider = null;
-    private EventRemoteViewsFactory factory = null;
+    private EventRemoteViewsFactory mFactory = null;
     private int eventRangeStored;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         mProvider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(mProvider.getContext());
+        mFactory = new EventRemoteViewsFactory(mProvider.getContext());
         eventRangeStored = CalendarPreferences.getEventRange(mProvider.getContext());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        CalendarPreferences.setEventRange(mProvider.getContext(), eventRangeStored);
+        mProvider.tearDown();
+        super.tearDown();
     }
 
     public void testInsidePeriod() throws IOException, JSONException {
@@ -45,14 +52,14 @@ public class MultidayEventTest extends InstrumentationTestCase {
         CalendarPreferences.setEventRange(mProvider.getContext(), dateRange);
         DateTime now = new DateTime(2015, 8, 30, 0, 0, 0);
         DateUtil.setNow(now);
-        factory.onDataSetChanged();
+        mFactory.onDataSetChanged();
 
         DateTime today = now.withTimeAtStartOfDay();
         DateTime endOfRangeTime = today.plusDays(dateRange);
         int dayOfEventEntryPrev = 0;
         int dayOfHeaderPrev = 0;
-        for (int ind=0; ind < factory.getWidgetEntries().size(); ind++) {
-            WidgetEntry entry = factory.getWidgetEntries().get(ind);
+        for (int ind=0; ind < mFactory.getWidgetEntries().size(); ind++) {
+            WidgetEntry entry = mFactory.getWidgetEntries().get(ind);
             String logMsg = method + "; " + String.format("%02d ", ind) + entry.toString();
             Log.v(TAG, logMsg);
             if (entry.getStartDay().isBefore(today)) {
@@ -84,12 +91,5 @@ public class MultidayEventTest extends InstrumentationTestCase {
         }
         assertEquals("No last header " + method, endOfRangeTime.getDayOfYear() - 1, dayOfHeaderPrev);
         assertEquals("Last day not filled " + method, endOfRangeTime.getDayOfYear() - 1, dayOfEventEntryPrev);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        CalendarPreferences.setEventRange(mProvider.getContext(), eventRangeStored);
-        mProvider.tearDown();
-        super.tearDown();
     }
 }

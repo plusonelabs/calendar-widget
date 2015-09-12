@@ -22,15 +22,22 @@ public class BirthdayTest extends InstrumentationTestCase {
     private static final String TAG = BirthdayTest.class.getSimpleName();
 
     private MockCalendarContentProvider mProvider = null;
-    private EventRemoteViewsFactory factory = null;
+    private EventRemoteViewsFactory mFactory = null;
     private int eventRangeStored;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         mProvider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(mProvider.getContext());
+        mFactory = new EventRemoteViewsFactory(mProvider.getContext());
         eventRangeStored = CalendarPreferences.getEventRange(mProvider.getContext());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        CalendarPreferences.setEventRange(mProvider.getContext(), eventRangeStored);
+        mProvider.tearDown();
+        super.tearDown();
     }
 
     public void testBirthdayOneDayOnly() throws IOException, JSONException {
@@ -87,26 +94,19 @@ public class BirthdayTest extends InstrumentationTestCase {
     private void playAtOneTime(CalendarQueryStoredResults inputs, DateTime now, int numberOfEntriesExpected) {
         mProvider.addResults(inputs.getResults());
         DateUtil.setNow(now);
-        factory.onDataSetChanged();
-        for (int ind=0; ind < factory.getWidgetEntries().size(); ind++) {
-            WidgetEntry widgetEntry = factory.getWidgetEntries().get(ind);
+        mFactory.onDataSetChanged();
+        for (int ind=0; ind < mFactory.getWidgetEntries().size(); ind++) {
+            WidgetEntry widgetEntry = mFactory.getWidgetEntries().get(ind);
             Log.v(TAG, String.format("%02d ", ind) + widgetEntry.toString());
         }
-        assertEquals(numberOfEntriesExpected, factory.getWidgetEntries().size());
+        assertEquals(numberOfEntriesExpected, mFactory.getWidgetEntries().size());
         if (numberOfEntriesExpected > 0) {
-            CalendarEntry birthday = (CalendarEntry) factory.getWidgetEntries().get(1);
+            CalendarEntry birthday = (CalendarEntry) mFactory.getWidgetEntries().get(1);
             assertEquals(9, birthday.getStartDate().dayOfMonth().get());
             assertEquals(0, birthday.getStartDate().hourOfDay().get());
             assertEquals(0, birthday.getStartDate().minuteOfHour().get());
             assertEquals(0, birthday.getStartDate().millisOfDay().get());
             assertEquals(true, birthday.isAllDay());
         }
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        CalendarPreferences.setEventRange(mProvider.getContext(), eventRangeStored);
-        mProvider.tearDown();
-        super.tearDown();
     }
 }

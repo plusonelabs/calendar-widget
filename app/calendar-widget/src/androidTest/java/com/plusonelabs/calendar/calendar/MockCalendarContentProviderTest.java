@@ -33,6 +33,13 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
         CalendarQueryStoredResults.setNeedStoreResults(true);
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        CalendarQueryStoredResults.setNeedStoreResults(false);
+        mProvider.tearDown();
+        super.tearDown();
+    }
+
     public void testTwoEventsToday() {
         CalendarQueryResult input1 = addOneResult("");
         CalendarQueryResult input2 = addOneResult("SOMETHING=1");
@@ -110,12 +117,5 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
         JSONObject jsonOutput = inputs1.toJson(mProvider.getContext());
         CalendarQueryStoredResults inputs2 = CalendarQueryStoredResults.fromJson(jsonOutput);
         assertEquals(inputs1, inputs2);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        CalendarQueryStoredResults.setNeedStoreResults(false);
-        mProvider.tearDown();
-        super.tearDown();
     }
 }

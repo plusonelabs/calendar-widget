@@ -8,7 +8,6 @@ public class CalendarEntry extends WidgetEntry {
 
 	private DateTime endDate;
 	private boolean allDay;
-	private boolean spansMultipleDays = false;
 	private CalendarEvent event;
 
     public static CalendarEntry fromEvent(CalendarEvent event) {
@@ -53,23 +52,19 @@ public class CalendarEntry extends WidgetEntry {
 	}
 
 	public boolean isPartOfMultiDayEvent() {
-		return spansMultipleDays;
-	}
-
-	public void setSpansMultipleDays() {
-		this.spansMultipleDays = true;
+		return getEvent().isPartOfMultiDayEvent();
 	}
 
 	public boolean isStartOfMultiDayEvent() {
-		return isPartOfMultiDayEvent() && getEvent().getStartDate().equals(getStartDate());
+		return isPartOfMultiDayEvent() && !getEvent().getStartDate().isBefore(getStartDate());
 	}
 
 	public boolean isEndOfMultiDayEvent() {
-		return isPartOfMultiDayEvent() && getEvent().getEndDate().equals(getEndDate());
+		return isPartOfMultiDayEvent() && !getEvent().getEndDate().isAfter(getEndDate());
 	}
 
 	public boolean spansOneFullDay() {
-		return getStartDate().plusDays(1).isEqual(endDate);
+		return getStartDate().plusDays(1).isEqual(getEndDate());
 	}
 
 	public CalendarEvent getEvent() {
@@ -80,9 +75,8 @@ public class CalendarEntry extends WidgetEntry {
 	public String toString() {
 		return "CalendarEntry ["
 				+ "startDate=" + getStartDate()
-				+ (endDate != null ? ", endDate=" + endDate : "")
+				+ (endDate != null ? ", endDate=" + getEndDate() : "")
 				+ ", allDay=" + allDay
-				+ ", spansMultipleDays=" + spansMultipleDays
 				+ ", event=" + event
                 + "]";
 	}

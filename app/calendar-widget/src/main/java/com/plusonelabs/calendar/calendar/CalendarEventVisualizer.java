@@ -221,14 +221,14 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 
     private CalendarEntry setupDayOneEntry(List<CalendarEntry> entryList, CalendarEvent event) {
         CalendarEntry dayOneEntry = CalendarEntry.fromEvent(event);
-        DateTime firstDate = dayOneEntry.getStartDate();
+        DateTime firstDate = event.getStartDate();
+        DateTime dayOfStartOfTimeRange = calendarContentProvider.getStartOfTimeRange()
+                .withTimeAtStartOfDay();
         if (!event.hasDefaultCalendarColor()
                 && firstDate.isBefore(calendarContentProvider.getStartOfTimeRange())
                 && event.getEndDate().isAfter(calendarContentProvider.getStartOfTimeRange())) {
-            if (event.isAllDay()) {
-                firstDate = calendarContentProvider.getStartOfTimeRange().withTimeAtStartOfDay();
-            } else {
-                firstDate = calendarContentProvider.getStartOfTimeRange();
+            if (event.isAllDay() || firstDate.isBefore(dayOfStartOfTimeRange)) {
+                firstDate = dayOfStartOfTimeRange;
             }
         }
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
@@ -237,9 +237,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
         }
         dayOneEntry.setStartDate(firstDate);
         DateTime nextDay = dayOneEntry.getStartDay().plusDays(1);
-        boolean spanMoreDays = event.getEndDate().isAfter(nextDay);
-        if (spanMoreDays) {
-            dayOneEntry.setSpansMultipleDays();
+        if (event.getEndDate().isAfter(nextDay)) {
             dayOneEntry.setEndDate(nextDay);
         }
         entryList.add(dayOneEntry);

@@ -26,7 +26,6 @@ public class OngoingEventTest extends InstrumentationTestCase {
         mProvider = MockCalendarContentProvider.getContentProvider(this);
         mFactory = new EventRemoteViewsFactory(mProvider.getContext());
         assertTrue(mFactory.getWidgetEntries().isEmpty());
-        mEventId = 0;
     }
 
     @Override
@@ -47,7 +46,6 @@ public class OngoingEventTest extends InstrumentationTestCase {
         event.setEndDate(today.plusHours(12));
 
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
-        mProvider.clear();
         mProvider.addRow(event);
         mFactory.onDataSetChanged();
         CalendarEntry entry = null;
@@ -75,7 +73,6 @@ public class OngoingEventTest extends InstrumentationTestCase {
         event.setEndDate(today.plusHours(12));
 
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
-        mProvider.clear();
         mProvider.addRow(event);
         mFactory.onDataSetChanged();
         CalendarEntry entry = null;

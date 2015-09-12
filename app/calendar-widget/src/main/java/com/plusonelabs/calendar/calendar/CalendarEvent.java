@@ -3,6 +3,8 @@ package com.plusonelabs.calendar.calendar;
 import com.plusonelabs.calendar.DateUtil;
 import org.joda.time.DateTime;
 
+import java.util.concurrent.TimeUnit;
+
 public class CalendarEvent {
 
 	private int eventId;
@@ -136,4 +138,8 @@ public class CalendarEvent {
     public boolean isActive() {
         return getStartDate().isBefore(DateUtil.now()) && endDate.isAfter(DateUtil.now());
     }
+
+	public boolean isPartOfMultiDayEvent() {
+		return getEndDate().getMillis() - getStartDate().getMillis() > TimeUnit.DAYS.toMillis(1);
+	}
 }

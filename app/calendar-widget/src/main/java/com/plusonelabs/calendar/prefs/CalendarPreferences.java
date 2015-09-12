@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.plusonelabs.calendar.Alignment;
-import com.plusonelabs.calendar.EndedSometimeAgo;
+import com.plusonelabs.calendar.EndedSomeTimeAgoB;
 import com.plusonelabs.calendar.Theme;
 
 import org.json.JSONException;
@@ -48,8 +48,9 @@ public class CalendarPreferences {
     public static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
     public static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
 	public static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
+    static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
 
-	private CalendarPreferences() {
+    private CalendarPreferences() {
 		// prohibit instantiation
 	}
 
@@ -66,7 +67,7 @@ public class CalendarPreferences {
 
     public static void fromJson(Context context, JSONObject jso) throws JSONException {
         setEventRange(context, jso.getInt(PREF_EVENT_RANGE));
-        setEventsEnded(context, EndedSometimeAgo.fromValue(jso.getString(PREF_EVENTS_ENDED)));
+        setEventsEnded(context, EndedSomeTimeAgoB.fromValue(jso.getString(PREF_EVENTS_ENDED)));
         setFillAllDayEvents(context, jso.getBoolean(PREF_FILL_ALL_DAY));
         setHideBasedOnKeywords(context, jso.getString(PREF_HIDE_BASED_ON_KEYWORDS));
         setShowDaysWithoutEvents(context, jso.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS));
@@ -101,12 +102,12 @@ public class CalendarPreferences {
         editor.apply();
     }
 
-    public static EndedSometimeAgo getEventsEnded(Context context) {
-        return EndedSometimeAgo.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
+    public static EndedSomeTimeAgoB getEventsEnded(Context context) {
+        return EndedSomeTimeAgoB.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
                 PREF_EVENTS_ENDED, ""));
     }
 
-    public static void setEventsEnded(Context context, EndedSometimeAgo value) {
+    public static void setEventsEnded(Context context, EndedSomeTimeAgoB value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PREF_EVENTS_ENDED, value.save());

@@ -2,7 +2,7 @@ package com.plusonelabs.calendar;
 
 import org.joda.time.DateTime;
 
-public enum EndedSometimeAgo {
+public enum EndedSomeTimeAgoB {
     NONE("NONE", 0),
     TODAY("TODAY", 0) {
         @Override
@@ -23,7 +23,7 @@ public enum EndedSometimeAgo {
     private final String value;
     private final int hoursAgo;
 
-    EndedSometimeAgo(String valueIn, int hoursAgo) {
+    EndedSomeTimeAgoB(String valueIn, int hoursAgo) {
         this.value = valueIn;
         this.hoursAgo = hoursAgo;
     }
@@ -32,9 +32,9 @@ public enum EndedSometimeAgo {
         return now.minusHours(hoursAgo);
     }
 
-    public static EndedSometimeAgo fromValue(String valueIn) {
-        EndedSometimeAgo ended = NONE;
-        for (EndedSometimeAgo item : EndedSometimeAgo.values()) {
+    public static EndedSomeTimeAgoB fromValue(String valueIn) {
+        EndedSomeTimeAgoB ended = NONE;
+        for (EndedSomeTimeAgoB item : EndedSomeTimeAgoB.values()) {
             if (item.value.equals(valueIn)) {
                 ended = item;
                 break;

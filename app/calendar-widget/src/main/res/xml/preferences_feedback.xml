@@ -14,7 +14,7 @@
             android:data="https://play.google.com/store/apps/details?id=com.plusonelabs.calendar" />
     </Preference>
     <Preference
-        android:key="share_events_for_debugging"
+        android:key="shareEventsForDebugging"
         android:summary="@string/share_events_for_debugging_desc"
         android:title="@string/share_events_for_debugging_title"
         android:persistent="false" />

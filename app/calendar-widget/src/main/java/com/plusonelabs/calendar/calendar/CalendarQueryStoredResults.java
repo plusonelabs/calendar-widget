@@ -81,8 +81,8 @@ public class CalendarQueryStoredResults {
         return storedResults != null;
     }
 
-    public static void setNeedStoreResults( boolean yes) {
-        if (yes) {
+    public static void setNeedStoreResults( boolean needStoreResults) {
+        if (needStoreResults) {
             storedResults = new CalendarQueryStoredResults();
         } else {
             storedResults = null;

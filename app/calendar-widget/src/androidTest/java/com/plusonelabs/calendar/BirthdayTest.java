@@ -46,7 +46,7 @@ public class BirthdayTest extends InstrumentationTestCase {
                         com.plusonelabs.calendar.tests.R.raw.birthday)
         );
 
-        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.NONE);
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSomeTimeAgoB.NONE);
         CalendarPreferences.setShowPastEventsWithDefaultColor(mProvider.getContext(), false);
         CalendarPreferences.setEventRange(mProvider.getContext(), 30);
         playAtOneTime(inputs, new DateTime(2015, 8, 1, 17, 0), 0);
@@ -63,19 +63,19 @@ public class BirthdayTest extends InstrumentationTestCase {
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 0, 30), 0);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 11, 0), 0);
 
-        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.ONE_HOUR);
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSomeTimeAgoB.ONE_HOUR);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 0, 30), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 0);
 
-        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.TODAY);
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSomeTimeAgoB.TODAY);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 0);
 
-        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.FOUR_HOURS);
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSomeTimeAgoB.FOUR_HOURS);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 3, 59), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 4,  0), 0);
 
-        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSometimeAgo.YESTERDAY);
+        CalendarPreferences.setEventsEnded(mProvider.getContext(), EndedSomeTimeAgoB.YESTERDAY);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 4, 0), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10,11,  0), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 17, 0), 2);

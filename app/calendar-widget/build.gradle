@@ -24,7 +24,7 @@ android {
     buildToolsVersion '22.0.1'
 
     defaultConfig {
-        versionName = '1.9.3'
+        versionName = '1.9.2'
         versionCode = 30
         minSdkVersion 15
         targetSdkVersion 22

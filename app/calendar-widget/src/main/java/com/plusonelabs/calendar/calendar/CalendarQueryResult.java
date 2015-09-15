@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Useful for logging and Mocking CalendarContentProvider
+ * Useful for logging and mocking CalendarContentProvider
  * @author yvolk@yurivolkov.com
  */
 public class CalendarQueryResult {
@@ -33,34 +33,34 @@ public class CalendarQueryResult {
     private static final String KEY_SELECTION_ARGS = "selectionArgs";
     private static final String KEY_SORT_ORDER = "sortOrder";
 
-    private final DateTime mExecutedAt;
-    private Uri mUri = Uri.EMPTY;
-    private String[] mProjection = {};
-    private String mSelection = "";
-    private String[] mSelectionArgs = {};
-    private String mSortOrder = "";
-    private final List<CalendarQueryRow> mRows = new ArrayList<>();
+    private final DateTime executedAt;
+    private Uri uri = Uri.EMPTY;
+    private String[] projection = {};
+    private String selection = "";
+    private String[] selectionArgs = {};
+    private String sortOrder = "";
+    private final List<CalendarQueryRow> rows = new ArrayList<>();
 
     public CalendarQueryResult (Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        mExecutedAt = DateUtil.now();
-        mUri = uri;
-        mProjection = projection;
-        mSelection = selection;
-        mSelectionArgs = selectionArgs;
-        mSortOrder = sortOrder;
+        executedAt = DateUtil.now();
+        this.uri = uri;
+        this.projection = projection;
+        this.selection = selection;
+        this.selectionArgs = selectionArgs;
+        this.sortOrder = sortOrder;
     }
 
     CalendarQueryResult(DateTime executedAt) {
-        mExecutedAt = executedAt;
+        this.executedAt = executedAt;
     }
 
     public static CalendarQueryResult fromJson(JSONObject jso) throws JSONException {
         CalendarQueryResult result = new CalendarQueryResult(new DateTime(jso.getLong(KEY_EXECUTED_AT)));
-        result.mUri = Uri.parse(jso.getString(KEY_URI));
-        result.mProjection = jsonToArrayOfStings(jso.getJSONArray(KEY_PROJECTION));
-        result.mSelection = jso.getString(KEY_SELECTION);
-        result.mSelectionArgs = jsonToArrayOfStings(jso.getJSONArray(KEY_SELECTION_ARGS));
-        result.mSortOrder = jso.getString(KEY_SORT_ORDER);
+        result.uri = Uri.parse(jso.getString(KEY_URI));
+        result.projection = jsonToArrayOfStings(jso.getJSONArray(KEY_PROJECTION));
+        result.selection = jso.getString(KEY_SELECTION);
+        result.selectionArgs = jsonToArrayOfStings(jso.getJSONArray(KEY_SELECTION_ARGS));
+        result.sortOrder = jso.getString(KEY_SORT_ORDER);
 
         JSONArray jsa = jso.getJSONArray(KEY_ROWS);
         if (jsa != null) {
@@ -83,7 +83,7 @@ public class CalendarQueryResult {
 
     public Cursor query(String[] projection) {
         MatrixCursor cursor = new MatrixCursor(projection);
-        for (CalendarQueryRow row : mRows) {
+        for (CalendarQueryRow row : rows) {
             cursor.addRow(row.getArray(projection));
         }
         return cursor;
@@ -94,19 +94,19 @@ public class CalendarQueryResult {
     }
 
     public void addRow(CalendarQueryRow row) {
-        mRows.add(row);
+        rows.add(row);
     }
 
     public Uri getUri() {
-        return mUri;
+        return uri;
     }
 
     public String getSelection() {
-        return mSelection;
+        return selection;
     }
 
     public List<CalendarQueryRow> getRows() {
-        return mRows;
+        return rows;
     }
 
     @Override
@@ -116,14 +116,14 @@ public class CalendarQueryResult {
 
         CalendarQueryResult that = (CalendarQueryResult) o;
 
-        if (!mUri.equals(that.mUri)) return false;
-        if (!Arrays.equals(mProjection, that.mProjection)) return false;
-        if (!mSelection.equals(that.mSelection)) return false;
-        if (!Arrays.equals(mSelectionArgs, that.mSelectionArgs)) return false;
-        if (!mSortOrder.equals(that.mSortOrder)) return false;
-        if (mRows.size() != that.mRows.size()) return false;
-        for (int ind=0; ind < mRows.size(); ind++) {
-            if (!mRows.get(ind).equals(that.mRows.get(ind))) {
+        if (!uri.equals(that.uri)) return false;
+        if (!Arrays.equals(projection, that.projection)) return false;
+        if (!selection.equals(that.selection)) return false;
+        if (!Arrays.equals(selectionArgs, that.selectionArgs)) return false;
+        if (!sortOrder.equals(that.sortOrder)) return false;
+        if (rows.size() != that.rows.size()) return false;
+        for (int ind=0; ind < rows.size(); ind++) {
+            if (!rows.get(ind).equals(that.rows.get(ind))) {
                 return false;
             }
         }
@@ -133,13 +133,13 @@ public class CalendarQueryResult {
 
     @Override
     public int hashCode() {
-        int result = mUri.hashCode();
-        result = 31 * result + Arrays.hashCode(mProjection);
-        result = 31 * result + mSelection.hashCode();
-        result = 31 * result + (mSelectionArgs != null ? Arrays.hashCode(mSelectionArgs) : 0);
-        result = 31 * result + mSortOrder.hashCode();
-        for (int ind=0; ind < mRows.size(); ind++) {
-            result = 31 * result + mRows.get(ind).hashCode();
+        int result = uri.hashCode();
+        result = 31 * result + Arrays.hashCode(projection);
+        result = 31 * result + selection.hashCode();
+        result = 31 * result + (selectionArgs != null ? Arrays.hashCode(selectionArgs) : 0);
+        result = 31 * result + sortOrder.hashCode();
+        for (int ind=0; ind < rows.size(); ind++) {
+            result = 31 * result + rows.get(ind).hashCode();
         }
         return result;
     }
@@ -150,24 +150,24 @@ public class CalendarQueryResult {
             return toJson().toString(2);
         } catch (JSONException e) {
             return TAG + " Error converting to Json "
-                    + e.getMessage() + "; " + mRows.toString();
+                    + e.getMessage() + "; " + rows.toString();
         }
     }
 
     public JSONObject toJson() throws JSONException {
         JSONObject jso = new JSONObject();
-        jso.put(KEY_EXECUTED_AT, mExecutedAt.getMillis());
-        DateTimeZone zone = mExecutedAt.getZone();
+        jso.put(KEY_EXECUTED_AT, executedAt.getMillis());
+        DateTimeZone zone = executedAt.getZone();
         jso.put(KEY_TIME_ZONE_ID, zone.getID());
-        jso.put(KEY_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getOffset(mExecutedAt));
-        jso.put(KEY_STANDARD_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getStandardOffset(mExecutedAt.getMillis()));
-        jso.put(KEY_URI, mUri != null ? mUri.toString() : "");
-        jso.put(KEY_PROJECTION, arrayOfStingsToJson(mProjection));
-        jso.put(KEY_SELECTION, mSelection != null ? mSelection : "");
-        jso.put(KEY_SELECTION_ARGS, arrayOfStingsToJson(mSelectionArgs));
-        jso.put(KEY_SORT_ORDER, mSortOrder != null ? mSortOrder : "");
+        jso.put(KEY_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getOffset(executedAt));
+        jso.put(KEY_STANDARD_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getStandardOffset(executedAt.getMillis()));
+        jso.put(KEY_URI, uri != null ? uri.toString() : "");
+        jso.put(KEY_PROJECTION, arrayOfStingsToJson(projection));
+        jso.put(KEY_SELECTION, selection != null ? selection : "");
+        jso.put(KEY_SELECTION_ARGS, arrayOfStingsToJson(selectionArgs));
+        jso.put(KEY_SORT_ORDER, sortOrder != null ? sortOrder : "");
         JSONArray jsa = new JSONArray();
-        for (CalendarQueryRow row : mRows) {
+        for (CalendarQueryRow row : rows) {
             jsa.put(row.toJson());
         }
         jso.put(KEY_ROWS, jsa);
@@ -185,7 +185,7 @@ public class CalendarQueryResult {
     }
 
     public void dropNullColumns() {
-        for (CalendarQueryRow row : mRows) {
+        for (CalendarQueryRow row : rows) {
             row.dropNullColumns();
         }
     }

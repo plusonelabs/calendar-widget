@@ -3,7 +3,7 @@ package com.plusonelabs.calendar;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import com.plusonelabs.calendar.calendar.CalendarQueryStoredResults;
+import com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
 import com.plusonelabs.calendar.widget.DayHeader;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
@@ -21,45 +21,45 @@ import java.io.IOException;
 public class MultidayAllDayEventTest extends InstrumentationTestCase {
     private static final String TAG = MultidayAllDayEventTest.class.getSimpleName();
 
-    private MockCalendarContentProvider mProvider = null;
-    private EventRemoteViewsFactory mFactory = null;
+    private MockCalendarContentProvider provider = null;
+    private EventRemoteViewsFactory factory = null;
     private int eventRangeStored;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mProvider = MockCalendarContentProvider.getContentProvider(this);
-        mFactory = new EventRemoteViewsFactory(mProvider.getContext());
-        eventRangeStored = CalendarPreferences.getEventRange(mProvider.getContext());
+        provider = MockCalendarContentProvider.getContentProvider(this);
+        factory = new EventRemoteViewsFactory(provider.getContext());
+        eventRangeStored = CalendarPreferences.getEventRange(provider.getContext());
     }
 
     @Override
     protected void tearDown() throws Exception {
-        CalendarPreferences.setEventRange(mProvider.getContext(), eventRangeStored);
-        mProvider.tearDown();
+        CalendarPreferences.setEventRange(provider.getContext(), eventRangeStored);
+        provider.tearDown();
         super.tearDown();
     }
 
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";
-        CalendarQueryStoredResults inputs = CalendarQueryStoredResults.fromJsonString(
+        CalendarQueryResultsStorage inputs = CalendarQueryResultsStorage.fromJsonString(
                 RawResourceUtils.getString(this.getInstrumentation().getContext(),
                         com.plusonelabs.calendar.tests.R.raw.multi_day)
         );
-        mProvider.addResults(inputs.getResults());
+        provider.addResults(inputs.getResults());
 
         int dateRange = 30;
-        CalendarPreferences.setEventRange(mProvider.getContext(), dateRange);
+        CalendarPreferences.setEventRange(provider.getContext(), dateRange);
         DateTime now = new DateTime(2015, 8, 30, 0, 0, 0);
         DateUtil.setNow(now);
-        mFactory.onDataSetChanged();
+        factory.onDataSetChanged();
 
         DateTime today = now.withTimeAtStartOfDay();
         DateTime endOfRangeTime = today.plusDays(dateRange);
         int dayOfEventEntryPrev = 0;
         int dayOfHeaderPrev = 0;
-        for (int ind=0; ind < mFactory.getWidgetEntries().size(); ind++) {
-            WidgetEntry entry = mFactory.getWidgetEntries().get(ind);
+        for (int ind=0; ind < factory.getWidgetEntries().size(); ind++) {
+            WidgetEntry entry = factory.getWidgetEntries().get(ind);
             String logMsg = method + "; " + String.format("%02d ", ind) + entry.toString();
             Log.v(TAG, logMsg);
             if (entry.getStartDay().isBefore(today)) {

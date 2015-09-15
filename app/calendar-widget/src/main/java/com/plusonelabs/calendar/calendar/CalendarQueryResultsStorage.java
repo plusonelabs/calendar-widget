@@ -22,8 +22,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author yvolk@yurivolkov.com
  */
-public class CalendarQueryStoredResults {
-    private static final String TAG = CalendarQueryStoredResults.class.getSimpleName();
+public class CalendarQueryResultsStorage {
+    private static final String TAG = CalendarQueryResultsStorage.class.getSimpleName();
     private static final String KEY_RESULTS_VERSION = "resultsVersion";
     private static final int RESULTS_VERSION = 1;
     private static final String KEY_RESULTS = "results";
@@ -40,15 +40,15 @@ public class CalendarQueryStoredResults {
     private static final String KEY_ANDROID_BRAND = "buildBrand";
     private static final String KEY_ANDROID_MODEL = "buildModel";
 
-    private static volatile CalendarQueryStoredResults storedResults = null;
+    private static volatile CalendarQueryResultsStorage theStorage = null;
 
-    private final List<CalendarQueryResult> mResults = new CopyOnWriteArrayList<>();
+    private final List<CalendarQueryResult> results = new CopyOnWriteArrayList<>();
 
     public static boolean store(CalendarQueryResult result) {
-        CalendarQueryStoredResults results = storedResults;
-        if (results != null) {
-            results.mResults.add(result);
-            return (results == storedResults);
+        CalendarQueryResultsStorage storage = theStorage;
+        if (storage != null) {
+            storage.results.add(result);
+            return (storage == theStorage);
         }
         return false;
     }
@@ -57,10 +57,10 @@ public class CalendarQueryStoredResults {
         final String method = "shareEventsForDebugging";
         try {
             Log.i(TAG, method + " started");
-            setNeedStoreResults(true);
+            setNeedToStoreResults(true);
             EventRemoteViewsFactory factory = new EventRemoteViewsFactory(context);
             factory.onDataSetChanged();
-            String results = storedResults.getResultsAsString(context);
+            String results = theStorage.getResultsAsString(context);
             if (TextUtils.isEmpty(results)) {
                 Log.i(TAG, method + "; Nothing to share");
             } else {
@@ -73,28 +73,28 @@ public class CalendarQueryStoredResults {
                 Log.i(TAG, method + "; Shared " + results);
             }
         } finally {
-            setNeedStoreResults(false);
+            setNeedToStoreResults(false);
         }
     }
 
     public static boolean getNeedToStoreResults() {
-        return storedResults != null;
+        return theStorage != null;
     }
 
-    public static void setNeedStoreResults( boolean needStoreResults) {
-        if (needStoreResults) {
-            storedResults = new CalendarQueryStoredResults();
+    public static void setNeedToStoreResults(boolean needToStoreResults) {
+        if (needToStoreResults) {
+            theStorage = new CalendarQueryResultsStorage();
         } else {
-            storedResults = null;
+            theStorage = null;
         }
     }
 
-    public static CalendarQueryStoredResults getStored() {
-        return storedResults;
+    public static CalendarQueryResultsStorage getStorage() {
+        return theStorage;
     }
 
     public List<CalendarQueryResult> getResults() {
-        return mResults;
+        return results;
     }
 
     private String getResultsAsString(Context context) {
@@ -107,7 +107,7 @@ public class CalendarQueryStoredResults {
 
     public JSONObject toJson(Context context) throws JSONException {
         JSONObject jso = new JSONObject();
-        List<CalendarQueryResult> results = mResults;
+        List<CalendarQueryResult> results = this.results;
         jso.put(KEY_RESULTS_VERSION, RESULTS_VERSION);
         jso.put(KEY_DEVICE_INFO, getDeviceInfo());
         jso.put(KEY_APP_INFO, getAppInfo(context));
@@ -121,15 +121,15 @@ public class CalendarQueryStoredResults {
         return jso;
     }
 
-    public static CalendarQueryStoredResults fromJsonString(String jsonString) throws JSONException {
+    public static CalendarQueryResultsStorage fromJsonString(String jsonString) throws JSONException {
         return fromJson(new JSONObject(jsonString));
     }
 
-    public static CalendarQueryStoredResults fromJson(JSONObject jso) throws JSONException {
-        CalendarQueryStoredResults results = new CalendarQueryStoredResults();
+    public static CalendarQueryResultsStorage fromJson(JSONObject jso) throws JSONException {
+        CalendarQueryResultsStorage results = new CalendarQueryResultsStorage();
         JSONArray jsonResults = jso.getJSONArray(KEY_RESULTS);
         for (int ind=0; ind < jsonResults.length(); ind++) {
-            results.mResults.add(CalendarQueryResult.fromJson(jsonResults.getJSONObject(ind)));
+            results.results.add(CalendarQueryResult.fromJson(jsonResults.getJSONObject(ind)));
         }
         return results;
     }
@@ -165,13 +165,13 @@ public class CalendarQueryStoredResults {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CalendarQueryStoredResults results = (CalendarQueryStoredResults) o;
+        CalendarQueryResultsStorage results = (CalendarQueryResultsStorage) o;
 
-        if (mResults.size() != results.mResults.size()) {
+        if (this.results.size() != results.results.size()) {
             return false;
         }
-        for (int ind=0; ind < mResults.size(); ind++) {
-            if (!mResults.get(ind).equals(results.mResults.get(ind))) {
+        for (int ind=0; ind < this.results.size(); ind++) {
+            if (!this.results.get(ind).equals(results.results.get(ind))) {
                 return false;
             }
         }
@@ -181,8 +181,8 @@ public class CalendarQueryStoredResults {
     @Override
     public int hashCode() {
         int result = 0;
-        for (int ind=0; ind < mResults.size(); ind++) {
-            result = 31 * result + mResults.get(ind).hashCode();
+        for (int ind=0; ind < results.size(); ind++) {
+            result = 31 * result + results.get(ind).hashCode();
         }
         return result;
     }

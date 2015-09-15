@@ -129,7 +129,7 @@ public class CalendarEventProvider {
             if (cursor != null) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
-                    if (CalendarQueryStoredResults.getNeedToStoreResults()) {
+                    if (CalendarQueryResultsStorage.getNeedToStoreResults()) {
                         result.addRow(cursor);
                     }
                     CalendarEvent event = createCalendarEvent(cursor);
@@ -143,7 +143,7 @@ public class CalendarEventProvider {
                 cursor.close();
             }
         }
-        CalendarQueryStoredResults.store(result);
+        CalendarQueryResultsStorage.store(result);
         return eventList;
     }
 

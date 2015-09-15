@@ -17,22 +17,22 @@ import java.util.concurrent.TimeUnit;
 public class RecurringEventsTest extends InstrumentationTestCase {
     private static final String TAG = RecurringEventsTest.class.getSimpleName();
 
-    private MockCalendarContentProvider mProvider = null;
-    private EventRemoteViewsFactory mFactory = null;
-    private int mEventId = 0;
+    private MockCalendarContentProvider provider = null;
+    private EventRemoteViewsFactory factory = null;
+    private int eventId = 0;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mProvider = MockCalendarContentProvider.getContentProvider(this);
-        mFactory = new EventRemoteViewsFactory(mProvider.getContext());
-        assertTrue(mFactory.getWidgetEntries().isEmpty());
-        mEventId = 0;
+        provider = MockCalendarContentProvider.getContentProvider(this);
+        factory = new EventRemoteViewsFactory(provider.getContext());
+        assertTrue(factory.getWidgetEntries().isEmpty());
+        eventId = 0;
     }
 
     @Override
     protected void tearDown() throws Exception {
-        mProvider.tearDown();
+        provider.tearDown();
         super.tearDown();
     }
 
@@ -42,16 +42,16 @@ public class RecurringEventsTest extends InstrumentationTestCase {
     public void testShowRecurringEvents() {
         DateTime date = DateTime.now().withTimeAtStartOfDay();
         long millis = date.getMillis() + TimeUnit.HOURS.toMillis(10);
-        mEventId++;
+        eventId++;
         for (int ind=0; ind<15; ind++) {
-            millis += TimeUnit.DAYS.toMillis(ind);
-            mProvider.addRow(new CalendarQueryRow().setEventId(mEventId).setTitle("Work each day")
+            millis += TimeUnit.DAYS.toMillis(1);
+            provider.addRow(new CalendarQueryRow().setEventId(eventId).setTitle("Work each day")
                     .setBegin(millis).setEnd(millis + TimeUnit.HOURS.toMillis(9)));
         }
-        mFactory.onDataSetChanged();
-        for (WidgetEntry entry : mFactory.getWidgetEntries()) {
+        factory.onDataSetChanged();
+        for (WidgetEntry entry : factory.getWidgetEntries()) {
             Log.v(TAG, entry.toString());
         }
-        assertTrue("Entries: " + mFactory.getWidgetEntries().size(), mFactory.getWidgetEntries().size() > 15);
+        assertTrue("Entries: " + factory.getWidgetEntries().size(), factory.getWidgetEntries().size() > 15);
     }
 }

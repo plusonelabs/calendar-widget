@@ -16,21 +16,21 @@ import org.joda.time.DateTime;
 public class OngoingEventTest extends InstrumentationTestCase {
     private static final String TAG = OngoingEventTest.class.getSimpleName();
 
-    private MockCalendarContentProvider mProvider = null;
-    private EventRemoteViewsFactory mFactory = null;
-    private int mEventId = 0;
+    private MockCalendarContentProvider provider = null;
+    private EventRemoteViewsFactory factory = null;
+    private int eventId = 0;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mProvider = MockCalendarContentProvider.getContentProvider(this);
-        mFactory = new EventRemoteViewsFactory(mProvider.getContext());
-        assertTrue(mFactory.getWidgetEntries().isEmpty());
+        provider = MockCalendarContentProvider.getContentProvider(this);
+        factory = new EventRemoteViewsFactory(provider.getContext());
+        assertTrue(factory.getWidgetEntries().isEmpty());
     }
 
     @Override
     protected void tearDown() throws Exception {
-        mProvider.tearDown();
+        provider.tearDown();
         super.tearDown();
     }
 
@@ -40,16 +40,16 @@ public class OngoingEventTest extends InstrumentationTestCase {
     public void testTodaysOngoingEvent() {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent();
-        event.setEventId(++mEventId);
+        event.setEventId(++eventId);
         event.setTitle("Ongoing event shows original start time");
         event.setStartDate(today.plusHours(9));
         event.setEndDate(today.plusHours(12));
 
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
-        mProvider.addRow(event);
-        mFactory.onDataSetChanged();
+        provider.addRow(event);
+        factory.onDataSetChanged();
         CalendarEntry entry = null;
-        for (WidgetEntry item : mFactory.getWidgetEntries()) {
+        for (WidgetEntry item : factory.getWidgetEntries()) {
             Log.v(TAG, item.toString());
             if (item instanceof CalendarEntry) {
                 entry = (CalendarEntry) item;
@@ -67,16 +67,16 @@ public class OngoingEventTest extends InstrumentationTestCase {
     public void testYesterdaysOngoingEvent() {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent();
-        event.setEventId(++mEventId);
+        event.setEventId(++eventId);
         event.setTitle("Ongoing event, which started yesterday, shows no start time");
         event.setStartDate(today.minusDays(1).plusHours(9));
         event.setEndDate(today.plusHours(12));
 
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
-        mProvider.addRow(event);
-        mFactory.onDataSetChanged();
+        provider.addRow(event);
+        factory.onDataSetChanged();
         CalendarEntry entry = null;
-        for (WidgetEntry item : mFactory.getWidgetEntries()) {
+        for (WidgetEntry item : factory.getWidgetEntries()) {
             Log.v(TAG, item.toString());
             if (item instanceof CalendarEntry) {
                 entry = (CalendarEntry) item;

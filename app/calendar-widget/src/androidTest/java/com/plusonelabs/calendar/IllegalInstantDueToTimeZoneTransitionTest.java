@@ -23,22 +23,21 @@ import java.util.concurrent.TimeUnit;
 public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTestCase {
     private static final String TAG = IllegalInstantDueToTimeZoneTransitionTest.class.getSimpleName();
 
-    private MockCalendarContentProvider mProvider = null;
-    private EventRemoteViewsFactory mFactory = null;
-    private int mEventId = 0;
+    private MockCalendarContentProvider provider = null;
+    private EventRemoteViewsFactory factory = null;
+    private int eventId = 0;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mProvider = MockCalendarContentProvider.getContentProvider(this);
-        mFactory = new EventRemoteViewsFactory(mProvider.getContext());
-        assertTrue(mFactory.getWidgetEntries().isEmpty());
-        mEventId = 0;
+        provider = MockCalendarContentProvider.getContentProvider(this);
+        factory = new EventRemoteViewsFactory(provider.getContext());
+        assertTrue(factory.getWidgetEntries().isEmpty());
     }
 
     @Override
     protected void tearDown() throws Exception {
-        mProvider.tearDown();
+        provider.tearDown();
         super.tearDown();
     }
 
@@ -57,18 +56,18 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTe
         oneTimeDst("2015-10-25T00:00:00+00:00");
         oneTimeDst("2011-03-27T00:00:00+00:00");
         oneTimeDst("1980-04-06T00:00:00+00:00");
-        mFactory.onDataSetChanged();
-        for (WidgetEntry entry : mFactory.getWidgetEntries()) {
+        factory.onDataSetChanged();
+        for (WidgetEntry entry : factory.getWidgetEntries()) {
             Log.v(TAG, entry.toString());
         }
-        assertEquals(1, mProvider.getQueriesCount());
+        assertEquals(1, provider.getQueriesCount());
     }
 
     private void oneTimeDst(String iso8601time) {
         long millis = toMillis(iso8601time);
         String title = "DST";
         for (int ind=-25; ind<26; ind++) {
-            mProvider.addRow(new CalendarQueryRow().setEventId(++mEventId).setTitle(title + " " + ind)
+            provider.addRow(new CalendarQueryRow().setEventId(++eventId).setTitle(title + " " + ind)
                     .setBegin(millis + TimeUnit.HOURS.toMillis(ind)).setAllDay(1));
         }
     }

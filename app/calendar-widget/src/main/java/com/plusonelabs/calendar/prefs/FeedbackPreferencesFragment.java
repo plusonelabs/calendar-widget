@@ -6,7 +6,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import com.plusonelabs.calendar.R;
-import com.plusonelabs.calendar.calendar.CalendarQueryStoredResults;
+import com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage;
 
 public class FeedbackPreferencesFragment extends PreferenceFragment {
 
@@ -14,7 +14,7 @@ public class FeedbackPreferencesFragment extends PreferenceFragment {
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 		switch (preference.getKey()) {
             case CalendarPreferences.KEY_SHARE_EVENTS_FOR_DEBUGGING:
-                CalendarQueryStoredResults.shareEventsForDebugging(getActivity());
+                CalendarQueryResultsStorage.shareEventsForDebugging(getActivity());
 			default:
 				break;
 		}

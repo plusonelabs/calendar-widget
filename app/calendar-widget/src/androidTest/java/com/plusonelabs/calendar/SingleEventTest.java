@@ -16,22 +16,21 @@ import org.joda.time.DateTime;
 public class SingleEventTest extends InstrumentationTestCase {
     private static final String TAG = SingleEventTest.class.getSimpleName();
 
-    private MockCalendarContentProvider mProvider = null;
-    private EventRemoteViewsFactory mFactory = null;
-    private int mEventId = 0;
+    private MockCalendarContentProvider provider = null;
+    private EventRemoteViewsFactory factory = null;
+    private int eventId = 0;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mProvider = MockCalendarContentProvider.getContentProvider(this);
-        mFactory = new EventRemoteViewsFactory(mProvider.getContext());
-        assertTrue(mFactory.getWidgetEntries().isEmpty());
-        mEventId = 0;
+        provider = MockCalendarContentProvider.getContentProvider(this);
+        factory = new EventRemoteViewsFactory(provider.getContext());
+        assertTrue(factory.getWidgetEntries().isEmpty());
     }
 
     @Override
     protected void tearDown() throws Exception {
-        mProvider.tearDown();
+        provider.tearDown();
         super.tearDown();
     }
 
@@ -39,7 +38,7 @@ public class SingleEventTest extends InstrumentationTestCase {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
         DateUtil.setNow(today.plusHours(10));
         CalendarEvent event = new CalendarEvent();
-        event.setEventId(++mEventId);
+        event.setEventId(++eventId);
         event.setTitle("Single Event today with all known attributes");
         event.setStartDate(today.plusHours(12));
         event.setEndDate(today.plusHours(13));
@@ -63,15 +62,15 @@ public class SingleEventTest extends InstrumentationTestCase {
     }
 
     private void assertOneEvent(CalendarEvent event, boolean equal) {
-        mProvider.clear();
-        mProvider.addRow(event);
-        mFactory.onDataSetChanged();
-        for (WidgetEntry entry : mFactory.getWidgetEntries()) {
+        provider.clear();
+        provider.addRow(event);
+        factory.onDataSetChanged();
+        for (WidgetEntry entry : factory.getWidgetEntries()) {
             Log.v(TAG, entry.toString());
         }
-        assertEquals(1, mProvider.getQueriesCount());
-        assertEquals(mFactory.getWidgetEntries().toString(), 2, mFactory.getWidgetEntries().size());
-        WidgetEntry entry = mFactory.getWidgetEntries().get(1);
+        assertEquals(1, provider.getQueriesCount());
+        assertEquals(factory.getWidgetEntries().toString(), 2, factory.getWidgetEntries().size());
+        WidgetEntry entry = factory.getWidgetEntries().get(1);
         assertTrue(entry instanceof CalendarEntry);
         CalendarEvent eventOut = ((CalendarEntry) entry).getEvent();
         if (equal) {

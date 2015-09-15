@@ -28,8 +28,8 @@ import java.util.Set;
  */
 public class MockCalendarContentProvider extends MockContentProvider {
 
-    private int mQueriesCount = 0;
-    private final List<CalendarQueryResult> mResults = new ArrayList<>();
+    private int queriesCount = 0;
+    private final List<CalendarQueryResult> results = new ArrayList<>();
     private final Set<String> storedCalendars;
     private final JSONObject storedPreferences;
 
@@ -85,11 +85,11 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        mQueriesCount++;
-        if (mResults.size() < mQueriesCount) {
+        queriesCount++;
+        if (results.size() < queriesCount) {
             return null;
         } else {
-            return mResults.get(mQueriesCount - 1).query(projection);
+            return results.get(queriesCount - 1).query(projection);
         }
     }
 
@@ -100,7 +100,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void addResult(CalendarQueryResult result) {
-        mResults.add(result);
+        results.add(result);
     }
 
     public void addRow(CalendarEvent event) {
@@ -118,19 +118,19 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void addRow(CalendarQueryRow calendarQueryRow) {
-        if(mResults.isEmpty()) {
+        if(results.isEmpty()) {
             addResult(new CalendarQueryResult(DateUtil.now()));
         }
-        mResults.get(0).addRow(calendarQueryRow);
+        results.get(0).addRow(calendarQueryRow);
     }
 
     public void clear() {
-        mQueriesCount = 0;
-        mResults.clear();
+        queriesCount = 0;
+        results.clear();
     }
 
     public int getQueriesCount() {
-        return mQueriesCount;
+        return queriesCount;
     }
 
     public void refreshWidget() {

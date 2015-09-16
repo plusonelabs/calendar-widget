@@ -24,7 +24,7 @@
   <string name="appearance_text_size_very_large">Muito Grande</string>
   <string name="appearance_multiline_title_title">Título em múltiplas linhas</string>
   <string name="appearance_multiline_title_desc">Distribuir título por múltiplas linhas</string>
-  <string name="appearance_date_format_desc">Mostrar hora no formato am/pm ou 24 horas</string>
+  <string name="appearance_date_format_desc">Mostrar a hora no formato am/pm ou 24 horas</string>
   <string name="appearance_date_format_title">Formato da data</string>
   <string name="appearance_date_format_auto">Automático</string>
   <string name="appearance_date_format_24">17:00</string>

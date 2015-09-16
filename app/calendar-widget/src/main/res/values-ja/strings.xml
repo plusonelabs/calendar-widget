@@ -24,7 +24,7 @@
   <string name="appearance_text_size_very_large">特大</string>
   <string name="appearance_multiline_title_title">複数行のタイトル</string>
   <string name="appearance_multiline_title_desc">イベントタイトルを複数行に展開します</string>
-  <string name="appearance_date_format_desc">時刻をAM/PMまたは24時間形式で表示します</string>
+  <string name="appearance_date_format_desc">午前/午後 または 24 時間形式で時刻を表示します</string>
   <string name="appearance_date_format_title">時刻の形式</string>
   <string name="appearance_date_format_auto">自動</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -97,4 +97,6 @@
   <string name="feedback_play_store_desc">Googleプレイストアに評価／コメントしてください</string>
   <string name="feedback_play_store_title">Googleプレイストアに行く</string>
   <string name="refresh_desc">リフレッシュ</string>
+  <string name="share_events_for_debugging_desc">問題のトラブルシューティングに役立つレポートを作成します</string>
+  <string name="share_events_for_debugging_title">デバッグ用のイベントを共有します</string>
 </resources>

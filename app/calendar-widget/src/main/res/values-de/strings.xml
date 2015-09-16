@@ -24,7 +24,7 @@
   <string name="appearance_text_size_very_large">Sehr groß</string>
   <string name="appearance_multiline_title_title">Mehrzeiliger Titel</string>
   <string name="appearance_multiline_title_desc">Zeige Termintitel über mehrere Zeilen an</string>
-  <string name="appearance_date_format_desc">Anzeige in am/pm oder 24-Stunden-Format</string>
+  <string name="appearance_date_format_desc">Zeit mit in 24-Stunden oder am/pm Format anzeigen</string>
   <string name="appearance_date_format_title">Datumsformat </string>
   <string name="appearance_date_format_auto">Automatisch</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -97,4 +97,6 @@
   <string name="feedback_play_store_desc">Bewerten und kommentieren im Google Play-Shop</string>
   <string name="feedback_play_store_title">Widget im Google Play-Store</string>
   <string name="refresh_desc">Aktualisieren</string>
+  <string name="share_events_for_debugging_desc">Erstelle Bericht um dem Entwicklerteam bei Problembehebungen zu helfen</string>
+  <string name="share_events_for_debugging_title">Versende Bericht zur Problembehebung</string>
 </resources>

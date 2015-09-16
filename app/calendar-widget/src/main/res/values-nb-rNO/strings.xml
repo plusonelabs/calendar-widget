@@ -97,4 +97,6 @@
   <string name="feedback_play_store_desc">Ranger og kommenter på Google Play</string>
   <string name="feedback_play_store_title">Besøk Calendar Widget på Google Play</string>
   <string name="refresh_desc">Oppdater</string>
+  <string name="share_events_for_debugging_desc"></string>
+  <string name="share_events_for_debugging_title">Del hendelser for feilsøking</string>
 </resources>

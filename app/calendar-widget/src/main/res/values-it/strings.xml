@@ -24,13 +24,13 @@
   <string name="appearance_text_size_very_large">Molto grande</string>
   <string name="appearance_multiline_title_title">Titolo multilinea</string>
   <string name="appearance_multiline_title_desc">Disponi il titolo dell\'evento su più righe</string>
-  <string name="appearance_date_format_desc">Mostra ora nel formato am/pm o 24 ore</string>
+  <string name="appearance_date_format_desc">Visualizza il tempo in formato am/pm o 24 ore</string>
   <string name="appearance_date_format_title">Formato ora</string>
   <string name="appearance_date_format_auto">Automatico</string>
   <string name="appearance_date_format_24">17:00</string>
   <string name="appearance_date_format_12">5:00 pm</string>
   <string name="appearance_show_days_without_events_title">Visualizza i giorni senza eventi</string>
-  <string name="appearance_show_days_without_events_desc">Visualizzare le intestazioni giorno per giorni senza eventi</string>
+  <string name="appearance_show_days_without_events_desc">Visualizza le intestazioni del giorno per giorni senza eventi</string>
   <string name="appearance_display_header_title">Mostra intestazione widget</string>
   <string name="appearance_display_header_desc">Mostra data e strumenti nell\'intestazione</string>
   <string name="appearance_display_header_warning">Nascondendo l\'intestazione non si potrà accedere ai settaggi del widget.</string>
@@ -38,7 +38,7 @@
   <string name="appearance_background_color_title">Sfondo trasparente</string>
   <string name="appearance_background_color_desc">Imposta la trasparenza dello sfondo</string>
   <string name="appearance_past_events_background_color_title">Colore di sfondo di eventi passati</string>
-  <string name="appearance_past_events_background_color_desc">Regolare il colore di sfondo degli eventi passati</string>
+  <string name="appearance_past_events_background_color_desc">Regola il colore di sfondo degli eventi passati</string>
   <string name="appearance_day_header_alignment_desc">Imposta l\'allineamento dell\'intestazione del giorno</string>
   <string name="appearance_day_header_alignment_title">Allineamento intestazione del giorno</string>
   <string name="appearance_day_header_alignment_left">Sinistra</string>
@@ -97,4 +97,6 @@
   <string name="feedback_play_store_desc">Vota e commenta su Google Play Store</string>
   <string name="feedback_play_store_title">Visita su Google Play Store</string>
   <string name="refresh_desc">Aggiorna</string>
+  <string name="share_events_for_debugging_desc">Crea un report per aiutare gli sviluppatori a risolvere i problemi</string>
+  <string name="share_events_for_debugging_title">Condividi gli eventi per il debug</string>
 </resources>

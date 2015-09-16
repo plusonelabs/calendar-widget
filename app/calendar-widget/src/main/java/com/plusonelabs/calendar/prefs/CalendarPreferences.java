@@ -55,23 +55,23 @@ public class CalendarPreferences {
 	}
 
     public static JSONObject toJson(Context context) throws JSONException {
-        JSONObject jso = new JSONObject();
-        jso.put(PREF_EVENT_RANGE, getEventRange(context));
-        jso.put(PREF_EVENTS_ENDED, getEventsEnded(context));
-        jso.put(PREF_FILL_ALL_DAY, getFillAllDayEvents(context));
-        jso.put(PREF_HIDE_BASED_ON_KEYWORDS, getHideBasedOnKeywords(context));
-        jso.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, getShowDaysWithoutEvents(context));
-        jso.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, getShowPastEventsWithDefaultColor(context));
-        return jso;
+        JSONObject json = new JSONObject();
+        json.put(PREF_EVENT_RANGE, getEventRange(context));
+        json.put(PREF_EVENTS_ENDED, getEventsEnded(context));
+        json.put(PREF_FILL_ALL_DAY, getFillAllDayEvents(context));
+        json.put(PREF_HIDE_BASED_ON_KEYWORDS, getHideBasedOnKeywords(context));
+        json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, getShowDaysWithoutEvents(context));
+        json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, getShowPastEventsWithDefaultColor(context));
+        return json;
     }
 
-    public static void fromJson(Context context, JSONObject jso) throws JSONException {
-        setEventRange(context, jso.getInt(PREF_EVENT_RANGE));
-        setEventsEnded(context, EndedSomeTimeAgo.fromValue(jso.getString(PREF_EVENTS_ENDED)));
-        setFillAllDayEvents(context, jso.getBoolean(PREF_FILL_ALL_DAY));
-        setHideBasedOnKeywords(context, jso.getString(PREF_HIDE_BASED_ON_KEYWORDS));
-        setShowDaysWithoutEvents(context, jso.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS));
-        setShowPastEventsWithDefaultColor(context, jso.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR));
+    public static void fromJson(Context context, JSONObject json) throws JSONException {
+        setEventRange(context, json.getInt(PREF_EVENT_RANGE));
+        setEventsEnded(context, EndedSomeTimeAgo.fromValue(json.getString(PREF_EVENTS_ENDED)));
+        setFillAllDayEvents(context, json.getBoolean(PREF_FILL_ALL_DAY));
+        setHideBasedOnKeywords(context, json.getString(PREF_HIDE_BASED_ON_KEYWORDS));
+        setShowDaysWithoutEvents(context, json.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS));
+        setShowPastEventsWithDefaultColor(context, json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR));
     }
 
     public static Set<String> getActiveCalendars(Context context) {

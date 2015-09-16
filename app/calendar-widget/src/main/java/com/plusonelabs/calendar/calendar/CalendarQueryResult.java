@@ -54,28 +54,28 @@ public class CalendarQueryResult {
         this.executedAt = executedAt;
     }
 
-    public static CalendarQueryResult fromJson(JSONObject jso) throws JSONException {
-        CalendarQueryResult result = new CalendarQueryResult(new DateTime(jso.getLong(KEY_EXECUTED_AT)));
-        result.uri = Uri.parse(jso.getString(KEY_URI));
-        result.projection = jsonToArrayOfStings(jso.getJSONArray(KEY_PROJECTION));
-        result.selection = jso.getString(KEY_SELECTION);
-        result.selectionArgs = jsonToArrayOfStings(jso.getJSONArray(KEY_SELECTION_ARGS));
-        result.sortOrder = jso.getString(KEY_SORT_ORDER);
+    public static CalendarQueryResult fromJson(JSONObject json) throws JSONException {
+        CalendarQueryResult result = new CalendarQueryResult(new DateTime(json.getLong(KEY_EXECUTED_AT)));
+        result.uri = Uri.parse(json.getString(KEY_URI));
+        result.projection = jsonToArrayOfStings(json.getJSONArray(KEY_PROJECTION));
+        result.selection = json.getString(KEY_SELECTION);
+        result.selectionArgs = jsonToArrayOfStings(json.getJSONArray(KEY_SELECTION_ARGS));
+        result.sortOrder = json.getString(KEY_SORT_ORDER);
 
-        JSONArray jsa = jso.getJSONArray(KEY_ROWS);
-        if (jsa != null) {
-            for (int ind=0; ind < jsa.length(); ind++) {
-                result.addRow(CalendarQueryRow.fromJson(jsa.getJSONObject(ind)));
+        JSONArray jsonArray = json.getJSONArray(KEY_ROWS);
+        if (jsonArray != null) {
+            for (int ind=0; ind < jsonArray.length(); ind++) {
+                result.addRow(CalendarQueryRow.fromJson(jsonArray.getJSONObject(ind)));
             }
         }
         return result;
     }
 
-    private static String[] jsonToArrayOfStings(JSONArray jsa) throws JSONException {
-        String[] array = new String[ jsa != null ? jsa.length() : 0];
-        if (jsa != null) {
-            for (int ind=0; ind < jsa.length(); ind++) {
-                array[ind] = jsa.getString(ind);
+    private static String[] jsonToArrayOfStings(JSONArray jsonArray) throws JSONException {
+        String[] array = new String[ jsonArray != null ? jsonArray.length() : 0];
+        if (jsonArray != null) {
+            for (int ind=0; ind < jsonArray.length(); ind++) {
+                array[ind] = jsonArray.getString(ind);
             }
         }
         return array;
@@ -155,33 +155,33 @@ public class CalendarQueryResult {
     }
 
     public JSONObject toJson() throws JSONException {
-        JSONObject jso = new JSONObject();
-        jso.put(KEY_EXECUTED_AT, executedAt.getMillis());
+        JSONObject json = new JSONObject();
+        json.put(KEY_EXECUTED_AT, executedAt.getMillis());
         DateTimeZone zone = executedAt.getZone();
-        jso.put(KEY_TIME_ZONE_ID, zone.getID());
-        jso.put(KEY_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getOffset(executedAt));
-        jso.put(KEY_STANDARD_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getStandardOffset(executedAt.getMillis()));
-        jso.put(KEY_URI, uri != null ? uri.toString() : "");
-        jso.put(KEY_PROJECTION, arrayOfStingsToJson(projection));
-        jso.put(KEY_SELECTION, selection != null ? selection : "");
-        jso.put(KEY_SELECTION_ARGS, arrayOfStingsToJson(selectionArgs));
-        jso.put(KEY_SORT_ORDER, sortOrder != null ? sortOrder : "");
-        JSONArray jsa = new JSONArray();
+        json.put(KEY_TIME_ZONE_ID, zone.getID());
+        json.put(KEY_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getOffset(executedAt));
+        json.put(KEY_STANDARD_MILLIS_OFFSET_FROM_UTC_TO_LOCAL, zone.getStandardOffset(executedAt.getMillis()));
+        json.put(KEY_URI, uri != null ? uri.toString() : "");
+        json.put(KEY_PROJECTION, arrayOfStingsToJson(projection));
+        json.put(KEY_SELECTION, selection != null ? selection : "");
+        json.put(KEY_SELECTION_ARGS, arrayOfStingsToJson(selectionArgs));
+        json.put(KEY_SORT_ORDER, sortOrder != null ? sortOrder : "");
+        JSONArray jsonArray = new JSONArray();
         for (CalendarQueryRow row : rows) {
-            jsa.put(row.toJson());
+            jsonArray.put(row.toJson());
         }
-        jso.put(KEY_ROWS, jsa);
-        return jso;
+        json.put(KEY_ROWS, jsonArray);
+        return json;
     }
 
     private static JSONArray arrayOfStingsToJson(String[] array) {
-        JSONArray jsa = new JSONArray();
+        JSONArray jsonArray = new JSONArray();
         if (array != null) {
             for (String item : array) {
-                jsa.put(item);
+                jsonArray.put(item);
             }
         }
-        return jsa;
+        return jsonArray;
     }
 
     public void dropNullColumns() {

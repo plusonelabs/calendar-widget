@@ -76,8 +76,8 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTe
      * from http://stackoverflow.com/a/5451245/297710
      */
     private void reproducedTimeZoneOffsetTransitionException() {
-        final DateTimeZone dtz = DateTimeZone.forID("CET");
-        LocalDateTime ldt = new LocalDateTime(dtz)
+        final DateTimeZone dateTimeZone = DateTimeZone.forID("CET");
+        LocalDateTime localDateTime = new LocalDateTime(dateTimeZone)
                 .withYear(2011)
                 .withMonthOfYear(3)
                 .withDayOfMonth(27)
@@ -86,17 +86,18 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTe
         // this is just here to illustrate I'm solving the problem;
         // don't need in operational code
         try {
-            DateTime myDateBroken = ldt.toDateTime(dtz);
-            fail("No exception for " + ldt + " -> " + myDateBroken);
+            DateTime myDateBroken = localDateTime.toDateTime(dateTimeZone);
+            fail("No exception for " + localDateTime + " -> " + myDateBroken);
         } catch (IllegalArgumentException iae) {
-            Log.v(TAG, "Sure enough, invalid instant due to time zone offset transition: " + ldt);
+            Log.v(TAG, "Sure enough, invalid instant due to time zone offset transition: "
+                    + localDateTime);
         }
 
-        if (dtz.isLocalDateTimeGap(ldt)) {
-            ldt = ldt.withHourOfDay(3);
+        if (dateTimeZone.isLocalDateTimeGap(localDateTime)) {
+            localDateTime = localDateTime.withHourOfDay(3);
         }
 
-        DateTime myDate = ldt.toDateTime(dtz);
+        DateTime myDate = localDateTime.toDateTime(dateTimeZone);
         Log.v(TAG, "No problem with this date: " + myDate);
     }
 

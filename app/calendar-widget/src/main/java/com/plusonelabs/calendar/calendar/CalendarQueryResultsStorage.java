@@ -106,28 +106,28 @@ public class CalendarQueryResultsStorage {
     }
 
     public JSONObject toJson(Context context) throws JSONException {
-        JSONObject jso = new JSONObject();
+        JSONObject json = new JSONObject();
         List<CalendarQueryResult> results = this.results;
-        jso.put(KEY_RESULTS_VERSION, RESULTS_VERSION);
-        jso.put(KEY_DEVICE_INFO, getDeviceInfo());
-        jso.put(KEY_APP_INFO, getAppInfo(context));
+        json.put(KEY_RESULTS_VERSION, RESULTS_VERSION);
+        json.put(KEY_DEVICE_INFO, getDeviceInfo());
+        json.put(KEY_APP_INFO, getAppInfo(context));
         if (results != null) {
-            JSONArray jsa = new JSONArray();
+            JSONArray jsonArray = new JSONArray();
             for(CalendarQueryResult result : results) {
-                jsa.put(result.toJson());
+                jsonArray.put(result.toJson());
             }
-            jso.put(KEY_RESULTS, jsa);
+            json.put(KEY_RESULTS, jsonArray);
         }
-        return jso;
+        return json;
     }
 
     public static CalendarQueryResultsStorage fromJsonString(String jsonString) throws JSONException {
         return fromJson(new JSONObject(jsonString));
     }
 
-    public static CalendarQueryResultsStorage fromJson(JSONObject jso) throws JSONException {
+    public static CalendarQueryResultsStorage fromJson(JSONObject json) throws JSONException {
         CalendarQueryResultsStorage results = new CalendarQueryResultsStorage();
-        JSONArray jsonResults = jso.getJSONArray(KEY_RESULTS);
+        JSONArray jsonResults = json.getJSONArray(KEY_RESULTS);
         for (int ind=0; ind < jsonResults.length(); ind++) {
             results.results.add(CalendarQueryResult.fromJson(jsonResults.getJSONObject(ind)));
         }
@@ -135,29 +135,29 @@ public class CalendarQueryResultsStorage {
     }
 
     private static JSONObject getAppInfo(Context context) throws JSONException{
-        JSONObject jso = new JSONObject();
+        JSONObject json = new JSONObject();
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(context.getApplicationContext().getPackageName(), 0);
-            jso.put(KEY_APP_VERSION_NAME, pi.versionName);
-            jso.put(KEY_APP_VERSION_CODE, pi.versionCode);
+            json.put(KEY_APP_VERSION_NAME, pi.versionName);
+            json.put(KEY_APP_VERSION_CODE, pi.versionCode);
         } catch (PackageManager.NameNotFoundException e) {
-            jso.put(KEY_APP_VERSION_NAME, "Unable to obtain package information " + e);
-            jso.put(KEY_APP_VERSION_CODE, -1);
+            json.put(KEY_APP_VERSION_NAME, "Unable to obtain package information " + e);
+            json.put(KEY_APP_VERSION_CODE, -1);
         }
-        jso.put(KEY_PREFERENCES, CalendarPreferences.toJson(context));
-        return jso;
+        json.put(KEY_PREFERENCES, CalendarPreferences.toJson(context));
+        return json;
     }
 
     private static JSONObject getDeviceInfo() throws JSONException {
-        JSONObject jso = new JSONObject();
-        jso.put(KEY_ANDROID_VERSION_CODE, Build.VERSION.SDK_INT);
-        jso.put(KEY_ANDROID_VERSION_RELEASE, Build.VERSION.RELEASE);
-        jso.put(KEY_ANDROID_VERSION_CODENAME, Build.VERSION.CODENAME);
-        jso.put(KEY_ANDROID_MANUFACTURE, Build.MANUFACTURER);
-        jso.put(KEY_ANDROID_BRAND, Build.BRAND);
-        jso.put(KEY_ANDROID_MODEL, Build.MODEL);
-        return jso;
+        JSONObject json = new JSONObject();
+        json.put(KEY_ANDROID_VERSION_CODE, Build.VERSION.SDK_INT);
+        json.put(KEY_ANDROID_VERSION_RELEASE, Build.VERSION.RELEASE);
+        json.put(KEY_ANDROID_VERSION_CODENAME, Build.VERSION.CODENAME);
+        json.put(KEY_ANDROID_MANUFACTURE, Build.MANUFACTURER);
+        json.put(KEY_ANDROID_BRAND, Build.BRAND);
+        json.put(KEY_ANDROID_MODEL, Build.MODEL);
+        return json;
     }
 
     @Override

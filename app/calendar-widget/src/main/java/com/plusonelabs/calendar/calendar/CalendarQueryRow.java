@@ -94,12 +94,12 @@ public class CalendarQueryRow {
             
         }
 
-        public static TypedValue fromJson(JSONObject jso) {
+        public static TypedValue fromJson(JSONObject json) {
             CursorFieldType type = CursorFieldType.UNKNOWN ;
-            if (jso.has(KEY_TYPE)) {
-                type = CursorFieldType.fromColumnType(jso.optInt(KEY_TYPE));
+            if (json.has(KEY_TYPE)) {
+                type = CursorFieldType.fromColumnType(json.optInt(KEY_TYPE));
             }
-            return new TypedValue(type, jso.opt(KEY_VALUE));
+            return new TypedValue(type, json.opt(KEY_VALUE));
         }
 
         public TypedValue(Cursor cursor, int columnIndex) {
@@ -117,10 +117,10 @@ public class CalendarQueryRow {
         }
 
         public JSONObject toJson() throws JSONException {
-            JSONObject jso = new JSONObject();
-            jso.put(KEY_TYPE, type.code);
-            jso.put(KEY_VALUE, value);
-            return jso;
+            JSONObject json = new JSONObject();
+            json.put(KEY_TYPE, type.code);
+            json.put(KEY_VALUE, value);
+            return json;
         }
     }
 
@@ -237,24 +237,24 @@ public class CalendarQueryRow {
         return row;
     }
 
-    public static CalendarQueryRow fromJson(JSONObject jso) throws JSONException {
+    public static CalendarQueryRow fromJson(JSONObject json) throws JSONException {
         CalendarQueryRow row = new CalendarQueryRow();
-        if (jso != null) {
-            Iterator<String> it=jso.keys();
+        if (json != null) {
+            Iterator<String> it=json.keys();
             while (it.hasNext()){
                 String columnName = it.next();
-                row.mRow.put(columnName, TypedValue.fromJson(jso.getJSONObject(columnName)));
+                row.mRow.put(columnName, TypedValue.fromJson(json.getJSONObject(columnName)));
             }
         }
         return row;
     }
 
     public JSONObject toJson() throws JSONException {
-        JSONObject jso = new JSONObject();
+        JSONObject json = new JSONObject();
         for (Map.Entry<String, TypedValue> entry : mRow.entrySet()) {
-            jso.put(entry.getKey(), entry.getValue().toJson());
+            json.put(entry.getKey(), entry.getValue().toJson());
         }
-        return jso;
+        return json;
     }
 
     public void dropNullColumns() {

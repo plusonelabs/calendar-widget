@@ -1,9 +1,10 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.3.0'
+        classpath 'org.ajoberstar:grgit:1.4.0'
     }
 }
 
@@ -24,7 +25,7 @@ android {
     buildToolsVersion '22.0.1'
 
     defaultConfig {
-        versionName = '1.9.3'
+        versionName = '1.9.2' + getGitCommitId()
         versionCode = 30
         minSdkVersion 15
         targetSdkVersion 22
@@ -54,8 +55,17 @@ android {
         buildTypes.release.signingConfig signingConfigs.releaseConfig
     }
     // See https://www.timroes.de/2013/09/22/handling-signing-configs-with-gradle/
-    if(project.hasProperty("calendar-widget.signing")
+    if (project.hasProperty("calendar-widget.signing")
             && new File(project.property("calendar-widget.signing").toString() + ".gradle").exists()) {
         apply from: project.property("calendar-widget.signing") + ".gradle";
+    }
+}
+
+Object getGitCommitId() {
+    try {
+        def git = org.ajoberstar.grgit.Grgit.open(dir: '../..')
+        return "-${git.head().abbreviatedId}"
+    } catch (Exception) {
+        return ""
     }
 }

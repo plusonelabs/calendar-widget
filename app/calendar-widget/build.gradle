@@ -25,8 +25,8 @@ android {
     buildToolsVersion '22.0.1'
 
     defaultConfig {
-        versionName = '1.9.2' + getGitCommitId()
-        versionCode = 30
+        versionName = '1.9.2' + getVersionNameSuffix()
+        versionCode = getVersionCodeInteger()
         minSdkVersion 15
         targetSdkVersion 22
 
@@ -61,11 +61,24 @@ android {
     }
 }
 
-Object getGitCommitId() {
+String getVersionNameSuffix() {
     try {
         def git = org.ajoberstar.grgit.Grgit.open(dir: '../..')
-        return "-${git.head().abbreviatedId}"
-    } catch (Exception) {
+        def versionNameSuffix = "-${git.head().abbreviatedId}"
+        git.close()
+        return versionNameSuffix
+    } catch (ignored) {
         return ""
+    }
+}
+
+def getVersionCodeInteger() {
+    try {
+        def git = org.ajoberstar.grgit.Grgit.open(dir: '../..')
+        def versionCode = git.log().size()
+        git.close()
+        return versionCode
+    } catch (ignored) {
+        return 1
     }
 }

@@ -25,6 +25,7 @@ public class CalendarPreferences {
 	public static final String PREF_SHOW_HEADER = "showHeader";
 	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";
 	public static final String PREF_INDICATE_ALERTS = "indicateAlerts";
+	public static final String PREF_INDICATE_UNDECIDED = "indicateUndecided";
 	public static final String PREF_BACKGROUND_COLOR = "backgroundColor";
 	public static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
 	public static final String PREF_DATE_FORMAT = "dateFormat";

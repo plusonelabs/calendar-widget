@@ -51,6 +51,8 @@ public class CalendarEntry extends WidgetEntry {
 		return event.isRecurring();
 	}
 
+	public boolean isUndecided() { return event.isUndecided(); }
+
 	public boolean isPartOfMultiDayEvent() {
 		return getEvent().isPartOfMultiDayEvent();
 	}

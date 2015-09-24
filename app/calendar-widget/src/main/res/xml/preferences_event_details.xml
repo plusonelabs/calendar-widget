@@ -29,6 +29,11 @@
             android:key="indicateRecurring"
             android:summary="@string/event_details_indicate_recurring_desc"
             android:title="@string/event_details_indicate_recurring_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="indicateUndecided"
+            android:summary="@string/event_details_indicate_undecided_desc"
+            android:title="@string/event_details_indicate_undecided_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

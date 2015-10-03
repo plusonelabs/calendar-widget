@@ -249,17 +249,18 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
         if (endDate.isAfter(calendarContentProvider.getEndOfTimeRange())) {
             endDate = calendarContentProvider.getEndOfTimeRange();
         }
-        DateTime nextDay = dayOneEntry.getStartDay().plusDays(1).withTimeAtStartOfDay();
-        while (nextDay.isBefore(endDate)) {
+        DateTime thisDay = dayOneEntry.getStartDay().plusDays(1).withTimeAtStartOfDay();
+        while (thisDay.isBefore(endDate)) {
+            DateTime nextDay = thisDay.plusDays(1);
             CalendarEntry nextEntry = CalendarEntry.fromEvent(dayOneEntry.getEvent());
-            nextEntry.setStartDate(nextDay);
+            nextEntry.setStartDate(thisDay);
             if (endDate.isAfter(nextDay)) {
                 nextEntry.setEndDate(nextDay);
             } else {
                 nextEntry.setEndDate(endDate);
             }
             entryList.add(nextEntry);
-            nextDay = nextDay.plusDays(1);
+            thisDay = nextDay;
         }
     }
 

@@ -56,6 +56,7 @@ public class OngoingEventTest extends InstrumentationTestCase {
             }
         }
         assertNotNull(entry);
+        assertTrue("Is active event", entry.getEvent().isActive());
         assertFalse("Is not part of Multi Day Event", entry.isPartOfMultiDayEvent());
         assertEquals("Start Time didn't change for today's event", event.getStartDate(), entry.getStartDate());
         assertEquals("End Time didn't change for today's event", event.getEndDate(), entry.getEndDate());
@@ -83,10 +84,40 @@ public class OngoingEventTest extends InstrumentationTestCase {
             }
         }
         assertNotNull(entry);
-        assertFalse("Is not start of Multi Day Event", entry.isStartOfMultiDayEvent());
+        assertTrue("Is active event", entry.getEvent().isActive());
         assertTrue("Is Part of Multi Day Event", entry.isPartOfMultiDayEvent());
+        assertFalse("Is not start of Multi Day Event", entry.isStartOfMultiDayEvent());
         assertTrue("Is end of Multi Day Event", entry.isEndOfMultiDayEvent());
         assertEquals("Yesterday's event entry start time is midnight", today, entry.getStartDate());
         assertEquals("End Time didn't change for yesterday's event", event.getEndDate(), entry.getEndDate());
     }
+
+    public void testEventWhichCarryOverToTheNextDay() {
+        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        CalendarEvent event = new CalendarEvent();
+        event.setEventId(++eventId);
+        event.setTitle("Event that carry over to the next day, show as ending midnight");
+        event.setStartDate(today.plusHours(19));
+        event.setEndDate(today.plusDays(1).plusHours(7));
+
+        DateUtil.setNow(today.plusHours(20).plusMinutes(33));
+        provider.addRow(event);
+        factory.onDataSetChanged();
+        CalendarEntry entry = null;
+        for (WidgetEntry item : factory.getWidgetEntries()) {
+            Log.v(TAG, item.toString());
+            if (item instanceof CalendarEntry) {
+                entry = (CalendarEntry) item;
+                break;
+            }
+        }
+        assertNotNull(entry);
+        assertTrue("Is active event", entry.getEvent().isActive());
+        assertTrue("Is Part of Multi Day Event", entry.isPartOfMultiDayEvent());
+        assertTrue("Is start of Multi Day Event", entry.isStartOfMultiDayEvent());
+        assertFalse("Is not an end of Multi Day Event", entry.isEndOfMultiDayEvent());
+        assertEquals("Start Time didn't change for today's event", event.getStartDate(), entry.getStartDate());
+        assertEquals("Event entry end time is next midnight", today.plusDays(1), entry.getEndDate());
+    }
+
 }

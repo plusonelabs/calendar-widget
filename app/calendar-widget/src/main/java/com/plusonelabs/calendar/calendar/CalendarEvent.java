@@ -140,6 +140,6 @@ public class CalendarEvent {
     }
 
 	public boolean isPartOfMultiDayEvent() {
-		return getEndDate().getMillis() - getStartDate().getMillis() > TimeUnit.DAYS.toMillis(1);
+		return getEndDate().withTimeAtStartOfDay().isAfter(getStartDate().withTimeAtStartOfDay());
 	}
 }

@@ -8,10 +8,12 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventRemoteViewsFactory;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -121,15 +123,26 @@ public class CalendarQueryResultsStorage {
         return json;
     }
 
-    public static CalendarQueryResultsStorage fromJsonString(String jsonString) throws JSONException {
-        return fromJson(new JSONObject(jsonString));
+    public static CalendarQueryResultsStorage fromJsonString(Context context, String jsonString) throws JSONException {
+        return fromJson(context, new JSONObject(jsonString));
     }
 
-    public static CalendarQueryResultsStorage fromJson(JSONObject json) throws JSONException {
+    public static CalendarQueryResultsStorage fromJson(Context context, JSONObject json) throws JSONException {
         CalendarQueryResultsStorage results = new CalendarQueryResultsStorage();
         JSONArray jsonResults = json.getJSONArray(KEY_RESULTS);
         for (int ind=0; ind < jsonResults.length(); ind++) {
             results.results.add(CalendarQueryResult.fromJson(jsonResults.getJSONObject(ind)));
+        }
+        JSONObject appInfo = json.optJSONObject(KEY_APP_INFO);
+        if (appInfo != null) {
+            JSONObject preferences = json.optJSONObject(KEY_PREFERENCES);
+            if (preferences != null) {
+                CalendarPreferences.fromJson(context, preferences);
+            }
+        }
+        if (!results.results.isEmpty()) {
+            DateTime now = results.results.get(0).getExecutedAt();
+            DateUtil.setNow(now);
         }
         return results;
     }

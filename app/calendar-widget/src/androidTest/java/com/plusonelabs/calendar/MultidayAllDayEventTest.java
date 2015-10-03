@@ -23,19 +23,16 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
 
     private MockCalendarContentProvider provider = null;
     private EventRemoteViewsFactory factory = null;
-    private int eventRangeStored;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
         factory = new EventRemoteViewsFactory(provider.getContext());
-        eventRangeStored = CalendarPreferences.getEventRange(provider.getContext());
     }
 
     @Override
     protected void tearDown() throws Exception {
-        CalendarPreferences.setEventRange(provider.getContext(), eventRangeStored);
         provider.tearDown();
         super.tearDown();
     }
@@ -43,6 +40,7 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";
         CalendarQueryResultsStorage inputs = CalendarQueryResultsStorage.fromJsonString(
+                provider.getContext(),
                 RawResourceUtils.getString(this.getInstrumentation().getContext(),
                         com.plusonelabs.calendar.tests.R.raw.multi_day)
         );

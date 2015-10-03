@@ -111,9 +111,11 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
         String jsonInputString =
                 RawResourceUtils.getString(getInstrumentation().getContext(),
                         com.plusonelabs.calendar.tests.R.raw.birthday);
-        CalendarQueryResultsStorage inputs1 = CalendarQueryResultsStorage.fromJsonString(jsonInputString);
+        CalendarQueryResultsStorage inputs1 =
+                CalendarQueryResultsStorage.fromJsonString(provider.getContext(), jsonInputString);
         JSONObject jsonOutput = inputs1.toJson(provider.getContext());
-        CalendarQueryResultsStorage inputs2 = CalendarQueryResultsStorage.fromJson(jsonOutput);
+        CalendarQueryResultsStorage inputs2 =
+                CalendarQueryResultsStorage.fromJson(provider.getContext(), jsonOutput);
         assertEquals(inputs1, inputs2);
     }
 }

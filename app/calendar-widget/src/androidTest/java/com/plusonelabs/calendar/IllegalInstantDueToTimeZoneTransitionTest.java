@@ -57,9 +57,7 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTe
         oneTimeDst("2011-03-27T00:00:00+00:00");
         oneTimeDst("1980-04-06T00:00:00+00:00");
         factory.onDataSetChanged();
-        for (WidgetEntry entry : factory.getWidgetEntries()) {
-            Log.v(TAG, entry.toString());
-        }
+        factory.logWidgetEntries(TAG);
         assertEquals(1, provider.getQueriesCount());
     }
 

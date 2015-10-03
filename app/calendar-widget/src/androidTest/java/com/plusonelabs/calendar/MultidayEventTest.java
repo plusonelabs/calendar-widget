@@ -47,8 +47,8 @@ public class MultidayEventTest extends InstrumentationTestCase {
         factory.onDataSetChanged();
         CalendarEntry entry1 = null;
         CalendarEntry entry2 = null;
+        factory.logWidgetEntries(TAG);
         for (WidgetEntry item : factory.getWidgetEntries()) {
-            Log.v(TAG, item.toString());
             if (item instanceof CalendarEntry) {
                 if (entry1 == null) {
                     entry1 = (CalendarEntry) item;

@@ -49,9 +49,7 @@ public class RecurringEventsTest extends InstrumentationTestCase {
                     .setBegin(millis).setEnd(millis + TimeUnit.HOURS.toMillis(9)));
         }
         factory.onDataSetChanged();
-        for (WidgetEntry entry : factory.getWidgetEntries()) {
-            Log.v(TAG, entry.toString());
-        }
+        factory.logWidgetEntries(TAG);
         assertTrue("Entries: " + factory.getWidgetEntries().size(), factory.getWidgetEntries().size() > 15);
     }
 }

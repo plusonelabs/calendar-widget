@@ -81,6 +81,10 @@ public class CalendarQueryResult {
         return array;
     }
 
+    public DateTime getExecutedAt() {
+        return executedAt;
+    }
+
     public Cursor query(String[] projection) {
         MatrixCursor cursor = new MatrixCursor(projection);
         for (CalendarQueryRow row : rows) {

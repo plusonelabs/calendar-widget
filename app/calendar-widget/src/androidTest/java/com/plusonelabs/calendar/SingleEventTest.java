@@ -65,9 +65,7 @@ public class SingleEventTest extends InstrumentationTestCase {
         provider.clear();
         provider.addRow(event);
         factory.onDataSetChanged();
-        for (WidgetEntry entry : factory.getWidgetEntries()) {
-            Log.v(TAG, entry.toString());
-        }
+        factory.logWidgetEntries(TAG);
         assertEquals(1, provider.getQueriesCount());
         assertEquals(factory.getWidgetEntries().toString(), 2, factory.getWidgetEntries().size());
         WidgetEntry entry = factory.getWidgetEntries().get(1);

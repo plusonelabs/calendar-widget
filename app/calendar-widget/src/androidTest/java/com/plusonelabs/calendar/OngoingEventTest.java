@@ -48,9 +48,9 @@ public class OngoingEventTest extends InstrumentationTestCase {
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
         factory.onDataSetChanged();
+        factory.logWidgetEntries(TAG);
         CalendarEntry entry = null;
         for (WidgetEntry item : factory.getWidgetEntries()) {
-            Log.v(TAG, item.toString());
             if (item instanceof CalendarEntry) {
                 entry = (CalendarEntry) item;
             }
@@ -76,9 +76,9 @@ public class OngoingEventTest extends InstrumentationTestCase {
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
         factory.onDataSetChanged();
+        factory.logWidgetEntries(TAG);
         CalendarEntry entry = null;
         for (WidgetEntry item : factory.getWidgetEntries()) {
-            Log.v(TAG, item.toString());
             if (item instanceof CalendarEntry) {
                 entry = (CalendarEntry) item;
             }
@@ -103,9 +103,9 @@ public class OngoingEventTest extends InstrumentationTestCase {
         DateUtil.setNow(today.plusHours(20).plusMinutes(33));
         provider.addRow(event);
         factory.onDataSetChanged();
+        factory.logWidgetEntries(TAG);
         CalendarEntry entry = null;
         for (WidgetEntry item : factory.getWidgetEntries()) {
-            Log.v(TAG, item.toString());
             if (item instanceof CalendarEntry) {
                 entry = (CalendarEntry) item;
                 break;

@@ -23,25 +23,23 @@ public class BirthdayTest extends InstrumentationTestCase {
 
     private MockCalendarContentProvider provider = null;
     private EventRemoteViewsFactory factory = null;
-    private int eventRangeStored;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
         factory = new EventRemoteViewsFactory(provider.getContext());
-        eventRangeStored = CalendarPreferences.getEventRange(provider.getContext());
     }
 
     @Override
     protected void tearDown() throws Exception {
-        CalendarPreferences.setEventRange(provider.getContext(), eventRangeStored);
         provider.tearDown();
         super.tearDown();
     }
 
     public void testBirthdayOneDayOnly() throws IOException, JSONException {
         CalendarQueryResultsStorage inputs = CalendarQueryResultsStorage.fromJsonString(
+                provider.getContext(),
                 RawResourceUtils.getString(this.getInstrumentation().getContext(),
                         com.plusonelabs.calendar.tests.R.raw.birthday)
         );
@@ -95,10 +93,7 @@ public class BirthdayTest extends InstrumentationTestCase {
         provider.addResults(inputs.getResults());
         DateUtil.setNow(now);
         factory.onDataSetChanged();
-        for (int ind=0; ind < factory.getWidgetEntries().size(); ind++) {
-            WidgetEntry widgetEntry = factory.getWidgetEntries().get(ind);
-            Log.v(TAG, String.format("%02d ", ind) + widgetEntry.toString());
-        }
+        factory.logWidgetEntries(TAG);
         assertEquals(numberOfEntriesExpected, factory.getWidgetEntries().size());
         if (numberOfEntriesExpected > 0) {
             CalendarEntry birthday = (CalendarEntry) factory.getWidgetEntries().get(1);

@@ -1,0 +1,271 @@
+{
+  "results": [
+    {
+      "executedAt": 1443642924779,
+      "selectionArgs": [],
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "standardMillisOffsetUtcToLocal": -28800000,
+      "projection": [
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor"
+      ],
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/1443642924779\/1444247724779",
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 3 OR calendar_id = 5 OR calendar_id = 1 OR calendar_id = 4 )",
+      "rows": [
+        {
+          "title": {
+            "value": "Mathworks Advisory Board Meeting",
+            "type": 3
+          },
+          "eventLocation": {
+            "value": "Manhattan Beach Marriott, 1400 Parkview Ave, Manhattan Beach, CA 90266, United States",
+            "type": 3
+          },
+          "allDay": {
+            "value": 0,
+            "type": 1
+          },
+          "displayColor": {
+            "value": -3312410,
+            "type": 1
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "value": 172,
+            "type": 1
+          },
+          "hasAlarm": {
+            "value": 0,
+            "type": 1
+          },
+          "end": {
+            "value": 1443742200000,
+            "type": 1
+          },
+          "begin": {
+            "value": 1443713400000,
+            "type": 1
+          }
+        },
+        {
+          "title": {
+            "value": "Company Meeting",
+            "type": 3
+          },
+          "eventLocation": {
+            "value": "",
+            "type": 3
+          },
+          "allDay": {
+            "value": 0,
+            "type": 1
+          },
+          "displayColor": {
+            "value": -3312410,
+            "type": 1
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "value": 160,
+            "type": 1
+          },
+          "hasAlarm": {
+            "value": 0,
+            "type": 1
+          },
+          "end": {
+            "value": 1443729600000,
+            "type": 1
+          },
+          "begin": {
+            "value": 1443726000000,
+            "type": 1
+          }
+        },
+        {
+          "title": {
+            "value": "Maker Fair",
+            "type": 3
+          },
+          "eventLocation": {
+            "value": "Balboa Park, San Diego, CA, USA",
+            "type": 3
+          },
+          "allDay": {
+            "value": 0,
+            "type": 1
+          },
+          "displayColor": {
+            "value": -6644481,
+            "type": 1
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "value": 1078,
+            "type": 1
+          },
+          "hasAlarm": {
+            "value": 0,
+            "type": 1
+          },
+          "end": {
+            "value": 1443898800000,
+            "type": 1
+          },
+          "begin": {
+            "value": 1443891600000,
+            "type": 1
+          }
+        },
+        {
+          "title": {
+            "value": "Henry Ribakovs's birthday",
+            "type": 3
+          },
+          "eventLocation": {
+            "value": "",
+            "type": 3
+          },
+          "allDay": {
+            "value": 1,
+            "type": 1
+          },
+          "displayColor": {
+            "value": -7151168,
+            "type": 1
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "value": 978,
+            "type": 1
+          },
+          "hasAlarm": {
+            "value": 0,
+            "type": 1
+          },
+          "end": {
+            "value": 1444003200000,
+            "type": 1
+          },
+          "begin": {
+            "value": 1443916800000,
+            "type": 1
+          }
+        },
+        {
+          "title": {
+            "value": "Ribakovs",
+            "type": 3
+          },
+          "eventLocation": {
+            "value": "XXXed out",
+            "type": 3
+          },
+          "allDay": {
+            "value": 0,
+            "type": 1
+          },
+          "displayColor": {
+            "value": -6644481,
+            "type": 1
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "value": 1080,
+            "type": 1
+          },
+          "hasAlarm": {
+            "value": 0,
+            "type": 1
+          },
+          "end": {
+            "value": 1443988800000,
+            "type": 1
+          },
+          "begin": {
+            "value": 1443974400000,
+            "type": 1
+          }
+        },
+        {
+          "title": {
+            "value": "Mathworks Conference",
+            "type": 3
+          },
+          "eventLocation": {
+            "value": "",
+            "type": 3
+          },
+          "allDay": {
+            "value": 0,
+            "type": 1
+          },
+          "displayColor": {
+            "value": -3312410,
+            "type": 1
+          },
+          "rrule": {
+            "value": "FREQ=WEEKLY;WKST=MO;BYDAY=MO",
+            "type": 3
+          },
+          "event_id": {
+            "value": 155,
+            "type": 1
+          },
+          "hasAlarm": {
+            "value": 0,
+            "type": 1
+          },
+          "end": {
+            "value": 1444060800000,
+            "type": 1
+          },
+          "begin": {
+            "value": 1444057200000,
+            "type": 1
+          }
+        }
+      ],
+      "millisOffsetUtcToLocal": -25200000,
+      "timeZoneId": "America\/Los_Angeles"
+    }
+  ],
+  "applicationInfo": {
+    "versionCode": 334,
+    "preferences": {
+      "showDaysWithoutEvents": false,
+      "hideBasedOnKeywords": "",
+      "eventRange": 7,
+      "showPastEventsWithDefaultColor": false,
+      "fillAllDay": true,
+      "eventsEnded": "NONE"
+    },
+    "versionName": "1.9.2-6b6d980"
+  },
+  "resultsVersion": 1,
+  "deviceInfo": {
+    "buildManufacturer": "samsung",
+    "versionCode": 19,
+    "buildBrand": "samsung",
+    "versionCodename": "REL",
+    "buildModel": "SAMSUNG-SGH-I747",
+    "versionRelease": "4.4.4"
+  }
+}

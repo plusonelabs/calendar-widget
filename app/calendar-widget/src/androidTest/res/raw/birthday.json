@@ -2,6 +2,7 @@
   "results": [
     {
       "executedAt": 1440948396325,
+      "timeZoneId": "Europe/Moscow",
       "selectionArgs": [],
       "uri": "content:\/\/com.android.calendar\/instances\/when\/1440948396325\/1443540396325",
       "sortOrder": "startDay ASC, allDay DESC, begin ASC ",

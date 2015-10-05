@@ -14,6 +14,7 @@ import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -143,6 +144,7 @@ public class CalendarQueryResultsStorage {
         if (!results.results.isEmpty()) {
             DateTime now = results.results.get(0).getExecutedAt();
             DateUtil.setNow(now);
+            DateTimeZone.setDefault(now.getZone());
         }
         return results;
     }

@@ -32,6 +32,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     private final List<CalendarQueryResult> results = new ArrayList<>();
     private final Set<String> storedCalendars;
     private final JSONObject storedPreferences;
+    private final DateTimeZone storedZone;
 
     private static DateTime fixDateForCalendar(DateTime date, boolean isAllDay) {
         if (!isAllDay) {
@@ -54,6 +55,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         super(context);
         storedCalendars = CalendarPreferences.getActiveCalendars(context);
         storedPreferences = CalendarPreferences.toJson(context);
+        storedZone = DateTimeZone.getDefault();
         setPreferences(context);
     }
 
@@ -76,6 +78,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         CalendarPreferences.setActiveCalendars(getContext(), storedCalendars);
         CalendarPreferences.fromJson(getContext(), storedPreferences);
         DateUtil.setNow(null);
+        DateTimeZone.setDefault(storedZone);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.plusonelabs.calendar.calendar;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.util.Log;
 
 import com.plusonelabs.calendar.DateUtil;
 
@@ -42,7 +43,7 @@ public class CalendarQueryResult {
     private final List<CalendarQueryRow> rows = new ArrayList<>();
 
     public CalendarQueryResult (Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        executedAt = DateUtil.now();
+        this(DateUtil.now());
         this.uri = uri;
         this.projection = projection;
         this.selection = selection;
@@ -55,7 +56,7 @@ public class CalendarQueryResult {
     }
 
     public static CalendarQueryResult fromJson(JSONObject json) throws JSONException {
-        CalendarQueryResult result = new CalendarQueryResult(new DateTime(json.getLong(KEY_EXECUTED_AT)));
+        CalendarQueryResult result = new CalendarQueryResult(new DateTime(json.getLong(KEY_EXECUTED_AT), dateTimeZoneFromJson(json)));
         result.uri = Uri.parse(json.getString(KEY_URI));
         result.projection = jsonToArrayOfStings(json.getJSONArray(KEY_PROJECTION));
         result.selection = json.getString(KEY_SELECTION);
@@ -69,6 +70,20 @@ public class CalendarQueryResult {
             }
         }
         return result;
+    }
+
+    static DateTimeZone dateTimeZoneFromJson(JSONObject json) {
+        String zoneId = json.optString(KEY_TIME_ZONE_ID);
+        DateTimeZone zone = null;
+        try {
+            zone = DateTimeZone.forID(zoneId);
+        } catch (IllegalArgumentException e) {
+            Log.i(TAG, "Unknown timezone id:" + zoneId);
+        }
+        if (zone == null) {
+            zone = DateTimeZone.forID("UTC");
+        }
+        return zone;
     }
 
     private static String[] jsonToArrayOfStings(JSONArray jsonArray) throws JSONException {

@@ -48,9 +48,9 @@ public class WrongDatesLostEventsTest extends InstrumentationTestCase {
         factory.onDataSetChanged();
         factory.logWidgetEntries(method);
         assertEquals("Number of entries", 10, factory.getWidgetEntries().size());
-        assertEquals("On Saturday", "Maker Fair", ((CalendarEntry) factory.getWidgetEntries().get(4)).getTitle());
+        assertEquals("On Saturday", "Maker Fair", ((CalendarEntry) factory.getWidgetEntries().get(4)).getEvent().getTitle());
         assertEquals("On Saturday", 6, factory.getWidgetEntries().get(4).getStartDate().getDayOfWeek());
-        assertEquals("On Sunday", "Ribakovs", ((CalendarEntry) factory.getWidgetEntries().get(7)).getTitle());
+        assertEquals("On Sunday", "Ribakovs", ((CalendarEntry) factory.getWidgetEntries().get(7)).getEvent().getTitle());
         assertEquals("On Sunday", 7, factory.getWidgetEntries().get(7).getStartDate().getDayOfWeek());
     }
 }

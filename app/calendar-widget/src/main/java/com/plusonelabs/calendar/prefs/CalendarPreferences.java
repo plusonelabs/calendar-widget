@@ -160,6 +160,21 @@ public class CalendarPreferences {
         setBooleanPreference(context, PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, value);
     }
 
+    public static boolean getShowEndTime(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT);
+    }
+
+    public static boolean getShowLocation(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
+    }
+
+    public static String getDateFormat(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(
+                PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
+    }
+
     private static void setBooleanPreference(Context context, String key, boolean value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();

@@ -1,10 +1,26 @@
 package com.plusonelabs.calendar.widget;
 
+import android.content.Context;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+
+import com.plusonelabs.calendar.DateUtil;
+import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.calendar.CalendarEvent;
+import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
 
+import java.util.Locale;
+
 public class CalendarEntry extends WidgetEntry {
+    private static final String TWELVE = "12";
+    private static final String AUTO = "auto";
+    private static final String SPACE_ARROW = " →";
+    private static final String ARROW_SPACE = "→ ";
+    private static final String EMPTY_STRING = "";
+    private static final String SPACE_DASH_SPACE = " - ";
+    private static final String SPACE_PIPE_SPACE = "  |  ";
 
 	private DateTime endDate;
 	private boolean allDay;
@@ -19,8 +35,12 @@ public class CalendarEntry extends WidgetEntry {
         return entry;
     }
 
-	public String getTitle() {
-		return event.getTitle();
+	public String getTitle(Context context) {
+        String title =  event.getTitle();
+        if (TextUtils.isEmpty(title)) {
+            title = context.getResources().getString(R.string.no_title);
+        }
+		return title;
 	}
 
 	public DateTime getEndDate() {
@@ -71,7 +91,72 @@ public class CalendarEntry extends WidgetEntry {
 		return event;
 	}
 
-	@Override
+	public String getEventDetails(Context context) {
+		if (spansOneFullDay() && !(isStartOfMultiDayEvent()
+				|| isEndOfMultiDayEvent())
+				|| isAllDay() && CalendarPreferences.getFillAllDayEvents(context)) {
+			return "";
+		} else {
+			String eventDetails = createTimeSpanString(context);
+			if (CalendarPreferences.getShowLocation(context) && getLocation() != null && !getLocation().isEmpty()) {
+				eventDetails += SPACE_PIPE_SPACE + getLocation();
+			}
+			return eventDetails;
+		}
+	}
+
+    private String createTimeSpanString(Context context) {
+        if (isAllDay() && !CalendarPreferences.getFillAllDayEvents(context)) {
+            DateTime dateTime = getEvent().getEndDate().minusDays(1);
+            return ARROW_SPACE + DateUtil.createDateString(context, dateTime);
+        } else {
+            return createTimeStringForCalendarEntry(context);
+        }
+    }
+
+    private String createTimeStringForCalendarEntry(Context context) {
+        String startStr;
+        String endStr;
+        String separator = SPACE_DASH_SPACE;
+        if (isPartOfMultiDayEvent()&& DateUtil.isMidnight(getStartDate())
+                && !isStartOfMultiDayEvent()) {
+            startStr = ARROW_SPACE;
+            separator = EMPTY_STRING;
+        } else {
+            startStr = createTimeString(context, getStartDate());
+        }
+        if (CalendarPreferences.getShowEndTime(context)) {
+            if (isPartOfMultiDayEvent() && DateUtil.isMidnight(getEndDate())
+                    && !isEndOfMultiDayEvent()) {
+                endStr = SPACE_ARROW;
+                separator = EMPTY_STRING;
+            } else {
+                endStr = createTimeString(context, getEndDate());
+            }
+        } else {
+            separator = EMPTY_STRING;
+            endStr = EMPTY_STRING;
+        }
+
+        if (startStr.equals(endStr)) {
+            return startStr;
+        }
+
+        return startStr + separator + endStr;
+    }
+
+    private String createTimeString(Context context, DateTime time) {
+        String dateFormat = CalendarPreferences.getDateFormat(context);
+        if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
+                || dateFormat.equals(TWELVE)) {
+            return DateUtils.formatDateTime(context, time.toDate().getTime(),
+                    DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
+        }
+        return DateUtils.formatDateTime(context, time.toDate().getTime(),
+                DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
+    }
+
+    @Override
 	public String toString() {
 		return "CalendarEntry ["
 				+ "startDate=" + getStartDate()

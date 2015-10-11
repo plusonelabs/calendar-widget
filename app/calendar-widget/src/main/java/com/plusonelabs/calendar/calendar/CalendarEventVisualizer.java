@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.format.DateUtils;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -21,7 +21,6 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
@@ -30,29 +29,14 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setSingleLine;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMAT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_DATE_FORMAT_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_ALERTS;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_RECURRING;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_END_TIME;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_END_TIME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_LOCATION;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_LOCATION_DEFAULT;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
-
-	private static final String TWELVE = "12";
-	private static final String AUTO = "auto";
-	private static final String SPACE_ARROW = " →";
-	private static final String ARROW_SPACE = "→ ";
-	private static final String EMPTY_STRING = "";
-	private static final String SPACE_DASH_SPACE = " - ";
-	private static final String SPACE_PIPE_SPACE = "  |  ";
-
 	private final Context context;
 	private final CalendarEventProvider calendarContentProvider;
 	private final SharedPreferences prefs;
@@ -76,11 +60,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 	}
 
 	private void setTitle(CalendarEntry event, RemoteViews rv) {
-		String title = event.getTitle();
-		if (title == null || title.equals(EMPTY_STRING)) {
-			title = context.getResources().getString(R.string.no_title);
-		}
-		rv.setTextViewText(R.id.event_entry_title, title);
+		rv.setTextViewText(R.id.event_entry_title, event.getTitle(context));
 		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
         setTextColorFromAttr(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
         setSingleLine(rv, R.id.event_entry_title,
@@ -88,17 +68,10 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
     }
 
 	private void setEventDetails(CalendarEntry entry, RemoteViews rv) {
-        boolean fillAllDayEvents = CalendarPreferences.getFillAllDayEvents(context);
-        if (entry.spansOneFullDay() && !(entry.isStartOfMultiDayEvent()
-                || entry.isEndOfMultiDayEvent())
-                || entry.isAllDay() && fillAllDayEvents) {
+        String eventDetails = entry.getEventDetails(context);
+        if (TextUtils.isEmpty(eventDetails)) {
             rv.setViewVisibility(R.id.event_entry_details, View.GONE);
         } else {
-            String eventDetails = createTimeSpanString(entry);
-            boolean showLocation = prefs.getBoolean(PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
-            if (showLocation && entry.getLocation() != null && !entry.getLocation().isEmpty()) {
-                eventDetails += SPACE_PIPE_SPACE + entry.getLocation();
-            }
             rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
             rv.setTextViewText(R.id.event_entry_details, eventDetails);
             setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
@@ -144,58 +117,6 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 		return CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
                 event.getStartDate(), event.getEndDate());
 	}
-
-	private String createTimeSpanString(CalendarEntry entry) {
-        if (entry.isAllDay() && !CalendarPreferences.getFillAllDayEvents(context)) {
-            DateTime dateTime = entry.getEvent().getEndDate().minusDays(1);
-            return ARROW_SPACE + DateUtil.createDateString(context, dateTime);
-        } else {
-            return createTimeStringForCalendarEntry(entry);
-        }
-    }
-
-    private String createTimeStringForCalendarEntry(CalendarEntry entry) {
-        String startStr;
-        String endStr;
-        String separator = SPACE_DASH_SPACE;
-        if (entry.isPartOfMultiDayEvent()&& DateUtil.isMidnight(entry.getStartDate())
-                && !entry.isStartOfMultiDayEvent()) {
-            startStr = ARROW_SPACE;
-            separator = EMPTY_STRING;
-        } else {
-            startStr = createTimeString(entry.getStartDate());
-        }
-        if (prefs.getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT)) {
-            if (entry.isPartOfMultiDayEvent() && DateUtil.isMidnight(entry.getEndDate())
-                    && !entry.isEndOfMultiDayEvent()) {
-                endStr = SPACE_ARROW;
-                separator = EMPTY_STRING;
-            } else {
-                endStr = createTimeString(entry.getEndDate());
-            }
-        } else {
-            separator = EMPTY_STRING;
-            endStr = EMPTY_STRING;
-        }
-
-        if (startStr.equals(endStr)) {
-            return startStr;
-        }
-        
-        return startStr + separator + endStr;
-    }
-
-    private String createTimeString(DateTime time) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String dateFormat = prefs.getString(PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
-        if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
-                || dateFormat.equals(TWELVE)) {
-            return DateUtils.formatDateTime(context, time.toDate().getTime(),
-                    DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
-        }
-        return DateUtils.formatDateTime(context, time.toDate().getTime(),
-                DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
-    }
 
     public int getViewTypeCount() {
         return 1;

@@ -24,7 +24,7 @@
   <string name="appearance_text_size_very_large">Дуже великий</string>
   <string name="appearance_multiline_title_title">Багаторядковий заголовок</string>
   <string name="appearance_multiline_title_desc">Розширювати заголовок події на кілька рядків</string>
-  <string name="appearance_date_format_desc">Відображати дати у am/pm або 24-годинному форматі</string>
+  <string name="appearance_date_format_desc">Відображати час у am/pm чи 24-годинному форматі</string>
   <string name="appearance_date_format_title">Формат дати</string>
   <string name="appearance_date_format_auto">Автоматично</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -97,4 +97,6 @@
   <string name="feedback_play_store_desc">Оцінити і прокоментувати у магазині Google Play</string>
   <string name="feedback_play_store_title">Перейти до віджета у магазині Google Play</string>
   <string name="refresh_desc">Оновити</string>
+  <string name="share_events_for_debugging_desc">Створити звіт, щоб допомогти розробникам усунути неполадки</string>
+  <string name="share_events_for_debugging_title">Поділитися подіями для налагодження</string>
 </resources>

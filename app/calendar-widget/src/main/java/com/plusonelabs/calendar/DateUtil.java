@@ -5,34 +5,16 @@ import android.text.format.DateUtils;
 
 import org.joda.time.DateTime;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Date;
-import java.util.Locale;
 
 public class DateUtil {
 
-    private static final String TWELVE = "12";
-    private static final String NOON_AM = "12:00 AM";
-    private static final String EMPTY_STRING = "";
     private static final String COMMA_SPACE = ", ";
     private static volatile DateTime mNow = null;
     private static volatile DateTime mNowSetAt = DateTime.now();
 
     public static boolean isMidnight(DateTime date) {
         return date.isEqual(date.withTimeAtStartOfDay());
-    }
-
-    public static boolean hasAmPmClock(Locale locale) {
-        DateFormat stdFormat = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US);
-        DateFormat localeFormat = DateFormat.getTimeInstance(DateFormat.LONG, locale);
-        String midnight = EMPTY_STRING;
-        try {
-            midnight = localeFormat.format(stdFormat.parse(NOON_AM));
-        } catch (ParseException ignore) {
-            // we ignore this exception deliberately
-        }
-        return midnight.contains(TWELVE);
     }
 
     public static String createDateString(Context context, DateTime dateTime) {

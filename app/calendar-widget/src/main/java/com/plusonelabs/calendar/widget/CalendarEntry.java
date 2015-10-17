@@ -2,6 +2,7 @@ package com.plusonelabs.calendar.widget;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 
 import com.plusonelabs.calendar.DateUtil;
@@ -10,8 +11,6 @@ import com.plusonelabs.calendar.calendar.CalendarEvent;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 
 import org.joda.time.DateTime;
-
-import java.util.Locale;
 
 public class CalendarEntry extends WidgetEntry {
     private static final String TWELVE = "12";
@@ -147,8 +146,8 @@ public class CalendarEntry extends WidgetEntry {
 
     private String createTimeString(Context context, DateTime time) {
         String dateFormat = CalendarPreferences.getDateFormat(context);
-        if (DateUtil.hasAmPmClock(Locale.getDefault()) && dateFormat.equals(AUTO)
-                || dateFormat.equals(TWELVE)) {
+        if (!DateFormat.is24HourFormat(context) && dateFormat.equals(AUTO)
+            || dateFormat.equals(TWELVE)) {
             return DateUtils.formatDateTime(context, time.toDate().getTime(),
                     DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
         }

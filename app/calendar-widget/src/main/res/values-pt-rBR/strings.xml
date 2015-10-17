@@ -97,4 +97,6 @@
   <string name="feedback_play_store_desc">Avalie e comente no Google Play Store</string>
   <string name="feedback_play_store_title">Visite-nos na Google Play Store</string>
   <string name="refresh_desc">Atualizar</string>
+  <string name="share_events_for_debugging_desc">Criar um relatório para ajudar os desenvolvedores a solucionar problemas</string>
+  <string name="share_events_for_debugging_title">Compartilhar eventos para depuração</string>
 </resources>

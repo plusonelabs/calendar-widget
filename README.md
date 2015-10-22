@@ -31,6 +31,11 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## Changelog
 
+### [v1.9.2](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.2)
+
+* Bugfixes for the 1.9 release
+* Translation updates
+
 ### [v1.9.1](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.1)
 
 * Bugfixes for 1.9 release

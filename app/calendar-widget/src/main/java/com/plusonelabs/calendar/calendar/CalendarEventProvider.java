@@ -100,11 +100,11 @@ public class CalendarEventProvider {
     }
 
     private String getCalendarSelection() {
-        Set<String> activeCalenders = CalendarPreferences.getActiveCalendars(context);
+        Set<String> activeCalendars = CalendarPreferences.getActiveCalendars(context);
         StringBuilder stringBuilder = new StringBuilder(EVENT_SELECTION);
-        if (!activeCalenders.isEmpty()) {
+        if (!activeCalendars.isEmpty()) {
             stringBuilder.append(AND_BRACKET);
-            Iterator<String> iterator = activeCalenders.iterator();
+            Iterator<String> iterator = activeCalendars.iterator();
             while (iterator.hasNext()) {
                 String calendarId = iterator.next();
                 stringBuilder.append(Instances.CALENDAR_ID);

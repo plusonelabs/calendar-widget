@@ -56,14 +56,14 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-		HashSet<String> selectedCalendars = getSelectedCalenders();
+		HashSet<String> selectedCalendars = getSelectedCalendars();
 		if (!selectedCalendars.equals(initialActiveCalendars)) {
 			CalendarPreferences.setActiveCalendars(getActivity(), selectedCalendars);
 			EventAppWidgetProvider.updateEventList(getActivity());
 		}
 	}
 
-    private HashSet<String> getSelectedCalenders() {
+    private HashSet<String> getSelectedCalendars() {
         PreferenceScreen preferenceScreen = getPreferenceScreen();
 		int prefCount = preferenceScreen.getPreferenceCount();
         HashSet<String> prefValues = new HashSet<>();

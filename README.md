@@ -31,6 +31,12 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## Changelog
 
+### [v1.9.3](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.3)
+
+* Date format "auto" now makes use of system wide date settings
+* Bugfixes for the 1.9 release
+* Translation updates
+
 ### [v1.9.2](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.2)
 
 * Bugfixes for the 1.9 release
@@ -44,8 +50,8 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 * New preferences to filter the events shown by the widget
   * New "Show events that ended recently" option allows to show events, which ended several hours ago, today or yesterday. [#122](https://github.com/plusonelabs/calendar-widget/issues/122)
-  * New "Show all past events having default color" optionshows all past events, which have 'Default color'. This option may be used to treat calendar events as Tasks and mark their completion by changing event's color. [#138](https://github.com/plusonelabs/calendar-widget/issues/138)
-  * New "Hide based on keywords in a title" option, which acts on all events. Multiple keywords may be seperated by spaces or commas.
+  * New "Show all past events having default color" option shows all past events, which have 'Default color'. This option may be used to treat calendar events as Tasks and mark their completion by changing event's color. [#138](https://github.com/plusonelabs/calendar-widget/issues/138)
+  * New "Hide based on keywords in a title" option, which acts on all events. Multiple keywords may be separated by spaces or commas.
 * Add "Past events background color" option.
 * Add "Today" option to "Date range", so you can see current and future events for today only (The same "Today" option exists for past events also) [#156](https://github.com/plusonelabs/calendar-widget/issues/156)
 * Add "Refresh" button to widget header to refresh the list of events [#120](https://github.com/plusonelabs/calendar-widget/issues/120)

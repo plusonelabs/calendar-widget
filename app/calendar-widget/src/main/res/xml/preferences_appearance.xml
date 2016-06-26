@@ -73,6 +73,15 @@
             android:key="entryTheme"
             android:summary="@string/appearance_entries_theme_desc"
             android:title="@string/appearance_entries_theme_title" />
+
+        <ListPreference
+            android:defaultValue="255"
+            android:entries="@array/pref_event_color_opacity_entries"
+            android:entryValues="@array/pref_event_color_opacity_values"
+            android:key="eventColorOpacity"
+            android:summary="@string/appearance_event_color_opacity_desc"
+            android:title="@string/appearance_event_color_opacity_title">
+        </ListPreference>
     </PreferenceCategory>
 
 </PreferenceScreen>

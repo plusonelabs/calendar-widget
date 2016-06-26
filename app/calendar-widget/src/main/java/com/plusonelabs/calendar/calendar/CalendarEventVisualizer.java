@@ -55,7 +55,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 		setEventDetails(event, rv);
 		setAlarmActive(event, rv);
         setRecurring(event, rv);
-		setColor(event, rv);
+		setColor(event, R.id.event_entry_color, rv);
 		return rv;
 	}
 
@@ -104,10 +104,14 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
         }
     }
 
-    private void setColor(CalendarEntry entry, RemoteViews rv) {
+    private void setColor(CalendarEntry entry, int viewId, RemoteViews rv) {
         setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
+        rv.setViewVisibility(viewId, View.VISIBLE);
         if (entry.getEndDate().isBefore(DateUtil.now())) {
             setBackgroundColor(rv, R.id.event_entry, CalendarPreferences.getPastEventsBackgroundColor(context));
+        } else if (CalendarPreferences.getEventColorOpacity(context) ==
+                CalendarPreferences.PREF_EVENT_COLOR_OPACITY_DISABLED) {
+            rv.setViewVisibility(viewId, View.GONE);
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);
         }

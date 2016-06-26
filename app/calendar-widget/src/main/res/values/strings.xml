@@ -56,6 +56,8 @@
     <string name="appearance_theme_dark">Light</string>
     <string name="appearance_theme_light">Dark</string>
     <string name="appearance_theme_white">Black</string>
+    <string name="appearance_event_color_opacity_desc">Adjust opacity of event color bars</string>
+    <string name="appearance_event_color_opacity_title">Event color opacity</string>
 
     <!-- Preference header: Event details -->
     <string name="event_details_prefs">Event details</string>
@@ -98,6 +100,10 @@
     <string name="ended_today">Ended today</string>
     <string name="ended_yesterday">Ended yesterday</string>
     <string name="pref_hide_based_on_keywords_title">Hide based on keywords in a title</string>
+    <string name="one_hundred_percent">100%</string>
+    <string name="fifty_percent">50%</string>
+    <string name="zero_percent">0%</string>
+    <string name="disable">Disable</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>

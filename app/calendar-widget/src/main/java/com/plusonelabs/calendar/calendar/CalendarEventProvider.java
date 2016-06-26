@@ -206,7 +206,7 @@ public class CalendarEventProvider {
         event.setLocation(cursor.getString(cursor.getColumnIndex(Instances.EVENT_LOCATION)));
         event.setAlarmActive(cursor.getInt(cursor.getColumnIndex(Instances.HAS_ALARM)) > 0);
         event.setRecurring(cursor.getString(cursor.getColumnIndex(Instances.RRULE)) != null);
-        event.setColor(getAsOpaque(getEventColor(cursor)));
+        event.setColor(getAsConfiguredOpacity(getEventColor(cursor)));
         if (event.isAllDay()) {
             fixAllDayEvent(event);
         }
@@ -266,5 +266,13 @@ public class CalendarEventProvider {
 
     private int getAsOpaque(int color) {
         return argb(255, red(color), green(color), blue(color));
+    }
+
+    private int getAsConfiguredOpacity(int color) {
+        if (CalendarPreferences.getEventColorOpacity(context) ==
+                CalendarPreferences.PREF_EVENT_COLOR_OPACITY_DISABLED) {
+            return argb(0, red(color), green(color), blue(color));
+        }
+        return argb(CalendarPreferences.getEventColorOpacity(context), red(color), green(color), blue(color));
     }
 }

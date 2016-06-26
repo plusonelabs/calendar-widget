@@ -49,6 +49,9 @@ public class CalendarPreferences {
     public static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
 	public static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
     static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
+    public static final String PREF_EVENT_COLOR_OPACITY = "eventColorOpacity";
+    public static final String PREF_EVENT_COLOR_OPACITY_DEFAULT = "255";
+    public static final int PREF_EVENT_COLOR_OPACITY_DISABLED = -1;
 
     private CalendarPreferences() {
 		// prohibit instantiation
@@ -173,6 +176,11 @@ public class CalendarPreferences {
     public static String getDateFormat(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(
                 PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
+    }
+
+    public static int getEventColorOpacity(Context context) {
+        return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_EVENT_COLOR_OPACITY, PREF_EVENT_COLOR_OPACITY_DEFAULT));
     }
 
     private static void setBooleanPreference(Context context, String key, boolean value) {

@@ -85,4 +85,16 @@
         <item>TODAY</item>
         <item>YESTERDAY</item>
     </string-array>
+    <string-array name="pref_event_color_opacity_entries">
+        <item>@string/one_hundred_percent</item>
+        <item>@string/fifty_percent</item>
+        <item>@string/zero_percent</item>
+        <item>@string/disable</item>
+    </string-array>
+    <string-array name="pref_event_color_opacity_values" tools:ignore="MissingTranslation">
+        <item>255</item>
+        <item>127</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
 </resources>

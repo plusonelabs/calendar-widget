@@ -11,6 +11,7 @@
     <TextView
         android:id="@+id/event_entry_color"
         style="@style/EventEntryColor"
+        android:visibility="visible"
         android:layout_width="8dp"
         android:layout_height="fill_parent"
         tools:ignore="SelectableText" />

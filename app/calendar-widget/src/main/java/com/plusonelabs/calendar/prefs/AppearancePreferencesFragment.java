@@ -37,6 +37,10 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
             new BackgroundTransparencyDialog().show(getFragmentManager(),
                     CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR);
         }
+/*		if (preference.getKey().equals(CalendarPreferences.PREF_EVENT_COLOR_OPACITY)) {
+			new OpacitySlider().show(getFragmentManager(),
+					CalendarPreferences.PREF_EVENT_COLOR_OPACITY);
+		} */// TODO: Implement OpacitySlider for variable event color opacity setting
 		return super.onPreferenceTreeClick(preferenceScreen, preference);
 	}
 

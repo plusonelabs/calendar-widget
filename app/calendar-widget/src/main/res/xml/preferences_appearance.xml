@@ -45,6 +45,13 @@
         android:title="@string/appearance_display_header_title">
     </CheckBoxPreference>
 
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="abbreviateDates"
+        android:summary="@string/appearance_abbreviate_dates_desc"
+        android:title="@string/appearance_abbreviate_dates_title">
+    </CheckBoxPreference>
+
     <PreferenceCategory android:title="@string/appearance_group_color_title">
         <ListPreference
             android:defaultValue="DARK"

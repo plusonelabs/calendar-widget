@@ -1,11 +1,15 @@
 package com.plusonelabs.calendar;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
 import org.joda.time.DateTime;
 
 import java.util.Date;
+
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ABBREVIATE_DATES;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ABBREVIATE_DATES_DEFAULT;
 
 public class DateUtil {
 
@@ -19,6 +23,12 @@ public class DateUtil {
 
     public static String createDateString(Context context, DateTime dateTime) {
         DateTime timeAtStartOfToday = DateTime.now().withTimeAtStartOfDay();
+        if (PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_ABBREVIATE_DATES, PREF_ABBREVIATE_DATES_DEFAULT)) {
+            return DateUtils.formatDateTime(context, dateTime.toDate().getTime(),
+                    DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
+                    DateUtils.FORMAT_SHOW_WEEKDAY);
+        }
         if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday)) {
             return createDateString(context, dateTime.toDate(), context.getString(R.string.today));
         } else if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday.plusDays(1))) {

@@ -49,6 +49,8 @@ public class CalendarPreferences {
     public static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
 	public static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
     static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
+    public static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
+    public static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
 
     private CalendarPreferences() {
 		// prohibit instantiation
@@ -62,6 +64,7 @@ public class CalendarPreferences {
         json.put(PREF_HIDE_BASED_ON_KEYWORDS, getHideBasedOnKeywords(context));
         json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, getShowDaysWithoutEvents(context));
         json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, getShowPastEventsWithDefaultColor(context));
+        json.put(PREF_ABBREVIATE_DATES, getAbbreviateDates(context));
         return json;
     }
 
@@ -72,6 +75,7 @@ public class CalendarPreferences {
         setHideBasedOnKeywords(context, json.getString(PREF_HIDE_BASED_ON_KEYWORDS));
         setShowDaysWithoutEvents(context, json.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS));
         setShowPastEventsWithDefaultColor(context, json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR));
+        setAbbreviateDates(context, json.getBoolean(PREF_ABBREVIATE_DATES));
     }
 
     public static Set<String> getActiveCalendars(Context context) {
@@ -173,6 +177,15 @@ public class CalendarPreferences {
     public static String getDateFormat(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(
                 PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
+    }
+
+    public static boolean getAbbreviateDates(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_ABBREVIATE_DATES, PREF_ABBREVIATE_DATES_DEFAULT);
+    }
+
+    public static void setAbbreviateDates(Context context, boolean value) {
+        setBooleanPreference(context, PREF_ABBREVIATE_DATES, value);
     }
 
     private static void setBooleanPreference(Context context, String key, boolean value) {

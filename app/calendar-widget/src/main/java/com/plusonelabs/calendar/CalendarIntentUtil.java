@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 
+import com.plusonelabs.calendar.util.PermissionsUtil;
+
 import org.joda.time.DateTime;
 
 public class CalendarIntentUtil {
@@ -28,13 +30,11 @@ public class CalendarIntentUtil {
 	}
 
 	static PendingIntent createOpenCalendarEventPendingIntent(Context context) {
-		Intent intent = createCalendarIntent();
-		return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		return PermissionsUtil.getPermittedPendingIntent(context, createCalendarIntent());
 	}
 
     static PendingIntent createOpenCalendarPendingIntent(Context context) {
-        Intent intent = createOpenCalendarAtDayIntent(new DateTime());
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PermissionsUtil.getPermittedPendingIntent(context, createOpenCalendarAtDayIntent(new DateTime()));
     }
 
     public static Intent createOpenCalendarEventIntent(int eventId, DateTime from, DateTime to) {
@@ -49,7 +49,7 @@ public class CalendarIntentUtil {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
 				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		return intent;
+		return  intent;
 	}
 
 	public static Intent createNewEventIntent() {

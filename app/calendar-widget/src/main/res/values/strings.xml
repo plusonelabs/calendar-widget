@@ -11,6 +11,11 @@
     <string name="indicator_alarm">Indicator if an alarm has been set</string>
     <string name="indicator_recurring">Indicator if the event is recurring</string>
     <string name="no_title">(No title)</string>
+    <string name="permissions_justification">The Calendar Widget application MUST be granted permission to read your calendars.
+    Otherwise the widget will be empty.</string>
+    <string name="no_widgets_found">No widgets to configure yet. Please add a \"Calendar Widget\" widget to the Home Screen of your device first.</string>
+    <string name="grant_permissions">Grant permissions</string>
+    <string name="close">Close</string>
 
     <!-- Preference header: Calendars -->
     <string name="calendars_prefs">Calendars</string>

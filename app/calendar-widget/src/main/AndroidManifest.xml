@@ -1,68 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest package="com.plusonelabs.calendar"
+          xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.plusonelabs.calendar"
           android:installLocation="internalOnly">
 
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.CalendarConfiguration.Dark">
-    <activity
-            android:name="WidgetConfigurationActivity"
-            android:exported="true"
-            tools:ignore="ExportedActivity" >
+
+        <activity android:name=".MainActivity"
+                  android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".WidgetConfigurationActivity"
+            android:exported="true"
+            tools:ignore="ExportedActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
         <receiver
-            android:name="EventAppWidgetProvider"
-            android:label="@string/widget_name" >
+            android:name=".EventAppWidgetProvider"
+            android:label="@string/widget_name">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/calendar_appwidget_info" />
+                android:resource="@xml/calendar_appwidget_info"/>
         </receiver>
-        <receiver android:name="EnvironmentChangedReceiver" >
+        <receiver android:name=".EnvironmentChangedReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PROVIDER_CHANGED" />
-                <data android:scheme="content" />
-                <data android:host="com.android.calendar" />
+                <action android:name="android.intent.action.PROVIDER_CHANGED"/>
+
+                <data android:scheme="content"/>
+                <data android:host="com.android.calendar"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.plusonelabs.calendar.action.REFRESH" />
+                <action android:name="com.plusonelabs.calendar.action.REFRESH"/>
             </intent-filter>
         </receiver>
-        <receiver android:name="AlarmReceiver" >
+        <receiver android:name=".AlarmReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
             </intent-filter>
         </receiver>
 
         <service
-            android:name="EventWidgetService"
+            android:name=".EventWidgetService"
             android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
+            android:permission="android.permission.BIND_REMOTEVIEWS">
         </service>
     </application>
 

@@ -12,6 +12,7 @@ import android.util.Log;
 import com.plusonelabs.calendar.BuildConfig;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.util.PermissionsUtil;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -48,7 +49,8 @@ public class CalendarEventProvider {
 
     public List<CalendarEvent> getEvents() {
         initialiseParameters();
-        List<CalendarEvent> eventList = getTimeFilteredEventList();
+        List<CalendarEvent> eventList = PermissionsUtil.arePermissionsGranted(context) ?
+                getTimeFilteredEventList() : new ArrayList<CalendarEvent>();
         for (CalendarEvent event : getPastEventWithColorList()) {
             if (eventList.contains(event)) {
                 eventList.remove(event);

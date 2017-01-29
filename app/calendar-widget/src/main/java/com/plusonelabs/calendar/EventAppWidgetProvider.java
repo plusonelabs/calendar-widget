@@ -17,16 +17,30 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.plusonelabs.calendar.util.PermissionsUtil;
+
 import org.joda.time.DateTime;
 
 import java.util.List;
 import java.util.Locale;
 
-import static android.graphics.Color.*;
-import static com.plusonelabs.calendar.CalendarIntentUtil.*;
-import static com.plusonelabs.calendar.RemoteViewsUtil.*;
+import static android.graphics.Color.alpha;
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarAtDayIntent;
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
+import static com.plusonelabs.calendar.CalendarIntentUtil.createOpenCalendarPendingIntent;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setColorFilter;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.*;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME_DEFAULT;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_HEADER;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
     private static final String PACKAGE = EventAppWidgetProvider.class.getPackage().getName();
@@ -90,7 +104,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void configureAddEvent(Context context, RemoteViews rv) {
-        Intent intent = CalendarIntentUtil.createNewEventIntent();
+        Intent intent = PermissionsUtil.getPermittedIntent(context, CalendarIntentUtil.createNewEventIntent());
         if (isIntentAvailable(context, intent)) {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
@@ -107,9 +121,8 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void configureOverflowMenu(Context context, RemoteViews rv) {
-        Intent startConfigIntent = new Intent(context, WidgetConfigurationActivity.class);
-        PendingIntent menuPendingIntent = PendingIntent.getActivity(context, 0, startConfigIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent menuPendingIntent = PermissionsUtil.getPermittedPendingIntent(context,
+                new Intent(context, WidgetConfigurationActivity.class));
         rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
     }
 

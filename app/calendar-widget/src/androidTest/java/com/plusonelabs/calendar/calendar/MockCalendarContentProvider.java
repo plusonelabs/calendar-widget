@@ -48,6 +48,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         Context isolatedContext = new IsolatedContext(mockResolver, testCase.getInstrumentation().getTargetContext());
         MockCalendarContentProvider contentProvider = new MockCalendarContentProvider(isolatedContext);
         mockResolver.addProvider("com.android.calendar", contentProvider);
+        mockResolver.addProvider("settings", new MockSettingsProvider());
         return contentProvider;
     }
 
@@ -70,7 +71,8 @@ public class MockCalendarContentProvider extends MockContentProvider {
                         " \"eventRange\": 30," +
                         " \"showPastEventsWithDefaultColor\": false," +
                         " \"fillAllDay\": true," +
-                        " \"eventsEnded\": \"\"" +
+                        " \"eventsEnded\": \"\"," +
+                        " \"abbreviateDates\": false" +
                         "}"));
     }
 

@@ -29,7 +29,7 @@ android:
 
 before_install:
   # http://stackoverflow.com/questions/33820638/travis-yml-gradlew-permission-denied
-  - chmod +x gradlew
+  - chmod +x app/calendar-widget/gradlew
 
 before_script:
   - uname -a

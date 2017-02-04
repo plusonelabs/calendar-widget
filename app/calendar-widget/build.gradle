@@ -17,7 +17,7 @@ repositories {
 dependencies {
     compile 'joda-time:joda-time:2.9.7'
     compile 'com.larswerkman:HoloColorPicker:1.5'
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.1.1'
 }
 
 android {

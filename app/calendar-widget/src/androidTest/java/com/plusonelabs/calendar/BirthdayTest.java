@@ -49,7 +49,7 @@ public class BirthdayTest extends InstrumentationTestCase {
         CalendarPreferences.setEventRange(provider.getContext(), 30);
         playAtOneTime(inputs, new DateTime(2015, 8, 1, 17, 0), 0);
         playAtOneTime(inputs, new DateTime(2015, 8,  9, 23, 59), 0);
-        playAtOneTime(inputs, new DateTime(2015, 8, 10,  0,  0), 0);
+        playAtOneTime(inputs, new DateTime(2015, 8, 10,  0,  0).plusMillis(1), 2);
         playAtOneTime(inputs, new DateTime(2015, 8, 10,  0,  1), 2);
 
         playAtOneTime(inputs, new DateTime(2015, 9, 8, 17,  0), 2);

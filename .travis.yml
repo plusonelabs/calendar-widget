@@ -103,7 +103,7 @@ script:
   # adb doesn't propagate exit code from tests, see https://code.google.com/p/android/issues/detail?id=3254
   # So we need to parse saved terminal log
   - |
-    cat build/adb-test.log | grep "INSTRUMENTATION_STATUS: stack="
+    cat build/adb-test.log | grep -A2 "INSTRUMENTATION_STATUS: stack="
     if [ $? -eq 0 ]; then
       echo "Test failure found"
       exit 1

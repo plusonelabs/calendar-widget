@@ -77,7 +77,7 @@ script:
   # - ./gradlew connectedCheck -PdisablePreDex --continue --stacktrace --debug
   # run:
   - |
-    ./gradlew :app:installDebugAndroidTest :app:installDebug
+    ./gradlew :installDebugAndroidTest :installDebug
     retval=$?
     if [ $retval -ne 0 ]; then
       echo "error on install, exit code: "$retval

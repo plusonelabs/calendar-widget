@@ -32,7 +32,6 @@ before_install:
   - chmod +x gradlew
 
 before_script:
-  - cd app/calendar-widget
   - uname -a
   - android list targets
   - ls -la $HOME/.android/**/*
@@ -42,7 +41,7 @@ before_script:
   - ls -la $HOME/.android/**/*
   - ls -la $HOME/**/*
   - cat $HOME/.android/avd/test.avd/config.ini
-  - cp ../../assets/avd_config.ini $HOME/.android/avd/test.avd/config.ini
+  - cp assets/avd_config.ini $HOME/.android/avd/test.avd/config.ini
   - cat $HOME/.android/avd/test.avd/config.ini
   - emulator -avd test -no-window &
   - travis_wait 30 android-wait-for-emulator
@@ -64,6 +63,7 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
+  - cd app/calendar-widget
   - |
     ./gradlew build assembleAndroidTest
     retval=$?

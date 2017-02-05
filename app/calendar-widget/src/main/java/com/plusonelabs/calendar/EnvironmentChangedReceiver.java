@@ -1,12 +1,10 @@
 package com.plusonelabs.calendar;
 
-import java.util.TimeZone;
-
-import org.joda.time.DateTimeZone;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import org.joda.time.DateTimeZone;
 
 public class EnvironmentChangedReceiver extends BroadcastReceiver {
 
@@ -17,7 +15,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
 				|| action.equals(Intent.ACTION_TIME_CHANGED)
 				|| action.equals(Intent.ACTION_DATE_CHANGED)
 				|| action.equals(Intent.ACTION_TIMEZONE_CHANGED)) {
-			DateTimeZone.setDefault(DateTimeZone.forID(TimeZone.getDefault().getID()));
+			DateTimeZone.setDefault(DateUtil.getCurrentTimeZone(context));
 			EventAppWidgetProvider.updateAllWidgets(context);
 		}
 		EventAppWidgetProvider.updateEventList(context);

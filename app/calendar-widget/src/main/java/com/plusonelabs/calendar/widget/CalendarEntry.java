@@ -148,10 +148,10 @@ public class CalendarEntry extends WidgetEntry {
         String dateFormat = CalendarPreferences.getDateFormat(context);
         if (!DateFormat.is24HourFormat(context) && dateFormat.equals(AUTO)
             || dateFormat.equals(TWELVE)) {
-            return DateUtils.formatDateTime(context, time.toDate().getTime(),
+            return DateUtil.formatDateTime(context, time,
                     DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
         }
-        return DateUtils.formatDateTime(context, time.toDate().getTime(),
+        return DateUtil.formatDateTime(context, time,
                 DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
     }
 

@@ -43,6 +43,9 @@
     <string name="appearance_display_header_title">Show widget header</string>
     <string name="appearance_display_header_desc">Show the date and settings header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>
+    <string name="lock_time_zone_off_desc">Unlocked, current zone: %1$s</string>
+    <string name="lock_time_zone_on_desc">Locked at %1$s</string>
+    <string name="lock_time_zone_title">Lock time zone</string>
     <string name="appearance_group_color_title">Colors</string>
     <string name="appearance_background_color_title">Background color</string>
     <string name="appearance_background_color_desc">Adjust the color of the background</string>

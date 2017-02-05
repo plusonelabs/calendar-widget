@@ -3,11 +3,14 @@ package com.plusonelabs.calendar.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import com.plusonelabs.calendar.Alignment;
+import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EndedSomeTimeAgo;
 import com.plusonelabs.calendar.Theme;
 
+import org.joda.time.DateTimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,6 +54,10 @@ public class CalendarPreferences {
     static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
     public static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
     public static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
+    static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
+    static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
+
+    private static volatile String lockedTimeZoneId = null;
 
     private CalendarPreferences() {
 		// prohibit instantiation
@@ -100,10 +107,7 @@ public class CalendarPreferences {
     }
 
     public static void setEventRange(Context context, int value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PREF_EVENT_RANGE, Integer.toString(value));
-        editor.apply();
+        setStringPreference(context, PREF_EVENT_RANGE, Integer.toString(value));
     }
 
     public static EndedSomeTimeAgo getEventsEnded(Context context) {
@@ -112,10 +116,7 @@ public class CalendarPreferences {
     }
 
     public static void setEventsEnded(Context context, EndedSomeTimeAgo value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PREF_EVENTS_ENDED, value.save());
-        editor.apply();
+        setStringPreference(context, PREF_EVENTS_ENDED, value.save());
     }
 
     public static boolean getFillAllDayEvents(Context context) {
@@ -128,15 +129,17 @@ public class CalendarPreferences {
     }
 
     public static String getHideBasedOnKeywords(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(
-                PREF_HIDE_BASED_ON_KEYWORDS,
-                "");
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_HIDE_BASED_ON_KEYWORDS, "");
     }
 
     private static void setHideBasedOnKeywords(Context context, String value) {
+        setStringPreference(context, PREF_HIDE_BASED_ON_KEYWORDS, value);
+    }
+
+    private static void setStringPreference(Context context, String key, String value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PREF_HIDE_BASED_ON_KEYWORDS, value);
+        editor.putString(key, value);
         editor.apply();
     }
 
@@ -193,6 +196,24 @@ public class CalendarPreferences {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(key, value);
         editor.apply();
+    }
+
+    public static String getLockedTimeZoneId(Context context) {
+        if (lockedTimeZoneId != null) {
+            return lockedTimeZoneId;
+        }
+        lockedTimeZoneId = PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_LOCKED_TIME_ZONE_ID, "");
+        return lockedTimeZoneId;
+    }
+
+    public static void setLockedTimeZoneId(Context context, String value) {
+        lockedTimeZoneId = value;
+        setStringPreference(context, PREF_LOCKED_TIME_ZONE_ID, value);
+        DateTimeZone.setDefault(DateUtil.getCurrentTimeZone(context));
+    }
+
+    public static boolean isTimeZoneLocked(Context context) {
+        return !TextUtils.isEmpty(getLockedTimeZoneId(context));
     }
 
 }

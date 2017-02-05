@@ -1,8 +1,6 @@
 package com.plusonelabs.calendar;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
@@ -11,10 +9,9 @@ import com.plusonelabs.calendar.prefs.CalendarPreferences;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import java.util.Formatter;
+import java.util.Locale;
 import java.util.TimeZone;
-
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ABBREVIATE_DATES;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ABBREVIATE_DATES_DEFAULT;
 
 public class DateUtil {
 
@@ -28,8 +25,7 @@ public class DateUtil {
 
     public static String createDateString(Context context, DateTime dateTime) {
         DateTime timeAtStartOfToday = DateTime.now().withTimeAtStartOfDay();
-        if (PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_ABBREVIATE_DATES, PREF_ABBREVIATE_DATES_DEFAULT)) {
+        if (CalendarPreferences.getAbbreviateDates(context)) {
             return formatDateTime(context, dateTime,
                     DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
                     DateUtils.FORMAT_SHOW_WEEKDAY);
@@ -48,17 +44,16 @@ public class DateUtil {
     }
 
     public static String formatDateTime(Context context, DateTime dateTime, int flags) {
-        TimeZone timeZoneStored = null;
-        long millis = dateTime.toDate().getTime();
-        if (CalendarPreferences.isTimeZoneLocked(context)) {
-            timeZoneStored = TimeZone.getDefault();
-            TimeZone.setDefault(getCurrentTimeZone(context).toTimeZone());
-        }
-        String formatted = DateUtils.formatDateTime(context, millis, flags);
-        if (timeZoneStored != null) {
-            TimeZone.setDefault(timeZoneStored);
-        }
-        return formatted;
+        return CalendarPreferences.isTimeZoneLocked(context) ?
+                formatDateTimeAtTimeZone(context, dateTime, flags, CalendarPreferences.getLockedTimeZoneId(context)) :
+                DateUtils.formatDateTime(context, dateTime.getMillis(), flags);
+    }
+
+    private static String formatDateTimeAtTimeZone(Context context, DateTime dateTime, int flags, String timeZoneId) {
+        return DateUtils.formatDateRange(context,
+                new Formatter(new StringBuilder(50), Locale.getDefault()),
+                dateTime.getMillis(), dateTime.getMillis(), flags,
+                timeZoneId).toString();
     }
 
     public static void setNow(DateTime now) {
@@ -90,12 +85,13 @@ public class DateUtil {
 
     public static DateTimeZone getCurrentTimeZone(Context context) {
         DateTimeZone zone = DateTimeZone.forID(TimeZone.getDefault().getID());
-        String lockedTimeZoneId = CalendarPreferences.getLockedTimeZoneId(context);
-        if (!TextUtils.isEmpty(lockedTimeZoneId)) {
+        if (CalendarPreferences.isTimeZoneLocked(context)) {
+            String lockedTimeZoneId = CalendarPreferences.getLockedTimeZoneId(context);
             try {
                 zone = DateTimeZone.forID(lockedTimeZoneId);
             } catch (IllegalArgumentException e) {
-                Log.w("getDefaultTimeZone", "The Locked time zone is not recognized: " + lockedTimeZoneId);
+                Log.w("getCurrentTimeZone", "The Locked time zone is not recognized: " + lockedTimeZoneId);
+                CalendarPreferences.setLockedTimeZoneId(context, "");
             }
         }
         return zone;

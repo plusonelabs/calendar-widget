@@ -52,10 +52,10 @@ public class CalendarPreferences {
     public static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
 	public static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
     static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
-    public static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
-    public static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
+    private static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
+    private static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
-    static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
+    private static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
 
     private static volatile String lockedTimeZoneId = null;
 

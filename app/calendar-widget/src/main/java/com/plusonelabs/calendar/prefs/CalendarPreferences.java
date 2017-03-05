@@ -25,6 +25,7 @@ public class CalendarPreferences {
 	public static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
 	private static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
 	private static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
+	private static final String PREF_SHOW_DAY_ENTRIES = "showDayEntries";
 	public static final String PREF_SHOW_HEADER = "showHeader";
 	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";
 	public static final String PREF_INDICATE_ALERTS = "indicateAlerts";
@@ -70,6 +71,7 @@ public class CalendarPreferences {
         json.put(PREF_FILL_ALL_DAY, getFillAllDayEvents(context));
         json.put(PREF_HIDE_BASED_ON_KEYWORDS, getHideBasedOnKeywords(context));
         json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, getShowDaysWithoutEvents(context));
+        json.put(PREF_SHOW_DAY_ENTRIES, getShowDayEntries(context));
         json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, getShowPastEventsWithDefaultColor(context));
         json.put(PREF_ABBREVIATE_DATES, getAbbreviateDates(context));
         return json;
@@ -81,6 +83,7 @@ public class CalendarPreferences {
         setFillAllDayEvents(context, json.getBoolean(PREF_FILL_ALL_DAY));
         setHideBasedOnKeywords(context, json.getString(PREF_HIDE_BASED_ON_KEYWORDS));
         setShowDaysWithoutEvents(context, json.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS));
+        setShowDayEntries(context, json.getBoolean(PREF_SHOW_DAY_ENTRIES));
         setShowPastEventsWithDefaultColor(context, json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR));
         setAbbreviateDates(context, json.getBoolean(PREF_ABBREVIATE_DATES));
     }
@@ -158,6 +161,15 @@ public class CalendarPreferences {
         setBooleanPreference(context, PREF_SHOW_DAYS_WITHOUT_EVENTS, value);
     }
 
+    public static boolean getShowDayEntries(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_DAY_ENTRIES, true);
+    }
+
+    private static void setShowDayEntries(Context context, boolean value) {
+        setBooleanPreference(context, PREF_SHOW_DAY_ENTRIES, value);
+    }
+
     public static boolean getShowPastEventsWithDefaultColor(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false);
@@ -215,5 +227,4 @@ public class CalendarPreferences {
     public static boolean isTimeZoneLocked(Context context) {
         return !TextUtils.isEmpty(getLockedTimeZoneId(context));
     }
-
 }

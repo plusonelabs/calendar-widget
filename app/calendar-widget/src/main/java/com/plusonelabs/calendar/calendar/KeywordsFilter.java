@@ -1,26 +1,69 @@
 package com.plusonelabs.calendar.calendar;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/** Filter String by keywords */
+/**
+ * Filter String by keywords or phrases, enclosed in single or double quotes
+ * @author yvolk@yurivolkov.com
+ */
 public class KeywordsFilter {
-    private final List<String> keywords;
+    protected final List<String> keywords = new ArrayList<>();
+    private static final char DOUBLE_QUOTE = '"';
+    private static final char SINGLE_QUOTE = '\'';
 
-    public KeywordsFilter(String rawKeywords) {
-        keywords = new ArrayList<>();
-        if (TextUtils.isEmpty(rawKeywords)) {
+    public KeywordsFilter(String text) {
+        if (TextUtils.isEmpty(text)) {
             return;
         }
-        for (String item0 : rawKeywords.split("[, ]")) {
-            String item = item0.trim();
+        boolean inQuote = false;
+        char quote = ' ';
+        for (int atPos = 0; atPos < text.length();) {
+            int separatorInd = inQuote ? nextQuote(text, quote, atPos) : nextSeparatorInd(text, atPos);
+            if (atPos > separatorInd) {
+                break;
+            }
+            String item = text.substring(atPos, separatorInd);
             if (!TextUtils.isEmpty(item) && !keywords.contains(item)) {
                 keywords.add(item);
             }
+            if (separatorInd < text.length() && isQuote(text, separatorInd)) {
+                inQuote = !inQuote;
+                quote = text.charAt(separatorInd);
+            }
+            atPos = separatorInd + 1;
         }
+    }
+
+    private boolean isQuote(String text, int index) {
+        switch (text.charAt(index)) {
+            case DOUBLE_QUOTE:
+            case SINGLE_QUOTE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private int nextQuote(String text, char quote, int atPos) {
+        for (int ind=atPos; ind < text.length(); ind++) {
+            if (quote == text.charAt(ind)) {
+                return ind;
+            }
+        }
+        return text.length();
+    }
+
+    private int nextSeparatorInd(String text, int atPos) {
+        final String SEPARATORS = ", " + DOUBLE_QUOTE + SINGLE_QUOTE;
+        for (int ind=atPos; ind < text.length(); ind++) {
+            if (SEPARATORS.indexOf(text.charAt(ind)) >= 0) {
+                return ind;
+            }
+        }
+        return text.length();
     }
 
     public boolean matched(String s) {
@@ -46,7 +89,8 @@ public class KeywordsFilter {
             if (builder.length() > 0) {
                 builder.append(", ");
             }
-            builder.append("\"" + keyword + "\"");
+            char quote = keyword.contains(String.valueOf(DOUBLE_QUOTE)) ? SINGLE_QUOTE : DOUBLE_QUOTE;
+            builder.append(quote + keyword + quote);
         }
         return builder.toString();
     }

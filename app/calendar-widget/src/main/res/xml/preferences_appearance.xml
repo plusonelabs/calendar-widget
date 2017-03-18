@@ -27,14 +27,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:defaultValue="true"
-        android:key="showDayEntries"
-        android:summary="@string/appearance_show_day_entries_desc"
-        android:title="@string/appearance_show_day_entries_title">
+        android:key="showDayHeaders"
+        android:summary="@string/appearance_show_day_headers_desc"
+        android:title="@string/appearance_show_day_headers_title">
     </CheckBoxPreference>
 
     <ListPreference
         android:defaultValue="RIGHT"
-        android:dependency="showDayEntries"
+        android:dependency="showDayHeaders"
         android:entries="@array/pref_day_header_alignment_entries"
         android:entryValues="@array/pref_day_header_alignment_values"
         android:key="dayHeaderAlignment"
@@ -43,7 +43,7 @@
 
     <CheckBoxPreference
         android:defaultValue="false"
-        android:dependency="showDayEntries"
+        android:dependency="showDayHeaders"
         android:key="showDaysWithoutEvents"
         android:summary="@string/appearance_show_days_without_events_desc"
         android:title="@string/appearance_show_days_without_events_title">

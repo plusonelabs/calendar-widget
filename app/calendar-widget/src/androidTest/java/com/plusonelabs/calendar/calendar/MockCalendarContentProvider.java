@@ -67,6 +67,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         CalendarPreferences.fromJson(context,
                 new JSONObject("{" +
                         " \"showDaysWithoutEvents\": false," +
+                        " \"showDayHeaders\": true," +
                         " \"hideBasedOnKeywords\": \"\"," +
                         " \"eventRange\": 30," +
                         " \"showPastEventsWithDefaultColor\": false," +

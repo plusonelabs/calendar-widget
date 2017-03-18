@@ -40,8 +40,8 @@
     <string name="appearance_date_format_12">5:00 pm</string>
     <string name="appearance_show_days_without_events_title">Show days without events</string>
     <string name="appearance_show_days_without_events_desc">Show day headers for days without events</string>
-    <string name="appearance_show_day_entries_title">Show day headers</string>
-    <string name="appearance_show_day_entries_desc">Show day headers at all</string>
+    <string name="appearance_show_day_headers_title">Show day headers</string>
+    <string name="appearance_show_day_headers_desc">Show day headers at all</string>
     <string name="appearance_display_header_title">Show widget header</string>
     <string name="appearance_display_header_desc">Show the date and settings header</string>
     <string name="appearance_display_header_warning">Hiding the header also stops you from getting back into the preferences.</string>

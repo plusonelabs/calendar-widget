@@ -94,7 +94,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
     public void onDataSetChanged() {
         context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT));
-        if (CalendarPreferences.getShowDayEntries(context))
+        if (CalendarPreferences.getShowDayHeaders(context))
             mWidgetEntries = addDayHeaders(getEventEntries());
         else
             mWidgetEntries = getEventEntries();

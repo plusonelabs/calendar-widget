@@ -1,6 +1,12 @@
 package com.plusonelabs.calendar.widget;
 
+import android.content.Context;
+
+import com.plusonelabs.calendar.DateUtil;
+import com.plusonelabs.calendar.R;
+
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 public class WidgetEntry implements Comparable<WidgetEntry> {
 
@@ -21,6 +27,20 @@ public class WidgetEntry implements Comparable<WidgetEntry> {
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName() + " [startDate=" + startDate + "]";
+	}
+
+	public CharSequence getDateString(Context context) {
+        Days days = Days.daysBetween(DateUtil.now().withTimeAtStartOfDay(), startDate.withTimeAtStartOfDay());
+        switch (days.getDays()) {
+            case -1:
+                return context.getText(R.string.yesterday);
+            case 0:
+                return context.getText(R.string.today);
+            case 1:
+                return context.getText(R.string.tomorrow);
+            default:
+                return Integer.toString(days.getDays());
+        }
 	}
 
     @Override

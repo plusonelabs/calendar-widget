@@ -9,6 +9,7 @@ import com.plusonelabs.calendar.Alignment;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EndedSomeTimeAgo;
 import com.plusonelabs.calendar.Theme;
+import com.plusonelabs.calendar.widget.EventEntryLayout;
 
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -57,6 +58,7 @@ public class CalendarPreferences {
     private static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
     private static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
+    static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
 
     private static volatile String lockedTimeZoneId = null;
 
@@ -226,5 +228,14 @@ public class CalendarPreferences {
 
     public static boolean isTimeZoneLocked(Context context) {
         return !TextUtils.isEmpty(getLockedTimeZoneId(context));
+    }
+
+    public static void setEventEntryLayout(Context context, EventEntryLayout value) {
+        setStringPreference(context, PREF_EVENT_ENTRY_LAYOUT, value.value);
+    }
+
+    public static EventEntryLayout getEventEntryLayout(Context context) {
+        return EventEntryLayout.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
+                PREF_EVENT_ENTRY_LAYOUT, ""));
     }
 }

@@ -85,4 +85,12 @@
         <item>TODAY</item>
         <item>YESTERDAY</item>
     </string-array>
+    <string-array name="pref_event_entry_layout_entries">
+        <item>@string/default_multiline_layout</item>
+        <item>@string/single_line_layout</item>
+    </string-array>
+    <string-array name="pref_event_entry_layout_values" tools:ignore="MissingTranslation">
+        <item>DEFAULT</item>
+        <item>ONE_LINE</item>
+    </string-array>
 </resources>

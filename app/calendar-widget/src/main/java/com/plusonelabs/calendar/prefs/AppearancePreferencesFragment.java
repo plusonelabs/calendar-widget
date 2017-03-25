@@ -1,5 +1,6 @@
 package com.plusonelabs.calendar.prefs;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -13,7 +14,8 @@ import com.plusonelabs.calendar.R;
 
 import java.util.TimeZone;
 
-public class AppearancePreferencesFragment extends PreferenceFragment {
+public class AppearancePreferencesFragment extends PreferenceFragment
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,16 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 	public void onResume() {
 		super.onResume();
 		showLockTimeZone(true);
+        showEventEntryLayout();
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
+
+    private void showEventEntryLayout() {
+        Preference preference = findPreference(CalendarPreferences.PREF_EVENT_ENTRY_LAYOUT);
+        if (preference != null) {
+            preference.setSummary(CalendarPreferences.getEventEntryLayout(getActivity()).summaryResId);
+        }
+    }
 
     private void showLockTimeZone(boolean setAlso) {
         CheckBoxPreference preference = (CheckBoxPreference) findPreference(CalendarPreferences.PREF_LOCK_TIME_ZONE);
@@ -78,7 +89,19 @@ public class AppearancePreferencesFragment extends PreferenceFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         EventAppWidgetProvider.updateEventList(getActivity());
 		EventAppWidgetProvider.updateAllWidgets(getActivity());
 	}
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key) {
+            case CalendarPreferences.PREF_EVENT_ENTRY_LAYOUT:
+                showEventEntryLayout();
+                break;
+            default:
+                break;
+        }
+    }
 }

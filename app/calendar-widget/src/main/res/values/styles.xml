@@ -31,7 +31,7 @@
     <style name="EventEntryTitle" parent="android:Widget.Holo.TextView">
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/event_entry_title_dark</item>
         <item name="android:textSize">@dimen/event_entry_title</item>
     </style>
 

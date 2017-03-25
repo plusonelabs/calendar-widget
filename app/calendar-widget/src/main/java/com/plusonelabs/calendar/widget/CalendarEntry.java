@@ -18,7 +18,7 @@ public class CalendarEntry extends WidgetEntry {
     private static final String SPACE_ARROW = " →";
     private static final String ARROW_SPACE = "→ ";
     private static final String EMPTY_STRING = "";
-    private static final String SPACE_DASH_SPACE = " - ";
+    static final String SPACE_DASH_SPACE = " - ";
     private static final String SPACE_PIPE_SPACE = "  |  ";
 
 	private DateTime endDate;
@@ -90,19 +90,23 @@ public class CalendarEntry extends WidgetEntry {
 		return event;
 	}
 
-	public String getEventDetails(Context context) {
-		if (spansOneFullDay() && !(isStartOfMultiDayEvent()
-				|| isEndOfMultiDayEvent())
-				|| isAllDay() && CalendarPreferences.getFillAllDayEvents(context)) {
-			return "";
-		} else {
-			String eventDetails = createTimeSpanString(context);
-			if (CalendarPreferences.getShowLocation(context) && getLocation() != null && !getLocation().isEmpty()) {
-				eventDetails += SPACE_PIPE_SPACE + getLocation();
-			}
-			return eventDetails;
-		}
+    public String getEventDetails(Context context) {
+		if (hideEventDetails(context)) return "";
+        String eventDetails = createTimeSpanString(context);
+        if (CalendarPreferences.getShowLocation(context) && getLocation() != null && !getLocation().isEmpty()) {
+            eventDetails += SPACE_PIPE_SPACE + getLocation();
+        }
+        return eventDetails;
 	}
+
+    String getEventTimeString(Context context) {
+        return hideEventDetails(context) ? "" : createTimeSpanString(context);
+    }
+
+    private boolean hideEventDetails(Context context) {
+        return spansOneFullDay() && !(isStartOfMultiDayEvent() || isEndOfMultiDayEvent()) ||
+                isAllDay() && CalendarPreferences.getFillAllDayEvents(context);
+    }
 
     private String createTimeSpanString(Context context) {
         if (isAllDay() && !CalendarPreferences.getFillAllDayEvents(context)) {

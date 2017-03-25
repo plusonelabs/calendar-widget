@@ -96,11 +96,11 @@ public class RemoteViewsUtil {
 		}
 	}
 
-	public static void setSingleLine(RemoteViews rv, int viewId, boolean singleLine) {
-		rv.setBoolean(viewId, METHOD_SET_SINGLE_LINE, singleLine);
+	public static void setMultiline(RemoteViews rv, int viewId, boolean multiLine) {
+		rv.setBoolean(viewId, METHOD_SET_SINGLE_LINE, !multiLine);
 	}
 
-    public static void setImageFromAttr(Context context, RemoteViews rv, int viewId, int attrResId) {
+	public static void setImageFromAttr(Context context, RemoteViews rv, int viewId, int attrResId) {
         TypedValue outValue = new TypedValue();
         context.getTheme().resolveAttribute(attrResId, outValue, true);
         setImage(rv, viewId, outValue.resourceId);

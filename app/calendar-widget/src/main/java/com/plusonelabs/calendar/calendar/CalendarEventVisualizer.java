@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -14,6 +13,7 @@ import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.prefs.CalendarPreferences;
 import com.plusonelabs.calendar.widget.CalendarEntry;
+import com.plusonelabs.calendar.widget.EventEntryLayout;
 import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
@@ -25,7 +25,7 @@ import java.util.List;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setSingleLine;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setMultiline;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
@@ -49,34 +49,23 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 
 	public RemoteViews getRemoteView(WidgetEntry eventEntry) {
 		CalendarEntry event = (CalendarEntry) eventEntry;
-		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.event_entry);
+        EventEntryLayout eventEntryLayout = CalendarPreferences.getEventEntryLayout(context);
+        RemoteViews rv = new RemoteViews(context.getPackageName(), eventEntryLayout.layoutId);
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getEvent()));
         setTitle(event, rv);
-		setEventDetails(event, rv);
+        eventEntryLayout.visualizeEvent(context, event, rv);
 		setAlarmActive(event, rv);
         setRecurring(event, rv);
 		setColor(event, rv);
 		return rv;
 	}
 
-	private void setTitle(CalendarEntry event, RemoteViews rv) {
+    private void setTitle(CalendarEntry event, RemoteViews rv) {
 		rv.setTextViewText(R.id.event_entry_title, event.getTitle(context));
 		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
         setTextColorFromAttr(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
-        setSingleLine(rv, R.id.event_entry_title,
-                !prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
-    }
-
-	private void setEventDetails(CalendarEntry entry, RemoteViews rv) {
-        String eventDetails = entry.getEventDetails(context);
-        if (TextUtils.isEmpty(eventDetails)) {
-            rv.setViewVisibility(R.id.event_entry_details, View.GONE);
-        } else {
-            rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
-            rv.setTextViewText(R.id.event_entry_details, eventDetails);
-            setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
-            setTextColorFromAttr(context, rv, R.id.event_entry_details, R.attr.eventEntryDetails);
-        }
+        setMultiline(rv, R.id.event_entry_title,
+                prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
     }
 
     private void setAlarmActive(CalendarEntry entry, RemoteViews rv) {

@@ -30,7 +30,8 @@
             android:layout_alignWithParentIfMissing="true"
             android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref"
             android:gravity="center_vertical"
-            tools:ignore="SelectableText" />
+            tools:text="Event Entry Title. It may be long and not fit in one line"
+            tools:ignore="SelectableText"/>
 
         <TextView
             android:id="@+id/event_entry_details"
@@ -41,16 +42,17 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/event_entry_title"
             android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref"
-            tools:ignore="SelectableText" />
+            tools:text="Event Entry Details, which could be quite long and span more than one line"
+            tools:ignore="SelectableText"/>
 
         <include
             android:id="@+id/event_entry_indicator_layout_ref"
+            layout="@layout/event_entry_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/event_entry_title"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/event_entry_title"
-            layout="@layout/event_entry_indicator" />
+            android:layout_alignTop="@id/event_entry_title"/>
     </RelativeLayout>
 
 </LinearLayout>

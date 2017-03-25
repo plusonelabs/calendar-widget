@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Calendar Widget</string>
+    <string name="yesterday">Yesterday</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="no_upcoming_events">No upcoming events</string>
@@ -31,6 +32,9 @@
     <string name="appearance_text_size_medium">Medium</string>
     <string name="appearance_text_size_large">Large</string>
     <string name="appearance_text_size_very_large">Very large</string>
+    <string name="pref_event_entry_layout_title">Event entry layout</string>
+    <string name="default_multiline_layout">Default multiline layout</string>
+    <string name="single_line_layout">Single line layout</string>
     <string name="appearance_multiline_title_title">Multiline title</string>
     <string name="appearance_multiline_title_desc">Spread event title over multiple lines</string>
     <string name="appearance_date_format_desc">Show time in am/pm or 24 hours format</string>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/event_entry"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="@dimen/calender_padding"
+              android:paddingRight="@dimen/calender_padding"
+              android:paddingBottom="@dimen/entry_bottom_padding">
+
+    <TextView
+        android:id="@+id/event_entry_color"
+        style="@style/EventEntryColor"
+        android:layout_width="8dp"
+        android:layout_height="fill_parent"
+        tools:ignore="SelectableText" />
+
+    <RelativeLayout
+        android:id="@+id/event_entry_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/text_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/event_entry_date"
+                style="@style/EventEntryTitle"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:paddingRight="4dp"
+                tools:ignore="SelectableText"
+                tools:text="@string/today"/>
+
+            <TextView
+                android:id="@+id/event_entry_time"
+                style="@style/EventEntryDetails"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:paddingTop="2dp"
+                android:paddingRight="4dp"
+                tools:ignore="SelectableText"
+                tools:text="13:40"/>
+
+            <TextView
+                android:id="@+id/event_entry_title"
+                style="@style/EventEntryTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                tools:text="Event Entry Title. It may be long and may doesn't fit in one line"
+                tools:ignore="SelectableText"/>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/event_entry_indicator_layout_ref"
+            layout="@layout/event_entry_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/text_container"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/text_container"/>
+    </RelativeLayout>
+
+</LinearLayout>

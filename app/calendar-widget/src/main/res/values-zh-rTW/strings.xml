@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">即使沒有活動但仍顯示日期標題</string>
   <string name="appearance_display_header_title">顯示小工具標題</string>
   <string name="appearance_display_header_desc">顯示日期和設置標題</string>
-  <string name="appearance_display_header_warning">隱藏標題將令您無法進入偏好設定。</string>
   <string name="appearance_group_color_title">顏色</string>
   <string name="appearance_background_color_title">背景顏色</string>
   <string name="appearance_background_color_desc">調整背景的顏色</string>

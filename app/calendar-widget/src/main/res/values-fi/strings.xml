@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Näytä päiväysotsikot päiville ilman tapahtumia</string>
   <string name="appearance_display_header_title">Näytä widgetin otsikko</string>
   <string name="appearance_display_header_desc">Näytä päivämäärä ja asetukset -otsikko</string>
-  <string name="appearance_display_header_warning">Otsikon piilottaminen estää pääsyn asetuksiin.</string>
   <string name="appearance_group_color_title">Värit</string>
   <string name="appearance_background_color_title">Taustaväri</string>
   <string name="appearance_background_color_desc">Muuta taustan väriä</string>

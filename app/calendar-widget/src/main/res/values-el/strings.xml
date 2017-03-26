@@ -31,7 +31,6 @@
   <string name="appearance_date_format_12">5:00 μ.μ</string>
   <string name="appearance_display_header_title">Εμφάνιση κεφαλίδας γραφικού</string>
   <string name="appearance_display_header_desc">Εμφάνιση κεφαλίδας ημερομηνίας και ρυθμίσεων</string>
-  <string name="appearance_display_header_warning">Αποκρύπτοντας την κεφαλίδα σας αποπτρέπει επίσης να γυρίσετε πίσω στις ρθυμίσεις.</string>
   <string name="appearance_group_color_title">Χρώματα</string>
   <string name="appearance_background_color_title">Χρώμα φόντου</string>
   <string name="appearance_background_color_desc">Προσαρμόστε το χρώμα του φόντου</string>

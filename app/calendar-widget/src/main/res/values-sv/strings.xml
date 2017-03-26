@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Visa rubriker för dagar utan händelser</string>
   <string name="appearance_display_header_title">Visa applikationens rubrik</string>
   <string name="appearance_display_header_desc">Visa rubrik för datum och inställningar</string>
-  <string name="appearance_display_header_warning">Om rubrik döljs förhindras du att gå tillbaka till inställningar.</string>
   <string name="appearance_group_color_title">Färger</string>
   <string name="appearance_background_color_title">Bakgrundsfärg</string>
   <string name="appearance_background_color_desc">Justera bakgrundsfärg</string>

@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Vis dagsoverskrifter for dage uden aftaler</string>
   <string name="appearance_display_header_title">Vis widget header</string>
   <string name="appearance_display_header_desc">Vis dato og indstillings header</string>
-  <string name="appearance_display_header_warning">Skjulning af headeren forhindrer dig også i at komme tilbage til indstillingerne.</string>
   <string name="appearance_group_color_title">Farver</string>
   <string name="appearance_background_color_title">Baggrunds farve</string>
   <string name="appearance_background_color_desc">Juster baggrundsfarven</string>

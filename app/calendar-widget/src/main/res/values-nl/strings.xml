@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Toon dag titels voor dagen zonder gebeurtenissen</string>
   <string name="appearance_display_header_title">Widget kop weergeven</string>
   <string name="appearance_display_header_desc">Toon de datum en instellingen kop</string>
-  <string name="appearance_display_header_warning">Het verbergen van de kop zorgt er ook voor dat u niet meer bij de instellingen kan.</string>
   <string name="appearance_group_color_title">Kleuren</string>
   <string name="appearance_background_color_title">Achtergrondkleur</string>
   <string name="appearance_background_color_desc">De kleur van de achtergrond aanpassen</string>

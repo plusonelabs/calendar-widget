@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Vis overskrifter for dager uten hendelser</string>
   <string name="appearance_display_header_title">Vis topplinje på widget</string>
   <string name="appearance_display_header_desc">Vis dato- og innstillingslinje</string>
-  <string name="appearance_display_header_warning">Ved å skjule topplinjen har du ingen måte å komme tilbake til innstillingene på.</string>
   <string name="appearance_group_color_title">Farger</string>
   <string name="appearance_background_color_title">Bakgrunnsfarge</string>
   <string name="appearance_background_color_desc">Juster bakgrunnsfargen</string>

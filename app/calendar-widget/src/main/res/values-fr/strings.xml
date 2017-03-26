@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Montrer les en-têtes pour les jours sans évènement</string>
   <string name="appearance_display_header_title">Montrer l\'en-tête du widget</string>
   <string name="appearance_display_header_desc">Montrer les en-têtes date et paramètres</string>
-  <string name="appearance_display_header_warning">Cacher l\'en-tête vous empêchera aussi de retourner dans les préférences.</string>
   <string name="appearance_group_color_title">Couleurs</string>
   <string name="appearance_background_color_title">Transparence du fond</string>
   <string name="appearance_background_color_desc">Ajuster la transparence du fond</string>

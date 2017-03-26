@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Pokaż nagłówek dnia dla dni bez wydarzeń</string>
   <string name="appearance_display_header_title">Pokaż nagłówek widżetu</string>
   <string name="appearance_display_header_desc">Pokaż nagłówek z datą i ustawieniami</string>
-  <string name="appearance_display_header_warning">Ukrywając nagłówek nie będziesz mógł wrócić do preferencji.</string>
   <string name="appearance_group_color_title">Kolory</string>
   <string name="appearance_background_color_title">Kolor tła</string>
   <string name="appearance_background_color_desc">Dostosuj kolor tła</string>

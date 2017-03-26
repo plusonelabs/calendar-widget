@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">イベントのない日のヘッダーを表示します</string>
   <string name="appearance_display_header_title">ウィジェットのヘッダ表示</string>
   <string name="appearance_display_header_desc">日付と設定のヘッダを表示します</string>
-  <string name="appearance_display_header_warning">ヘッダを非表示にしてしまうと、プリファレンスに戻ってくることもできなくなります。</string>
   <string name="appearance_group_color_title">色</string>
   <string name="appearance_background_color_title">背景の透明度</string>
   <string name="appearance_background_color_desc">背景の透明度を調整します</string>

@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Відображати шапки днів для днів без подій</string>
   <string name="appearance_display_header_title">Відображати шапку віджета</string>
   <string name="appearance_display_header_desc">Відображати в шапці дату і налаштування</string>
-  <string name="appearance_display_header_warning">Забравши шапку, Ви не зможете повернутись до налаштувань.</string>
   <string name="appearance_group_color_title">Кольори</string>
   <string name="appearance_background_color_title">Колір тла</string>
   <string name="appearance_background_color_desc">Налаштування кольору тла</string>

@@ -31,7 +31,6 @@
   <string name="appearance_date_format_12">5:00</string>
   <string name="appearance_display_header_title">Mutassa a modul fejlécét</string>
   <string name="appearance_display_header_desc">Mutassa a dátumot és a parancs ikonokat a fejlécben</string>
-  <string name="appearance_display_header_warning">A fejléc elrejtése után a modulból nem fogja elérni a beállításokat.</string>
   <string name="appearance_group_color_title">Színek</string>
   <string name="appearance_background_color_title">Háttér átlátszóság </string>
   <string name="appearance_background_color_desc">A háttér átlátszóság beállítása</string>

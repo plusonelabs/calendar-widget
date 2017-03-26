@@ -35,6 +35,15 @@ android {
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
 
+    buildTypes {
+        release {
+            minifyEnabled false
+            lintOptions {
+                warning 'MissingTranslation','InvalidPackage'
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7

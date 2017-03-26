@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Exibir cabeçalho para dias sem eventos</string>
   <string name="appearance_display_header_title">Mostrar cabeçalho do widget</string>
   <string name="appearance_display_header_desc">Mostrar data e configurações no cabeçalho</string>
-  <string name="appearance_display_header_warning">Ocultar o cabeçalho impede de voltar para as configurações.</string>
   <string name="appearance_group_color_title">Cores</string>
   <string name="appearance_background_color_title">Cor do fundo</string>
   <string name="appearance_background_color_desc">Ajustar a cor de fundo</string>

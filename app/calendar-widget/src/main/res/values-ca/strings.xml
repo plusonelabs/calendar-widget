@@ -31,7 +31,6 @@
   <string name="appearance_date_format_12">5:00 pm</string>
   <string name="appearance_display_header_title">Mostra la capçalera del widget</string>
   <string name="appearance_display_header_desc">Mostra l\'encapçalament de la data i la configuració</string>
-  <string name="appearance_display_header_warning">Amagar la capçalera t\'impedeix tornar a les preferències.</string>
   <string name="appearance_group_color_title">Colors</string>
   <string name="appearance_background_color_title">Color de fons</string>
   <string name="appearance_background_color_desc">Ajusteu el color del fons</string>

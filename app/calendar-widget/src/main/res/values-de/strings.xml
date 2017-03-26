@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Zeige Tageskopfzeile für Tage ohne Einträge</string>
   <string name="appearance_display_header_title">Kopfzeile anzeigen</string>
   <string name="appearance_display_header_desc">Kopfzeile ein- und ausblenden</string>
-  <string name="appearance_display_header_warning">Wenn die Kopfzeile ausgeblendet wird kannst du nicht mehr in die Einstellungen gelangen.</string>
   <string name="appearance_group_color_title">Farben</string>
   <string name="appearance_background_color_title">Hintergrundfarbe</string>
   <string name="appearance_background_color_desc">Passe die Farbe des Hintergrundes an</string>

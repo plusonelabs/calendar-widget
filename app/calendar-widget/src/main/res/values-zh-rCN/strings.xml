@@ -31,7 +31,6 @@
   <string name="appearance_date_format_12">下午5：00</string>
   <string name="appearance_display_header_title">显示小部件顶栏</string>
   <string name="appearance_display_header_desc">显示日期和设置标题</string>
-  <string name="appearance_display_header_warning">隐藏标题将令您无法进入偏好设定。</string>
   <string name="appearance_group_color_title">颜色</string>
   <string name="appearance_background_color_title">背景色</string>
   <string name="appearance_background_color_desc">调整背景色</string>

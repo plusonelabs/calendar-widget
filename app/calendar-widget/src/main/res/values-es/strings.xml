@@ -32,7 +32,6 @@
   <string name="appearance_show_days_without_events_title">Mostrar días sin eventos</string>
   <string name="appearance_display_header_title">Mostrar cabecera del widget</string>
   <string name="appearance_display_header_desc">Mostrar la fecha y ajustes en cabecera</string>
-  <string name="appearance_display_header_warning">Ocultar la cabecera impedirá volver a entrar en los ajustes.</string>
   <string name="appearance_group_color_title">Colores</string>
   <string name="appearance_background_color_title">Color del fondo</string>
   <string name="appearance_background_color_desc">Ajustar el color de fondo</string>

@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">הצג כותרות עבור ימים ללא אירועים</string>
   <string name="appearance_display_header_title">הצג כותרת יישומון</string>
   <string name="appearance_display_header_desc">הצג את כותרת התאריך וההגדרות</string>
-  <string name="appearance_display_header_warning">הסתרת הכותרת תמנע ממך אפשרות לחזור למסך הגדרות זה.</string>
   <string name="appearance_group_color_title">צבעים</string>
   <string name="appearance_background_color_title">צבע הרקע</string>
   <string name="appearance_background_color_desc">התאם את צבע הרקע</string>

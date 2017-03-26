@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Zobrazit záhlaví dní bez událostí</string>
   <string name="appearance_display_header_title">Zobrazit záhlaví</string>
   <string name="appearance_display_header_desc">Zobrazit datum a nastavení v záhlaví</string>
-  <string name="appearance_display_header_warning">Skrytí záhlaví znemožní přístup do nastavení widgetu přes tlačítko.</string>
   <string name="appearance_group_color_title">Barvy</string>
   <string name="appearance_background_color_title">Barva pozadí </string>
   <string name="appearance_background_color_desc">Nastavit barvu pozadí</string>

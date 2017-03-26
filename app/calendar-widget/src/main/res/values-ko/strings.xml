@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">이벤트 없는 날의 헤더 표시</string>
   <string name="appearance_display_header_title">위젯 헤더 표시</string>
   <string name="appearance_display_header_desc">날짜헤더와 설정헤더 표시</string>
-  <string name="appearance_display_header_warning">헤더를 숨기면 환경설정에 들어갈수 없습니다.</string>
   <string name="appearance_group_color_title">색상</string>
   <string name="appearance_background_color_title">바탕색</string>
   <string name="appearance_background_color_desc">바탕색 설정</string>

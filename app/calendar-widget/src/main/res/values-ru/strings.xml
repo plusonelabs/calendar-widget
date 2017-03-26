@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Показывать заголовки дней, в которые нет событий</string>
   <string name="appearance_display_header_title">Отображать заголовок виджета</string>
   <string name="appearance_display_header_desc">Отображать заголовок виджета с датой и настройками</string>
-  <string name="appearance_display_header_warning">Убрав заголовок, вы не сможете вернуться к настройкам.</string>
   <string name="appearance_group_color_title">Цвета</string>
   <string name="appearance_background_color_title">Цвет фона</string>
   <string name="appearance_background_color_desc">Изменить цвет и прозрачность фона</string>

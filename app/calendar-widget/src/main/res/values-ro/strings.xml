@@ -33,7 +33,6 @@
   <string name="appearance_show_days_without_events_desc">Arată anteturile zilelor, fără evenimente</string>
   <string name="appearance_display_header_title">Afisare antet widget</string>
   <string name="appearance_display_header_desc">Afisare data si setari in antet</string>
-  <string name="appearance_display_header_warning">Ascunde antet, ascunde acces preferinte.</string>
   <string name="appearance_group_color_title">Culori</string>
   <string name="appearance_background_color_title">Culoare fundal</string>
   <string name="appearance_background_color_desc">Ajustare culori fundal</string>

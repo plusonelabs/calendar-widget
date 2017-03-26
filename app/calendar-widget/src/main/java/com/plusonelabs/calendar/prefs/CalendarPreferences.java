@@ -27,7 +27,7 @@ public class CalendarPreferences {
 	private static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
 	private static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
 	private static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
-	public static final String PREF_SHOW_HEADER = "showHeader";
+	public static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
 	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";
 	public static final String PREF_INDICATE_ALERTS = "indicateAlerts";
 	public static final String PREF_BACKGROUND_COLOR = "backgroundColor";

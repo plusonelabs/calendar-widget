@@ -55,7 +55,7 @@ public class AppearancePreferencesFragment extends PreferenceFragment
     @Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         switch (preference.getKey()) {
-            case CalendarPreferences.PREF_SHOW_HEADER:
+            case CalendarPreferences.PREF_SHOW_WIDGET_HEADER:
                 if (preference instanceof CheckBoxPreference) {
                     CheckBoxPreference checkPref = (CheckBoxPreference) preference;
                     if (!checkPref.isChecked()) {

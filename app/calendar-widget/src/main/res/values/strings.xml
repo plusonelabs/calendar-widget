@@ -71,7 +71,7 @@
     <string name="appearance_theme_light">Dark</string>
     <string name="appearance_theme_white">Black</string>
     <string name="appearance_abbreviate_dates_title">Abbreviate dates</string>
-    <string name="appearance_abbreviate_dates_desc">Use three-letter format for day headers</string>
+    <string name="appearance_abbreviate_dates_desc">Use three-letter format for dates in Widget and Day headers etc.</string>
 
     <!-- Preference header: Event details -->
     <string name="event_details_prefs">Event details</string>

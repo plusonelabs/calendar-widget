@@ -32,6 +32,13 @@
         android:title="@string/appearance_date_format_title" />
 
     <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="abbreviateDates"
+        android:summary="@string/appearance_abbreviate_dates_desc"
+        android:title="@string/appearance_abbreviate_dates_title">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:defaultValue="true"
@@ -62,13 +69,6 @@
         android:key="showHeader"
         android:summary="@string/appearance_display_header_desc"
         android:title="@string/appearance_display_header_title">
-    </CheckBoxPreference>
-
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="abbreviateDates"
-        android:summary="@string/appearance_abbreviate_dates_desc"
-        android:title="@string/appearance_abbreviate_dates_title">
     </CheckBoxPreference>
 
     <CheckBoxPreference

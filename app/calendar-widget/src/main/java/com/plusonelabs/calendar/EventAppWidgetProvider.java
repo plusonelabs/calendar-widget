@@ -12,7 +12,6 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.text.format.DateUtils;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -40,7 +39,7 @@ import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_HEADER;
+import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_WIDGET_HEADER;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
     private static final String PACKAGE = EventAppWidgetProvider.class.getPackage().getName();
@@ -62,7 +61,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
 	private void configureBackground(Context context, RemoteViews rv) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		if (prefs.getBoolean(PREF_SHOW_HEADER, true)) {
+		if (prefs.getBoolean(PREF_SHOW_WIDGET_HEADER, true)) {
 			rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
 		} else {
 			rv.setViewVisibility(R.id.action_bar, View.GONE);
@@ -83,9 +82,8 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
     private void configureCurrentDate(Context context, RemoteViews rv) {
         rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(context));
-        String formattedDate = DateUtil.formatDateTime(context, DateUtil.now(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
-        rv.setTextViewText(R.id.calendar_current_date, formattedDate.toUpperCase(Locale.getDefault()));
+        String formattedDate = DateUtil.createDateString(context, DateUtil.now()).toUpperCase(Locale.getDefault());
+        rv.setTextViewText(R.id.calendar_current_date, formattedDate);
         setTextColorFromAttr(context, rv, R.id.calendar_current_date, R.attr.header);
     }
 

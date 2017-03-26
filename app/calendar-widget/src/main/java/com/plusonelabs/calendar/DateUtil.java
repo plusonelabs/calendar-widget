@@ -23,17 +23,27 @@ public class DateUtil {
         return date.isEqual(date.withTimeAtStartOfDay());
     }
 
+    public static String createDayHeaderTitle(Context context, DateTime dateTime) {
+        return createDateString(context, dateTime, true);
+    }
+
     public static String createDateString(Context context, DateTime dateTime) {
-        DateTime timeAtStartOfToday = DateTime.now().withTimeAtStartOfDay();
+        return createDateString(context, dateTime, false);
+    }
+
+    private static String createDateString(Context context, DateTime dateTime, boolean forDayHeader) {
         if (CalendarPreferences.getAbbreviateDates(context)) {
             return formatDateTime(context, dateTime,
                     DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
-                    DateUtils.FORMAT_SHOW_WEEKDAY);
+                            DateUtils.FORMAT_SHOW_WEEKDAY);
         }
-        if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday)) {
-            return createDateString(context, dateTime, context.getString(R.string.today));
-        } else if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday.plusDays(1))) {
-            return createDateString(context, dateTime, context.getString(R.string.tomorrow));
+        if (forDayHeader) {
+            DateTime timeAtStartOfToday = DateTime.now().withTimeAtStartOfDay();
+            if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday)) {
+                return createDateString(context, dateTime, context.getString(R.string.today));
+            } else if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday.plusDays(1))) {
+                return createDateString(context, dateTime, context.getString(R.string.tomorrow));
+            }
         }
         return formatDateTime(context, dateTime,
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);

@@ -78,7 +78,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String alignment = prefs.getString(PREF_DAY_HEADER_ALIGNMENT, PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
         RemoteViews rv = new RemoteViews(context.getPackageName(), Alignment.valueOf(alignment).getLayoutId());
-        String dateString = DateUtil.createDateString(context, dayHeader.getStartDate())
+        String dateString = DateUtil.createDayHeaderTitle(context, dayHeader.getStartDate())
                 .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);

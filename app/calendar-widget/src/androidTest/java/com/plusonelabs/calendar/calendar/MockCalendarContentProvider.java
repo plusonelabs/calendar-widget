@@ -73,7 +73,8 @@ public class MockCalendarContentProvider extends MockContentProvider {
                         " \"showPastEventsWithDefaultColor\": false," +
                         " \"fillAllDay\": true," +
                         " \"eventsEnded\": \"\"," +
-                        " \"abbreviateDates\": false" +
+                        " \"abbreviateDates\": false," +
+                        " \"showOnlyClosestInstanceOfRecurringEvent\": false" +
                         "}"));
     }
 

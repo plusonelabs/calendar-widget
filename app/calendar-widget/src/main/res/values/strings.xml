@@ -113,6 +113,7 @@
     <string name="ended_today">Ended today</string>
     <string name="ended_yesterday">Ended yesterday</string>
     <string name="pref_hide_based_on_keywords_title">Hide based on keywords in a title</string>
+    <string name="show_only_closest_instance_of_recurring_event">Show only the closest instance of a recurring event</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>

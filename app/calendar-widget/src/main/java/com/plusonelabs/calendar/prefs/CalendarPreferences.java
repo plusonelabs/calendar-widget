@@ -59,6 +59,8 @@ public class CalendarPreferences {
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
     private static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
     static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
+    public static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
+            "showOnlyClosestInstanceOfRecurringEvent";
 
     private static volatile String lockedTimeZoneId = null;
 
@@ -76,6 +78,7 @@ public class CalendarPreferences {
         json.put(PREF_SHOW_DAY_HEADERS, getShowDayHeaders(context));
         json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, getShowPastEventsWithDefaultColor(context));
         json.put(PREF_ABBREVIATE_DATES, getAbbreviateDates(context));
+        json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, getShowOnlyClosestInstanceOfRecurringEvent(context));
         return json;
     }
 
@@ -88,6 +91,7 @@ public class CalendarPreferences {
         setShowDayHeaders(context, json.getBoolean(PREF_SHOW_DAY_HEADERS));
         setShowPastEventsWithDefaultColor(context, json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR));
         setAbbreviateDates(context, json.getBoolean(PREF_ABBREVIATE_DATES));
+        setShowOnlyClosestInstanceOfRecurringEvent(context, json.getBoolean(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT));
     }
 
     public static Set<String> getActiveCalendars(Context context) {
@@ -239,4 +243,14 @@ public class CalendarPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT);
     }
+
+    public static boolean getShowOnlyClosestInstanceOfRecurringEvent(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, false);
+    }
+
+    public static void setShowOnlyClosestInstanceOfRecurringEvent(Context context, boolean value) {
+        setBooleanPreference(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, value);
+    }
+
 }

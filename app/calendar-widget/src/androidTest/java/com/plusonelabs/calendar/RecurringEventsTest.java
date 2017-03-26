@@ -1,10 +1,11 @@
 package com.plusonelabs.calendar;
 
 import android.test.InstrumentationTestCase;
-import android.util.Log;
 
 import com.plusonelabs.calendar.calendar.CalendarQueryRow;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
+import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.widget.CalendarEntry;
 import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
@@ -37,9 +38,29 @@ public class RecurringEventsTest extends InstrumentationTestCase {
     }
 
     /**
-     * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/191">Issue 191</a>
+     * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/191">Issue 191</a> and
+     *  <a href="https://github.com/plusonelabs/calendar-widget/issues/46">Issue 46</a>
      */
     public void testShowRecurringEvents() {
+        generateEventInstances();
+        assertEquals("Entries: " + factory.getWidgetEntries().size(), 15, countCalendarEntries());
+        CalendarPreferences.setShowOnlyClosestInstanceOfRecurringEvent(provider.getContext(), true);
+        generateEventInstances();
+        assertEquals("Entries: " + factory.getWidgetEntries().size(), 1, countCalendarEntries());
+    }
+
+    int countCalendarEntries() {
+        int count = 0;
+        for (WidgetEntry widgetEntry : factory.getWidgetEntries()) {
+            if (CalendarEntry.class.isAssignableFrom(widgetEntry.getClass())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    void generateEventInstances() {
+        provider.clear();
         DateTime date = DateTime.now().withTimeAtStartOfDay();
         long millis = date.getMillis() + TimeUnit.HOURS.toMillis(10);
         eventId++;
@@ -50,6 +71,5 @@ public class RecurringEventsTest extends InstrumentationTestCase {
         }
         factory.onDataSetChanged();
         factory.logWidgetEntries(TAG);
-        assertTrue("Entries: " + factory.getWidgetEntries().size(), factory.getWidgetEntries().size() > 15);
     }
 }

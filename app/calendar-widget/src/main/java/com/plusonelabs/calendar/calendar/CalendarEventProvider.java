@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.plusonelabs.calendar.BuildConfig;
 import com.plusonelabs.calendar.DateUtil;
@@ -49,15 +51,44 @@ public class CalendarEventProvider {
 
     public List<CalendarEvent> getEvents() {
         initialiseParameters();
-        List<CalendarEvent> eventList = PermissionsUtil.arePermissionsGranted(context) ?
-                getTimeFilteredEventList() : new ArrayList<CalendarEvent>();
-        for (CalendarEvent event : getPastEventWithColorList()) {
+        if (!PermissionsUtil.arePermissionsGranted(context)) {
+            return new ArrayList<>();
+        }
+        List<CalendarEvent> eventList = getTimeFilteredEventList();
+        if (CalendarPreferences.getShowPastEventsWithDefaultColor(context)) {
+            addPastEventsWithDefaultColor(eventList);
+        }
+        if (CalendarPreferences.getShowOnlyClosestInstanceOfRecurringEvent(context)) {
+            filterShowOnlyClosestInstanceOfRecurringEvent(eventList);
+        }
+        return eventList;
+    }
+
+    private void addPastEventsWithDefaultColor(List<CalendarEvent> eventList) {
+        for (CalendarEvent event : getPastEventsWithColorList()) {
             if (eventList.contains(event)) {
                 eventList.remove(event);
             }
             eventList.add(event);
         }
-        return eventList;
+    }
+
+    private void filterShowOnlyClosestInstanceOfRecurringEvent(@NonNull List<CalendarEvent> eventList) {
+        SparseArray<CalendarEvent> eventIds = new SparseArray<>();
+        List<CalendarEvent> toDelete = new ArrayList<>();
+        for (CalendarEvent event : eventList) {
+            CalendarEvent otherEvent = eventIds.get(event.getEventId());
+            if (otherEvent == null) {
+                eventIds.put(event.getEventId(), event);
+            } else if ( Math.abs(event.getStartDate().getMillis() - DateUtil.now().getMillis()) <
+                    Math.abs(otherEvent.getStartDate().getMillis() - DateUtil.now().getMillis())) {
+                toDelete.add(otherEvent);
+                eventIds.put(event.getEventId(), event);
+            } else {
+                toDelete.add(event);
+            }
+        }
+        eventList.removeAll(toDelete);
     }
 
     private void initialiseParameters() {
@@ -168,16 +199,13 @@ public class CalendarEventProvider {
         return columnNames.toArray(new String[columnNames.size()]);
     }
 
-    private List<CalendarEvent> getPastEventWithColorList() {
-        List<CalendarEvent> eventList = new ArrayList<>();
-        if (CalendarPreferences.getShowPastEventsWithDefaultColor(context)) {
-            Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
-            ContentUris.appendId(builder, 0);
-            ContentUris.appendId(builder, DateUtil.now().getMillis());
-            eventList = queryList(builder.build(), getPastEventsWithColorSelection());
-            for (CalendarEvent event : eventList) {
-                event.setDefaultCalendarColor();
-            }
+    private List<CalendarEvent> getPastEventsWithColorList() {
+        Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
+        ContentUris.appendId(builder, 0);
+        ContentUris.appendId(builder, DateUtil.now().getMillis());
+        List<CalendarEvent> eventList = queryList(builder.build(), getPastEventsWithColorSelection());
+        for (CalendarEvent event : eventList) {
+            event.setDefaultCalendarColor();
         }
         return eventList;
     }

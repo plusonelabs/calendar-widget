@@ -26,5 +26,9 @@
             android:key="hideBasedOnKeywords"
             android:summary="@string/this_option_is_turned_off"
             android:title="@string/pref_hide_based_on_keywords_title" />
+        <com.plusonelabs.calendar.prefs.MultilineCheckBoxPreference
+            android:defaultValue="false"
+            android:key="showOnlyClosestInstanceOfRecurringEvent"
+            android:title="@string/show_only_closest_instance_of_recurring_event" />
     </PreferenceCategory>
 </PreferenceScreen>

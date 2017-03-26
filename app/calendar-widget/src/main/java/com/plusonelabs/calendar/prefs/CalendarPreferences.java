@@ -230,12 +230,13 @@ public class CalendarPreferences {
         return !TextUtils.isEmpty(getLockedTimeZoneId(context));
     }
 
-    public static void setEventEntryLayout(Context context, EventEntryLayout value) {
-        setStringPreference(context, PREF_EVENT_ENTRY_LAYOUT, value.value);
-    }
-
     public static EventEntryLayout getEventEntryLayout(Context context) {
         return EventEntryLayout.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
                 PREF_EVENT_ENTRY_LAYOUT, ""));
+    }
+
+    public static boolean isTitleMultiline(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT);
     }
 }

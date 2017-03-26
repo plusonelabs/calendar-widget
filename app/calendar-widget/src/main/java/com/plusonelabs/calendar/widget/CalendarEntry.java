@@ -90,17 +90,13 @@ public class CalendarEntry extends WidgetEntry {
 		return event;
 	}
 
-    public String getEventDetails(Context context) {
-		if (hideEventDetails(context)) return "";
-        String eventDetails = createTimeSpanString(context);
-        if (CalendarPreferences.getShowLocation(context) && getLocation() != null && !getLocation().isEmpty()) {
-            eventDetails += SPACE_PIPE_SPACE + getLocation();
-        }
-        return eventDetails;
-	}
-
-    String getEventTimeString(Context context) {
+    public String getEventTimeString(Context context) {
         return hideEventDetails(context) ? "" : createTimeSpanString(context);
+    }
+
+    String getLocationString(Context context) {
+        return getLocation() == null || getLocation().isEmpty() || hideEventDetails(context) || !CalendarPreferences
+                .getShowLocation(context) ? "" : SPACE_PIPE_SPACE + getLocation();
     }
 
     private boolean hideEventDetails(Context context) {

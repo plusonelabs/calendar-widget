@@ -25,16 +25,11 @@ import java.util.List;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setMultiline;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_ALERTS;
 import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_RECURRING;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_MULTILINE_TITLE_DEFAULT;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
 	private final Context context;
@@ -52,21 +47,12 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
         EventEntryLayout eventEntryLayout = CalendarPreferences.getEventEntryLayout(context);
         RemoteViews rv = new RemoteViews(context.getPackageName(), eventEntryLayout.layoutId);
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getEvent()));
-        setTitle(event, rv);
         eventEntryLayout.visualizeEvent(context, event, rv);
 		setAlarmActive(event, rv);
         setRecurring(event, rv);
 		setColor(event, rv);
 		return rv;
 	}
-
-    private void setTitle(CalendarEntry event, RemoteViews rv) {
-		rv.setTextViewText(R.id.event_entry_title, event.getTitle(context));
-		setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
-        setTextColorFromAttr(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
-        setMultiline(rv, R.id.event_entry_title,
-                prefs.getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT));
-    }
 
     private void setAlarmActive(CalendarEntry entry, RemoteViews rv) {
         boolean showIndication = entry.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true);

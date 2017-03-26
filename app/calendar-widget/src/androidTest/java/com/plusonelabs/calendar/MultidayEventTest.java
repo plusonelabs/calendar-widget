@@ -96,9 +96,9 @@ public class MultidayEventTest extends InstrumentationTestCase {
         assertEquals(sunday, entry1.getStartDate());
         assertEquals(event.getEndDate(), entry1.getEndDate());
         assertEquals(event.getTitle(), entry1.getTitle(provider.getContext()));
-        String details = entry1.getEventDetails(provider.getContext());
-        assertTrue(details, details.indexOf(ARROW) >= 0);
-        assertEquals(details, details.indexOf(ARROW), details.lastIndexOf(ARROW));
+        String timeString = entry1.getEventTimeString(provider.getContext());
+        assertTrue(timeString, timeString.contains(ARROW));
+        assertEquals(timeString, timeString.indexOf(ARROW), timeString.lastIndexOf(ARROW));
     }
 
     private CalendarEntry getSundayEntryAt(CalendarEvent event, DateTime currentDateTime) {

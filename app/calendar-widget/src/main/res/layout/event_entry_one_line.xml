@@ -42,6 +42,18 @@
                 tools:text="@string/today"/>
 
             <TextView
+                android:id="@+id/event_entry_date_right"
+                style="@style/EventEntryTitle"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:gravity="end"
+                android:textAlignment="gravity"
+                android:paddingRight="12dp"
+                tools:ignore="SelectableText"
+                tools:text="-325"/>
+
+            <TextView
                 android:id="@+id/event_entry_time"
                 style="@style/EventEntryDetails"
                 android:layout_width="45dp"

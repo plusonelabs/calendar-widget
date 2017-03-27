@@ -45,9 +45,27 @@ public enum EventEntryLayout {
         protected void setEventDate(Context context, CalendarEntry entry, RemoteViews rv) {
             if (CalendarPreferences.getShowDayHeaders(context)) {
                 rv.setViewVisibility(R.id.event_entry_date, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
             } else {
-                rv.setViewVisibility(R.id.event_entry_date, View.VISIBLE);
-                rv.setTextViewText(R.id.event_entry_date, entry.getDateString(context));
+                int days = entry.getDaysFromToday();
+                int viewToShow = days < -1 || days > 1 ? R.id.event_entry_date_right : R.id.event_entry_date;
+                int viewToHide = viewToShow == R.id.event_entry_date? R.id.event_entry_date_right : R.id.event_entry_date;
+                rv.setViewVisibility(viewToHide, View.GONE);
+                rv.setViewVisibility(viewToShow, View.VISIBLE);
+                rv.setTextViewText(viewToShow, getDaysFromTodayString(context, days));
+            }
+        }
+
+        private CharSequence getDaysFromTodayString(Context context, int daysFromToday) {
+            switch (daysFromToday) {
+                case -1:
+                    return context.getText(R.string.yesterday);
+                case 0:
+                    return context.getText(R.string.today);
+                case 1:
+                    return context.getText(R.string.tomorrow);
+                default:
+                    return Integer.toString(daysFromToday);
             }
         }
 

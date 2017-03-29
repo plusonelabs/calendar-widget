@@ -11,7 +11,7 @@ import android.util.Log;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventRemoteViewsFactory;
 import com.plusonelabs.calendar.R;
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -138,7 +138,7 @@ public class CalendarQueryResultsStorage {
         if (appInfo != null) {
             JSONObject preferences = json.optJSONObject(KEY_PREFERENCES);
             if (preferences != null) {
-                CalendarPreferences.fromJson(context, preferences);
+                ApplicationPreferences.fromJson(context, preferences);
             }
         }
         if (!results.results.isEmpty()) {
@@ -160,7 +160,7 @@ public class CalendarQueryResultsStorage {
             json.put(KEY_APP_VERSION_NAME, "Unable to obtain package information " + e);
             json.put(KEY_APP_VERSION_CODE, -1);
         }
-        json.put(KEY_PREFERENCES, CalendarPreferences.toJson(context));
+        json.put(KEY_PREFERENCES, ApplicationPreferences.toJson(context));
         return json;
     }
 

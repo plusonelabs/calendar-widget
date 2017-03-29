@@ -11,7 +11,7 @@ import android.test.mock.MockContentResolver;
 
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -54,8 +54,8 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     public MockCalendarContentProvider(Context context) throws JSONException {
         super(context);
-        storedCalendars = CalendarPreferences.getActiveCalendars(context);
-        storedPreferences = CalendarPreferences.toJson(context);
+        storedCalendars = ApplicationPreferences.getActiveCalendars(context);
+        storedPreferences = ApplicationPreferences.toJson(context);
         storedZone = DateTimeZone.getDefault();
         setPreferences(context);
     }
@@ -63,8 +63,8 @@ public class MockCalendarContentProvider extends MockContentProvider {
     private void setPreferences(Context context) throws JSONException {
         Set<String> calendars = new HashSet<>();
         calendars.add("1");
-        CalendarPreferences.setActiveCalendars(context, calendars);
-        CalendarPreferences.fromJson(context,
+        ApplicationPreferences.setActiveCalendars(context, calendars);
+        ApplicationPreferences.fromJson(context,
                 new JSONObject("{" +
                         " \"showDaysWithoutEvents\": false," +
                         " \"showDayHeaders\": true," +
@@ -79,8 +79,8 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void tearDown() throws JSONException {
-        CalendarPreferences.setActiveCalendars(getContext(), storedCalendars);
-        CalendarPreferences.fromJson(getContext(), storedPreferences);
+        ApplicationPreferences.setActiveCalendars(getContext(), storedCalendars);
+        ApplicationPreferences.fromJson(getContext(), storedPreferences);
         DateUtil.setNow(null);
         DateTimeZone.setDefault(storedZone);
     }

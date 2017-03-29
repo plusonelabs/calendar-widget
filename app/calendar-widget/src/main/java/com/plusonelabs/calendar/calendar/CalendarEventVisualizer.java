@@ -11,7 +11,7 @@ import com.plusonelabs.calendar.CalendarIntentUtil;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.widget.CalendarEntry;
 import com.plusonelabs.calendar.widget.EventEntryLayout;
 import com.plusonelabs.calendar.widget.WidgetEntry;
@@ -26,10 +26,10 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_ALERTS;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_INDICATE_RECURRING;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_INDICATE_ALERTS;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_INDICATE_RECURRING;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
 	private final Context context;
@@ -44,7 +44,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 
 	public RemoteViews getRemoteView(WidgetEntry eventEntry) {
 		CalendarEntry event = (CalendarEntry) eventEntry;
-        EventEntryLayout eventEntryLayout = CalendarPreferences.getEventEntryLayout(context);
+        EventEntryLayout eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
         RemoteViews rv = new RemoteViews(context.getPackageName(), eventEntryLayout.layoutId);
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getEvent()));
         eventEntryLayout.visualizeEvent(context, event, rv);
@@ -82,7 +82,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
     private void setColor(CalendarEntry entry, RemoteViews rv) {
         setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
         if (entry.getEndDate().isBefore(DateUtil.now())) {
-            setBackgroundColor(rv, R.id.event_entry, CalendarPreferences.getPastEventsBackgroundColor(context));
+            setBackgroundColor(rv, R.id.event_entry, ApplicationPreferences.getPastEventsBackgroundColor(context));
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);
         }
@@ -104,7 +104,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 	}
 
     private List<CalendarEntry> createEntryList(List<CalendarEvent> eventList) {
-        boolean fillAllDayEvents = CalendarPreferences.getFillAllDayEvents(context);
+        boolean fillAllDayEvents = ApplicationPreferences.getFillAllDayEvents(context);
         List<CalendarEntry> entryList = new ArrayList<>();
         for (CalendarEvent event : eventList) {
             CalendarEntry dayOneEntry = setupDayOneEntry(entryList, event);

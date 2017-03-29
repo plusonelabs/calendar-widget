@@ -6,7 +6,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.widget.Toast;
 
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
@@ -32,16 +31,16 @@ public class AppearancePreferencesFragment extends PreferenceFragment
 	}
 
     private void showEventEntryLayout() {
-        Preference preference = findPreference(CalendarPreferences.PREF_EVENT_ENTRY_LAYOUT);
+        Preference preference = findPreference(ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT);
         if (preference != null) {
-            preference.setSummary(CalendarPreferences.getEventEntryLayout(getActivity()).summaryResId);
+            preference.setSummary(ApplicationPreferences.getEventEntryLayout(getActivity()).summaryResId);
         }
     }
 
     private void showLockTimeZone(boolean setAlso) {
-        CheckBoxPreference preference = (CheckBoxPreference) findPreference(CalendarPreferences.PREF_LOCK_TIME_ZONE);
+        CheckBoxPreference preference = (CheckBoxPreference) findPreference(ApplicationPreferences.PREF_LOCK_TIME_ZONE);
         if (preference != null) {
-            boolean isChecked = setAlso ? CalendarPreferences.isTimeZoneLocked(getActivity()) : preference.isChecked();
+            boolean isChecked = setAlso ? ApplicationPreferences.isTimeZoneLocked(getActivity()) : preference.isChecked();
             if (setAlso && preference.isChecked() != isChecked) {
                 preference.setChecked(isChecked);
             }
@@ -55,18 +54,18 @@ public class AppearancePreferencesFragment extends PreferenceFragment
     @Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         switch (preference.getKey()) {
-            case CalendarPreferences.PREF_BACKGROUND_COLOR:
+            case ApplicationPreferences.PREF_BACKGROUND_COLOR:
                 new BackgroundTransparencyDialog().show(getFragmentManager(),
-                        CalendarPreferences.PREF_BACKGROUND_COLOR);
+                        ApplicationPreferences.PREF_BACKGROUND_COLOR);
                 break;
-            case CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR:
+            case ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR:
                 new BackgroundTransparencyDialog().show(getFragmentManager(),
-                        CalendarPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR);
+                        ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR);
                 break;
-            case CalendarPreferences.PREF_LOCK_TIME_ZONE:
+            case ApplicationPreferences.PREF_LOCK_TIME_ZONE:
                 if (preference instanceof CheckBoxPreference) {
                     CheckBoxPreference checkPref = (CheckBoxPreference) preference;
-                    CalendarPreferences.setLockedTimeZoneId(getActivity(),
+                    ApplicationPreferences.setLockedTimeZoneId(getActivity(),
                             checkPref.isChecked() ? TimeZone.getDefault().getID() : "");
                     showLockTimeZone(false);
                 }
@@ -88,7 +87,7 @@ public class AppearancePreferencesFragment extends PreferenceFragment
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
-            case CalendarPreferences.PREF_EVENT_ENTRY_LAYOUT:
+            case ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT:
                 showEventEntryLayout();
                 break;
             default:

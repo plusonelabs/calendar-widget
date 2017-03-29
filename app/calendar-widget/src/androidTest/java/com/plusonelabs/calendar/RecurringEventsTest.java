@@ -4,7 +4,7 @@ import android.test.InstrumentationTestCase;
 
 import com.plusonelabs.calendar.calendar.CalendarQueryRow;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.widget.CalendarEntry;
 import com.plusonelabs.calendar.widget.WidgetEntry;
 
@@ -44,7 +44,7 @@ public class RecurringEventsTest extends InstrumentationTestCase {
     public void testShowRecurringEvents() {
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 15, countCalendarEntries());
-        CalendarPreferences.setShowOnlyClosestInstanceOfRecurringEvent(provider.getContext(), true);
+        ApplicationPreferences.setShowOnlyClosestInstanceOfRecurringEvent(provider.getContext(), true);
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 1, countCalendarEntries());
     }

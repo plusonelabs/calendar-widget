@@ -9,8 +9,8 @@ import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_TEXT_SIZE_SCALE;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
 import static java.lang.Float.parseFloat;
 
 public class RemoteViewsUtil {

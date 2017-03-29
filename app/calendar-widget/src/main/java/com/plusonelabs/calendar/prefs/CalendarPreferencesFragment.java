@@ -30,7 +30,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences_calendars);
-		initialActiveCalendars = CalendarPreferences.getActiveCalendars(getActivity());
+		initialActiveCalendars = ApplicationPreferences.getActiveCalendars(getActivity());
 		populatePreferenceScreen(initialActiveCalendars);
 	}
 
@@ -58,7 +58,7 @@ public class CalendarPreferencesFragment extends PreferenceFragment {
 		super.onPause();
 		HashSet<String> selectedCalendars = getSelectedCalendars();
 		if (!selectedCalendars.equals(initialActiveCalendars)) {
-			CalendarPreferences.setActiveCalendars(getActivity(), selectedCalendars);
+			ApplicationPreferences.setActiveCalendars(getActivity(), selectedCalendars);
 			EventAppWidgetProvider.updateEventList(getActivity());
 		}
 	}

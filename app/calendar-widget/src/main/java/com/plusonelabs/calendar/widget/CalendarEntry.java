@@ -8,7 +8,7 @@ import android.text.format.DateUtils;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.calendar.CalendarEvent;
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 
 import org.joda.time.DateTime;
 
@@ -95,17 +95,17 @@ public class CalendarEntry extends WidgetEntry {
     }
 
     String getLocationString(Context context) {
-        return getLocation() == null || getLocation().isEmpty() || hideEventDetails(context) || !CalendarPreferences
+        return getLocation() == null || getLocation().isEmpty() || hideEventDetails(context) || !ApplicationPreferences
                 .getShowLocation(context) ? "" : SPACE_PIPE_SPACE + getLocation();
     }
 
     private boolean hideEventDetails(Context context) {
         return spansOneFullDay() && !(isStartOfMultiDayEvent() || isEndOfMultiDayEvent()) ||
-                isAllDay() && CalendarPreferences.getFillAllDayEvents(context);
+                isAllDay() && ApplicationPreferences.getFillAllDayEvents(context);
     }
 
     private String createTimeSpanString(Context context) {
-        if (isAllDay() && !CalendarPreferences.getFillAllDayEvents(context)) {
+        if (isAllDay() && !ApplicationPreferences.getFillAllDayEvents(context)) {
             DateTime dateTime = getEvent().getEndDate().minusDays(1);
             return ARROW_SPACE + DateUtil.createDateString(context, dateTime);
         } else {
@@ -124,7 +124,7 @@ public class CalendarEntry extends WidgetEntry {
         } else {
             startStr = createTimeString(context, getStartDate());
         }
-        if (CalendarPreferences.getShowEndTime(context)) {
+        if (ApplicationPreferences.getShowEndTime(context)) {
             if (isPartOfMultiDayEvent() && DateUtil.isMidnight(getEndDate())
                     && !isEndOfMultiDayEvent()) {
                 endStr = SPACE_ARROW;
@@ -145,7 +145,7 @@ public class CalendarEntry extends WidgetEntry {
     }
 
     private String createTimeString(Context context, DateTime time) {
-        String dateFormat = CalendarPreferences.getDateFormat(context);
+        String dateFormat = ApplicationPreferences.getDateFormat(context);
         if (!DateFormat.is24HourFormat(context) && dateFormat.equals(AUTO)
             || dateFormat.equals(TWELVE)) {
             return DateUtil.formatDateTime(context, time,

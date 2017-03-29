@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CalendarPreferences {
+public class ApplicationPreferences {
 
 	public static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
 	public static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
@@ -64,7 +64,7 @@ public class CalendarPreferences {
 
     private static volatile String lockedTimeZoneId = null;
 
-    private CalendarPreferences() {
+    private ApplicationPreferences() {
 		// prohibit instantiation
 	}
 

@@ -9,7 +9,7 @@ import android.widget.RemoteViews;
 
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.RemoteViewsUtil;
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 
 import static com.plusonelabs.calendar.RemoteViewsUtil.setMultiline;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
@@ -43,7 +43,7 @@ public enum EventEntryLayout {
 
         @Override
         protected void setEventDate(Context context, CalendarEntry entry, RemoteViews rv) {
-            if (CalendarPreferences.getShowDayHeaders(context)) {
+            if (ApplicationPreferences.getShowDayHeaders(context)) {
                 rv.setViewVisibility(R.id.event_entry_date, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
             } else {
@@ -71,7 +71,7 @@ public enum EventEntryLayout {
 
         @Override
         protected void setEventTime(Context context, CalendarEntry entry, RemoteViews rv) {
-            RemoteViewsUtil.setMultiline(rv, R.id.event_entry_time, CalendarPreferences.getShowEndTime(context));
+            RemoteViewsUtil.setMultiline(rv, R.id.event_entry_time, ApplicationPreferences.getShowEndTime(context));
             rv.setTextViewText(R.id.event_entry_time, entry.getEventTimeString(context).replace(CalendarEntry
                     .SPACE_DASH_SPACE, " "));
         }
@@ -111,7 +111,7 @@ public enum EventEntryLayout {
         rv.setTextViewText(R.id.event_entry_title, getTitleString(context, event));
         setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
         setTextColorFromAttr(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
-        setMultiline(rv, R.id.event_entry_title, CalendarPreferences.isTitleMultiline(context));
+        setMultiline(rv, R.id.event_entry_title, ApplicationPreferences.isTitleMultiline(context));
     }
 
     protected String getTitleString(Context context, CalendarEntry event) {

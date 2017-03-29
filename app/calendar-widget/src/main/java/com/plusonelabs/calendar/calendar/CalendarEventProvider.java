@@ -13,7 +13,7 @@ import android.util.SparseArray;
 
 import com.plusonelabs.calendar.BuildConfig;
 import com.plusonelabs.calendar.DateUtil;
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.util.PermissionsUtil;
 
 import org.joda.time.DateTime;
@@ -55,10 +55,10 @@ public class CalendarEventProvider {
             return new ArrayList<>();
         }
         List<CalendarEvent> eventList = getTimeFilteredEventList();
-        if (CalendarPreferences.getShowPastEventsWithDefaultColor(context)) {
+        if (ApplicationPreferences.getShowPastEventsWithDefaultColor(context)) {
             addPastEventsWithDefaultColor(eventList);
         }
-        if (CalendarPreferences.getShowOnlyClosestInstanceOfRecurringEvent(context)) {
+        if (ApplicationPreferences.getShowOnlyClosestInstanceOfRecurringEvent(context)) {
             filterShowOnlyClosestInstanceOfRecurringEvent(eventList);
         }
         return eventList;
@@ -92,8 +92,8 @@ public class CalendarEventProvider {
     }
 
     private void initialiseParameters() {
-        mKeywordsFilter = new KeywordsFilter(CalendarPreferences.getHideBasedOnKeywords(context));
-        mStartOfTimeRange = CalendarPreferences.getEventsEnded(context)
+        mKeywordsFilter = new KeywordsFilter(ApplicationPreferences.getHideBasedOnKeywords(context));
+        mStartOfTimeRange = ApplicationPreferences.getEventsEnded(context)
                 .endedAt(DateUtil.now());
         mEndOfTimeRange = getEndOfTimeRange(DateUtil.now());
     }
@@ -107,7 +107,7 @@ public class CalendarEventProvider {
     }
 
     private DateTime getEndOfTimeRange(DateTime now) {
-        int dateRange = CalendarPreferences.getEventRange(context);
+        int dateRange = ApplicationPreferences.getEventRange(context);
         return dateRange > 0
                 ? now.plusDays(dateRange)
                 : now.withTimeAtStartOfDay().plusDays(1);
@@ -133,7 +133,7 @@ public class CalendarEventProvider {
     }
 
     private String getCalendarSelection() {
-        Set<String> activeCalendars = CalendarPreferences.getActiveCalendars(context);
+        Set<String> activeCalendars = ApplicationPreferences.getActiveCalendars(context);
         StringBuilder stringBuilder = new StringBuilder(EVENT_SELECTION);
         if (!activeCalendars.isEmpty()) {
             stringBuilder.append(AND_BRACKET);

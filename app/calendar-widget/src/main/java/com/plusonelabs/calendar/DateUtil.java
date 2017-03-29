@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.format.DateUtils;
 import android.util.Log;
 
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -32,7 +32,7 @@ public class DateUtil {
     }
 
     private static String createDateString(Context context, DateTime dateTime, boolean forDayHeader) {
-        if (CalendarPreferences.getAbbreviateDates(context)) {
+        if (ApplicationPreferences.getAbbreviateDates(context)) {
             return formatDateTime(context, dateTime,
                     DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
                             DateUtils.FORMAT_SHOW_WEEKDAY);
@@ -54,8 +54,8 @@ public class DateUtil {
     }
 
     public static String formatDateTime(Context context, DateTime dateTime, int flags) {
-        return CalendarPreferences.isTimeZoneLocked(context) ?
-                formatDateTimeAtTimeZone(context, dateTime, flags, CalendarPreferences.getLockedTimeZoneId(context)) :
+        return ApplicationPreferences.isTimeZoneLocked(context) ?
+                formatDateTimeAtTimeZone(context, dateTime, flags, ApplicationPreferences.getLockedTimeZoneId(context)) :
                 DateUtils.formatDateTime(context, dateTime.getMillis(), flags);
     }
 
@@ -95,13 +95,13 @@ public class DateUtil {
 
     public static DateTimeZone getCurrentTimeZone(Context context) {
         DateTimeZone zone = DateTimeZone.forID(TimeZone.getDefault().getID());
-        if (CalendarPreferences.isTimeZoneLocked(context)) {
-            String lockedTimeZoneId = CalendarPreferences.getLockedTimeZoneId(context);
+        if (ApplicationPreferences.isTimeZoneLocked(context)) {
+            String lockedTimeZoneId = ApplicationPreferences.getLockedTimeZoneId(context);
             try {
                 zone = DateTimeZone.forID(lockedTimeZoneId);
             } catch (IllegalArgumentException e) {
                 Log.w("getCurrentTimeZone", "The Locked time zone is not recognized: " + lockedTimeZoneId);
-                CalendarPreferences.setLockedTimeZoneId(context, "");
+                ApplicationPreferences.setLockedTimeZoneId(context, "");
             }
         }
         return zone;

@@ -35,11 +35,11 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setColorFilter;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_HEADER_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_SHOW_WIDGET_HEADER;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HEADER_THEME;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HEADER_THEME_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
     private static final String PACKAGE = EventAppWidgetProvider.class.getPackage().getName();

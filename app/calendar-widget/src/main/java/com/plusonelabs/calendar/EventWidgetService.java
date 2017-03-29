@@ -8,8 +8,8 @@ import android.widget.RemoteViewsService;
 import org.joda.time.DateTimeZone;
 
 import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME;
-import static com.plusonelabs.calendar.prefs.CalendarPreferences.PREF_ENTRY_THEME_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
 
 
 public class EventWidgetService extends RemoteViewsService {

@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
-import com.plusonelabs.calendar.prefs.CalendarPreferences;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.util.RawResourceUtils;
 import com.plusonelabs.calendar.widget.DayHeader;
 import com.plusonelabs.calendar.widget.WidgetEntry;
@@ -47,7 +47,7 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
         provider.addResults(inputs.getResults());
 
         int dateRange = 30;
-        CalendarPreferences.setEventRange(provider.getContext(), dateRange);
+        ApplicationPreferences.setEventRange(provider.getContext(), dateRange);
         DateTime now = new DateTime(2015, 8, 30, 0, 0, 1);
         DateUtil.setNow(now);
         factory.onDataSetChanged();

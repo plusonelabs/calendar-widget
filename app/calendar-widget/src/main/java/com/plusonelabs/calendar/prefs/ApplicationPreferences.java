@@ -15,7 +15,6 @@ import java.util.Set;
 
 public class ApplicationPreferences {
     static final String PREF_WIDGET_ID = "widgetId";
-    private static final String PREF_INSTANCE_SAVED = "instanceSaved";
 
 	static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
 	static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
@@ -68,7 +67,6 @@ public class ApplicationPreferences {
     public static void startEditing(Context context, Integer widgetId) {
         InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
         setWidgetId(context, settings.getWidgetId());
-        setInstanceSaved(context, false);
         setActiveCalendars(context, settings.getActiveCalendars());
         setEventRange(context, settings.getEventRange());
         setEventsEnded(context, settings.getEventsEnded());
@@ -99,7 +97,6 @@ public class ApplicationPreferences {
 
     public static void save(Context context) {
         InstanceSettings.save(context, getWidgetId(context));
-        setInstanceSaved(context, true);
     }
 
     public static InstanceSettings currentSettings(Context context) {
@@ -112,15 +109,6 @@ public class ApplicationPreferences {
 
     public static void setWidgetId(Context context, int value) {
         setInt(context, PREF_WIDGET_ID, value);
-    }
-
-    public static boolean isInstanceSaved(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_INSTANCE_SAVED, true);
-    }
-
-    public static void setInstanceSaved(Context context, boolean value) {
-        setBoolean(context, PREF_INSTANCE_SAVED, value);
     }
 
     public static Set<String> getActiveCalendars(Context context) {

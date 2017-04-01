@@ -21,6 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.plusonelabs.calendar.EventAppWidgetProvider.getWidgetIds;
 import static com.plusonelabs.calendar.Theme.themeNameToResId;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES_DEFAULT;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ACTIVE_CALENDARS;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
@@ -30,19 +32,34 @@ import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_DAY_HEA
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_EVENTS_ENDED;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_EVENT_RANGE;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_EVENT_RANGE_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY_DEFAULT;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HEADER_THEME;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HEADER_THEME_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HIDE_BASED_ON_KEYWORDS;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_INDICATE_ALERTS;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_INDICATE_RECURRING;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_LOCKED_TIME_ZONE_ID;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE_DEFAULT;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_DAY_HEADERS;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_END_TIME;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_END_TIME_DEFAULT;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_LOCATION;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_LOCATION_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_WIDGET_ID;
 import static com.plusonelabs.calendar.prefs.SettingsStorage.loadJson;
 import static com.plusonelabs.calendar.prefs.SettingsStorage.saveJson;
 
@@ -60,21 +77,21 @@ public class InstanceSettings {
     private final int widgetId;
     private boolean justCreated = true;
     private Set<String> activeCalendars = new HashSet<>();
-    private int eventRange = Integer.valueOf(ApplicationPreferences.PREF_EVENT_RANGE_DEFAULT);
+    private int eventRange = Integer.valueOf(PREF_EVENT_RANGE_DEFAULT);
     private EndedSomeTimeAgo eventsEnded = EndedSomeTimeAgo.NONE;
-    private boolean fillAllDayEvents = ApplicationPreferences.PREF_FILL_ALL_DAY_DEFAULT;
+    private boolean fillAllDayEvents = PREF_FILL_ALL_DAY_DEFAULT;
     private String hideBasedOnKeywords = "";
     private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
     private boolean showDaysWithoutEvents = false;
     private boolean showDayHeaders = true;
     private boolean showPastEventsWithDefaultColor = false;
-    private boolean showEndTime = ApplicationPreferences.PREF_SHOW_END_TIME_DEFAULT;
-    private boolean showLocation = ApplicationPreferences.PREF_SHOW_LOCATION_DEFAULT;
+    private boolean showEndTime = PREF_SHOW_END_TIME_DEFAULT;
+    private boolean showLocation = PREF_SHOW_LOCATION_DEFAULT;
     private String dateFormat = PREF_DATE_FORMAT_DEFAULT;
-    private boolean abbreviateDates = ApplicationPreferences.PREF_ABBREVIATE_DATES_DEFAULT;
+    private boolean abbreviateDates = PREF_ABBREVIATE_DATES_DEFAULT;
     private String lockedTimeZoneId = "";
     private EventEntryLayout eventEntryLayout = EventEntryLayout.DEFAULT;
-    private boolean titleMultiline = ApplicationPreferences.PREF_MULTILINE_TITLE_DEFAULT;
+    private boolean titleMultiline = PREF_MULTILINE_TITLE_DEFAULT;
     private boolean showOnlyClosestInstanceOfRecurringEvent = false;
     private boolean indicateAlerts = true;
     private boolean indicateRecurring = false;
@@ -147,30 +164,29 @@ public class InstanceSettings {
     }
 
     public static InstanceSettings fromJson(Context context, JSONObject json) throws JSONException {
-        InstanceSettings settings = new InstanceSettings(context, json.optInt(ApplicationPreferences.PREF_WIDGET_ID));
+        InstanceSettings settings = new InstanceSettings(context, json.optInt(PREF_WIDGET_ID));
         if (settings.widgetId == 0) {
             return settings;
         }
         settings.justCreated = false;
         settings.activeCalendars = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_CALENDARS));
-        settings.eventRange = json.getInt(ApplicationPreferences.PREF_EVENT_RANGE);
-        settings.eventsEnded = EndedSomeTimeAgo.fromValue(json.getString(ApplicationPreferences.PREF_EVENTS_ENDED));
-        settings.fillAllDayEvents = json.getBoolean(ApplicationPreferences.PREF_FILL_ALL_DAY);
-        settings.hideBasedOnKeywords = json.getString(ApplicationPreferences.PREF_HIDE_BASED_ON_KEYWORDS);
+        settings.eventRange = json.getInt(PREF_EVENT_RANGE);
+        settings.eventsEnded = EndedSomeTimeAgo.fromValue(json.getString(PREF_EVENTS_ENDED));
+        settings.fillAllDayEvents = json.getBoolean(PREF_FILL_ALL_DAY);
+        settings.hideBasedOnKeywords = json.getString(PREF_HIDE_BASED_ON_KEYWORDS);
         settings.pastEventsBackgroundColor = json.getInt(PREF_PAST_EVENTS_BACKGROUND_COLOR);
-        settings.showDaysWithoutEvents = json.getBoolean(ApplicationPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS);
-        settings.showDayHeaders = json.getBoolean(ApplicationPreferences.PREF_SHOW_DAY_HEADERS);
-        settings.showPastEventsWithDefaultColor = json.getBoolean(
-                ApplicationPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR);
+        settings.showDaysWithoutEvents = json.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS);
+        settings.showDayHeaders = json.getBoolean(PREF_SHOW_DAY_HEADERS);
+        settings.showPastEventsWithDefaultColor = json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR);
         settings.showEndTime = json.getBoolean(PREF_SHOW_END_TIME);
         settings.showLocation = json.getBoolean(PREF_SHOW_LOCATION);
         settings.dateFormat = json.getString(PREF_DATE_FORMAT);
-        settings.abbreviateDates = json.getBoolean(ApplicationPreferences.PREF_ABBREVIATE_DATES);
-        settings.lockedTimeZoneId = json.getString(ApplicationPreferences.PREF_LOCKED_TIME_ZONE_ID);
+        settings.abbreviateDates = json.getBoolean(PREF_ABBREVIATE_DATES);
+        settings.lockedTimeZoneId = json.getString(PREF_LOCKED_TIME_ZONE_ID);
         settings.eventEntryLayout = EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT));
         settings.titleMultiline = json.getBoolean(PREF_MULTILINE_TITLE);
         settings.showOnlyClosestInstanceOfRecurringEvent = json.getBoolean(
-                ApplicationPreferences.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT);
+                PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT);
         settings.indicateAlerts = json.getBoolean(PREF_INDICATE_ALERTS);
         settings.indicateRecurring = json.getBoolean(PREF_INDICATE_RECURRING);
         settings.entryTheme = json.getString(PREF_ENTRY_THEME);
@@ -279,25 +295,24 @@ public class InstanceSettings {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         try {
-            json.put(ApplicationPreferences.PREF_WIDGET_ID, widgetId);
-            json.put(ApplicationPreferences.PREF_ACTIVE_CALENDARS, new JSONArray(activeCalendars));
-            json.put(ApplicationPreferences.PREF_EVENT_RANGE, eventRange);
-            json.put(ApplicationPreferences.PREF_EVENTS_ENDED, eventsEnded.save());
-            json.put(ApplicationPreferences.PREF_FILL_ALL_DAY, fillAllDayEvents);
-            json.put(ApplicationPreferences.PREF_HIDE_BASED_ON_KEYWORDS, hideBasedOnKeywords);
+            json.put(PREF_WIDGET_ID, widgetId);
+            json.put(PREF_ACTIVE_CALENDARS, new JSONArray(activeCalendars));
+            json.put(PREF_EVENT_RANGE, eventRange);
+            json.put(PREF_EVENTS_ENDED, eventsEnded.save());
+            json.put(PREF_FILL_ALL_DAY, fillAllDayEvents);
+            json.put(PREF_HIDE_BASED_ON_KEYWORDS, hideBasedOnKeywords);
             json.put(PREF_PAST_EVENTS_BACKGROUND_COLOR, pastEventsBackgroundColor);
-            json.put(ApplicationPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS, showDaysWithoutEvents);
-            json.put(ApplicationPreferences.PREF_SHOW_DAY_HEADERS, showDayHeaders);
-            json.put(ApplicationPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, showPastEventsWithDefaultColor);
+            json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, showDaysWithoutEvents);
+            json.put(PREF_SHOW_DAY_HEADERS, showDayHeaders);
+            json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, showPastEventsWithDefaultColor);
             json.put(PREF_SHOW_END_TIME, showEndTime);
             json.put(PREF_SHOW_LOCATION, showLocation);
             json.put(PREF_DATE_FORMAT, dateFormat);
-            json.put(ApplicationPreferences.PREF_ABBREVIATE_DATES, abbreviateDates);
-            json.put(ApplicationPreferences.PREF_LOCKED_TIME_ZONE_ID, lockedTimeZoneId);
+            json.put(PREF_ABBREVIATE_DATES, abbreviateDates);
+            json.put(PREF_LOCKED_TIME_ZONE_ID, lockedTimeZoneId);
             json.put(PREF_EVENT_ENTRY_LAYOUT, eventEntryLayout.value);
             json.put(PREF_MULTILINE_TITLE, titleMultiline);
-            json.put(ApplicationPreferences.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT,
-                    showOnlyClosestInstanceOfRecurringEvent);
+            json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, showOnlyClosestInstanceOfRecurringEvent);
             json.put(PREF_INDICATE_ALERTS, indicateAlerts);
             json.put(PREF_INDICATE_RECURRING, indicateRecurring);
             json.put(PREF_ENTRY_THEME, entryTheme);
@@ -455,4 +470,10 @@ public class InstanceSettings {
     public String getDayHeaderAlignment() {
         return dayHeaderAlignment;
     }
+
+    public static Map<Integer, InstanceSettings> getInstances(Context context) {
+        ensureInstancesAreLoaded(context);
+        return instances;
+    }
+
 }

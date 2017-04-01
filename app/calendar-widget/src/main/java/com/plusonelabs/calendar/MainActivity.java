@@ -1,7 +1,6 @@
 package com.plusonelabs.calendar;
 
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,18 +9,29 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.util.PermissionsUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+    protected static final String KEY_VISIBLE_NAME = "visible_name";
+    protected static final String KEY_ID = "id";
+
     boolean permissionsGranted = false;
-    @NonNull
-    int[] appWidgetIds = new int[]{};
+    ListView listView = null;
 
     @NonNull
     public static Intent newIntentToStartMe(Context context) {
@@ -33,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkPermissionsAndRequestThem();
-        findWidgets();
+        listView = (ListView) findViewById(android.R.id.list);
         updateScreen();
     }
 
@@ -49,33 +59,64 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         permissionsGranted = PermissionsUtil.arePermissionsGranted(this);
     }
 
-    /**
-     * TODO: For now we only check the fact that at least one AppWidget exists.
-     */
-    private void findWidgets() {
-        int[] ids = AppWidgetManager.getInstance(this)
-                .getAppWidgetIds(new ComponentName(this, EventAppWidgetProvider.class));
-        if (ids != null) {
-            appWidgetIds = ids;
-        }
-    }
-
     private void updateScreen() {
         int messageResourceId = R.string.permissions_justification;
         if (permissionsGranted) {
-            if (appWidgetIds.length > 0 ) {
+
+            if (InstanceSettings.getInstances(this).size() == 1 ) {
                 Intent intent = new Intent(this.getApplicationContext(), WidgetConfigurationActivity.class);
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                        InstanceSettings.getInstances(this).keySet().iterator().next());
                 startActivity(intent);
                 finish();
                 return;
-            } else {
+            } else if (InstanceSettings.getInstances(this).isEmpty()) {
                 messageResourceId = R.string.no_widgets_found;
+            } else {
+                messageResourceId = R.string.select_a_widget_to_edit;
             }
         }
         TextView message = ((TextView)this.findViewById(R.id.message));
         if (message != null) {
             message.setText(messageResourceId);
         }
+
+        if (!InstanceSettings.getInstances(this).isEmpty() && permissionsGranted) {
+            final List<Map<String, String>> data = new ArrayList<>();
+            for (InstanceSettings settings : InstanceSettings.getInstances(this).values()) {
+                Map<String, String> map = new HashMap<>();
+                String visibleName = "Widget " + settings.getWidgetId();
+                map.put(KEY_VISIBLE_NAME, visibleName);
+                map.put(KEY_ID, Integer.toString(settings.getWidgetId()));
+                data.add(map);
+            }
+
+            SimpleAdapter adapter = new SimpleAdapter(this,
+                    data,
+                    R.layout.widget_list_item,
+                    new String[] {KEY_VISIBLE_NAME, KEY_ID},
+                    new int[] {R.id.visible_name, R.id.id});
+            setListAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MainActivity.this, WidgetConfigurationActivity.class);
+                    TextView textView = (TextView) view.findViewById(R.id.id);
+                    if (textView != null) {
+                        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                                Integer.valueOf(textView.getText().toString()));
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            });
+
+            listView.setVisibility(View.VISIBLE);
+        } else {
+            listView.setVisibility(View.GONE);
+        }
+
         Button grantPermissionsButton = (Button) findViewById(R.id.grant_permissions);
         if (grantPermissionsButton != null) {
             grantPermissionsButton.setVisibility(permissionsGranted ? View.GONE : View.VISIBLE);
@@ -96,5 +137,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     public void onCloseButtonClick(View view) {
         finish();
+    }
+
+    protected void setListAdapter(SimpleAdapter adapter) {
+        if (listView != null) {
+            listView.setAdapter(adapter);
+        }
     }
 }

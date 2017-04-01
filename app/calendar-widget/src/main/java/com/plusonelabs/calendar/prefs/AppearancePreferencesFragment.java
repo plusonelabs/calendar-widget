@@ -27,6 +27,7 @@ public class AppearancePreferencesFragment extends PreferenceFragment
 		super.onResume();
 		showLockTimeZone(true);
         showEventEntryLayout();
+        showWidgetInstanceName();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
 
@@ -92,8 +93,19 @@ public class AppearancePreferencesFragment extends PreferenceFragment
             case ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT:
                 showEventEntryLayout();
                 break;
+            case ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME:
+                showWidgetInstanceName();
+                getActivity().setTitle(ApplicationPreferences.getWidgetInstanceName(getActivity()));
+                break;
             default:
                 break;
+        }
+    }
+
+    private void showWidgetInstanceName() {
+        Preference preference = findPreference(ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME);
+        if (preference != null) {
+            preference.setSummary(ApplicationPreferences.getWidgetInstanceName(getActivity()));
         }
     }
 }

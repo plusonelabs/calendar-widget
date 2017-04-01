@@ -1,5 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <EditTextPreference
+        android:key="widgetInstanceName"
+        android:title="@string/widget_instance_name" />
+
     <ListPreference
         android:defaultValue="1.0"
         android:entries="@array/pref_text_size_entries"

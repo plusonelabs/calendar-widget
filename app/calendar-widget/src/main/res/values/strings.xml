@@ -126,5 +126,6 @@
     <string name="refresh_desc">Refresh</string>
     <string name="share_events_for_debugging_desc">Create a report to help developers troubleshoot problems</string>
     <string name="share_events_for_debugging_title">Share events for debugging</string>
+    <string name="widget_instance_name">Widget instance name</string>
 
 </resources>

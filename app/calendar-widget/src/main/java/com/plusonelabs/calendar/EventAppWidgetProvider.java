@@ -89,7 +89,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     private void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {
         rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(settings));
         String formattedDate = DateUtil.createDateString(settings,
-                DateUtil.now()).toUpperCase(Locale.getDefault()) + "   " + settings.getWidgetId();
+                DateUtil.now()).toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.calendar_current_date, formattedDate);
         setTextColorFromAttr(settings.getHeaderThemeContext(), rv, R.id.calendar_current_date, R.attr.header);
     }

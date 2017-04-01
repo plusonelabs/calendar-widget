@@ -15,6 +15,7 @@ import java.util.List;
 public class WidgetConfigurationActivity extends PreferenceActivity {
 
     private static final String PREFERENCES_PACKAGE_NAME = "com.plusonelabs.calendar.prefs";
+    private int widgetId = 0;
 
     @Override
     protected void onPause() {
@@ -24,7 +25,7 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int widgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+        widgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
         if (widgetId == 0) {
             widgetId = ApplicationPreferences.getWidgetId(this);
             Log.i(this.getClass().getSimpleName(), "Continue editing " + widgetId);
@@ -42,6 +43,9 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_header, target);
+        if (widgetId != 0) {
+            setTitle(ApplicationPreferences.getWidgetInstanceName(this));
+        }
     }
 
     @Override

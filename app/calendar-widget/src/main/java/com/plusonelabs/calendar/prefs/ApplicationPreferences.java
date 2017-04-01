@@ -57,6 +57,7 @@ public class ApplicationPreferences {
     static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
+    static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
 
     private static volatile String lockedTimeZoneId = null;
 
@@ -67,6 +68,7 @@ public class ApplicationPreferences {
     public static void startEditing(Context context, Integer widgetId) {
         InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
         setWidgetId(context, settings.getWidgetId());
+        setString(context, PREF_WIDGET_INSTANCE_NAME, settings.getWidgetInstanceName());
         setActiveCalendars(context, settings.getActiveCalendars());
         setEventRange(context, settings.getEventRange());
         setEventsEnded(context, settings.getEventsEnded());
@@ -286,5 +288,9 @@ public class ApplicationPreferences {
 
     public static int getInt(Context context, String key, int defaultValue) {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(key, defaultValue);
+    }
+
+    public static String getWidgetInstanceName(Context context) {
+        return getString(context, PREF_WIDGET_INSTANCE_NAME, "");
     }
 }

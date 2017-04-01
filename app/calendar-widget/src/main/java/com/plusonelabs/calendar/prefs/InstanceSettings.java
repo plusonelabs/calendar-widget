@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 
 import com.plusonelabs.calendar.EndedSomeTimeAgo;
+import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.widget.EventEntryLayout;
 
 import org.json.JSONArray;
@@ -60,6 +61,7 @@ import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_WI
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_WIDGET_ID;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME;
 import static com.plusonelabs.calendar.prefs.SettingsStorage.loadJson;
 import static com.plusonelabs.calendar.prefs.SettingsStorage.saveJson;
 
@@ -75,6 +77,7 @@ public class InstanceSettings {
     private volatile ContextThemeWrapper headerThemeContext = null;
 
     private final int widgetId;
+    private String widgetInstanceName = "";
     private boolean justCreated = true;
     private Set<String> activeCalendars = new HashSet<>();
     private int eventRange = Integer.valueOf(PREF_EVENT_RANGE_DEFAULT);
@@ -168,6 +171,7 @@ public class InstanceSettings {
         if (settings.widgetId == 0) {
             return settings;
         }
+        settings.setWidgetInstanceName(json.getString(PREF_WIDGET_INSTANCE_NAME));
         settings.justCreated = false;
         settings.activeCalendars = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_CALENDARS));
         settings.eventRange = json.getInt(PREF_EVENT_RANGE);
@@ -224,6 +228,7 @@ public class InstanceSettings {
     public static InstanceSettings fromApplicationPreferences(Context context, int widgetId) {
         InstanceSettings settings = new InstanceSettings(context, widgetId);
         settings.justCreated = false;
+        settings.setWidgetInstanceName(ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, ""));
         settings.activeCalendars = ApplicationPreferences.getActiveCalendars(context);
         settings.eventRange = ApplicationPreferences.getEventRange(context);
         settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);
@@ -282,6 +287,7 @@ public class InstanceSettings {
     private InstanceSettings(Context context, int widgetId) {
         this.context = context;
         this.widgetId = widgetId;
+        this.widgetInstanceName = context.getText(R.string.app_name) + " " + widgetId;
     }
 
     private void save() {
@@ -296,6 +302,7 @@ public class InstanceSettings {
         JSONObject json = new JSONObject();
         try {
             json.put(PREF_WIDGET_ID, widgetId);
+            json.put(PREF_WIDGET_INSTANCE_NAME, widgetInstanceName);
             json.put(PREF_ACTIVE_CALENDARS, new JSONArray(activeCalendars));
             json.put(PREF_EVENT_RANGE, eventRange);
             json.put(PREF_EVENTS_ENDED, eventsEnded.save());
@@ -333,6 +340,16 @@ public class InstanceSettings {
 
     public int getWidgetId() {
         return widgetId;
+    }
+
+    public void setWidgetInstanceName(String widgetInstanceName) {
+        if (!TextUtils.isEmpty(widgetInstanceName)) {
+            this.widgetInstanceName = widgetInstanceName;
+        }
+    }
+
+    public String getWidgetInstanceName() {
+        return widgetInstanceName;
     }
 
     public boolean isJustCreated() {

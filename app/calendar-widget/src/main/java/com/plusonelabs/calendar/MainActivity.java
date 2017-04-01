@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void updateScreen() {
         int messageResourceId = R.string.permissions_justification;
         if (permissionsGranted) {
-
             if (InstanceSettings.getInstances(this).size() == 1 ) {
                 Intent intent = new Intent(this.getApplicationContext(), WidgetConfigurationActivity.class);
                 intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -82,36 +81,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         }
 
         if (!InstanceSettings.getInstances(this).isEmpty() && permissionsGranted) {
-            final List<Map<String, String>> data = new ArrayList<>();
-            for (InstanceSettings settings : InstanceSettings.getInstances(this).values()) {
-                Map<String, String> map = new HashMap<>();
-                String visibleName = "Widget " + settings.getWidgetId();
-                map.put(KEY_VISIBLE_NAME, visibleName);
-                map.put(KEY_ID, Integer.toString(settings.getWidgetId()));
-                data.add(map);
-            }
-
-            SimpleAdapter adapter = new SimpleAdapter(this,
-                    data,
-                    R.layout.widget_list_item,
-                    new String[] {KEY_VISIBLE_NAME, KEY_ID},
-                    new int[] {R.id.visible_name, R.id.id});
-            setListAdapter(adapter);
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(MainActivity.this, WidgetConfigurationActivity.class);
-                    TextView textView = (TextView) view.findViewById(R.id.id);
-                    if (textView != null) {
-                        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                                Integer.valueOf(textView.getText().toString()));
-                        startActivity(intent);
-                        finish();
-                    }
-                }
-            });
-
+            fillWidgetList();
             listView.setVisibility(View.VISIBLE);
         } else {
             listView.setVisibility(View.GONE);
@@ -121,6 +91,37 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (grantPermissionsButton != null) {
             grantPermissionsButton.setVisibility(permissionsGranted ? View.GONE : View.VISIBLE);
         }
+    }
+
+    private void fillWidgetList() {
+        final List<Map<String, String>> data = new ArrayList<>();
+        for (InstanceSettings settings : InstanceSettings.getInstances(this).values()) {
+            Map<String, String> map = new HashMap<>();
+            map.put(KEY_VISIBLE_NAME, settings.getWidgetInstanceName());
+            map.put(KEY_ID, Integer.toString(settings.getWidgetId()));
+            data.add(map);
+        }
+
+        SimpleAdapter adapter = new SimpleAdapter(this,
+                data,
+                R.layout.widget_list_item,
+                new String[] {KEY_VISIBLE_NAME, KEY_ID},
+                new int[] {R.id.visible_name, R.id.id});
+        setListAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, WidgetConfigurationActivity.class);
+                TextView textView = (TextView) view.findViewById(R.id.id);
+                if (textView != null) {
+                    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                            Integer.valueOf(textView.getText().toString()));
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
     }
 
     public void grantPermissions(View view) {

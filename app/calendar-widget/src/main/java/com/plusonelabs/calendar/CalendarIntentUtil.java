@@ -2,12 +2,12 @@ package com.plusonelabs.calendar;
 
 import android.app.PendingIntent;
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.util.PermissionsUtil;
 
 import org.joda.time.DateTime;
@@ -29,12 +29,12 @@ public class CalendarIntentUtil {
 		return intent;
 	}
 
-	static PendingIntent createOpenCalendarEventPendingIntent(Context context) {
-		return PermissionsUtil.getPermittedPendingIntent(context, createCalendarIntent());
+	static PendingIntent createOpenCalendarEventPendingIntent(InstanceSettings settings) {
+		return PermissionsUtil.getPermittedPendingIntent(settings, createCalendarIntent());
 	}
 
-    static PendingIntent createOpenCalendarPendingIntent(Context context) {
-        return PermissionsUtil.getPermittedPendingIntent(context, createOpenCalendarAtDayIntent(new DateTime()));
+    static PendingIntent createOpenCalendarPendingIntent(InstanceSettings settings) {
+        return PermissionsUtil.getPermittedPendingIntent(settings, createOpenCalendarAtDayIntent(new DateTime()));
     }
 
     public static Intent createOpenCalendarEventIntent(int eventId, DateTime from, DateTime to) {

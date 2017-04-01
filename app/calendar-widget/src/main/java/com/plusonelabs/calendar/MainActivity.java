@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     /**
-     * For now we only check the fact that at least one AppWidget exists.
+     * TODO: For now we only check the fact that at least one AppWidget exists.
      */
     private void findWidgets() {
         int[] ids = AppWidgetManager.getInstance(this)
@@ -63,8 +63,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void updateScreen() {
         int messageResourceId = R.string.permissions_justification;
         if (permissionsGranted) {
-            if (appWidgetIds.length > 0) {
-                startActivity(new Intent(this.getApplicationContext(), WidgetConfigurationActivity.class));
+            if (appWidgetIds.length > 0 ) {
+                Intent intent = new Intent(this.getApplicationContext(), WidgetConfigurationActivity.class);
+                startActivity(intent);
                 finish();
                 return;
             } else {

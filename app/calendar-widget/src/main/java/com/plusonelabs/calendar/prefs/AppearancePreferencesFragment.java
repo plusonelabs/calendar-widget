@@ -47,7 +47,9 @@ public class AppearancePreferencesFragment extends PreferenceFragment
             preference.setSummary(
                     String.format(getText(
                             isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc
-                    ).toString(), DateUtil.getCurrentTimeZone(getActivity()).getName(DateUtil.now().getMillis())));
+                    ).toString(), DateUtil.getCurrentTimeZone(
+                            ApplicationPreferences.currentSettings(getActivity()))
+                            .getName(DateUtil.now().getMillis())));
         }
     }
 

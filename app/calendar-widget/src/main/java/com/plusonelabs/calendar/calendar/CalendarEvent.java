@@ -1,11 +1,15 @@
 package com.plusonelabs.calendar.calendar;
 
+import android.content.Context;
+
 import com.plusonelabs.calendar.DateUtil;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
+
 import org.joda.time.DateTime;
 
-import java.util.concurrent.TimeUnit;
-
 public class CalendarEvent {
+    private final Context context;
+	private final int widgetId;
 
 	private int eventId;
 	private String title;
@@ -18,6 +22,11 @@ public class CalendarEvent {
 	private boolean recurring;
 
     private DateTime startDate;
+
+	public CalendarEvent(Context context, int widgetId) {
+        this.context = context;
+		this.widgetId = widgetId;
+	}
 
     public DateTime getStartDate() {
         return startDate;
@@ -142,4 +151,8 @@ public class CalendarEvent {
 	public boolean isPartOfMultiDayEvent() {
 		return getEndDate().withTimeAtStartOfDay().isAfter(getStartDate().withTimeAtStartOfDay());
 	}
+
+	public InstanceSettings getSettings() {
+        return InstanceSettings.fromId(context, widgetId);
+    }
 }

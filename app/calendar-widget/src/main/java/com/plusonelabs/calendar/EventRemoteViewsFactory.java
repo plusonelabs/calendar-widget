@@ -2,16 +2,15 @@ package com.plusonelabs.calendar;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import com.plusonelabs.calendar.calendar.CalendarEventVisualizer;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.widget.DayHeader;
-import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
@@ -27,27 +26,25 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColorFromAtt
 import static com.plusonelabs.calendar.RemoteViewsUtil.setPadding;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
-import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
+import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
 	private final Context context;
+    private final int widgetId;
 	private volatile List<WidgetEntry> mWidgetEntries = new ArrayList<>();
 	private final List<IEventVisualizer<?>> eventProviders;
 
-	public EventRemoteViewsFactory(Context context) {
+	public EventRemoteViewsFactory(Context context, int widgetId) {
 		this.context = context;
+        this.widgetId = widgetId;
         eventProviders = new ArrayList<>();
-        eventProviders.add(new CalendarEventVisualizer(context));
+        eventProviders.add(new CalendarEventVisualizer(context, widgetId));
     }
 
     public void onCreate() {
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
-		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
+		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(getSettings()));
 	}
 
 	public void onDestroy() {
@@ -75,26 +72,32 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 	}
 
 	private RemoteViews getRemoteView(DayHeader dayHeader) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String alignment = prefs.getString(PREF_DAY_HEADER_ALIGNMENT, PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
+        String alignment = getSettings().getDayHeaderAlignment();
         RemoteViews rv = new RemoteViews(context.getPackageName(), Alignment.valueOf(alignment).getLayoutId());
-        String dateString = DateUtil.createDayHeaderTitle(context, dayHeader.getStartDate())
+        String dateString = DateUtil.createDayHeaderTitle(getSettings(), dayHeader.getStartDate())
                 .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
-        setTextSize(context, rv, R.id.day_header_title, R.dimen.day_header_title);
+        setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
         setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
         setBackgroundColor(rv, R.id.day_header,
-                dayHeader.getStartDay().plusDays(1).isBefore(DateUtil.now()) ? ApplicationPreferences.getPastEventsBackgroundColor(context) : Color.TRANSPARENT);
+                dayHeader.getStartDay().plusDays(1).isBefore(DateUtil.now()) ?
+                        getSettings().getPastEventsBackgroundColor() : Color.TRANSPARENT);
         setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
-        setPadding(context, rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top, R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
+        setPadding(getSettings(), rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
+                R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
 		Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());
 		rv.setOnClickFillInIntent(R.id.day_header, intent);
 		return rv;
 	}
 
+    @NonNull
+    private InstanceSettings getSettings() {
+        return InstanceSettings.fromId(context, widgetId);
+    }
+
     public void onDataSetChanged() {
-        context.setTheme(getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT));
-        if (ApplicationPreferences.getShowDayHeaders(context))
+        context.setTheme(themeNameToResId(getSettings().getEntryTheme()));
+        if (getSettings().getShowDayHeaders())
             mWidgetEntries = addDayHeaders(getEventEntries());
         else
             mWidgetEntries = getEventEntries();
@@ -111,7 +114,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     private List<WidgetEntry> addDayHeaders(List<WidgetEntry> listIn) {
         List<WidgetEntry> listOut = new ArrayList<>();
         if (!listIn.isEmpty()) {
-            boolean showDaysWithoutEvents = ApplicationPreferences.getShowDaysWithoutEvents(context);
+            boolean showDaysWithoutEvents = getSettings().getShowDaysWithoutEvents();
             DayHeader curDayBucket = new DayHeader(new DateTime(0));
             for (WidgetEntry entry : listIn) {
                 DateTime nextStartOfDay = entry.getStartDay();

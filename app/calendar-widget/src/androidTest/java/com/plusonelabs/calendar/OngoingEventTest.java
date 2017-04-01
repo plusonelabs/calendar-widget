@@ -1,7 +1,6 @@
 package com.plusonelabs.calendar;
 
 import android.test.InstrumentationTestCase;
-import android.util.Log;
 
 import com.plusonelabs.calendar.calendar.CalendarEvent;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
@@ -24,7 +23,7 @@ public class OngoingEventTest extends InstrumentationTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext());
+        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().isEmpty());
     }
 
@@ -39,7 +38,7 @@ public class OngoingEventTest extends InstrumentationTestCase {
      */
     public void testTodaysOngoingEvent() {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent();
+        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Ongoing event shows original start time");
         event.setStartDate(today.plusHours(9));
@@ -67,7 +66,7 @@ public class OngoingEventTest extends InstrumentationTestCase {
      */
     public void testYesterdaysOngoingEvent() {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent();
+        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Ongoing event, which started yesterday, shows no start time");
         event.setStartDate(today.minusDays(1).plusHours(9));
@@ -94,7 +93,7 @@ public class OngoingEventTest extends InstrumentationTestCase {
 
     public void testEventWhichCarryOverToTheNextDay() {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent();
+        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Event that carry over to the next day, show as ending midnight");
         event.setStartDate(today.plusHours(19));

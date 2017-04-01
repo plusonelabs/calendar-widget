@@ -28,7 +28,7 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext());
+        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
     }
 
     @Override
@@ -47,7 +47,9 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
         provider.addResults(inputs.getResults());
 
         int dateRange = 30;
+        ApplicationPreferences.startEditing(provider.getContext(), provider.getWidgetId());
         ApplicationPreferences.setEventRange(provider.getContext(), dateRange);
+        ApplicationPreferences.save(provider.getContext());
         DateTime now = new DateTime(2015, 8, 30, 0, 0, 1);
         DateUtil.setNow(now);
         factory.onDataSetChanged();

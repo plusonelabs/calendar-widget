@@ -5,10 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -29,12 +26,10 @@ public class BackgroundTransparencyDialog extends DialogFragment {
         picker = (ColorPicker) layout.findViewById(R.id.background_color_picker);
         picker.addSVBar((SVBar) layout.findViewById(R.id.background_color_svbar));
         picker.addOpacityBar((OpacityBar) layout.findViewById(R.id.background_color_opacitybar));
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefKey = getTag().equals(ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR)
                 ? ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR
                 : ApplicationPreferences.PREF_BACKGROUND_COLOR;
-        int color = prefs
-                .getInt(prefKey,
+        int color = ApplicationPreferences.getInt(getActivity(), prefKey,
                         getTag().equals(ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR)
                                 ? ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT
                                 : ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT);
@@ -54,11 +49,7 @@ public class BackgroundTransparencyDialog extends DialogFragment {
         builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				SharedPreferences prefs = PreferenceManager
-						.getDefaultSharedPreferences(getActivity());
-				Editor editor = prefs.edit();
-                editor.putInt(prefKey, picker.getColor());
-                editor.commit();
+				ApplicationPreferences.setInt(getActivity(), prefKey, picker.getColor());
             }
 		});
 		return builder.create();

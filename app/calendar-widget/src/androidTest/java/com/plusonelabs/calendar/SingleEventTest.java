@@ -6,7 +6,6 @@ import com.plusonelabs.calendar.widget.CalendarEntry;
 import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import android.test.InstrumentationTestCase;
-import android.util.Log;
 
 import org.joda.time.DateTime;
 
@@ -24,7 +23,7 @@ public class SingleEventTest extends InstrumentationTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext());
+        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().isEmpty());
     }
 
@@ -37,7 +36,7 @@ public class SingleEventTest extends InstrumentationTestCase {
     public void testEventAttributes() {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
         DateUtil.setNow(today.plusHours(10));
-        CalendarEvent event = new CalendarEvent();
+        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Single Event today with all known attributes");
         event.setStartDate(today.plusHours(12));

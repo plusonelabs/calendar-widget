@@ -1,9 +1,6 @@
 package com.plusonelabs.calendar.widget;
 
-import android.content.Context;
-
 import com.plusonelabs.calendar.DateUtil;
-import com.plusonelabs.calendar.R;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -42,5 +39,4 @@ public class WidgetEntry implements Comparable<WidgetEntry> {
 		}
 		return 0;
 	}
-
 }

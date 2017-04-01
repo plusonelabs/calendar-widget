@@ -1,8 +1,6 @@
 package com.plusonelabs.calendar;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
 
 public enum Theme {
 
@@ -13,13 +11,16 @@ public enum Theme {
 
     private final int themeResId;
 
-    private Theme(int themeResId) {
+    Theme(int themeResId) {
         this.themeResId = themeResId;
     }
 
-    public static int getCurrentThemeId(Context context, String prefKey, String prefDefault) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return Theme.valueOf(prefs.getString(prefKey, prefDefault)).themeResId;
+    public static int themeNameToResId(String themeName) {
+        try {
+            return Theme.valueOf(themeName).themeResId;
+        } catch (Exception e) {
+            return Theme.valueOf(PREF_ENTRY_THEME_DEFAULT).themeResId;
+        }
     }
 
 }

@@ -25,7 +25,7 @@ public class WrongDatesLostEventsTest extends InstrumentationTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext());
+        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
     }
 
     @Override

@@ -6,60 +6,57 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.plusonelabs.calendar.Alignment;
-import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EndedSomeTimeAgo;
 import com.plusonelabs.calendar.Theme;
 import com.plusonelabs.calendar.widget.EventEntryLayout;
-
-import org.joda.time.DateTimeZone;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class ApplicationPreferences {
+    static final String PREF_WIDGET_ID = "widgetId";
+    private static final String PREF_INSTANCE_SAVED = "instanceSaved";
 
-	public static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
-	public static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
-	public static final String PREF_MULTILINE_TITLE = "multiline_title";
-	public static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
-	private static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
-	private static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
-	private static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
-	public static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
-	public static final String PREF_INDICATE_RECURRING = "indicateRecurring";
-	public static final String PREF_INDICATE_ALERTS = "indicateAlerts";
-	public static final String PREF_BACKGROUND_COLOR = "backgroundColor";
-	public static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
-	public static final String PREF_DATE_FORMAT = "dateFormat";
-	public static final String PREF_DATE_FORMAT_DEFAULT = "auto";
-	public static final String PREF_EVENT_RANGE = "eventRange";
-	private static final String PREF_EVENT_RANGE_DEFAULT = "30";
-	public static final String PREF_EVENTS_ENDED = "eventsEnded";
-	public static final String PREF_SHOW_END_TIME = "showEndTime";
-	public static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
-	public static final String PREF_SHOW_LOCATION = "showLocation";
-	public static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
-	private static final String PREF_FILL_ALL_DAY = "fillAllDay";
-	private static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
-	public static final String PREF_ENTRY_THEME = "entryTheme";
+	static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
+	static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
+	static final String PREF_MULTILINE_TITLE = "multiline_title";
+	static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
+	static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
+	static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
+	static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
+	static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
+	static final String PREF_INDICATE_RECURRING = "indicateRecurring";
+	static final String PREF_INDICATE_ALERTS = "indicateAlerts";
+	static final String PREF_BACKGROUND_COLOR = "backgroundColor";
+	static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
+	static final String PREF_DATE_FORMAT = "dateFormat";
+	static final String PREF_DATE_FORMAT_DEFAULT = "auto";
+	static final String PREF_EVENT_RANGE = "eventRange";
+	static final String PREF_EVENT_RANGE_DEFAULT = "30";
+	static final String PREF_EVENTS_ENDED = "eventsEnded";
+	static final String PREF_SHOW_END_TIME = "showEndTime";
+	static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
+	static final String PREF_SHOW_LOCATION = "showLocation";
+	static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
+	static final String PREF_FILL_ALL_DAY = "fillAllDay";
+	static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
+	static final String PREF_ENTRY_THEME = "entryTheme";
 	public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
-	public static final String PREF_HEADER_THEME = "headerTheme";
-	public static final String PREF_HEADER_THEME_DEFAULT = Theme.DARK.name();
-	public static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
-	public static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
-    private static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
-    public static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
-    public static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
-	public static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
+	static final String PREF_HEADER_THEME = "headerTheme";
+	static final String PREF_HEADER_THEME_DEFAULT = Theme.DARK.name();
+	static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
+	static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
+    static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
+    static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
+    static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
+	static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
     static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
-    private static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
-    private static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
+    static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
+    static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
-    private static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
+    static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
     static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
-    public static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
+    static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
 
     private static volatile String lockedTimeZoneId = null;
@@ -68,30 +65,62 @@ public class ApplicationPreferences {
 		// prohibit instantiation
 	}
 
-    public static JSONObject toJson(Context context) throws JSONException {
-        JSONObject json = new JSONObject();
-        json.put(PREF_EVENT_RANGE, getEventRange(context));
-        json.put(PREF_EVENTS_ENDED, getEventsEnded(context));
-        json.put(PREF_FILL_ALL_DAY, getFillAllDayEvents(context));
-        json.put(PREF_HIDE_BASED_ON_KEYWORDS, getHideBasedOnKeywords(context));
-        json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, getShowDaysWithoutEvents(context));
-        json.put(PREF_SHOW_DAY_HEADERS, getShowDayHeaders(context));
-        json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, getShowPastEventsWithDefaultColor(context));
-        json.put(PREF_ABBREVIATE_DATES, getAbbreviateDates(context));
-        json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, getShowOnlyClosestInstanceOfRecurringEvent(context));
-        return json;
+    public static void startEditing(Context context, Integer widgetId) {
+        InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
+        setWidgetId(context, settings.getWidgetId());
+        setInstanceSaved(context, false);
+        setActiveCalendars(context, settings.getActiveCalendars());
+        setEventRange(context, settings.getEventRange());
+        setEventsEnded(context, settings.getEventsEnded());
+        setFillAllDayEvents(context, settings.getFillAllDayEvents());
+        setHideBasedOnKeywords(context, settings.getHideBasedOnKeywords());
+        setInt(context, PREF_PAST_EVENTS_BACKGROUND_COLOR,  settings.getPastEventsBackgroundColor());
+        setShowDaysWithoutEvents(context,settings.getShowDaysWithoutEvents());
+        setShowDayHeaders(context, settings.getShowDayHeaders());
+        setShowPastEventsWithDefaultColor(context, settings.getShowPastEventsWithDefaultColor());
+        setBoolean(context, PREF_SHOW_END_TIME, settings.getShowEndTime());
+        setBoolean(context, PREF_SHOW_LOCATION, settings.getShowLocation());
+        setString(context, PREF_DATE_FORMAT, settings.getDateFormat());
+        setAbbreviateDates(context, settings.getAbbreviateDates());
+        setLockedTimeZoneId(context, settings.getLockedTimeZoneId());
+        setString(context, PREF_EVENT_ENTRY_LAYOUT, settings.getEventEntryLayout().value);
+        setBoolean(context, PREF_MULTILINE_TITLE, settings.isTitleMultiline());
+        setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, settings
+                .getShowOnlyClosestInstanceOfRecurringEvent());
+        setBoolean(context, PREF_INDICATE_ALERTS, settings.getIndicateAlerts());
+        setBoolean(context, PREF_INDICATE_RECURRING, settings.getIndicateRecurring());
+        setString(context, PREF_ENTRY_THEME, settings.getEntryTheme());
+        setString(context, PREF_HEADER_THEME, settings.getHeaderTheme());
+        setBoolean(context, PREF_SHOW_WIDGET_HEADER, settings.getShowWidgetHeader());
+        setInt(context, PREF_BACKGROUND_COLOR, settings.getBackgroundColor());
+        setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale());
+        setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());
     }
 
-    public static void fromJson(Context context, JSONObject json) throws JSONException {
-        setEventRange(context, json.getInt(PREF_EVENT_RANGE));
-        setEventsEnded(context, EndedSomeTimeAgo.fromValue(json.getString(PREF_EVENTS_ENDED)));
-        setFillAllDayEvents(context, json.getBoolean(PREF_FILL_ALL_DAY));
-        setHideBasedOnKeywords(context, json.getString(PREF_HIDE_BASED_ON_KEYWORDS));
-        setShowDaysWithoutEvents(context, json.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS));
-        setShowDayHeaders(context, json.getBoolean(PREF_SHOW_DAY_HEADERS));
-        setShowPastEventsWithDefaultColor(context, json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR));
-        setAbbreviateDates(context, json.getBoolean(PREF_ABBREVIATE_DATES));
-        setShowOnlyClosestInstanceOfRecurringEvent(context, json.getBoolean(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT));
+    public static void save(Context context) {
+        InstanceSettings.save(context, getWidgetId(context));
+        setInstanceSaved(context, true);
+    }
+
+    public static InstanceSettings currentSettings(Context context) {
+        return InstanceSettings.fromId(context, getWidgetId(context));
+    }
+
+    public static int getWidgetId(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(PREF_WIDGET_ID, 0);
+    }
+
+    public static void setWidgetId(Context context, int value) {
+        setInt(context, PREF_WIDGET_ID, value);
+    }
+
+    public static boolean isInstanceSaved(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_INSTANCE_SAVED, true);
+    }
+
+    public static void setInstanceSaved(Context context, boolean value) {
+        setBoolean(context, PREF_INSTANCE_SAVED, value);
     }
 
     public static Set<String> getActiveCalendars(Context context) {
@@ -116,7 +145,7 @@ public class ApplicationPreferences {
     }
 
     public static void setEventRange(Context context, int value) {
-        setStringPreference(context, PREF_EVENT_RANGE, Integer.toString(value));
+        setString(context, PREF_EVENT_RANGE, Integer.toString(value));
     }
 
     public static EndedSomeTimeAgo getEventsEnded(Context context) {
@@ -125,7 +154,7 @@ public class ApplicationPreferences {
     }
 
     public static void setEventsEnded(Context context, EndedSomeTimeAgo value) {
-        setStringPreference(context, PREF_EVENTS_ENDED, value.save());
+        setString(context, PREF_EVENTS_ENDED, value.save());
     }
 
     public static boolean getFillAllDayEvents(Context context) {
@@ -134,7 +163,7 @@ public class ApplicationPreferences {
     }
 
     private static void setFillAllDayEvents(Context context, boolean value) {
-        setBooleanPreference(context, PREF_FILL_ALL_DAY, value);
+        setBoolean(context, PREF_FILL_ALL_DAY, value);
     }
 
     public static String getHideBasedOnKeywords(Context context) {
@@ -142,14 +171,7 @@ public class ApplicationPreferences {
     }
 
     private static void setHideBasedOnKeywords(Context context, String value) {
-        setStringPreference(context, PREF_HIDE_BASED_ON_KEYWORDS, value);
-    }
-
-    private static void setStringPreference(Context context, String key, String value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(key, value);
-        editor.apply();
+        setString(context, PREF_HIDE_BASED_ON_KEYWORDS, value);
     }
 
     public static int getPastEventsBackgroundColor(Context context) {
@@ -164,7 +186,7 @@ public class ApplicationPreferences {
     }
 
     private static void setShowDaysWithoutEvents(Context context, boolean value) {
-        setBooleanPreference(context, PREF_SHOW_DAYS_WITHOUT_EVENTS, value);
+        setBoolean(context, PREF_SHOW_DAYS_WITHOUT_EVENTS, value);
     }
 
     public static boolean getShowDayHeaders(Context context) {
@@ -173,7 +195,7 @@ public class ApplicationPreferences {
     }
 
     private static void setShowDayHeaders(Context context, boolean value) {
-        setBooleanPreference(context, PREF_SHOW_DAY_HEADERS, value);
+        setBoolean(context, PREF_SHOW_DAY_HEADERS, value);
     }
 
     public static boolean getShowPastEventsWithDefaultColor(Context context) {
@@ -182,7 +204,7 @@ public class ApplicationPreferences {
     }
 
     public static void setShowPastEventsWithDefaultColor(Context context, boolean value) {
-        setBooleanPreference(context, PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, value);
+        setBoolean(context, PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, value);
     }
 
     public static boolean getShowEndTime(Context context) {
@@ -206,14 +228,7 @@ public class ApplicationPreferences {
     }
 
     public static void setAbbreviateDates(Context context, boolean value) {
-        setBooleanPreference(context, PREF_ABBREVIATE_DATES, value);
-    }
-
-    private static void setBooleanPreference(Context context, String key, boolean value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(key, value);
-        editor.apply();
+        setBoolean(context, PREF_ABBREVIATE_DATES, value);
     }
 
     public static String getLockedTimeZoneId(Context context) {
@@ -226,8 +241,7 @@ public class ApplicationPreferences {
 
     public static void setLockedTimeZoneId(Context context, String value) {
         lockedTimeZoneId = value;
-        setStringPreference(context, PREF_LOCKED_TIME_ZONE_ID, value);
-        DateTimeZone.setDefault(DateUtil.getCurrentTimeZone(context));
+        setString(context, PREF_LOCKED_TIME_ZONE_ID, value);
     }
 
     public static boolean isTimeZoneLocked(Context context) {
@@ -250,7 +264,39 @@ public class ApplicationPreferences {
     }
 
     public static void setShowOnlyClosestInstanceOfRecurringEvent(Context context, boolean value) {
-        setBooleanPreference(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, value);
+        setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, value);
     }
 
+    private static void setString(Context context, String key, String value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    public static String getString(Context context, String key, String defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(key, defaultValue);
+    }
+
+    private static void setBoolean(Context context, String key, boolean value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public static boolean getBoolean(Context context, String key, boolean defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(key, defaultValue);
+    }
+
+    public static void setInt(Context context, String key, int value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    public static int getInt(Context context, String key, int defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(key, defaultValue);
+    }
 }

@@ -8,7 +8,7 @@ import android.text.format.DateUtils;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.calendar.CalendarEvent;
-import com.plusonelabs.calendar.prefs.ApplicationPreferences;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;
 
@@ -34,10 +34,10 @@ public class CalendarEntry extends WidgetEntry {
         return entry;
     }
 
-	public String getTitle(Context context) {
+	public String getTitle() {
         String title =  event.getTitle();
         if (TextUtils.isEmpty(title)) {
-            title = context.getResources().getString(R.string.no_title);
+            title = getSettings().getEntryThemeContext().getResources().getString(R.string.no_title);
         }
 		return title;
 	}
@@ -90,24 +90,25 @@ public class CalendarEntry extends WidgetEntry {
 		return event;
 	}
 
-    public String getEventTimeString(Context context) {
-        return hideEventDetails(context) ? "" : createTimeSpanString(context);
+    public String getEventTimeString() {
+        return hideEventDetails() ? "" :
+                createTimeSpanString(getSettings().getEntryThemeContext());
     }
 
-    String getLocationString(Context context) {
-        return getLocation() == null || getLocation().isEmpty() || hideEventDetails(context) || !ApplicationPreferences
-                .getShowLocation(context) ? "" : SPACE_PIPE_SPACE + getLocation();
+    String getLocationString() {
+        return getLocation() == null || getLocation().isEmpty() || hideEventDetails() ||
+                !getSettings().getShowLocation() ? "" : SPACE_PIPE_SPACE + getLocation();
     }
 
-    private boolean hideEventDetails(Context context) {
+    private boolean hideEventDetails() {
         return spansOneFullDay() && !(isStartOfMultiDayEvent() || isEndOfMultiDayEvent()) ||
-                isAllDay() && ApplicationPreferences.getFillAllDayEvents(context);
+                isAllDay() && getSettings().getFillAllDayEvents();
     }
 
     private String createTimeSpanString(Context context) {
-        if (isAllDay() && !ApplicationPreferences.getFillAllDayEvents(context)) {
+        if (isAllDay() && !getSettings().getFillAllDayEvents()) {
             DateTime dateTime = getEvent().getEndDate().minusDays(1);
-            return ARROW_SPACE + DateUtil.createDateString(context, dateTime);
+            return ARROW_SPACE + DateUtil.createDateString(getSettings(), dateTime);
         } else {
             return createTimeStringForCalendarEntry(context);
         }
@@ -124,7 +125,7 @@ public class CalendarEntry extends WidgetEntry {
         } else {
             startStr = createTimeString(context, getStartDate());
         }
-        if (ApplicationPreferences.getShowEndTime(context)) {
+        if (getSettings().getShowEndTime()) {
             if (isPartOfMultiDayEvent() && DateUtil.isMidnight(getEndDate())
                     && !isEndOfMultiDayEvent()) {
                 endStr = SPACE_ARROW;
@@ -145,14 +146,18 @@ public class CalendarEntry extends WidgetEntry {
     }
 
     private String createTimeString(Context context, DateTime time) {
-        String dateFormat = ApplicationPreferences.getDateFormat(context);
+        String dateFormat = getSettings().getDateFormat();
         if (!DateFormat.is24HourFormat(context) && dateFormat.equals(AUTO)
             || dateFormat.equals(TWELVE)) {
-            return DateUtil.formatDateTime(context, time,
+            return DateUtil.formatDateTime(getSettings(), time,
                     DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
         }
-        return DateUtil.formatDateTime(context, time,
+        return DateUtil.formatDateTime(getSettings(), time,
                 DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
+    }
+
+    public InstanceSettings getSettings() {
+        return event.getSettings();
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.plusonelabs.calendar.calendar.CalendarQueryRow;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
-import com.plusonelabs.calendar.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -31,7 +30,7 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTe
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext());
+        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().isEmpty());
     }
 

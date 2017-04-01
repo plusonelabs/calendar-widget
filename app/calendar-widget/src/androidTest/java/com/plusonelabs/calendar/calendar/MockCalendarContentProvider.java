@@ -1,6 +1,7 @@
 package com.plusonelabs.calendar.calendar;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,28 +12,31 @@ import android.test.mock.MockContentResolver;
 
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
-import com.plusonelabs.calendar.prefs.ApplicationPreferences;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import static junit.framework.Assert.assertTrue;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class MockCalendarContentProvider extends MockContentProvider {
 
+    private static final int WIDGET_ID = 434892;
     private int queriesCount = 0;
     private final List<CalendarQueryResult> results = new ArrayList<>();
-    private final Set<String> storedCalendars;
-    private final JSONObject storedPreferences;
+    private final JSONArray storedSettings;
     private final DateTimeZone storedZone;
+
+    private int widgetId = WIDGET_ID;
 
     private static DateTime fixDateForCalendar(DateTime date, boolean isAllDay) {
         if (!isAllDay) {
@@ -54,33 +58,28 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     public MockCalendarContentProvider(Context context) throws JSONException {
         super(context);
-        storedCalendars = ApplicationPreferences.getActiveCalendars(context);
-        storedPreferences = ApplicationPreferences.toJson(context);
+        storedSettings = InstanceSettings.toJson(getBaseContext(context));
         storedZone = DateTimeZone.getDefault();
         setPreferences(context);
     }
 
+    static Context getBaseContext(Context context) {
+        return ContextWrapper.class.isAssignableFrom(context.getClass()) ? ((ContextWrapper)
+                context).getBaseContext() : context;
+    }
+
     private void setPreferences(Context context) throws JSONException {
-        Set<String> calendars = new HashSet<>();
-        calendars.add("1");
-        ApplicationPreferences.setActiveCalendars(context, calendars);
-        ApplicationPreferences.fromJson(context,
-                new JSONObject("{" +
-                        " \"showDaysWithoutEvents\": false," +
-                        " \"showDayHeaders\": true," +
-                        " \"hideBasedOnKeywords\": \"\"," +
-                        " \"eventRange\": 30," +
-                        " \"showPastEventsWithDefaultColor\": false," +
-                        " \"fillAllDay\": true," +
-                        " \"eventsEnded\": \"\"," +
-                        " \"abbreviateDates\": false," +
-                        " \"showOnlyClosestInstanceOfRecurringEvent\": false" +
-                        "}"));
+        InstanceSettings.delete(context, widgetId);
+        InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
+        assertTrue(settings.isJustCreated());
+        JSONObject json = settings.toJson();
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(json);
+        InstanceSettings.fromJson(context, jsonArray);
     }
 
     public void tearDown() throws JSONException {
-        ApplicationPreferences.setActiveCalendars(getContext(), storedCalendars);
-        ApplicationPreferences.fromJson(getContext(), storedPreferences);
+        InstanceSettings.fromJson(getBaseContext(getContext()), storedSettings);
         DateUtil.setNow(null);
         DateTimeZone.setDefault(storedZone);
     }
@@ -143,6 +142,10 @@ public class MockCalendarContentProvider extends MockContentProvider {
     public void refreshWidget() {
         Intent intent = new Intent(EventAppWidgetProvider.ACTION_REFRESH);
         getContext().sendBroadcast(intent);
+    }
+
+    public int getWidgetId() {
+        return widgetId;
     }
 
 }

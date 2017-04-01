@@ -12,6 +12,7 @@ import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventRemoteViewsFactory;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.prefs.ApplicationPreferences;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -61,7 +62,8 @@ public class CalendarQueryResultsStorage {
         try {
             Log.i(TAG, method + " started");
             setNeedToStoreResults(true);
-            EventRemoteViewsFactory factory = new EventRemoteViewsFactory(context);
+            EventRemoteViewsFactory factory = new EventRemoteViewsFactory(context,
+                    ApplicationPreferences.getWidgetId(context));
             factory.onDataSetChanged();
             String results = theStorage.getResultsAsString(context);
             if (TextUtils.isEmpty(results)) {
@@ -136,9 +138,9 @@ public class CalendarQueryResultsStorage {
         }
         JSONObject appInfo = json.optJSONObject(KEY_APP_INFO);
         if (appInfo != null) {
-            JSONObject preferences = json.optJSONObject(KEY_PREFERENCES);
+            JSONArray preferences = json.optJSONArray(KEY_PREFERENCES);
             if (preferences != null) {
-                ApplicationPreferences.fromJson(context, preferences);
+                InstanceSettings.fromJson(context, preferences);
             }
         }
         if (!results.results.isEmpty()) {
@@ -160,7 +162,7 @@ public class CalendarQueryResultsStorage {
             json.put(KEY_APP_VERSION_NAME, "Unable to obtain package information " + e);
             json.put(KEY_APP_VERSION_CODE, -1);
         }
-        json.put(KEY_PREFERENCES, ApplicationPreferences.toJson(context));
+        json.put(KEY_PREFERENCES, InstanceSettings.toJson(context));
         return json;
     }
 

@@ -26,7 +26,7 @@ public class RecurringEventsTest extends InstrumentationTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext());
+        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().isEmpty());
         eventId = 0;
     }
@@ -44,7 +44,9 @@ public class RecurringEventsTest extends InstrumentationTestCase {
     public void testShowRecurringEvents() {
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 15, countCalendarEntries());
+        ApplicationPreferences.startEditing(provider.getContext(), provider.getWidgetId());
         ApplicationPreferences.setShowOnlyClosestInstanceOfRecurringEvent(provider.getContext(), true);
+        ApplicationPreferences.save(provider.getContext());
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 1, countCalendarEntries());
     }

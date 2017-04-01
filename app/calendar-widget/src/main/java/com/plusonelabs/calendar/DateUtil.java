@@ -1,10 +1,10 @@
 package com.plusonelabs.calendar;
 
-import android.content.Context;
 import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.plusonelabs.calendar.prefs.ApplicationPreferences;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -23,44 +23,45 @@ public class DateUtil {
         return date.isEqual(date.withTimeAtStartOfDay());
     }
 
-    public static String createDayHeaderTitle(Context context, DateTime dateTime) {
-        return createDateString(context, dateTime, true);
+    public static String createDayHeaderTitle(InstanceSettings settings, DateTime dateTime) {
+        return createDateString(settings, dateTime, true);
     }
 
-    public static String createDateString(Context context, DateTime dateTime) {
-        return createDateString(context, dateTime, false);
+    public static String createDateString(InstanceSettings settings, DateTime dateTime) {
+        return createDateString(settings, dateTime, false);
     }
 
-    private static String createDateString(Context context, DateTime dateTime, boolean forDayHeader) {
-        if (ApplicationPreferences.getAbbreviateDates(context)) {
-            return formatDateTime(context, dateTime,
+    private static String createDateString(InstanceSettings settings, DateTime dateTime, boolean forDayHeader) {
+        if (settings.getAbbreviateDates()) {
+            return formatDateTime(settings, dateTime,
                     DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
                             DateUtils.FORMAT_SHOW_WEEKDAY);
         }
         if (forDayHeader) {
             DateTime timeAtStartOfToday = DateTime.now().withTimeAtStartOfDay();
             if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday)) {
-                return createDateString(context, dateTime, context.getString(R.string.today));
+                return createDateString(settings, dateTime, settings.getContext().getString(R.string.today));
             } else if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday.plusDays(1))) {
-                return createDateString(context, dateTime, context.getString(R.string.tomorrow));
+                return createDateString(settings, dateTime, settings.getContext().getString(R.string.tomorrow));
             }
         }
-        return formatDateTime(context, dateTime,
+        return formatDateTime(settings, dateTime,
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
     }
 
-    private static String createDateString(Context context, DateTime dateTime, String prefix) {
-        return prefix + COMMA_SPACE + formatDateTime(context, dateTime, DateUtils.FORMAT_SHOW_DATE);
+    private static String createDateString(InstanceSettings settings, DateTime dateTime, String prefix) {
+        return prefix + COMMA_SPACE + formatDateTime(settings, dateTime, DateUtils.FORMAT_SHOW_DATE);
     }
 
-    public static String formatDateTime(Context context, DateTime dateTime, int flags) {
-        return ApplicationPreferences.isTimeZoneLocked(context) ?
-                formatDateTimeAtTimeZone(context, dateTime, flags, ApplicationPreferences.getLockedTimeZoneId(context)) :
-                DateUtils.formatDateTime(context, dateTime.getMillis(), flags);
+    public static String formatDateTime(InstanceSettings settings, DateTime dateTime, int flags) {
+        return settings.isTimeZoneLocked() ?
+                formatDateTimeAtTimeZone(settings, dateTime, flags, settings.getLockedTimeZoneId()) :
+                DateUtils.formatDateTime(settings.getContext(), dateTime.getMillis(), flags);
     }
 
-    private static String formatDateTimeAtTimeZone(Context context, DateTime dateTime, int flags, String timeZoneId) {
-        return DateUtils.formatDateRange(context,
+    private static String formatDateTimeAtTimeZone(InstanceSettings settings, DateTime dateTime,
+                                                   int flags, String timeZoneId) {
+        return DateUtils.formatDateRange(settings.getContext(),
                 new Formatter(new StringBuilder(50), Locale.getDefault()),
                 dateTime.getMillis(), dateTime.getMillis(), flags,
                 timeZoneId).toString();
@@ -93,15 +94,17 @@ public class DateUtil {
         }
     }
 
-    public static DateTimeZone getCurrentTimeZone(Context context) {
+    public static DateTimeZone getCurrentTimeZone(InstanceSettings settings) {
         DateTimeZone zone = DateTimeZone.forID(TimeZone.getDefault().getID());
-        if (ApplicationPreferences.isTimeZoneLocked(context)) {
-            String lockedTimeZoneId = ApplicationPreferences.getLockedTimeZoneId(context);
+        if (settings.isTimeZoneLocked()) {
+            String lockedTimeZoneId = settings.getLockedTimeZoneId();
             try {
                 zone = DateTimeZone.forID(lockedTimeZoneId);
             } catch (IllegalArgumentException e) {
                 Log.w("getCurrentTimeZone", "The Locked time zone is not recognized: " + lockedTimeZoneId);
-                ApplicationPreferences.setLockedTimeZoneId(context, "");
+                ApplicationPreferences.startEditing(settings.getContext(), settings.getWidgetId());
+                ApplicationPreferences.setLockedTimeZoneId(settings.getContext(), "");
+                ApplicationPreferences.save(settings.getContext());
             }
         }
         return zone;

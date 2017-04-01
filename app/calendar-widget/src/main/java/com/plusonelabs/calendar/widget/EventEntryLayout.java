@@ -9,7 +9,6 @@ import android.widget.RemoteViews;
 
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.RemoteViewsUtil;
-import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 
 import static com.plusonelabs.calendar.RemoteViewsUtil.setMultiline;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
@@ -22,28 +21,29 @@ public enum EventEntryLayout {
     DEFAULT(R.layout.event_entry, "DEFAULT", R.string.default_multiline_layout) {
 
         @Override
-        protected void setEventDetails(Context context, CalendarEntry entry, RemoteViews rv) {
-            String eventDetails = entry.getEventTimeString(context) + entry.getLocationString(context);
+        protected void setEventDetails(CalendarEntry entry, RemoteViews rv) {
+            String eventDetails = entry.getEventTimeString() + entry.getLocationString();
             if (TextUtils.isEmpty(eventDetails)) {
                 rv.setViewVisibility(R.id.event_entry_details, View.GONE);
             } else {
                 rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
                 rv.setTextViewText(R.id.event_entry_details, eventDetails);
-                setTextSize(context, rv, R.id.event_entry_details, R.dimen.event_entry_details);
-                setTextColorFromAttr(context, rv, R.id.event_entry_details, R.attr.eventEntryDetails);
+                setTextSize(entry.getSettings(), rv, R.id.event_entry_details, R.dimen.event_entry_details);
+                setTextColorFromAttr(entry.getSettings().getEntryThemeContext(), rv, R.id.event_entry_details,
+                        R.attr.eventEntryDetails);
             }
         }
     },
     ONE_LINE(R.layout.event_entry_one_line, "ONE_LINE", R.string.single_line_layout) {
 
         @Override
-        protected String getTitleString(Context context, CalendarEntry event) {
-            return event.getTitle(context) + event.getLocationString(context);
+        protected String getTitleString(CalendarEntry event) {
+            return event.getTitle() + event.getLocationString();
         }
 
         @Override
-        protected void setEventDate(Context context, CalendarEntry entry, RemoteViews rv) {
-            if (ApplicationPreferences.getShowDayHeaders(context)) {
+        protected void setEventDate(CalendarEntry entry, RemoteViews rv) {
+            if (entry.getSettings().getShowDayHeaders()) {
                 rv.setViewVisibility(R.id.event_entry_date, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
             } else {
@@ -52,7 +52,7 @@ public enum EventEntryLayout {
                 int viewToHide = viewToShow == R.id.event_entry_date? R.id.event_entry_date_right : R.id.event_entry_date;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
-                rv.setTextViewText(viewToShow, getDaysFromTodayString(context, days));
+                rv.setTextViewText(viewToShow, getDaysFromTodayString(entry.getSettings().getEntryThemeContext(), days));
             }
         }
 
@@ -70,9 +70,9 @@ public enum EventEntryLayout {
         }
 
         @Override
-        protected void setEventTime(Context context, CalendarEntry entry, RemoteViews rv) {
-            RemoteViewsUtil.setMultiline(rv, R.id.event_entry_time, ApplicationPreferences.getShowEndTime(context));
-            rv.setTextViewText(R.id.event_entry_time, entry.getEventTimeString(context).replace(CalendarEntry
+        protected void setEventTime(CalendarEntry entry, RemoteViews rv) {
+            RemoteViewsUtil.setMultiline(rv, R.id.event_entry_time, entry.getSettings().getShowEndTime());
+            rv.setTextViewText(R.id.event_entry_time, entry.getEventTimeString().replace(CalendarEntry
                     .SPACE_DASH_SPACE, " "));
         }
     };
@@ -100,33 +100,33 @@ public enum EventEntryLayout {
         return layout;
     }
 
-    public void visualizeEvent(Context context, CalendarEntry entry, RemoteViews rv) {
-        setTitle(context, entry, rv);
-        setEventDate(context, entry, rv);
-        setEventTime(context, entry, rv);
-        setEventDetails(context, entry, rv);
+    public void visualizeEvent(CalendarEntry entry, RemoteViews rv) {
+        setTitle(entry, rv);
+        setEventDate(entry, rv);
+        setEventTime(entry, rv);
+        setEventDetails(entry, rv);
     }
 
-    protected void setTitle(Context context, CalendarEntry event, RemoteViews rv) {
-        rv.setTextViewText(R.id.event_entry_title, getTitleString(context, event));
-        setTextSize(context, rv, R.id.event_entry_title, R.dimen.event_entry_title);
-        setTextColorFromAttr(context, rv, R.id.event_entry_title, R.attr.eventEntryTitle);
-        setMultiline(rv, R.id.event_entry_title, ApplicationPreferences.isTitleMultiline(context));
+    protected void setTitle(CalendarEntry event, RemoteViews rv) {
+        rv.setTextViewText(R.id.event_entry_title, getTitleString(event));
+        setTextSize(event.getSettings(), rv, R.id.event_entry_title, R.dimen.event_entry_title);
+        setTextColorFromAttr(event.getSettings().getEntryThemeContext(), rv, R.id.event_entry_title, R.attr.eventEntryTitle);
+        setMultiline(rv, R.id.event_entry_title, event.getSettings().isTitleMultiline());
     }
 
-    protected String getTitleString(Context context, CalendarEntry event) {
-        return event.getTitle(context);
+    protected String getTitleString(CalendarEntry event) {
+        return event.getTitle();
     }
 
-    protected void setEventDate(Context context, CalendarEntry entry, RemoteViews rv) {
+    protected void setEventDate(CalendarEntry entry, RemoteViews rv) {
         // Empty
     }
 
-    protected void setEventTime(Context context, CalendarEntry entry, RemoteViews rv) {
+    protected void setEventTime(CalendarEntry entry, RemoteViews rv) {
         // Empty
     }
 
-    protected void setEventDetails(Context context, CalendarEntry entry, RemoteViews rv) {
+    protected void setEventDetails(CalendarEntry entry, RemoteViews rv) {
         // Empty
     }
 

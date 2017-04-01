@@ -2,8 +2,7 @@ package com.plusonelabs.calendar.calendar;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -11,7 +10,7 @@ import com.plusonelabs.calendar.CalendarIntentUtil;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
-import com.plusonelabs.calendar.prefs.ApplicationPreferences;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.widget.CalendarEntry;
 import com.plusonelabs.calendar.widget.EventEntryLayout;
 import com.plusonelabs.calendar.widget.WidgetEntry;
@@ -25,29 +24,25 @@ import java.util.List;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
-import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_INDICATE_ALERTS;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_INDICATE_RECURRING;
+import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
 	private final Context context;
+    private final int widgetId;
 	private final CalendarEventProvider calendarContentProvider;
-	private final SharedPreferences prefs;
 
-    public CalendarEventVisualizer(Context context) {
+    public CalendarEventVisualizer(Context context, int widgetId) {
 		this.context = context;
-		calendarContentProvider = new CalendarEventProvider(context);
-		prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.widgetId = widgetId;
+		calendarContentProvider = new CalendarEventProvider(context, widgetId);
 	}
 
 	public RemoteViews getRemoteView(WidgetEntry eventEntry) {
 		CalendarEntry event = (CalendarEntry) eventEntry;
-        EventEntryLayout eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
+        EventEntryLayout eventEntryLayout = getSettings().getEventEntryLayout();
         RemoteViews rv = new RemoteViews(context.getPackageName(), eventEntryLayout.layoutId);
 		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getEvent()));
-        eventEntryLayout.visualizeEvent(context, event, rv);
+        eventEntryLayout.visualizeEvent(event, rv);
 		setAlarmActive(event, rv);
         setRecurring(event, rv);
 		setColor(event, rv);
@@ -55,12 +50,12 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 	}
 
     private void setAlarmActive(CalendarEntry entry, RemoteViews rv) {
-        boolean showIndication = entry.isAlarmActive() && prefs.getBoolean(PREF_INDICATE_ALERTS, true);
+        boolean showIndication = entry.isAlarmActive() && getSettings().getIndicateAlerts();
         setIndicator(rv, showIndication, R.id.event_entry_indicator_alarm, R.attr.eventEntryAlarm);
 	}
 
 	private void setRecurring(CalendarEntry entry, RemoteViews rv) {
-        boolean showIndication = entry.isRecurring() && prefs.getBoolean(PREF_INDICATE_RECURRING, false);
+        boolean showIndication = entry.isRecurring() && getSettings().getIndicateRecurring();
         setIndicator(rv, showIndication, R.id.event_entry_indicator_recurring, R.attr.eventEntryRecurring);
     }
 
@@ -68,7 +63,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
         if (showIndication) {
             rv.setViewVisibility(viewId, View.VISIBLE);
             setImageFromAttr(context, rv, viewId, imageAttrId);
-            int themeId = getCurrentThemeId(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
+            int themeId = themeNameToResId(getSettings().getEntryTheme());
             int alpha = 255;
             if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
                 alpha = 128;
@@ -82,10 +77,15 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
     private void setColor(CalendarEntry entry, RemoteViews rv) {
         setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
         if (entry.getEndDate().isBefore(DateUtil.now())) {
-            setBackgroundColor(rv, R.id.event_entry, ApplicationPreferences.getPastEventsBackgroundColor(context));
+            setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);
         }
+    }
+
+    @NonNull
+    private InstanceSettings getSettings() {
+        return InstanceSettings.fromId(context, widgetId);
     }
 
     private Intent createOnItemClickIntent(CalendarEvent event) {
@@ -104,7 +104,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 	}
 
     private List<CalendarEntry> createEntryList(List<CalendarEvent> eventList) {
-        boolean fillAllDayEvents = ApplicationPreferences.getFillAllDayEvents(context);
+        boolean fillAllDayEvents = getSettings().getFillAllDayEvents();
         List<CalendarEntry> entryList = new ArrayList<>();
         for (CalendarEvent event : eventList) {
             CalendarEntry dayOneEntry = setupDayOneEntry(entryList, event);

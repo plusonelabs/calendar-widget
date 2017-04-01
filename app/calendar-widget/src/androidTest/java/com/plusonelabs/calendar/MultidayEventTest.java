@@ -25,7 +25,7 @@ public class MultidayEventTest extends InstrumentationTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext());
+        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().isEmpty());
     }
 
@@ -38,7 +38,7 @@ public class MultidayEventTest extends InstrumentationTestCase {
     /** Issue #206 https://github.com/plusonelabs/calendar-widget/issues/206 */
     public void testEventWhichCarryOverToTheNextDay() {
         DateTime today = DateUtil.now().withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent();
+        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Event that carry over to the next day, show as ending midnight");
         event.setStartDate(today.plusHours(19));
@@ -80,7 +80,7 @@ public class MultidayEventTest extends InstrumentationTestCase {
     public void testThreeDaysEvent() {
         DateTime friday = new DateTime(2015, 9, 18, 0, 0);
         DateTime sunday = friday.plusDays(2);
-        CalendarEvent event = new CalendarEvent();
+        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Leader's weekend");
         event.setStartDate(friday.plusHours(19));
@@ -95,8 +95,8 @@ public class MultidayEventTest extends InstrumentationTestCase {
         CalendarEntry entry1 = getSundayEntryAt(event, currentDateTime);
         assertEquals(sunday, entry1.getStartDate());
         assertEquals(event.getEndDate(), entry1.getEndDate());
-        assertEquals(event.getTitle(), entry1.getTitle(provider.getContext()));
-        String timeString = entry1.getEventTimeString(provider.getContext());
+        assertEquals(event.getTitle(), entry1.getTitle());
+        String timeString = entry1.getEventTimeString();
         assertTrue(timeString, timeString.contains(ARROW));
         assertEquals(timeString, timeString.indexOf(ARROW), timeString.lastIndexOf(ARROW));
     }

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 import com.plusonelabs.calendar.MainActivity;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -21,9 +22,10 @@ public class PermissionsUtil {
     }
 
     @NonNull
-    public static PendingIntent getPermittedPendingIntent(Context context, Intent intent) {
-        Intent intentPermitted = getPermittedIntent(context, intent);
-        return PendingIntent.getActivity(context, 0, intentPermitted, PendingIntent.FLAG_UPDATE_CURRENT);
+    public static PendingIntent getPermittedPendingIntent(InstanceSettings settings, Intent intent) {
+        Intent intentPermitted = getPermittedIntent(settings.getContext(), intent);
+        return PendingIntent.getActivity(settings.getContext(), settings.getWidgetId(), intentPermitted, PendingIntent
+                .FLAG_UPDATE_CURRENT);
     }
 
     @NonNull

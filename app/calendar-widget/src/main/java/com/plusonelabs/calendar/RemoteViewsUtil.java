@@ -2,15 +2,13 @@ package com.plusonelabs.calendar;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources.NotFoundException;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
+
 import static java.lang.Float.parseFloat;
 
 public class RemoteViewsUtil {
@@ -26,13 +24,13 @@ public class RemoteViewsUtil {
 	}
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	public static void setPadding(Context context, RemoteViews rv, int viewId, int leftDimenId,
-			int topDimenId, int rightDimenId, int bottomDimenId) {
+	public static void setPadding(InstanceSettings settings, RemoteViews rv, int viewId, int leftDimenId,
+								  int topDimenId, int rightDimenId, int bottomDimenId) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			int leftPadding = Math.round(getScaledValueInPixel(context, leftDimenId));
-			int topPadding = Math.round(getScaledValueInPixel(context, topDimenId));
-			int rightPadding = Math.round(getScaledValueInPixel(context, rightDimenId));
-			int bottomPadding = Math.round(getScaledValueInPixel(context, bottomDimenId));
+			int leftPadding = Math.round(getScaledValueInPixel(settings, leftDimenId));
+			int topPadding = Math.round(getScaledValueInPixel(settings, topDimenId));
+			int rightPadding = Math.round(getScaledValueInPixel(settings, rightDimenId));
+			int bottomPadding = Math.round(getScaledValueInPixel(settings, bottomDimenId));
 			rv.setViewPadding(viewId, leftPadding, topPadding, rightPadding, bottomPadding);
 		}
 	}
@@ -45,8 +43,8 @@ public class RemoteViewsUtil {
 		rv.setInt(viewId, METHOD_SET_COLOR_FILTER, color);
 	}
 
-	public static void setTextSize(Context context, RemoteViews rv, int viewId, int dimenId) {
-		rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValue(context, dimenId));
+	public static void setTextSize(InstanceSettings settings, RemoteViews rv, int viewId, int dimenId) {
+		rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValue(settings, dimenId));
 	}
 
     public static void setTextColorFromAttr(Context context, RemoteViews rv, int viewId, int colorAttrId) {
@@ -62,21 +60,16 @@ public class RemoteViewsUtil {
 		rv.setInt(viewId, METHOD_SET_BACKGROUND_COLOR, color);
 	}
 
-
-    private static float getScaledValueInPixel(Context context, int dimenId) {
-        float resValue = getDimension(context, dimenId);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
-				PREF_TEXT_SIZE_SCALE_DEFAULT));
+    private static float getScaledValueInPixel(InstanceSettings settings, int dimenId) {
+        float resValue = getDimension(settings.getContext(), dimenId);
+        float prefTextScale = parseFloat(settings.getTextSizeScale());
 		return resValue * prefTextScale;
 	}
 
-	private static float getScaledValue(Context context, int dimenId) {
-        float resValue = getDimension(context, dimenId);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        float density = context.getResources().getDisplayMetrics().density;
-        float prefTextScale = parseFloat(prefs.getString(PREF_TEXT_SIZE_SCALE,
-				PREF_TEXT_SIZE_SCALE_DEFAULT));
+	private static float getScaledValue(InstanceSettings settings, int dimenId) {
+        float resValue = getDimension(settings.getEntryThemeContext(), dimenId);
+        float density = settings.getEntryThemeContext().getResources().getDisplayMetrics().density;
+        float prefTextScale = parseFloat(settings.getTextSizeScale());
 		return resValue * prefTextScale / density;
 	}
 

@@ -13,7 +13,7 @@ import android.util.SparseArray;
 
 import com.plusonelabs.calendar.BuildConfig;
 import com.plusonelabs.calendar.DateUtil;
-import com.plusonelabs.calendar.prefs.ApplicationPreferences;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.util.PermissionsUtil;
 
 import org.joda.time.DateTime;
@@ -41,12 +41,14 @@ public class CalendarEventProvider {
     private static final String AND_BRACKET = " AND (";
 
     private final Context context;
+    private final int widgetId;
     private KeywordsFilter mKeywordsFilter;
     private DateTime mStartOfTimeRange;
     private DateTime mEndOfTimeRange;
 
-    public CalendarEventProvider(Context context) {
+    public CalendarEventProvider(Context context, int widgetId) {
         this.context = context;
+        this.widgetId = widgetId;
     }
 
     public List<CalendarEvent> getEvents() {
@@ -55,10 +57,10 @@ public class CalendarEventProvider {
             return new ArrayList<>();
         }
         List<CalendarEvent> eventList = getTimeFilteredEventList();
-        if (ApplicationPreferences.getShowPastEventsWithDefaultColor(context)) {
+        if (getSettings().getShowPastEventsWithDefaultColor()) {
             addPastEventsWithDefaultColor(eventList);
         }
-        if (ApplicationPreferences.getShowOnlyClosestInstanceOfRecurringEvent(context)) {
+        if (getSettings().getShowOnlyClosestInstanceOfRecurringEvent()) {
             filterShowOnlyClosestInstanceOfRecurringEvent(eventList);
         }
         return eventList;
@@ -92,8 +94,8 @@ public class CalendarEventProvider {
     }
 
     private void initialiseParameters() {
-        mKeywordsFilter = new KeywordsFilter(ApplicationPreferences.getHideBasedOnKeywords(context));
-        mStartOfTimeRange = ApplicationPreferences.getEventsEnded(context)
+        mKeywordsFilter = new KeywordsFilter(getSettings().getHideBasedOnKeywords());
+        mStartOfTimeRange = getSettings().getEventsEnded()
                 .endedAt(DateUtil.now());
         mEndOfTimeRange = getEndOfTimeRange(DateUtil.now());
     }
@@ -107,10 +109,15 @@ public class CalendarEventProvider {
     }
 
     private DateTime getEndOfTimeRange(DateTime now) {
-        int dateRange = ApplicationPreferences.getEventRange(context);
+        int dateRange = getSettings().getEventRange();
         return dateRange > 0
                 ? now.plusDays(dateRange)
                 : now.withTimeAtStartOfDay().plusDays(1);
+    }
+
+    @NonNull
+    private InstanceSettings getSettings() {
+        return InstanceSettings.fromId(context, widgetId);
     }
 
     private List<CalendarEvent> getTimeFilteredEventList() {
@@ -133,7 +140,7 @@ public class CalendarEventProvider {
     }
 
     private String getCalendarSelection() {
-        Set<String> activeCalendars = ApplicationPreferences.getActiveCalendars(context);
+        Set<String> activeCalendars = getSettings().getActiveCalendars();
         StringBuilder stringBuilder = new StringBuilder(EVENT_SELECTION);
         if (!activeCalendars.isEmpty()) {
             stringBuilder.append(AND_BRACKET);
@@ -227,7 +234,7 @@ public class CalendarEventProvider {
     }
 
     private CalendarEvent createCalendarEvent(Cursor cursor) {
-        CalendarEvent event = new CalendarEvent();
+        CalendarEvent event = new CalendarEvent(context, widgetId);
         event.setEventId(cursor.getInt(cursor.getColumnIndex(Instances.EVENT_ID)));
         event.setTitle(cursor.getString(cursor.getColumnIndex(Instances.TITLE)));
         event.setStartDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.BEGIN))));

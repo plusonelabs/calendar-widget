@@ -6,19 +6,18 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.util.PermissionsUtil;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.List;
 import java.util.Locale;
@@ -34,64 +33,72 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setColorFilter;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
-import static com.plusonelabs.calendar.Theme.getCurrentThemeId;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HEADER_THEME;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HEADER_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
+import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
     private static final String PACKAGE = EventAppWidgetProvider.class.getPackage().getName();
     public static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
 
-	@Override
-	public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        int themeId = getCurrentThemeId(baseContext, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT);
-        Context context = new ContextThemeWrapper(baseContext, themeId);
-        AlarmReceiver.scheduleAlarm(context);
+    public static int[] getWidgetIds(Context context) {
+        return AppWidgetManager.getInstance(context)
+                .getAppWidgetIds(new ComponentName(context, EventAppWidgetProvider.class));
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
         for (int widgetId : appWidgetIds) {
-            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
-            configureBackground(context, rv);
-            configureActionBar(context, rv);
-            configureList(context, widgetId, rv);
+            InstanceSettings.delete(context, widgetId);
+        }
+    }
+
+    @Override
+	public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        for (int widgetId : appWidgetIds) {
+            InstanceSettings settings = InstanceSettings.fromId(baseContext, widgetId);
+            AlarmReceiver.scheduleAlarm(settings.getHeaderThemeContext());
+            DateTimeZone.setDefault(DateUtil.getCurrentTimeZone(settings));
+            RemoteViews rv = new RemoteViews(baseContext.getPackageName(), R.layout.widget);
+            configureBackground(settings, rv);
+            configureActionBar(settings, rv);
+            configureList(settings, widgetId, rv);
             appWidgetManager.updateAppWidget(widgetId, rv);
         }
     }
 
-	private void configureBackground(Context context, RemoteViews rv) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		if (prefs.getBoolean(PREF_SHOW_WIDGET_HEADER, true)) {
+	private void configureBackground(InstanceSettings settings, RemoteViews rv) {
+		if (settings.getShowWidgetHeader()) {
 			rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
 		} else {
 			rv.setViewVisibility(R.id.action_bar, View.GONE);
 		}
-        int color = prefs.getInt(PREF_BACKGROUND_COLOR, PREF_BACKGROUND_COLOR_DEFAULT);
+        int color = settings.getBackgroundColor();
         int opaqueColor = Color.rgb(red(color), green(color), blue(color));
         setColorFilter(rv, R.id.background_image, opaqueColor);
         setAlpha(rv, R.id.background_image, alpha(color));
     }
 
-    private void configureActionBar(Context context, RemoteViews rv) {
-        configureCurrentDate(context, rv);
-        setActionIcons(context, rv);
-        configureAddEvent(context, rv);
-        configureRefresh(context, rv);
-        configureOverflowMenu(context, rv);
+    private void configureActionBar(InstanceSettings settings, RemoteViews rv) {
+        configureCurrentDate(settings, rv);
+        setActionIcons(settings, rv);
+        configureAddEvent(settings.getContext(), rv);
+        configureRefresh(settings.getContext(), rv);
+        configureOverflowMenu(settings, rv);
 	}
 
-    private void configureCurrentDate(Context context, RemoteViews rv) {
-        rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(context));
-        String formattedDate = DateUtil.createDateString(context, DateUtil.now()).toUpperCase(Locale.getDefault());
+    private void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {
+        rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(settings));
+        String formattedDate = DateUtil.createDateString(settings,
+                DateUtil.now()).toUpperCase(Locale.getDefault()) + "   " + settings.getWidgetId();
         rv.setTextViewText(R.id.calendar_current_date, formattedDate);
-        setTextColorFromAttr(context, rv, R.id.calendar_current_date, R.attr.header);
+        setTextColorFromAttr(settings.getHeaderThemeContext(), rv, R.id.calendar_current_date, R.attr.header);
     }
 
-    private void setActionIcons(Context context, RemoteViews rv) {
-        setImageFromAttr(context, rv, R.id.add_event, R.attr.header_action_add_event);
-        setImageFromAttr(context, rv, R.id.refresh, R.attr.header_action_refresh);
-        setImageFromAttr(context, rv, R.id.overflow_menu, R.attr.header_action_overflow);
-        int themeId = getCurrentThemeId(context, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT);
+    private void setActionIcons(InstanceSettings settings, RemoteViews rv) {
+        setImageFromAttr(settings.getHeaderThemeContext(), rv, R.id.add_event, R.attr.header_action_add_event);
+        setImageFromAttr(settings.getHeaderThemeContext(), rv, R.id.refresh, R.attr.header_action_refresh);
+        setImageFromAttr(settings.getHeaderThemeContext(), rv, R.id.overflow_menu, R.attr.header_action_overflow);
+        int themeId = themeNameToResId(settings.getHeaderTheme());
         int alpha = 255;
         if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
             alpha = 154;
@@ -118,9 +125,10 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         rv.setOnClickPendingIntent(R.id.refresh, pendingIntent);
     }
 
-    private void configureOverflowMenu(Context context, RemoteViews rv) {
-        PendingIntent menuPendingIntent = PermissionsUtil.getPermittedPendingIntent(context,
-                new Intent(context, WidgetConfigurationActivity.class));
+    private void configureOverflowMenu(InstanceSettings settings, RemoteViews rv) {
+        Intent intent = new Intent(settings.getContext(), WidgetConfigurationActivity.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, settings.getWidgetId());
+        PendingIntent menuPendingIntent = PermissionsUtil.getPermittedPendingIntent(settings, intent);
         rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
     }
 
@@ -131,15 +139,15 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         return list.size() > 0;
     }
 
-	private void configureList(Context context, int widgetId, RemoteViews rv) {
-		Intent intent = new Intent(context, EventWidgetService.class);
+	private void configureList(InstanceSettings settings, int widgetId, RemoteViews rv) {
+		Intent intent = new Intent(settings.getContext(), EventWidgetService.class);
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
 		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 		rv.setRemoteAdapter(R.id.event_list, intent);
 		rv.setEmptyView(R.id.event_list, R.id.empty_event_list);
-		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(context));
+		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(settings));
         rv.setOnClickFillInIntent(R.id.empty_event_list, createOpenCalendarAtDayIntent(new DateTime()));
-        setTextColorFromAttr(context, rv, R.id.empty_event_list, R.attr.eventEntryTitle);
+        setTextColorFromAttr(settings.getEntryThemeContext(), rv, R.id.empty_event_list, R.attr.eventEntryTitle);
     }
 
     public static void updateEventList(Context context) {

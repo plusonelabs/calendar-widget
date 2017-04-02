@@ -2,9 +2,12 @@ package com.plusonelabs.calendar;
 
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.plusonelabs.calendar.prefs.ApplicationPreferences;
@@ -17,6 +20,13 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
     private static final String PREFERENCES_PACKAGE_NAME = "com.plusonelabs.calendar.prefs";
     private int widgetId = 0;
 
+    @NonNull
+    public static Intent newIntentToStartMe(Context context, int widgetId) {
+        Intent intent = new Intent(context, WidgetConfigurationActivity.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        return intent;
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -28,9 +38,7 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
         widgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
         if (widgetId == 0) {
             widgetId = ApplicationPreferences.getWidgetId(this);
-            Log.i(this.getClass().getSimpleName(), "Continue editing " + widgetId);
         } else {
-            Log.i(this.getClass().getSimpleName(), "Starting editing " + widgetId);
             ApplicationPreferences.startEditing(this, widgetId);
         }
         super.onCreate(savedInstanceState);

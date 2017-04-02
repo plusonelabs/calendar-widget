@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkPermissionsAndRequestThem();
         listView = (ListView) findViewById(android.R.id.list);
+        checkPermissionsAndRequestThem();
         updateScreen();
     }
 
@@ -63,16 +63,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         int messageResourceId = R.string.permissions_justification;
         if (permissionsGranted) {
             if (InstanceSettings.getInstances(this).size() == 1 ) {
-                Intent intent = new Intent(this.getApplicationContext(), WidgetConfigurationActivity.class);
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                        InstanceSettings.getInstances(this).keySet().iterator().next());
+                Intent intent = WidgetConfigurationActivity.newIntentToStartMe(
+                        this, InstanceSettings.getInstances(this).keySet().iterator().next());
                 startActivity(intent);
                 finish();
                 return;
             } else if (InstanceSettings.getInstances(this).isEmpty()) {
                 messageResourceId = R.string.no_widgets_found;
             } else {
-                messageResourceId = R.string.select_a_widget_to_edit;
+                messageResourceId = R.string.select_a_widget_to_configure;
             }
         }
         TextView message = ((TextView)this.findViewById(R.id.message));
@@ -107,16 +106,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 R.layout.widget_list_item,
                 new String[] {KEY_VISIBLE_NAME, KEY_ID},
                 new int[] {R.id.visible_name, R.id.id});
-        setListAdapter(adapter);
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, WidgetConfigurationActivity.class);
                 TextView textView = (TextView) view.findViewById(R.id.id);
                 if (textView != null) {
-                    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                            Integer.valueOf(textView.getText().toString()));
+                    Intent intent = WidgetConfigurationActivity.newIntentToStartMe(
+                            MainActivity.this, Integer.valueOf(textView.getText().toString()));
                     startActivity(intent);
                     finish();
                 }
@@ -138,11 +136,5 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     public void onCloseButtonClick(View view) {
         finish();
-    }
-
-    protected void setListAdapter(SimpleAdapter adapter) {
-        if (listView != null) {
-            listView.setAdapter(adapter);
-        }
     }
 }

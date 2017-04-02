@@ -126,8 +126,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void configureOverflowMenu(InstanceSettings settings, RemoteViews rv) {
-        Intent intent = new Intent(settings.getContext(), WidgetConfigurationActivity.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, settings.getWidgetId());
+        Intent intent = WidgetConfigurationActivity.newIntentToStartMe(settings.getContext(), settings.getWidgetId());
         PendingIntent menuPendingIntent = PermissionsUtil.getPermittedPendingIntent(settings, intent);
         rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
     }
@@ -151,19 +150,13 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     public static void updateEventList(Context context) {
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		ComponentName compName = new ComponentName(context, EventAppWidgetProvider.class);
-		int[] widgetIds = appWidgetManager.getAppWidgetIds(compName);
-		appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.event_list);
+        AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(getWidgetIds(context), R.id.event_list);
 	}
 
 	public static void updateAllWidgets(Context context) {
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		ComponentName compName = new ComponentName(context, EventAppWidgetProvider.class);
 		Intent intent = new Intent(context, EventAppWidgetProvider.class);
 		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
-				appWidgetManager.getAppWidgetIds(compName));
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, getWidgetIds(context));
 		context.sendBroadcast(intent);
 	}
 

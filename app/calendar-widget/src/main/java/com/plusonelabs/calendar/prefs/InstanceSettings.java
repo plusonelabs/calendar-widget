@@ -171,7 +171,7 @@ public class InstanceSettings {
         if (settings.widgetId == 0) {
             return settings;
         }
-        settings.setWidgetInstanceName(json.getString(PREF_WIDGET_INSTANCE_NAME));
+        settings.setWidgetInstanceName(json.optString(PREF_WIDGET_INSTANCE_NAME));
         settings.justCreated = false;
         settings.activeCalendars = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_CALENDARS));
         settings.eventRange = json.getInt(PREF_EVENT_RANGE);

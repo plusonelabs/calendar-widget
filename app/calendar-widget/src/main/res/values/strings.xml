@@ -6,7 +6,7 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="no_upcoming_events">No upcoming events</string>
-    <string name="widget_name">Calendar</string>
+    <string name="widget_name">Calendar Widget</string>
     <string name="open_prefs_desc">Open the settings of the calendar widget</string>
     <string name="add_event_desc">Add new calender event</string>
     <string name="indicator_alarm">Indicator if an alarm has been set</string>
@@ -15,7 +15,7 @@
     <string name="permissions_justification">The Calendar Widget application MUST be granted permission to read your calendars.
     Otherwise the widget will be empty.</string>
     <string name="no_widgets_found">No widgets to configure yet. Please add a \"Calendar Widget\" widget to the Home Screen of your device first.</string>
-    <string name="select_a_widget_to_edit">Select a Widget to edit</string>
+    <string name="select_a_widget_to_configure">Select a Widget to configure</string>
     <string name="grant_permissions">Grant permissions</string>
     <string name="close">Close</string>
 

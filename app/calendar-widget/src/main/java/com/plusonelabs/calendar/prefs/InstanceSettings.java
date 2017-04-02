@@ -116,7 +116,7 @@ public class InstanceSettings {
         synchronized (instances) {
             settings = instances.get(widgetId);
             if (settings == null && widgetId != 0) {
-                if (ApplicationPreferences.getWidgetId(context) == widgetId) {
+                if (ApplicationPreferences.getWidgetId(context) == widgetId || instances.isEmpty()) {
                     settings =  fromApplicationPreferences(context, widgetId);
                 } else {
                     settings = new InstanceSettings(context, widgetId);
@@ -137,12 +137,10 @@ public class InstanceSettings {
                     InstanceSettings settings;
                     try {
                         settings = fromJson(context, loadJson(context, getStorageKey(widgetId)));
+                        instances.put(widgetId, settings);
                     } catch (JSONException | IOException e) {
                         Log.e("loadInstances", "widgetId:" + widgetId, e);
-                        settings = newInstance(context, widgetId);
-                    }
-                    if (widgetId != 0) {
-                        instances.put(widgetId, settings);
+                        newInstance(context, widgetId);
                     }
                 }
                 instancesLoaded = true;
@@ -227,8 +225,8 @@ public class InstanceSettings {
 
     public static InstanceSettings fromApplicationPreferences(Context context, int widgetId) {
         InstanceSettings settings = new InstanceSettings(context, widgetId);
-        settings.justCreated = false;
         settings.setWidgetInstanceName(ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, ""));
+        settings.justCreated = false;
         settings.activeCalendars = ApplicationPreferences.getActiveCalendars(context);
         settings.eventRange = ApplicationPreferences.getEventRange(context);
         settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);

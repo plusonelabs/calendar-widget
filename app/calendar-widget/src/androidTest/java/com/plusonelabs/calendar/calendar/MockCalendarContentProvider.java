@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -69,7 +70,15 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     private void setPreferences(Context context) throws JSONException {
-        InstanceSettings.delete(context, widgetId);
+        while (InstanceSettings.getInstances(context).containsKey(widgetId) ||
+               InstanceSettings.getInstances(context).containsKey(widgetId + 1)) {
+            widgetId++;
+        }
+        if (InstanceSettings.getInstances(context).isEmpty()) {
+            InstanceSettings settings1 = InstanceSettings.fromId(context, widgetId);
+            assertFalse(settings1.isJustCreated());
+        }
+        widgetId++;
         InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
         assertTrue(settings.isJustCreated());
         JSONObject json = settings.toJson();
@@ -79,6 +88,8 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void tearDown() throws JSONException {
+        InstanceSettings.delete(getContext(), widgetId - 1);
+        InstanceSettings.delete(getContext(), widgetId);
         InstanceSettings.fromJson(getBaseContext(getContext()), storedSettings);
         DateUtil.setNow(null);
         DateTimeZone.setDefault(storedZone);

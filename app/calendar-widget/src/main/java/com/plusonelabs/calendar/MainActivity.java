@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @NonNull
     public static Intent intentToStartMe(Context context) {
         return new Intent(context.getApplicationContext(), MainActivity.class).
-                setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_NEW_TASK
-                        + Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
     }
 
     @Override
@@ -51,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(android.R.id.list);
         checkPermissionsAndRequestThem();
-        updateScreen();
+        if (preparedToOpen()) {
+            updateScreen();
+        }
     }
 
     private void checkPermissionsAndRequestThem() {
@@ -66,22 +67,25 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         permissionsGranted = PermissionsUtil.arePermissionsGranted(this);
     }
 
+    private boolean preparedToOpen() {
+        int newWidgetId = 0;
+        if (permissionsGranted) {
+            newWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+            if (newWidgetId == 0 && InstanceSettings.getInstances(this).size() == 1) {
+                newWidgetId = InstanceSettings.getInstances(this).keySet().iterator().next();
+            }
+            if (newWidgetId != 0) {
+                startActivity(WidgetConfigurationActivity.intentToStartMe(this, newWidgetId));
+                finish();
+            }
+        }
+        return newWidgetId == 0;
+    }
+
     private void updateScreen() {
         int messageResourceId = R.string.permissions_justification;
         if (permissionsGranted) {
-            int newWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
-            if (newWidgetId != 0) {
-                Intent intent = WidgetConfigurationActivity.intentToStartMe(this, newWidgetId);
-                finish();
-                startActivity(intent);
-                return;
-            } else if (InstanceSettings.getInstances(this).size() == 1 ) {
-                Intent intent = WidgetConfigurationActivity.intentToStartMe(
-                        this, InstanceSettings.getInstances(this).keySet().iterator().next());
-                finish();
-                startActivity(intent);
-                return;
-            } else if (InstanceSettings.getInstances(this).isEmpty()) {
+            if (InstanceSettings.getInstances(this).isEmpty()) {
                 messageResourceId = R.string.no_widgets_found;
             } else {
                 messageResourceId = R.string.select_a_widget_to_configure;
@@ -128,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 if (textView != null) {
                     Intent intent = WidgetConfigurationActivity.intentToStartMe(
                             MainActivity.this, Integer.valueOf(textView.getText().toString()));
-                    finish();
                     startActivity(intent);
+                    finish();
                 }
             }
         });

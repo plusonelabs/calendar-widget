@@ -126,7 +126,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void configureOverflowMenu(InstanceSettings settings, RemoteViews rv) {
-        Intent intent = WidgetConfigurationActivity.newIntentToStartMe(settings.getContext(), settings.getWidgetId());
+        Intent intent = MainActivity.intentToConfigure(settings.getContext(), settings.getWidgetId());
         PendingIntent menuPendingIntent = PermissionsUtil.getPermittedPendingIntent(settings, intent);
         rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
     }

@@ -9,6 +9,7 @@ import android.preference.PreferenceScreen;
 
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
+import com.plusonelabs.calendar.MainActivity;
 import com.plusonelabs.calendar.R;
 
 import java.util.TimeZone;
@@ -94,8 +95,9 @@ public class AppearancePreferencesFragment extends PreferenceFragment
                 showEventEntryLayout();
                 break;
             case ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME:
-                showWidgetInstanceName();
-                getActivity().setTitle(ApplicationPreferences.getWidgetInstanceName(getActivity()));
+                getActivity().finish();
+                startActivity(MainActivity.intentToConfigure(getActivity(), ApplicationPreferences
+                        .getWidgetId(getActivity())));
                 break;
             default:
                 break;

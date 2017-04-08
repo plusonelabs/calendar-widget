@@ -30,7 +30,7 @@ public class PermissionsUtil {
 
     @NonNull
     public static Intent getPermittedIntent(@NonNull Context context, @NonNull Intent intent) {
-        return arePermissionsGranted(context) ? intent : MainActivity.newIntentToStartMe(context);
+        return arePermissionsGranted(context) ? intent : MainActivity.intentToStartMe(context);
     }
 
     public static boolean arePermissionsGranted(Context context) {

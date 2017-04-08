@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.util.PermissionsUtil;
@@ -21,8 +20,9 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
     private int widgetId = 0;
 
     @NonNull
-    public static Intent newIntentToStartMe(Context context, int widgetId) {
+    public static Intent intentToStartMe(Context context, int widgetId) {
         Intent intent = new Intent(context, WidgetConfigurationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP + Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         return intent;
     }
@@ -35,25 +35,43 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        widgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
-        if (widgetId == 0) {
-            widgetId = ApplicationPreferences.getWidgetId(this);
-        } else {
+        if (preparedForNewIntent(getIntent())) {
+            super.onCreate(savedInstanceState);
+        }
+    }
+
+    private boolean preparedForNewIntent(Intent newIntent) {
+        int newWidgetId = newIntent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+        if (newWidgetId == 0) {
+            newWidgetId = ApplicationPreferences.getWidgetId(this);
+        }
+        Intent restartIntent = null;
+        if (newWidgetId == 0 || !PermissionsUtil.arePermissionsGranted(this)) {
+            restartIntent = MainActivity.intentToStartMe(this);
+        } else if (widgetId != 0 && widgetId != newWidgetId) {
+            restartIntent = MainActivity.intentToConfigure(this, newWidgetId);
+        } else if (widgetId == 0) {
+            widgetId = newWidgetId;
             ApplicationPreferences.startEditing(this, widgetId);
         }
-        super.onCreate(savedInstanceState);
-        if (widgetId == 0 || !PermissionsUtil.arePermissionsGranted(this)) {
-            startActivity(MainActivity.newIntentToStartMe(this));
+        if (restartIntent != null) {
             finish();
+            startActivity(restartIntent);
+        }
+        return restartIntent == null;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (preparedForNewIntent(getIntent())) {
+            super.onNewIntent(intent);
         }
     }
 
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_header, target);
-        if (widgetId != 0) {
-            setTitle(ApplicationPreferences.getWidgetInstanceName(this));
-        }
+        setTitle(ApplicationPreferences.getWidgetInstanceName(this));
     }
 
     @Override

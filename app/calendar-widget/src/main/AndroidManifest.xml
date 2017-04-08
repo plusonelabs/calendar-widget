@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.plusonelabs.calendar"
           xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
@@ -13,20 +12,24 @@
         android:theme="@style/Theme.CalendarConfiguration.Dark">
 
         <activity android:name=".MainActivity"
+                  android:exported="true"
+                  android:launchMode="singleTask"
+                  android:finishOnTaskLaunch="true"
+                  android:noHistory="true"
+                  android:excludeFromRecents="true"
                   android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".WidgetConfigurationActivity"
-            android:exported="true"
-            tools:ignore="ExportedActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
+        </activity>
+
+        <activity android:name=".WidgetConfigurationActivity"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true">
         </activity>
 
         <receiver

@@ -138,7 +138,7 @@ public class InstanceSettings {
                     try {
                         settings = fromJson(context, loadJson(context, getStorageKey(widgetId)));
                         instances.put(widgetId, settings);
-                    } catch (JSONException | IOException e) {
+                    } catch (Exception e) { // Starting from API21 android.system.ErrnoException may be thrown
                         Log.e("loadInstances", "widgetId:" + widgetId, e);
                         newInstance(context, widgetId);
                     }

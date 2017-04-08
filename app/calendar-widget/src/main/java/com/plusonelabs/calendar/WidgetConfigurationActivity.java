@@ -30,7 +30,13 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ApplicationPreferences.save(this);
+        ApplicationPreferences.save(this, widgetId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        restartIfNeeded();
     }
 
     @Override
@@ -54,7 +60,16 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
             ApplicationPreferences.startEditing(this, widgetId);
         }
         if (restartIntent != null) {
+            widgetId = 0;
             startActivity(restartIntent);
+            finish();
+        }
+    }
+
+    private void restartIfNeeded() {
+        if (widgetId != ApplicationPreferences.getWidgetId(this) || !PermissionsUtil.arePermissionsGranted(this)) {
+            widgetId = 0;
+            startActivity(MainActivity.intentToStartMe(this));
             finish();
         }
     }

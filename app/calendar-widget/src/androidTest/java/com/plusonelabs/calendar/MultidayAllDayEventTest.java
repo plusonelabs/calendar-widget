@@ -47,9 +47,9 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
         provider.addResults(inputs.getResults());
 
         int dateRange = 30;
-        ApplicationPreferences.startEditing(provider.getContext(), provider.getWidgetId());
+        provider.startEditing();
         ApplicationPreferences.setEventRange(provider.getContext(), dateRange);
-        ApplicationPreferences.save(provider.getContext());
+        provider.saveSettings();
         DateTime now = new DateTime(2015, 8, 30, 0, 0, 1);
         DateUtil.setNow(now);
         factory.onDataSetChanged();

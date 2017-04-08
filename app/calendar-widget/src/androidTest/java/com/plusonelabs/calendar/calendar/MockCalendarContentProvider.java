@@ -12,6 +12,7 @@ import android.test.mock.MockContentResolver;
 
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
+import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;
@@ -90,6 +91,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     public void tearDown() throws JSONException {
         InstanceSettings.delete(getContext(), widgetId - 1);
         InstanceSettings.delete(getContext(), widgetId);
+        ApplicationPreferences.setWidgetId(getContext(), 0);
         InstanceSettings.fromJson(getBaseContext(getContext()), storedSettings);
         DateUtil.setNow(null);
         DateTimeZone.setDefault(storedZone);
@@ -159,4 +161,11 @@ public class MockCalendarContentProvider extends MockContentProvider {
         return widgetId;
     }
 
+    public void startEditing() {
+        ApplicationPreferences.startEditing(getContext(), getWidgetId());
+    }
+
+    public void saveSettings() {
+        ApplicationPreferences.save(getContext(), getWidgetId());
+    }
 }

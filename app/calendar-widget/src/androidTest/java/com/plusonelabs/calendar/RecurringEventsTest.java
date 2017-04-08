@@ -44,9 +44,9 @@ public class RecurringEventsTest extends InstrumentationTestCase {
     public void testShowRecurringEvents() {
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 15, countCalendarEntries());
-        ApplicationPreferences.startEditing(provider.getContext(), provider.getWidgetId());
+        provider.startEditing();
         ApplicationPreferences.setShowOnlyClosestInstanceOfRecurringEvent(provider.getContext(), true);
-        ApplicationPreferences.save(provider.getContext());
+        provider.saveSettings();
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 1, countCalendarEntries());
     }

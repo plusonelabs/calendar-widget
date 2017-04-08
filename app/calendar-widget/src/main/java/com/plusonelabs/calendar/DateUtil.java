@@ -104,7 +104,7 @@ public class DateUtil {
                 Log.w("getCurrentTimeZone", "The Locked time zone is not recognized: " + lockedTimeZoneId);
                 ApplicationPreferences.startEditing(settings.getContext(), settings.getWidgetId());
                 ApplicationPreferences.setLockedTimeZoneId(settings.getContext(), "");
-                ApplicationPreferences.save(settings.getContext());
+                ApplicationPreferences.save(settings.getContext(), settings.getWidgetId());
             }
         }
         return zone;

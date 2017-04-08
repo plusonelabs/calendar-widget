@@ -42,11 +42,11 @@ public class BirthdayTest extends InstrumentationTestCase {
                         com.plusonelabs.calendar.tests.R.raw.birthday)
         );
 
-        ApplicationPreferences.startEditing(provider.getContext(), provider.getWidgetId());
+        provider.startEditing();
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.NONE);
         ApplicationPreferences.setShowPastEventsWithDefaultColor(provider.getContext(), false);
         ApplicationPreferences.setEventRange(provider.getContext(), 30);
-        ApplicationPreferences.save(provider.getContext());
+        provider.saveSettings();
 
         playAtOneTime(inputs, new DateTime(2015, 8, 1, 17, 0), 0);
         playAtOneTime(inputs, new DateTime(2015, 8,  9, 23, 59), 0);
@@ -63,22 +63,22 @@ public class BirthdayTest extends InstrumentationTestCase {
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 11, 0), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.ONE_HOUR);
-        ApplicationPreferences.save(provider.getContext());
+        provider.saveSettings();
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 0, 30), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.TODAY);
-        ApplicationPreferences.save(provider.getContext());
+        provider.saveSettings();
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.FOUR_HOURS);
-        ApplicationPreferences.save(provider.getContext());
+        provider.saveSettings();
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 3, 59), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 4,  0), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.YESTERDAY);
-        ApplicationPreferences.save(provider.getContext());
+        provider.saveSettings();
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 4, 0), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10,11,  0), 2);
         playAtOneTime(inputs, new DateTime(2015, 9, 10, 17, 0), 2);
@@ -87,7 +87,7 @@ public class BirthdayTest extends InstrumentationTestCase {
         playAtOneTime(inputs, new DateTime(2015, 9, 11, 0, 30), 0);
 
         ApplicationPreferences.setShowPastEventsWithDefaultColor(provider.getContext(), true);
-        ApplicationPreferences.save(provider.getContext());
+        provider.saveSettings();
         playAtOneTime(inputs, new DateTime(2015, 9, 11, 0, 30), 0);
 
         // TODO: This doesn't work yet. We need to inject a MockCalendarContentProvider deeper,

@@ -97,8 +97,10 @@ public class ApplicationPreferences {
         setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());
     }
 
-    public static void save(Context context) {
-        InstanceSettings.save(context, getWidgetId(context));
+    public static void save(Context context, int wigdetId) {
+        if (wigdetId != 0 && wigdetId == getWidgetId(context)) {
+            InstanceSettings.save(context, wigdetId);
+        }
     }
 
     public static InstanceSettings currentSettings(Context context) {

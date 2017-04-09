@@ -2,21 +2,23 @@
 <resources>
 
     <string name="app_name">Calendar Widget</string>
+    <string name="widget_name">Calendar Widget</string>
+    <string name="widget_instance_name">Widget instance name</string>
     <string name="yesterday">Yesterday</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="no_upcoming_events">No upcoming events</string>
-    <string name="widget_name">Calendar Widget</string>
     <string name="open_prefs_desc">Open the settings of the calendar widget</string>
     <string name="add_event_desc">Add new calender event</string>
     <string name="indicator_alarm">Indicator if an alarm has been set</string>
     <string name="indicator_recurring">Indicator if the event is recurring</string>
     <string name="no_title">(No title)</string>
-    <string name="permissions_justification">The Calendar Widget application MUST be granted permission to read your calendars.
-    Otherwise the widget will be empty.</string>
-    <string name="no_widgets_found">No widgets to configure yet. Please add a \"Calendar Widget\" widget to the Home Screen of your device first.</string>
-    <string name="select_a_widget_to_configure">Select a Widget to configure</string>
     <string name="grant_permissions">Grant permissions</string>
+    <string name="permissions_justification">The Calendar Widget application MUST be granted permission to read your
+        calendars. Otherwise the widget will be empty.</string>
+    <string name="no_widgets_found">No widgets to configure yet. Please add a \"Calendar Widget\" widget to the Home Screen
+        of your device first.</string>
+    <string name="select_a_widget_to_configure">Select a Widget to configure</string>
     <string name="close">Close</string>
 
     <!-- Preference header: Calendars -->
@@ -126,6 +128,5 @@
     <string name="refresh_desc">Refresh</string>
     <string name="share_events_for_debugging_desc">Create a report to help developers troubleshoot problems</string>
     <string name="share_events_for_debugging_title">Share events for debugging</string>
-    <string name="widget_instance_name">Widget instance name</string>
 
 </resources>

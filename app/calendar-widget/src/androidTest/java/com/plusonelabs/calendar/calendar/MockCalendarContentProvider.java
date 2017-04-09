@@ -95,6 +95,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         InstanceSettings.fromJson(getBaseContext(getContext()), storedSettings);
         DateUtil.setNow(null);
         DateTimeZone.setDefault(storedZone);
+        EventAppWidgetProvider.updateAllWidgets(getBaseContext(getContext()));
     }
 
     @Override

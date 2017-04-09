@@ -37,22 +37,21 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ### [v1.10.0](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.0) (not released yet)
 
-* Added: Different settings for different Widget instances allows you to create any number of
-customized views on your events, including configuration of different calendars for different widgets.
+* Added: Different settings for different Widget instances allow you to create any number of
+customized views of your events, including configuration of different calendars for different widgets.
 All setting are currently separate for each Widget instance. In order not to get confused in 
 configurations of different widgets, you now can launch "Calendar Widget" with your Android Launcher 
 and you will be presented with a widget selection list. Each widget can be given its name 
 to ease configuring. See [screenshots](https://github.com/plusonelabs/calendar-widget/issues/37#issuecomment-290968481). 
 * Added: "Show day headers" option to disable day headers completely.
-* Added: The alternative, "Single line layout". Each event can now occupy literally one line only.
+* Added: The alternative widget layout: "Single line layout". Each event can now occupy literally one line only.
 "Appearance -> Event entry layout" option now allows 
 to switch between the "Default multiline layout" and this new one. When used with the
-"Show day headers" option, this layout almost doubles number of events visible in a widget.
+"Show day headers" option, this layout almost doubles number of events visible in a widget without scrolling.
 "Days from Today" column successfully replaces day headers in a case the Day Headers are 
 turned off. See [screenshots](https://github.com/plusonelabs/calendar-widget/issues/42#issuecomment-289261236).
 * Added: "Abbreviate dates" option allows to have shorter date format for both Widget and Day headers.
-* Added: "Lock time zone" feature to show events in the same Time Zone when travelling to different
-time zones.
+* Added: "Lock time zone" option to show events in the same Time Zone when travelling to different time zones.
 * Added: "Show only the closest instance of a recurring event". Now, at last, you can set 
 "Event Filters"->"Date range" to "One year", and your agenda won't be an endless list of the same 
 events, as it was before...

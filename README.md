@@ -53,7 +53,7 @@ turned off. See [screenshots](https://github.com/plusonelabs/calendar-widget/iss
 * Added: "Abbreviate dates" option allows to have shorter date format for both Widget and Day headers.
 * Added: "Lock time zone" feature to show events in the same Time Zone when travelling to different
 time zones.
-* Added: "Show only the closest instance of a recurring event". Now, at last, we can set 
+* Added: "Show only the closest instance of a recurring event". Now, at last, you can set 
 "Event Filters"->"Date range" to "One year", and your agenda won't be an endless list of the same 
 events, as it was before...
 * Improved: Use space or commas in "Hide based on keywords in a title". Place a text in single or

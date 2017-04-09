@@ -144,9 +144,8 @@ public class CalendarQueryResultsStorage {
             }
         }
         if (!results.results.isEmpty()) {
-            DateTime now = results.results.get(0).getExecutedAt();
+            DateTime now = results.results.get(0).getExecutedAt().toDateTime(DateTimeZone.getDefault());
             DateUtil.setNow(now);
-            DateTimeZone.setDefault(now.getZone());
         }
         return results;
     }

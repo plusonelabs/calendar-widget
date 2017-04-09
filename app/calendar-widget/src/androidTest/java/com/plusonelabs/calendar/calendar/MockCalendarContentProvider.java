@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.test.InstrumentationTestCase;
 import android.test.IsolatedContext;
 import android.test.mock.MockContentProvider;
@@ -117,6 +118,13 @@ public class MockCalendarContentProvider extends MockContentProvider {
         for (CalendarQueryResult result : results) {
             addResult(result);
         }
+        if (!results.isEmpty()) {
+            Context context = getSettings().getContext();
+            int widgetId = getSettings().getWidgetId();
+            ApplicationPreferences.startEditing(context, widgetId);
+            ApplicationPreferences.setLockedTimeZoneId(context, results.get(0).getExecutedAt().getZone().getID());
+            ApplicationPreferences.save(context, widgetId);
+        }
     }
 
     public void addResult(CalendarQueryResult result) {
@@ -139,9 +147,14 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     public void addRow(CalendarQueryRow calendarQueryRow) {
         if(results.isEmpty()) {
-            addResult(new CalendarQueryResult(DateUtil.now()));
+            addResult(new CalendarQueryResult(DateUtil.now(getSettings().getTimeZone())));
         }
         results.get(0).addRow(calendarQueryRow);
+    }
+
+    @NonNull
+    public InstanceSettings getSettings() {
+        return InstanceSettings.fromId(getBaseContext(getContext()), widgetId);
     }
 
     public void clear() {

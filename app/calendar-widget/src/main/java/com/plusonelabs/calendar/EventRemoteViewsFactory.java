@@ -80,7 +80,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
         setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
         setBackgroundColor(rv, R.id.day_header,
-                dayHeader.getStartDay().plusDays(1).isBefore(DateUtil.now()) ?
+                dayHeader.getStartDay().plusDays(1).isBefore(DateUtil.now(getSettings().getTimeZone())) ?
                         getSettings().getPastEventsBackgroundColor() : Color.TRANSPARENT);
         setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(getSettings(), rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
@@ -115,7 +115,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         List<WidgetEntry> listOut = new ArrayList<>();
         if (!listIn.isEmpty()) {
             boolean showDaysWithoutEvents = getSettings().getShowDaysWithoutEvents();
-            DayHeader curDayBucket = new DayHeader(new DateTime(0));
+            DayHeader curDayBucket = new DayHeader(new DateTime(0, getSettings().getTimeZone()));
             for (WidgetEntry entry : listIn) {
                 DateTime nextStartOfDay = entry.getStartDay();
                 if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
@@ -144,7 +144,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
     private void addEmptyDayHeadersBetweenTwoDays(List<WidgetEntry> entries, DateTime fromDayExclusive, DateTime toDayExclusive) {
         DateTime emptyDay = fromDayExclusive.plusDays(1);
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now(getSettings().getTimeZone()).withTimeAtStartOfDay();
         if (emptyDay.isBefore(today)) {
             emptyDay = today;
         }

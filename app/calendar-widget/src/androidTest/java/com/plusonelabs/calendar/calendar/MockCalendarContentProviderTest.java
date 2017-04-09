@@ -62,9 +62,9 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
     }
 
     private CalendarQueryResult addOneResult(String selection) {
-        CalendarQueryResult input = new CalendarQueryResult(
+        CalendarQueryResult input = new CalendarQueryResult(provider.getSettings().getTimeZone(),
                 CalendarContract.Instances.CONTENT_URI, projection, selection, null, sortOrder);
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         input.addRow(new CalendarQueryRow().setEventId(++eventId)
                 .setTitle("First Event today").setBegin(today.plusHours(8).getMillis()));
         input.addRow(new CalendarQueryRow()
@@ -85,7 +85,8 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
     }
 
     private CalendarQueryResult queryList(Uri uri, String selection) {
-        CalendarQueryResult result = new CalendarQueryResult(uri, projection, selection, null, sortOrder);
+        CalendarQueryResult result = new CalendarQueryResult(provider.getSettings().getTimeZone(),
+                uri, projection, selection, null, sortOrder);
         Cursor cursor = null;
         try {
             cursor = provider.getContext().getContentResolver().query(uri, projection,

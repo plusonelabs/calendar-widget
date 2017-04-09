@@ -6,10 +6,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
+import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EndedSomeTimeAgo;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.widget.EventEntryLayout;
 
+import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -184,7 +186,7 @@ public class InstanceSettings {
         settings.showLocation = json.getBoolean(PREF_SHOW_LOCATION);
         settings.dateFormat = json.getString(PREF_DATE_FORMAT);
         settings.abbreviateDates = json.getBoolean(PREF_ABBREVIATE_DATES);
-        settings.lockedTimeZoneId = json.getString(PREF_LOCKED_TIME_ZONE_ID);
+        settings.setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
         settings.eventEntryLayout = EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT));
         settings.titleMultiline = json.getBoolean(PREF_MULTILINE_TITLE);
         settings.showOnlyClosestInstanceOfRecurringEvent = json.getBoolean(
@@ -240,7 +242,7 @@ public class InstanceSettings {
         settings.showLocation = ApplicationPreferences.getShowLocation(context);
         settings.dateFormat = ApplicationPreferences.getDateFormat(context);
         settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
-        settings.lockedTimeZoneId = ApplicationPreferences.getLockedTimeZoneId(context);
+        settings.setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
         settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
         settings.titleMultiline = ApplicationPreferences.isTitleMultiline(context);
         settings.showOnlyClosestInstanceOfRecurringEvent = ApplicationPreferences
@@ -406,12 +408,20 @@ public class InstanceSettings {
         return abbreviateDates;
     }
 
+    private void setLockedTimeZoneId(String lockedTimeZoneId) {
+        this.lockedTimeZoneId = DateUtil.validatedTimeZoneId(lockedTimeZoneId);
+    }
+
     public String getLockedTimeZoneId() {
         return lockedTimeZoneId;
     }
 
     public boolean isTimeZoneLocked() {
         return !TextUtils.isEmpty(lockedTimeZoneId);
+    }
+
+    public DateTimeZone getTimeZone() {
+        return isTimeZoneLocked() ? DateTimeZone.forID(lockedTimeZoneId) : DateTimeZone.getDefault();
     }
 
     public EventEntryLayout getEventEntryLayout() {
@@ -490,5 +500,4 @@ public class InstanceSettings {
         ensureInstancesAreLoaded(context);
         return instances;
     }
-
 }

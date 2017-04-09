@@ -42,6 +42,9 @@ public class CalendarEventProvider {
 
     private final Context context;
     private final int widgetId;
+
+    // Below are parameters, which may change in settings
+    private DateTimeZone zone;
     private KeywordsFilter mKeywordsFilter;
     private DateTime mStartOfTimeRange;
     private DateTime mEndOfTimeRange;
@@ -82,8 +85,10 @@ public class CalendarEventProvider {
             CalendarEvent otherEvent = eventIds.get(event.getEventId());
             if (otherEvent == null) {
                 eventIds.put(event.getEventId(), event);
-            } else if ( Math.abs(event.getStartDate().getMillis() - DateUtil.now().getMillis()) <
-                    Math.abs(otherEvent.getStartDate().getMillis() - DateUtil.now().getMillis())) {
+            } else if (Math.abs(event.getStartDate().getMillis() -
+                    DateUtil.now(zone).getMillis()) <
+                    Math.abs(otherEvent.getStartDate().getMillis() -
+                            DateUtil.now(zone).getMillis())) {
                 toDelete.add(otherEvent);
                 eventIds.put(event.getEventId(), event);
             } else {
@@ -94,10 +99,10 @@ public class CalendarEventProvider {
     }
 
     private void initialiseParameters() {
+        zone = getSettings().getTimeZone();
         mKeywordsFilter = new KeywordsFilter(getSettings().getHideBasedOnKeywords());
-        mStartOfTimeRange = getSettings().getEventsEnded()
-                .endedAt(DateUtil.now());
-        mEndOfTimeRange = getEndOfTimeRange(DateUtil.now());
+        mStartOfTimeRange = getSettings().getEventsEnded().endedAt(DateUtil.now(zone));
+        mEndOfTimeRange = getEndOfTimeRange(DateUtil.now(zone));
     }
 
     public DateTime getEndOfTimeRange() {
@@ -161,7 +166,8 @@ public class CalendarEventProvider {
 
     private List<CalendarEvent> queryList(Uri uri, String selection) {
         List<CalendarEvent> eventList = new ArrayList<>();
-        CalendarQueryResult result = new CalendarQueryResult(uri, getProjection(), selection, null, EVENT_SORT_ORDER);
+        CalendarQueryResult result = new CalendarQueryResult(getSettings().getTimeZone(), uri, getProjection(),
+                selection, null, EVENT_SORT_ORDER);
         Cursor cursor = null;
         try {
             cursor = context.getContentResolver().query(uri, getProjection(),
@@ -209,7 +215,7 @@ public class CalendarEventProvider {
     private List<CalendarEvent> getPastEventsWithColorList() {
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(builder, 0);
-        ContentUris.appendId(builder, DateUtil.now().getMillis());
+        ContentUris.appendId(builder, DateUtil.now(zone).getMillis());
         List<CalendarEvent> eventList = queryList(builder.build(), getPastEventsWithColorSelection());
         for (CalendarEvent event : eventList) {
             event.setDefaultCalendarColor();
@@ -237,8 +243,8 @@ public class CalendarEventProvider {
         CalendarEvent event = new CalendarEvent(context, widgetId);
         event.setEventId(cursor.getInt(cursor.getColumnIndex(Instances.EVENT_ID)));
         event.setTitle(cursor.getString(cursor.getColumnIndex(Instances.TITLE)));
-        event.setStartDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.BEGIN))));
-        event.setEndDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.END))));
+        event.setStartDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.BEGIN)), zone));
+        event.setEndDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.END)), zone));
         event.setAllDay(cursor.getInt(cursor.getColumnIndex(Instances.ALL_DAY)) > 0);
         event.setLocation(cursor.getString(cursor.getColumnIndex(Instances.EVENT_LOCATION)));
         event.setAlarmActive(cursor.getInt(cursor.getColumnIndex(Instances.HAS_ALARM)) > 0);
@@ -278,7 +284,7 @@ public class CalendarEventProvider {
                 Log.v("fixTimeOfAllDayEvent", "Local Date Time Gap: " + ldt + "; " + msgLog);
                 ldt = ldt.withHourOfDay(++hour);
             }
-            fixed = ldt.toDateTime();
+            fixed = ldt.toDateTime(zone);
             msgLog += " -> " + fixed;
             if (BuildConfig.DEBUG) {
                 Log.v("fixTimeOfAllDayEvent", msgLog);

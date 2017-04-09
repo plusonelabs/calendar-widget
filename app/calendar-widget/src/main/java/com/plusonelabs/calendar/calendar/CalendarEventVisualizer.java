@@ -76,7 +76,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 
     private void setColor(CalendarEntry entry, RemoteViews rv) {
         setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
-        if (entry.getEndDate().isBefore(DateUtil.now())) {
+        if (entry.getEndDate().isBefore(DateUtil.now(entry.getEndDate().getZone()))) {
             setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);
@@ -127,7 +127,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
                 firstDate = dayOfStartOfTimeRange;
             }
         }
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now(event.getStartDate().getZone()).withTimeAtStartOfDay();
         if (event.isActive() && firstDate.isBefore(today)) {
             firstDate = today;
         }

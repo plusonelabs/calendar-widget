@@ -37,7 +37,7 @@ public class MultidayEventTest extends InstrumentationTestCase {
 
     /** Issue #206 https://github.com/plusonelabs/calendar-widget/issues/206 */
     public void testEventWhichCarryOverToTheNextDay() {
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Event that carry over to the next day, show as ending midnight");

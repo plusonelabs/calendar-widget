@@ -27,7 +27,8 @@ public class WidgetEntry implements Comparable<WidgetEntry> {
 	}
 
 	public int getDaysFromToday() {
-		return Days.daysBetween(DateUtil.now().withTimeAtStartOfDay(), startDate.withTimeAtStartOfDay()).getDays();
+		return Days.daysBetween(DateUtil.now(startDate.getZone()).withTimeAtStartOfDay(),
+				startDate.withTimeAtStartOfDay()).getDays();
 	}
 
     @Override

@@ -34,7 +34,7 @@ public class SingleEventTest extends InstrumentationTestCase {
     }
 
     public void testEventAttributes() {
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         DateUtil.setNow(today.plusHours(10));
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);

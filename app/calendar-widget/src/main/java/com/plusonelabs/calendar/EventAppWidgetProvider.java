@@ -17,7 +17,6 @@ import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.util.PermissionsUtil;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import java.util.List;
 import java.util.Locale;
@@ -57,7 +56,6 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         for (int widgetId : appWidgetIds) {
             InstanceSettings settings = InstanceSettings.fromId(baseContext, widgetId);
             AlarmReceiver.scheduleAlarm(settings.getHeaderThemeContext());
-            DateTimeZone.setDefault(DateUtil.getCurrentTimeZone(settings));
             RemoteViews rv = new RemoteViews(baseContext.getPackageName(), R.layout.widget);
             configureBackground(settings, rv);
             configureActionBar(settings, rv);
@@ -89,7 +87,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     private void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {
         rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(settings));
         String formattedDate = DateUtil.createDateString(settings,
-                DateUtil.now()).toUpperCase(Locale.getDefault());
+                DateUtil.now(settings.getTimeZone())).toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.calendar_current_date, formattedDate);
         setTextColorFromAttr(settings.getHeaderThemeContext(), rv, R.id.calendar_current_date, R.attr.header);
     }

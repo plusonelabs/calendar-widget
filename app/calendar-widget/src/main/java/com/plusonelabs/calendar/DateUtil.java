@@ -1,9 +1,10 @@
 package com.plusonelabs.calendar;
 
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
-import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;
@@ -11,7 +12,6 @@ import org.joda.time.DateTimeZone;
 
 import java.util.Formatter;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class DateUtil {
 
@@ -75,7 +75,7 @@ public class DateUtil {
     /**
      * Usually returns real "now", but may be #setNow to some other time for testing purposes
      */
-    public static DateTime now() {
+    public static DateTime now(DateTimeZone zone) {
         DateTime nowSetAt;
         DateTime now;
         do {
@@ -83,30 +83,27 @@ public class DateUtil {
             now = mNow;
         } while (nowSetAt != mNowSetAt); // Ensure concurrent consistency
         if (now == null) {
-            return DateTime.now();
+            return DateTime.now(zone);
         } else {
             long diffL = DateTime.now().getMillis() - nowSetAt.getMillis();
             int diff = 0;
             if (diffL > 0 && diffL < Integer.MAX_VALUE) {
                 diff = (int) diffL;
             }
-            return new DateTime(now).plusMillis(diff);
+            return new DateTime(now, zone).plusMillis(diff);
         }
     }
 
-    public static DateTimeZone getCurrentTimeZone(InstanceSettings settings) {
-        DateTimeZone zone = DateTimeZone.forID(TimeZone.getDefault().getID());
-        if (settings.isTimeZoneLocked()) {
-            String lockedTimeZoneId = settings.getLockedTimeZoneId();
+    /** Returns an empty string in a case supplied ID is not a valid Time Zone ID */
+    @NonNull
+    public static String validatedTimeZoneId(String timeZoneId) {
+        if ( !TextUtils.isEmpty(timeZoneId)) {
             try {
-                zone = DateTimeZone.forID(lockedTimeZoneId);
+                return DateTimeZone.forID(timeZoneId).getID();
             } catch (IllegalArgumentException e) {
-                Log.w("getCurrentTimeZone", "The Locked time zone is not recognized: " + lockedTimeZoneId);
-                ApplicationPreferences.startEditing(settings.getContext(), settings.getWidgetId());
-                ApplicationPreferences.setLockedTimeZoneId(settings.getContext(), "");
-                ApplicationPreferences.save(settings.getContext(), settings.getWidgetId());
+                Log.w("validatedTimeZoneId", "The time zone is not recognized: '" + timeZoneId + "'");
             }
         }
-        return zone;
+        return "";
     }
 }

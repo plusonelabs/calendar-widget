@@ -145,7 +145,8 @@ public class CalendarEvent {
     }
 
     public boolean isActive() {
-        return getStartDate().isBefore(DateUtil.now()) && endDate.isAfter(DateUtil.now());
+        return getStartDate().isBefore(DateUtil.now(startDate.getZone())) &&
+				endDate.isAfter(DateUtil.now(startDate.getZone()));
     }
 
 	public boolean isPartOfMultiDayEvent() {

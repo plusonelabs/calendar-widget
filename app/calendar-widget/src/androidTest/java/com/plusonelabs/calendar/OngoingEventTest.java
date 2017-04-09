@@ -37,7 +37,7 @@ public class OngoingEventTest extends InstrumentationTestCase {
      * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/199">Issue 199</a>
      */
     public void testTodaysOngoingEvent() {
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Ongoing event shows original start time");
@@ -65,7 +65,7 @@ public class OngoingEventTest extends InstrumentationTestCase {
      * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/199">Issue 199</a>
      */
     public void testYesterdaysOngoingEvent() {
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Ongoing event, which started yesterday, shows no start time");
@@ -92,7 +92,7 @@ public class OngoingEventTest extends InstrumentationTestCase {
     }
 
     public void testEventWhichCarryOverToTheNextDay() {
-        DateTime today = DateUtil.now().withTimeAtStartOfDay();
+        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);
         event.setTitle("Event that carry over to the next day, show as ending midnight");

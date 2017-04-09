@@ -12,6 +12,8 @@ import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.MainActivity;
 import com.plusonelabs.calendar.R;
 
+import org.joda.time.DateTimeZone;
+
 import java.util.TimeZone;
 
 public class AppearancePreferencesFragment extends PreferenceFragment
@@ -46,12 +48,11 @@ public class AppearancePreferencesFragment extends PreferenceFragment
             if (setAlso && preference.isChecked() != isChecked) {
                 preference.setChecked(isChecked);
             }
+            DateTimeZone timeZone = ApplicationPreferences.currentSettings(getActivity()).getTimeZone();
             preference.setSummary(
-                    String.format(getText(
-                            isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc
-                    ).toString(), DateUtil.getCurrentTimeZone(
-                            ApplicationPreferences.currentSettings(getActivity()))
-                            .getName(DateUtil.now().getMillis())));
+                    String.format(getText(isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc).toString(),
+                            timeZone.getName(DateUtil.now(timeZone).getMillis()))
+            );
         }
     }
 

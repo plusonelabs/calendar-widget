@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.plusonelabs.calendar.EventAppWidgetProvider.getWidgetIds;
@@ -421,7 +422,8 @@ public class InstanceSettings {
     }
 
     public DateTimeZone getTimeZone() {
-        return isTimeZoneLocked() ? DateTimeZone.forID(lockedTimeZoneId) : DateTimeZone.getDefault();
+        return DateTimeZone.forID(DateUtil.validatedTimeZoneId(
+                isTimeZoneLocked() ? lockedTimeZoneId : TimeZone.getDefault().getID()));
     }
 
     public EventEntryLayout getEventEntryLayout() {

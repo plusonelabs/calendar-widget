@@ -11,8 +11,10 @@
   <string name="indicator_alarm">Jelölő emlékeztető beállításánál</string>
   <string name="indicator_recurring">Jelölő ismétlődő eseménynél</string>
   <string name="no_title">(Üres esemény név)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Naptárak</string>
   <string name="calendars_prefs_desc">Válassza ki a naptárakat</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">Megjelenés</string>
   <string name="appearance_prefs_desc">A modul megjelenésének beállítása</string>
   <string name="appearance_text_size_title">Szövegméret</string>
@@ -24,16 +26,20 @@
   <string name="appearance_text_size_very_large">Nagyon nagy</string>
   <string name="appearance_multiline_title_title">Többsoros cím</string>
   <string name="appearance_multiline_title_desc">Esemény címét törje több sorba, ha nem fér ki</string>
-  <string name="appearance_date_format_desc">Válassza ki az idő formátumát</string>
+  <string name="appearance_date_format_desc">Idő mutatása de/du vagy 24 órás formátumban</string>
   <string name="appearance_date_format_title">Idő formátum</string>
   <string name="appearance_date_format_auto">Alapértelmezett</string>
   <string name="appearance_date_format_24">17:00</string>
   <string name="appearance_date_format_12">5:00</string>
+  <string name="appearance_show_days_without_events_title">Napok mutatása események nélkül</string>
+  <string name="appearance_show_days_without_events_desc">Nap-fejlécek mutatása a napokhoz események nélkül</string>
   <string name="appearance_display_header_title">Mutassa a modul fejlécét</string>
   <string name="appearance_display_header_desc">Mutassa a dátumot és a parancs ikonokat a fejlécben</string>
   <string name="appearance_group_color_title">Színek</string>
   <string name="appearance_background_color_title">Háttér átlátszóság </string>
   <string name="appearance_background_color_desc">A háttér átlátszóság beállítása</string>
+  <string name="appearance_past_events_background_color_title">Múltbéi események háttérszíne</string>
+  <string name="appearance_past_events_background_color_desc">Múltbéli események háttérszínének beállítása</string>
   <string name="appearance_day_header_alignment_desc">Igazítsa a nap fejlécét</string>
   <string name="appearance_day_header_alignment_title">Nap fejlécének igazítása</string>
   <string name="appearance_day_header_alignment_left">Balra</string>
@@ -47,6 +53,8 @@
   <string name="appearance_theme_dark">Világos</string>
   <string name="appearance_theme_light">Sötét</string>
   <string name="appearance_theme_white">Fekete</string>
+  <!-- Preference header: Event details -->
+  <string name="event_details_prefs">Esemény részletei</string>
   <string name="event_details_prefs_desc">Az esemény részleteinek beállítása</string>
   <string name="event_details_show_end_time_title">Befejezési idő</string>
   <string name="event_details_show_end_time_desc">Az esemény befejezési időpontjának megjelenítése</string>
@@ -59,8 +67,15 @@
   <string name="event_details_indicate_alert_title">Emlékeztetők</string>
   <string name="event_details_indicate_recurring_desc">Jelölje meg az ismétlődő eseményeket</string>
   <string name="event_details_indicate_recurring_title">Ismétlődő események</string>
+  <!-- Preference header: Event filters -->
+  <string name="event_filters_prefs">Esemény szűrők</string>
+  <string name="event_filters_prefs_desc">Melyik jelenlegi, jövőbeli és múltbéli eseményeket mutassa</string>
+  <string name="all_events">Minden esemény</string>
+  <string name="current_and_future_events">Jelenlegi és jövőbeli események</string>
+  <string name="past_events">Múltbéli események</string>
   <string name="event_details_event_range_title">Dátum intervallum</string>
   <string name="event_details_event_range_desc">Megjelenítendő események számának beállítása</string>
+  <string name="event_range_today">Ma</string>
   <string name="event_range_one_day">Egy nap</string>
   <string name="event_range_one_week">Egy hét</string>
   <string name="event_range_two_weeks">Két hét</string>
@@ -69,10 +84,23 @@
   <string name="event_range_three_months">Három hónap</string>
   <string name="event_range_six_months">Hat hónap</string>
   <string name="event_range_one_year">Egy év</string>
+  <string name="show_past_events_with_default_color_title">Minden múltbéli esemény mutatása alapértelmezett színnel</string>
+  <string name="this_option_is_turned_off">(letiltva)</string>
+  <string name="pref_events_ended_title">Minden nemrég véget ért esemény mutatása</string>
+  <string name="ended_one_hour_ago">Egy órája ért véget</string>
+  <string name="ended_two_hours_ago">Két órája ért véget</string>
+  <string name="ended_four_hours_ago">Négy órája ért véget</string>
+  <string name="ended_today">Ma ért véget</string>
+  <string name="ended_yesterday">Tegnap ért véget</string>
+  <string name="pref_hide_based_on_keywords_title">Elrejtés a címben lévő kulcsszavak alapján</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Visszajelzés</string>
   <string name="feedback_prefs_desc">Lépjen kapcsolatba velünk</string>
   <string name="feedback_github_desc">Visszajelzés a projekt oldalán</string>
   <string name="feedback_github_title">A modul a Github-on</string>
   <string name="feedback_play_store_desc">Értékelés a Google Play-en</string>
   <string name="feedback_play_store_title">Modul a Google Play-en</string>
+  <string name="refresh_desc">Frissítés</string>
+  <string name="share_events_for_debugging_desc">Hibajelentés készítése, hogy a fejlesztők javítani tudják a problémákat</string>
+  <string name="share_events_for_debugging_title">Események megosztása hibakereséshez</string>
 </resources>

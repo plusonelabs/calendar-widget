@@ -24,7 +24,7 @@
   <string name="appearance_text_size_very_large">Erittäin suuri</string>
   <string name="appearance_multiline_title_title">Usean rivin otsikko</string>
   <string name="appearance_multiline_title_desc">Jaa tapahtuman otsikko usealle riville</string>
-  <string name="appearance_date_format_desc">Näytä päivämäärät ap/ip tai 24 tunnin muodossa</string>
+  <string name="appearance_date_format_desc">Käytetäänkö 12h vai 24h muotoa?</string>
   <string name="appearance_date_format_title">Päiväyksen muoto</string>
   <string name="appearance_date_format_auto">Automaattinen</string>
   <string name="appearance_date_format_24">17.00</string>
@@ -96,4 +96,6 @@
   <string name="feedback_play_store_desc">Arvostele ja kommentoi Google Play -kaupassa</string>
   <string name="feedback_play_store_title">Widget Google Play -kaupassa</string>
   <string name="refresh_desc">Päivitä</string>
+  <string name="share_events_for_debugging_desc">Luo raportti helpottamaan kehittäjiä vianmäärityksessä</string>
+  <string name="share_events_for_debugging_title">Jaa tapahtumat vianetsintää varten</string>
 </resources>

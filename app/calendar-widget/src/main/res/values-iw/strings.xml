@@ -11,8 +11,10 @@
   <string name="indicator_alarm">הצג חיווי להתראות</string>
   <string name="indicator_recurring">הצג חיווי לאירוע חוזר</string>
   <string name="no_title">(ללא כותרת)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">לוחות שנה</string>
   <string name="calendars_prefs_desc">בחר את לוחות השנה להצגה</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">מראה</string>
   <string name="appearance_prefs_desc">התאם את המראה של היישומון</string>
   <string name="appearance_text_size_title">גודל טקסט</string>
@@ -24,7 +26,7 @@
   <string name="appearance_text_size_very_large">גדול מאוד</string>
   <string name="appearance_multiline_title_title">כותרת מרובת שורות</string>
   <string name="appearance_multiline_title_desc">הרחב את כותרת האירוע למספר שורות</string>
-  <string name="appearance_date_format_desc">הצג זמנים בתבנית am/pm או בתבנית של 24 שעות</string>
+  <string name="appearance_date_format_desc">הצג זמן בפורמט am/pm או בפורמט 24 שעות</string>
   <string name="appearance_date_format_title">תבנית התאריך</string>
   <string name="appearance_date_format_auto">אוטומטי</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -51,6 +53,7 @@
   <string name="appearance_theme_dark">בהיר</string>
   <string name="appearance_theme_light">כהה</string>
   <string name="appearance_theme_white">שחור</string>
+  <!-- Preference header: Event details -->
   <string name="event_details_prefs">פרטי אירוע</string>
   <string name="event_details_prefs_desc">הגדר אילו פריטים להציג לאירוע</string>
   <string name="event_details_show_end_time_title">שעת סיום</string>
@@ -64,6 +67,7 @@
   <string name="event_details_indicate_alert_title">התראות</string>
   <string name="event_details_indicate_recurring_desc">הצג חיווי לאירועים חוזרים</string>
   <string name="event_details_indicate_recurring_title">אירועים חוזרים</string>
+  <!-- Preference header: Event filters -->
   <string name="event_filters_prefs">מסנני אירועים</string>
   <string name="event_filters_prefs_desc">אילו אירועים נוכחיים, עתידיים ואירועי עבר להציג</string>
   <string name="all_events">כל האירועים</string>
@@ -89,6 +93,7 @@
   <string name="ended_today">הסתיים היום</string>
   <string name="ended_yesterday">הסתיים אתמול</string>
   <string name="pref_hide_based_on_keywords_title">הסתר על פי מילות מפתח בכותרת</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">משוב</string>
   <string name="feedback_prefs_desc">צור איתנו קשר (באנגלית)</string>
   <string name="feedback_github_desc">תן לנו משוב בדף הפרוייקט</string>
@@ -96,4 +101,6 @@
   <string name="feedback_play_store_desc">דרג והגב ב-Google Play Store</string>
   <string name="feedback_play_store_title">בקר אותנו ב-Google Play Store</string>
   <string name="refresh_desc">רענן</string>
+  <string name="share_events_for_debugging_desc">יצירת דוח כדי לסייע למפתחים לפתור בעיות</string>
+  <string name="share_events_for_debugging_title">שתף אירועים עבור איתור באגים</string>
 </resources>

@@ -8,10 +8,15 @@
   <string name="widget_name">Takvim</string>
   <string name="open_prefs_desc">Takvim aracının ayarlarını açın</string>
   <string name="add_event_desc">Yeni takvim olayı ekle</string>
+  <string name="indicator_alarm">Alarm ayarlandığında gösterge oluştur</string>
+  <string name="indicator_recurring">Olay yineleniyorsa gösterge oluştur</string>
   <string name="no_title">(Başlık yok)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Takvimler</string>
   <string name="calendars_prefs_desc">Görüntülenecek takvimleri seç</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">Görünüm</string>
+  <string name="appearance_prefs_desc">Widget görünümünü ayarla</string>
   <string name="appearance_text_size_title">Metin boyutu</string>
   <string name="appearance_text_size_desc">Metin boyutunu düzenle</string>
   <string name="appearance_text_size_very_small">Çok küçük</string>
@@ -19,10 +24,13 @@
   <string name="appearance_text_size_medium">Orta</string>
   <string name="appearance_text_size_large">Büyük</string>
   <string name="appearance_text_size_very_large">Çok büyük</string>
+  <string name="appearance_multiline_title_title">Çok satırlı başlık</string>
   <string name="appearance_date_format_title">Tarih formatı</string>
   <string name="appearance_date_format_auto">Otomatik</string>
   <string name="appearance_date_format_24">17:00</string>
+  <string name="appearance_date_format_12">17:00</string>
   <string name="appearance_show_days_without_events_title">Günleri olaylar olmadan göster</string>
+  <string name="appearance_display_header_title">Widget üstbilgisini göster</string>
   <string name="appearance_group_color_title">Renkler</string>
   <string name="appearance_background_color_title">Arkaplan Rengi</string>
   <string name="appearance_background_color_desc">Arkaplan rengini ayarla</string>
@@ -32,6 +40,20 @@
   <string name="appearance_theme_black">Beyaz</string>
   <string name="appearance_theme_dark">Açık</string>
   <string name="appearance_theme_light">Koyu</string>
+  <string name="appearance_theme_white">Siyah</string>
+  <!-- Preference header: Event details -->
+  <string name="event_details_prefs">Etkinlik ayrıntıları</string>
+  <string name="event_details_show_end_time_title">Bitiş zamanı</string>
+  <!-- Preference header: Event filters -->
+  <string name="event_range_today">Bugün</string>
+  <string name="event_range_one_day">Bir gün</string>
+  <string name="event_range_one_week">Bir hafta</string>
+  <string name="event_range_two_weeks">İki hafta</string>
+  <string name="event_range_one_month">Bir ay</string>
+  <string name="event_range_two_months">İki ay</string>
+  <string name="event_range_three_months">Üç ay</string>
+  <string name="event_range_six_months">Altı ay</string>
+  <string name="event_range_one_year">Bir yıl</string>
   <string name="this_option_is_turned_off">(devre dışı)</string>
   <string name="pref_events_ended_title">Yakın zamanda sona ermiş etkinlikleri göster</string>
   <string name="ended_one_hour_ago">Bir saat önce bitti</string>
@@ -40,6 +62,7 @@
   <string name="ended_today">Bugün bitti</string>
   <string name="ended_yesterday">Dün bitti</string>
   <string name="pref_hide_based_on_keywords_title">Başlıkdaki anahtar kelimeleri gizle</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Öneride bulun</string>
   <string name="feedback_prefs_desc">Bizimle iletişime geçin</string>
   <string name="feedback_github_desc">Proje sayfasına görüşde bulunun</string>

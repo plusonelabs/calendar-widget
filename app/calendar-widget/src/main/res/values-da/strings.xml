@@ -11,8 +11,10 @@
   <string name="indicator_alarm">Indikator hvis en alarm er indstillet</string>
   <string name="indicator_recurring">Indikator hvis aftalen er gentagende</string>
   <string name="no_title">(Ingen titel)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Kalendere</string>
   <string name="calendars_prefs_desc">Vælg kalendere som skal vises</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">Udseende</string>
   <string name="appearance_prefs_desc">Juster widgetens udseende</string>
   <string name="appearance_text_size_title">Tekst størrelse</string>
@@ -24,7 +26,7 @@
   <string name="appearance_text_size_very_large">Meget stor</string>
   <string name="appearance_multiline_title_title">Flerlinjers titel</string>
   <string name="appearance_multiline_title_desc">Spred aftale-titlen over flere linjer</string>
-  <string name="appearance_date_format_desc">Vis datoer i am/pm eller 24H format</string>
+  <string name="appearance_date_format_desc">Vis tid i 12 eller 24 timers format</string>
   <string name="appearance_date_format_title">Dato format</string>
   <string name="appearance_date_format_auto">Automatisk</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -51,6 +53,7 @@
   <string name="appearance_theme_dark">Lys</string>
   <string name="appearance_theme_light">Mørk</string>
   <string name="appearance_theme_white">Sort</string>
+  <!-- Preference header: Event details -->
   <string name="event_details_prefs">Aftale detaljer</string>
   <string name="event_details_prefs_desc">Konfigurer hvilke detaljer der vises for en aftale</string>
   <string name="event_details_show_end_time_title">Slut tid</string>
@@ -64,6 +67,7 @@
   <string name="event_details_indicate_alert_title">Alarmer</string>
   <string name="event_details_indicate_recurring_desc">Vis indikator for gentagende aftaler</string>
   <string name="event_details_indicate_recurring_title">Gentagende aftaler</string>
+  <!-- Preference header: Event filters -->
   <string name="event_filters_prefs">Aftale filtre</string>
   <string name="event_filters_prefs_desc">Hvilke nuværende, fremtidige og tidligere aftaler skal vises</string>
   <string name="all_events">Alle aftaler</string>
@@ -89,6 +93,7 @@
   <string name="ended_today">Sluttede i dag</string>
   <string name="ended_yesterday">Sluttede igår</string>
   <string name="pref_hide_based_on_keywords_title">Skjul baseret på nøgleord i en titel</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Tilbagemelding</string>
   <string name="feedback_prefs_desc">Kom i kontakt med os</string>
   <string name="feedback_github_desc">Tilføj tilbagemelding på projekt siden</string>
@@ -96,4 +101,6 @@
   <string name="feedback_play_store_desc">Bedøm og kommenter på Google Play Store</string>
   <string name="feedback_play_store_title">Besøg widget på Google Play Store</string>
   <string name="refresh_desc">Opdater</string>
+  <string name="share_events_for_debugging_desc">Opret en rapport for at hjælpe udviklerne med at fejlsøge problemer</string>
+  <string name="share_events_for_debugging_title">Del begivenheder til fejlfinding</string>
 </resources>

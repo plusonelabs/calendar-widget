@@ -24,11 +24,13 @@
   <string name="appearance_text_size_very_large">Πολύ μεγάλο</string>
   <string name="appearance_multiline_title_title">Τίτλος πολλαπλών γραμμών</string>
   <string name="appearance_multiline_title_desc">Άπλωμα τίτλου γεγονότος σε πολλαπλές γραμμές</string>
-  <string name="appearance_date_format_desc">Εμφάνιση ημερομηνιών σε π.μ./μ.μ. ή 24ωρη μορφή</string>
+  <string name="appearance_date_format_desc">Εμφάνιση ώρας σε μορφή π.μ./μ.μ. ή 24ωρη</string>
   <string name="appearance_date_format_title">Μορφή ημερομηνίας</string>
   <string name="appearance_date_format_auto">Αυτόματο</string>
   <string name="appearance_date_format_24">17:00</string>
   <string name="appearance_date_format_12">5:00 μ.μ</string>
+  <string name="appearance_show_days_without_events_title">Εμφάνιση ημέρες χωρίς συμβάντα</string>
+  <string name="appearance_show_days_without_events_desc">Εμφάνιση ημέρα κεφαλίδες για μέρες χωρίς εκδηλώσεις</string>
   <string name="appearance_display_header_title">Εμφάνιση κεφαλίδας γραφικού</string>
   <string name="appearance_display_header_desc">Εμφάνιση κεφαλίδας ημερομηνίας και ρυθμίσεων</string>
   <string name="appearance_group_color_title">Χρώματα</string>

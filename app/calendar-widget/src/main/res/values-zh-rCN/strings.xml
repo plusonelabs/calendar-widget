@@ -11,8 +11,10 @@
   <string name="indicator_alarm">有闹铃时提示</string>
   <string name="indicator_recurring">日程重复提示</string>
   <string name="no_title">（无标题）</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">日历</string>
   <string name="calendars_prefs_desc">选择要显示的日历</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">外观</string>
   <string name="appearance_prefs_desc">调整小部件的外观</string>
   <string name="appearance_text_size_title">字体大小</string>
@@ -24,16 +26,20 @@
   <string name="appearance_text_size_very_large">很大</string>
   <string name="appearance_multiline_title_title">多行标题</string>
   <string name="appearance_multiline_title_desc">日程标题多行显示</string>
-  <string name="appearance_date_format_desc">日期显示为12小时制或24小时制</string>
+  <string name="appearance_date_format_desc">显示时间格式为12小时或24小时</string>
   <string name="appearance_date_format_title">日期格式</string>
   <string name="appearance_date_format_auto">自动</string>
   <string name="appearance_date_format_24">17：00</string>
   <string name="appearance_date_format_12">下午5：00</string>
+  <string name="appearance_show_days_without_events_title">显示无日程安排日期</string>
+  <string name="appearance_show_days_without_events_desc">为无安排日期显示日期标题</string>
   <string name="appearance_display_header_title">显示小部件顶栏</string>
   <string name="appearance_display_header_desc">显示日期和设置标题</string>
   <string name="appearance_group_color_title">颜色</string>
   <string name="appearance_background_color_title">背景色</string>
   <string name="appearance_background_color_desc">调整背景色</string>
+  <string name="appearance_past_events_background_color_title">已过期日程的背景颜色</string>
+  <string name="appearance_past_events_background_color_desc">调整过期日程背景颜色</string>
   <string name="appearance_day_header_alignment_desc">设置日期标题的对齐方式</string>
   <string name="appearance_day_header_alignment_title">日期标题对齐方式</string>
   <string name="appearance_day_header_alignment_left">左</string>
@@ -47,6 +53,8 @@
   <string name="appearance_theme_dark">浅色</string>
   <string name="appearance_theme_light">深色</string>
   <string name="appearance_theme_white">黑色</string>
+  <!-- Preference header: Event details -->
+  <string name="event_details_prefs">日程细节</string>
   <string name="event_details_prefs_desc">配置日程显示详情</string>
   <string name="event_details_show_end_time_title">结束时间</string>
   <string name="event_details_show_end_time_desc">显示日程结束时间</string>
@@ -59,11 +67,15 @@
   <string name="event_details_indicate_alert_title">响闹</string>
   <string name="event_details_indicate_recurring_desc">显示重复的日程提示</string>
   <string name="event_details_indicate_recurring_title">重复的日程</string>
-  <string name="all_events">所有活动</string>
-  <string name="past_events">过去的事件</string>
+  <!-- Preference header: Event filters -->
+  <string name="event_filters_prefs">日程筛选</string>
+  <string name="event_filters_prefs_desc">筛选显示当前/将来/过期的某个事件</string>
+  <string name="all_events">全部日程</string>
+  <string name="current_and_future_events">当前和将来日程</string>
+  <string name="past_events">已结束日程</string>
   <string name="event_details_event_range_title">日期范围</string>
   <string name="event_details_event_range_desc">配置日程显示条数</string>
-  <string name="event_range_today">今天</string>
+  <string name="event_range_today">当日</string>
   <string name="event_range_one_day">一天</string>
   <string name="event_range_one_week">一周</string>
   <string name="event_range_two_weeks">两周</string>
@@ -72,15 +84,23 @@
   <string name="event_range_three_months">三个月</string>
   <string name="event_range_six_months">六个月</string>
   <string name="event_range_one_year">一年</string>
-  <string name="pref_events_ended_title">显示最近结束的事件</string>
-  <string name="ended_one_hour_ago">一小时前结束</string>
-  <string name="ended_two_hours_ago">两小时前结束</string>
-  <string name="ended_four_hours_ago">四小时前结束</string>
+  <string name="show_past_events_with_default_color_title">默认颜色显示已过期日程</string>
+  <string name="this_option_is_turned_off">关闭</string>
+  <string name="pref_events_ended_title">显示最近结束的日程</string>
+  <string name="ended_one_hour_ago">已结束一小时</string>
+  <string name="ended_two_hours_ago">已结束两小时</string>
+  <string name="ended_four_hours_ago">已结束四小时</string>
+  <string name="ended_today">今日结束</string>
+  <string name="ended_yesterday">昨天结束</string>
+  <string name="pref_hide_based_on_keywords_title">基于标题关键字隐藏</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">反馈</string>
   <string name="feedback_prefs_desc">联系我们</string>
   <string name="feedback_github_desc">在项目页面上提供反馈</string>
   <string name="feedback_github_title">在Github上访问小部件</string>
   <string name="feedback_play_store_desc">于 Google Play 商店上评分及评论</string>
   <string name="feedback_play_store_title">在Google Play商店访问小部件</string>
-  <string name="refresh_desc">刷新</string>
+  <string name="refresh_desc">更新</string>
+  <string name="share_events_for_debugging_desc">帮开发者创建报告以解决故障</string>
+  <string name="share_events_for_debugging_title">创建日程记录作为调试使用</string>
 </resources>

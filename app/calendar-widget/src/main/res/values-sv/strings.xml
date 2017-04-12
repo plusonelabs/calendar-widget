@@ -11,8 +11,10 @@
   <string name="indicator_alarm">Indikerar att larm är inställt</string>
   <string name="indicator_recurring">Indikerar att händelsen upprepas</string>
   <string name="no_title">(ingen rubrik)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Kalendrar</string>
   <string name="calendars_prefs_desc">Välj kalendrar som skall visas</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">Utseende</string>
   <string name="appearance_prefs_desc">Anpassa applikationens utseende</string>
   <string name="appearance_text_size_title">Textstorlek</string>
@@ -51,6 +53,7 @@
   <string name="appearance_theme_dark">Ljust</string>
   <string name="appearance_theme_light">Mörkt</string>
   <string name="appearance_theme_white">Svart</string>
+  <!-- Preference header: Event details -->
   <string name="event_details_prefs">Händelsedetaljer</string>
   <string name="event_details_prefs_desc">Konfigurera vilket innehåll som skall visas för en händelse</string>
   <string name="event_details_show_end_time_title">Sluttid</string>
@@ -64,6 +67,7 @@
   <string name="event_details_indicate_alert_title">Larm</string>
   <string name="event_details_indicate_recurring_desc">Visa tecken för återkommande händelser</string>
   <string name="event_details_indicate_recurring_title">Återkommande händelser</string>
+  <!-- Preference header: Event filters -->
   <string name="event_filters_prefs">Filter för händelser</string>
   <string name="event_filters_prefs_desc">Vilka aktuella, framtida och tidigare händelser som skall visas</string>
   <string name="all_events">Alla aktiviteter</string>
@@ -89,6 +93,7 @@
   <string name="ended_today">Avslutad idag</string>
   <string name="ended_yesterday">Avslutades i går</string>
   <string name="pref_hide_based_on_keywords_title">Dölj baserat på nyckelord i en titel</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Kontakta oss</string>
   <string name="feedback_github_desc">Lämna feedback på projektets hemsida</string>

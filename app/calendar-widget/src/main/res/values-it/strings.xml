@@ -11,8 +11,10 @@
   <string name="indicator_alarm">Mostra se l\'evento ha un allarme</string>
   <string name="indicator_recurring">Mostra se l\'evento è ricorrente</string>
   <string name="no_title">(Nessun titolo)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Calendari</string>
   <string name="calendars_prefs_desc">Selezionare i calendari da mostrare</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">Aspetto</string>
   <string name="appearance_prefs_desc">Imposta l\'aspetto del widget</string>
   <string name="appearance_text_size_title">Dimensione testo</string>
@@ -51,6 +53,7 @@
   <string name="appearance_theme_dark">Luce</string>
   <string name="appearance_theme_light">Scuro</string>
   <string name="appearance_theme_white">Nero</string>
+  <!-- Preference header: Event details -->
   <string name="event_details_prefs">Dettagli dell\'evento</string>
   <string name="event_details_prefs_desc">Selezionare quali dettagli mostrare per gli eventi</string>
   <string name="event_details_show_end_time_title">Ora in cui termina</string>
@@ -64,6 +67,7 @@
   <string name="event_details_indicate_alert_title">Allarmi</string>
   <string name="event_details_indicate_recurring_desc">Mostra indicatori per eventi ricorrenti</string>
   <string name="event_details_indicate_recurring_title">Eventi ricorrenti</string>
+  <!-- Preference header: Event filters -->
   <string name="event_filters_prefs">Filtri per gli eventi</string>
   <string name="event_filters_prefs_desc">Eventi attuali, futuri e passati da mostrare</string>
   <string name="all_events">Tutti gli eventi</string>
@@ -89,6 +93,7 @@
   <string name="ended_today">Concluso oggi</string>
   <string name="ended_yesterday">Conclusi ieri</string>
   <string name="pref_hide_based_on_keywords_title">Nascondi in base alla parole chiave nel titolo</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Entra in contatto con noi</string>
   <string name="feedback_github_desc">Fornisci un feedback sulla pagina del progetto</string>

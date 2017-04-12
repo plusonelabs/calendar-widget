@@ -11,8 +11,10 @@
   <string name="indicator_alarm">Indicador se um lembrete foi definido</string>
   <string name="indicator_recurring">Indicador se o evento é recorrente</string>
   <string name="no_title">(Sem título)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Calendários</string>
   <string name="calendars_prefs_desc">Selecionar os calendários visíveis</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">Aparência</string>
   <string name="appearance_prefs_desc">Ajustar a aparência do widget</string>
   <string name="appearance_text_size_title">Tamanho do texto</string>
@@ -24,7 +26,7 @@
   <string name="appearance_text_size_very_large">Muito grande</string>
   <string name="appearance_multiline_title_title">Título em múltiplas linhas</string>
   <string name="appearance_multiline_title_desc">Mostrar o título do evento em múltiplas linhas</string>
-  <string name="appearance_date_format_desc">Mostrar as horas no formato am/pm ou no formato de 24 horas</string>
+  <string name="appearance_date_format_desc">Mostrar a hora no formato am/pm ou 24 horas</string>
   <string name="appearance_date_format_title">Formato da data</string>
   <string name="appearance_date_format_auto">Automático</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -51,6 +53,7 @@
   <string name="appearance_theme_dark">Claro</string>
   <string name="appearance_theme_light">Escuro</string>
   <string name="appearance_theme_white">Preto</string>
+  <!-- Preference header: Event details -->
   <string name="event_details_prefs">Detalhes do evento</string>
   <string name="event_details_prefs_desc">Configurar quais os detalhes a mostrar do evento</string>
   <string name="event_details_show_end_time_title">Hora de fim</string>
@@ -64,7 +67,8 @@
   <string name="event_details_indicate_alert_title">Lembretes</string>
   <string name="event_details_indicate_recurring_desc">Mostrar indicador de eventos recorrentes</string>
   <string name="event_details_indicate_recurring_title">Eventos recorrentes</string>
-  <string name="event_filters_prefs">Filtros do evento</string>
+  <!-- Preference header: Event filters -->
+  <string name="event_filters_prefs">Filtros de eventos</string>
   <string name="event_filters_prefs_desc">Quais os eventos passados, atuais e futuros a mostrar</string>
   <string name="all_events">Todos os eventos</string>
   <string name="current_and_future_events">Eventos atuais e futuros</string>
@@ -80,8 +84,8 @@
   <string name="event_range_three_months">3 meses</string>
   <string name="event_range_six_months">6 meses</string>
   <string name="event_range_one_year">1 ano</string>
-  <string name="show_past_events_with_default_color_title">Mostrar todos os últimos eventos na cor padrão</string>
-  <string name="this_option_is_turned_off">(desativado)</string>
+  <string name="show_past_events_with_default_color_title">Mostrar todos os eventos passados na cor padrão</string>
+  <string name="this_option_is_turned_off">(desativada)</string>
   <string name="pref_events_ended_title">Mostrar os eventos que terminaram recentemente</string>
   <string name="ended_one_hour_ago">Terminou há uma hora atrás</string>
   <string name="ended_two_hours_ago">Terminou há duas horas atrás</string>
@@ -89,6 +93,7 @@
   <string name="ended_today">Terminou hoje</string>
   <string name="ended_yesterday">Terminou ontem</string>
   <string name="pref_hide_based_on_keywords_title">Ocultar baseado em palavras-chave num título</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Feedback</string>
   <string name="feedback_prefs_desc">Entrar em contacto connosco</string>
   <string name="feedback_github_desc">Fornecer feedback na página do projeto</string>
@@ -96,4 +101,6 @@
   <string name="feedback_play_store_desc">Avaliar e comentar na Google Play Store</string>
   <string name="feedback_play_store_title">Visitar o widget na Google Play Store</string>
   <string name="refresh_desc">Atualizar</string>
+  <string name="share_events_for_debugging_desc">Criar um relatório para ajudar os programadores a diagnosticar os problemas</string>
+  <string name="share_events_for_debugging_title">Partilhar eventos para diagnóstico</string>
 </resources>

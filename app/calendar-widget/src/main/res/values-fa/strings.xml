@@ -24,7 +24,7 @@
   <string name="appearance_text_size_very_large">بسیار بزرگ</string>
   <string name="appearance_multiline_title_title">عنوان چند خطی</string>
   <string name="appearance_multiline_title_desc">عنوان رویداد را در چند خط نشان بده</string>
-  <string name="appearance_date_format_desc">نمایش تاریخ در صبح و شب یا در قالب 24 ساعت</string>
+  <string name="appearance_date_format_desc">نمایش زمان به صورت am/pm و یا 24 ساعت</string>
   <string name="appearance_date_format_title">فرمت تاریخ</string>
   <string name="appearance_date_format_auto">خودکار</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -96,4 +96,6 @@
   <string name="feedback_play_store_desc">امتیاز دهی و اظهار نظر دز  Google Play Store</string>
   <string name="feedback_play_store_title">بازدید ویدجت در Google Play Store</string>
   <string name="refresh_desc">تازه سازی</string>
+  <string name="share_events_for_debugging_desc">ایجاد گزارش برای کمک به توسعه دهندگان جهت رفع اشکال</string>
+  <string name="share_events_for_debugging_title">به اشتراک گذاری رویداد ها جهت اشکال زدایی</string>
 </resources>

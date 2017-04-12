@@ -11,8 +11,10 @@
   <string name="indicator_alarm">Индикатор за зададена аларма</string>
   <string name="indicator_recurring">Индикатор за повтарящо се събитие</string>
   <string name="no_title">(Без заглавие)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Календари</string>
   <string name="calendars_prefs_desc">Изберете календари за показване</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">Изглед</string>
   <string name="appearance_prefs_desc">Промяна облика на уиджета</string>
   <string name="appearance_text_size_title">Размер на текста</string>
@@ -51,6 +53,7 @@
   <string name="appearance_theme_dark">Светъл</string>
   <string name="appearance_theme_light">Тъмен</string>
   <string name="appearance_theme_white">Черен</string>
+  <!-- Preference header: Event details -->
   <string name="event_details_prefs">Подробности за събитието</string>
   <string name="event_details_prefs_desc">Настройки за показване на събитията</string>
   <string name="event_details_show_end_time_title">Край на събитието</string>
@@ -64,6 +67,7 @@
   <string name="event_details_indicate_alert_title">Напомняния</string>
   <string name="event_details_indicate_recurring_desc">Показва индикатор за повтарящи се събития</string>
   <string name="event_details_indicate_recurring_title">Повтарящи се събития</string>
+  <!-- Preference header: Event filters -->
   <string name="event_filters_prefs">Филтри за събитие</string>
   <string name="event_filters_prefs_desc">Кои настоящи, бъдещи и минали събития  да се показват</string>
   <string name="all_events">Всички събития</string>
@@ -89,6 +93,7 @@
   <string name="ended_today">Завършили днес</string>
   <string name="ended_yesterday">Приключени вчера</string>
   <string name="pref_hide_based_on_keywords_title">Скриване на базата на ключови думи в заглавие</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Обратна връзка</string>
   <string name="feedback_prefs_desc">Свържете се с нас</string>
   <string name="feedback_github_desc">Връзка към страницата на проекта</string>
@@ -96,4 +101,6 @@
   <string name="feedback_play_store_desc">Гласувайте и коментирайте</string>
   <string name="feedback_play_store_title">На Google Play Store</string>
   <string name="refresh_desc">Обновяване</string>
+  <string name="share_events_for_debugging_desc">Създайте отчет, за да помогнете на разработчиците да отстранят проблемите</string>
+  <string name="share_events_for_debugging_title">Споделяне на събития за отстраняване на грешки</string>
 </resources>

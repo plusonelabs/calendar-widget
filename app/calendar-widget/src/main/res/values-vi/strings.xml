@@ -11,8 +11,10 @@
   <string name="indicator_alarm">Báo hiệu nếu một báo động đã được thiết lập</string>
   <string name="indicator_recurring">Báo hiệu nếu các sự kiện là định kỳ</string>
   <string name="no_title">(Không tiêu đề)</string>
+  <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Lịch</string>
   <string name="calendars_prefs_desc">Chọn lịch để hiển thị</string>
+  <!-- Preference header: Appearance -->
   <string name="appearance_prefs">Giao diện</string>
   <string name="appearance_prefs_desc">Điều chỉnh giao diện widget</string>
   <string name="appearance_text_size_title">Cỡ chữ</string>
@@ -24,7 +26,6 @@
   <string name="appearance_text_size_very_large">Rất lớn</string>
   <string name="appearance_multiline_title_title">Nhiều tiêu đề</string>
   <string name="appearance_multiline_title_desc">Tiêu đề sự kiện tràn ra nhiều dòng</string>
-  <string name="appearance_date_format_desc">Hiển thị đồng hồ am/pm hoặc định dạng 24 giờ</string>
   <string name="appearance_date_format_title">Định dạng ngày tháng</string>
   <string name="appearance_date_format_auto">Tự động</string>
   <string name="appearance_date_format_24">17:00</string>
@@ -51,6 +52,7 @@
   <string name="appearance_theme_dark">Sáng</string>
   <string name="appearance_theme_light">Tối</string>
   <string name="appearance_theme_white">Đen</string>
+  <!-- Preference header: Event details -->
   <string name="event_details_prefs">Chi tiết sự kiện</string>
   <string name="event_details_prefs_desc">Cài đặt hiển thị chi tiết cho Sự kiện</string>
   <string name="event_details_show_end_time_title">Thời gian kết thúc</string>
@@ -64,6 +66,7 @@
   <string name="event_details_indicate_alert_title">Thông báo</string>
   <string name="event_details_indicate_recurring_desc">Biểu thị cho các sự kiện định kỳ</string>
   <string name="event_details_indicate_recurring_title">Sự kiện theo định kỳ</string>
+  <!-- Preference header: Event filters -->
   <string name="event_filters_prefs">Bộ lọc sự kiện</string>
   <string name="event_filters_prefs_desc">Hiển thị sự kiện hiện tại, sắp tới và đã qua</string>
   <string name="all_events">Tất cả sự kiện</string>
@@ -89,6 +92,7 @@
   <string name="ended_today">Kết thúc ngày hôm nay</string>
   <string name="ended_yesterday">Đã kết thúc hôm qua</string>
   <string name="pref_hide_based_on_keywords_title">Ẩn dựa vào từ khoá trong tiêu đề</string>
+  <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Phản hồi</string>
   <string name="feedback_prefs_desc">Liên lạc với chúng tôi</string>
   <string name="feedback_github_desc">Phản hồi trên trang web của dự án</string>

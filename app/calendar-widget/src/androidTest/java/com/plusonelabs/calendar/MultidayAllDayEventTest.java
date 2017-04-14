@@ -6,7 +6,6 @@ import android.util.Log;
 import com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
 import com.plusonelabs.calendar.prefs.ApplicationPreferences;
-import com.plusonelabs.calendar.util.RawResourceUtils;
 import com.plusonelabs.calendar.widget.DayHeader;
 import com.plusonelabs.calendar.widget.WidgetEntry;
 
@@ -39,11 +38,8 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
 
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";
-        CalendarQueryResultsStorage inputs = CalendarQueryResultsStorage.fromJsonString(
-                provider.getContext(),
-                RawResourceUtils.getString(this.getInstrumentation().getContext(),
-                        com.plusonelabs.calendar.tests.R.raw.multi_day)
-        );
+        CalendarQueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
+                        com.plusonelabs.calendar.tests.R.raw.multi_day);
         provider.addResults(inputs.getResults());
 
         int dateRange = 30;

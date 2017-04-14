@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.RawRes;
 import android.test.InstrumentationTestCase;
 import android.test.IsolatedContext;
 import android.test.mock.MockContentProvider;
@@ -15,6 +16,7 @@ import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
 import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.prefs.InstanceSettings;
+import com.plusonelabs.calendar.util.RawResourceUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -22,9 +24,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage.KEY_SETTINGS;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_WIDGET_ID;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
@@ -147,7 +152,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     public void addRow(CalendarQueryRow calendarQueryRow) {
         if(results.isEmpty()) {
-            addResult(new CalendarQueryResult(DateUtil.now(getSettings().getTimeZone())));
+            addResult(new CalendarQueryResult(getSettings().getWidgetId(), DateUtil.now(getSettings().getTimeZone())));
         }
         results.get(0).addRow(calendarQueryRow);
     }
@@ -181,5 +186,12 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     public void saveSettings() {
         ApplicationPreferences.save(getContext(), getWidgetId());
+    }
+
+    public CalendarQueryResultsStorage loadResults(Context context, @RawRes int jsonResId)
+            throws IOException, JSONException {
+        JSONObject json = new JSONObject(RawResourceUtils.getString(context, jsonResId));
+        json.getJSONObject(KEY_SETTINGS).put(PREF_WIDGET_ID, widgetId);
+        return CalendarQueryResultsStorage.fromJson(getContext(), json);
     }
 }

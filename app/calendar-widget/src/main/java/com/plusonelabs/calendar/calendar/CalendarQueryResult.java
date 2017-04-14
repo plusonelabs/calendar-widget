@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.plusonelabs.calendar.DateUtil;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -35,6 +36,7 @@ public class CalendarQueryResult {
     private static final String KEY_SORT_ORDER = "sortOrder";
 
     private final DateTime executedAt;
+    private final int widgetId;
     private Uri uri = Uri.EMPTY;
     private String[] projection = {};
     private String selection = "";
@@ -42,9 +44,9 @@ public class CalendarQueryResult {
     private String sortOrder = "";
     private final List<CalendarQueryRow> rows = new ArrayList<>();
 
-    public CalendarQueryResult (DateTimeZone zone, Uri uri, String[] projection, String selection,
+    public CalendarQueryResult (InstanceSettings settings, Uri uri, String[] projection, String selection,
                                 String[] selectionArgs, String sortOrder) {
-        this(DateUtil.now(zone));
+        this(settings.getWidgetId(), DateUtil.now(settings.getTimeZone()));
         this.uri = uri;
         this.projection = projection;
         this.selection = selection;
@@ -52,12 +54,13 @@ public class CalendarQueryResult {
         this.sortOrder = sortOrder;
     }
 
-    CalendarQueryResult(DateTime executedAt) {
+    CalendarQueryResult(int widgetId, DateTime executedAt) {
+        this.widgetId = widgetId;
         this.executedAt = executedAt;
     }
 
-    public static CalendarQueryResult fromJson(JSONObject json) throws JSONException {
-        CalendarQueryResult result = new CalendarQueryResult(
+    public static CalendarQueryResult fromJson(JSONObject json, int widgetId) throws JSONException {
+        CalendarQueryResult result = new CalendarQueryResult(widgetId,
                 new DateTime(json.getLong(KEY_EXECUTED_AT), dateTimeZoneFromJson(json)));
         result.uri = Uri.parse(json.getString(KEY_URI));
         result.projection = jsonToArrayOfStings(json.getJSONArray(KEY_PROJECTION));
@@ -87,6 +90,10 @@ public class CalendarQueryResult {
             }
         }
         return array;
+    }
+
+    public int getWidgetId() {
+        return widgetId;
     }
 
     public DateTime getExecutedAt() {

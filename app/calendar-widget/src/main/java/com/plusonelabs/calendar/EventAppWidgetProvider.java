@@ -79,7 +79,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     private void configureActionBar(InstanceSettings settings, RemoteViews rv) {
         configureCurrentDate(settings, rv);
         setActionIcons(settings, rv);
-        configureAddEvent(settings.getContext(), rv);
+        configureAddEvent(settings, rv);
         configureRefresh(settings.getContext(), rv);
         configureOverflowMenu(settings, rv);
 	}
@@ -106,8 +106,10 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         setAlpha(rv, R.id.overflow_menu, alpha);
     }
 
-    private void configureAddEvent(Context context, RemoteViews rv) {
-        Intent intent = PermissionsUtil.getPermittedIntent(context, CalendarIntentUtil.createNewEventIntent());
+    private void configureAddEvent(InstanceSettings settings, RemoteViews rv) {
+        Context context = settings.getContext();
+        Intent intent = PermissionsUtil.getPermittedIntent(context,
+                CalendarIntentUtil.createNewEventIntent(settings.getTimeZone()));
         if (isIntentAvailable(context, intent)) {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
@@ -143,7 +145,8 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		rv.setRemoteAdapter(R.id.event_list, intent);
 		rv.setEmptyView(R.id.event_list, R.id.empty_event_list);
 		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(settings));
-        rv.setOnClickFillInIntent(R.id.empty_event_list, createOpenCalendarAtDayIntent(new DateTime()));
+        rv.setOnClickFillInIntent(R.id.empty_event_list,
+                createOpenCalendarAtDayIntent(new DateTime(settings.getTimeZone())));
         setTextColorFromAttr(settings.getEntryThemeContext(), rv, R.id.empty_event_list, R.attr.eventEntryTitle);
     }
 

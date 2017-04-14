@@ -60,17 +60,17 @@
   ],
   "applicationInfo": {
     "versionCode": 28,
-    "preferences": {
-      "showDaysWithoutEvents": false,
-      "hideBasedOnKeywords": "",
-      "eventRange": 30,
-      "showPastEventsWithDefaultColor": false,
-      "fillAllDay": true,
-      "eventsEnded": "NONE"
-    },
-    "versionName": "1.9.1"
+    "versionName": "1.10.0"
   },
-  "resultsVersion": 1,
+  "settings": {
+    "showDaysWithoutEvents": false,
+    "hideBasedOnKeywords": "",
+    "eventRange": 30,
+    "showPastEventsWithDefaultColor": false,
+    "fillAllDay": true,
+    "eventsEnded": "NONE"
+  },
+  "resultsVersion": 2,
   "deviceInfo": {
     "buildManufacturer": "samsung",
     "versionCode": 19,

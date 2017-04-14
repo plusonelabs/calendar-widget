@@ -62,7 +62,7 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
     }
 
     private CalendarQueryResult addOneResult(String selection) {
-        CalendarQueryResult input = new CalendarQueryResult(provider.getSettings().getTimeZone(),
+        CalendarQueryResult input = new CalendarQueryResult(provider.getSettings(),
                 CalendarContract.Instances.CONTENT_URI, projection, selection, null, sortOrder);
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         input.addRow(new CalendarQueryRow().setEventId(++eventId)
@@ -85,7 +85,7 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
     }
 
     private CalendarQueryResult queryList(Uri uri, String selection) {
-        CalendarQueryResult result = new CalendarQueryResult(provider.getSettings().getTimeZone(),
+        CalendarQueryResult result = new CalendarQueryResult(provider.getSettings(),
                 uri, projection, selection, null, sortOrder);
         Cursor cursor = null;
         try {
@@ -109,12 +109,9 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
     }
 
     public void testJsonToAndFrom() throws IOException, JSONException {
-        String jsonInputString =
-                RawResourceUtils.getString(getInstrumentation().getContext(),
-                        com.plusonelabs.calendar.tests.R.raw.birthday);
-        CalendarQueryResultsStorage inputs1 =
-                CalendarQueryResultsStorage.fromJsonString(provider.getContext(), jsonInputString);
-        JSONObject jsonOutput = inputs1.toJson(provider.getContext());
+        CalendarQueryResultsStorage inputs1 = provider.loadResults(getInstrumentation().getContext(),
+                com.plusonelabs.calendar.tests.R.raw.birthday);
+        JSONObject jsonOutput = inputs1.toJson(provider.getContext(), provider.getWidgetId());
         CalendarQueryResultsStorage inputs2 =
                 CalendarQueryResultsStorage.fromJson(provider.getContext(), jsonOutput);
         assertEquals(inputs1, inputs2);

@@ -78,7 +78,7 @@ public class MultidayEventTest extends InstrumentationTestCase {
 
     /**  https://github.com/plusonelabs/calendar-widget/issues/184#issuecomment-142671469 */
     public void testThreeDaysEvent() {
-        DateTime friday = new DateTime(2015, 9, 18, 0, 0);
+        DateTime friday = new DateTime(2015, 9, 18, 0, 0, 0, 0, provider.getSettings().getTimeZone());
         DateTime sunday = friday.plusDays(2);
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
         event.setEventId(++eventId);

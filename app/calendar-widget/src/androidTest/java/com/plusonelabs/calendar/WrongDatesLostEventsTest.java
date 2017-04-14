@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
-import com.plusonelabs.calendar.util.RawResourceUtils;
 import com.plusonelabs.calendar.widget.CalendarEntry;
 
 import org.json.JSONException;
@@ -37,11 +36,8 @@ public class WrongDatesLostEventsTest extends InstrumentationTestCase {
     /** https://github.com/plusonelabs/calendar-widget/issues/205 */
     public void testIssue205() throws IOException, JSONException {
         final String method = "testIssue205";
-        CalendarQueryResultsStorage inputs = CalendarQueryResultsStorage.fromJsonString(
-                provider.getContext(),
-                RawResourceUtils.getString(this.getInstrumentation().getContext(),
-                        com.plusonelabs.calendar.tests.R.raw.wrong_dates_lost_events)
-        );
+        CalendarQueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
+                        com.plusonelabs.calendar.tests.R.raw.wrong_dates_lost_events);
         provider.addResults(inputs.getResults());
         Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());
 

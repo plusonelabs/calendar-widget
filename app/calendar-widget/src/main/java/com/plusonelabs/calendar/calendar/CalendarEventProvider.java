@@ -166,7 +166,7 @@ public class CalendarEventProvider {
 
     private List<CalendarEvent> queryList(Uri uri, String selection) {
         List<CalendarEvent> eventList = new ArrayList<>();
-        CalendarQueryResult result = new CalendarQueryResult(getSettings().getTimeZone(), uri, getProjection(),
+        CalendarQueryResult result = new CalendarQueryResult(getSettings(), uri, getProjection(),
                 selection, null, EVENT_SORT_ORDER);
         Cursor cursor = null;
         try {

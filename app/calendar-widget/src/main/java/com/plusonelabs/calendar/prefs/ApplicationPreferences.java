@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ApplicationPreferences {
-    static final String PREF_WIDGET_ID = "widgetId";
+    public static final String PREF_WIDGET_ID = "widgetId";
 
 	static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
 	static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";

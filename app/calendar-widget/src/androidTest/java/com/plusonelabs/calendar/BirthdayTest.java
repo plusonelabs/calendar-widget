@@ -5,7 +5,6 @@ import android.test.InstrumentationTestCase;
 import com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
 import com.plusonelabs.calendar.prefs.ApplicationPreferences;
-import com.plusonelabs.calendar.util.RawResourceUtils;
 import com.plusonelabs.calendar.widget.CalendarEntry;
 
 import org.joda.time.DateTime;
@@ -36,11 +35,8 @@ public class BirthdayTest extends InstrumentationTestCase {
     }
 
     public void testBirthdayOneDayOnly() throws IOException, JSONException {
-        CalendarQueryResultsStorage inputs = CalendarQueryResultsStorage.fromJsonString(
-                provider.getContext(),
-                RawResourceUtils.getString(this.getInstrumentation().getContext(),
-                        com.plusonelabs.calendar.tests.R.raw.birthday)
-        );
+        CalendarQueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
+                        com.plusonelabs.calendar.tests.R.raw.birthday);
 
         provider.startEditing();
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.NONE);
@@ -48,51 +44,61 @@ public class BirthdayTest extends InstrumentationTestCase {
         ApplicationPreferences.setEventRange(provider.getContext(), 30);
         provider.saveSettings();
 
-        playAtOneTime(inputs, new DateTime(2015, 8, 1, 17, 0), 0);
-        playAtOneTime(inputs, new DateTime(2015, 8,  9, 23, 59), 0);
-        playAtOneTime(inputs, new DateTime(2015, 8, 10,  0,  0).plusMillis(1), 2);
-        playAtOneTime(inputs, new DateTime(2015, 8, 10,  0,  1), 2);
+        playAtOneTime(inputs, dateTime(2015, 8, 1, 17, 0), 0);
+        playAtOneTime(inputs, dateTime(2015, 8,  9, 23, 59), 0);
+        playAtOneTime(inputs, dateTime(2015, 8, 10,  0,  0).plusMillis(1), 2);
+        playAtOneTime(inputs, dateTime(2015, 8, 10,  0,  1), 2);
 
-        playAtOneTime(inputs, new DateTime(2015, 9, 8, 17,  0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 8, 23, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 9,  0, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 9, 11,  0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 9, 17,  0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 9, 23, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 0, 30), 0);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 11, 0), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 8, 17,  0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 8, 23, 30), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 9,  0, 30), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 9, 11,  0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 9, 17,  0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 9, 23, 30), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 0, 30), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 11, 0), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.ONE_HOUR);
         provider.saveSettings();
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 0, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 0, 30), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 1, 30), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.TODAY);
         provider.saveSettings();
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 1, 30), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.FOUR_HOURS);
         provider.saveSettings();
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 1, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 3, 59), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 4,  0), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 1, 30), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 3, 59), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 4,  0), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.YESTERDAY);
         provider.saveSettings();
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 4, 0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10,11,  0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10, 17, 0), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 10,23, 30), 2);
-        playAtOneTime(inputs, new DateTime(2015, 9, 11, 0,  0), 0);
-        playAtOneTime(inputs, new DateTime(2015, 9, 11, 0, 30), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 4, 0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 10,11,  0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 17, 0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 10,23, 30), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 11, 0,  0), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 11, 0, 30), 0);
 
         ApplicationPreferences.setShowPastEventsWithDefaultColor(provider.getContext(), true);
         provider.saveSettings();
-        playAtOneTime(inputs, new DateTime(2015, 9, 11, 0, 30), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 11, 0, 30), 0);
 
         // TODO: This doesn't work yet. We need to inject a MockCalendarContentProvider deeper,
         // so it could work in a normal Context also
         provider.refreshWidget();
+    }
+
+    private DateTime dateTime(
+            int year,
+            int monthOfYear,
+            int dayOfMonth,
+            int hourOfDay,
+            int minuteOfHour) {
+        return new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 0, 0,
+                provider.getSettings().getTimeZone());
     }
 
     private void playAtOneTime(CalendarQueryResultsStorage inputs, DateTime now, int numberOfEntriesExpected) {

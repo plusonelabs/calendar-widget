@@ -11,6 +11,7 @@ import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.util.PermissionsUtil;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 public class CalendarIntentUtil {
 
@@ -34,7 +35,8 @@ public class CalendarIntentUtil {
 	}
 
     static PendingIntent createOpenCalendarPendingIntent(InstanceSettings settings) {
-        return PermissionsUtil.getPermittedPendingIntent(settings, createOpenCalendarAtDayIntent(new DateTime()));
+        return PermissionsUtil.getPermittedPendingIntent(settings,
+				createOpenCalendarAtDayIntent(new DateTime(settings.getTimeZone())));
     }
 
     public static Intent createOpenCalendarEventIntent(int eventId, DateTime from, DateTime to) {
@@ -52,8 +54,8 @@ public class CalendarIntentUtil {
 		return  intent;
 	}
 
-	public static Intent createNewEventIntent() {
-		DateTime beginTime = new DateTime().plusHours(1).withMinuteOfHour(0).withSecondOfMinute(0)
+	public static Intent createNewEventIntent(DateTimeZone timeZone) {
+		DateTime beginTime = new DateTime(timeZone).plusHours(1).withMinuteOfHour(0).withSecondOfMinute(0)
 				.withMillisOfSecond(0);
 		DateTime endTime = beginTime.plusHours(1);
         return new Intent(Intent.ACTION_INSERT, Events.CONTENT_URI)

@@ -174,32 +174,82 @@ public class InstanceSettings {
         }
         settings.setWidgetInstanceName(json.optString(PREF_WIDGET_INSTANCE_NAME));
         settings.justCreated = false;
-        settings.activeCalendars = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_CALENDARS));
-        settings.eventRange = json.getInt(PREF_EVENT_RANGE);
-        settings.eventsEnded = EndedSomeTimeAgo.fromValue(json.getString(PREF_EVENTS_ENDED));
-        settings.fillAllDayEvents = json.getBoolean(PREF_FILL_ALL_DAY);
-        settings.hideBasedOnKeywords = json.getString(PREF_HIDE_BASED_ON_KEYWORDS);
-        settings.pastEventsBackgroundColor = json.getInt(PREF_PAST_EVENTS_BACKGROUND_COLOR);
-        settings.showDaysWithoutEvents = json.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS);
-        settings.showDayHeaders = json.getBoolean(PREF_SHOW_DAY_HEADERS);
-        settings.showPastEventsWithDefaultColor = json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR);
-        settings.showEndTime = json.getBoolean(PREF_SHOW_END_TIME);
-        settings.showLocation = json.getBoolean(PREF_SHOW_LOCATION);
-        settings.dateFormat = json.getString(PREF_DATE_FORMAT);
-        settings.abbreviateDates = json.getBoolean(PREF_ABBREVIATE_DATES);
-        settings.setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
-        settings.eventEntryLayout = EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT));
-        settings.titleMultiline = json.getBoolean(PREF_MULTILINE_TITLE);
-        settings.showOnlyClosestInstanceOfRecurringEvent = json.getBoolean(
-                PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT);
-        settings.indicateAlerts = json.getBoolean(PREF_INDICATE_ALERTS);
-        settings.indicateRecurring = json.getBoolean(PREF_INDICATE_RECURRING);
-        settings.entryTheme = json.getString(PREF_ENTRY_THEME);
-        settings.headerTheme = json.getString(PREF_HEADER_THEME);
-        settings.showWidgetHeader = json.getBoolean(PREF_SHOW_WIDGET_HEADER);
-        settings.backgroundColor = json.getInt(PREF_BACKGROUND_COLOR);
-        settings.textSizeScale = json.getString(PREF_TEXT_SIZE_SCALE);
-        settings.dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
+        if (json.has(PREF_ACTIVE_CALENDARS)) {
+            settings.activeCalendars = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_CALENDARS));
+        }
+        if (json.has(PREF_EVENT_RANGE)) {
+            settings.eventRange = json.getInt(PREF_EVENT_RANGE);
+        }
+        if (json.has(PREF_EVENTS_ENDED)) {
+            settings.eventsEnded = EndedSomeTimeAgo.fromValue(json.getString(PREF_EVENTS_ENDED));
+        }
+        if (json.has(PREF_FILL_ALL_DAY)) {
+            settings.fillAllDayEvents = json.getBoolean(PREF_FILL_ALL_DAY);
+        }
+        if (json.has(PREF_HIDE_BASED_ON_KEYWORDS)) {
+            settings.hideBasedOnKeywords = json.getString(PREF_HIDE_BASED_ON_KEYWORDS);
+        }
+        if (json.has(PREF_PAST_EVENTS_BACKGROUND_COLOR)) {
+            settings.pastEventsBackgroundColor = json.getInt(PREF_PAST_EVENTS_BACKGROUND_COLOR);
+        }
+        if (json.has(PREF_SHOW_DAYS_WITHOUT_EVENTS)) {
+            settings.showDaysWithoutEvents = json.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS);
+        }
+        if (json.has(PREF_SHOW_DAY_HEADERS)) {
+            settings.showDayHeaders = json.getBoolean(PREF_SHOW_DAY_HEADERS);
+        }
+        if (json.has(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR)) {
+            settings.showPastEventsWithDefaultColor = json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR);
+        }
+        if (json.has(PREF_SHOW_END_TIME)) {
+            settings.showEndTime = json.getBoolean(PREF_SHOW_END_TIME);
+        }
+        if (json.has(PREF_SHOW_LOCATION)) {
+            settings.showLocation = json.getBoolean(PREF_SHOW_LOCATION);
+        }
+        if (json.has(PREF_DATE_FORMAT)) {
+            settings.dateFormat = json.getString(PREF_DATE_FORMAT);
+        }
+        if (json.has(PREF_ABBREVIATE_DATES)) {
+            settings.abbreviateDates = json.getBoolean(PREF_ABBREVIATE_DATES);
+        }
+        if (json.has(PREF_LOCKED_TIME_ZONE_ID)) {
+            settings.setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
+        }
+        if (json.has(PREF_EVENT_ENTRY_LAYOUT)) {
+            settings.eventEntryLayout = EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT));
+        }
+        if (json.has(PREF_MULTILINE_TITLE)) {
+            settings.titleMultiline = json.getBoolean(PREF_MULTILINE_TITLE);
+        }
+        if (json.has(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT)) {
+            settings.showOnlyClosestInstanceOfRecurringEvent = json.getBoolean(
+                    PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT);
+        }
+        if (json.has(PREF_INDICATE_ALERTS)) {
+            settings.indicateAlerts = json.getBoolean(PREF_INDICATE_ALERTS);
+        }
+        if (json.has(PREF_INDICATE_RECURRING)) {
+            settings.indicateRecurring = json.getBoolean(PREF_INDICATE_RECURRING);
+        }
+        if (json.has(PREF_ENTRY_THEME)) {
+            settings.entryTheme = json.getString(PREF_ENTRY_THEME);
+        }
+        if (json.has(PREF_HEADER_THEME)) {
+            settings.headerTheme = json.getString(PREF_HEADER_THEME);
+        }
+        if (json.has(PREF_SHOW_WIDGET_HEADER)) {
+            settings.showWidgetHeader = json.getBoolean(PREF_SHOW_WIDGET_HEADER);
+        }
+        if (json.has(PREF_BACKGROUND_COLOR)) {
+            settings.backgroundColor = json.getInt(PREF_BACKGROUND_COLOR);
+        }
+        if (json.has(PREF_TEXT_SIZE_SCALE)) {
+            settings.textSizeScale = json.getString(PREF_TEXT_SIZE_SCALE);
+        }
+        if (json.has(PREF_DAY_HEADER_ALIGNMENT)) {
+            settings.dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
+        }
         return settings;
     }
 

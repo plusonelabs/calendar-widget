@@ -14,7 +14,8 @@ public class FeedbackPreferencesFragment extends PreferenceFragment {
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 		switch (preference.getKey()) {
             case ApplicationPreferences.KEY_SHARE_EVENTS_FOR_DEBUGGING:
-                CalendarQueryResultsStorage.shareEventsForDebugging(getActivity());
+                CalendarQueryResultsStorage.shareEventsForDebugging(getActivity(),
+						ApplicationPreferences.getWidgetId(getActivity()));
 			default:
 				break;
 		}

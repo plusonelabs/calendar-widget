@@ -11,7 +11,6 @@ import android.util.Log;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventRemoteViewsFactory;
 import com.plusonelabs.calendar.R;
-import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;
@@ -29,12 +28,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class CalendarQueryResultsStorage {
     private static final String TAG = CalendarQueryResultsStorage.class.getSimpleName();
     private static final String KEY_RESULTS_VERSION = "resultsVersion";
-    private static final int RESULTS_VERSION = 1;
+    private static final int RESULTS_VERSION = 2;
     private static final String KEY_RESULTS = "results";
     private static final String KEY_APP_VERSION_NAME = "versionName";
     private static final String KEY_APP_VERSION_CODE = "versionCode";
     private static final String KEY_APP_INFO = "applicationInfo";
-    private static final String KEY_PREFERENCES = "preferences";
+    public static final String KEY_SETTINGS = "settings";
 
     private static final String KEY_DEVICE_INFO = "deviceInfo";
     private static final String KEY_ANDROID_VERSION_CODE = "versionCode";
@@ -57,15 +56,14 @@ public class CalendarQueryResultsStorage {
         return false;
     }
 
-    public static void shareEventsForDebugging(Context context) {
+    public static void shareEventsForDebugging(Context context, int widgetId) {
         final String method = "shareEventsForDebugging";
         try {
             Log.i(TAG, method + " started");
             setNeedToStoreResults(true);
-            EventRemoteViewsFactory factory = new EventRemoteViewsFactory(context,
-                    ApplicationPreferences.getWidgetId(context));
+            EventRemoteViewsFactory factory = new EventRemoteViewsFactory(context, widgetId);
             factory.onDataSetChanged();
-            String results = theStorage.getResultsAsString(context);
+            String results = theStorage.getResultsAsString(context, widgetId);
             if (TextUtils.isEmpty(results)) {
                 Log.i(TAG, method + "; Nothing to share");
             } else {
@@ -102,46 +100,40 @@ public class CalendarQueryResultsStorage {
         return results;
     }
 
-    private String getResultsAsString(Context context) {
+    private String getResultsAsString(Context context, int widgetId) {
         try {
-            return toJson(context).toString(2);
+            return toJson(context, widgetId).toString(2);
         } catch (JSONException e) {
             return "Error while formatting data " + e;
         }
     }
 
-    public JSONObject toJson(Context context) throws JSONException {
+    public JSONObject toJson(Context context, int widgetId) throws JSONException {
         JSONObject json = new JSONObject();
         List<CalendarQueryResult> results = this.results;
         json.put(KEY_RESULTS_VERSION, RESULTS_VERSION);
         json.put(KEY_DEVICE_INFO, getDeviceInfo());
         json.put(KEY_APP_INFO, getAppInfo(context));
+        json.put(KEY_SETTINGS, InstanceSettings.fromId(context, widgetId).toJson());
         if (results != null) {
             JSONArray jsonArray = new JSONArray();
             for(CalendarQueryResult result : results) {
-                jsonArray.put(result.toJson());
+                if (result.getWidgetId() == widgetId) {
+                    jsonArray.put(result.toJson());
+                }
             }
             json.put(KEY_RESULTS, jsonArray);
         }
         return json;
     }
 
-    public static CalendarQueryResultsStorage fromJsonString(Context context, String jsonString) throws JSONException {
-        return fromJson(context, new JSONObject(jsonString));
-    }
-
     public static CalendarQueryResultsStorage fromJson(Context context, JSONObject json) throws JSONException {
+        InstanceSettings settings = InstanceSettings.fromJson(context, json.getJSONObject(KEY_SETTINGS));
+        InstanceSettings.getInstances(context).put(settings.getWidgetId(), settings) ;
         CalendarQueryResultsStorage results = new CalendarQueryResultsStorage();
         JSONArray jsonResults = json.getJSONArray(KEY_RESULTS);
         for (int ind=0; ind < jsonResults.length(); ind++) {
-            results.results.add(CalendarQueryResult.fromJson(jsonResults.getJSONObject(ind)));
-        }
-        JSONObject appInfo = json.optJSONObject(KEY_APP_INFO);
-        if (appInfo != null) {
-            JSONArray preferences = json.optJSONArray(KEY_PREFERENCES);
-            if (preferences != null) {
-                InstanceSettings.fromJson(context, preferences);
-            }
+            results.results.add(CalendarQueryResult.fromJson(jsonResults.getJSONObject(ind), settings.getWidgetId()));
         }
         if (!results.results.isEmpty()) {
             DateTime now = results.results.get(0).getExecutedAt().toDateTime(DateTimeZone.getDefault());
@@ -161,7 +153,6 @@ public class CalendarQueryResultsStorage {
             json.put(KEY_APP_VERSION_NAME, "Unable to obtain package information " + e);
             json.put(KEY_APP_VERSION_CODE, -1);
         }
-        json.put(KEY_PREFERENCES, InstanceSettings.toJson(context));
         return json;
     }
 
@@ -201,5 +192,12 @@ public class CalendarQueryResultsStorage {
             result = 31 * result + results.get(ind).hashCode();
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CalendarQueryResultsStorage{" +
+                "results=" + results +
+                '}';
     }
 }

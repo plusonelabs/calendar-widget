@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Menu"
+        android:layout_marginBottom="@dimen/calender_padding"
         tools:text="@string/permissions_justification"/>
 
     <ListView

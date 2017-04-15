@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -58,7 +59,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
             AlarmReceiver.scheduleAlarm(settings.getHeaderThemeContext());
             RemoteViews rv = new RemoteViews(baseContext.getPackageName(), R.layout.widget);
             configureBackground(settings, rv);
-            configureActionBar(settings, rv);
+            configureWidgetHeader(settings, rv);
             configureList(settings, widgetId, rv);
             appWidgetManager.updateAppWidget(widgetId, rv);
         }
@@ -76,7 +77,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         setAlpha(rv, R.id.background_image, alpha(color));
     }
 
-    private void configureActionBar(InstanceSettings settings, RemoteViews rv) {
+    private void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
         configureCurrentDate(settings, rv);
         setActionIcons(settings, rv);
         configureAddEvent(settings, rv);
@@ -107,16 +108,24 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void configureAddEvent(InstanceSettings settings, RemoteViews rv) {
+        rv.setOnClickPendingIntent(R.id.add_event, getPermittedAddEventPendingIntent(settings));
+    }
+
+    private PendingIntent getPermittedAddEventPendingIntent(InstanceSettings settings) {
         Context context = settings.getContext();
         Intent intent = PermissionsUtil.getPermittedIntent(context,
                 CalendarIntentUtil.createNewEventIntent(settings.getTimeZone()));
-        if (isIntentAvailable(context, intent)) {
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            rv.setOnClickPendingIntent(R.id.add_event, pendingIntent);
-        } else {
-            rv.setViewVisibility(R.id.add_event, View.GONE);
-        }
+        return isIntentAvailable(context, intent) ?
+            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT) :
+            getEmptyPendingIntent(context);
+    }
+
+    private static PendingIntent getEmptyPendingIntent(Context context) {
+        return PendingIntent.getActivity(
+                context.getApplicationContext(),
+                0,
+                new Intent(),
+                PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void configureRefresh(Context context, RemoteViews rv) {
@@ -143,11 +152,20 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
 		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 		rv.setRemoteAdapter(R.id.event_list, intent);
-		rv.setEmptyView(R.id.event_list, R.id.empty_event_list);
-		rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(settings));
-        rv.setOnClickFillInIntent(R.id.empty_event_list,
-                createOpenCalendarAtDayIntent(new DateTime(settings.getTimeZone())));
-        setTextColorFromAttr(settings.getEntryThemeContext(), rv, R.id.empty_event_list, R.attr.eventEntryTitle);
+
+        boolean permissionsGranted = PermissionsUtil.arePermissionsGranted(settings.getContext());
+        @IdRes int emptyViewId = R.id.empty_event_list;
+        rv.setEmptyView(R.id.event_list, emptyViewId);
+        rv.setTextViewText(emptyViewId, settings.getContext().getText(
+                permissionsGranted ? R.string.no_upcoming_events : R.string.grant_permissions_verbose
+        ));
+        rv.setOnClickPendingIntent(emptyViewId, getPermittedAddEventPendingIntent(settings));
+        if (permissionsGranted) {
+            rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(settings));
+            rv.setOnClickFillInIntent(emptyViewId,
+                    createOpenCalendarAtDayIntent(new DateTime(settings.getTimeZone())));
+        }
+        setTextColorFromAttr(settings.getEntryThemeContext(), rv, emptyViewId, R.attr.eventEntryTitle);
     }
 
     public static void updateEventList(Context context) {

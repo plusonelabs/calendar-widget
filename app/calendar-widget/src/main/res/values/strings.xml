@@ -14,6 +14,8 @@
     <string name="indicator_recurring">Indicator if the event is recurring</string>
     <string name="no_title">(No title)</string>
     <string name="grant_permissions">Grant permissions</string>
+    <string name="grant_permissions_verbose">No permission available to read calendars. Tap here to grant the
+        permission</string>
     <string name="permissions_justification">Welcome to the Calendar Widget, the easy access to your calendar.
         \nTo make the most of the widget you need to grant it access to your calendar.
         Otherwise the widget will be empty.</string>

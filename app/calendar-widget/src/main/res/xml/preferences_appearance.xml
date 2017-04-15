@@ -2,7 +2,8 @@
 
     <EditTextPreference
         android:key="widgetInstanceName"
-        android:title="@string/widget_instance_name" />
+        android:title="@string/widget_instance_name"
+        android:singleLine="true" />
 
     <ListPreference
         android:defaultValue="1.0"

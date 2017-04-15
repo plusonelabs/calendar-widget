@@ -33,6 +33,7 @@ import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setColorFilter;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
@@ -165,6 +166,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
             rv.setOnClickFillInIntent(emptyViewId,
                     createOpenCalendarAtDayIntent(new DateTime(settings.getTimeZone())));
         }
+        setTextSize(settings, rv, emptyViewId, R.dimen.event_entry_details);
         setTextColorFromAttr(settings.getEntryThemeContext(), rv, emptyViewId, R.attr.eventEntryTitle);
     }
 

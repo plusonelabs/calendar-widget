@@ -80,7 +80,7 @@ public class InstanceSettings {
     private volatile ContextThemeWrapper headerThemeContext = null;
 
     private final int widgetId;
-    private String widgetInstanceName = "";
+    private final String widgetInstanceName;
     private boolean justCreated = true;
     private Set<String> activeCalendars = new HashSet<>();
     private int eventRange = Integer.valueOf(PREF_EVENT_RANGE_DEFAULT);
@@ -122,7 +122,7 @@ public class InstanceSettings {
                 if (ApplicationPreferences.getWidgetId(context) == widgetId || instances.isEmpty()) {
                     settings =  fromApplicationPreferences(context, widgetId);
                 } else {
-                    settings = new InstanceSettings(context, widgetId);
+                    settings = new InstanceSettings(context, widgetId, "");
                 }
                 instances.put(widgetId, settings);
             }
@@ -168,11 +168,11 @@ public class InstanceSettings {
     }
 
     public static InstanceSettings fromJson(Context context, JSONObject json) throws JSONException {
-        InstanceSettings settings = new InstanceSettings(context, json.optInt(PREF_WIDGET_ID));
+        InstanceSettings settings = new InstanceSettings(context, json.optInt(PREF_WIDGET_ID),
+                json.optString(PREF_WIDGET_INSTANCE_NAME));
         if (settings.widgetId == 0) {
             return settings;
         }
-        settings.setWidgetInstanceName(json.optString(PREF_WIDGET_INSTANCE_NAME));
         settings.justCreated = false;
         if (json.has(PREF_ACTIVE_CALENDARS)) {
             settings.activeCalendars = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_CALENDARS));
@@ -277,8 +277,9 @@ public class InstanceSettings {
     }
 
     public static InstanceSettings fromApplicationPreferences(Context context, int widgetId) {
-        InstanceSettings settings = new InstanceSettings(context, widgetId);
-        settings.setWidgetInstanceName(ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, ""));
+        InstanceSettings settings = new InstanceSettings(context, widgetId,
+                ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
+                        ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, "")));
         settings.justCreated = false;
         settings.activeCalendars = ApplicationPreferences.getActiveCalendars(context);
         settings.eventRange = ApplicationPreferences.getEventRange(context);
@@ -335,10 +336,32 @@ public class InstanceSettings {
         }
     }
 
-    private InstanceSettings(Context context, int widgetId) {
+    private InstanceSettings(Context context, int widgetId, String widgetInstanceName) {
         this.context = context;
         this.widgetId = widgetId;
-        this.widgetInstanceName = context.getText(R.string.app_name) + " " + widgetId;
+        this.widgetInstanceName = uniqueInstanceName(widgetInstanceName);
+    }
+
+    private String uniqueInstanceName(String widgetInstanceName) {
+        int index = instances.size();
+        String name = TextUtils.isEmpty(widgetInstanceName) ? defaultInstanceName(++index) : widgetInstanceName;
+        while (existsInstanceName(name)) {
+            name = defaultInstanceName(++index);
+        }
+        return name;
+    }
+
+    private String defaultInstanceName(int index) {
+        return context.getText(R.string.app_name) + " " + index;
+    }
+
+    private boolean existsInstanceName(String name) {
+        for (InstanceSettings settings : instances.values()) {
+            if (settings.getWidgetId() != widgetId && settings.getWidgetInstanceName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void save() {
@@ -391,12 +414,6 @@ public class InstanceSettings {
 
     public int getWidgetId() {
         return widgetId;
-    }
-
-    public void setWidgetInstanceName(String widgetInstanceName) {
-        if (!TextUtils.isEmpty(widgetInstanceName)) {
-            this.widgetInstanceName = widgetInstanceName;
-        }
     }
 
     public String getWidgetInstanceName() {

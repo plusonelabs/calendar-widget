@@ -3,7 +3,7 @@
 
     <string name="app_name">Calendar Widget</string>
     <string name="widget_name">Calendar Widget</string>
-    <string name="widget_instance_name">Widget instance name</string>
+    <string name="widget_instance_name">Widget name</string>
     <string name="yesterday">Yesterday</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>

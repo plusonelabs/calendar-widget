@@ -39,25 +39,24 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 * Added: Different settings for different Widget instances allow you to create any number of
 customized views of your events, including configuration of different calendars for different widgets.
-All setting are currently separate for each Widget instance. In order not to get confused in 
-configurations of different widgets, you now can launch "Calendar Widget" with your Android Launcher 
+All setting are separate for each Widget instance. In order not to get confused in 
+configurations of different widgets, you can launch "Calendar Widget" with your Android Launcher 
 and you will be presented with a widget selection list. Each widget can be given its name 
 to ease configuring. See [screenshots](https://github.com/plusonelabs/calendar-widget/issues/37#issuecomment-290968481). 
 * Added: "Show day headers" option to disable day headers completely.
-* Added: The alternative widget layout: "Single line layout". Each event can now occupy literally one line only.
-"Appearance -> Event entry layout" option now allows 
-to switch between the "Default multiline layout" and this new one. When used with the
+* Added: The alternative widget layout: "All in one row". Each event can now occupy literally one line 
+only. "Appearance -> Event entry layout" option allows 
+to switch between the "Time below title" layout and this new one. When used with the
 "Show day headers" option, this layout almost doubles number of events visible in a widget without scrolling.
-"Days from Today" column successfully replaces day headers in a case the Day Headers are 
+"Days from Today" column replaces day headers in a case the Day Headers are 
 turned off. See [screenshots](https://github.com/plusonelabs/calendar-widget/issues/42#issuecomment-289261236).
 * Added: "Abbreviate dates" option allows to have shorter date format for both Widget and Day headers.
 * Added: "Lock time zone" option to show events in the same Time Zone when travelling to different time zones.
-* Added: "Show only the closest instance of a recurring event". Now, at last, you can set 
-"Event Filters"->"Date range" to "One year", and your agenda won't be an endless list of the same 
-events, as it was before...
+* Added: "Show only the closest instance of a recurring event". You can set 
+"Event Filters"->"Date range" to "One year", and your agenda won't be an endless list of the same events.
 * Improved: Use space or commas in "Hide based on keywords in a title". Place a text in single or
 double quotes in order to have space or comma in a filter.
-* Android 7 compatibility, including support of permissions, introduced in Android 6.
+* Android 7 compatibility, including support of permissions introduced in Android 6.
 
 ### [v1.9.3](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.3)
 

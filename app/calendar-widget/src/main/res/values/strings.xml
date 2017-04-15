@@ -40,8 +40,8 @@
     <string name="appearance_text_size_large">Large</string>
     <string name="appearance_text_size_very_large">Very large</string>
     <string name="pref_event_entry_layout_title">Event entry layout</string>
-    <string name="default_multiline_layout">Default multiline layout</string>
-    <string name="single_line_layout">Single line layout</string>
+    <string name="default_multiline_layout">Time below title</string>
+    <string name="single_line_layout">All in one row</string>
     <string name="appearance_multiline_title_title">Multiline title</string>
     <string name="appearance_multiline_title_desc">Spread event title over multiple lines</string>
     <string name="appearance_date_format_desc">Show time in am/pm or 24 hours format</string>

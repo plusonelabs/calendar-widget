@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(android.R.id.list);
-        checkPermissionsAndRequestThem();
+        checkPermissions();
         if (preparedToOpen()) {
             updateScreen();
         }
@@ -103,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             listView.setVisibility(View.GONE);
         }
 
+        Button goToHomeScreenButton = (Button) findViewById(R.id.go_to_home_screen_button);
+        if (goToHomeScreenButton != null) {
+            goToHomeScreenButton.setVisibility(permissionsGranted &&
+                    InstanceSettings.getInstances(this).isEmpty() ? View.VISIBLE : View.GONE);
+        }
+
         Button grantPermissionsButton = (Button) findViewById(R.id.grant_permissions);
         if (grantPermissionsButton != null) {
             grantPermissionsButton.setVisibility(permissionsGranted ? View.GONE : View.VISIBLE);
@@ -151,7 +157,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         updateScreen();
     }
 
-    public void onCloseButtonClick(View view) {
+    public void onHomeButtonClick(View view) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         finish();
     }
 }

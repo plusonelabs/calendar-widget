@@ -31,21 +31,21 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end">
+        android:gravity="center_horizontal">
 
         <Button
+            android:id="@+id/grant_permissions"
             android:text="@string/grant_permissions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/grant_permissions"
             android:onClick="grantPermissions"/>
 
         <Button
-            android:text="@string/close"
+            android:id="@+id/go_to_home_screen_button"
+            android:text="@string/go_to_home_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/close_button"
-            android:onClick="onCloseButtonClick"/>
+            android:onClick="onHomeButtonClick"/>
     </LinearLayout>
 
 </LinearLayout>

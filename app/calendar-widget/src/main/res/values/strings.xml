@@ -14,16 +14,14 @@
     <string name="indicator_recurring">Indicator if the event is recurring</string>
     <string name="no_title">(No title)</string>
     <string name="grant_permissions">Grant permissions</string>
-    <string name="grant_permissions_verbose">No permission available to read calendars. Tap here to grant the
-        permission</string>
+    <string name="grant_permissions_verbose">Widget requires permission to read calendars.\nTap here to grant permission.</string>
     <string name="permissions_justification">Welcome to the Calendar Widget, the easy access to your calendar.
-        \nTo make the most of the widget you need to grant it access to your calendar.
-        Otherwise the widget will be empty.</string>
-    <string name="no_widgets_found">No widgets to configure yet. Please add a \"Calendar Widget\" widget
-        from the Home Screen of your device first.</string>
-    <string name="select_a_widget_to_configure">Select a Widget to configure</string>
+        \n\nTo make the most out of the widget you need to grant it access to your calendar.</string>
+    <string name="no_widgets_found">Please add a \"Calendar Widget\" widget
+        from the home screen of your device first.</string>
+    <string name="select_a_widget_to_configure">Select a widget to configure</string>
     <string name="close">Close</string>
-    <string name="go_to_home_screen">Go to the Home Screen</string>
+    <string name="go_to_home_screen">Go to home screen</string>
 
     <!-- Preference header: Calendars -->
     <string name="calendars_prefs">Calendars</string>

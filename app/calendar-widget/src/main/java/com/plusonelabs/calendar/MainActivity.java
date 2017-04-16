@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -27,6 +28,7 @@ import java.util.Map;
  * @author yvolk@yurivolkov.com
  */
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+
     protected static final String KEY_VISIBLE_NAME = "visible_name";
     protected static final String KEY_ID = "id";
 
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 messageResourceId = R.string.select_a_widget_to_configure;
             }
         }
-        TextView message = ((TextView)this.findViewById(R.id.message));
+        TextView message = ((TextView) this.findViewById(R.id.message));
         if (message != null) {
             message.setText(messageResourceId);
         }
@@ -124,23 +126,18 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             data.add(map);
         }
 
-        SimpleAdapter adapter = new SimpleAdapter(this,
-                data,
-                R.layout.widget_list_item,
-                new String[] {KEY_VISIBLE_NAME, KEY_ID},
-                new int[] {R.id.visible_name, R.id.id});
-        listView.setAdapter(adapter);
+        listView.setAdapter(new SimpleAdapter(this, data, R.layout.widget_list_item,
+                new String[]{KEY_VISIBLE_NAME}, new int[]{R.id.widget_name}));
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view.findViewById(R.id.id);
-                if (textView != null) {
-                    Intent intent = WidgetConfigurationActivity.intentToStartMe(
-                            MainActivity.this, Integer.valueOf(textView.getText().toString()));
-                    startActivity(intent);
-                    finish();
-                }
+                Map<String, String> stringStringMap = data.get(position);
+                String widgetId = stringStringMap.get(KEY_ID);
+                Intent intent = WidgetConfigurationActivity.intentToStartMe(
+                        MainActivity.this, Integer.valueOf(widgetId));
+                startActivity(intent);
+                finish();
             }
         });
     }

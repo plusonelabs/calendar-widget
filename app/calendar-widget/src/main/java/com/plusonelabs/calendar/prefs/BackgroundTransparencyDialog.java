@@ -30,15 +30,14 @@ public class BackgroundTransparencyDialog extends DialogFragment {
                 ? ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR
                 : ApplicationPreferences.PREF_BACKGROUND_COLOR;
         int color = ApplicationPreferences.getInt(getActivity(), prefKey,
-                        getTag().equals(ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR)
-                                ? ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT
-                                : ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT);
+                getTag().equals(ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR)
+                        ? ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT
+                        : ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT);
         // android.util.Log.v("Color", "key:" + prefKey + "; color:0x" + Integer.toString(color, 16));
         picker.setColor(color);
         picker.setOldCenterColor(color);
         return createDialog(layout);
     }
-
 
     private Dialog createDialog(View layout) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -48,11 +47,11 @@ public class BackgroundTransparencyDialog extends DialogFragment {
         builder.setView(layout);
         builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 
-			public void onClick(DialogInterface dialog, int which) {
-				ApplicationPreferences.setInt(getActivity(), prefKey, picker.getColor());
+            public void onClick(DialogInterface dialog, int which) {
+                ApplicationPreferences.setInt(getActivity(), prefKey, picker.getColor());
             }
-		});
-		return builder.create();
-	}
+        });
+        return builder.create();
+    }
 
 }

@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @author yvolk@yurivolkov.com
  */
 public class RecurringEventsTest extends InstrumentationTestCase {
+
     private static final String TAG = RecurringEventsTest.class.getSimpleName();
 
     private MockCalendarContentProvider provider = null;
@@ -39,7 +40,7 @@ public class RecurringEventsTest extends InstrumentationTestCase {
 
     /**
      * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/191">Issue 191</a> and
-     *  <a href="https://github.com/plusonelabs/calendar-widget/issues/46">Issue 46</a>
+     * <a href="https://github.com/plusonelabs/calendar-widget/issues/46">Issue 46</a>
      */
     public void testShowRecurringEvents() {
         generateEventInstances();
@@ -66,7 +67,7 @@ public class RecurringEventsTest extends InstrumentationTestCase {
         DateTime date = DateTime.now().withTimeAtStartOfDay();
         long millis = date.getMillis() + TimeUnit.HOURS.toMillis(10);
         eventId++;
-        for (int ind=0; ind<15; ind++) {
+        for (int ind = 0; ind < 15; ind++) {
             millis += TimeUnit.DAYS.toMillis(1);
             provider.addRow(new CalendarQueryRow().setEventId(eventId).setTitle("Work each day")
                     .setBegin(millis).setEnd(millis + TimeUnit.HOURS.toMillis(9)));

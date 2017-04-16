@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
  * @author yvolk@yurivolkov.com
  */
 public class OngoingEventTest extends InstrumentationTestCase {
+
     private static final String TAG = OngoingEventTest.class.getSimpleName();
 
     private MockCalendarContentProvider provider = null;

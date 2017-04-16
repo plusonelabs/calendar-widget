@@ -2,6 +2,7 @@
  * Based on the example: 
  * http://stackoverflow.com/questions/4087674/android-read-text-raw-resource-file
  */
+
 package com.plusonelabs.calendar.util;
 
 import android.content.Context;
@@ -19,7 +20,7 @@ public class RawResourceUtils {
     }
 
     /**
-     *  reads resources regardless of their size
+     * reads resources regardless of their size
      */
     private static byte[] getBytes(int id, Context context) throws IOException {
         Resources resources = context.getResources();
@@ -33,11 +34,11 @@ public class RawResourceUtils {
             int read;
             do {
                 read = is.read(readBuffer, 0, readBuffer.length);
-                if(read == -1) {
+                if (read == -1) {
                     break;
                 }
                 bout.write(readBuffer, 0, read);
-            } while(true);
+            } while (true);
 
             return bout.toByteArray();
         } finally {

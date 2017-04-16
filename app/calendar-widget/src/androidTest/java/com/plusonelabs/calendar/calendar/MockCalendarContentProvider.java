@@ -30,8 +30,7 @@ import java.util.List;
 
 import static com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage.KEY_SETTINGS;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_WIDGET_ID;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -78,7 +77,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     private void setPreferences(Context context) throws JSONException {
         while (InstanceSettings.getInstances(context).containsKey(widgetId) ||
-               InstanceSettings.getInstances(context).containsKey(widgetId + 1)) {
+                InstanceSettings.getInstances(context).containsKey(widgetId + 1)) {
             widgetId++;
         }
         if (InstanceSettings.getInstances(context).isEmpty()) {
@@ -138,20 +137,20 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     public void addRow(CalendarEvent event) {
         addRow(new CalendarQueryRow()
-                        .setEventId(event.getEventId())
-                        .setTitle(event.getTitle())
-                        .setBegin(fixDateForCalendar(event.getStartDate(), event.isAllDay()).getMillis())
-                        .setEnd(fixDateForCalendar(event.getEndDate(), event.isAllDay()).getMillis())
-                        .setDisplayColor(event.getColor())
-                        .setAllDay(event.isAllDay() ? 1 : 0)
-                        .setEventLocation(event.getLocation())
-                        .setHasAlarm(event.isAlarmActive() ? 1 : 0)
-                        .setRRule(event.isRecurring() ? "FREQ=WEEKLY;WKST=MO;BYDAY=MO,WE,FR" : null)
+                .setEventId(event.getEventId())
+                .setTitle(event.getTitle())
+                .setBegin(fixDateForCalendar(event.getStartDate(), event.isAllDay()).getMillis())
+                .setEnd(fixDateForCalendar(event.getEndDate(), event.isAllDay()).getMillis())
+                .setDisplayColor(event.getColor())
+                .setAllDay(event.isAllDay() ? 1 : 0)
+                .setEventLocation(event.getLocation())
+                .setHasAlarm(event.isAlarmActive() ? 1 : 0)
+                .setRRule(event.isRecurring() ? "FREQ=WEEKLY;WKST=MO;BYDAY=MO,WE,FR" : null)
         );
     }
 
     public void addRow(CalendarQueryRow calendarQueryRow) {
-        if(results.isEmpty()) {
+        if (results.isEmpty()) {
             addResult(new CalendarQueryResult(getSettings().getWidgetId(), DateUtil.now(getSettings().getTimeZone())));
         }
         results.get(0).addRow(calendarQueryRow);

@@ -4,8 +4,8 @@ import org.joda.time.DateTime;
 
 public class DayHeader extends WidgetEntry {
 
-	public DayHeader(DateTime date) {
-		setStartDate(date.withTimeAtStartOfDay());
-	}
+    public DayHeader(DateTime date) {
+        setStartDate(date.withTimeAtStartOfDay());
+    }
 
 }

@@ -6,6 +6,7 @@ import android.test.InstrumentationTestCase;
  * @author yvolk@yurivolkov.com
  */
 public class KeywordsFilterTest extends InstrumentationTestCase {
+
     public void testPhrases() {
         String query = "\"do it\"";
         final String keywordDN = "do it";
@@ -34,7 +35,7 @@ public class KeywordsFilterTest extends InstrumentationTestCase {
         int size = keywords.length;
         KeywordsFilter filter1 = new KeywordsFilter(query);
         assertEquals(filter1.toString(), size, filter1.keywords.size());
-        for ( int ind = 0; ind < size; ind++) {
+        for (int ind = 0; ind < size; ind++) {
             assertEquals(filter1.toString(), keywords[ind], filter1.keywords.get(ind));
         }
     }

@@ -1,11 +1,11 @@
 package com.plusonelabs.calendar;
 
+import android.test.InstrumentationTestCase;
+
 import com.plusonelabs.calendar.calendar.CalendarEvent;
 import com.plusonelabs.calendar.calendar.MockCalendarContentProvider;
 import com.plusonelabs.calendar.widget.CalendarEntry;
 import com.plusonelabs.calendar.widget.WidgetEntry;
-
-import android.test.InstrumentationTestCase;
 
 import org.joda.time.DateTime;
 
@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
  * @author yvolk@yurivolkov.com
  */
 public class SingleEventTest extends InstrumentationTestCase {
+
     private static final String TAG = SingleEventTest.class.getSimpleName();
 
     private MockCalendarContentProvider provider = null;
@@ -72,8 +73,7 @@ public class SingleEventTest extends InstrumentationTestCase {
         CalendarEvent eventOut = ((CalendarEntry) entry).getEvent();
         if (equal) {
             assertEquals(event.toString(), eventOut.toString());
-        }
-        else {
+        } else {
             assertNotSame(event.toString(), eventOut.toString());
         }
     }

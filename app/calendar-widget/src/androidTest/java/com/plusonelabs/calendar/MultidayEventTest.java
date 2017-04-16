@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
  * @author yvolk@yurivolkov.com
  */
 public class MultidayEventTest extends InstrumentationTestCase {
+
     private static final String TAG = MultidayEventTest.class.getSimpleName();
     private static final String ARROW = "→";
 
@@ -35,7 +36,9 @@ public class MultidayEventTest extends InstrumentationTestCase {
         super.tearDown();
     }
 
-    /** Issue #206 https://github.com/plusonelabs/calendar-widget/issues/206 */
+    /**
+     * Issue #206 https://github.com/plusonelabs/calendar-widget/issues/206
+     */
     public void testEventWhichCarryOverToTheNextDay() {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId());
@@ -76,7 +79,9 @@ public class MultidayEventTest extends InstrumentationTestCase {
         assertEquals("Tomorrow event entry end time is the same as for the event", entry2.getEvent().getEndDate(), entry2.getEndDate());
     }
 
-    /**  https://github.com/plusonelabs/calendar-widget/issues/184#issuecomment-142671469 */
+    /**
+     * https://github.com/plusonelabs/calendar-widget/issues/184#issuecomment-142671469
+     */
     public void testThreeDaysEvent() {
         DateTime friday = new DateTime(2015, 9, 18, 0, 0, 0, 0, provider.getSettings().getTimeZone());
         DateTime sunday = friday.plusDays(2);
@@ -112,7 +117,7 @@ public class MultidayEventTest extends InstrumentationTestCase {
         for (WidgetEntry item : factory.getWidgetEntries()) {
             if (item instanceof CalendarEntry) {
                 CalendarEntry entry = (CalendarEntry) item;
-                if ( entry.getStartDate().getDayOfMonth() == 20) {
+                if (entry.getStartDate().getDayOfMonth() == 20) {
                     assertNull(sundayEntry);
                     sundayEntry = entry;
                 }

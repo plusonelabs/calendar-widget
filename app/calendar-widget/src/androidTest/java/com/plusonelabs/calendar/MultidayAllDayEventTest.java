@@ -18,6 +18,7 @@ import java.io.IOException;
  * @author yvolk@yurivolkov.com
  */
 public class MultidayAllDayEventTest extends InstrumentationTestCase {
+
     private static final String TAG = MultidayAllDayEventTest.class.getSimpleName();
 
     private MockCalendarContentProvider provider = null;
@@ -39,7 +40,7 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";
         CalendarQueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
-                        com.plusonelabs.calendar.tests.R.raw.multi_day);
+                com.plusonelabs.calendar.tests.R.raw.multi_day);
         provider.addResults(inputs.getResults());
 
         int dateRange = 30;
@@ -55,7 +56,7 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
         DateTime endOfRangeTime = today.plusDays(dateRange);
         int dayOfEventEntryPrev = 0;
         int dayOfHeaderPrev = 0;
-        for (int ind=0; ind < factory.getWidgetEntries().size(); ind++) {
+        for (int ind = 0; ind < factory.getWidgetEntries().size(); ind++) {
             WidgetEntry entry = factory.getWidgetEntries().get(ind);
             String logMsg = method + "; " + String.format("%02d ", ind) + entry.toString();
             Log.v(TAG, logMsg);

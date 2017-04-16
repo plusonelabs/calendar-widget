@@ -19,20 +19,20 @@ import java.util.TimeZone;
 public class AppearancePreferencesFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.preferences_appearance);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences_appearance);
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		showLockTimeZone(true);
+    @Override
+    public void onResume() {
+        super.onResume();
+        showLockTimeZone(true);
         showEventEntryLayout();
         showWidgetInstanceName();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-	}
+    }
 
     private void showEventEntryLayout() {
         Preference preference = findPreference(ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT);
@@ -52,13 +52,13 @@ public class AppearancePreferencesFragment extends PreferenceFragment
                     ApplicationPreferences.getLockedTimeZoneId(getActivity()) : TimeZone.getDefault().getID()));
             preference.setSummary(String.format(
                     getText(isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc).toString(),
-                            timeZone.getName(DateUtil.now(timeZone).getMillis()))
+                    timeZone.getName(DateUtil.now(timeZone).getMillis()))
             );
         }
     }
 
     @Override
-	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         switch (preference.getKey()) {
             case ApplicationPreferences.PREF_BACKGROUND_COLOR:
                 new BackgroundTransparencyDialog().show(getFragmentManager(),
@@ -79,16 +79,16 @@ public class AppearancePreferencesFragment extends PreferenceFragment
             default:
                 break;
         }
-		return super.onPreferenceTreeClick(preferenceScreen, preference);
-	}
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
 
-	@Override
-	public void onPause() {
-		super.onPause();
+    @Override
+    public void onPause() {
+        super.onPause();
         getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         EventAppWidgetProvider.updateEventList(getActivity());
-		EventAppWidgetProvider.updateAllWidgets(getActivity());
-	}
+        EventAppWidgetProvider.updateAllWidgets(getActivity());
+    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

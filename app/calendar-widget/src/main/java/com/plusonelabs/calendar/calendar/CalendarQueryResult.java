@@ -20,9 +20,11 @@ import java.util.List;
 
 /**
  * Useful for logging and mocking CalendarContentProvider
+ *
  * @author yvolk@yurivolkov.com
  */
 public class CalendarQueryResult {
+
     private static final String TAG = CalendarQueryResult.class.getSimpleName();
     private static final String KEY_ROWS = "rows";
     private static final String KEY_EXECUTED_AT = "executedAt";
@@ -44,8 +46,8 @@ public class CalendarQueryResult {
     private String sortOrder = "";
     private final List<CalendarQueryRow> rows = new ArrayList<>();
 
-    public CalendarQueryResult (InstanceSettings settings, Uri uri, String[] projection, String selection,
-                                String[] selectionArgs, String sortOrder) {
+    public CalendarQueryResult(InstanceSettings settings, Uri uri, String[] projection, String selection,
+                               String[] selectionArgs, String sortOrder) {
         this(settings.getWidgetId(), DateUtil.now(settings.getTimeZone()));
         this.uri = uri;
         this.projection = projection;
@@ -70,7 +72,7 @@ public class CalendarQueryResult {
 
         JSONArray jsonArray = json.getJSONArray(KEY_ROWS);
         if (jsonArray != null) {
-            for (int ind=0; ind < jsonArray.length(); ind++) {
+            for (int ind = 0; ind < jsonArray.length(); ind++) {
                 result.addRow(CalendarQueryRow.fromJson(jsonArray.getJSONObject(ind)));
             }
         }
@@ -83,9 +85,9 @@ public class CalendarQueryResult {
     }
 
     private static String[] jsonToArrayOfStings(JSONArray jsonArray) throws JSONException {
-        String[] array = new String[ jsonArray != null ? jsonArray.length() : 0];
+        String[] array = new String[jsonArray != null ? jsonArray.length() : 0];
         if (jsonArray != null) {
-            for (int ind=0; ind < jsonArray.length(); ind++) {
+            for (int ind = 0; ind < jsonArray.length(); ind++) {
                 array[ind] = jsonArray.getString(ind);
             }
         }
@@ -141,7 +143,7 @@ public class CalendarQueryResult {
         if (!Arrays.equals(selectionArgs, that.selectionArgs)) return false;
         if (!sortOrder.equals(that.sortOrder)) return false;
         if (rows.size() != that.rows.size()) return false;
-        for (int ind=0; ind < rows.size(); ind++) {
+        for (int ind = 0; ind < rows.size(); ind++) {
             if (!rows.get(ind).equals(that.rows.get(ind))) {
                 return false;
             }
@@ -157,7 +159,7 @@ public class CalendarQueryResult {
         result = 31 * result + selection.hashCode();
         result = 31 * result + (selectionArgs != null ? Arrays.hashCode(selectionArgs) : 0);
         result = 31 * result + sortOrder.hashCode();
-        for (int ind=0; ind < rows.size(); ind++) {
+        for (int ind = 0; ind < rows.size(); ind++) {
             result = 31 * result + rows.get(ind).hashCode();
         }
         return result;

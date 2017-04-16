@@ -13,6 +13,7 @@ import com.plusonelabs.calendar.prefs.InstanceSettings;
 import org.joda.time.DateTime;
 
 public class CalendarEntry extends WidgetEntry {
+
     private static final String TWELVE = "12";
     private static final String AUTO = "auto";
     private static final String SPACE_ARROW = " →";
@@ -21,9 +22,9 @@ public class CalendarEntry extends WidgetEntry {
     static final String SPACE_DASH_SPACE = " - ";
     private static final String SPACE_PIPE_SPACE = "  |  ";
 
-	private DateTime endDate;
-	private boolean allDay;
-	private CalendarEvent event;
+    private DateTime endDate;
+    private boolean allDay;
+    private CalendarEvent event;
 
     public static CalendarEntry fromEvent(CalendarEvent event) {
         CalendarEntry entry = new CalendarEntry();
@@ -34,61 +35,61 @@ public class CalendarEntry extends WidgetEntry {
         return entry;
     }
 
-	public String getTitle() {
-        String title =  event.getTitle();
+    public String getTitle() {
+        String title = event.getTitle();
         if (TextUtils.isEmpty(title)) {
             title = getSettings().getEntryThemeContext().getResources().getString(R.string.no_title);
         }
-		return title;
-	}
+        return title;
+    }
 
-	public DateTime getEndDate() {
-		return endDate;
-	}
+    public DateTime getEndDate() {
+        return endDate;
+    }
 
-	public void setEndDate(DateTime endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(DateTime endDate) {
+        this.endDate = endDate;
+    }
 
-	public int getColor() {
-		return event.getColor();
-	}
+    public int getColor() {
+        return event.getColor();
+    }
 
-	public boolean isAllDay() {
-		return allDay;
- 	}
+    public boolean isAllDay() {
+        return allDay;
+    }
 
-	public String getLocation() {
-		return event.getLocation();
-	}
+    public String getLocation() {
+        return event.getLocation();
+    }
 
-	public boolean isAlarmActive() {
-		return event.isAlarmActive();
-	}
+    public boolean isAlarmActive() {
+        return event.isAlarmActive();
+    }
 
-	public boolean isRecurring() {
-		return event.isRecurring();
-	}
+    public boolean isRecurring() {
+        return event.isRecurring();
+    }
 
-	public boolean isPartOfMultiDayEvent() {
-		return getEvent().isPartOfMultiDayEvent();
-	}
+    public boolean isPartOfMultiDayEvent() {
+        return getEvent().isPartOfMultiDayEvent();
+    }
 
-	public boolean isStartOfMultiDayEvent() {
-		return isPartOfMultiDayEvent() && !getEvent().getStartDate().isBefore(getStartDate());
-	}
+    public boolean isStartOfMultiDayEvent() {
+        return isPartOfMultiDayEvent() && !getEvent().getStartDate().isBefore(getStartDate());
+    }
 
-	public boolean isEndOfMultiDayEvent() {
-		return isPartOfMultiDayEvent() && !getEvent().getEndDate().isAfter(getEndDate());
-	}
+    public boolean isEndOfMultiDayEvent() {
+        return isPartOfMultiDayEvent() && !getEvent().getEndDate().isAfter(getEndDate());
+    }
 
-	public boolean spansOneFullDay() {
-		return getStartDate().plusDays(1).isEqual(getEndDate());
-	}
+    public boolean spansOneFullDay() {
+        return getStartDate().plusDays(1).isEqual(getEndDate());
+    }
 
-	public CalendarEvent getEvent() {
-		return event;
-	}
+    public CalendarEvent getEvent() {
+        return event;
+    }
 
     public String getEventTimeString() {
         return hideEventDetails() ? "" :
@@ -118,7 +119,7 @@ public class CalendarEntry extends WidgetEntry {
         String startStr;
         String endStr;
         String separator = SPACE_DASH_SPACE;
-        if (isPartOfMultiDayEvent()&& DateUtil.isMidnight(getStartDate())
+        if (isPartOfMultiDayEvent() && DateUtil.isMidnight(getStartDate())
                 && !isStartOfMultiDayEvent()) {
             startStr = ARROW_SPACE;
             separator = EMPTY_STRING;
@@ -148,7 +149,7 @@ public class CalendarEntry extends WidgetEntry {
     private String createTimeString(Context context, DateTime time) {
         String dateFormat = getSettings().getDateFormat();
         if (!DateFormat.is24HourFormat(context) && dateFormat.equals(AUTO)
-            || dateFormat.equals(TWELVE)) {
+                || dateFormat.equals(TWELVE)) {
             return DateUtil.formatDateTime(getSettings(), time,
                     DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
         }
@@ -161,14 +162,14 @@ public class CalendarEntry extends WidgetEntry {
     }
 
     @Override
-	public String toString() {
-		return "CalendarEntry ["
-				+ "startDate=" + getStartDate()
-				+ (endDate != null ? ", endDate=" + getEndDate() : "")
-				+ ", allDay=" + allDay
-				+ ", event=" + event
+    public String toString() {
+        return "CalendarEntry ["
+                + "startDate=" + getStartDate()
+                + (endDate != null ? ", endDate=" + getEndDate() : "")
+                + ", allDay=" + allDay
+                + ", event=" + event
                 + "]";
-	}
+    }
 
     @Override
     public boolean equals(Object o) {

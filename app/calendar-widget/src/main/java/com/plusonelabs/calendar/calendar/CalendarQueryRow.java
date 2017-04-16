@@ -14,6 +14,7 @@ import java.util.Map;
 
 /**
  * Useful for logging and Mocking CalendarContentProvider
+ *
  * @author yvolk@yurivolkov.com
  */
 public class CalendarQueryRow {
@@ -75,27 +76,28 @@ public class CalendarQueryRow {
             NULL(Cursor.FIELD_TYPE_NULL);
 
             final int code;
+
             CursorFieldType(int fieldType) {
                 code = fieldType;
             }
-            
+
             public Object columnToObject(Cursor cursor, int columnIndex) {
-                return  null;
+                return null;
             }
 
             public static CursorFieldType fromColumnType(int cursorColumnType) {
-                for(CursorFieldType val : values()) {
+                for (CursorFieldType val : values()) {
                     if (val.code == cursorColumnType) {
                         return val;
                     }
                 }
                 return UNKNOWN;
             }
-            
+
         }
 
         public static TypedValue fromJson(JSONObject json) {
-            CursorFieldType type = CursorFieldType.UNKNOWN ;
+            CursorFieldType type = CursorFieldType.UNKNOWN;
             if (json.has(KEY_TYPE)) {
                 type = CursorFieldType.fromColumnType(json.optInt(KEY_TYPE));
             }
@@ -103,7 +105,7 @@ public class CalendarQueryRow {
         }
 
         public TypedValue(Cursor cursor, int columnIndex) {
-            type =  CursorFieldType.fromColumnType(cursor.getType(columnIndex));
+            type = CursorFieldType.fromColumnType(cursor.getType(columnIndex));
             value = type.columnToObject(cursor, columnIndex);
         }
 
@@ -112,7 +114,7 @@ public class CalendarQueryRow {
         }
 
         public TypedValue(CursorFieldType type, Object object) {
-            this.type = type ;
+            this.type = type;
             value = object;
         }
 
@@ -160,11 +162,11 @@ public class CalendarQueryRow {
         mRow.put(columnName, new TypedValue(columnValue));
         return this;
     }
-    
+
     public CalendarQueryRow setEventId(Object obj) {
         return setColumn(CalendarContract.Instances.EVENT_ID, obj);
     }
-    
+
     public CalendarQueryRow setTitle(Object obj) {
         return setColumn(CalendarContract.Instances.TITLE, obj);
     }
@@ -240,8 +242,8 @@ public class CalendarQueryRow {
     public static CalendarQueryRow fromJson(JSONObject json) throws JSONException {
         CalendarQueryRow row = new CalendarQueryRow();
         if (json != null) {
-            Iterator<String> it=json.keys();
-            while (it.hasNext()){
+            Iterator<String> it = json.keys();
+            while (it.hasNext()) {
                 String columnName = it.next();
                 row.mRow.put(columnName, TypedValue.fromJson(json.getJSONObject(columnName)));
             }
@@ -258,10 +260,10 @@ public class CalendarQueryRow {
     }
 
     public void dropNullColumns() {
-        for(Iterator<Map.Entry<String, TypedValue>> it = mRow.entrySet().iterator(); it.hasNext(); ) {
+        for (Iterator<Map.Entry<String, TypedValue>> it = mRow.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, TypedValue> entry = it.next();
             if (entry.getValue().type == TypedValue.CursorFieldType.NULL
-                    || entry.getValue().value == null ) {
+                    || entry.getValue().value == null) {
                 it.remove();
             }
         }

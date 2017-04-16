@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @author yvolk@yurivolkov.com
  */
 public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTestCase {
+
     private static final String TAG = IllegalInstantDueToTimeZoneTransitionTest.class.getSimpleName();
 
     private MockCalendarContentProvider provider = null;
@@ -45,7 +46,7 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTe
      * See http://joda-time.sourceforge.net/faq.html#illegalinstant
      * http://stackoverflow.com/questions/25233776/unable-to-create-a-specific-joda-datetime-illegalinstantexception
      * http://beust.com/weblog/2013/03/30/the-time-that-never-was/
-     *
+     * <p>
      * I couldn't reproduce the problem though.
      */
     public void testIllegalInstantDueToTimeZoneOffsetTransition() {
@@ -63,7 +64,7 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTe
     private void oneTimeDst(String iso8601time) {
         long millis = toMillis(iso8601time);
         String title = "DST";
-        for (int ind=-25; ind<26; ind++) {
+        for (int ind = -25; ind < 26; ind++) {
             provider.addRow(new CalendarQueryRow().setEventId(++eventId).setTitle(title + " " + ind)
                     .setBegin(millis + TimeUnit.HOURS.toMillis(ind)).setAllDay(1));
         }

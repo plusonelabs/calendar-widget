@@ -25,10 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import static android.graphics.Color.argb;
-import static android.graphics.Color.blue;
-import static android.graphics.Color.green;
-import static android.graphics.Color.red;
+import static android.graphics.Color.*;
 
 public class CalendarEventProvider {
 
@@ -133,10 +130,10 @@ public class CalendarEventProvider {
         // Above filters are not exactly correct for AllDay events: for them that filter
         // time should be moved by a time zone... (i.e. by several hours)
         // This is why we need to do additional filtering after querying a Content Provider:
-        for(Iterator<CalendarEvent> it = eventList.iterator(); it.hasNext(); ) {
+        for (Iterator<CalendarEvent> it = eventList.iterator(); it.hasNext(); ) {
             CalendarEvent event = it.next();
             if (!event.getEndDate().isAfter(mStartOfTimeRange)
-                    || !mEndOfTimeRange.isAfter(event.getStartDate()) ) {
+                    || !mEndOfTimeRange.isAfter(event.getStartDate())) {
                 // We remove using Iterator to avoid ConcurrentModificationException
                 it.remove();
             }

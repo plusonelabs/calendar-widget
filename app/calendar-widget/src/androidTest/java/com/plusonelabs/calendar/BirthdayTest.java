@@ -16,6 +16,7 @@ import java.io.IOException;
  * @author yvolk@yurivolkov.com
  */
 public class BirthdayTest extends InstrumentationTestCase {
+
     private static final String TAG = BirthdayTest.class.getSimpleName();
 
     private MockCalendarContentProvider provider = null;
@@ -36,7 +37,7 @@ public class BirthdayTest extends InstrumentationTestCase {
 
     public void testBirthdayOneDayOnly() throws IOException, JSONException {
         CalendarQueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
-                        com.plusonelabs.calendar.tests.R.raw.birthday);
+                com.plusonelabs.calendar.tests.R.raw.birthday);
 
         provider.startEditing();
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.NONE);
@@ -45,15 +46,15 @@ public class BirthdayTest extends InstrumentationTestCase {
         provider.saveSettings();
 
         playAtOneTime(inputs, dateTime(2015, 8, 1, 17, 0), 0);
-        playAtOneTime(inputs, dateTime(2015, 8,  9, 23, 59), 0);
-        playAtOneTime(inputs, dateTime(2015, 8, 10,  0,  0).plusMillis(1), 2);
-        playAtOneTime(inputs, dateTime(2015, 8, 10,  0,  1), 2);
+        playAtOneTime(inputs, dateTime(2015, 8, 9, 23, 59), 0);
+        playAtOneTime(inputs, dateTime(2015, 8, 10, 0, 0).plusMillis(1), 2);
+        playAtOneTime(inputs, dateTime(2015, 8, 10, 0, 1), 2);
 
-        playAtOneTime(inputs, dateTime(2015, 9, 8, 17,  0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 8, 17, 0), 2);
         playAtOneTime(inputs, dateTime(2015, 9, 8, 23, 30), 2);
-        playAtOneTime(inputs, dateTime(2015, 9, 9,  0, 30), 2);
-        playAtOneTime(inputs, dateTime(2015, 9, 9, 11,  0), 2);
-        playAtOneTime(inputs, dateTime(2015, 9, 9, 17,  0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 9, 0, 30), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 9, 11, 0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 9, 17, 0), 2);
         playAtOneTime(inputs, dateTime(2015, 9, 9, 23, 30), 2);
         playAtOneTime(inputs, dateTime(2015, 9, 10, 0, 30), 0);
         playAtOneTime(inputs, dateTime(2015, 9, 10, 11, 0), 0);
@@ -71,15 +72,15 @@ public class BirthdayTest extends InstrumentationTestCase {
         provider.saveSettings();
         playAtOneTime(inputs, dateTime(2015, 9, 10, 1, 30), 2);
         playAtOneTime(inputs, dateTime(2015, 9, 10, 3, 59), 2);
-        playAtOneTime(inputs, dateTime(2015, 9, 10, 4,  0), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 4, 0), 0);
 
         ApplicationPreferences.setEventsEnded(provider.getContext(), EndedSomeTimeAgo.YESTERDAY);
         provider.saveSettings();
         playAtOneTime(inputs, dateTime(2015, 9, 10, 4, 0), 2);
-        playAtOneTime(inputs, dateTime(2015, 9, 10,11,  0), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 11, 0), 2);
         playAtOneTime(inputs, dateTime(2015, 9, 10, 17, 0), 2);
-        playAtOneTime(inputs, dateTime(2015, 9, 10,23, 30), 2);
-        playAtOneTime(inputs, dateTime(2015, 9, 11, 0,  0), 0);
+        playAtOneTime(inputs, dateTime(2015, 9, 10, 23, 30), 2);
+        playAtOneTime(inputs, dateTime(2015, 9, 11, 0, 0), 0);
         playAtOneTime(inputs, dateTime(2015, 9, 11, 0, 30), 0);
 
         ApplicationPreferences.setShowPastEventsWithDefaultColor(provider.getContext(), true);

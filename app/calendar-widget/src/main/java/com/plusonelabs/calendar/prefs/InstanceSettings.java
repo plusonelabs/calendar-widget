@@ -25,53 +25,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.plusonelabs.calendar.EventAppWidgetProvider.getWidgetIds;
 import static com.plusonelabs.calendar.Theme.themeNameToResId;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ACTIVE_CALENDARS;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_DATE_FORMAT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_DATE_FORMAT_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_EVENTS_ENDED;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_EVENT_RANGE;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_EVENT_RANGE_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HEADER_THEME;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HEADER_THEME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_HIDE_BASED_ON_KEYWORDS;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_INDICATE_ALERTS;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_INDICATE_RECURRING;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_LOCKED_TIME_ZONE_ID;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_DAY_HEADERS;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_END_TIME;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_END_TIME_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_LOCATION;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_LOCATION_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_WIDGET_ID;
-import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME;
-import static com.plusonelabs.calendar.prefs.SettingsStorage.loadJson;
-import static com.plusonelabs.calendar.prefs.SettingsStorage.saveJson;
+import static com.plusonelabs.calendar.prefs.ApplicationPreferences.*;
+import static com.plusonelabs.calendar.prefs.SettingsStorage.*;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class InstanceSettings {
+
     private static volatile boolean instancesLoaded = false;
     private static final Map<Integer, InstanceSettings> instances = new ConcurrentHashMap<>();
 
@@ -120,7 +81,7 @@ public class InstanceSettings {
             settings = instances.get(widgetId);
             if (settings == null && widgetId != 0) {
                 if (ApplicationPreferences.getWidgetId(context) == widgetId || instances.isEmpty()) {
-                    settings =  fromApplicationPreferences(context, widgetId);
+                    settings = fromApplicationPreferences(context, widgetId);
                 } else {
                     settings = new InstanceSettings(context, widgetId, "");
                 }
@@ -135,7 +96,7 @@ public class InstanceSettings {
             return;
         }
         synchronized (instances) {
-            if(!instancesLoaded) {
+            if (!instancesLoaded) {
                 for (int widgetId : getWidgetIds(context)) {
                     InstanceSettings settings;
                     try {

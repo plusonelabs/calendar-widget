@@ -21,40 +21,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
+import static com.plusonelabs.calendar.RemoteViewsUtil.*;
 import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
-	private final Context context;
+
+    private final Context context;
     private final int widgetId;
-	private final CalendarEventProvider calendarContentProvider;
+    private final CalendarEventProvider calendarContentProvider;
 
     public CalendarEventVisualizer(Context context, int widgetId) {
-		this.context = context;
+        this.context = context;
         this.widgetId = widgetId;
-		calendarContentProvider = new CalendarEventProvider(context, widgetId);
-	}
+        calendarContentProvider = new CalendarEventProvider(context, widgetId);
+    }
 
-	public RemoteViews getRemoteView(WidgetEntry eventEntry) {
-		CalendarEntry event = (CalendarEntry) eventEntry;
+    public RemoteViews getRemoteView(WidgetEntry eventEntry) {
+        CalendarEntry event = (CalendarEntry) eventEntry;
         EventEntryLayout eventEntryLayout = getSettings().getEventEntryLayout();
         RemoteViews rv = new RemoteViews(context.getPackageName(), eventEntryLayout.layoutId);
-		rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getEvent()));
+        rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getEvent()));
         eventEntryLayout.visualizeEvent(event, rv);
-		setAlarmActive(event, rv);
+        setAlarmActive(event, rv);
         setRecurring(event, rv);
-		setColor(event, rv);
-		return rv;
-	}
+        setColor(event, rv);
+        return rv;
+    }
 
     private void setAlarmActive(CalendarEntry entry, RemoteViews rv) {
         boolean showIndication = entry.isAlarmActive() && getSettings().getIndicateAlerts();
         setIndicator(rv, showIndication, R.id.event_entry_indicator_alarm, R.attr.eventEntryAlarm);
-	}
+    }
 
-	private void setRecurring(CalendarEntry entry, RemoteViews rv) {
+    private void setRecurring(CalendarEntry entry, RemoteViews rv) {
         boolean showIndication = entry.isRecurring() && getSettings().getIndicateRecurring();
         setIndicator(rv, showIndication, R.id.event_entry_indicator_recurring, R.attr.eventEntryRecurring);
     }
@@ -89,19 +88,19 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
     }
 
     private Intent createOnItemClickIntent(CalendarEvent event) {
-		return CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
+        return CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
                 event.getStartDate(), event.getEndDate());
-	}
+    }
 
     public int getViewTypeCount() {
         return 1;
-	}
+    }
 
-	public List<CalendarEntry> getEventEntries() {
+    public List<CalendarEntry> getEventEntries() {
         List<CalendarEntry> entries = createEntryList(calendarContentProvider.getEvents());
         Collections.sort(entries);
         return entries;
-	}
+    }
 
     private List<CalendarEntry> createEntryList(List<CalendarEvent> eventList) {
         boolean fillAllDayEvents = getSettings().getFillAllDayEvents();
@@ -160,8 +159,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
         }
     }
 
-	public Class<? extends CalendarEntry> getSupportedEventEntryType() {
-		return CalendarEntry.class;
-	}
+    public Class<? extends CalendarEntry> getSupportedEventEntryType() {
+        return CalendarEntry.class;
+    }
 
 }

@@ -14,41 +14,42 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ApplicationPreferences {
+
     public static final String PREF_WIDGET_ID = "widgetId";
 
-	static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
-	static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
-	static final String PREF_MULTILINE_TITLE = "multiline_title";
-	static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
-	static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
-	static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
-	static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
-	static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
-	static final String PREF_INDICATE_RECURRING = "indicateRecurring";
-	static final String PREF_INDICATE_ALERTS = "indicateAlerts";
-	static final String PREF_BACKGROUND_COLOR = "backgroundColor";
-	static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
-	static final String PREF_DATE_FORMAT = "dateFormat";
-	static final String PREF_DATE_FORMAT_DEFAULT = "auto";
-	static final String PREF_EVENT_RANGE = "eventRange";
-	static final String PREF_EVENT_RANGE_DEFAULT = "30";
-	static final String PREF_EVENTS_ENDED = "eventsEnded";
-	static final String PREF_SHOW_END_TIME = "showEndTime";
-	static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
-	static final String PREF_SHOW_LOCATION = "showLocation";
-	static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
-	static final String PREF_FILL_ALL_DAY = "fillAllDay";
-	static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
-	static final String PREF_ENTRY_THEME = "entryTheme";
-	public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
-	static final String PREF_HEADER_THEME = "headerTheme";
-	static final String PREF_HEADER_THEME_DEFAULT = Theme.DARK.name();
-	static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
-	static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
+    static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
+    static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
+    static final String PREF_MULTILINE_TITLE = "multiline_title";
+    static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
+    static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
+    static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
+    static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
+    static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
+    static final String PREF_INDICATE_RECURRING = "indicateRecurring";
+    static final String PREF_INDICATE_ALERTS = "indicateAlerts";
+    static final String PREF_BACKGROUND_COLOR = "backgroundColor";
+    static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
+    static final String PREF_DATE_FORMAT = "dateFormat";
+    static final String PREF_DATE_FORMAT_DEFAULT = "auto";
+    static final String PREF_EVENT_RANGE = "eventRange";
+    static final String PREF_EVENT_RANGE_DEFAULT = "30";
+    static final String PREF_EVENTS_ENDED = "eventsEnded";
+    static final String PREF_SHOW_END_TIME = "showEndTime";
+    static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
+    static final String PREF_SHOW_LOCATION = "showLocation";
+    static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
+    static final String PREF_FILL_ALL_DAY = "fillAllDay";
+    static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
+    static final String PREF_ENTRY_THEME = "entryTheme";
+    public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
+    static final String PREF_HEADER_THEME = "headerTheme";
+    static final String PREF_HEADER_THEME_DEFAULT = Theme.DARK.name();
+    static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
+    static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
     static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
     static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
     static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
-	static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
+    static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
     static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
     static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
     static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
@@ -62,8 +63,8 @@ public class ApplicationPreferences {
     private static volatile String lockedTimeZoneId = null;
 
     private ApplicationPreferences() {
-		// prohibit instantiation
-	}
+        // prohibit instantiation
+    }
 
     public static void startEditing(Context context, Integer widgetId) {
         InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
@@ -74,8 +75,8 @@ public class ApplicationPreferences {
         setEventsEnded(context, settings.getEventsEnded());
         setFillAllDayEvents(context, settings.getFillAllDayEvents());
         setHideBasedOnKeywords(context, settings.getHideBasedOnKeywords());
-        setInt(context, PREF_PAST_EVENTS_BACKGROUND_COLOR,  settings.getPastEventsBackgroundColor());
-        setShowDaysWithoutEvents(context,settings.getShowDaysWithoutEvents());
+        setInt(context, PREF_PAST_EVENTS_BACKGROUND_COLOR, settings.getPastEventsBackgroundColor());
+        setShowDaysWithoutEvents(context, settings.getShowDaysWithoutEvents());
         setShowDayHeaders(context, settings.getShowDayHeaders());
         setShowPastEventsWithDefaultColor(context, settings.getShowPastEventsWithDefaultColor());
         setBoolean(context, PREF_SHOW_END_TIME, settings.getShowEndTime());

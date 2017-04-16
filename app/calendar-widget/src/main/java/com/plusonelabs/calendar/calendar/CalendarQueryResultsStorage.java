@@ -26,6 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author yvolk@yurivolkov.com
  */
 public class CalendarQueryResultsStorage {
+
     private static final String TAG = CalendarQueryResultsStorage.class.getSimpleName();
     private static final String KEY_RESULTS_VERSION = "resultsVersion";
     private static final int RESULTS_VERSION = 2;
@@ -117,7 +118,7 @@ public class CalendarQueryResultsStorage {
         json.put(KEY_SETTINGS, InstanceSettings.fromId(context, widgetId).toJson());
         if (results != null) {
             JSONArray jsonArray = new JSONArray();
-            for(CalendarQueryResult result : results) {
+            for (CalendarQueryResult result : results) {
                 if (result.getWidgetId() == widgetId) {
                     jsonArray.put(result.toJson());
                 }
@@ -129,10 +130,10 @@ public class CalendarQueryResultsStorage {
 
     public static CalendarQueryResultsStorage fromJson(Context context, JSONObject json) throws JSONException {
         InstanceSettings settings = InstanceSettings.fromJson(context, json.getJSONObject(KEY_SETTINGS));
-        InstanceSettings.getInstances(context).put(settings.getWidgetId(), settings) ;
+        InstanceSettings.getInstances(context).put(settings.getWidgetId(), settings);
         CalendarQueryResultsStorage results = new CalendarQueryResultsStorage();
         JSONArray jsonResults = json.getJSONArray(KEY_RESULTS);
-        for (int ind=0; ind < jsonResults.length(); ind++) {
+        for (int ind = 0; ind < jsonResults.length(); ind++) {
             results.results.add(CalendarQueryResult.fromJson(jsonResults.getJSONObject(ind), settings.getWidgetId()));
         }
         if (!results.results.isEmpty()) {
@@ -142,7 +143,7 @@ public class CalendarQueryResultsStorage {
         return results;
     }
 
-    private static JSONObject getAppInfo(Context context) throws JSONException{
+    private static JSONObject getAppInfo(Context context) throws JSONException {
         JSONObject json = new JSONObject();
         try {
             PackageManager pm = context.getPackageManager();
@@ -177,7 +178,7 @@ public class CalendarQueryResultsStorage {
         if (this.results.size() != results.results.size()) {
             return false;
         }
-        for (int ind=0; ind < this.results.size(); ind++) {
+        for (int ind = 0; ind < this.results.size(); ind++) {
             if (!this.results.get(ind).equals(results.results.get(ind))) {
                 return false;
             }
@@ -188,7 +189,7 @@ public class CalendarQueryResultsStorage {
     @Override
     public int hashCode() {
         int result = 0;
-        for (int ind=0; ind < results.size(); ind++) {
+        for (int ind = 0; ind < results.size(); ind++) {
             result = 31 * result + results.get(ind).hashCode();
         }
         return result;

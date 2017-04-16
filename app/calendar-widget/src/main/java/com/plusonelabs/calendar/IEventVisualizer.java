@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface IEventVisualizer<T extends WidgetEntry> {
 
-	RemoteViews getRemoteView(WidgetEntry eventEntry);
+    RemoteViews getRemoteView(WidgetEntry eventEntry);
 
-	int getViewTypeCount();
+    int getViewTypeCount();
 
-	List<T> getEventEntries();
+    List<T> getEventEntries();
 
-	Class<? extends T> getSupportedEventEntryType();
+    Class<? extends T> getSupportedEventEntryType();
 
 }

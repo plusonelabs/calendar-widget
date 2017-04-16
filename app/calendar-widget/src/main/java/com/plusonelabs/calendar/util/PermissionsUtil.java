@@ -15,6 +15,7 @@ import com.plusonelabs.calendar.prefs.InstanceSettings;
  * @author yvolk@yurivolkov.com
  */
 public class PermissionsUtil {
+
     public final static String PERMISSION = Manifest.permission.READ_CALENDAR;
 
     private PermissionsUtil() {
@@ -45,7 +46,7 @@ public class PermissionsUtil {
         try {
             Class.forName("com.plusonelabs.calendar.calendar.MockCalendarContentProvider");
             return true;
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             // Ignore
         }
         return false;

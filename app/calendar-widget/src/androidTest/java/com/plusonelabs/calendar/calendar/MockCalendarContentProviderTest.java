@@ -6,7 +6,6 @@ import android.provider.CalendarContract;
 import android.test.InstrumentationTestCase;
 
 import com.plusonelabs.calendar.DateUtil;
-import com.plusonelabs.calendar.util.RawResourceUtils;
 
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -16,9 +15,11 @@ import java.io.IOException;
 
 /**
  * Tests of the Testing framework itself
+ *
  * @author yvolk@yurivolkov.com
  */
 public class MockCalendarContentProviderTest extends InstrumentationTestCase {
+
     private MockCalendarContentProvider provider = null;
     private final String[] projection = CalendarEventProvider.getProjection();
     private final String sortOrder = CalendarEventProvider.EVENT_SORT_ORDER;
@@ -68,15 +69,15 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
         input.addRow(new CalendarQueryRow().setEventId(++eventId)
                 .setTitle("First Event today").setBegin(today.plusHours(8).getMillis()));
         input.addRow(new CalendarQueryRow()
-                        .setEventId(++eventId)
-                        .setTitle("Event with all known attributes")
-                        .setBegin(today.plusHours(12).getMillis())
-                        .setEnd(today.plusHours(13).getMillis())
-                        .setDisplayColor(0xFF00FF)
-                        .setAllDay(false)
-                        .setEventLocation("somewhere")
-                        .setHasAlarm(true)
-                        .setRRule("what's this?")
+                .setEventId(++eventId)
+                .setTitle("Event with all known attributes")
+                .setBegin(today.plusHours(12).getMillis())
+                .setEnd(today.plusHours(13).getMillis())
+                .setDisplayColor(0xFF00FF)
+                .setAllDay(false)
+                .setEventLocation("somewhere")
+                .setHasAlarm(true)
+                .setRRule("what's this?")
         );
         assertEquals(CalendarContract.Instances.CONTENT_URI, input.getUri());
         assertEquals(selection, input.getSelection());

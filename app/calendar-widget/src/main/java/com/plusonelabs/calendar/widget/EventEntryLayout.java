@@ -10,16 +10,13 @@ import android.widget.RemoteViews;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.RemoteViewsUtil;
 
-import static com.plusonelabs.calendar.RemoteViewsUtil.setMultiline;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
-import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
+import static com.plusonelabs.calendar.RemoteViewsUtil.*;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public enum EventEntryLayout {
     DEFAULT(R.layout.event_entry, "DEFAULT", R.string.default_multiline_layout) {
-
         @Override
         protected void setEventDetails(CalendarEntry entry, RemoteViews rv) {
             String eventDetails = entry.getEventTimeString() + entry.getLocationString();
@@ -35,7 +32,6 @@ public enum EventEntryLayout {
         }
     },
     ONE_LINE(R.layout.event_entry_one_line, "ONE_LINE", R.string.single_line_layout) {
-
         @Override
         protected String getTitleString(CalendarEntry event) {
             return event.getTitle() + event.getLocationString();
@@ -49,7 +45,7 @@ public enum EventEntryLayout {
             } else {
                 int days = entry.getDaysFromToday();
                 int viewToShow = days < -1 || days > 1 ? R.id.event_entry_date_right : R.id.event_entry_date;
-                int viewToHide = viewToShow == R.id.event_entry_date? R.id.event_entry_date_right : R.id.event_entry_date;
+                int viewToHide = viewToShow == R.id.event_entry_date ? R.id.event_entry_date_right : R.id.event_entry_date;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
                 rv.setTextViewText(viewToShow, getDaysFromTodayString(entry.getSettings().getEntryThemeContext(), days));

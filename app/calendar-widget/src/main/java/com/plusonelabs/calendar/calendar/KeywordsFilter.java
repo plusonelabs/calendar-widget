@@ -7,9 +7,11 @@ import java.util.List;
 
 /**
  * Filter String by keywords or phrases, enclosed in single or double quotes
+ *
  * @author yvolk@yurivolkov.com
  */
 public class KeywordsFilter {
+
     protected final List<String> keywords = new ArrayList<>();
     private static final char DOUBLE_QUOTE = '"';
     private static final char SINGLE_QUOTE = '\'';
@@ -20,7 +22,7 @@ public class KeywordsFilter {
         }
         boolean inQuote = false;
         char quote = ' ';
-        for (int atPos = 0; atPos < text.length();) {
+        for (int atPos = 0; atPos < text.length(); ) {
             int separatorInd = inQuote ? nextQuote(text, quote, atPos) : nextSeparatorInd(text, atPos);
             if (atPos > separatorInd) {
                 break;
@@ -48,7 +50,7 @@ public class KeywordsFilter {
     }
 
     private int nextQuote(String text, char quote, int atPos) {
-        for (int ind=atPos; ind < text.length(); ind++) {
+        for (int ind = atPos; ind < text.length(); ind++) {
             if (quote == text.charAt(ind)) {
                 return ind;
             }
@@ -58,7 +60,7 @@ public class KeywordsFilter {
 
     private int nextSeparatorInd(String text, int atPos) {
         final String SEPARATORS = ", " + DOUBLE_QUOTE + SINGLE_QUOTE;
-        for (int ind=atPos; ind < text.length(); ind++) {
+        for (int ind = atPos; ind < text.length(); ind++) {
             if (SEPARATORS.indexOf(text.charAt(ind)) >= 0) {
                 return ind;
             }

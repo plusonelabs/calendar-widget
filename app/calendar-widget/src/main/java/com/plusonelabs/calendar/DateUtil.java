@@ -94,10 +94,12 @@ public class DateUtil {
         }
     }
 
-    /** Returns an empty string in a case supplied ID is not a valid Time Zone ID */
+    /**
+     * Returns an empty string in a case supplied ID is not a valid Time Zone ID
+     */
     @NonNull
     public static String validatedTimeZoneId(String timeZoneId) {
-        if ( !TextUtils.isEmpty(timeZoneId)) {
+        if (!TextUtils.isEmpty(timeZoneId)) {
             try {
                 return DateTimeZone.forID(timeZoneId).getID();
             } catch (IllegalArgumentException e) {

@@ -12,11 +12,11 @@ import com.plusonelabs.calendar.calendar.KeywordsFilter;
 
 public class EventFiltersPreferencesFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.preferences_event_filters);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences_event_filters);
+    }
 
     @Override
     public void onResume() {
@@ -25,11 +25,11 @@ public class EventFiltersPreferencesFragment extends PreferenceFragment implemen
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
-	private void showStatus() {
+    private void showStatus() {
         showEventsEnded();
         showEvenRange();
         showHideBasedOnKeywords();
-	}
+    }
 
     private void showEventsEnded() {
         ListPreference preference = (ListPreference) findPreference(ApplicationPreferences.PREF_EVENTS_ENDED);
@@ -52,12 +52,12 @@ public class EventFiltersPreferencesFragment extends PreferenceFragment implemen
     }
 
     @Override
-	public void onPause() {
+    public void onPause() {
         getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-		EventAppWidgetProvider.updateEventList(getActivity());
-		EventAppWidgetProvider.updateAllWidgets(getActivity());
+        EventAppWidgetProvider.updateEventList(getActivity());
+        EventAppWidgetProvider.updateAllWidgets(getActivity());
         super.onPause();
-	}
+    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

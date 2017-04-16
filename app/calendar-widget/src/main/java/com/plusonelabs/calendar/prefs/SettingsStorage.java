@@ -26,6 +26,7 @@ import java.util.Arrays;
  * @author yvolk@yurivolkov.com
  */
 public class SettingsStorage {
+
     private static final int BUFFER_LENGTH = 4 * 1024;
 
     private SettingsStorage() {
@@ -90,7 +91,9 @@ public class SettingsStorage {
         return new String(getBytes(file), Charset.forName("UTF-8"));
     }
 
-    /** Reads the whole file */
+    /**
+     * Reads the whole file
+     */
     private static byte[] getBytes(File file) throws IOException {
         if (file != null) {
             return getBytes(new FileInputStream(file));
@@ -98,7 +101,9 @@ public class SettingsStorage {
         return new byte[0];
     }
 
-    /** Read the stream into an array and close the stream **/
+    /**
+     * Read the stream into an array and close the stream
+     **/
     private static byte[] getBytes(InputStream is) throws IOException {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         if (is != null) {
@@ -107,11 +112,11 @@ public class SettingsStorage {
                 int read;
                 do {
                     read = is.read(readBuffer, 0, readBuffer.length);
-                    if(read == -1) {
+                    if (read == -1) {
                         break;
                     }
                     bout.write(readBuffer, 0, read);
-                } while(true);
+                } while (true);
                 return bout.toByteArray();
             } finally {
                 closeSilently(is);
@@ -120,7 +125,9 @@ public class SettingsStorage {
         return new byte[0];
     }
 
-    /** Reads up to 'size' bytes, starting from 'offset' */
+    /**
+     * Reads up to 'size' bytes, starting from 'offset'
+     */
     private static byte[] getBytes(File file, int offset, int size) throws IOException {
         if (file != null) {
             InputStream is = new FileInputStream(file);
@@ -148,7 +155,7 @@ public class SettingsStorage {
         if (closeable != null) {
             try {
                 closeable.close();
-            } catch ( IOException e) {
+            } catch (IOException e) {
                 // Ignored
             }
         }

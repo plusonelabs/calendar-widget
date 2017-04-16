@@ -8,25 +8,26 @@ import com.plusonelabs.calendar.prefs.InstanceSettings;
 import org.joda.time.DateTime;
 
 public class CalendarEvent {
-    private final Context context;
-	private final int widgetId;
 
-	private int eventId;
-	private String title;
-	private DateTime endDate;
-	private int color;
+    private final Context context;
+    private final int widgetId;
+
+    private int eventId;
+    private String title;
+    private DateTime endDate;
+    private int color;
     private boolean mHasDefaultCalendarColor;
-	private boolean allDay;
-	private String location;
-	private boolean alarmActive;
-	private boolean recurring;
+    private boolean allDay;
+    private String location;
+    private boolean alarmActive;
+    private boolean recurring;
 
     private DateTime startDate;
 
-	public CalendarEvent(Context context, int widgetId) {
+    public CalendarEvent(Context context, int widgetId) {
         this.context = context;
-		this.widgetId = widgetId;
-	}
+        this.widgetId = widgetId;
+    }
 
     public DateTime getStartDate() {
         return startDate;
@@ -36,37 +37,37 @@ public class CalendarEvent {
         this.startDate = startDate;
     }
 
-	public int getEventId() {
-		return eventId;
-	}
+    public int getEventId() {
+        return eventId;
+    }
 
-	public void setEventId(int eventId) {
-		this.eventId = eventId;
-	}
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public DateTime getEndDate() {
-		return endDate;
-	}
+    public DateTime getEndDate() {
+        return endDate;
+    }
 
-	public void setEndDate(DateTime endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(DateTime endDate) {
+        this.endDate = endDate;
+    }
 
-	public int getColor() {
-		return color;
-	}
+    public int getColor() {
+        return color;
+    }
 
-	public void setColor(int color) {
-		this.color = color;
-	}
+    public void setColor(int color) {
+        this.color = color;
+    }
 
     public boolean hasDefaultCalendarColor() {
         return mHasDefaultCalendarColor;
@@ -76,51 +77,51 @@ public class CalendarEvent {
         mHasDefaultCalendarColor = true;
     }
 
-	public boolean isAllDay() {
-		return allDay;
-	}
+    public boolean isAllDay() {
+        return allDay;
+    }
 
-	public void setAllDay(boolean allDay) {
-		this.allDay = allDay;
-	}
+    public void setAllDay(boolean allDay) {
+        this.allDay = allDay;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public void setAlarmActive(boolean active) {
-		this.alarmActive = active;
-	}
+    public void setAlarmActive(boolean active) {
+        this.alarmActive = active;
+    }
 
-	public boolean isAlarmActive() {
-		return alarmActive;
-	}
+    public boolean isAlarmActive() {
+        return alarmActive;
+    }
 
-	public void setRecurring(boolean recurring) {
-		this.recurring = recurring;
-	}
+    public void setRecurring(boolean recurring) {
+        this.recurring = recurring;
+    }
 
-	public boolean isRecurring() {
-		return recurring;
-	}
+    public boolean isRecurring() {
+        return recurring;
+    }
 
-	@Override
-	public String toString() {
-		return "CalendarEvent [eventId=" + eventId
-				+ (title != null ? ", title=" + title : "")
-				+ ", startDate=" + getStartDate()
-				+ (endDate != null ? ", endDate=" + endDate : "")
-				+ ", color=" + color
+    @Override
+    public String toString() {
+        return "CalendarEvent [eventId=" + eventId
+                + (title != null ? ", title=" + title : "")
+                + ", startDate=" + getStartDate()
+                + (endDate != null ? ", endDate=" + endDate : "")
+                + ", color=" + color
                 + (mHasDefaultCalendarColor ? " is default" : "")
-				+ ", allDay=" + allDay
-				+ ", alarmActive=" + alarmActive
-				+ ", recurring=" + recurring
-				+ (location != null ? ", location=" + location : "") + "]";
-	}
+                + ", allDay=" + allDay
+                + ", alarmActive=" + alarmActive
+                + ", recurring=" + recurring
+                + (location != null ? ", location=" + location : "") + "]";
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -146,14 +147,14 @@ public class CalendarEvent {
 
     public boolean isActive() {
         return getStartDate().isBefore(DateUtil.now(startDate.getZone())) &&
-				endDate.isAfter(DateUtil.now(startDate.getZone()));
+                endDate.isAfter(DateUtil.now(startDate.getZone()));
     }
 
-	public boolean isPartOfMultiDayEvent() {
-		return getEndDate().withTimeAtStartOfDay().isAfter(getStartDate().withTimeAtStartOfDay());
-	}
+    public boolean isPartOfMultiDayEvent() {
+        return getEndDate().withTimeAtStartOfDay().isAfter(getStartDate().withTimeAtStartOfDay());
+    }
 
-	public InstanceSettings getSettings() {
+    public InstanceSettings getSettings() {
         return InstanceSettings.fromId(context, widgetId);
     }
 }

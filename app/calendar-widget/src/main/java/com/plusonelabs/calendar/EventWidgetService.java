@@ -10,11 +10,10 @@ import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
-
 public class EventWidgetService extends RemoteViewsService {
 
-	@Override
-	public RemoteViewsFactory onGetViewFactory(Intent intent) {
+    @Override
+    public RemoteViewsFactory onGetViewFactory(Intent intent) {
         int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
         Context appContext = getApplicationContext();
         int currentThemeId = themeNameToResId(InstanceSettings.fromId(appContext, widgetId).getEntryTheme());

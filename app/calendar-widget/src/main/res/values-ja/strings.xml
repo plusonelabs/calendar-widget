@@ -14,10 +14,12 @@
   <string name="indicator_recurring">イベントが繰り返しだったらインジケータ</string>
   <string name="no_title">(タイトルなし)</string>
   <string name="grant_permissions">アクセス許可を付与</string>
+  <string name="grant_permissions_verbose">ウィジェットは、カレンダーの読み取りアクセス許可が必要です。\nアクセス許可を付与するには、ここをタップしてください。</string>
   <string name="permissions_justification">カレンダーウィジェット アプリケーションは、カレンダーの読み取りアクセス許可を付与する必要があります。そうしないと、ウィジェットは空になります。</string>
   <string name="no_widgets_found">まだウィジェットは設定されていません。まず、お使いのデバイスのホーム画面に「カレンダーウィジェット」ウィジェットを追加してください。</string>
   <string name="select_a_widget_to_configure">設定するウィジェットを選択</string>
   <string name="close">閉じる</string>
+  <string name="go_to_home_screen">ホーム画面に移動</string>
   <!-- Preference header: Calendars -->
   <string name="calendars_prefs">カレンダー</string>
   <string name="calendars_prefs_desc">表示するカレンダーを選択します</string>
@@ -32,8 +34,8 @@
   <string name="appearance_text_size_large">大</string>
   <string name="appearance_text_size_very_large">特大</string>
   <string name="pref_event_entry_layout_title">イベントエントリ レイアウト</string>
-  <string name="default_multiline_layout">デフォルトの複数行レイアウト</string>
-  <string name="single_line_layout">単一行レイアウト</string>
+  <string name="default_multiline_layout">タイトルの下に時間</string>
+  <string name="single_line_layout">1 行にすべて</string>
   <string name="appearance_multiline_title_title">複数行のタイトル</string>
   <string name="appearance_multiline_title_desc">イベントタイトルを複数行に展開します</string>
   <string name="appearance_date_format_desc">午前/午後もしくは 24 時間形式で時刻を表示します。</string>

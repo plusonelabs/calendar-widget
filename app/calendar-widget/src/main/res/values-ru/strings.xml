@@ -14,10 +14,12 @@
   <string name="indicator_recurring">Индикатор повторяющегося события</string>
   <string name="no_title">(Без заголовка)</string>
   <string name="grant_permissions">Предоставить разрешения</string>
+  <string name="grant_permissions_verbose">Для Виджета требуется разрешение на чтение календарей. \nНажмите здесь, чтобы предоставить это разрешение.</string>
   <string name="permissions_justification">Приложению \"Виджет календаря\" необходимо предоставить разрешение на чтение Ваших календарей. В противном случае виджет будет пустым.</string>
   <string name="no_widgets_found">Пока нет Виджетов, которые можно настроить. Пожалуйста, сначала добавьте виджет «Виджет календаря» на главном экране Вашего устройства.</string>
   <string name="select_a_widget_to_configure">Выберите Виджет, который Вы хотите настроить</string>
   <string name="close">Закрыть</string>
+  <string name="go_to_home_screen">Перейти на главный экран</string>
   <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Календари</string>
   <string name="calendars_prefs_desc">Выберите календари для отображения</string>
@@ -32,8 +34,8 @@
   <string name="appearance_text_size_large">Большой</string>
   <string name="appearance_text_size_very_large">Очень большой</string>
   <string name="pref_event_entry_layout_title">Макет представления события</string>
-  <string name="default_multiline_layout">Стандартный многострочный макет</string>
-  <string name="single_line_layout">Однострочный макет</string>
+  <string name="default_multiline_layout">Время под заголовком</string>
+  <string name="single_line_layout">Всё - в один ряд</string>
   <string name="appearance_multiline_title_title">Многострочный заголовок</string>
   <string name="appearance_multiline_title_desc">Длинные заголовки событий продолжаются на несколько строк</string>
   <string name="appearance_date_format_desc">Формат времени am/pm или 24 часа</string>

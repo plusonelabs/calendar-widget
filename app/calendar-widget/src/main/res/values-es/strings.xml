@@ -14,10 +14,13 @@
   <string name="indicator_recurring">Indicar si el evento es recurrente</string>
   <string name="no_title">(Sin título)</string>
   <string name="grant_permissions">Conceder permisos</string>
-  <string name="permissions_justification">Calendar Widget TIENE que ser autorizado para leer tus calendarios. En caso contrario el widget estará vacío.</string>
+  <string name="grant_permissions_verbose">El widget solicita permiso para leer los calendarios.\nTocar aquí para conceder el permiso.</string>
+  <string name="permissions_justification">Bienvenido a Calendar Widget, el acceso sencillo a tu calendario.
+        \n\nSe debe autorizar el acceso a los calendarios para que el widget funcione.</string>
   <string name="no_widgets_found">Ningún widget para configurar. Primero añade un widget \"Calendar Widget\" en la Pantalla Principal de tu dispositivo.</string>
   <string name="select_a_widget_to_configure">Elige un Widget para configurar</string>
   <string name="close">Cerrar</string>
+  <string name="go_to_home_screen">Ir a la pantalla de inicio</string>
   <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Calendarios</string>
   <string name="calendars_prefs_desc">Seleccionar calendarios a mostrar</string>
@@ -32,8 +35,8 @@
   <string name="appearance_text_size_large">Grande</string>
   <string name="appearance_text_size_very_large">Muy grande</string>
   <string name="pref_event_entry_layout_title">Diseño del evento</string>
-  <string name="default_multiline_layout">Diseño multilínea por defecto</string>
-  <string name="single_line_layout">Diseño de una sola linea</string>
+  <string name="default_multiline_layout">Hora debajo del título</string>
+  <string name="single_line_layout">Todo en una sola línea</string>
   <string name="appearance_multiline_title_title">Título multilinea</string>
   <string name="appearance_multiline_title_desc">Extender título de eventos en varias líneas</string>
   <string name="appearance_date_format_desc">Mostrar hora en formato am/pm o 24 horas</string>

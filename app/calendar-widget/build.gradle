@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath 'org.ajoberstar:grgit:1.4.0'
+        classpath 'org.ajoberstar:grgit:1.9.2'
     }
 }
 
@@ -26,7 +26,7 @@ android {
     buildToolsVersion '25.0.2'
 
     defaultConfig {
-        versionName '1.10.0' + getVersionNameSuffix()
+        versionName '1.10.0' + getVersionNameExtension()
         versionCode getVersionCodeInteger()
         minSdkVersion 15
         targetSdkVersion 25
@@ -71,10 +71,10 @@ android {
     }
 }
 
-String getVersionNameSuffix() {
+static getVersionNameExtension() {
     try {
-        def git = org.ajoberstar.grgit.Grgit.open(dir: '../..')
-        def versionNameSuffix = "-${git.head().abbreviatedId}"
+        def git = org.ajoberstar.grgit.Grgit.open()
+        def versionNameSuffix = "-${git.head().getAbbreviatedId(8)}"
         git.close()
         return versionNameSuffix
     } catch (ignored) {
@@ -82,9 +82,9 @@ String getVersionNameSuffix() {
     }
 }
 
-def getVersionCodeInteger() {
+static getVersionCodeInteger() {
     try {
-        def git = org.ajoberstar.grgit.Grgit.open(dir: '../..')
+        def git = org.ajoberstar.grgit.Grgit.open()
         def versionCode = git.log().size()
         git.close()
         return versionCode

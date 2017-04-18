@@ -1,12 +1,10 @@
 package com.plusonelabs.calendar.calendar;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.plusonelabs.calendar.CalendarIntentUtil;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.IEventVisualizer;
 import com.plusonelabs.calendar.R;
@@ -21,7 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.plusonelabs.calendar.RemoteViewsUtil.*;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
 import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
@@ -37,14 +37,14 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
     }
 
     public RemoteViews getRemoteView(WidgetEntry eventEntry) {
-        CalendarEntry event = (CalendarEntry) eventEntry;
+        CalendarEntry entry = (CalendarEntry) eventEntry;
         EventEntryLayout eventEntryLayout = getSettings().getEventEntryLayout();
         RemoteViews rv = new RemoteViews(context.getPackageName(), eventEntryLayout.layoutId);
-        rv.setOnClickFillInIntent(R.id.event_entry, createOnItemClickIntent(event.getEvent()));
-        eventEntryLayout.visualizeEvent(event, rv);
-        setAlarmActive(event, rv);
-        setRecurring(event, rv);
-        setColor(event, rv);
+        rv.setOnClickFillInIntent(R.id.event_entry, entry.getEvent().createOpenCalendarEventIntent());
+        eventEntryLayout.visualizeEvent(entry, rv);
+        setAlarmActive(entry, rv);
+        setRecurring(entry, rv);
+        setColor(entry, rv);
         return rv;
     }
 
@@ -85,11 +85,6 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
     @NonNull
     private InstanceSettings getSettings() {
         return InstanceSettings.fromId(context, widgetId);
-    }
-
-    private Intent createOnItemClickIntent(CalendarEvent event) {
-        return CalendarIntentUtil.createOpenCalendarEventIntent(event.getEventId(),
-                event.getStartDate(), event.getEndDate());
     }
 
     public int getViewTypeCount() {

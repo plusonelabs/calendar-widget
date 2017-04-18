@@ -8,24 +8,24 @@ import android.os.Build;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.util.SparseArray;
 
-import com.plusonelabs.calendar.BuildConfig;
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.util.PermissionsUtil;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import static android.graphics.Color.*;
+import static android.graphics.Color.argb;
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
 
 public class CalendarEventProvider {
 
@@ -237,59 +237,17 @@ public class CalendarEventProvider {
     }
 
     private CalendarEvent createCalendarEvent(Cursor cursor) {
-        CalendarEvent event = new CalendarEvent(context, widgetId);
+        boolean allDay = cursor.getInt(cursor.getColumnIndex(Instances.ALL_DAY)) > 0;
+        CalendarEvent event = new CalendarEvent(context, widgetId, zone, allDay);
         event.setEventId(cursor.getInt(cursor.getColumnIndex(Instances.EVENT_ID)));
         event.setTitle(cursor.getString(cursor.getColumnIndex(Instances.TITLE)));
-        event.setStartDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.BEGIN)), zone));
-        event.setEndDate(new DateTime(cursor.getLong(cursor.getColumnIndex(Instances.END)), zone));
-        event.setAllDay(cursor.getInt(cursor.getColumnIndex(Instances.ALL_DAY)) > 0);
+        event.setStartMillis(cursor.getLong(cursor.getColumnIndex(Instances.BEGIN)));
+        event.setEndMillis(cursor.getLong(cursor.getColumnIndex(Instances.END)));
         event.setLocation(cursor.getString(cursor.getColumnIndex(Instances.EVENT_LOCATION)));
         event.setAlarmActive(cursor.getInt(cursor.getColumnIndex(Instances.HAS_ALARM)) > 0);
         event.setRecurring(cursor.getString(cursor.getColumnIndex(Instances.RRULE)) != null);
         event.setColor(getAsOpaque(getEventColor(cursor)));
-        if (event.isAllDay()) {
-            fixAllDayEvent(event);
-        }
         return event;
-    }
-
-    private void fixAllDayEvent(CalendarEvent event) {
-        event.setStartDate(fixTimeOfAllDayEvent(event.getStartDate()));
-        event.setEndDate(fixTimeOfAllDayEvent(event.getEndDate()));
-        if (!event.getEndDate().isAfter(event.getStartDate())) {
-            event.setEndDate(event.getStartDate().plusDays(1));
-        }
-    }
-
-    /**
-     * Implemented based on this answer: http://stackoverflow.com/a/5451245/297710
-     */
-    private DateTime fixTimeOfAllDayEvent(DateTime date) {
-        String msgLog = "";
-        DateTime fixed;
-        try {
-            DateTimeZone zone = date.getZone();
-            msgLog += "date=" + date + " ( " + zone + ")";
-            DateTime utcDate = date.toDateTime(DateTimeZone.UTC);
-            LocalDateTime ldt = new LocalDateTime()
-                    .withYear(utcDate.getYear())
-                    .withMonthOfYear(utcDate.getMonthOfYear())
-                    .withDayOfMonth(utcDate.getDayOfMonth())
-                    .withMillisOfDay(0);
-            int hour = 0;
-            while (zone.isLocalDateTimeGap(ldt)) {
-                Log.v("fixTimeOfAllDayEvent", "Local Date Time Gap: " + ldt + "; " + msgLog);
-                ldt = ldt.withHourOfDay(++hour);
-            }
-            fixed = ldt.toDateTime(zone);
-            msgLog += " -> " + fixed;
-            if (BuildConfig.DEBUG) {
-                Log.v("fixTimeOfAllDayEvent", msgLog);
-            }
-        } catch (org.joda.time.IllegalInstantException e) {
-            throw new org.joda.time.IllegalInstantException(msgLog + " caused by: " + e);
-        }
-        return fixed;
     }
 
     private int getEventColor(Cursor cursor) {

@@ -64,7 +64,7 @@ public class RecurringEventsTest extends InstrumentationTestCase {
 
     void generateEventInstances() {
         provider.clear();
-        DateTime date = DateTime.now().withTimeAtStartOfDay();
+        DateTime date = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         long millis = date.getMillis() + TimeUnit.HOURS.toMillis(10);
         eventId++;
         for (int ind = 0; ind < 15; ind++) {

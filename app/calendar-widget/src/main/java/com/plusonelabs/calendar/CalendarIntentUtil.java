@@ -39,15 +39,7 @@ public class CalendarIntentUtil {
                 createOpenCalendarAtDayIntent(new DateTime(settings.getTimeZone())));
     }
 
-    public static Intent createOpenCalendarEventIntent(int eventId, DateTime from, DateTime to) {
-        Intent intent = createCalendarIntent();
-        intent.setData(ContentUris.withAppendedId(Events.CONTENT_URI, eventId));
-        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, from.getMillis());
-        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, to.getMillis());
-        return intent;
-    }
-
-    private static Intent createCalendarIntent() {
+    public static Intent createCalendarIntent() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);

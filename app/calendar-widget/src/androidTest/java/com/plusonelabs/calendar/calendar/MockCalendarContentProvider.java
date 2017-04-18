@@ -11,6 +11,7 @@ import android.test.InstrumentationTestCase;
 import android.test.IsolatedContext;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
+import android.util.Log;
 
 import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.EventAppWidgetProvider;
@@ -18,7 +19,6 @@ import com.plusonelabs.calendar.prefs.ApplicationPreferences;
 import com.plusonelabs.calendar.prefs.InstanceSettings;
 import com.plusonelabs.calendar.util.RawResourceUtils;
 
-import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,29 +30,22 @@ import java.util.List;
 
 import static com.plusonelabs.calendar.calendar.CalendarQueryResultsStorage.KEY_SETTINGS;
 import static com.plusonelabs.calendar.prefs.ApplicationPreferences.PREF_WIDGET_ID;
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class MockCalendarContentProvider extends MockContentProvider {
 
-    private static final int WIDGET_ID = 434892;
+    private static final int WIDGET_ID_MIN = 434892;
+    private static final String[] ZONE_IDS = {"America/Los_Angeles", "Europe/Moscow", "Asia/Kuala_Lumpur", "UTC"};
     private int queriesCount = 0;
     private final List<CalendarQueryResult> results = new ArrayList<>();
     private final JSONArray storedSettings;
     private final DateTimeZone storedZone;
 
-    private int widgetId = WIDGET_ID;
-
-    private static DateTime fixDateForCalendar(DateTime date, boolean isAllDay) {
-        if (!isAllDay) {
-            return date;
-        }
-        return new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(),
-                date.getHourOfDay(), date.getMinuteOfHour(),
-                DateTimeZone.UTC);
-    }
+    private int widgetId = WIDGET_ID_MIN;
 
     public static MockCalendarContentProvider getContentProvider(InstrumentationTestCase testCase) throws JSONException {
         MockContentResolver mockResolver = new MockContentResolver();
@@ -80,6 +73,11 @@ public class MockCalendarContentProvider extends MockContentProvider {
                 InstanceSettings.getInstances(context).containsKey(widgetId + 1)) {
             widgetId++;
         }
+
+        DateTimeZone zone = DateTimeZone.forID(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
+        DateTimeZone.setDefault(zone);
+        Log.i(getClass().getSimpleName(), "Default Time zone set to " + zone);
+
         if (InstanceSettings.getInstances(context).isEmpty()) {
             InstanceSettings settings1 = InstanceSettings.fromId(context, widgetId);
             assertFalse(settings1.isJustCreated());
@@ -139,8 +137,8 @@ public class MockCalendarContentProvider extends MockContentProvider {
         addRow(new CalendarQueryRow()
                 .setEventId(event.getEventId())
                 .setTitle(event.getTitle())
-                .setBegin(fixDateForCalendar(event.getStartDate(), event.isAllDay()).getMillis())
-                .setEnd(fixDateForCalendar(event.getEndDate(), event.isAllDay()).getMillis())
+                .setBegin(event.getStartMillis())
+                .setEnd(event.getEndMillis())
                 .setDisplayColor(event.getColor())
                 .setAllDay(event.isAllDay() ? 1 : 0)
                 .setEventLocation(event.getLocation())

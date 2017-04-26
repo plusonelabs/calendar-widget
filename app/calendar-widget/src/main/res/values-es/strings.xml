@@ -72,7 +72,7 @@
   <string name="appearance_theme_light">Oscuro</string>
   <string name="appearance_theme_white">Negro</string>
   <string name="appearance_abbreviate_dates_title">Acortar fechas</string>
-  <string name="appearance_abbreviate_dates_desc">Usa formato de tres-letras para fechas en el Widget y cabezales Día etc.</string>
+  <string name="appearance_abbreviate_dates_desc">Usar formato de tres letras para fechas en encabezados de Widget y día etc.</string>
   <!-- Preference header: Event details -->
   <string name="event_details_prefs">Detalles del evento</string>
   <string name="event_details_prefs_desc">Configurar los detalles a mostrar de un evento</string>

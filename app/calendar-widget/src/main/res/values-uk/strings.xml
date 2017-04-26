@@ -14,10 +14,12 @@
   <string name="indicator_recurring">Індикатор подій, що повторюються</string>
   <string name="no_title">(Без заголовка)</string>
   <string name="grant_permissions">Надати дозволи</string>
+  <string name="grant_permissions_verbose">Віджету потрібен дозвіл на читання календарів.\nНатисніть тут, щоб дати дозвіл.</string>
   <string name="permissions_justification">Додатку \"Віджет календаря\" потрібен дозвіл для читання вашого календаря. В іншому випадку віджет буде порожнім.</string>
   <string name="no_widgets_found">Відсутні настроювані віджети. Добавте віджет \"Віджет календаря\" на головний екран пристрою.</string>
   <string name="select_a_widget_to_configure">Виберіть віджет для налаштування</string>
   <string name="close">Закрити</string>
+  <string name="go_to_home_screen">Перейти до головного екрану</string>
   <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Календарі</string>
   <string name="calendars_prefs_desc">Виберіть календарі для відображення</string>
@@ -32,8 +34,8 @@
   <string name="appearance_text_size_large">Великий</string>
   <string name="appearance_text_size_very_large">Дуже великий</string>
   <string name="pref_event_entry_layout_title">Схема розташування подій</string>
-  <string name="default_multiline_layout">За замовчуванням багатоторядкове розташування</string>
-  <string name="single_line_layout">Однолінійне розташування</string>
+  <string name="default_multiline_layout">Час нижче заголовку</string>
+  <string name="single_line_layout">Все в один рядок</string>
   <string name="appearance_multiline_title_title">Багаторядковий заголовок</string>
   <string name="appearance_multiline_title_desc">Розширювати заголовок події на кілька рядків</string>
   <string name="appearance_date_format_desc">Відображати час у 12 чи 24-годинному форматі</string>

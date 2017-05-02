@@ -25,7 +25,7 @@ and selected calendars.
 * Indicators for alerts and recurring events.
 * Lock time zone when travelling to different time zones.
 * Turn off Day headers and see dates in the "Days from today" column.
-* Android v.4.0 up to v.7 supported. Supports Android tablets.
+* Android 4 to 7 supported. Supports Android tablets.
 
 ## Collaborate
 
@@ -35,7 +35,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## Changelog
 
-### [v1.10.0](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.0) (not released yet)
+### [v1.10.0](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.0)
 
 * Added: Different settings for different Widget instances allow you to create any number of
 customized views of your events, including configuration of different calendars for different widgets.

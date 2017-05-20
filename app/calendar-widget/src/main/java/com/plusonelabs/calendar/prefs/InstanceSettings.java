@@ -72,23 +72,25 @@ public class InstanceSettings {
     @NonNull
     public static InstanceSettings fromId(Context context, Integer widgetId) {
         ensureInstancesAreLoaded(context);
-        return instances.containsKey(widgetId) ? instances.get(widgetId) : newInstance(context, widgetId);
+        InstanceSettings settings = instances.get(widgetId);
+        return settings != null ? settings : newInstance(context, widgetId);
     }
 
+    @NonNull
     private static InstanceSettings newInstance(Context context, Integer widgetId) {
-        InstanceSettings settings;
         synchronized (instances) {
-            settings = instances.get(widgetId);
-            if (settings == null && widgetId != 0) {
-                if (ApplicationPreferences.getWidgetId(context) == widgetId || instances.isEmpty()) {
+            InstanceSettings settings = instances.get(widgetId);
+            if (settings == null) {
+                if (widgetId != 0 &&
+                        (ApplicationPreferences.getWidgetId(context) == widgetId || instances.isEmpty())) {
                     settings = fromApplicationPreferences(context, widgetId);
                 } else {
                     settings = new InstanceSettings(context, widgetId, "");
                 }
                 instances.put(widgetId, settings);
             }
+            return settings;
         }
-        return settings;
     }
 
     private static void ensureInstancesAreLoaded(Context context) {

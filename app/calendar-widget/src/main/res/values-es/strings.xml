@@ -3,7 +3,7 @@
 <resources>
   <string name="app_name">Widget del Calendario</string>
   <string name="widget_name">Calendar Widget</string>
-  <string name="widget_instance_name">Elige un widget para configurar</string>
+  <string name="widget_instance_name">Nombre del widget</string>
   <string name="yesterday">Ayer</string>
   <string name="today">Hoy</string>
   <string name="tomorrow">Mañana</string>
@@ -45,9 +45,9 @@
   <string name="appearance_date_format_24">17:00</string>
   <string name="appearance_date_format_12">5:00 pm</string>
   <string name="appearance_show_days_without_events_title">Mostrar días sin eventos</string>
-  <string name="appearance_show_days_without_events_desc">Mostrar cabecera de día para días sin eventos</string>
-  <string name="appearance_show_day_headers_title">Mostrar cabezales días</string>
-  <string name="appearance_show_day_headers_desc">Mostrar cabezal días en todos</string>
+  <string name="appearance_show_days_without_events_desc">Mostrar encabezados de día para días sin eventos</string>
+  <string name="appearance_show_day_headers_title">Mostrar encabezados de día</string>
+  <string name="appearance_show_day_headers_desc">Mostrar encabezados de día en todos los días</string>
   <string name="appearance_display_header_title">Mostrar cabecera del widget</string>
   <string name="appearance_display_header_desc">Mostrar la fecha y ajustes en cabecera</string>
   <string name="lock_time_zone_off_desc">Desbloqueado, zona actual: %s</string>
@@ -72,7 +72,7 @@
   <string name="appearance_theme_light">Oscuro</string>
   <string name="appearance_theme_white">Negro</string>
   <string name="appearance_abbreviate_dates_title">Acortar fechas</string>
-  <string name="appearance_abbreviate_dates_desc">Usar formato de tres letras para fechas en encabezados de Widget y día etc.</string>
+  <string name="appearance_abbreviate_dates_desc">Usar formato de tres letras para fechas en encabezados de Widget y día, etc.</string>
   <!-- Preference header: Event details -->
   <string name="event_details_prefs">Detalles del evento</string>
   <string name="event_details_prefs_desc">Configurar los detalles a mostrar de un evento</string>
@@ -113,7 +113,7 @@
   <string name="ended_today">Finalizados hoy</string>
   <string name="ended_yesterday">Finalizados ayer</string>
   <string name="pref_hide_based_on_keywords_title">Esconder eventos con palabra en el título</string>
-  <string name="show_only_closest_instance_of_recurring_event">Mostrar solo la instancia más cercana de un evento recurrente</string>
+  <string name="show_only_closest_instance_of_recurring_event">Mostrar sólo la fecha más cercana de un evento recurrente</string>
   <!-- Preference header: Feedback -->
   <string name="feedback_prefs">Información</string>
   <string name="feedback_prefs_desc">Póngase en contacto con nosotros</string>
@@ -123,5 +123,5 @@
   <string name="feedback_play_store_title">Visitar widget en Google Play Store</string>
   <string name="refresh_desc">Actualizar</string>
   <string name="share_events_for_debugging_desc">Generar un informe para ayudar los desarrolladores a solucionar el problema</string>
-  <string name="share_events_for_debugging_title">Comparte eventos para depuración</string>
+  <string name="share_events_for_debugging_title">Compartir eventos para depuración</string>
 </resources>

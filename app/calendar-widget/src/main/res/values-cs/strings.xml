@@ -14,10 +14,12 @@
   <string name="indicator_recurring">Zobrazení ikonky u opakujících se událostí</string>
   <string name="no_title">(Bez názvu)</string>
   <string name="grant_permissions">Udělit oprávnění</string>
+  <string name="grant_permissions_verbose">Widget vyžaduje oprávnění ke čtení kalendářů.\nStiskněte zde pro udělení oprávnění.</string>
   <string name="permissions_justification">Aplikaci Calendar widget musíte udělit oprávnění ke čtení kalendářů. Jinak bude widget prázdný.</string>
   <string name="no_widgets_found">Žádné widgety nelze ještě konfigurovat. Na domovské obrazovce zařízení si nejprve přidejte widget Calendar Widget.</string>
   <string name="select_a_widget_to_configure">Vyberte widget ke konfiguraci</string>
   <string name="close">Zavřít</string>
+  <string name="go_to_home_screen">Přejít na domovskou stránku</string>
   <!-- Preference header: Calendars -->
   <string name="calendars_prefs">Kalendáře</string>
   <string name="calendars_prefs_desc">Vyberte kalendaře k zobrazení</string>
@@ -32,8 +34,8 @@
   <string name="appearance_text_size_large">Velká</string>
   <string name="appearance_text_size_very_large">Velmi velká</string>
   <string name="pref_event_entry_layout_title">Rozložení vstupní události</string>
-  <string name="default_multiline_layout">Výchozí rozložení na více řádků</string>
-  <string name="single_line_layout">Jednořádkové rozložení</string>
+  <string name="default_multiline_layout">Čas pod názvem</string>
+  <string name="single_line_layout">Vše v jednom řádku</string>
   <string name="appearance_multiline_title_title">Víceřádkový název</string>
   <string name="appearance_multiline_title_desc">Rozdělí název události na více řádků</string>
   <string name="appearance_date_format_desc">Zobrazit čas ve formátu am/pm nebo 24 hodin</string>

@@ -35,6 +35,12 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## Changelog
 
+
+### [v1.10.1](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.1)
+
+* Fix issue where widget would crash because of unexpected widgetId
+* Translations updates
+
 ### [v1.10.0](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.0)
 
 * Added: Different settings for different Widget instances allow you to create any number of

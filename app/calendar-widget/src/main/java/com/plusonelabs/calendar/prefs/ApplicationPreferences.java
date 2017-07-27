@@ -28,6 +28,7 @@ public class ApplicationPreferences {
     static final String PREF_INDICATE_RECURRING = "indicateRecurring";
     static final String PREF_INDICATE_ALERTS = "indicateAlerts";
     static final String PREF_BACKGROUND_COLOR = "backgroundColor";
+    static final String PREF_EVENT_BACKGROUND_COLOR_OVERRIDE = "eventBackgroundColorOverride";
     static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
     static final String PREF_DATE_FORMAT = "dateFormat";
     static final String PREF_DATE_FORMAT_DEFAULT = "auto";

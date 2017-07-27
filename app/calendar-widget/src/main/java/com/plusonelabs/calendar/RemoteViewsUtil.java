@@ -60,6 +60,19 @@ public class RemoteViewsUtil {
         rv.setInt(viewId, METHOD_SET_BACKGROUND_COLOR, color);
     }
 
+//    public static int adjustAlpha(int color, float alpha) {
+//        int newAlpha = (int) (255 * alpha);
+//        int red = Color.red(color);
+//        int green = Color.green(color);
+//        int blue = Color.blue(color);
+//        return Color.argb(newAlpha, red, green, blue);
+//    }
+
+    public static int adjustAlpha(int myOpaqueColor, float factor) {
+        int color = ( (int) ( factor * 255.0f ) << 24 ) | ( myOpaqueColor & 0x00ffffff);
+        return color;
+    }
+
     private static float getScaledValueInPixel(InstanceSettings settings, int dimenId) {
         float resValue = getDimension(settings.getContext(), dimenId);
         float prefTextScale = parseFloat(settings.getTextSizeScale());

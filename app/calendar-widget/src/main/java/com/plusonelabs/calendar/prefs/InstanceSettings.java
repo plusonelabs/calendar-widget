@@ -62,6 +62,7 @@ public class InstanceSettings {
     private boolean showOnlyClosestInstanceOfRecurringEvent = false;
     private boolean indicateAlerts = true;
     private boolean indicateRecurring = false;
+    private boolean eventBackgroundColorOverride = false;
     private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
     private String headerTheme = PREF_HEADER_THEME_DEFAULT;
     private boolean showWidgetHeader = true;
@@ -207,6 +208,9 @@ public class InstanceSettings {
         if (json.has(PREF_BACKGROUND_COLOR)) {
             settings.backgroundColor = json.getInt(PREF_BACKGROUND_COLOR);
         }
+        if (json.has(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE)) {
+            settings.eventBackgroundColorOverride = json.getBoolean(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE);
+        }
         if (json.has(PREF_TEXT_SIZE_SCALE)) {
             settings.textSizeScale = json.getString(PREF_TEXT_SIZE_SCALE);
         }
@@ -273,6 +277,8 @@ public class InstanceSettings {
                 PREF_TEXT_SIZE_SCALE_DEFAULT);
         settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
                 PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
+        settings.eventBackgroundColorOverride = ApplicationPreferences.getBoolean(context,
+                PREF_EVENT_BACKGROUND_COLOR_OVERRIDE, false);
         return settings;
     }
 
@@ -365,6 +371,7 @@ public class InstanceSettings {
             json.put(PREF_BACKGROUND_COLOR, backgroundColor);
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
+            json.put(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE, eventBackgroundColorOverride);
         } catch (JSONException e) {
             throw new RuntimeException("Saving settings to JSON", e);
         }
@@ -454,6 +461,14 @@ public class InstanceSettings {
     public DateTimeZone getTimeZone() {
         return DateTimeZone.forID(DateUtil.validatedTimeZoneId(
                 isTimeZoneLocked() ? lockedTimeZoneId : TimeZone.getDefault().getID()));
+    }
+
+    public boolean getEventBackgroundColorOverride() {
+        return eventBackgroundColorOverride;
+    }
+
+    public void setEventBackgroundColorOverride(boolean eventBackgroundColorOverride) {
+        this.eventBackgroundColorOverride = eventBackgroundColorOverride;
     }
 
     public EventEntryLayout getEventEntryLayout() {

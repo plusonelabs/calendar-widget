@@ -22,6 +22,7 @@ import java.util.List;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
+import static com.plusonelabs.calendar.RemoteViewsUtil.adjustAlpha;
 import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
@@ -77,6 +78,10 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
         setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
         if (entry.getEndDate().isBefore(DateUtil.now(entry.getEndDate().getZone()))) {
             setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
+        } else if (getSettings().getEventBackgroundColorOverride()) {
+            setBackgroundColor(rv, R.id.event_entry_color, 0);
+            int modifiedColor = adjustAlpha(entry.getColor(), .1f);
+            setBackgroundColor(rv, R.id.event_entry, modifiedColor);
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);
         }

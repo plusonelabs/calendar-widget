@@ -112,13 +112,22 @@
             android:key="entryTheme"
             android:summary="@string/appearance_entries_theme_desc"
             android:title="@string/appearance_entries_theme_title" />
+    </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/appearance_group_event_background_override_title">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="eventBackgroundColorOverride"
             android:summary="@string/appearance_background_event_color_override"
             android:title="@string/appearance_background_event_color_override_title">
         </CheckBoxPreference>
+
+        <Preference
+            android:defaultValue="50"
+            android:key="eventBackgroundColorOverrideOpacity"
+            android:summary="@string/appearance_background_event_color_override_opacity_desc"
+            android:title="@string/appearance_background_event_color_override_opacity_title"
+            android:dependency="eventBackgroundColorOverride"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

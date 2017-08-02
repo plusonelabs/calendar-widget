@@ -2,6 +2,7 @@ package com.plusonelabs.calendar.calendar;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -19,10 +20,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.plusonelabs.calendar.RemoteViewsUtil.adjustAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setAlpha;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setBackgroundColor;
 import static com.plusonelabs.calendar.RemoteViewsUtil.setImageFromAttr;
-import static com.plusonelabs.calendar.RemoteViewsUtil.adjustAlpha;
 import static com.plusonelabs.calendar.Theme.themeNameToResId;
 
 public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
@@ -76,11 +77,14 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 
     private void setColor(CalendarEntry entry, RemoteViews rv) {
         setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
+        InstanceSettings settings = getSettings();
         if (entry.getEndDate().isBefore(DateUtil.now(entry.getEndDate().getZone()))) {
-            setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
-        } else if (getSettings().getEventBackgroundColorOverride()) {
+            setBackgroundColor(rv, R.id.event_entry, settings.getPastEventsBackgroundColor());
+        } else if (settings.getEventBackgroundColorOverride()) {
             setBackgroundColor(rv, R.id.event_entry_color, 0);
-            int modifiedColor = adjustAlpha(entry.getColor(), .1f);
+            int alpha = settings.getEventBackgroundColorOverrideOpacity();
+            Log.v("Visualizer", "Alpha: " + alpha);
+            int modifiedColor = adjustAlpha(entry.getColor(), alpha);
             setBackgroundColor(rv, R.id.event_entry, modifiedColor);
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);

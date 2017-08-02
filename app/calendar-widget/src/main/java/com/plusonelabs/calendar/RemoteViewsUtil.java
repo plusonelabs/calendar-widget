@@ -3,6 +3,7 @@ package com.plusonelabs.calendar;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
@@ -60,17 +61,12 @@ public class RemoteViewsUtil {
         rv.setInt(viewId, METHOD_SET_BACKGROUND_COLOR, color);
     }
 
-//    public static int adjustAlpha(int color, float alpha) {
-//        int newAlpha = (int) (255 * alpha);
-//        int red = Color.red(color);
-//        int green = Color.green(color);
-//        int blue = Color.blue(color);
-//        return Color.argb(newAlpha, red, green, blue);
-//    }
-
-    public static int adjustAlpha(int myOpaqueColor, float factor) {
-        int color = ( (int) ( factor * 255.0f ) << 24 ) | ( myOpaqueColor & 0x00ffffff);
-        return color;
+    public static int adjustAlpha(int originalColor, int alpha) {
+        int red = Color.red(originalColor);
+        int green = Color.green(originalColor);
+        int blue = Color.blue(originalColor);
+        int argb = Color.argb(alpha, red, green, blue);
+        return argb;
     }
 
     private static float getScaledValueInPixel(InstanceSettings settings, int dimenId) {

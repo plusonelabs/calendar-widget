@@ -62,13 +62,14 @@ public class InstanceSettings {
     private boolean showOnlyClosestInstanceOfRecurringEvent = false;
     private boolean indicateAlerts = true;
     private boolean indicateRecurring = false;
-    private boolean eventBackgroundColorOverride = false;
     private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
     private String headerTheme = PREF_HEADER_THEME_DEFAULT;
     private boolean showWidgetHeader = true;
     private int backgroundColor = PREF_BACKGROUND_COLOR_DEFAULT;
     private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
     private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+    private boolean eventBackgroundColorOverride = false;
+    private int eventBackgroundColorOverrideOpacity = PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY_DEFAULT;
 
     @NonNull
     public static InstanceSettings fromId(Context context, Integer widgetId) {
@@ -211,6 +212,9 @@ public class InstanceSettings {
         if (json.has(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE)) {
             settings.eventBackgroundColorOverride = json.getBoolean(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE);
         }
+        if (json.has(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY)) {
+            settings.eventBackgroundColorOverrideOpacity = json.getInt(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY);
+        }
         if (json.has(PREF_TEXT_SIZE_SCALE)) {
             settings.textSizeScale = json.getString(PREF_TEXT_SIZE_SCALE);
         }
@@ -279,6 +283,9 @@ public class InstanceSettings {
                 PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
         settings.eventBackgroundColorOverride = ApplicationPreferences.getBoolean(context,
                 PREF_EVENT_BACKGROUND_COLOR_OVERRIDE, false);
+        settings.eventBackgroundColorOverrideOpacity = ApplicationPreferences.getInt(context,
+                PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY,
+                PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY_DEFAULT);
         return settings;
     }
 
@@ -371,6 +378,7 @@ public class InstanceSettings {
             json.put(PREF_BACKGROUND_COLOR, backgroundColor);
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
+            json.put(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY, eventBackgroundColorOverrideOpacity);
             json.put(PREF_EVENT_BACKGROUND_COLOR_OVERRIDE, eventBackgroundColorOverride);
         } catch (JSONException e) {
             throw new RuntimeException("Saving settings to JSON", e);
@@ -467,8 +475,8 @@ public class InstanceSettings {
         return eventBackgroundColorOverride;
     }
 
-    public void setEventBackgroundColorOverride(boolean eventBackgroundColorOverride) {
-        this.eventBackgroundColorOverride = eventBackgroundColorOverride;
+    public int getEventBackgroundColorOverrideOpacity() {
+        return eventBackgroundColorOverrideOpacity;
     }
 
     public EventEntryLayout getEventEntryLayout() {

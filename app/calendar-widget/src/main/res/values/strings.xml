@@ -55,7 +55,10 @@
     <string name="lock_time_zone_on_desc">Locked at %s</string>
     <string name="lock_time_zone_title">Lock time zone</string>
     <string name="appearance_group_color_title">Colors</string>
+    <string name="appearance_group_event_background_override_title">Event Background Override</string>
     <string name="appearance_background_color_title">Background color</string>
+    <string name="appearance_background_event_color_override_opacity_title">Opacity</string>
+    <string name="appearance_background_event_color_override_opacity_desc">Adjust opacity of event background color override</string>
     <string name="appearance_background_event_color_override_title">Event Background Color Override</string>
     <string name="appearance_background_event_color_override">Set calendar color as event background</string>
     <string name="appearance_background_color_desc">Adjust the color of the background</string>

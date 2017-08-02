@@ -28,7 +28,6 @@ public class ApplicationPreferences {
     static final String PREF_INDICATE_RECURRING = "indicateRecurring";
     static final String PREF_INDICATE_ALERTS = "indicateAlerts";
     static final String PREF_BACKGROUND_COLOR = "backgroundColor";
-    static final String PREF_EVENT_BACKGROUND_COLOR_OVERRIDE = "eventBackgroundColorOverride";
     static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
     static final String PREF_DATE_FORMAT = "dateFormat";
     static final String PREF_DATE_FORMAT_DEFAULT = "auto";
@@ -60,6 +59,9 @@ public class ApplicationPreferences {
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
+    static final String PREF_EVENT_BACKGROUND_COLOR_OVERRIDE = "eventBackgroundColorOverride";
+    static final String PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY = "eventBackgroundColorOverrideOpacity";
+    static final int PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY_DEFAULT = 127;
 
     private static volatile String lockedTimeZoneId = null;
 
@@ -97,6 +99,8 @@ public class ApplicationPreferences {
         setInt(context, PREF_BACKGROUND_COLOR, settings.getBackgroundColor());
         setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale());
         setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());
+        setBoolean(context, PREF_EVENT_BACKGROUND_COLOR_OVERRIDE, settings.getEventBackgroundColorOverride());
+        setInt(context, PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY, settings.getEventBackgroundColorOverrideOpacity());
     }
 
     public static void save(Context context, int wigdetId) {

@@ -76,6 +76,10 @@ public class AppearancePreferencesFragment extends PreferenceFragment
                     showLockTimeZone(false);
                 }
                 break;
+            case ApplicationPreferences.PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY:
+                new EventBackgroundOverrideTransparencyDialog().show(getFragmentManager(),
+                        ApplicationPreferences.PREF_EVENT_BACKGROUND_COLOR_OVERRIDE_OPACITY);
+                break;
             default:
                 break;
         }

@@ -9,6 +9,7 @@ import android.widget.RemoteViews;
 
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.RemoteViewsUtil;
+import com.plusonelabs.calendar.prefs.InstanceSettings;
 
 import static com.plusonelabs.calendar.RemoteViewsUtil.*;
 
@@ -39,16 +40,23 @@ public enum EventEntryLayout {
 
         @Override
         protected void setEventDate(CalendarEntry entry, RemoteViews rv) {
-            if (entry.getSettings().getShowDayHeaders()) {
+            InstanceSettings settings = entry.getSettings();
+            if (settings.getShowDayHeaders()
+                    && !settings.isHeaderToLeftOfEvent()) {
                 rv.setViewVisibility(R.id.event_entry_date, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
+            } else if (settings.isHeaderToLeftOfEvent()) {
+                CharSequence dateText = getDaysFromTodayString(settings.getEntryThemeContext(), entry.getDaysFromToday());
+//                rv.setTextViewText(viewToShow, getDaysFromTodayString(settings.getEntryThemeContext(), days));
+                //TODO create new layout, set visible here and set text
+
             } else {
                 int days = entry.getDaysFromToday();
                 int viewToShow = days < -1 || days > 1 ? R.id.event_entry_date_right : R.id.event_entry_date;
                 int viewToHide = viewToShow == R.id.event_entry_date ? R.id.event_entry_date_right : R.id.event_entry_date;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
-                rv.setTextViewText(viewToShow, getDaysFromTodayString(entry.getSettings().getEntryThemeContext(), days));
+                rv.setTextViewText(viewToShow, getDaysFromTodayString(settings.getEntryThemeContext(), days));
             }
         }
 

@@ -64,6 +64,7 @@
     <string name="appearance_day_header_alignment_left">Left</string>
     <string name="appearance_day_header_alignment_center">Center</string>
     <string name="appearance_day_header_alignment_right">Right</string>
+    <string name="appearance_day_header_alignment_left_of_event">Left Of Event</string>
     <string name="appearance_header_theme_title">Widget header shading</string>
     <string name="appearance_header_theme_desc">Show the header of the widget in dark or light shade</string>
     <string name="appearance_entries_theme_title">Event shading</string>

@@ -7,11 +7,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.plusonelabs.calendar.DateUtil;
 import com.plusonelabs.calendar.R;
 import com.plusonelabs.calendar.RemoteViewsUtil;
 import com.plusonelabs.calendar.prefs.InstanceSettings;
 
-import static com.plusonelabs.calendar.RemoteViewsUtil.*;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setMultiline;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextColorFromAttr;
+import static com.plusonelabs.calendar.RemoteViewsUtil.setTextSize;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -20,15 +23,24 @@ public enum EventEntryLayout {
     DEFAULT(R.layout.event_entry, "DEFAULT", R.string.default_multiline_layout) {
         @Override
         protected void setEventDetails(CalendarEntry entry, RemoteViews rv) {
+            InstanceSettings settings = entry.getSettings();
             String eventDetails = entry.getEventTimeString() + entry.getLocationString();
             if (TextUtils.isEmpty(eventDetails)) {
                 rv.setViewVisibility(R.id.event_entry_details, View.GONE);
             } else {
                 rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
                 rv.setTextViewText(R.id.event_entry_details, eventDetails);
-                setTextSize(entry.getSettings(), rv, R.id.event_entry_details, R.dimen.event_entry_details);
+                setTextSize(settings, rv, R.id.event_entry_details, R.dimen.event_entry_details);
                 setTextColorFromAttr(entry.getSettings().getEntryThemeContext(), rv, R.id.event_entry_details,
                         R.attr.eventEntryDetails);
+            }
+
+            if (settings.getShowDayHeaders() && settings.isHeaderToLeftOfEvent()) {
+                CharSequence dateText = DateUtil.createDayHeaderTitle(settings, entry.getStartDate());
+                rv.setViewVisibility(R.id.event_entry_date_left, View.VISIBLE);
+                rv.setTextViewText(R.id.event_entry_date_left,dateText);
+                rv.setTextViewText(R.id.event_entry_details,dateText);
+                setTextSize(settings, rv, R.id.event_entry_date_left, R.dimen.event_entry_details);
             }
         }
     },
@@ -45,10 +57,13 @@ public enum EventEntryLayout {
                     && !settings.isHeaderToLeftOfEvent()) {
                 rv.setViewVisibility(R.id.event_entry_date, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
-            } else if (settings.isHeaderToLeftOfEvent()) {
-                CharSequence dateText = getDaysFromTodayString(settings.getEntryThemeContext(), entry.getDaysFromToday());
-//                rv.setTextViewText(viewToShow, getDaysFromTodayString(settings.getEntryThemeContext(), days));
-                //TODO create new layout, set visible here and set text
+            } else if (settings.getShowDayHeaders()
+                    && settings.isHeaderToLeftOfEvent()) {
+                CharSequence dateText = DateUtil.createDayHeaderTitle(settings, entry.getStartDate());
+                rv.setViewVisibility(R.id.event_entry_date, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_date_left, View.VISIBLE);
+                rv.setTextViewText(R.id.event_entry_date_left,dateText);
 
             } else {
                 int days = entry.getDaysFromToday();
@@ -60,18 +75,6 @@ public enum EventEntryLayout {
             }
         }
 
-        private CharSequence getDaysFromTodayString(Context context, int daysFromToday) {
-            switch (daysFromToday) {
-                case -1:
-                    return context.getText(R.string.yesterday);
-                case 0:
-                    return context.getText(R.string.today);
-                case 1:
-                    return context.getText(R.string.tomorrow);
-                default:
-                    return Integer.toString(daysFromToday);
-            }
-        }
 
         @Override
         protected void setEventTime(CalendarEntry entry, RemoteViews rv) {
@@ -80,6 +83,19 @@ public enum EventEntryLayout {
                     .SPACE_DASH_SPACE, " "));
         }
     };
+
+    private static CharSequence getDaysFromTodayString(Context context, int daysFromToday) {
+        switch (daysFromToday) {
+            case -1:
+                return context.getText(R.string.yesterday);
+            case 0:
+                return context.getText(R.string.today);
+            case 1:
+                return context.getText(R.string.tomorrow);
+            default:
+                return Integer.toString(daysFromToday);
+        }
+    }
 
     @LayoutRes
     public final int layoutId;

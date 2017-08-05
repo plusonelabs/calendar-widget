@@ -48,6 +48,12 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
         return rv;
     }
 
+    public RemoteViews getRemoteViewNonFirstEventForDay(WidgetEntry eventEntry) {
+        RemoteViews rv = getRemoteView(eventEntry);
+        rv.setTextViewText(R.id.event_entry_date_left, "");
+        return rv;
+    }
+
     private void setAlarmActive(CalendarEntry entry, RemoteViews rv) {
         boolean showIndication = entry.isAlarmActive() && getSettings().getIndicateAlerts();
         setIndicator(rv, showIndication, R.id.event_entry_indicator_alarm, R.attr.eventEntryAlarm);

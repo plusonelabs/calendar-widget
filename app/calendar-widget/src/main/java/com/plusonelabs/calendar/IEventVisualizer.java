@@ -9,6 +9,7 @@ import java.util.List;
 public interface IEventVisualizer<T extends WidgetEntry> {
 
     RemoteViews getRemoteView(WidgetEntry eventEntry);
+    RemoteViews getRemoteViewNonFirstEventForDay(WidgetEntry eventEntry);
 
     int getViewTypeCount();
 

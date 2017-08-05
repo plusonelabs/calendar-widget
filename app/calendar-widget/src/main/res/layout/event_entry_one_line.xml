@@ -9,6 +9,20 @@
               android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
+        android:id="@+id/event_entry_date_left"
+        style="@style/EventEntryTitle"
+        android:layout_width="60dp"
+        android:layout_height="fill_parent"
+        android:paddingRight="4dp"
+        android:visibility="gone"
+        android:maxLines="2"
+        android:singleLine="false"
+        android:scrollHorizontally="false"
+        android:ellipsize="none"
+        tools:ignore="SelectableText"
+        tools:text="@string/today"/>
+
+    <TextView
         android:id="@+id/event_entry_color"
         style="@style/EventEntryColor"
         android:layout_width="8dp"

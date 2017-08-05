@@ -39,7 +39,6 @@ public enum EventEntryLayout {
                 CharSequence dateText = DateUtil.createDayHeaderTitle(settings, entry.getStartDate());
                 rv.setViewVisibility(R.id.event_entry_date_left, View.VISIBLE);
                 rv.setTextViewText(R.id.event_entry_date_left,dateText);
-                rv.setTextViewText(R.id.event_entry_details,dateText);
                 setTextSize(settings, rv, R.id.event_entry_date_left, R.dimen.event_entry_details);
             }
         }

@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/event_entry_date_left"
         style="@style/EventEntryTitle"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="fill_parent"
         android:paddingRight="4dp"
         android:visibility="gone"

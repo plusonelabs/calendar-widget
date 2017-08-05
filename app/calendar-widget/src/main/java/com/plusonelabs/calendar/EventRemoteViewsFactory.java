@@ -29,10 +29,13 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     private final int widgetId;
     private volatile List<WidgetEntry> mWidgetEntries = new ArrayList<>();
     private final List<IEventVisualizer<?>> eventProviders;
+    private DateTime current = null;
+    private WidgetEntry lastEntry = null;
 
     public EventRemoteViewsFactory(Context context, int widgetId) {
         this.context = context;
         this.widgetId = widgetId;
+        this.current = null;
         eventProviders = new ArrayList<>();
         eventProviders.add(new CalendarEventVisualizer(context, widgetId));
     }
@@ -59,7 +62,16 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
             }
             for (IEventVisualizer<?> eventProvider : eventProviders) {
                 if (entry.getClass().isAssignableFrom(eventProvider.getSupportedEventEntryType())) {
-                    return eventProvider.getRemoteView(entry);
+                    DateTime nextStartOfDay = entry.getStartDay();
+
+                    if (current == null || !nextStartOfDay.isEqual(current) || lastEntry == entry) {
+                        current = nextStartOfDay;
+                        lastEntry = entry; // Because sometimes entries are duplicated?  Weird.
+                        RemoteViews remoteView = eventProvider.getRemoteView(entry);
+                        return remoteView;
+                    } else {
+                        return eventProvider.getRemoteViewNonFirstEventForDay(entry);
+                    }
                 }
             }
         }
@@ -91,8 +103,10 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     }
 
     public void onDataSetChanged() {
-        context.setTheme(themeNameToResId(getSettings().getEntryTheme()));
-        if (getSettings().getShowDayHeaders())
+        InstanceSettings settings = getSettings();
+        context.setTheme(themeNameToResId(settings.getEntryTheme()));
+        if (settings.getShowDayHeaders()
+                && !settings.isHeaderToLeftOfEvent())
             mWidgetEntries = addDayHeaders(getEventEntries());
         else
             mWidgetEntries = getEventEntries();

@@ -434,6 +434,11 @@ public class InstanceSettings {
         return showDayHeaders;
     }
 
+    public boolean isHeaderToLeftOfEvent() {
+        String leftOfEvent = getContext().getResources().getStringArray(R.array.pref_day_header_alignment_values)[3];
+        return getDayHeaderAlignment().equals(leftOfEvent);
+    }
+
     public boolean getShowPastEventsWithDefaultColor() {
         return showPastEventsWithDefaultColor;
     }

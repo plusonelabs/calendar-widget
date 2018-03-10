@@ -1,35 +1,36 @@
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'org.ajoberstar:grgit:1.9.2'
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'org.ajoberstar:grgit:2.1.0'
     }
 }
 
 apply plugin: 'com.android.application'
 
 repositories {
+    google()
     jcenter()
 }
 
 dependencies {
-    compile 'joda-time:joda-time:2.9.7'
-    compile 'com.larswerkman:HoloColorPicker:1.5'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'joda-time:joda-time:2.9.7'
+    implementation 'com.larswerkman:HoloColorPicker:1.5'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
 }
 
 android {
 
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 27
 
     defaultConfig {
-        versionName '1.10.1' + getVersionNameExtension()
-        versionCode getVersionCodeInteger()
+        versionName '1.10.1' + "-" + getCommitShortHash()
+        versionCode getCommitCount()
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
 
         testApplicationId "com.plusonelabs.calendar.tests"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
@@ -71,10 +72,10 @@ android {
     }
 }
 
-static getVersionNameExtension() {
+static getCommitShortHash() {
     try {
         def git = org.ajoberstar.grgit.Grgit.open()
-        def versionNameSuffix = "-${git.head().getAbbreviatedId(8)}"
+        def versionNameSuffix = "${git.head().getAbbreviatedId(7)}"
         git.close()
         return versionNameSuffix
     } catch (ignored) {
@@ -82,7 +83,7 @@ static getVersionNameExtension() {
     }
 }
 
-static getVersionCodeInteger() {
+static getCommitCount() {
     try {
         def git = org.ajoberstar.grgit.Grgit.open()
         def versionCode = git.log().size()

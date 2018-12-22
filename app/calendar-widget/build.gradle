@@ -32,7 +32,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
 
-        testApplicationId "com.plusonelabs.calendar.tests"
+        testApplicationId "org.andstatus.todoagenda.tests"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
 
@@ -54,21 +54,21 @@ android {
         abortOnError false
     }
 
-    if (project.hasProperty('calendarStoreFile')) {
+    if (project.hasProperty('todoagendaStoreFile')) {
         signingConfigs {
             releaseConfig {
-                storeFile file(calendarStoreFile)
-                storePassword calendarStorePassword
-                keyAlias calendarKeyAlias
-                keyPassword calendarKeyPassword
+                storeFile file(todoagendaStoreFile)
+                storePassword todoagendaStorePassword
+                keyAlias todoagendaKeyAlias
+                keyPassword todoagendaKeyPassword
             }
         }
         buildTypes.release.signingConfig signingConfigs.releaseConfig
     }
     // See https://www.timroes.de/2013/09/22/handling-signing-configs-with-gradle/
-    if (project.hasProperty("calendar-widget.signing")
-            && new File(project.property("calendar-widget.signing").toString() + ".gradle").exists()) {
-        apply from: project.property("calendar-widget.signing") + ".gradle";
+    if (project.hasProperty("todoagenda.signing")
+            && new File(project.property("todoagenda.signing").toString() + ".gradle").exists()) {
+        apply from: project.property("todoagenda.signing") + ".gradle";
     }
 }
 

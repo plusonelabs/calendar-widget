@@ -15,7 +15,7 @@
         android:persistent="false">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://play.google.com/store/apps/details?id=com.plusonelabs.calendar" />
+            android:data="https://play.google.com/store/apps/details?id=org.andstatus.todoagenda" />
     </Preference>
     <Preference
         android:key="shareEventsForDebugging"

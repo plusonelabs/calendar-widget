@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.plusonelabs.calendar"
+<manifest package="org.andstatus.todoagenda"
           xmlns:android="http://schemas.android.com/apk/res/android"
           android:installLocation="internalOnly">
 
@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.CalendarConfiguration.Dark">
 
-        <activity android:name=".MainActivity"
+        <activity android:name="org.andstatus.todoagenda.MainActivity"
                   android:exported="true"
                   android:launchMode="singleTask"
                   android:finishOnTaskLaunch="true"
@@ -27,13 +27,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".WidgetConfigurationActivity"
+        <activity android:name="org.andstatus.todoagenda.WidgetConfigurationActivity"
             android:excludeFromRecents="true"
             android:finishOnTaskLaunch="true">
         </activity>
 
         <receiver
-            android:name=".EventAppWidgetProvider"
+            android:name="org.andstatus.todoagenda.EventAppWidgetProvider"
             android:label="@string/widget_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -43,7 +43,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/calendar_appwidget_info"/>
         </receiver>
-        <receiver android:name=".EnvironmentChangedReceiver">
+        <receiver android:name="org.andstatus.todoagenda.EnvironmentChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
                 <action android:name="android.intent.action.DATE_CHANGED"/>
@@ -57,10 +57,10 @@
                 <data android:host="com.android.calendar"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.plusonelabs.calendar.action.REFRESH"/>
+                <action android:name="org.andstatus.todoagenda.action.REFRESH"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".AlarmReceiver">
+        <receiver android:name="org.andstatus.todoagenda.AlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -69,7 +69,7 @@
         </receiver>
 
         <service
-            android:name=".EventWidgetService"
+            android:name="org.andstatus.todoagenda.EventWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS">
         </service>

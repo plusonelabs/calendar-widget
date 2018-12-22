@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'org.ajoberstar:grgit:2.1.0'
     }
 }
@@ -19,7 +19,7 @@ repositories {
 dependencies {
     implementation 'joda-time:joda-time:2.9.7'
     implementation 'com.larswerkman:HoloColorPicker:1.5'
-    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }
 
 android {

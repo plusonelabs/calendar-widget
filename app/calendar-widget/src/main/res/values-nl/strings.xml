@@ -14,8 +14,8 @@
   <string name="indicator_recurring">Indicator bij terugkerende gebeurtenis</string>
   <string name="no_title">(Geen titel)</string>
   <string name="grant_permissions">Geef toestemming</string>
-  <string name="permissions_justification">De \"Calendar Widget\" applicatie heeft rechten nodig om de agenda uit te kunnen lezen. Anders kan de widget geen data tonen.</string>
-  <string name="no_widgets_found">Nog geen widget om in te stellen. Voeg eerst een \"Calendar Widget\" widget toe op het startscherm van jouw toestel.</string>
+  <string name="permissions_justification">De \"Todo Agenda\" applicatie heeft rechten nodig om de agenda uit te kunnen lezen. Anders kan de widget geen data tonen.</string>
+  <string name="no_widgets_found">Nog geen widget om in te stellen. Voeg eerst een \"Todo Agenda\" widget toe op het startscherm van jouw toestel.</string>
   <string name="select_a_widget_to_configure">Selecteer de in te stellen widget</string>
   <string name="close">Sluiten</string>
   <!-- Preference header: Calendars -->

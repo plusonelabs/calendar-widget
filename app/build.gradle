@@ -1,20 +1,4 @@
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'org.ajoberstar:grgit:2.1.0'
-    }
-}
-
 apply plugin: 'com.android.application'
-
-repositories {
-    google()
-    jcenter()
-}
 
 dependencies {
     implementation 'joda-time:joda-time:2.9.7'
@@ -23,17 +7,17 @@ dependencies {
 }
 
 android {
-
     compileSdkVersion 27
 
     defaultConfig {
-        versionName '1.10.1' + "-" + getCommitShortHash()
         versionCode getCommitCount()
+        versionName '2.0.0' + "-" + versionCode
         minSdkVersion 15
         targetSdkVersion 27
 
         testApplicationId "org.andstatus.todoagenda.tests"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        project.ext.archivesBaseName = "TodoAgenda-$versionName".toString()
     }
 
     buildTypes {
@@ -69,17 +53,6 @@ android {
     if (project.hasProperty("todoagenda.signing")
             && new File(project.property("todoagenda.signing").toString() + ".gradle").exists()) {
         apply from: project.property("todoagenda.signing") + ".gradle";
-    }
-}
-
-static getCommitShortHash() {
-    try {
-        def git = org.ajoberstar.grgit.Grgit.open()
-        def versionNameSuffix = "${git.head().getAbbreviatedId(7)}"
-        git.close()
-        return versionNameSuffix
-    } catch (ignored) {
-        return ""
     }
 }
 

@@ -93,7 +93,7 @@ script:
   # For testing one method only:
   # - adb shell am instrument -w -r -e debug false -e class org.andstatus.app.msg.ActAsUserTest#testActAsUser org.andstatus.app.tests/android.test.InstrumentationTestRunner
   - |
-    adb shell am instrument -w -r -e debug false com.plusonelabs.calendar.tests/android.test.InstrumentationTestRunner |& tee build/adb-test.log
+    adb shell am instrument -w -r -e debug false org.andstatus.todoagenda.tests/android.test.InstrumentationTestRunner |& tee build/adb-test.log
     retval=$?
     if [ $retval -ne 0 ]; then
       echo "error in adb, exit code: "$retval

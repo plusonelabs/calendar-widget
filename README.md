@@ -37,7 +37,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ### [v2.0.0](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
 
-* The "Calendar Widget" renamed to "Todo Agenda" and published to Google Play as [the new application]().
+* The "Calendar Widget" renamed to "Todo Agenda" and published to Google Play as [the new application](https://play.google.com/store/apps/details?id=org.andstatus.todoagenda).
 
 ### [v1.10.1](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.1)
 

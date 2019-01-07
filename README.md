@@ -1,10 +1,10 @@
-# Android Calendar Widget
+# Todo Agenda - Calendar widgets for Android
 
-[![Build Status](https://travis-ci.org/plusonelabs/calendar-widget.svg?branch=master)](https://travis-ci.org/plusonelabs/calendar-widget)
+[![Build Status](https://travis-ci.org/andstatus/todoagenda.svg?branch=master)](https://travis-ci.org/andstatus/todoagenda)
 
-The Android calendar widget is home screen widget for your Android device. It displays a list of upcoming calendar events so that you can easily have a glimpse at your upcoming appointments.
+The Todo Agenda is a home screen widget for your Android device. It displays a list of upcoming calendar events so that you can easily have a glimpse at your upcoming appointments.
 
-<a href="https://play.google.com/store/apps/details?id=com.plusonelabs.calendar">
+<a href="https://play.google.com/store/apps/details?id=org.andstatus.todoagenda">
 <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" width="150px"/>
 </a>
 
@@ -29,12 +29,15 @@ and selected calendars.
 
 ## Collaborate
 
-We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open [issues](https://github.com/plusonelabs/calendar-widget/issues) and provide [pull requests](https://github.com/plusonelabs/calendar-widget/pulls). To get timely feedback we are also making use of the open beta feature in the Google Play Store. Please [opt-in here](https://play.google.com/apps/testing/com.plusonelabs.calendar).
+We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open [issues](https://github.com/plusonelabs/calendar-widget/issues) and provide [pull requests](https://github.com/andstatus/todoagenda/pulls). To get timely feedback we are also making use of the open beta feature in the Google Play Store. Please [opt-in here](https://play.google.com/apps/testing/org.andstatus.todoagenda).
 
 We are also looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
 
 ## Changelog
 
+### [v2.0.0](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
+
+* The "Calendar Widget" renamed to "Todo Agenda" and published to Google Play as [the new application](https://play.google.com/store/apps/details?id=org.andstatus.todoagenda).
 
 ### [v1.10.1](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.1)
 

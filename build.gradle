@@ -1,0 +1,17 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'org.ajoberstar:grgit:2.1.0'
+    }
+}
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}

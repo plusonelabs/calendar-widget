@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    implementation 'joda-time:joda-time:2.9.7'
+    implementation 'com.larswerkman:HoloColorPicker:1.5'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+}
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        versionCode getCommitCount()
+        versionName '2.0.0' + "-" + versionCode
+        minSdkVersion 15
+        targetSdkVersion 27
+
+        testApplicationId "org.andstatus.todoagenda.tests"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        project.ext.archivesBaseName = "TodoAgenda-$versionName".toString()
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            lintOptions {
+                warning 'MissingTranslation','InvalidPackage'
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    if (project.hasProperty('todoagendaStoreFile')) {
+        signingConfigs {
+            releaseConfig {
+                storeFile file(todoagendaStoreFile)
+                storePassword todoagendaStorePassword
+                keyAlias todoagendaKeyAlias
+                keyPassword todoagendaKeyPassword
+            }
+        }
+        buildTypes.release.signingConfig signingConfigs.releaseConfig
+    }
+    // See https://www.timroes.de/2013/09/22/handling-signing-configs-with-gradle/
+    if (project.hasProperty("todoagenda.signing")
+            && new File(project.property("todoagenda.signing").toString() + ".gradle").exists()) {
+        apply from: project.property("todoagenda.signing") + ".gradle";
+    }
+}
+
+static getCommitCount() {
+    try {
+        def git = org.ajoberstar.grgit.Grgit.open()
+        def versionCode = git.log().size()
+        git.close()
+        return versionCode
+    } catch (ignored) {
+        return 1
+    }
+}

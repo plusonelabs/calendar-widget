@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/andstatus/todoagenda.svg?branch=master)](https://travis-ci.org/andstatus/todoagenda)
 
-The Todo Agenda is a home screen widget for your Android device. It displays a list of upcoming calendar events so that you can easily have a glimpse at your upcoming appointments.
+Todo Agenda is a home screen widget for your Android device. It displays a list of upcoming calendar events 
+so that you can easily have a glimpse at your appointments.
 
 <a href="https://play.google.com/store/apps/details?id=org.andstatus.todoagenda">
 <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" width="150px"/>
@@ -29,7 +30,11 @@ and selected calendars.
 
 ## Collaborate
 
-We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open [issues](https://github.com/plusonelabs/calendar-widget/issues) and provide [pull requests](https://github.com/andstatus/todoagenda/pulls). To get timely feedback we are also making use of the open beta feature in the Google Play Store. Please [opt-in here](https://play.google.com/apps/testing/org.andstatus.todoagenda).
+We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open 
+[issues](https://github.com/plusonelabs/calendar-widget/issues) and provide 
+[pull requests](https://github.com/andstatus/todoagenda/pulls). 
+To get timely feedback we are also making use of the open beta feature in the Google Play Store. 
+Please [opt-in here](https://play.google.com/apps/testing/org.andstatus.todoagenda).
 
 We are also looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
 

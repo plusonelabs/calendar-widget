@@ -23,9 +23,9 @@
 
     <!-- Descriptions for app markets -->
     <string name="app_description_80_chars_max">Widgets displaying lists of upcoming (and past…) events from selected calendars</string>
-    <string name="app_description_4000_chars_max_part01">Todo Agenda is a home screen widget for your Android device. It displays a list of upcoming calendar events
-        so that you can easily have a glimpse at your appointments.</string>
-    <string name="app_description_4000_chars_max_part02">Features:</string>
+    <string name="app_description_4000_chars_max_part01">Todo Agenda is a home screen widget for your Android device.
+        It displays a list of upcoming calendar events so that you can easily have a glimpse at your appointments.</string>
+    <string name="app_description_4000_chars_max_part02">Features</string>
     <string name="app_description_4000_chars_max_part03">Displays all events from your calendars. Optionally shows past events.</string>
     <string name="app_description_4000_chars_max_part04">Automatically updates when you add/delete/modify an event. Or you may update the list instantly.</string>
     <string name="app_description_4000_chars_max_part05">Select only the calendars you want to see in the widget.</string>

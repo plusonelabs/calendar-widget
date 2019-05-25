@@ -4,17 +4,28 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Filter String by keywords or phrases, enclosed in single or double quotes
+ * Each keyword can be prefixed with "RE:", in which case the string
+ *   "CAL=<calendar_of_event>;TITLE=<title_of_event>"
+ * is matched against the remaining part of the keyword (interpreted as a regex).
+ * Negation is possible to indicate on the whole set of keywords (by using "!"
+ * as the first keyword), and on individual keywords (by prefixing without space
+ * a keyword/phrase with "!").
  *
  * @author yvolk@yurivolkov.com
+ * @author github@kjdf.de
  */
 public class KeywordsFilter {
 
     protected final List<String> keywords = new ArrayList<>();
     private static final char DOUBLE_QUOTE = '"';
     private static final char SINGLE_QUOTE = '\'';
+    private static final String RE_PREFIX = "RE:";
+    private static final String NEG_PREFIX = "!";
 
     public KeywordsFilter(String text) {
         if (TextUtils.isEmpty(text)) {
@@ -68,16 +79,33 @@ public class KeywordsFilter {
         return text.length();
     }
 
-    public boolean matched(String s) {
+    public boolean matched(String s, String cal_name) {
         if (keywords.isEmpty() || TextUtils.isEmpty(s)) {
             return false;
         }
-        for (String keyword : keywords) {
-            if (s.contains(keyword)) {
-                return true;
+        boolean negate_whole = keywords.get(0).equals(NEG_PREFIX);
+        for (ListIterator<String> it = keywords.listIterator(negate_whole ? 1 : 0); it.hasNext(); ) {
+            String keyword = it.next();
+            boolean matches;
+            boolean negate_this = keyword.startsWith(NEG_PREFIX);
+            if (negate_this) {
+                keyword = keyword.substring(NEG_PREFIX.length());
+            }
+            if (keyword.startsWith(RE_PREFIX)) {
+                keyword = keyword.substring(RE_PREFIX.length());
+                try {
+                    matches = ("CAL=" + cal_name + ";TITLE=" + s).matches(keyword);
+                } catch (PatternSyntaxException e) {
+                    matches = false;
+                }
+            } else {
+                matches = s.contains(keyword);
+            }
+            if (matches ^ negate_this) {
+                return !negate_whole;
             }
         }
-        return false;
+        return negate_whole;
     }
 
     public boolean isEmpty() {

@@ -29,6 +29,13 @@ public class KeywordsFilterTest extends InstrumentationTestCase {
         assertMatch(query3, "Smith's Birthday");
         assertMatch(query3, "Smith Hidden Birthday");
         assertNotMatch(query3, "Smith.Birthday");
+
+        assertMatch("RE:CAL=.*;TITLE=John.*", "John Smith's Birthday");
+        assertMatch("RE:CAL=.*;TITLE=.*Smith.*", "John Smith's Birthday");
+        assertNotMatch("RE:CAL=wrong_cal_name;TITLE=.*", "John Smith's Birthday");
+        assertNotMatch("!RE:CAL=.*;TITLE=.*", "John Smith's Birthday");
+        assertNotMatch("! John Miller", "John Smith's Birthday");
+        assertMatch("! Jack Miller", "John Smith's Birthday");
     }
 
     private void assertOneQueryToKeywords(String query, String... keywords) {
@@ -41,10 +48,10 @@ public class KeywordsFilterTest extends InstrumentationTestCase {
     }
 
     private void assertMatch(String query, String body) {
-        assertTrue("no keywords from '" + query + "' match: '" + body + "'", new KeywordsFilter(query).matched(body));
+        assertTrue("no keywords from '" + query + "' match: '" + body + "'", new KeywordsFilter(query).matched(body, "cal_name"));
     }
 
     private void assertNotMatch(String query, String body) {
-        assertFalse("Some keyword from '" + query + "' match: '" + body + "'", new KeywordsFilter(query).matched(body));
+        assertFalse("Some keyword from '" + query + "' match: '" + body + "'", new KeywordsFilter(query).matched(body, "cal_name"));
     }
 }

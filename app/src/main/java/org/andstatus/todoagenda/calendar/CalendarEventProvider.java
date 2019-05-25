@@ -176,7 +176,8 @@ public class CalendarEventProvider {
                         result.addRow(cursor);
                     }
                     CalendarEvent event = createCalendarEvent(cursor);
-                    if (!eventList.contains(event) && !mKeywordsFilter.matched(event.getTitle())) {
+                    if (!eventList.contains(event) && !mKeywordsFilter.matched(event.getTitle(),
+                            cursor.getString(cursor.getColumnIndex(Instances.CALENDAR_DISPLAY_NAME)))) {
                         eventList.add(event);
                     }
                 }
@@ -200,6 +201,7 @@ public class CalendarEventProvider {
         columnNames.add(Instances.EVENT_LOCATION);
         columnNames.add(Instances.HAS_ALARM);
         columnNames.add(Instances.RRULE);
+        columnNames.add(Instances.CALENDAR_DISPLAY_NAME);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             columnNames.add(Instances.DISPLAY_COLOR);
         } else {

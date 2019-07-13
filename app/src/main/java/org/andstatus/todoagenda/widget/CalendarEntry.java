@@ -162,6 +162,11 @@ public class CalendarEntry extends WidgetEntry {
     }
 
     @Override
+    public int getPriority() {
+        return 30;
+    }
+
+    @Override
     public String toString() {
         return "CalendarEntry ["
                 + "startDate=" + getStartDate()

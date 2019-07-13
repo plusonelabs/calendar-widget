@@ -8,4 +8,8 @@ public class DayHeader extends WidgetEntry {
         setStartDate(date.withTimeAtStartOfDay());
     }
 
+    @Override
+    public int getPriority() {
+        return 10;
+    }
 }

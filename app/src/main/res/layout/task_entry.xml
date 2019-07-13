@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/task_entry"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="@dimen/calender_padding"
+              android:paddingRight="@dimen/calender_padding"
+              android:paddingBottom="@dimen/entry_bottom_padding">
+
+    <TextView
+        android:id="@+id/task_entry_icon"
+        style="@style/TaskEntryIcon"
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/task_icon"
+        tools:ignore="SelectableText" />
+
+    <TextView
+        android:id="@+id/task_entry_title"
+        style="@style/EventEntryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        tools:text="Task Entry Title. It may be long and not fit in one line"
+        tools:ignore="SelectableText"/>
+
+</LinearLayout>

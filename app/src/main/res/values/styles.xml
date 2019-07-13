@@ -47,4 +47,9 @@
         <item name="android:layout_marginRight">8dp</item>
     </style>
 
+    <style name="TaskEntryIcon" parent="android:Widget.Holo.TextView">
+        <item name="android:textColor">@android:color/holo_green_dark</item>
+        <item name="android:layout_marginRight">4dp</item>
+    </style>
+
 </resources>

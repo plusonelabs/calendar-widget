@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:defaultValue="NONE"
+        android:entries="@array/pref_task_source_entries"
+        android:entryValues="@array/pref_task_source_values"
+        android:key="taskSource"
+        android:title="@string/task_source_pref_title"
+        android:summary="@string/task_source_pref_desc" />
+    <Preference
+        android:key="grantTaskPermission"
+        android:title="@string/grant_task_permission_title"
+        android:summary="@string/grant_task_permission_desc"
+        android:persistent="false" />
+</PreferenceScreen>

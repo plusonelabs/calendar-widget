@@ -4,6 +4,7 @@
           android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="org.dmfs.permission.READ_TASKS"/>
 
     <application
         android:allowBackup="true"

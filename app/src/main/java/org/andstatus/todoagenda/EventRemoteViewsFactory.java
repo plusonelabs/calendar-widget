@@ -10,12 +10,14 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import org.andstatus.todoagenda.calendar.CalendarEventVisualizer;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.task.TaskVisualizer;
 import org.andstatus.todoagenda.widget.DayHeader;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,6 +37,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         this.widgetId = widgetId;
         eventProviders = new ArrayList<>();
         eventProviders.add(new CalendarEventVisualizer(context, widgetId));
+        eventProviders.add(new TaskVisualizer(context, widgetId));
     }
 
     public void onCreate() {
@@ -103,6 +106,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         for (IEventVisualizer<?> eventProvider : eventProviders) {
             entries.addAll(eventProvider.getEventEntries());
         }
+        Collections.sort(entries);
         return entries;
     }
 

@@ -68,6 +68,7 @@ public class InstanceSettings {
     private int backgroundColor = PREF_BACKGROUND_COLOR_DEFAULT;
     private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
     private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+    private String taskSource = PREF_TASK_SOURCE_DEFAULT;
 
     @NonNull
     public static InstanceSettings fromId(Context context, Integer widgetId) {
@@ -213,6 +214,9 @@ public class InstanceSettings {
         if (json.has(PREF_DAY_HEADER_ALIGNMENT)) {
             settings.dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
         }
+        if (json.has(PREF_TASK_SOURCE)) {
+            settings.taskSource = json.getString(PREF_TASK_SOURCE);
+        }
         return settings;
     }
 
@@ -273,6 +277,7 @@ public class InstanceSettings {
                 PREF_TEXT_SIZE_SCALE_DEFAULT);
         settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
                 PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
+        settings.taskSource = ApplicationPreferences.getTaskSource(context);
         return settings;
     }
 
@@ -365,6 +370,7 @@ public class InstanceSettings {
             json.put(PREF_BACKGROUND_COLOR, backgroundColor);
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
+            json.put(PREF_TASK_SOURCE, taskSource);
         } catch (JSONException e) {
             throw new RuntimeException("Saving settings to JSON", e);
         }
@@ -526,6 +532,10 @@ public class InstanceSettings {
 
     public String getDayHeaderAlignment() {
         return dayHeaderAlignment;
+    }
+
+    public String getTaskSource() {
+        return taskSource;
     }
 
     public static Map<Integer, InstanceSettings> getInstances(Context context) {

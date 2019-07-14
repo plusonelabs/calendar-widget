@@ -20,6 +20,7 @@
     <string name="select_a_widget_to_configure">Select a widget to configure</string>
     <string name="close">Close</string>
     <string name="go_to_home_screen">Go to home screen</string>
+    <string name="task_icon" translatable="false">✔</string>
 
     <!-- Descriptions for app markets -->
     <string name="app_description_80_chars_max">Widgets displaying lists of upcoming (and past…) events from selected calendars</string>
@@ -135,6 +136,17 @@
     <string name="ended_yesterday">Ended yesterday</string>
     <string name="pref_hide_based_on_keywords_title">Hide based on keywords in a title</string>
     <string name="show_only_closest_instance_of_recurring_event">Show only the closest instance of a recurring event</string>
+
+    <!-- Preference header: Tasks -->
+    <string name="task_prefs">Tasks</string>
+    <string name="task_prefs_desc">Configure display of tasks/TODOs</string>
+    <string name="task_source_pref_title">Task events source</string>
+    <string name="task_source_pref_desc">Select the source from which to get task events</string>
+    <string name="task_source_none">Don\'t display tasks</string>
+    <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
+    <string name="task_source_samsung">Samsung Calendar</string>
+    <string name="grant_task_permission_title">Grant permission to fetch tasks</string>
+    <string name="grant_task_permission_desc">You need to grant permission for tasks to be displayed</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>

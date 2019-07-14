@@ -58,6 +58,9 @@ public class ApplicationPreferences {
     static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
+    static final String PREF_TASK_SOURCE = "taskSource";
+    static final String PREF_TASK_SOURCE_DEFAULT = "NONE";
+    static final String KEY_PREF_GRANT_TASK_PERMISSION = "grantTaskPermission";
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
 
     private static volatile String lockedTimeZoneId = null;
@@ -258,6 +261,10 @@ public class ApplicationPreferences {
 
     public static void setShowOnlyClosestInstanceOfRecurringEvent(Context context, boolean value) {
         setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, value);
+    }
+
+    public static String getTaskSource(Context context) {
+        return getString(context, PREF_TASK_SOURCE, PREF_DATE_FORMAT_DEFAULT);
     }
 
     private static void setString(Context context, String key, String value) {

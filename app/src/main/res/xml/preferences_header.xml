@@ -17,6 +17,10 @@
         android:summary="@string/calendars_prefs_desc"
         android:title="@string/calendars_prefs" />
     <header
+        android:fragment="org.andstatus.todoagenda.prefs.TaskPreferencesFragment"
+        android:summary="@string/task_prefs_desc"
+        android:title="@string/task_prefs" />
+    <header
         android:fragment="org.andstatus.todoagenda.prefs.FeedbackPreferencesFragment"
         android:summary="@string/feedback_prefs_desc"
         android:title="@string/feedback_prefs" />

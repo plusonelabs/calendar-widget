@@ -1,6 +1,5 @@
 package org.andstatus.todoagenda.task;
 
-import android.app.Activity;
 import android.content.Context;
 
 import org.andstatus.todoagenda.DateUtil;
@@ -40,8 +39,4 @@ public abstract class AbstractTaskProvider extends EventProvider {
             return dueDate.withTimeAtStartOfDay();
         }
     }
-
-    public abstract boolean hasPermission();
-
-    public abstract void requestPermission(Activity activity);
 }

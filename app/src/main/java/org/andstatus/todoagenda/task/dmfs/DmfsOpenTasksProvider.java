@@ -1,12 +1,8 @@
 package org.andstatus.todoagenda.task.dmfs;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
 import org.andstatus.todoagenda.calendar.CalendarQueryResult;
 import org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage;
@@ -24,10 +20,6 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
 
     @Override
     public List<TaskEvent> getTasks() {
-        if (!hasPermission()) {
-            return new ArrayList<>();
-        }
-
         initialiseParameters();
 
         return queryTasks();
@@ -96,15 +88,5 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         task.setStartDate(getDueDate(dueMillis));
 
         return task;
-    }
-
-    @Override
-    public boolean hasPermission() {
-        return ContextCompat.checkSelfPermission(context, DmfsOpenTasksContract.PERMISSION) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    @Override
-    public void requestPermission(Activity activity) {
-        ActivityCompat.requestPermissions(activity, new String[]{DmfsOpenTasksContract.PERMISSION}, 1);
     }
 }

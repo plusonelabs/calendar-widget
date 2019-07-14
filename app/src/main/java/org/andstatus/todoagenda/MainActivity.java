@@ -20,6 +20,7 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void checkPermissionsAndRequestThem() {
         checkPermissions();
         if (!permissionsGranted) {
-            Log.d(this.getLocalClassName(), "Requesting permission: " + PermissionsUtil.PERMISSION);
-            ActivityCompat.requestPermissions(this, new String[]{PermissionsUtil.PERMISSION}, 1);
+            Log.d(this.getLocalClassName(), "Requesting permissions: " + Arrays.asList(PermissionsUtil.permissions));
+            ActivityCompat.requestPermissions(this, PermissionsUtil.permissions, 1);
         }
     }
 

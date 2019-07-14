@@ -60,7 +60,6 @@ public class ApplicationPreferences {
             "showOnlyClosestInstanceOfRecurringEvent";
     static final String PREF_TASK_SOURCE = "taskSource";
     static final String PREF_TASK_SOURCE_DEFAULT = "NONE";
-    static final String KEY_PREF_GRANT_TASK_PERMISSION = "grantTaskPermission";
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
 
     private static volatile String lockedTimeZoneId = null;

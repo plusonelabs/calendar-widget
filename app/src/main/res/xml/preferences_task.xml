@@ -6,9 +6,4 @@
         android:key="taskSource"
         android:title="@string/task_source_pref_title"
         android:summary="@string/task_source_pref_desc" />
-    <Preference
-        android:key="grantTaskPermission"
-        android:title="@string/grant_task_permission_title"
-        android:summary="@string/grant_task_permission_desc"
-        android:persistent="false" />
 </PreferenceScreen>

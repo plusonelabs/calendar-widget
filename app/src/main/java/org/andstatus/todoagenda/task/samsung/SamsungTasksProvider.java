@@ -1,6 +1,5 @@
 package org.andstatus.todoagenda.task.samsung;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -89,15 +88,5 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         task.setStartDate(getDueDate(dueMillis));
 
         return task;
-    }
-
-    @Override
-    public boolean hasPermission() {
-        return true;
-    }
-
-    @Override
-    public void requestPermission(Activity activity) {
-        // Requires just android.permission.READ_CALENDAR, which is expected to be granted already
     }
 }

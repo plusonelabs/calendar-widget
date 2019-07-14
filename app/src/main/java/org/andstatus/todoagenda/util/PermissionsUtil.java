@@ -10,13 +10,14 @@ import android.support.v4.content.ContextCompat;
 
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.task.dmfs.DmfsOpenTasksContract;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class PermissionsUtil {
 
-    public final static String PERMISSION = Manifest.permission.READ_CALENDAR;
+    public final static String[] permissions = {Manifest.permission.READ_CALENDAR, DmfsOpenTasksContract.PERMISSION};
 
     private PermissionsUtil() {
         // Empty
@@ -35,7 +36,14 @@ public class PermissionsUtil {
     }
 
     public static boolean arePermissionsGranted(Context context) {
-        return isTestMode() || ContextCompat.checkSelfPermission(context, PERMISSION) == PackageManager.PERMISSION_GRANTED;
+        if (isTestMode()) return true;
+
+        for (String permission: permissions) {
+            if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

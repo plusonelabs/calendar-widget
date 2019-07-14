@@ -1,6 +1,5 @@
 package org.andstatus.todoagenda.task;
 
-import android.app.Activity;
 import android.content.Context;
 
 import org.andstatus.todoagenda.EventProvider;
@@ -21,16 +20,6 @@ public class TaskProvider extends EventProvider {
     public List<TaskEvent> getEvents() {
         AbstractTaskProvider provider = getProvider();
         return provider.getTasks();
-    }
-
-    public boolean hasPermission() {
-        AbstractTaskProvider provider = getProvider();
-        return provider.hasPermission();
-    }
-
-    public void requestPermission(Activity activity) {
-        AbstractTaskProvider provider = getProvider();
-        provider.requestPermission(activity);
     }
 
     private AbstractTaskProvider getProvider() {

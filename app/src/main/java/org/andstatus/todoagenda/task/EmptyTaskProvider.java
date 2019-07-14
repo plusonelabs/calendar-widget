@@ -1,6 +1,5 @@
 package org.andstatus.todoagenda.task;
 
-import android.app.Activity;
 import android.content.Context;
 
 import java.util.ArrayList;
@@ -15,15 +14,5 @@ public class EmptyTaskProvider extends AbstractTaskProvider {
     @Override
     public List<TaskEvent> getTasks() {
         return new ArrayList<>();
-    }
-
-    @Override
-    public boolean hasPermission() {
-        return true;
-    }
-
-    @Override
-    public void requestPermission(Activity activity) {
-        // No action necessary
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 
 import org.andstatus.todoagenda.EventProvider;
-import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.task.dmfs.DmfsOpenTasksProvider;
 import org.andstatus.todoagenda.task.samsung.SamsungTasksProvider;
 
@@ -35,7 +34,7 @@ public class TaskProvider extends EventProvider {
     }
 
     private AbstractTaskProvider getProvider() {
-        String taskSource = ApplicationPreferences.getTaskSource(context);
+        String taskSource = getSettings().getTaskSource();
         if (PROVIDER_DMFS.equals(taskSource)) {
             return new DmfsOpenTasksProvider(context, widgetId);
         }

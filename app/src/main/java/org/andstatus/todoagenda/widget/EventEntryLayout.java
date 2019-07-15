@@ -1,12 +1,12 @@
 package org.andstatus.todoagenda.widget;
 
-import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import org.andstatus.todoagenda.DateUtil;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.RemoteViewsUtil;
 
@@ -48,20 +48,7 @@ public enum EventEntryLayout {
                 int viewToHide = viewToShow == R.id.event_entry_date ? R.id.event_entry_date_right : R.id.event_entry_date;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
-                rv.setTextViewText(viewToShow, getDaysFromTodayString(entry.getSettings().getEntryThemeContext(), days));
-            }
-        }
-
-        private CharSequence getDaysFromTodayString(Context context, int daysFromToday) {
-            switch (daysFromToday) {
-                case -1:
-                    return context.getText(R.string.yesterday);
-                case 0:
-                    return context.getText(R.string.today);
-                case 1:
-                    return context.getText(R.string.tomorrow);
-                default:
-                    return Integer.toString(daysFromToday);
+                rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(entry.getSettings().getEntryThemeContext(), days));
             }
         }
 

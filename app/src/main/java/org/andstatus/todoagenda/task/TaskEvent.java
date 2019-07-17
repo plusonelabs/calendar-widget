@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 public abstract class TaskEvent {
     private long id;
     private String title;
-    private DateTime startDate;
+    private DateTime taskDate;
 
     public long getId() {
         return id;
@@ -24,12 +24,12 @@ public abstract class TaskEvent {
         this.title = title;
     }
 
-    public DateTime getStartDate() {
-        return startDate;
+    public DateTime getTaskDate() {
+        return taskDate;
     }
 
-    public void setStartDate(DateTime startDate) {
-        this.startDate = startDate;
+    public void setTaskDate(DateTime taskDate) {
+        this.taskDate = taskDate;
     }
 
     public abstract Intent createOpenCalendarEventIntent();

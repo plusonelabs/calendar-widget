@@ -2,6 +2,7 @@ package org.andstatus.todoagenda;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+
 import org.andstatus.todoagenda.calendar.KeywordsFilter;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.joda.time.DateTime;
@@ -10,6 +11,7 @@ import org.joda.time.DateTimeZone;
 public abstract class EventProvider {
 
     protected static final String AND_BRACKET = " AND (";
+    protected static final String OPEN_BRACKET = "( ";
     protected static final String CLOSING_BRACKET = " )";
     protected static final String AND = " AND ";
     protected static final String OR = " OR ";

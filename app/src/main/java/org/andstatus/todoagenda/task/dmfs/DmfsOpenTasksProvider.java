@@ -30,7 +30,8 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         String[] projection = {
                 DmfsOpenTasksContract.COLUMN_ID,
                 DmfsOpenTasksContract.COLUMN_TITLE,
-                DmfsOpenTasksContract.COLUMN_DUE_DATE
+                DmfsOpenTasksContract.COLUMN_DUE_DATE,
+                DmfsOpenTasksContract.COLUMN_START_DATE,
         };
         String where = getWhereClause();
 
@@ -64,13 +65,23 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
 
     private String getWhereClause() {
         StringBuilder whereBuilder = new StringBuilder();
+
         whereBuilder.append(DmfsOpenTasksContract.COLUMN_STATUS).append(NOT_EQUALS).append(DmfsOpenTasksContract.STATUS_COMPLETED);
 
+        // @formatter:off
         whereBuilder.append(AND_BRACKET)
                 .append(DmfsOpenTasksContract.COLUMN_DUE_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
                 .append(OR)
-                .append(DmfsOpenTasksContract.COLUMN_DUE_DATE).append(IS_NULL)
+                    .append(OPEN_BRACKET)
+                        .append(DmfsOpenTasksContract.COLUMN_DUE_DATE).append(IS_NULL)
+                        .append(AND_BRACKET)
+                            .append(DmfsOpenTasksContract.COLUMN_START_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
+                            .append(OR)
+                            .append(DmfsOpenTasksContract.COLUMN_START_DATE).append(IS_NULL)
+                        .append(CLOSING_BRACKET)
+                    .append(CLOSING_BRACKET)
                 .append(CLOSING_BRACKET);
+        // @formatter:on
 
         return whereBuilder.toString();
     }
@@ -85,7 +96,12 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         if (!cursor.isNull(dueDateIdx)) {
             dueMillis = cursor.getLong(dueDateIdx);
         }
-        task.setStartDate(getDueDate(dueMillis));
+        int startDateIdx = cursor.getColumnIndex(DmfsOpenTasksContract.COLUMN_START_DATE);
+        Long startMillis = null;
+        if (!cursor.isNull(startDateIdx)) {
+            startMillis = cursor.getLong(startDateIdx);
+        }
+        task.setTaskDate(getTaskDate(dueMillis, startMillis));
 
         return task;
     }

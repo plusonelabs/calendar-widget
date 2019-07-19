@@ -6,10 +6,12 @@ import android.net.Uri;
 
 import org.andstatus.todoagenda.calendar.CalendarQueryResult;
 import org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage;
+import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.task.AbstractTaskProvider;
 import org.andstatus.todoagenda.task.TaskEvent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class SamsungTasksProvider extends AbstractTaskProvider {
@@ -87,5 +89,10 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         }
         task.setDates(null, dueMillis);
         return task;
+    }
+
+    @Override
+    public Collection<EventSource> getTaskLists() {
+        return new ArrayList<>();
     }
 }

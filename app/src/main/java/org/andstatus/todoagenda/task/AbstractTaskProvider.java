@@ -27,16 +27,22 @@ public abstract class AbstractTaskProvider extends EventProvider {
 
     public abstract List<TaskEvent> getTasks();
 
-    protected DateTime getDueDate(Long dueMillis) {
-        if (dueMillis == null) {
-            return now.withTimeAtStartOfDay();
+    protected DateTime getTaskDate(Long dueMillis, Long startMillis) {
+        DateTime dueDate;
+        if (dueMillis != null) {
+            dueDate = new DateTime(dueMillis, zone);
         } else {
-            DateTime dueDate = new DateTime(dueMillis, zone);
-            if (dueDate.isBefore(now)) {
+            if (startMillis != null) {
+                dueDate = new DateTime(startMillis, zone);
+            } else {
                 dueDate = now;
             }
-
-            return dueDate.withTimeAtStartOfDay();
         }
+
+        if (dueDate.isBefore(now)) {
+            dueDate = now;
+        }
+
+        return dueDate.withTimeAtStartOfDay();
     }
 }

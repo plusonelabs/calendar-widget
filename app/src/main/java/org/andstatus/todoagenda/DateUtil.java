@@ -1,12 +1,12 @@
 package org.andstatus.todoagenda;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -65,6 +65,19 @@ public class DateUtil {
                 new Formatter(new StringBuilder(50), Locale.getDefault()),
                 dateTime.getMillis(), dateTime.getMillis(), flags,
                 timeZoneId).toString();
+    }
+
+    public static CharSequence getDaysFromTodayString(Context context, int daysFromToday) {
+        switch (daysFromToday) {
+            case -1:
+                return context.getText(R.string.yesterday);
+            case 0:
+                return context.getText(R.string.today);
+            case 1:
+                return context.getText(R.string.tomorrow);
+            default:
+                return Integer.toString(daysFromToday);
+        }
     }
 
     public static void setNow(DateTime now) {

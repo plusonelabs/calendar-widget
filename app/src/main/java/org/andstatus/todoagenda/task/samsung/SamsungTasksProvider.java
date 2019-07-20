@@ -85,7 +85,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         if (!cursor.isNull(dueDateIdx)) {
             dueMillis = cursor.getLong(dueDateIdx);
         }
-        task.setStartDate(getDueDate(dueMillis));
+        task.setTaskDate(getTaskDate(dueMillis, null));
 
         return task;
     }

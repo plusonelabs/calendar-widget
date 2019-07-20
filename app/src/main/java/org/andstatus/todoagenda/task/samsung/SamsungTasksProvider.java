@@ -76,7 +76,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
     }
 
     private TaskEvent createTask(Cursor cursor) {
-        TaskEvent task = new SamsungTaskEvent();
+        TaskEvent task = new SamsungTaskEvent(zone);
         task.setId(cursor.getLong(cursor.getColumnIndex(SamsungTasksContract.COLUMN_ID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(SamsungTasksContract.COLUMN_TITLE)));
 
@@ -85,8 +85,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         if (!cursor.isNull(dueDateIdx)) {
             dueMillis = cursor.getLong(dueDateIdx);
         }
-        task.setTaskDate(getTaskDate(dueMillis, null));
-
+        task.setDates(null, dueMillis);
         return task;
     }
 }

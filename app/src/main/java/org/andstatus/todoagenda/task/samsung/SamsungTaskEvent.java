@@ -6,8 +6,13 @@ import android.provider.CalendarContract;
 
 import org.andstatus.todoagenda.CalendarIntentUtil;
 import org.andstatus.todoagenda.task.TaskEvent;
+import org.joda.time.DateTimeZone;
 
 public class SamsungTaskEvent extends TaskEvent {
+
+    public SamsungTaskEvent(DateTimeZone zone) {
+        super(zone);
+    }
 
     @Override
     public Intent createOpenCalendarEventIntent() {

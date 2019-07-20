@@ -87,7 +87,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
     }
 
     private TaskEvent createTask(Cursor cursor) {
-        TaskEvent task = new DmfsOpenTasksEvent();
+        TaskEvent task = new DmfsOpenTasksEvent(zone);
         task.setId(cursor.getLong(cursor.getColumnIndex(DmfsOpenTasksContract.COLUMN_ID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(DmfsOpenTasksContract.COLUMN_TITLE)));
 
@@ -101,8 +101,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         if (!cursor.isNull(startDateIdx)) {
             startMillis = cursor.getLong(startDateIdx);
         }
-        task.setTaskDate(getTaskDate(dueMillis, startMillis));
-
+        task.setDates(startMillis, dueMillis);
         return task;
     }
 }

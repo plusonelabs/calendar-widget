@@ -1,12 +1,21 @@
 package org.andstatus.todoagenda.task;
 
 import android.content.Intent;
+
+import org.andstatus.todoagenda.DateUtil;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 public abstract class TaskEvent {
     private long id;
     private String title;
-    private DateTime taskDate;
+    private final DateTimeZone zone;
+    private DateTime startDate;
+    private DateTime dueDate;
+
+    protected TaskEvent(DateTimeZone zone) {
+        this.zone = zone;
+    }
 
     public long getId() {
         return id;
@@ -24,13 +33,41 @@ public abstract class TaskEvent {
         this.title = title;
     }
 
-    public DateTime getTaskDate() {
-        return taskDate;
+    public DateTime getStartDate() {
+        return startDate;
     }
 
-    public void setTaskDate(DateTime taskDate) {
-        this.taskDate = taskDate;
+    public DateTime getDueDate() {
+        return dueDate;
     }
 
     public abstract Intent createOpenCalendarEventIntent();
+
+    public void setDates(Long startMillis, Long dueMillis) {
+        startDate = toStartDate(startMillis, dueMillis);
+        dueDate = toDueDate(startMillis, dueMillis);
+    }
+
+    private DateTime toStartDate(Long startMillis, Long dueMillis) {
+        DateTime startDate;
+        if (startMillis != null) {
+            startDate = new DateTime(startMillis, zone);
+        } else {
+            if (dueMillis != null) {
+                startDate = new DateTime(dueMillis, zone);
+            } else {
+                startDate = DateUtil.now(zone).withTimeAtStartOfDay();
+            }
+        }
+        return startDate;
+    }
+
+    private DateTime toDueDate(Long startMillis, Long dueMillis) {
+        DateTime dueDate = dueMillis == null
+                ? DateUtil.now(zone).withTimeAtStartOfDay()
+                : new DateTime(dueMillis, zone);
+        return startMillis == null
+                ? dueDate.plusSeconds(1)
+                : dueDate;
+    }
 }

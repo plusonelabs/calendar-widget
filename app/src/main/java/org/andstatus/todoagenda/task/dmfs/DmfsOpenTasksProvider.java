@@ -3,6 +3,7 @@ package org.andstatus.todoagenda.task.dmfs;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import org.andstatus.todoagenda.calendar.CalendarQueryResult;
 import org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage;
@@ -13,6 +14,7 @@ import org.andstatus.todoagenda.task.TaskEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class DmfsOpenTasksProvider extends AbstractTaskProvider {
 
@@ -84,6 +86,15 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
                     .append(CLOSING_BRACKET)
                 .append(CLOSING_BRACKET);
         // @formatter:on
+
+        Set<String> taskLists = getSettings().getActiveTaskLists();
+        if (!taskLists.isEmpty()) {
+            whereBuilder.append(AND);
+            whereBuilder.append(DmfsOpenTasksContract.Tasks.COLUMN_LIST_ID);
+            whereBuilder.append(" IN ( ");
+            whereBuilder.append(TextUtils.join(",", taskLists));
+            whereBuilder.append(CLOSING_BRACKET);
+        }
 
         return whereBuilder.toString();
     }

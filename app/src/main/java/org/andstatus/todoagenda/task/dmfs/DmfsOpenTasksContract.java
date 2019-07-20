@@ -13,6 +13,7 @@ public class DmfsOpenTasksContract {
         public static final String COLUMN_DUE_DATE = "due";
         public static final String COLUMN_START_DATE = "dtstart";
         public static final String COLUMN_STATUS = "status";
+        public static final String COLUMN_LIST_ID = "list_id";
 
         public static final int STATUS_COMPLETED = 2;
     }

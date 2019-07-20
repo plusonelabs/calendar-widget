@@ -8,6 +8,8 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import static android.graphics.Color.*;
+
 public abstract class EventProvider {
 
     protected static final String AND_BRACKET = " AND (";
@@ -51,5 +53,9 @@ public abstract class EventProvider {
     @NonNull
     protected InstanceSettings getSettings() {
         return InstanceSettings.fromId(context, widgetId);
+    }
+
+    protected int getAsOpaque(int color) {
+        return argb(255, red(color), green(color), blue(color));
     }
 }

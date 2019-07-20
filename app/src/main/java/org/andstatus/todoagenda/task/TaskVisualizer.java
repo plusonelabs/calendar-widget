@@ -32,10 +32,15 @@ public class TaskVisualizer implements IEventVisualizer<TaskEntry> {
     public RemoteViews getRemoteView(WidgetEntry eventEntry) {
         TaskEntry entry = (TaskEntry) eventEntry;
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.task_entry);
+        setColor(entry, rv);
         setDaysToEvent(entry, rv);
         setTitle(entry, rv);
         rv.setOnClickFillInIntent(R.id.task_entry, entry.getEvent().createOpenCalendarEventIntent());
         return rv;
+    }
+
+    private void setColor(TaskEntry entry, RemoteViews rv) {
+        rv.setTextColor(R.id.task_entry_icon, entry.getEvent().getColor());
     }
 
     private void setDaysToEvent(TaskEntry entry, RemoteViews rv) {

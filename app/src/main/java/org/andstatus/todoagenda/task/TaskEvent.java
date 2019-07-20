@@ -7,11 +7,13 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 public abstract class TaskEvent {
+
     private long id;
     private String title;
     private final DateTimeZone zone;
     private DateTime startDate;
     private DateTime dueDate;
+    private int color;
 
     protected TaskEvent(DateTimeZone zone) {
         this.zone = zone;
@@ -39,6 +41,14 @@ public abstract class TaskEvent {
 
     public DateTime getDueDate() {
         return dueDate;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public abstract Intent createOpenCalendarEventIntent();

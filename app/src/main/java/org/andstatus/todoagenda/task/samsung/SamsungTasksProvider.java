@@ -42,7 +42,12 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
 
         CalendarQueryResult result = new CalendarQueryResult(getSettings(), uri, projection, where, null, null);
 
-        Cursor cursor = context.getContentResolver().query(uri, projection, where, null, null);
+        Cursor cursor;
+        try {
+            cursor = context.getContentResolver().query(uri, projection, where, null, null);
+        } catch (IllegalArgumentException e) {
+            cursor = null;
+        }
         if (cursor == null) {
             return new ArrayList<>();
         }
@@ -118,7 +123,12 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
                 SamsungTasksContract.TaskLists.COLUMN_NAME,
                 SamsungTasksContract.TaskLists.COLUMN_COLOR,
         };
-        Cursor cursor = context.getContentResolver().query(SamsungTasksContract.TaskLists.PROVIDER_URI, projection, null, null, null);
+        Cursor cursor;
+        try {
+            cursor = context.getContentResolver().query(SamsungTasksContract.TaskLists.PROVIDER_URI, projection, null, null, null);
+        } catch (IllegalArgumentException e) {
+            cursor = null;
+        }
         if (cursor == null) {
             return eventSources;
         }

@@ -34,4 +34,16 @@
     <color name="colorPrimaryDark">#37474f</color>
     <color name="colorAccent">#009688</color>
 
+    <!-- Task list colors for providers that don't supply this information -->
+    <color name="task_list_0">#2196f3</color>
+    <color name="task_list_1">#009688</color>
+    <color name="task_list_2">#607d8d</color>
+    <color name="task_list_3">#795548</color>
+    <color name="task_list_4">#ffc107</color>
+    <color name="task_list_5">#f44336</color>
+    <color name="task_list_6">#00bcd4</color>
+    <color name="task_list_7">#cddc39</color>
+    <color name="task_list_8">#9c27b0</color>
+    <color name="task_list_9">#4caf59</color>
+
 </resources>

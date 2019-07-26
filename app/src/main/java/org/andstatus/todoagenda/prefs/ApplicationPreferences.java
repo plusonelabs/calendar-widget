@@ -8,9 +8,10 @@ import android.text.TextUtils;
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.Theme;
+import org.andstatus.todoagenda.task.TaskProvider;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 public class ApplicationPreferences {
@@ -59,7 +60,8 @@ public class ApplicationPreferences {
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
     static final String PREF_TASK_SOURCE = "taskSource";
-    static final String PREF_TASK_SOURCE_DEFAULT = "NONE";
+    static final String PREF_TASK_SOURCE_DEFAULT = TaskProvider.PROVIDER_NONE;
+    static final String PREF_ACTIVE_TASK_LISTS = "activeTaskLists";
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
 
     private static volatile String lockedTimeZoneId = null;
@@ -98,6 +100,8 @@ public class ApplicationPreferences {
         setInt(context, PREF_BACKGROUND_COLOR, settings.getBackgroundColor());
         setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale());
         setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());
+        setString(context, PREF_TASK_SOURCE, settings.getTaskSource());
+        setActiveTaskLists(context, settings.getActiveTaskLists());
     }
 
     public static void save(Context context, int wigdetId) {
@@ -122,7 +126,7 @@ public class ApplicationPreferences {
         Set<String> activeCalendars = PreferenceManager.getDefaultSharedPreferences(context)
                 .getStringSet(PREF_ACTIVE_CALENDARS, null);
         if (activeCalendars == null) {
-            activeCalendars = new HashSet<>();
+            activeCalendars = Collections.emptySet();
         }
         return activeCalendars;
     }
@@ -264,6 +268,22 @@ public class ApplicationPreferences {
 
     public static String getTaskSource(Context context) {
         return getString(context, PREF_TASK_SOURCE, PREF_DATE_FORMAT_DEFAULT);
+    }
+
+    public static Set<String> getActiveTaskLists(Context context) {
+        Set<String> activeTaskLists = PreferenceManager.getDefaultSharedPreferences(context)
+                .getStringSet(PREF_ACTIVE_TASK_LISTS, null);
+        if (activeTaskLists == null) {
+            activeTaskLists = Collections.emptySet();
+        }
+        return activeTaskLists;
+    }
+
+    public static void setActiveTaskLists(Context context, Set<String> taskLists) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet(PREF_ACTIVE_TASK_LISTS, taskLists);
+        editor.apply();
     }
 
     private static void setString(Context context, String key, String value) {

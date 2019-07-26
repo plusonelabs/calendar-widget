@@ -2,92 +2,51 @@ package org.andstatus.todoagenda.prefs;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.graphics.LightingColorFilter;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.provider.CalendarContract.Calendars;
 
-import org.andstatus.todoagenda.EventAppWidgetProvider;
-import org.andstatus.todoagenda.R;
-
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
-public class CalendarPreferencesFragment extends PreferenceFragment {
+public class CalendarPreferencesFragment extends AbstractEventSourcesPreferencesFragment {
 
-    private static final String CALENDAR_ID = "calendarId";
     private static final String[] PROJECTION = new String[]{Calendars._ID,
             Calendars.CALENDAR_DISPLAY_NAME, Calendars.CALENDAR_COLOR,
             Calendars.ACCOUNT_NAME};
-    private Set<String> initialActiveCalendars;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.preferences_calendars);
-        initialActiveCalendars = ApplicationPreferences.getActiveCalendars(getActivity());
-        populatePreferenceScreen(initialActiveCalendars);
+    protected Set<String> fetchInitialActiveSources() {
+        return ApplicationPreferences.getActiveCalendars(getActivity());
     }
 
-    private void populatePreferenceScreen(Set<String> activeCalendars) {
+    @Override
+    protected Collection<EventSource> fetchAvailableSources() {
+        List<EventSource> eventSources = new ArrayList<>();
+
         Cursor cursor = createLoadedCursor();
         if (cursor == null) {
-            return;
+            return eventSources;
         }
+
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
-            CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
-            checkboxPref.setTitle(cursor.getString(1));
-            checkboxPref.setSummary(cursor.getString(3));
-            checkboxPref.setIcon(createDrawable(cursor.getInt(2)));
-            int calendarId = cursor.getInt(0);
-            checkboxPref.getExtras().putInt(CALENDAR_ID, calendarId);
-            checkboxPref.setChecked(activeCalendars.isEmpty()
-                    || activeCalendars.contains(String.valueOf(calendarId)));
-            getPreferenceScreen().addPreference(checkboxPref);
+            EventSource source = new EventSource(cursor.getInt(0), cursor.getString(1),
+                    cursor.getString(3), cursor.getInt(2));
+            eventSources.add(source);
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        HashSet<String> selectedCalendars = getSelectedCalendars();
-        if (!selectedCalendars.equals(initialActiveCalendars)) {
-            ApplicationPreferences.setActiveCalendars(getActivity(), selectedCalendars);
-            EventAppWidgetProvider.updateEventList(getActivity());
-        }
-    }
-
-    private HashSet<String> getSelectedCalendars() {
-        PreferenceScreen preferenceScreen = getPreferenceScreen();
-        int prefCount = preferenceScreen.getPreferenceCount();
-        HashSet<String> prefValues = new HashSet<>();
-        for (int i = 0; i < prefCount; i++) {
-            Preference pref = preferenceScreen.getPreference(i);
-            if (pref instanceof CheckBoxPreference) {
-                CheckBoxPreference checkPref = (CheckBoxPreference) pref;
-                if (checkPref.isChecked()) {
-                    prefValues.add(String.valueOf(checkPref.getExtras().getInt(CALENDAR_ID)));
-                }
-            }
-        }
-        return prefValues;
-    }
-
-    private Drawable createDrawable(int color) {
-        Drawable drawable = getResources().getDrawable(R.drawable.prefs_calendar_entry);
-        drawable.setColorFilter(new LightingColorFilter(0x0, color));
-        return drawable;
+        return eventSources;
     }
 
     private Cursor createLoadedCursor() {
         Uri.Builder builder = Calendars.CONTENT_URI.buildUpon();
         ContentResolver contentResolver = getActivity().getContentResolver();
         return contentResolver.query(builder.build(), PROJECTION, null, null, null);
+    }
+
+    @Override
+    protected void storeSelectedSources(Set<String> selectedSources) {
+        ApplicationPreferences.setActiveCalendars(getActivity(), selectedSources);
     }
 }

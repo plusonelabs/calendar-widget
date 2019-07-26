@@ -6,4 +6,11 @@
         android:key="taskSource"
         android:title="@string/task_source_pref_title"
         android:summary="@string/task_source_pref_desc" />
+
+    <Preference
+        android:fragment="org.andstatus.todoagenda.prefs.TaskListsPreferencesFragment"
+        android:key="activeTaskListsButton"
+        android:persistent="false"
+        android:title="@string/task_lists_pref_title"
+        android:summary="@string/task_lists_pref_summary" />
 </PreferenceScreen>

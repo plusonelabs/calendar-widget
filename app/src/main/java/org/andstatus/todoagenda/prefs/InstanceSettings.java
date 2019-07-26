@@ -10,13 +10,13 @@ import org.andstatus.todoagenda.DateUtil;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
-
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -43,7 +43,7 @@ public class InstanceSettings {
     private final int widgetId;
     private final String widgetInstanceName;
     private boolean justCreated = true;
-    private Set<String> activeCalendars = new HashSet<>();
+    private Set<String> activeCalendars = Collections.emptySet();
     private int eventRange = Integer.valueOf(PREF_EVENT_RANGE_DEFAULT);
     private EndedSomeTimeAgo eventsEnded = EndedSomeTimeAgo.NONE;
     private boolean fillAllDayEvents = PREF_FILL_ALL_DAY_DEFAULT;
@@ -69,6 +69,7 @@ public class InstanceSettings {
     private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
     private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
     private String taskSource = PREF_TASK_SOURCE_DEFAULT;
+    private Set<String> activeTaskLists = Collections.emptySet();
 
     @NonNull
     public static InstanceSettings fromId(Context context, Integer widgetId) {
@@ -217,6 +218,9 @@ public class InstanceSettings {
         if (json.has(PREF_TASK_SOURCE)) {
             settings.taskSource = json.getString(PREF_TASK_SOURCE);
         }
+        if (json.has(PREF_ACTIVE_TASK_LISTS)) {
+            settings.activeTaskLists = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_TASK_LISTS));
+        }
         return settings;
     }
 
@@ -278,6 +282,7 @@ public class InstanceSettings {
         settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
                 PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
         settings.taskSource = ApplicationPreferences.getTaskSource(context);
+        settings.activeTaskLists = ApplicationPreferences.getActiveTaskLists(context);
         return settings;
     }
 
@@ -371,6 +376,7 @@ public class InstanceSettings {
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
             json.put(PREF_TASK_SOURCE, taskSource);
+            json.put(PREF_ACTIVE_TASK_LISTS, new JSONArray(activeTaskLists));
         } catch (JSONException e) {
             throw new RuntimeException("Saving settings to JSON", e);
         }
@@ -536,6 +542,10 @@ public class InstanceSettings {
 
     public String getTaskSource() {
         return taskSource;
+    }
+
+    public Set<String> getActiveTaskLists() {
+        return activeTaskLists;
     }
 
     public static Map<Integer, InstanceSettings> getInstances(Context context) {

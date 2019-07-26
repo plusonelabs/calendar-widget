@@ -103,4 +103,16 @@
         <item>DMFS_OPEN_TASKS</item>
         <item>SAMSUNG</item>
     </string-array>
+    <integer-array name="task_list_colors">
+        <item>@color/task_list_0</item>
+        <item>@color/task_list_1</item>
+        <item>@color/task_list_2</item>
+        <item>@color/task_list_3</item>
+        <item>@color/task_list_4</item>
+        <item>@color/task_list_5</item>
+        <item>@color/task_list_6</item>
+        <item>@color/task_list_7</item>
+        <item>@color/task_list_8</item>
+        <item>@color/task_list_9</item>
+    </integer-array>
 </resources>

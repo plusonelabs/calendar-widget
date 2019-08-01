@@ -1,41 +1,41 @@
 package org.andstatus.todoagenda.task;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import org.andstatus.todoagenda.DateUtil;
-import org.andstatus.todoagenda.IEventVisualizer;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.provider.EventProvider;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.TaskEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
+import org.andstatus.todoagenda.widget.WidgetEntryVisualizer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.andstatus.todoagenda.RemoteViewsUtil.*;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setMultiline;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
 
-public class TaskVisualizer implements IEventVisualizer<TaskEntry> {
-    private final Context context;
-    private final int widgetId;
-    private final TaskProvider taskProvider;
+public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
+    private final AbstractTaskProvider eventProvider;
 
-    public TaskVisualizer(Context context, int widgetId) {
-        this.context = context;
-        this.widgetId = widgetId;
-        this.taskProvider = new TaskProvider(context, widgetId);
+    public TaskVisualizer(EventProvider eventProvider) {
+        this.eventProvider = (AbstractTaskProvider) eventProvider;
     }
 
     @Override
     public RemoteViews getRemoteView(WidgetEntry eventEntry) {
+        if (!(eventEntry instanceof TaskEntry)) return null;
+
         TaskEntry entry = (TaskEntry) eventEntry;
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.task_entry);
+        RemoteViews rv = new RemoteViews(eventProvider.context.getPackageName(), R.layout.task_entry);
         setColor(entry, rv);
         setDaysToEvent(entry, rv);
         setTitle(entry, rv);
-        rv.setOnClickFillInIntent(R.id.task_entry, entry.getEvent().createOpenCalendarEventIntent());
+        rv.setOnClickFillInIntent(R.id.task_entry, eventProvider.createViewEventIntent(entry.getEvent()));
         return rv;
     }
 
@@ -74,7 +74,7 @@ public class TaskVisualizer implements IEventVisualizer<TaskEntry> {
     }
 
     public InstanceSettings getSettings() {
-        return InstanceSettings.fromId(context, widgetId);
+        return InstanceSettings.fromId(eventProvider.context, eventProvider.widgetId);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class TaskVisualizer implements IEventVisualizer<TaskEntry> {
 
     @Override
     public List<TaskEntry> getEventEntries() {
-        return createEntryList(taskProvider.getEvents());
+        return createEntryList(eventProvider.getEvents());
     }
 
     private List<TaskEntry> createEntryList(List<TaskEvent> events) {
@@ -95,8 +95,4 @@ public class TaskVisualizer implements IEventVisualizer<TaskEntry> {
         return entries;
     }
 
-    @Override
-    public Class<? extends TaskEntry> getSupportedEventEntryType() {
-        return TaskEntry.class;
-    }
 }

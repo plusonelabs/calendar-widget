@@ -4,6 +4,7 @@ import android.test.InstrumentationTestCase;
 
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.calendar.MockCalendarContentProvider;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 

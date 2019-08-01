@@ -8,9 +8,10 @@ import android.preference.PreferenceFragment;
 
 import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.R;
-import org.andstatus.todoagenda.task.TaskProvider;
 
 import java.util.Collections;
+
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TASK_SOURCE_DEFAULT;
 
 public class TaskPreferencesFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -55,7 +56,7 @@ public class TaskPreferencesFragment extends PreferenceFragment implements Share
 
     private void setTaskListState() {
         Preference taskListButton = findPreference(PREF_ACTIVE_TASK_LISTS_BUTTON);
-        taskListButton.setEnabled(!ApplicationPreferences.getTaskSource(getActivity()).equals(TaskProvider.PROVIDER_NONE));
+        taskListButton.setEnabled(!ApplicationPreferences.getTaskSource(getActivity()).equals(PREF_TASK_SOURCE_DEFAULT));
     }
 
     private void clearTasksLists() {

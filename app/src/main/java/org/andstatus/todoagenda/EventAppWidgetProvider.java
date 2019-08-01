@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.util.CalendarIntentUtil;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 
@@ -27,14 +29,14 @@ import static android.graphics.Color.alpha;
 import static android.graphics.Color.blue;
 import static android.graphics.Color.green;
 import static android.graphics.Color.red;
-import static org.andstatus.todoagenda.CalendarIntentUtil.createOpenCalendarAtDayIntent;
-import static org.andstatus.todoagenda.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
-import static org.andstatus.todoagenda.CalendarIntentUtil.createOpenCalendarPendingIntent;
-import static org.andstatus.todoagenda.RemoteViewsUtil.setAlpha;
-import static org.andstatus.todoagenda.RemoteViewsUtil.setColorFilter;
-import static org.andstatus.todoagenda.RemoteViewsUtil.setImageFromAttr;
-import static org.andstatus.todoagenda.RemoteViewsUtil.setTextColorFromAttr;
-import static org.andstatus.todoagenda.RemoteViewsUtil.setTextSize;
+import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarAtDayIntent;
+import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
+import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarPendingIntent;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setAlpha;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setColorFilter;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setImageFromAttr;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
 import static org.andstatus.todoagenda.Theme.themeNameToResId;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {

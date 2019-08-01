@@ -1,46 +1,42 @@
 package org.andstatus.todoagenda.calendar;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import org.andstatus.todoagenda.DateUtil;
-import org.andstatus.todoagenda.IEventVisualizer;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.provider.EventProvider;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
-
+import org.andstatus.todoagenda.widget.WidgetEntryVisualizer;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.andstatus.todoagenda.RemoteViewsUtil.setAlpha;
-import static org.andstatus.todoagenda.RemoteViewsUtil.setBackgroundColor;
-import static org.andstatus.todoagenda.RemoteViewsUtil.setImageFromAttr;
 import static org.andstatus.todoagenda.Theme.themeNameToResId;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setAlpha;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setBackgroundColor;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setImageFromAttr;
 
-public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> {
+public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry> {
+    private final CalendarEventProvider eventProvider;
 
-    private final Context context;
-    private final int widgetId;
-    private final CalendarEventProvider calendarContentProvider;
-
-    public CalendarEventVisualizer(Context context, int widgetId) {
-        this.context = context;
-        this.widgetId = widgetId;
-        calendarContentProvider = new CalendarEventProvider(context, widgetId);
+    public CalendarEventVisualizer(EventProvider eventProvider) {
+        this.eventProvider = (CalendarEventProvider) eventProvider;
     }
 
     public RemoteViews getRemoteView(WidgetEntry eventEntry) {
+        if (!(eventEntry instanceof CalendarEntry)) return null;
+
         CalendarEntry entry = (CalendarEntry) eventEntry;
         EventEntryLayout eventEntryLayout = getSettings().getEventEntryLayout();
-        RemoteViews rv = new RemoteViews(context.getPackageName(), eventEntryLayout.layoutId);
-        rv.setOnClickFillInIntent(R.id.event_entry, entry.getEvent().createOpenCalendarEventIntent());
+        RemoteViews rv = new RemoteViews(eventProvider.context.getPackageName(), eventEntryLayout.layoutId);
+        rv.setOnClickFillInIntent(R.id.event_entry, eventProvider.createViewEventIntent(entry.getEvent()));
         eventEntryLayout.visualizeEvent(entry, rv);
         setAlarmActive(entry, rv);
         setRecurring(entry, rv);
@@ -61,7 +57,7 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
     private void setIndicator(RemoteViews rv, boolean showIndication, int viewId, int imageAttrId) {
         if (showIndication) {
             rv.setViewVisibility(viewId, View.VISIBLE);
-            setImageFromAttr(context, rv, viewId, imageAttrId);
+            setImageFromAttr(eventProvider.context, rv, viewId, imageAttrId);
             int themeId = themeNameToResId(getSettings().getEntryTheme());
             int alpha = 255;
             if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
@@ -84,15 +80,16 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 
     @NonNull
     private InstanceSettings getSettings() {
-        return InstanceSettings.fromId(context, widgetId);
+        return InstanceSettings.fromId(eventProvider.context, eventProvider.widgetId);
     }
 
     public int getViewTypeCount() {
         return 1;
     }
 
+    @Override
     public List<CalendarEntry> getEventEntries() {
-        List<CalendarEntry> entries = createEntryList(calendarContentProvider.getEvents());
+        List<CalendarEntry> entries = createEntryList(eventProvider.getEvents());
         Collections.sort(entries);
         return entries;
     }
@@ -112,11 +109,11 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
     private CalendarEntry setupDayOneEntry(List<CalendarEntry> entryList, CalendarEvent event) {
         CalendarEntry dayOneEntry = CalendarEntry.fromEvent(event);
         DateTime firstDate = event.getStartDate();
-        DateTime dayOfStartOfTimeRange = calendarContentProvider.getStartOfTimeRange()
+        DateTime dayOfStartOfTimeRange = eventProvider.getStartOfTimeRange()
                 .withTimeAtStartOfDay();
         if (!event.hasDefaultCalendarColor()
-                && firstDate.isBefore(calendarContentProvider.getStartOfTimeRange())
-                && event.getEndDate().isAfter(calendarContentProvider.getStartOfTimeRange())) {
+                && firstDate.isBefore(eventProvider.getStartOfTimeRange())
+                && event.getEndDate().isAfter(eventProvider.getStartOfTimeRange())) {
             if (event.isAllDay() || firstDate.isBefore(dayOfStartOfTimeRange)) {
                 firstDate = dayOfStartOfTimeRange;
             }
@@ -136,8 +133,8 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
 
     private void createFollowingEntries(List<CalendarEntry> entryList, CalendarEntry dayOneEntry) {
         DateTime endDate = dayOneEntry.getEvent().getEndDate();
-        if (endDate.isAfter(calendarContentProvider.getEndOfTimeRange())) {
-            endDate = calendarContentProvider.getEndOfTimeRange();
+        if (endDate.isAfter(eventProvider.getEndOfTimeRange())) {
+            endDate = eventProvider.getEndOfTimeRange();
         }
         DateTime thisDay = dayOneEntry.getStartDay().plusDays(1).withTimeAtStartOfDay();
         while (thisDay.isBefore(endDate)) {
@@ -152,10 +149,6 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEntry> 
             entryList.add(nextEntry);
             thisDay = nextDay;
         }
-    }
-
-    public Class<? extends CalendarEntry> getSupportedEventEntryType() {
-        return CalendarEntry.class;
     }
 
 }

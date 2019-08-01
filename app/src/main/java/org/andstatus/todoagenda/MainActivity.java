@@ -17,6 +17,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.ArrayList;
@@ -61,8 +62,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void checkPermissionsAndRequestThem() {
         checkPermissions();
         if (!permissionsGranted) {
-            Log.d(this.getLocalClassName(), "Requesting permissions: " + Arrays.asList(PermissionsUtil.permissions));
-            ActivityCompat.requestPermissions(this, PermissionsUtil.permissions, 1);
+            Log.d(this.getLocalClassName(), "Requesting permissions: " +
+                    Arrays.asList(EventProviderType.getNeededPermissions(this)));
+            ActivityCompat.requestPermissions(this,
+                    EventProviderType.getNeededPermissions(this).toArray(new String[]{}), 1);
         }
     }
 
@@ -150,9 +153,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        EventProviderType.initialize(this, true);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         checkPermissions();
         updateScreen();
+        EventAppWidgetProvider.updateEventList(this);
     }
 
     public void onHomeButtonClick(View view) {

@@ -5,7 +5,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import org.andstatus.todoagenda.DateUtil;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 
 import org.joda.time.DateTime;

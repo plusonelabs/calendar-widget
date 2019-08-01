@@ -49,6 +49,7 @@ public class SettingsStorage {
         }
     }
 
+    @NonNull
     private static File jsonFile(Context context, String key) {
         return new File(getExistingPreferencesDirectory(context), key + ".json");
     }
@@ -76,13 +77,18 @@ public class SettingsStorage {
 
     @NonNull
     private static JSONObject getJSONObject(File file) throws IOException {
-        String fileString = utf8File2String(file);
-        if (!TextUtils.isEmpty(fileString)) {
-            try {
-                return new JSONObject(fileString);
-            } catch (JSONException e) {
-                Log.v("getJSONObject", file.getAbsolutePath(), e);
+        if(file.exists()) {
+            String fileString = utf8File2String(file);
+            if (!TextUtils.isEmpty(fileString)) {
+                try {
+                    return new JSONObject(fileString);
+                } catch (JSONException e) {
+                    Log.w("getJSONObject", file.getAbsolutePath(), e);
+                }
             }
+        } else {
+            Log.w(SettingsStorage.class.getSimpleName(),
+                    "The settings file doesn't exist: " + file.getAbsolutePath());
         }
         return new JSONObject();
     }

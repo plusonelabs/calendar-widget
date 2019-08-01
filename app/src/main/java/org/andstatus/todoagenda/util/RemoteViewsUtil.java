@@ -1,4 +1,4 @@
-package org.andstatus.todoagenda;
+package org.andstatus.todoagenda.util;
 
 import android.annotation.TargetApi;
 import android.content.Context;

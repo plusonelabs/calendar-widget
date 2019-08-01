@@ -2,7 +2,7 @@ package org.andstatus.todoagenda.widget;
 
 import org.andstatus.todoagenda.task.TaskEvent;
 
-public class TaskEntry extends WidgetEntry {
+public class TaskEntry extends WidgetEntry<TaskEntry> {
     private TaskEvent event;
 
     public static TaskEntry fromEvent(TaskEvent event) {

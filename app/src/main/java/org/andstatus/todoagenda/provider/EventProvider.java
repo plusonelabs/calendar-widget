@@ -1,14 +1,21 @@
-package org.andstatus.todoagenda;
+package org.andstatus.todoagenda.provider;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import org.andstatus.todoagenda.calendar.KeywordsFilter;
+import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import static android.graphics.Color.*;
+import java.util.Collection;
+
+import static android.graphics.Color.argb;
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
 
 public abstract class EventProvider {
 
@@ -22,8 +29,9 @@ public abstract class EventProvider {
     protected static final String LTE = " <= ";
     protected static final String IS_NULL = " IS NULL";
 
-    protected final Context context;
-    protected final int widgetId;
+    public final EventProviderType type;
+    public final Context context;
+    public final int widgetId;
 
     // Below are parameters, which may change in settings
     protected DateTimeZone zone;
@@ -31,7 +39,8 @@ public abstract class EventProvider {
     protected DateTime mStartOfTimeRange;
     protected DateTime mEndOfTimeRange;
 
-    public EventProvider(Context context, int widgetId) {
+    public EventProvider(EventProviderType type, Context context, int widgetId) {
+        this.type = type;
         this.context = context;
         this.widgetId = widgetId;
     }
@@ -58,4 +67,6 @@ public abstract class EventProvider {
     protected int getAsOpaque(int color) {
         return argb(255, red(color), green(color), blue(color));
     }
+
+    public abstract Collection<EventSource> fetchAvailableSources();
 }

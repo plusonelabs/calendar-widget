@@ -8,7 +8,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.andstatus.todoagenda.DateUtil;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.EventRemoteViewsFactory;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.InstanceSettings;

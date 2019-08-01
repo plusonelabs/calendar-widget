@@ -1,16 +1,22 @@
 package org.andstatus.todoagenda.task.samsung;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.CalendarContract;
 import android.text.TextUtils;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.calendar.CalendarQueryResult;
 import org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage;
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.task.AbstractTaskProvider;
 import org.andstatus.todoagenda.task.TaskEvent;
+import org.andstatus.todoagenda.util.CalendarIntentUtil;
+import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,13 +25,17 @@ import java.util.Set;
 
 public class SamsungTasksProvider extends AbstractTaskProvider {
 
-    public SamsungTasksProvider(Context context, int widgetId) {
-        super(context, widgetId);
+    public SamsungTasksProvider(EventProviderType type, Context context, int widgetId) {
+        super(type, context, widgetId);
     }
 
     @Override
-    public List<TaskEvent> getTasks() {
+    public List<TaskEvent> getEvents() {
         initialiseParameters();
+        if (PermissionsUtil.isPermissionNeeded(context, type.permission)) {
+            return new ArrayList<>();
+        }
+
         return queryTasks();
     }
 
@@ -97,7 +107,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
     }
 
     private TaskEvent createTask(Cursor cursor) {
-        TaskEvent task = new SamsungTaskEvent(zone);
+        TaskEvent task = new TaskEvent(zone);
         task.setId(cursor.getLong(cursor.getColumnIndex(SamsungTasksContract.Tasks.COLUMN_ID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(SamsungTasksContract.Tasks.COLUMN_TITLE)));
 
@@ -115,7 +125,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
     }
 
     @Override
-    public Collection<EventSource> getTaskLists() {
+    public Collection<EventSource> fetchAvailableSources() {
         ArrayList<EventSource> eventSources = new ArrayList<>();
 
         String[] projection = {
@@ -140,7 +150,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         try {
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(idIdx);
-                EventSource eventSource = new EventSource(id, taskListName,
+                EventSource eventSource = new EventSource(type, id, taskListName,
                         cursor.getString(nameIdx), getColor(cursor, colorIdx, id));
                 eventSources.add(eventSource);
             }
@@ -149,6 +159,18 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         }
 
         return eventSources;
+    }
+
+    @Override
+    public Intent createViewEventIntent(TaskEvent event) {
+        Intent intent = CalendarIntentUtil.createViewIntent();
+        intent.setData(ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event.getId()));
+        intent.putExtra(SamsungTasksContract.INTENT_EXTRA_TASK, true);
+        intent.putExtra(SamsungTasksContract.INTENT_EXTRA_SELECTED, event.getId());
+        intent.putExtra(SamsungTasksContract.INTENT_EXTRA_ACTION_VIEW_FOCUS, 0);
+        intent.putExtra(SamsungTasksContract.INTENT_EXTRA_DETAIL_MODE, true);
+        intent.putExtra(SamsungTasksContract.INTENT_EXTRA_LAUNCH_FROM_WIDGET, true);
+        return intent;
     }
 
     private int getColor(Cursor cursor, int colorIdx, int accountId) {

@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.Theme;
-import org.andstatus.todoagenda.task.TaskProvider;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 
 import java.util.Collections;
@@ -60,7 +59,7 @@ public class ApplicationPreferences {
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
     static final String PREF_TASK_SOURCE = "taskSource";
-    static final String PREF_TASK_SOURCE_DEFAULT = TaskProvider.PROVIDER_NONE;
+    static final String PREF_TASK_SOURCE_DEFAULT = "NONE"; // TODO: remove
     static final String PREF_ACTIVE_TASK_LISTS = "activeTaskLists";
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
 

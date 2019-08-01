@@ -1,21 +1,21 @@
 package org.andstatus.todoagenda.task;
 
 import android.content.Context;
+import android.content.Intent;
 
-import org.andstatus.todoagenda.DateUtil;
-import org.andstatus.todoagenda.EventProvider;
-import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.provider.EventProvider;
 import org.joda.time.DateTime;
 
-import java.util.Collection;
 import java.util.List;
 
 public abstract class AbstractTaskProvider extends EventProvider {
 
     protected DateTime now;
 
-    public AbstractTaskProvider(Context context, int widgetId) {
-        super(context, widgetId);
+    public AbstractTaskProvider(EventProviderType type, Context context, int widgetId) {
+        super(type, context, widgetId);
     }
 
     @Override
@@ -25,7 +25,7 @@ public abstract class AbstractTaskProvider extends EventProvider {
         now = DateUtil.now(zone);
     }
 
-    public abstract List<TaskEvent> getTasks();
+    public abstract List<TaskEvent> getEvents();
 
-    public abstract Collection<EventSource> getTaskLists();
+    public abstract Intent createViewEventIntent(TaskEvent event);
 }

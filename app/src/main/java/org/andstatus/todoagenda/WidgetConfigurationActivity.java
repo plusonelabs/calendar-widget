@@ -67,7 +67,8 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
     }
 
     private void restartIfNeeded() {
-        if (widgetId != ApplicationPreferences.getWidgetId(this) || !PermissionsUtil.arePermissionsGranted(this)) {
+        if (widgetId != ApplicationPreferences.getWidgetId(this) ||
+                !PermissionsUtil.arePermissionsGranted(this)) {
             widgetId = 0;
             startActivity(MainActivity.intentToStartMe(this));
             finish();

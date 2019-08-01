@@ -1,6 +1,5 @@
 package org.andstatus.todoagenda.util;
 
-import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +9,12 @@ import android.support.v4.content.ContextCompat;
 
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-import org.andstatus.todoagenda.task.dmfs.DmfsOpenTasksContract;
+import org.andstatus.todoagenda.provider.EventProviderType;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class PermissionsUtil {
-
-    public final static String[] permissions = {Manifest.permission.READ_CALENDAR, DmfsOpenTasksContract.PERMISSION};
 
     private PermissionsUtil() {
         // Empty
@@ -36,14 +33,17 @@ public class PermissionsUtil {
     }
 
     public static boolean arePermissionsGranted(Context context) {
-        if (isTestMode()) return true;
-
-        for (String permission: permissions) {
-            if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+        for (String permission: EventProviderType.getNeededPermissions(context)) {
+            if (isPermissionNeeded(context, permission)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static boolean isPermissionNeeded(Context context, String permission) {
+        return !isTestMode() &&
+                ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED;
     }
 
     /**

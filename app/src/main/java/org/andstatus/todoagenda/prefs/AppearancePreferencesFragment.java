@@ -7,7 +7,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
-import org.andstatus.todoagenda.DateUtil;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.R;

@@ -1,38 +1,48 @@
 package org.andstatus.todoagenda.calendar;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.CalendarContract;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
-import org.andstatus.todoagenda.DateUtil;
-import org.andstatus.todoagenda.EventProvider;
+import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.provider.EventProvider;
+import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.util.CalendarIntentUtil;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 public class CalendarEventProvider extends EventProvider {
+    private static final String[] EVENT_SOURCES_PROJECTION = new String[]{CalendarContract.Calendars._ID,
+            CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, CalendarContract.Calendars.CALENDAR_COLOR,
+            CalendarContract.Calendars.ACCOUNT_NAME};
 
     public static final String EVENT_SORT_ORDER = "startDay ASC, allDay DESC, begin ASC ";
     private static final String EVENT_SELECTION = Instances.SELF_ATTENDEE_STATUS + "!="
             + Attendees.ATTENDEE_STATUS_DECLINED;
 
-    public CalendarEventProvider(Context context, int widgetId) {
-        super(context, widgetId);
+    public CalendarEventProvider(EventProviderType type, Context context, int widgetId) {
+        super(type, context, widgetId);
     }
 
     public List<CalendarEvent> getEvents() {
         initialiseParameters();
-        if (!PermissionsUtil.arePermissionsGranted(context)) {
+        if (PermissionsUtil.isPermissionNeeded(context, type.permission)) {
             return new ArrayList<>();
         }
         List<CalendarEvent> eventList = getTimeFilteredEventList();
@@ -221,4 +231,39 @@ public class CalendarEventProvider extends EventProvider {
             return cursor.getInt(cursor.getColumnIndex(Instances.CALENDAR_COLOR));
         }
     }
+
+    @Override
+    public Collection<EventSource> fetchAvailableSources() {
+        List<EventSource> eventSources = new ArrayList<>();
+        Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = null;
+        try {
+            cursor = contentResolver.query(builder.build(), EVENT_SOURCES_PROJECTION, null, null, null);
+            if (cursor == null) {
+                return eventSources;
+            }
+
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToPosition(i);
+                EventSource source = new EventSource(type, cursor.getInt(0), cursor.getString(1),
+                        cursor.getString(3), cursor.getInt(2));
+                eventSources.add(source);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return eventSources;
+    }
+
+    public Intent createViewEventIntent(CalendarEvent event) {
+        Intent intent = CalendarIntentUtil.createViewIntent();
+        intent.setData(ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event.getEventId()));
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getStartMillis());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getEndMillis());
+        return intent;
+    }
+
 }

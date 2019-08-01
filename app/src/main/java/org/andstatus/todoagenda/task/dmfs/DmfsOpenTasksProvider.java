@@ -1,6 +1,8 @@
 package org.andstatus.todoagenda.task.dmfs;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -8,8 +10,11 @@ import android.text.TextUtils;
 import org.andstatus.todoagenda.calendar.CalendarQueryResult;
 import org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage;
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.task.AbstractTaskProvider;
 import org.andstatus.todoagenda.task.TaskEvent;
+import org.andstatus.todoagenda.util.CalendarIntentUtil;
+import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,13 +23,16 @@ import java.util.Set;
 
 public class DmfsOpenTasksProvider extends AbstractTaskProvider {
 
-    public DmfsOpenTasksProvider(Context context, int widgetId) {
-        super(context, widgetId);
+    public DmfsOpenTasksProvider(EventProviderType type, Context context, int widgetId) {
+        super(type, context, widgetId);
     }
 
     @Override
-    public List<TaskEvent> getTasks() {
+    public List<TaskEvent> getEvents() {
         initialiseParameters();
+        if (PermissionsUtil.isPermissionNeeded(context, type.permission)) {
+            return new ArrayList<>();
+        }
 
         return queryTasks();
     }
@@ -106,7 +114,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
     }
 
     private TaskEvent createTask(Cursor cursor) {
-        TaskEvent task = new DmfsOpenTasksEvent(zone);
+        TaskEvent task = new TaskEvent(zone);
         task.setId(cursor.getLong(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_ID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_TITLE)));
 
@@ -128,7 +136,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
     }
 
     @Override
-    public Collection<EventSource> getTaskLists() {
+    public Collection<EventSource> fetchAvailableSources() {
         ArrayList<EventSource> eventSources = new ArrayList<>();
 
         String[] projection = {
@@ -153,7 +161,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         int accountIdx = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ACCOUNT_NAME);
         try {
             while (cursor.moveToNext()) {
-                EventSource eventSource = new EventSource(cursor.getInt(idIdx), cursor.getString(nameIdx),
+                EventSource eventSource = new EventSource(type, cursor.getInt(idIdx), cursor.getString(nameIdx),
                         cursor.getString(accountIdx), cursor.getInt(colorIdx));
                 eventSources.add(eventSource);
             }
@@ -162,5 +170,12 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         }
 
         return eventSources;
+    }
+
+    @Override
+    public Intent createViewEventIntent(TaskEvent event) {
+        Intent intent = CalendarIntentUtil.createViewIntent();
+        intent.setData(ContentUris.withAppendedId(DmfsOpenTasksContract.Tasks.PROVIDER_URI, event.getId()));
+        return intent;
     }
 }

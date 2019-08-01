@@ -1,12 +1,10 @@
 package org.andstatus.todoagenda.task;
 
-import android.content.Intent;
-
-import org.andstatus.todoagenda.DateUtil;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-public abstract class TaskEvent {
+public class TaskEvent {
 
     private long id;
     private String title;
@@ -15,7 +13,7 @@ public abstract class TaskEvent {
     private DateTime dueDate;
     private int color;
 
-    protected TaskEvent(DateTimeZone zone) {
+    public TaskEvent(DateTimeZone zone) {
         this.zone = zone;
     }
 
@@ -50,8 +48,6 @@ public abstract class TaskEvent {
     public void setColor(int color) {
         this.color = color;
     }
-
-    public abstract Intent createOpenCalendarEventIntent();
 
     public void setDates(Long startMillis, Long dueMillis) {
         startDate = toStartDate(startMillis, dueMillis);

@@ -6,7 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
-import org.andstatus.todoagenda.DateUtil;
+import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -101,6 +102,7 @@ public class InstanceSettings {
         }
         synchronized (instances) {
             if (!instancesLoaded) {
+                EventProviderType.initialize(context, false);
                 for (int widgetId : getWidgetIds(context)) {
                     InstanceSettings settings;
                     try {

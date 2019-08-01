@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import org.andstatus.todoagenda.DateUtil;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.R;
-import org.andstatus.todoagenda.RemoteViewsUtil;
+import org.andstatus.todoagenda.util.RemoteViewsUtil;
 
-import static org.andstatus.todoagenda.RemoteViewsUtil.*;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.*;
 
 /**
  * @author yvolk@yurivolkov.com

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.RawRes;
@@ -13,10 +14,10 @@ import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.util.Log;
 
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RawResourceUtils;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -26,8 +27,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage.KEY_SETTINGS;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
@@ -39,12 +40,12 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     private static final int WIDGET_ID_MIN = 434892;
     private static final String[] ZONE_IDS = {"America/Los_Angeles", "Europe/Moscow", "Asia/Kuala_Lumpur", "UTC"};
-    private int queriesCount = 0;
+    private volatile int queriesCount = 0;
     private final List<CalendarQueryResult> results = new ArrayList<>();
     private final JSONArray storedSettings;
     private final DateTimeZone storedZone;
 
-    private int widgetId = WIDGET_ID_MIN;
+    private final static AtomicInteger widgetId = new AtomicInteger(WIDGET_ID_MIN);
 
     public static MockCalendarContentProvider getContentProvider(InstrumentationTestCase testCase) throws JSONException {
         MockContentResolver mockResolver = new MockContentResolver();
@@ -52,14 +53,14 @@ public class MockCalendarContentProvider extends MockContentProvider {
         MockCalendarContentProvider contentProvider = new MockCalendarContentProvider(isolatedContext);
         mockResolver.addProvider("com.android.calendar", contentProvider);
         mockResolver.addProvider("settings", new MockSettingsProvider());
+        contentProvider.setPreferences(isolatedContext);
         return contentProvider;
     }
 
-    public MockCalendarContentProvider(Context context) throws JSONException {
+    private MockCalendarContentProvider(Context context) {
         super(context);
         storedSettings = InstanceSettings.toJson(getBaseContext(context));
         storedZone = DateTimeZone.getDefault();
-        setPreferences(context);
     }
 
     static Context getBaseContext(Context context) {
@@ -68,23 +69,15 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     private void setPreferences(Context context) throws JSONException {
-        while (InstanceSettings.getInstances(context).containsKey(widgetId) ||
-                InstanceSettings.getInstances(context).containsKey(widgetId + 1)) {
-            widgetId++;
-        }
-
         DateTimeZone zone = DateTimeZone.forID(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
         DateTimeZone.setDefault(zone);
         Log.i(getClass().getSimpleName(), "Default Time zone set to " + zone);
 
         if (InstanceSettings.getInstances(context).isEmpty()) {
-            InstanceSettings settings1 = InstanceSettings.fromId(context, widgetId);
-// TODO: fix this:
-//  assertFalse(settings1.isJustCreated());
+            InstanceSettings.save(context, widgetId.incrementAndGet());
         }
-        widgetId++;
-        InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
-        assertTrue(settings.isJustCreated());
+        InstanceSettings settings = InstanceSettings.fromId(context, widgetId.incrementAndGet());
+        assertTrue("widgetId:" + getWidgetId(), settings.isJustCreated());
         JSONObject json = settings.toJson();
         JSONArray jsonArray = new JSONArray();
         jsonArray.put(json);
@@ -92,8 +85,9 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void tearDown() throws JSONException {
-        InstanceSettings.delete(getContext(), widgetId - 1);
-        InstanceSettings.delete(getContext(), widgetId);
+        for(int id = WIDGET_ID_MIN; id <= getWidgetId(); id++) {
+            InstanceSettings.delete(getContext(), id);
+        }
         ApplicationPreferences.setWidgetId(getContext(), 0);
         InstanceSettings.fromJson(getBaseContext(getContext()), storedSettings);
         DateUtil.setNow(null);
@@ -108,6 +102,18 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        if ("content://com.android.calendar/calendars".equals(uri.toString())) {
+            Log.i(MockCalendarContentProvider.class.getSimpleName(), "query: Available Calendar sources");
+            MatrixCursor cursor = new MatrixCursor(projection);
+            cursor.addRow(new Object[]{1L, getClass().getSimpleName(), 0x00FF00, "my.test@example.com"});
+            return cursor;
+        }
+        if ("content://com.android.calendar/TasksAccounts".equals(uri.toString())) {
+            Log.i(MockCalendarContentProvider.class.getSimpleName(), "query: Available Task sources");
+            return null;
+        }
+
+        Log.i(MockCalendarContentProvider.class.getSimpleName(), "query: " + uri);
         queriesCount++;
         if (results.size() < queriesCount) {
             return null;
@@ -156,7 +162,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     @NonNull
     public InstanceSettings getSettings() {
-        return InstanceSettings.fromId(getBaseContext(getContext()), widgetId);
+        return InstanceSettings.fromId(getBaseContext(getContext()), getWidgetId());
     }
 
     public void clear() {
@@ -174,7 +180,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public int getWidgetId() {
-        return widgetId;
+        return widgetId.get();
     }
 
     public void startEditing() {

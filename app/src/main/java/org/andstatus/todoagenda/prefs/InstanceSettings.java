@@ -124,6 +124,9 @@ public class InstanceSettings {
             if (settings == null) {
                 if (widgetId != 0 &&
                         (ApplicationPreferences.getWidgetId(context) == widgetId || instances.isEmpty())) {
+                    if (ApplicationPreferences.getWidgetId(context) != widgetId) {
+                        ApplicationPreferences.setWidgetId(context, widgetId);
+                    }
                     settings = fromApplicationPreferences(context, widgetId);
                 } else {
                     settings = new InstanceSettings(context, widgetId, "");
@@ -140,7 +143,6 @@ public class InstanceSettings {
         }
         synchronized (instances) {
             if (!instancesLoaded) {
-                EventProviderType.initialize(context, false);
                 for (int widgetId : getWidgetIds(context)) {
                     InstanceSettings settings;
                     try {
@@ -152,6 +154,7 @@ public class InstanceSettings {
                     }
                 }
                 instancesLoaded = true;
+                EventProviderType.initialize(context, false);
             }
         }
     }
@@ -169,6 +172,7 @@ public class InstanceSettings {
                 }
             }
             instancesLoaded = true;
+            EventProviderType.initialize(context, true);
         }
     }
 
@@ -181,14 +185,7 @@ public class InstanceSettings {
         settings.justCreated = false;
         if (json.has(PREF_ACTIVE_SOURCES)) {
             JSONArray jsonArray = json.getJSONArray(PREF_ACTIVE_SOURCES);
-            List<EventSource> list = new ArrayList<>();
-            for (int index = 0; index < jsonArray.length(); index++) {
-                String value = jsonArray.optString(index);
-                if (value != null) {
-                    list.add(EventSource.fromStoredString(value));
-                }
-            }
-            settings.activeEventSources = list;
+            settings.activeEventSources = EventSource.fromJsonArray(jsonArray);
         }
         if (json.has(PREF_EVENT_RANGE)) {
             settings.eventRange = json.getInt(PREF_EVENT_RANGE);
@@ -272,7 +269,7 @@ public class InstanceSettings {
         }
         InstanceSettings settings = fromApplicationPreferences(context, widgetId);
         InstanceSettings settingStored = fromId(context, widgetId);
-        if (!settings.equals(settingStored)) {
+        if (settings.widgetId == widgetId && !settings.equals(settingStored)) {
             settings.save();
             instances.put(widgetId, settings);
         }
@@ -379,7 +376,7 @@ public class InstanceSettings {
         try {
             json.put(PREF_WIDGET_ID, widgetId);
             json.put(PREF_WIDGET_INSTANCE_NAME, widgetInstanceName);
-            json.put(PREF_ACTIVE_SOURCES, new JSONArray(activeEventSources));
+            json.put(PREF_ACTIVE_SOURCES, EventSource.toJsonArray(activeEventSources));
             json.put(PREF_EVENT_RANGE, eventRange);
             json.put(PREF_EVENTS_ENDED, eventsEnded.save());
             json.put(PREF_FILL_ALL_DAY, fillAllDayEvents);

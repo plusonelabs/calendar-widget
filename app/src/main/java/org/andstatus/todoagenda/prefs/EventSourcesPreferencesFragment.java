@@ -83,7 +83,6 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     public void onPause() {
         if (!getSelectedSources().equals(savedActiveSources)) {
             saveSelectedSources();
-            EventAppWidgetProvider.updateEventList(getActivity());
         }
         super.onPause();
     }

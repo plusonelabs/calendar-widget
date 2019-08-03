@@ -3,6 +3,7 @@ package org.andstatus.todoagenda.prefs;
 import android.support.annotation.NonNull;
 
 import org.andstatus.todoagenda.provider.EventProviderType;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,6 +65,30 @@ public class EventSource {
             stringSet.add(source.toStoredString());
         }
         return stringSet;
+    }
+
+    @NonNull
+    public static List<EventSource> fromJsonArray(JSONArray jsonArray) {
+        List<EventSource> list = new ArrayList<>();
+        for (int index = 0; index < jsonArray.length(); index++) {
+            String value = jsonArray.optString(index);
+            if (value != null) {
+                EventSource source = fromStoredString(value);
+                if (source != EMPTY) {
+                    list.add(source);
+                }
+            }
+        }
+        return list;
+    }
+
+    @NonNull
+    public static JSONArray toJsonArray(List<EventSource> eventSources) {
+        List<String> strings = new ArrayList<>();
+        for(EventSource source: eventSources) {
+            strings.add(source.toStoredString());
+        }
+        return new JSONArray(strings);
     }
 
     @NonNull

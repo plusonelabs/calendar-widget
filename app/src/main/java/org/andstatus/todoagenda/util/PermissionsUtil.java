@@ -46,17 +46,20 @@ public class PermissionsUtil {
                 ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED;
     }
 
+    private static volatile Boolean isTestMode = null;
     /**
      * Based on
      * http://stackoverflow.com/questions/21367646/how-to-determine-if-android-application-is-started-with-junit-testing-instrument
      */
-    private static boolean isTestMode() {
-        try {
-            Class.forName("org.andstatus.todoagenda.calendar.MockCalendarContentProvider");
-            return true;
-        } catch (ClassNotFoundException e) {
-            // Ignore
+    public static boolean isTestMode() {
+        if (isTestMode == null) {
+            try {
+                Class.forName("org.andstatus.todoagenda.calendar.MockCalendarContentProvider");
+                isTestMode = true;
+            } catch (ClassNotFoundException e) {
+                isTestMode = false;
+            }
         }
-        return false;
+        return isTestMode;
     }
 }

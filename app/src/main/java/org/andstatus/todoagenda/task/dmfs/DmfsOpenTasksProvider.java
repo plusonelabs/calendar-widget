@@ -18,6 +18,7 @@ import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -101,7 +102,10 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
                 .append(CLOSING_BRACKET);
         // @formatter:on
 
-        Set<String> taskLists = getSettings().getActiveTaskLists();
+        Set<String> taskLists = new HashSet<>();
+        for (EventSource source: getSettings().getActiveEventSources(type)) {
+            taskLists.add(Integer.toString(source.getId()));
+        }
         if (!taskLists.isEmpty()) {
             whereBuilder.append(AND);
             whereBuilder.append(DmfsOpenTasksContract.Tasks.COLUMN_LIST_ID);

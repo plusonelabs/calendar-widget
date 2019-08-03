@@ -11,13 +11,15 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import static android.graphics.Color.argb;
 import static android.graphics.Color.blue;
 import static android.graphics.Color.green;
 import static android.graphics.Color.red;
 
-public abstract class EventProvider {
+/** Implementation of Empty event provider */
+public class EventProvider {
 
     protected static final String AND_BRACKET = " AND (";
     protected static final String OPEN_BRACKET = "( ";
@@ -68,5 +70,7 @@ public abstract class EventProvider {
         return argb(255, red(color), green(color), blue(color));
     }
 
-    public abstract Collection<EventSource> fetchAvailableSources();
+    public Collection<EventSource> fetchAvailableSources() {
+        return Collections.emptyList();
+    }
 }

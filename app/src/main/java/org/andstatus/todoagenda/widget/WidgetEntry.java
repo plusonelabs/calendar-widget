@@ -4,7 +4,7 @@ import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparable<WidgetEntry> {
+public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparable<WidgetEntry<T>> {
 
     private DateTime startDate;
 

@@ -8,10 +8,10 @@ import android.text.TextUtils;
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.Theme;
+import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class ApplicationPreferences {
 
@@ -21,7 +21,7 @@ public class ApplicationPreferences {
     static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
     static final String PREF_MULTILINE_TITLE = "multiline_title";
     static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
-    static final String PREF_ACTIVE_CALENDARS = "activeCalendars";
+    static final String PREF_ACTIVE_SOURCES = "activeSources";
     static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
     static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
     static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
@@ -58,9 +58,6 @@ public class ApplicationPreferences {
     static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
-    static final String PREF_TASK_SOURCE = "taskSource";
-    static final String PREF_TASK_SOURCE_DEFAULT = "NONE"; // TODO: remove
-    static final String PREF_ACTIVE_TASK_LISTS = "activeTaskLists";
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
 
     private static volatile String lockedTimeZoneId = null;
@@ -73,7 +70,7 @@ public class ApplicationPreferences {
         InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
         setWidgetId(context, settings.getWidgetId());
         setString(context, PREF_WIDGET_INSTANCE_NAME, settings.getWidgetInstanceName());
-        setActiveCalendars(context, settings.getActiveCalendars());
+        setActiveEventSources(context, settings.getActiveEventSources());
         setEventRange(context, settings.getEventRange());
         setEventsEnded(context, settings.getEventsEnded());
         setFillAllDayEvents(context, settings.getFillAllDayEvents());
@@ -99,8 +96,6 @@ public class ApplicationPreferences {
         setInt(context, PREF_BACKGROUND_COLOR, settings.getBackgroundColor());
         setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale());
         setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());
-        setString(context, PREF_TASK_SOURCE, settings.getTaskSource());
-        setActiveTaskLists(context, settings.getActiveTaskLists());
     }
 
     public static void save(Context context, int wigdetId) {
@@ -121,19 +116,16 @@ public class ApplicationPreferences {
         setInt(context, PREF_WIDGET_ID, value);
     }
 
-    public static Set<String> getActiveCalendars(Context context) {
-        Set<String> activeCalendars = PreferenceManager.getDefaultSharedPreferences(context)
-                .getStringSet(PREF_ACTIVE_CALENDARS, null);
-        if (activeCalendars == null) {
-            activeCalendars = Collections.emptySet();
-        }
-        return activeCalendars;
+    public static List<EventSource> getActiveEventSources(Context context) {
+        List<EventSource> storedSources = EventSource.fromStringSet(PreferenceManager.getDefaultSharedPreferences(context)
+                .getStringSet(PREF_ACTIVE_SOURCES, null));
+        return storedSources.isEmpty() ? EventProviderType.getAvailableSources() : storedSources;
     }
 
-    public static void setActiveCalendars(Context context, Set<String> calendars) {
+    public static void setActiveEventSources(Context context, List<EventSource> sources) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putStringSet(PREF_ACTIVE_CALENDARS, calendars);
+        editor.putStringSet(PREF_ACTIVE_SOURCES, EventSource.toStringSet(sources));
         editor.apply();
     }
 
@@ -263,26 +255,6 @@ public class ApplicationPreferences {
 
     public static void setShowOnlyClosestInstanceOfRecurringEvent(Context context, boolean value) {
         setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, value);
-    }
-
-    public static String getTaskSource(Context context) {
-        return getString(context, PREF_TASK_SOURCE, PREF_DATE_FORMAT_DEFAULT);
-    }
-
-    public static Set<String> getActiveTaskLists(Context context) {
-        Set<String> activeTaskLists = PreferenceManager.getDefaultSharedPreferences(context)
-                .getStringSet(PREF_ACTIVE_TASK_LISTS, null);
-        if (activeTaskLists == null) {
-            activeTaskLists = Collections.emptySet();
-        }
-        return activeTaskLists;
-    }
-
-    public static void setActiveTaskLists(Context context, Set<String> taskLists) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putStringSet(PREF_ACTIVE_TASK_LISTS, taskLists);
-        editor.apply();
     }
 
     private static void setString(Context context, String key, String value) {

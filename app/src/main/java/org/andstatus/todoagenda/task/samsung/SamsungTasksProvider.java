@@ -20,6 +20,7 @@ import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -94,7 +95,10 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
                 .append(SamsungTasksContract.Tasks.COLUMN_DUE_DATE).append(IS_NULL)
                 .append(CLOSING_BRACKET);
 
-        Set<String> taskLists = getSettings().getActiveTaskLists();
+        Set<String> taskLists = new HashSet<>();
+        for (EventSource source: getSettings().getActiveEventSources(type)) {
+            taskLists.add(Integer.toString(source.getId()));
+        }
         if (!taskLists.isEmpty()) {
             whereBuilder.append(AND);
             whereBuilder.append(SamsungTasksContract.Tasks.COLUMN_LIST_ID);

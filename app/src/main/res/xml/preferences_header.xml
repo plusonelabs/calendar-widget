@@ -13,11 +13,11 @@
         android:summary="@string/event_filters_prefs_desc"
         android:title="@string/event_filters_prefs" />
     <header
-        android:fragment="org.andstatus.todoagenda.prefs.CalendarPreferencesFragment"
+        android:fragment="org.andstatus.todoagenda.prefs.EventSourcesPreferencesFragment$Calendars"
         android:summary="@string/calendars_prefs_desc"
         android:title="@string/calendars_prefs" />
     <header
-        android:fragment="org.andstatus.todoagenda.prefs.TaskPreferencesFragment"
+        android:fragment="org.andstatus.todoagenda.prefs.EventSourcesPreferencesFragment$TaskLists"
         android:summary="@string/task_prefs_desc"
         android:title="@string/task_prefs" />
     <header

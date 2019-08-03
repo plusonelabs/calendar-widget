@@ -139,14 +139,9 @@
 
     <!-- Preference header: Tasks -->
     <string name="task_prefs">Tasks</string>
-    <string name="task_prefs_desc">Configure display of tasks/TODOs</string>
-    <string name="task_source_pref_title">Task events source</string>
-    <string name="task_source_pref_desc">Select the source from which to get task events</string>
-    <string name="task_source_none">Don\'t display tasks</string>
+    <string name="task_prefs_desc">Configure tasks/TODOs lists to display</string>
     <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
     <string name="task_source_samsung">Samsung Calendar</string>
-    <string name="task_lists_pref_title">Task lists</string>
-    <string name="task_lists_pref_summary">Select the task lists to display</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>

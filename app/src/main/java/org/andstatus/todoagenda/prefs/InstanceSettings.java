@@ -6,10 +6,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
-import org.andstatus.todoagenda.provider.EventProviderType;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -17,17 +17,57 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.andstatus.todoagenda.EventAppWidgetProvider.getWidgetIds;
 import static org.andstatus.todoagenda.Theme.themeNameToResId;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.*;
-import static org.andstatus.todoagenda.prefs.SettingsStorage.*;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ACTIVE_SOURCES;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DATE_FORMAT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DATE_FORMAT_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENTS_ENDED;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_RANGE;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_RANGE_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_HEADER_THEME;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_HEADER_THEME_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_HIDE_BASED_ON_KEYWORDS;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_INDICATE_ALERTS;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_INDICATE_RECURRING;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_LOCKED_TIME_ZONE_ID;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DAY_HEADERS;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_END_TIME;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_END_TIME_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_LOCATION;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_LOCATION_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME;
+import static org.andstatus.todoagenda.prefs.SettingsStorage.loadJson;
+import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -44,7 +84,7 @@ public class InstanceSettings {
     private final int widgetId;
     private final String widgetInstanceName;
     private boolean justCreated = true;
-    private Set<String> activeCalendars = Collections.emptySet();
+    private List<EventSource> activeEventSources = Collections.emptyList();
     private int eventRange = Integer.valueOf(PREF_EVENT_RANGE_DEFAULT);
     private EndedSomeTimeAgo eventsEnded = EndedSomeTimeAgo.NONE;
     private boolean fillAllDayEvents = PREF_FILL_ALL_DAY_DEFAULT;
@@ -69,8 +109,6 @@ public class InstanceSettings {
     private int backgroundColor = PREF_BACKGROUND_COLOR_DEFAULT;
     private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
     private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
-    private String taskSource = PREF_TASK_SOURCE_DEFAULT;
-    private Set<String> activeTaskLists = Collections.emptySet();
 
     @NonNull
     public static InstanceSettings fromId(Context context, Integer widgetId) {
@@ -141,8 +179,16 @@ public class InstanceSettings {
             return settings;
         }
         settings.justCreated = false;
-        if (json.has(PREF_ACTIVE_CALENDARS)) {
-            settings.activeCalendars = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_CALENDARS));
+        if (json.has(PREF_ACTIVE_SOURCES)) {
+            JSONArray jsonArray = json.getJSONArray(PREF_ACTIVE_SOURCES);
+            List<EventSource> list = new ArrayList<>();
+            for (int index = 0; index < jsonArray.length(); index++) {
+                String value = jsonArray.optString(index);
+                if (value != null) {
+                    list.add(EventSource.fromStoredString(value));
+                }
+            }
+            settings.activeEventSources = list;
         }
         if (json.has(PREF_EVENT_RANGE)) {
             settings.eventRange = json.getInt(PREF_EVENT_RANGE);
@@ -217,24 +263,7 @@ public class InstanceSettings {
         if (json.has(PREF_DAY_HEADER_ALIGNMENT)) {
             settings.dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
         }
-        if (json.has(PREF_TASK_SOURCE)) {
-            settings.taskSource = json.getString(PREF_TASK_SOURCE);
-        }
-        if (json.has(PREF_ACTIVE_TASK_LISTS)) {
-            settings.activeTaskLists = jsonArray2StringSet(json.getJSONArray(PREF_ACTIVE_TASK_LISTS));
-        }
         return settings;
-    }
-
-    private static Set<String> jsonArray2StringSet(JSONArray jsonArray) {
-        Set<String> set = new HashSet<>();
-        for (int index = 0; index < jsonArray.length(); index++) {
-            String value = jsonArray.optString(index);
-            if (value != null) {
-                set.add(value);
-            }
-        }
-        return set;
     }
 
     public static void save(Context context, Integer widgetId) {
@@ -254,7 +283,7 @@ public class InstanceSettings {
                 ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
                         ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, "")));
         settings.justCreated = false;
-        settings.activeCalendars = ApplicationPreferences.getActiveCalendars(context);
+        settings.activeEventSources = ApplicationPreferences.getActiveEventSources(context);
         settings.eventRange = ApplicationPreferences.getEventRange(context);
         settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);
         settings.fillAllDayEvents = ApplicationPreferences.getFillAllDayEvents(context);
@@ -283,8 +312,6 @@ public class InstanceSettings {
                 PREF_TEXT_SIZE_SCALE_DEFAULT);
         settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
                 PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
-        settings.taskSource = ApplicationPreferences.getTaskSource(context);
-        settings.activeTaskLists = ApplicationPreferences.getActiveTaskLists(context);
         return settings;
     }
 
@@ -352,7 +379,7 @@ public class InstanceSettings {
         try {
             json.put(PREF_WIDGET_ID, widgetId);
             json.put(PREF_WIDGET_INSTANCE_NAME, widgetInstanceName);
-            json.put(PREF_ACTIVE_CALENDARS, new JSONArray(activeCalendars));
+            json.put(PREF_ACTIVE_SOURCES, new JSONArray(activeEventSources));
             json.put(PREF_EVENT_RANGE, eventRange);
             json.put(PREF_EVENTS_ENDED, eventsEnded.save());
             json.put(PREF_FILL_ALL_DAY, fillAllDayEvents);
@@ -377,8 +404,6 @@ public class InstanceSettings {
             json.put(PREF_BACKGROUND_COLOR, backgroundColor);
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
-            json.put(PREF_TASK_SOURCE, taskSource);
-            json.put(PREF_ACTIVE_TASK_LISTS, new JSONArray(activeTaskLists));
         } catch (JSONException e) {
             throw new RuntimeException("Saving settings to JSON", e);
         }
@@ -401,8 +426,16 @@ public class InstanceSettings {
         return justCreated;
     }
 
-    public Set<String> getActiveCalendars() {
-        return activeCalendars;
+    public List<EventSource> getActiveEventSources(EventProviderType type) {
+        List<EventSource> sources = new ArrayList<>();
+        for(EventSource source: activeEventSources) {
+            if (source.providerType == type) sources.add(source);
+        }
+        return sources;
+    }
+
+    public List<EventSource> getActiveEventSources() {
+        return activeEventSources;
     }
 
     public int getEventRange() {
@@ -540,14 +573,6 @@ public class InstanceSettings {
 
     public String getDayHeaderAlignment() {
         return dayHeaderAlignment;
-    }
-
-    public String getTaskSource() {
-        return taskSource;
-    }
-
-    public Set<String> getActiveTaskLists() {
-        return activeTaskLists;
     }
 
     public static Map<Integer, InstanceSettings> getInstances(Context context) {

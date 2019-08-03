@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class CalendarEventProvider extends EventProvider {
     private static final String[] EVENT_SOURCES_PROJECTION = new String[]{CalendarContract.Calendars._ID,
@@ -112,16 +111,16 @@ public class CalendarEventProvider extends EventProvider {
     }
 
     private String getCalendarSelection() {
-        Set<String> activeCalendars = getSettings().getActiveCalendars();
+        List<EventSource> activeSources = getSettings().getActiveEventSources(type);
         StringBuilder stringBuilder = new StringBuilder(EVENT_SELECTION);
-        if (!activeCalendars.isEmpty()) {
+        if (!activeSources.isEmpty()) {
             stringBuilder.append(AND_BRACKET);
-            Iterator<String> iterator = activeCalendars.iterator();
+            Iterator<EventSource> iterator = activeSources.iterator();
             while (iterator.hasNext()) {
-                String calendarId = iterator.next();
+                EventSource source = iterator.next();
                 stringBuilder.append(Instances.CALENDAR_ID);
                 stringBuilder.append(EQUALS);
-                stringBuilder.append(calendarId);
+                stringBuilder.append(source.getId());
                 if (iterator.hasNext()) {
                     stringBuilder.append(OR);
                 }

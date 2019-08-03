@@ -40,9 +40,11 @@
     <string name="app_description_4000_chars_max_part13">Turn off Day headers and see dates in the \"Days from today\" column.</string>
     <string name="app_description_4000_chars_max_part14">Android 4 to 7 supported. Supports Android tablets.</string>
 
-    <!-- Preference header: Calendars -->
-    <string name="calendars_prefs">Calendars</string>
-    <string name="calendars_prefs_desc">Select the calendars to display</string>
+    <!-- Preference header: Calendars and Task Lists -->
+    <string name="calendars_prefs">Calendars and Task Lists</string>
+    <string name="calendars_prefs_desc">Select the calendars and task lists to display</string>
+    <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
+    <string name="task_source_samsung">Samsung Calendar</string>
 
     <!-- Preference header: Appearance -->
     <string name="appearance_prefs">Appearance</string>
@@ -136,12 +138,6 @@
     <string name="ended_yesterday">Ended yesterday</string>
     <string name="pref_hide_based_on_keywords_title">Hide based on keywords in a title</string>
     <string name="show_only_closest_instance_of_recurring_event">Show only the closest instance of a recurring event</string>
-
-    <!-- Preference header: Tasks -->
-    <string name="task_prefs">Tasks</string>
-    <string name="task_prefs_desc">Configure tasks/TODOs lists to display</string>
-    <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
-    <string name="task_source_samsung">Samsung Calendar</string>
 
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Feedback</string>

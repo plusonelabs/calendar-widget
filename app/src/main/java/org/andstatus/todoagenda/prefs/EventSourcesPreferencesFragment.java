@@ -20,27 +20,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class EventSourcesPreferencesFragment extends PreferenceFragment {
-    public static class Calendars extends EventSourcesPreferencesFragment {
-        public Calendars() {
-            super(true);
-        }
-    }
-
-    public static class TaskLists extends EventSourcesPreferencesFragment {
-        public TaskLists() {
-            super(false);
-        }
-    }
-
+public class EventSourcesPreferencesFragment extends PreferenceFragment {
     private static final String SOURCE_ID = "sourceId";
 
-    private final boolean isCalendar;
     List<EventSource> savedActiveSources = Collections.emptyList();
-
-    private EventSourcesPreferencesFragment(boolean isCalendar) {
-        this.isCalendar = isCalendar;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,14 +36,12 @@ public abstract class EventSourcesPreferencesFragment extends PreferenceFragment
     private void populateAvailableSources() {
         Collection<EventSource> availableSources = EventProviderType.getAvailableSources();
         for (EventSource source : availableSources) {
-            if (source.providerType.isCalendar == isCalendar) {
-                CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
-                checkboxPref.setTitle(source.getTitle());
-                checkboxPref.setSummary(source.getSummary());
-                checkboxPref.setIcon(createDrawable(source.providerType.isCalendar, source.getColor()));
-                checkboxPref.getExtras().putString(SOURCE_ID, source.toStoredString());
-                getPreferenceScreen().addPreference(checkboxPref);
-            }
+            CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
+            checkboxPref.setTitle(source.getTitle());
+            checkboxPref.setSummary(source.getSummary());
+            checkboxPref.setIcon(createDrawable(source.providerType.isCalendar, source.getColor()));
+            checkboxPref.getExtras().putString(SOURCE_ID, source.toStoredString());
+            getPreferenceScreen().addPreference(checkboxPref);
         }
     }
 
@@ -132,11 +113,6 @@ public abstract class EventSourcesPreferencesFragment extends PreferenceFragment
                         selectedSources.add(eventSource);
                     }
                 }
-            }
-        }
-        for (EventSource source : savedActiveSources) {
-            if (source.providerType.isCalendar != isCalendar) {
-                selectedSources.add(source);
             }
         }
         return selectedSources;

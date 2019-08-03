@@ -147,7 +147,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
             return eventSources;
         }
 
-        String taskListName = context.getResources().getString(R.string.task_prefs);
+        String taskListName = context.getResources().getString(R.string.task_source_samsung);
         int idIdx = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_ID);
         int nameIdx = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_NAME);
         int colorIdx = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_COLOR);

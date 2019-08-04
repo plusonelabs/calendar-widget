@@ -8,7 +8,6 @@ import android.preference.PreferenceFragment;
 
 import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.R;
-import org.andstatus.todoagenda.calendar.KeywordsFilter;
 
 public class EventFiltersPreferencesFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 

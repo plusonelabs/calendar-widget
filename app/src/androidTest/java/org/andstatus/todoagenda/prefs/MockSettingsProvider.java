@@ -1,4 +1,4 @@
-package org.andstatus.todoagenda.calendar;
+package org.andstatus.todoagenda.prefs;
 
 import android.os.Bundle;
 import android.test.mock.MockContentProvider;

@@ -2,8 +2,8 @@ package org.andstatus.todoagenda;
 
 import android.test.InstrumentationTestCase;
 
-import org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage;
-import org.andstatus.todoagenda.calendar.MockCalendarContentProvider;
+import org.andstatus.todoagenda.provider.QueryResultsStorage;
+import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
@@ -37,7 +37,7 @@ public class BirthdayTest extends InstrumentationTestCase {
     }
 
     public void testBirthdayOneDayOnly() throws IOException, JSONException {
-        CalendarQueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.birthday);
 
         provider.startEditing();
@@ -103,7 +103,7 @@ public class BirthdayTest extends InstrumentationTestCase {
                 provider.getSettings().getTimeZone());
     }
 
-    private void playAtOneTime(CalendarQueryResultsStorage inputs, DateTime now, int numberOfEntriesExpected) {
+    private void playAtOneTime(QueryResultsStorage inputs, DateTime now, int numberOfEntriesExpected) {
         provider.addResults(inputs.getResults());
         DateUtil.setNow(now);
         factory.onDataSetChanged();

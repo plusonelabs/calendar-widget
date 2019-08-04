@@ -1,6 +1,7 @@
 {
   "results": [
     {
+      "providerType": 1,
       "executedAt": 1440948396325,
       "timeZoneId": "Europe/Moscow",
       "selectionArgs": [],
@@ -71,7 +72,7 @@
     "fillAllDay": true,
     "eventsEnded": "NONE"
   },
-  "resultsVersion": 2,
+  "resultsVersion": 3,
   "deviceInfo": {
     "buildManufacturer": "samsung",
     "versionCode": 19,

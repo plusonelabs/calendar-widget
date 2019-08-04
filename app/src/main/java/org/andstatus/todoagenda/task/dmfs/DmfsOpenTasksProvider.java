@@ -7,10 +7,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import org.andstatus.todoagenda.calendar.CalendarQueryResult;
-import org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage;
 import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.provider.QueryResult;
+import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.task.AbstractTaskProvider;
 import org.andstatus.todoagenda.task.TaskEvent;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
@@ -49,7 +49,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         };
         String where = getWhereClause();
 
-        CalendarQueryResult result = new CalendarQueryResult(getSettings(), uri, projection, where, null, null);
+        QueryResult result = new QueryResult(type, getSettings(), uri, projection, where, null, null);
 
         Cursor cursor;
         try {
@@ -64,7 +64,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         List<TaskEvent> tasks = new ArrayList<>();
         try {
             while (cursor.moveToNext()) {
-                if (CalendarQueryResultsStorage.getNeedToStoreResults()) {
+                if (QueryResultsStorage.getNeedToStoreResults()) {
                     result.addRow(cursor);
                 }
 
@@ -77,7 +77,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
             cursor.close();
         }
 
-        CalendarQueryResultsStorage.store(result);
+        QueryResultsStorage.store(result);
 
         return tasks;
     }

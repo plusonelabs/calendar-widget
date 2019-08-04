@@ -3,9 +3,9 @@ package org.andstatus.todoagenda.provider;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import org.andstatus.todoagenda.calendar.KeywordsFilter;
 import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.prefs.KeywordsFilter;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

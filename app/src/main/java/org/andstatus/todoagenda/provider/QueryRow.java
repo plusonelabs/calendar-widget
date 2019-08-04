@@ -1,4 +1,4 @@
-package org.andstatus.todoagenda.calendar;
+package org.andstatus.todoagenda.provider;
 
 import android.annotation.TargetApi;
 import android.database.Cursor;
@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author yvolk@yurivolkov.com
  */
-public class CalendarQueryRow {
+public class QueryRow {
 
     private static class TypedValue {
 
@@ -131,7 +131,7 @@ public class CalendarQueryRow {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CalendarQueryRow that = (CalendarQueryRow) o;
+        QueryRow that = (QueryRow) o;
         if (mRow.size() != that.mRow.size()) {
             return false;
         }
@@ -158,40 +158,40 @@ public class CalendarQueryRow {
 
     private final Map<String, TypedValue> mRow = new HashMap<>();
 
-    private CalendarQueryRow setColumn(String columnName, Object columnValue) {
+    private QueryRow setColumn(String columnName, Object columnValue) {
         mRow.put(columnName, new TypedValue(columnValue));
         return this;
     }
 
-    public CalendarQueryRow setEventId(Object obj) {
+    public QueryRow setEventId(Object obj) {
         return setColumn(CalendarContract.Instances.EVENT_ID, obj);
     }
 
-    public CalendarQueryRow setTitle(Object obj) {
+    public QueryRow setTitle(Object obj) {
         return setColumn(CalendarContract.Instances.TITLE, obj);
     }
 
-    public CalendarQueryRow setBegin(Object obj) {
+    public QueryRow setBegin(Object obj) {
         return setColumn(CalendarContract.Instances.BEGIN, obj);
     }
 
-    public CalendarQueryRow setEnd(Object obj) {
+    public QueryRow setEnd(Object obj) {
         return setColumn(CalendarContract.Instances.END, obj);
     }
 
-    public CalendarQueryRow setAllDay(Object obj) {
+    public QueryRow setAllDay(Object obj) {
         return setColumn(CalendarContract.Instances.ALL_DAY, obj);
     }
 
-    public CalendarQueryRow setEventLocation(Object obj) {
+    public QueryRow setEventLocation(Object obj) {
         return setColumn(CalendarContract.Instances.EVENT_LOCATION, obj);
     }
 
-    public CalendarQueryRow setHasAlarm(Object obj) {
+    public QueryRow setHasAlarm(Object obj) {
         return setColumn(CalendarContract.Instances.HAS_ALARM, obj);
     }
 
-    public CalendarQueryRow setRRule(Object obj) {
+    public QueryRow setRRule(Object obj) {
         return setColumn(CalendarContract.Instances.RRULE, obj);
     }
 
@@ -206,7 +206,7 @@ public class CalendarQueryRow {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public CalendarQueryRow setDisplayColor(Object obj) {
+    public QueryRow setDisplayColor(Object obj) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             return setColumn(CalendarContract.Instances.DISPLAY_COLOR, obj);
         } else {
@@ -229,8 +229,8 @@ public class CalendarQueryRow {
         return null;
     }
 
-    public static CalendarQueryRow fromCursor(Cursor cursor) {
-        CalendarQueryRow row = new CalendarQueryRow();
+    public static QueryRow fromCursor(Cursor cursor) {
+        QueryRow row = new QueryRow();
         if (cursor != null && !cursor.isClosed()) {
             for (int ind = 0; ind < cursor.getColumnCount(); ind++) {
                 row.mRow.put(cursor.getColumnName(ind), new TypedValue(cursor, ind));
@@ -239,8 +239,8 @@ public class CalendarQueryRow {
         return row;
     }
 
-    public static CalendarQueryRow fromJson(JSONObject json) throws JSONException {
-        CalendarQueryRow row = new CalendarQueryRow();
+    public static QueryRow fromJson(JSONObject json) throws JSONException {
+        QueryRow row = new QueryRow();
         if (json != null) {
             Iterator<String> it = json.keys();
             while (it.hasNext()) {

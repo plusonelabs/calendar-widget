@@ -16,6 +16,8 @@ import android.util.SparseArray;
 import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.provider.QueryResult;
+import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
@@ -132,7 +134,7 @@ public class CalendarEventProvider extends EventProvider {
 
     private List<CalendarEvent> queryList(Uri uri, String selection) {
         List<CalendarEvent> eventList = new ArrayList<>();
-        CalendarQueryResult result = new CalendarQueryResult(getSettings(), uri, getProjection(),
+        QueryResult result = new QueryResult(type, getSettings(), uri, getProjection(),
                 selection, null, EVENT_SORT_ORDER);
         Cursor cursor = null;
         try {
@@ -141,7 +143,7 @@ public class CalendarEventProvider extends EventProvider {
             if (cursor != null) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
-                    if (CalendarQueryResultsStorage.getNeedToStoreResults()) {
+                    if (QueryResultsStorage.getNeedToStoreResults()) {
                         result.addRow(cursor);
                     }
                     CalendarEvent event = createCalendarEvent(cursor);
@@ -155,7 +157,7 @@ public class CalendarEventProvider extends EventProvider {
                 cursor.close();
             }
         }
-        CalendarQueryResultsStorage.store(result);
+        QueryResultsStorage.store(result);
         return eventList;
     }
 

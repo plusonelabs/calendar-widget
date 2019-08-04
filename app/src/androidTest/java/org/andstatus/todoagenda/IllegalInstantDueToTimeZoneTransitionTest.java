@@ -3,8 +3,8 @@ package org.andstatus.todoagenda;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import org.andstatus.todoagenda.calendar.CalendarQueryRow;
-import org.andstatus.todoagenda.calendar.MockCalendarContentProvider;
+import org.andstatus.todoagenda.provider.QueryRow;
+import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -65,7 +65,7 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTe
         long millis = toMillis(iso8601time);
         String title = "DST";
         for (int ind = -25; ind < 26; ind++) {
-            provider.addRow(new CalendarQueryRow().setEventId(++eventId).setTitle(title + " " + ind)
+            provider.addRow(new QueryRow().setEventId(++eventId).setTitle(title + " " + ind)
                     .setBegin(millis + TimeUnit.HOURS.toMillis(ind)).setAllDay(1));
         }
     }

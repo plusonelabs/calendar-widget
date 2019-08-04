@@ -3,8 +3,8 @@ package org.andstatus.todoagenda;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import org.andstatus.todoagenda.calendar.CalendarQueryResultsStorage;
-import org.andstatus.todoagenda.calendar.MockCalendarContentProvider;
+import org.andstatus.todoagenda.provider.QueryResultsStorage;
+import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
@@ -40,7 +40,7 @@ public class MultidayAllDayEventTest extends InstrumentationTestCase {
 
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";
-        CalendarQueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.multi_day);
         provider.addResults(inputs.getResults());
 

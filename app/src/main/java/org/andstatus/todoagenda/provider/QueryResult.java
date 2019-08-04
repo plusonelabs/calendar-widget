@@ -1,13 +1,12 @@
-package org.andstatus.todoagenda.calendar;
+package org.andstatus.todoagenda.provider;
 
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-
+import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -23,10 +22,11 @@ import java.util.List;
  *
  * @author yvolk@yurivolkov.com
  */
-public class CalendarQueryResult {
+public class QueryResult {
 
-    private static final String TAG = CalendarQueryResult.class.getSimpleName();
+    private static final String TAG = QueryResult.class.getSimpleName();
     private static final String KEY_ROWS = "rows";
+    private static final String KEY_PROVIDER_TYPE = "providerType";
     private static final String KEY_EXECUTED_AT = "executedAt";
     private static final String KEY_TIME_ZONE_ID = "timeZoneId";
     private static final String KEY_MILLIS_OFFSET_FROM_UTC_TO_LOCAL = "millisOffsetUtcToLocal";
@@ -37,18 +37,19 @@ public class CalendarQueryResult {
     private static final String KEY_SELECTION_ARGS = "selectionArgs";
     private static final String KEY_SORT_ORDER = "sortOrder";
 
-    private final DateTime executedAt;
+    private final EventProviderType providerType;
     private final int widgetId;
+    private final DateTime executedAt;
     private Uri uri = Uri.EMPTY;
     private String[] projection = {};
     private String selection = "";
     private String[] selectionArgs = {};
     private String sortOrder = "";
-    private final List<CalendarQueryRow> rows = new ArrayList<>();
+    private final List<QueryRow> rows = new ArrayList<>();
 
-    public CalendarQueryResult(InstanceSettings settings, Uri uri, String[] projection, String selection,
-                               String[] selectionArgs, String sortOrder) {
-        this(settings.getWidgetId(), DateUtil.now(settings.getTimeZone()));
+    public QueryResult(EventProviderType providerType, InstanceSettings settings, Uri uri, String[] projection,
+                       String selection, String[] selectionArgs, String sortOrder) {
+        this(providerType, settings.getWidgetId(), DateUtil.now(settings.getTimeZone()));
         this.uri = uri;
         this.projection = projection;
         this.selection = selection;
@@ -56,14 +57,18 @@ public class CalendarQueryResult {
         this.sortOrder = sortOrder;
     }
 
-    CalendarQueryResult(int widgetId, DateTime executedAt) {
+    QueryResult(EventProviderType providerType, int widgetId, DateTime executedAt) {
+        this.providerType = providerType;
         this.widgetId = widgetId;
         this.executedAt = executedAt;
     }
 
-    public static CalendarQueryResult fromJson(JSONObject json, int widgetId) throws JSONException {
-        CalendarQueryResult result = new CalendarQueryResult(widgetId,
-                new DateTime(json.getLong(KEY_EXECUTED_AT), dateTimeZoneFromJson(json)));
+    static QueryResult fromJson(JSONObject json, int widgetId) throws JSONException {
+        QueryResult result = new QueryResult(
+                EventProviderType.fromId(json.getInt(KEY_PROVIDER_TYPE)),
+                widgetId,
+                new DateTime(json.getLong(KEY_EXECUTED_AT), dateTimeZoneFromJson(json))
+        );
         result.uri = Uri.parse(json.getString(KEY_URI));
         result.projection = jsonToArrayOfStings(json.getJSONArray(KEY_PROJECTION));
         result.selection = json.getString(KEY_SELECTION);
@@ -73,13 +78,13 @@ public class CalendarQueryResult {
         JSONArray jsonArray = json.getJSONArray(KEY_ROWS);
         if (jsonArray != null) {
             for (int ind = 0; ind < jsonArray.length(); ind++) {
-                result.addRow(CalendarQueryRow.fromJson(jsonArray.getJSONObject(ind)));
+                result.addRow(QueryRow.fromJson(jsonArray.getJSONObject(ind)));
             }
         }
         return result;
     }
 
-    static DateTimeZone dateTimeZoneFromJson(JSONObject json) {
+    private static DateTimeZone dateTimeZoneFromJson(JSONObject json) {
         String zoneId = DateUtil.validatedTimeZoneId(json.optString(KEY_TIME_ZONE_ID));
         return DateTimeZone.forID(TextUtils.isEmpty(zoneId) ? "UTC" : zoneId);
     }
@@ -102,19 +107,19 @@ public class CalendarQueryResult {
         return executedAt;
     }
 
-    public Cursor query(String[] projection) {
+    Cursor query(String[] projection) {
         MatrixCursor cursor = new MatrixCursor(projection);
-        for (CalendarQueryRow row : rows) {
+        for (QueryRow row : rows) {
             cursor.addRow(row.getArray(projection));
         }
         return cursor;
     }
 
     public void addRow(Cursor cursor) {
-        addRow(CalendarQueryRow.fromCursor(cursor));
+        addRow(QueryRow.fromCursor(cursor));
     }
 
-    public void addRow(CalendarQueryRow row) {
+    public void addRow(QueryRow row) {
         rows.add(row);
     }
 
@@ -122,11 +127,11 @@ public class CalendarQueryResult {
         return uri;
     }
 
-    public String getSelection() {
+    String getSelection() {
         return selection;
     }
 
-    public List<CalendarQueryRow> getRows() {
+    List<QueryRow> getRows() {
         return rows;
     }
 
@@ -135,7 +140,7 @@ public class CalendarQueryResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CalendarQueryResult that = (CalendarQueryResult) o;
+        QueryResult that = (QueryResult) o;
 
         if (!uri.equals(that.uri)) return false;
         if (!Arrays.equals(projection, that.projection)) return false;
@@ -175,8 +180,9 @@ public class CalendarQueryResult {
         }
     }
 
-    public JSONObject toJson() throws JSONException {
+    JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
+        json.put(KEY_PROVIDER_TYPE, providerType.id);
         json.put(KEY_EXECUTED_AT, executedAt.getMillis());
         DateTimeZone zone = executedAt.getZone();
         json.put(KEY_TIME_ZONE_ID, zone.getID());
@@ -188,7 +194,7 @@ public class CalendarQueryResult {
         json.put(KEY_SELECTION_ARGS, arrayOfStingsToJson(selectionArgs));
         json.put(KEY_SORT_ORDER, sortOrder != null ? sortOrder : "");
         JSONArray jsonArray = new JSONArray();
-        for (CalendarQueryRow row : rows) {
+        for (QueryRow row : rows) {
             jsonArray.put(row.toJson());
         }
         json.put(KEY_ROWS, jsonArray);
@@ -205,8 +211,8 @@ public class CalendarQueryResult {
         return jsonArray;
     }
 
-    public void dropNullColumns() {
-        for (CalendarQueryRow row : rows) {
+    void dropNullColumns() {
+        for (QueryRow row : rows) {
             row.dropNullColumns();
         }
     }

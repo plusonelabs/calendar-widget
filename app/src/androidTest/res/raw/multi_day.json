@@ -1,6 +1,7 @@
 {
   "results": [
     {
+      "providerType": 1,
       "executedAt": 1441009880961,
       "selectionArgs": [],
       "uri": "content:\/\/com.android.calendar\/instances\/when\/1441009880960\/1443601880960",
@@ -70,7 +71,7 @@
     "fillAllDay": true,
     "eventsEnded": "NONE"
   },
-  "resultsVersion": 2,
+  "resultsVersion": 3,
   "deviceInfo": {
     "buildManufacturer": "samsung",
     "versionCode": 19,

@@ -1,6 +1,7 @@
 {
   "results": [
     {
+      "providerType": 1,
       "executedAt": 1443642924779,
       "selectionArgs": [],
       "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
@@ -259,7 +260,7 @@
     "fillAllDay": true,
     "eventsEnded": "NONE"
   },
-  "resultsVersion": 2,
+  "resultsVersion": 3,
   "deviceInfo": {
     "buildManufacturer": "samsung",
     "versionCode": 19,

@@ -15,6 +15,7 @@
     <string name="no_title">(No title)</string>
     <string name="grant_permissions">Grant permissions</string>
     <string name="grant_permissions_verbose">Widget requires permission to read calendars and tasks.\nTap here to grant permissions.</string>
+    <string name="past_header">Past and due</string>
     <string name="permissions_justification">Welcome to the Todo Agenda, the easy access to your calendar.\n\nTo make the most of the widget you need to grant it access to your calendar and tasks.</string>
     <string name="no_widgets_found">Please add a \"Todo Agenda\" widget from the home screen of your device first.</string>
     <string name="select_a_widget_to_configure">Select a widget to configure</string>
@@ -95,6 +96,7 @@
     <string name="appearance_theme_white">Black</string>
     <string name="appearance_abbreviate_dates_title">Abbreviate dates</string>
     <string name="appearance_abbreviate_dates_desc">Use three-letter format for dates in Widget and Day headers etc.</string>
+    <string name="show_past_events_under_one_header">Show past/due events under one "Past and due" header</string>
 
     <!-- Preference header: Event details -->
     <string name="event_details_prefs">Event details</string>

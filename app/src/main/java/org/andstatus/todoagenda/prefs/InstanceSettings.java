@@ -60,6 +60,7 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_EN
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_LOCATION;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_LOCATION_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
@@ -92,6 +93,7 @@ public class InstanceSettings {
     private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
     private boolean showDaysWithoutEvents = false;
     private boolean showDayHeaders = true;
+    private boolean showPastEventsUnderOneHeader = false;
     private boolean showPastEventsWithDefaultColor = false;
     private boolean showEndTime = PREF_SHOW_END_TIME_DEFAULT;
     private boolean showLocation = PREF_SHOW_LOCATION_DEFAULT;
@@ -208,6 +210,9 @@ public class InstanceSettings {
         if (json.has(PREF_SHOW_DAY_HEADERS)) {
             settings.showDayHeaders = json.getBoolean(PREF_SHOW_DAY_HEADERS);
         }
+        if (json.has(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER)) {
+            settings.showPastEventsUnderOneHeader = json.getBoolean(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER);
+        }
         if (json.has(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR)) {
             settings.showPastEventsWithDefaultColor = json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR);
         }
@@ -288,6 +293,7 @@ public class InstanceSettings {
         settings.pastEventsBackgroundColor = ApplicationPreferences.getPastEventsBackgroundColor(context);
         settings.showDaysWithoutEvents = ApplicationPreferences.getShowDaysWithoutEvents(context);
         settings.showDayHeaders = ApplicationPreferences.getShowDayHeaders(context);
+        settings.showPastEventsUnderOneHeader = ApplicationPreferences.getShowPastEventsUnderOneHeader(context);
         settings.showPastEventsWithDefaultColor = ApplicationPreferences.getShowPastEventsWithDefaultColor(context);
         settings.showEndTime = ApplicationPreferences.getShowEndTime(context);
         settings.showLocation = ApplicationPreferences.getShowLocation(context);
@@ -384,6 +390,7 @@ public class InstanceSettings {
             json.put(PREF_PAST_EVENTS_BACKGROUND_COLOR, pastEventsBackgroundColor);
             json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, showDaysWithoutEvents);
             json.put(PREF_SHOW_DAY_HEADERS, showDayHeaders);
+            json.put(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, showPastEventsUnderOneHeader);
             json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, showPastEventsWithDefaultColor);
             json.put(PREF_SHOW_END_TIME, showEndTime);
             json.put(PREF_SHOW_LOCATION, showLocation);
@@ -461,6 +468,10 @@ public class InstanceSettings {
 
     public boolean getShowDayHeaders() {
         return showDayHeaders;
+    }
+
+    public boolean getShowPastEventsUnderOneHeader() {
+        return showPastEventsUnderOneHeader;
     }
 
     public boolean getShowPastEventsWithDefaultColor() {

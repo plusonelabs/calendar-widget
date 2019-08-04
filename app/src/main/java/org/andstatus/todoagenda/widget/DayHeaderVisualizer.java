@@ -38,8 +38,10 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
         DayHeader dayHeader = (DayHeader) eventEntry;
         String alignment = getSettings().getDayHeaderAlignment();
         RemoteViews rv = new RemoteViews(context.getPackageName(), Alignment.valueOf(alignment).getLayoutId());
-        String dateString = DateUtil.createDayHeaderTitle(getSettings(), dayHeader.getStartDate())
-                .toUpperCase(Locale.getDefault());
+        String dateString = (dayHeader.getStartDate().equals(DateUtil.DATETIME_MIN)
+                ? context.getString(R.string.past_header)
+                : DateUtil.createDayHeaderTitle(getSettings(), dayHeader.getStartDate()))
+            .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
         setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);

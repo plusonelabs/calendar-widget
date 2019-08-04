@@ -91,12 +91,19 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     private List<WidgetEntry> addDayHeaders(List<WidgetEntry> listIn) {
         List<WidgetEntry> listOut = new ArrayList<>();
         if (!listIn.isEmpty()) {
-            boolean showDaysWithoutEvents = getSettings().getShowDaysWithoutEvents();
-            DayHeader curDayBucket = new DayHeader(new DateTime(0, getSettings().getTimeZone()));
+            InstanceSettings settings = getSettings();
+            DateTime today = DateUtil.now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+            DayHeader curDayBucket = new DayHeader(DateUtil.DATETIME_MIN);
+            boolean pastEventsHeaderAdded = false;
             for (WidgetEntry entry : listIn) {
                 DateTime nextStartOfDay = entry.getStartDay();
-                if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
-                    if (showDaysWithoutEvents) {
+                if (settings.getShowPastEventsUnderOneHeader() && nextStartOfDay.isBefore(today)) {
+                    if(!pastEventsHeaderAdded) {
+                        listOut.add(curDayBucket);
+                        pastEventsHeaderAdded = true;
+                    }
+                } else if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
+                    if (settings.getShowDaysWithoutEvents()) {
                         addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getStartDay(), nextStartOfDay);
                     }
                     curDayBucket = new DayHeader(nextStartOfDay);

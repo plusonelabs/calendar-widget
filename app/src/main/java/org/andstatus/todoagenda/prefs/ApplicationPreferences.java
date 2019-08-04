@@ -24,6 +24,7 @@ public class ApplicationPreferences {
     static final String PREF_ACTIVE_SOURCES = "activeSources";
     static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
     static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
+    static final String PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER = "showPastEventsUnderOneHeader";
     static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
     static final String PREF_INDICATE_RECURRING = "indicateRecurring";
     static final String PREF_INDICATE_ALERTS = "indicateAlerts";
@@ -68,7 +69,7 @@ public class ApplicationPreferences {
 
     public static void startEditing(Context context, Integer widgetId) {
         InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
-        setWidgetId(context, settings.getWidgetId());
+        setWidgetId(context, widgetId == 0 ? settings.getWidgetId() : widgetId);
         setString(context, PREF_WIDGET_INSTANCE_NAME, settings.getWidgetInstanceName());
         setActiveEventSources(context, settings.getActiveEventSources());
         setEventRange(context, settings.getEventRange());
@@ -78,6 +79,7 @@ public class ApplicationPreferences {
         setInt(context, PREF_PAST_EVENTS_BACKGROUND_COLOR, settings.getPastEventsBackgroundColor());
         setShowDaysWithoutEvents(context, settings.getShowDaysWithoutEvents());
         setShowDayHeaders(context, settings.getShowDayHeaders());
+        setShowPastEventsUnderOneHeader(context, settings.getShowPastEventsUnderOneHeader());
         setShowPastEventsWithDefaultColor(context, settings.getShowPastEventsWithDefaultColor());
         setBoolean(context, PREF_SHOW_END_TIME, settings.getShowEndTime());
         setBoolean(context, PREF_SHOW_LOCATION, settings.getShowLocation());
@@ -186,6 +188,15 @@ public class ApplicationPreferences {
 
     private static void setShowDayHeaders(Context context, boolean value) {
         setBoolean(context, PREF_SHOW_DAY_HEADERS, value);
+    }
+
+    public static boolean getShowPastEventsUnderOneHeader(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, false);
+    }
+
+    private static void setShowPastEventsUnderOneHeader(Context context, boolean value) {
+        setBoolean(context, PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, value);
     }
 
     public static boolean getShowPastEventsWithDefaultColor(Context context) {

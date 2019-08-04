@@ -19,6 +19,7 @@ public class DateUtil {
     private static final String COMMA_SPACE = ", ";
     private static volatile DateTime mNow = null;
     private static volatile DateTime mNowSetAt = DateTime.now();
+    public static final DateTime DATETIME_MIN = new DateTime(0, DateTimeZone.UTC);
 
     public static boolean isMidnight(DateTime date) {
         return date.isEqual(date.withTimeAtStartOfDay());

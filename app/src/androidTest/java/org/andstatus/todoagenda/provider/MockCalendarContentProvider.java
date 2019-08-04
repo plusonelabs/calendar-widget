@@ -8,12 +8,12 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.RawRes;
-import android.test.InstrumentationTestCase;
 import android.test.IsolatedContext;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.util.Log;
 
+import org.andstatus.todoagenda.BaseWidgetTest;
 import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
@@ -27,41 +27,48 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static junit.framework.Assert.assertTrue;
-import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
+import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class MockCalendarContentProvider extends MockContentProvider {
 
+    final String TAG = this.getClass().getSimpleName();
     private static final int WIDGET_ID_MIN = 434892;
     private static final String[] ZONE_IDS = {"America/Los_Angeles", "Europe/Moscow", "Asia/Kuala_Lumpur", "UTC"};
     private volatile int queriesCount = 0;
-    private final List<QueryResult> results = new ArrayList<>();
+    private final List<QueryResult> results = new CopyOnWriteArrayList<>();
     private final JSONArray storedSettings;
     private final DateTimeZone storedZone;
+    private final int numberOfOpenTaskSources;
 
     private final static AtomicInteger widgetId = new AtomicInteger(WIDGET_ID_MIN);
 
-    public static MockCalendarContentProvider getContentProvider(InstrumentationTestCase testCase) throws JSONException {
+    public static MockCalendarContentProvider getContentProvider(BaseWidgetTest testCase, int numberOfOpenTasksSources) throws JSONException {
         MockContentResolver mockResolver = new MockContentResolver();
         Context isolatedContext = new IsolatedContext(mockResolver, testCase.getInstrumentation().getTargetContext());
-        MockCalendarContentProvider contentProvider = new MockCalendarContentProvider(isolatedContext);
+        MockCalendarContentProvider contentProvider =
+                new MockCalendarContentProvider(isolatedContext, numberOfOpenTasksSources);
         mockResolver.addProvider("com.android.calendar", contentProvider);
+        if (numberOfOpenTasksSources > 0) {
+            mockResolver.addProvider("org.dmfs.tasks", contentProvider);
+        }
         mockResolver.addProvider("settings", new MockSettingsProvider());
         contentProvider.setPreferences(isolatedContext);
         return contentProvider;
     }
 
-    private MockCalendarContentProvider(Context context) {
+    private MockCalendarContentProvider(Context context, int numberOfOpenTaskSources) {
         super(context);
         storedSettings = InstanceSettings.toJson(getBaseContext(context));
+        this.numberOfOpenTaskSources = numberOfOpenTaskSources;
         storedZone = DateTimeZone.getDefault();
     }
 
@@ -105,13 +112,24 @@ public class MockCalendarContentProvider extends MockContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         if ("content://com.android.calendar/calendars".equals(uri.toString())) {
-            Log.i(MockCalendarContentProvider.class.getSimpleName(), "query: Available Calendar sources");
+            Log.i(TAG, "query: Available Calendar sources");
             MatrixCursor cursor = new MatrixCursor(projection);
             cursor.addRow(new Object[]{1L, getClass().getSimpleName(), 0x00FF00, "my.test@example.com"});
             return cursor;
         }
+        if ("content://org.dmfs.tasks/tasklists".equals(uri.toString())) {
+            Log.i(TAG, "query: Available OpenTasks sources");
+            if (numberOfOpenTaskSources == 0) return null;
+
+            MatrixCursor cursor = new MatrixCursor(projection);
+            for(int i = 0; i < numberOfOpenTaskSources; i++) {
+                cursor.addRow(new Object[]{2L + i, getClass().getSimpleName() + ".task" + i, 0x0FF0000,
+                        "my.task@example.com"});
+            }
+            return cursor;
+        }
         if ("content://com.android.calendar/TasksAccounts".equals(uri.toString())) {
-            Log.i(MockCalendarContentProvider.class.getSimpleName(), "query: Available Task sources");
+            Log.i(TAG, "query: Available Samsung task sources");
             return null;
         }
 

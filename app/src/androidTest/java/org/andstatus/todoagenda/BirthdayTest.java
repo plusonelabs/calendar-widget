@@ -1,13 +1,9 @@
 package org.andstatus.todoagenda;
 
-import android.test.InstrumentationTestCase;
-
-import org.andstatus.todoagenda.provider.QueryResultsStorage;
-import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
+import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
-
 import org.joda.time.DateTime;
 import org.json.JSONException;
 
@@ -16,25 +12,7 @@ import java.io.IOException;
 /**
  * @author yvolk@yurivolkov.com
  */
-public class BirthdayTest extends InstrumentationTestCase {
-
-    private static final String TAG = BirthdayTest.class.getSimpleName();
-
-    private MockCalendarContentProvider provider = null;
-    private EventRemoteViewsFactory factory = null;
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        provider.tearDown();
-        super.tearDown();
-    }
+public class BirthdayTest extends BaseWidgetTest {
 
     public void testBirthdayOneDayOnly() throws IOException, JSONException {
         QueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
@@ -91,16 +69,6 @@ public class BirthdayTest extends InstrumentationTestCase {
         // TODO: This doesn't work yet. We need to inject a MockCalendarContentProvider deeper,
         // so it could work in a normal Context also
         provider.refreshWidget();
-    }
-
-    private DateTime dateTime(
-            int year,
-            int monthOfYear,
-            int dayOfMonth,
-            int hourOfDay,
-            int minuteOfHour) {
-        return new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 0, 0,
-                provider.getSettings().getTimeZone());
     }
 
     private void playAtOneTime(QueryResultsStorage inputs, DateTime now, int numberOfEntriesExpected) {

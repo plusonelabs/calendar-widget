@@ -3,8 +3,8 @@ package org.andstatus.todoagenda.provider;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
-import android.test.InstrumentationTestCase;
 
+import org.andstatus.todoagenda.BaseWidgetTest;
 import org.andstatus.todoagenda.calendar.CalendarEventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
@@ -19,9 +19,8 @@ import java.io.IOException;
  *
  * @author yvolk@yurivolkov.com
  */
-public class MockCalendarContentProviderTest extends InstrumentationTestCase {
+public class MockCalendarContentProviderTest extends BaseWidgetTest {
 
-    private MockCalendarContentProvider provider = null;
     private final String[] projection = CalendarEventProvider.getProjection();
     private final String sortOrder = CalendarEventProvider.EVENT_SORT_ORDER;
     private long eventId = 0;
@@ -29,14 +28,12 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        provider = MockCalendarContentProvider.getContentProvider(this);
         QueryResultsStorage.setNeedToStoreResults(true);
     }
 
     @Override
     protected void tearDown() throws Exception {
         QueryResultsStorage.setNeedToStoreResults(false);
-        provider.tearDown();
         super.tearDown();
     }
 

@@ -1,11 +1,8 @@
 package org.andstatus.todoagenda;
 
-import android.test.InstrumentationTestCase;
 import android.util.Log;
 
 import org.andstatus.todoagenda.provider.QueryRow;
-import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
@@ -19,27 +16,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author yvolk@yurivolkov.com
  */
-public class IllegalInstantDueToTimeZoneTransitionTest extends InstrumentationTestCase {
+public class IllegalInstantDueToTimeZoneTransitionTest extends BaseWidgetTest {
 
-    private static final String TAG = IllegalInstantDueToTimeZoneTransitionTest.class.getSimpleName();
-
-    private MockCalendarContentProvider provider = null;
-    private EventRemoteViewsFactory factory = null;
     private int eventId = 0;
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-        assertTrue(factory.getWidgetEntries().isEmpty());
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        provider.tearDown();
-        super.tearDown();
-    }
 
     /**
      * Issue 186

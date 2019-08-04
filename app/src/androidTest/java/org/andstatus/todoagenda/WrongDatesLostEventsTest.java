@@ -1,12 +1,9 @@
 package org.andstatus.todoagenda;
 
-import android.test.InstrumentationTestCase;
 import android.util.Log;
 
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
-import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.widget.CalendarEntry;
-
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -14,25 +11,7 @@ import java.io.IOException;
 /**
  * @author yvolk@yurivolkov.com
  */
-public class WrongDatesLostEventsTest extends InstrumentationTestCase {
-
-    private static final String TAG = WrongDatesLostEventsTest.class.getSimpleName();
-
-    private MockCalendarContentProvider provider = null;
-    private EventRemoteViewsFactory factory = null;
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        provider.tearDown();
-        super.tearDown();
-    }
+public class WrongDatesLostEventsTest extends BaseWidgetTest {
 
     /**
      * https://github.com/plusonelabs/calendar-widget/issues/205

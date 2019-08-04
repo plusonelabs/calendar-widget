@@ -1,41 +1,21 @@
 package org.andstatus.todoagenda;
 
-import android.test.InstrumentationTestCase;
 import android.util.Log;
 
 import org.andstatus.todoagenda.calendar.CalendarEvent;
-import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
-
 import org.joda.time.DateTime;
 
 /**
  * @author yvolk@yurivolkov.com
  */
-public class MultidayEventTest extends InstrumentationTestCase {
+public class MultidayEventTest extends BaseWidgetTest {
 
-    private static final String TAG = MultidayEventTest.class.getSimpleName();
     private static final String ARROW = "→";
 
-    private MockCalendarContentProvider provider = null;
-    private EventRemoteViewsFactory factory = null;
     private int eventId = 0;
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-        assertTrue(factory.getWidgetEntries().isEmpty());
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        provider.tearDown();
-        super.tearDown();
-    }
 
     /**
      * Issue #206 https://github.com/plusonelabs/calendar-widget/issues/206
@@ -85,7 +65,7 @@ public class MultidayEventTest extends InstrumentationTestCase {
      * https://github.com/plusonelabs/calendar-widget/issues/184#issuecomment-142671469
      */
     public void testThreeDaysEvent() {
-        DateTime friday = new DateTime(2015, 9, 18, 0, 0, 0, 0, provider.getSettings().getTimeZone());
+        DateTime friday = dateTime(2015, 9, 18);
         DateTime sunday = friday.plusDays(2);
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
                 provider.getSettings().getTimeZone(), false);

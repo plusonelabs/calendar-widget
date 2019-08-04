@@ -1,15 +1,12 @@
 package org.andstatus.todoagenda;
 
-import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import org.andstatus.todoagenda.provider.QueryResultsStorage;
-import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
+import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
 import org.andstatus.todoagenda.widget.WidgetEntry;
-
 import org.joda.time.DateTime;
 import org.json.JSONException;
 
@@ -18,25 +15,7 @@ import java.io.IOException;
 /**
  * @author yvolk@yurivolkov.com
  */
-public class MultidayAllDayEventTest extends InstrumentationTestCase {
-
-    private static final String TAG = MultidayAllDayEventTest.class.getSimpleName();
-
-    private MockCalendarContentProvider provider = null;
-    private EventRemoteViewsFactory factory = null;
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        provider.tearDown();
-        super.tearDown();
-    }
+public class MultidayAllDayEventTest extends BaseWidgetTest {
 
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";

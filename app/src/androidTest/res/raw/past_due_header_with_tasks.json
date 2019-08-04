@@ -1,0 +1,370 @@
+{
+  "resultsVersion": 3,
+  "deviceInfo": {
+    "versionCode": 26,
+    "versionRelease": "8.0.0",
+    "versionCodename": "REL",
+    "buildManufacturer": "Sony",
+    "buildBrand": "Sony",
+    "buildModel": "F5321"
+  },
+  "applicationInfo": {
+    "versionName": "2.1.0-450",
+    "versionCode": 450
+  },
+  "settings": {
+    "widgetId": 30,
+    "widgetInstanceName": "Todo Agenda Alt",
+    "activeSources": [
+      "2,1",
+      "2,2",
+      "1,8"
+    ],
+    "eventRange": 365,
+    "eventsEnded": "NONE",
+    "fillAllDay": true,
+    "hideBasedOnKeywords": "",
+    "pastEventsBackgroundColor": 1258290987,
+    "showDaysWithoutEvents": false,
+    "showDayHeaders": true,
+    "showPastEventsUnderOneHeader": true,
+    "showPastEventsWithDefaultColor": true,
+    "showEndTime": true,
+    "showLocation": true,
+    "dateFormat": "auto",
+    "abbreviateDates": false,
+    "lockedTimeZoneId": "",
+    "eventEntryLayout": "DEFAULT",
+    "multiline_title": false,
+    "showOnlyClosestInstanceOfRecurringEvent": true,
+    "indicateAlerts": true,
+    "indicateRecurring": false,
+    "entryTheme": "BLACK",
+    "headerTheme": "WHITE",
+    "showHeader": true,
+    "backgroundColor": -2010512640,
+    "textSizeScale": "1.0",
+    "dayHeaderAlignment": "RIGHT"
+  },
+  "results": [
+    {
+      "providerType": 1,
+      "executedAt": 1564922165983,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/1564922165979\/1596458165979",
+      "projection": [
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor"
+      ],
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 8 )",
+      "selectionArgs": [],
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "rows": [
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 580
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1565011800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Tomorrow's meeting"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1565008200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;WKST=MO"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 126
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1585288800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Call John Smith"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1585285200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "providerType": 1,
+      "executedAt": 1564922166011,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/0\/1564922166010",
+      "projection": [
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor"
+      ],
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 8 ) AND (displayColor = calendar_color )",
+      "selectionArgs": [],
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "rows": [
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;WKST=MO"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 126
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1490594400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Call John Smith"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1490590800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;WKST=MO"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 126
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1522130400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Call John Smith"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1522126800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;WKST=MO"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 126
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1553666400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Call John Smith"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1553662800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "providerType": 2,
+      "executedAt": 1564922166027,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/org.dmfs.tasks\/tasks",
+      "projection": [
+        "_id",
+        "title",
+        "due",
+        "dtstart",
+        "list_color"
+      ],
+      "selection": "status != 2 AND (due <= 1596458166026 OR ( due IS NULL AND (dtstart <= 1596458166026 OR dtstart IS NULL ) ) ) AND list_id IN ( 1,2 )",
+      "selectionArgs": [],
+      "sortOrder": "",
+      "rows": [
+        {
+          "due": {
+            "type": 0
+          },
+          "list_color": {
+            "type": 1,
+            "value": -10819738
+          },
+          "_id": {
+            "type": 1,
+            "value": 2
+          },
+          "title": {
+            "type": 3,
+            "value": "My task 002"
+          },
+          "dtstart": {
+            "type": 0
+          }
+        },
+        {
+          "due": {
+            "type": 1,
+            "value": 1564639200000
+          },
+          "list_color": {
+            "type": 1,
+            "value": -10819738
+          },
+          "_id": {
+            "type": 1,
+            "value": 4
+          },
+          "title": {
+            "type": 3,
+            "value": "Due task 002"
+          },
+          "dtstart": {
+            "type": 0
+          }
+        },
+        {
+          "due": {
+            "type": 1,
+            "value": 1565287200000
+          },
+          "list_color": {
+            "type": 1,
+            "value": -14776091
+          },
+          "_id": {
+            "type": 1,
+            "value": 1
+          },
+          "title": {
+            "type": 3,
+            "value": "Test task 001"
+          },
+          "dtstart": {
+            "type": 0
+          }
+        }
+      ]
+    }
+  ]
+}

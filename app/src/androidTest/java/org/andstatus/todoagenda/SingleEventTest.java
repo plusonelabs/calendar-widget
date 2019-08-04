@@ -1,40 +1,18 @@
 package org.andstatus.todoagenda;
 
-import android.test.InstrumentationTestCase;
-
 import org.andstatus.todoagenda.calendar.CalendarEvent;
-import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 /**
  * @author yvolk@yurivolkov.com
  */
-public class SingleEventTest extends InstrumentationTestCase {
+public class SingleEventTest extends BaseWidgetTest {
 
-    private static final String TAG = SingleEventTest.class.getSimpleName();
-
-    private MockCalendarContentProvider provider = null;
-    private EventRemoteViewsFactory factory = null;
     private int eventId = 0;
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-        assertTrue(factory.getWidgetEntries().isEmpty());
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        provider.tearDown();
-        super.tearDown();
-    }
 
     public void testEventAttributes() {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();

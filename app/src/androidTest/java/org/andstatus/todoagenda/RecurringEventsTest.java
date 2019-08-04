@@ -1,14 +1,10 @@
 package org.andstatus.todoagenda;
 
-import android.test.InstrumentationTestCase;
-
-import org.andstatus.todoagenda.provider.QueryRow;
-import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
+import org.andstatus.todoagenda.provider.QueryRow;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
-
 import org.joda.time.DateTime;
 
 import java.util.concurrent.TimeUnit;
@@ -16,28 +12,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author yvolk@yurivolkov.com
  */
-public class RecurringEventsTest extends InstrumentationTestCase {
+public class RecurringEventsTest extends BaseWidgetTest {
 
-    private static final String TAG = RecurringEventsTest.class.getSimpleName();
-
-    private MockCalendarContentProvider provider = null;
-    private EventRemoteViewsFactory factory = null;
     private int eventId = 0;
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        provider = MockCalendarContentProvider.getContentProvider(this);
-        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-        assertTrue(factory.getWidgetEntries().isEmpty());
-        eventId = 0;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        provider.tearDown();
-        super.tearDown();
-    }
 
     /**
      * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/191">Issue 191</a> and

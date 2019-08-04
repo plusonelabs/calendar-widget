@@ -7,6 +7,7 @@ import android.test.InstrumentationTestCase;
 
 import org.andstatus.todoagenda.calendar.CalendarEventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +38,10 @@ public class MockCalendarContentProviderTest extends InstrumentationTestCase {
         QueryResultsStorage.setNeedToStoreResults(false);
         provider.tearDown();
         super.tearDown();
+    }
+
+    public void testTestMode() {
+        assertTrue("isTestMode should be true", PermissionsUtil.isTestMode());
     }
 
     public void testTwoEventsToday() {

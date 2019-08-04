@@ -54,7 +54,7 @@ public class PermissionsUtil {
     public static boolean isTestMode() {
         if (isTestMode == null) {
             try {
-                Class.forName("org.andstatus.todoagenda.calendar.MockCalendarContentProvider");
+                Class.forName("org.andstatus.todoagenda.provider.MockCalendarContentProvider");
                 isTestMode = true;
             } catch (ClassNotFoundException e) {
                 isTestMode = false;

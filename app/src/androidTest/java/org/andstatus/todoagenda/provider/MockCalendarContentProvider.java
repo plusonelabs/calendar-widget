@@ -17,6 +17,7 @@ import org.andstatus.todoagenda.BaseWidgetTest;
 import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
+import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.MockSettingsProvider;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -27,11 +28,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static junit.framework.Assert.assertTrue;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS;
 
@@ -85,8 +86,18 @@ public class MockCalendarContentProvider extends MockContentProvider {
         if (InstanceSettings.getInstances(context).isEmpty()) {
             InstanceSettings.save(context, widgetId.incrementAndGet());
         }
-        InstanceSettings settings = InstanceSettings.fromId(context, widgetId.incrementAndGet());
-        assertTrue("widgetId:" + getWidgetId(), settings.isJustCreated());
+
+        ApplicationPreferences.startEditing(context, widgetId.incrementAndGet());
+        List<EventSource> sources = new ArrayList<>();
+        sources.add(new EventSource(EventProviderType.CALENDAR, 1, "", "", 0xFF));
+        for(int i = 0; i < numberOfOpenTaskSources; i++) {
+            sources.add(new EventSource(EventProviderType.DMFS_OPEN_TASKS, 2 + i,
+                    getClass().getSimpleName() + ".task" + i, "my.task@example.com", 0x0FF0000));
+        }
+        ApplicationPreferences.setActiveEventSources(context, sources);
+        ApplicationPreferences.save(context, widgetId.get());
+
+        InstanceSettings settings = InstanceSettings.fromId(context, widgetId.get());
         JSONObject json = settings.toJson();
         JSONArray jsonArray = new JSONArray();
         jsonArray.put(json);
@@ -123,7 +134,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
             MatrixCursor cursor = new MatrixCursor(projection);
             for(int i = 0; i < numberOfOpenTaskSources; i++) {
-                cursor.addRow(new Object[]{2L + i, getClass().getSimpleName() + ".task" + i, 0x0FF0000,
+                cursor.addRow(new Object[]{2 + i, getClass().getSimpleName() + ".task" + i, 0x0FF0000,
                         "my.task@example.com"});
             }
             return cursor;

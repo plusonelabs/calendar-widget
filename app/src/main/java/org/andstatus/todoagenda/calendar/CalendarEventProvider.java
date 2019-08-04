@@ -25,6 +25,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,10 +42,11 @@ public class CalendarEventProvider extends EventProvider {
         super(type, context, widgetId);
     }
 
-    public List<CalendarEvent> getEvents() {
+    List<CalendarEvent> getEvents() {
         initialiseParameters();
-        if (PermissionsUtil.isPermissionNeeded(context, type.permission)) {
-            return new ArrayList<>();
+        if (PermissionsUtil.isPermissionNeeded(context, type.permission) ||
+                getSettings().getActiveEventSources(type).isEmpty()) {
+            return Collections.emptyList();
         }
         List<CalendarEvent> eventList = getTimeFilteredEventList();
         if (getSettings().getShowPastEventsWithDefaultColor()) {

@@ -16,7 +16,6 @@ import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.task.AbstractTaskProvider;
 import org.andstatus.todoagenda.task.TaskEvent;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
-import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,16 +30,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
     }
 
     @Override
-    public List<TaskEvent> getEvents() {
-        initialiseParameters();
-        if (PermissionsUtil.isPermissionNeeded(context, type.permission)) {
-            return new ArrayList<>();
-        }
-
-        return queryTasks();
-    }
-
-    private List<TaskEvent> queryTasks() {
+    public List<TaskEvent> queryTasks() {
         Uri uri = SamsungTasksContract.Tasks.PROVIDER_URI;
         String[] projection = {
                 SamsungTasksContract.Tasks.COLUMN_ID,

@@ -9,7 +9,7 @@
               android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
-        android:id="@+id/event_entry_color"
+        android:id="@+id/event_entry_icon"
         style="@style/EventEntryColor"
         android:layout_width="8dp"
         android:layout_height="fill_parent"

@@ -15,6 +15,7 @@ import org.andstatus.todoagenda.widget.WidgetEntryVisualizer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setBackgroundColor;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setMultiline;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
@@ -35,12 +36,17 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         setColor(entry, rv);
         setDaysToEvent(entry, rv);
         setTitle(entry, rv);
-        rv.setOnClickFillInIntent(R.id.task_entry, eventProvider.createViewEventIntent(entry.getEvent()));
+        rv.setOnClickFillInIntent(R.id.event_entry, eventProvider.createViewEventIntent(entry.getEvent()));
         return rv;
     }
 
     private void setColor(TaskEntry entry, RemoteViews rv) {
-        rv.setTextColor(R.id.task_entry_icon, entry.getEvent().getColor());
+        rv.setTextColor(R.id.event_entry_icon, entry.getEvent().getColor());
+        if (entry.getEvent().getDueDate().isBefore(DateUtil.now(entry.getEvent().getDueDate().getZone()))) {
+            setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
+        } else {
+            setBackgroundColor(rv, R.id.event_entry, 0);
+        }
     }
 
     private void setDaysToEvent(TaskEntry entry, RemoteViews rv) {
@@ -66,11 +72,11 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
     }
 
     private void setTitle(TaskEntry entry, RemoteViews rv) {
-        rv.setTextViewText(R.id.task_entry_title, entry.getTitle());
-        setTextSize(getSettings(), rv, R.id.task_entry_icon, R.dimen.event_entry_title);
-        setTextSize(getSettings(), rv, R.id.task_entry_title, R.dimen.event_entry_title);
-        setTextColorFromAttr(getSettings().getEntryThemeContext(), rv, R.id.task_entry_title, R.attr.eventEntryTitle);
-        setMultiline(rv, R.id.task_entry_title, getSettings().isTitleMultiline());
+        rv.setTextViewText(R.id.event_entry_title, entry.getTitle());
+        setTextSize(getSettings(), rv, R.id.event_entry_icon, R.dimen.event_entry_title);
+        setTextSize(getSettings(), rv, R.id.event_entry_title, R.dimen.event_entry_title);
+        setTextColorFromAttr(getSettings().getEntryThemeContext(), rv, R.id.event_entry_title, R.attr.eventEntryTitle);
+        setMultiline(rv, R.id.event_entry_title, getSettings().isTitleMultiline());
     }
 
     public InstanceSettings getSettings() {

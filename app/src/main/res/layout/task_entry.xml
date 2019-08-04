@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/task_entry"
+              android:id="@+id/event_entry"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:paddingLeft="@dimen/calender_padding"
@@ -9,7 +9,7 @@
               android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
-        android:id="@+id/task_entry_icon"
+        android:id="@+id/event_entry_icon"
         style="@style/TaskEntryIcon"
         android:layout_width="12dp"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         tools:ignore="SelectableText" />
 
     <TextView
-        android:id="@+id/task_entry_title"
+        android:id="@+id/event_entry_title"
         style="@style/EventEntryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

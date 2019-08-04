@@ -70,7 +70,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
     }
 
     private void setColor(CalendarEntry entry, RemoteViews rv) {
-        setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
+        setBackgroundColor(rv, R.id.event_entry_icon, entry.getColor());
         if (entry.getEndDate().isBefore(DateUtil.now(entry.getEndDate().getZone()))) {
             setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
         } else {

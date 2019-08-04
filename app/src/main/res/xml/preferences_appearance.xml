@@ -57,7 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:defaultValue="false"
-        android:title="@string/show_past_events_under_one_header"
+        android:title="@string/show_past_events_under_one_header_title"
+        android:summary="@string/show_past_events_under_one_header_desc"
         android:dependency="showDayHeaders">
     </CheckBoxPreference>
 

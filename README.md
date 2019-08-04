@@ -1,20 +1,35 @@
-# Todo Agenda - Calendar widgets for Android
+# Todo Agenda - Calendar and Task widgets for Android
 
 [![Build Status](https://travis-ci.org/andstatus/todoagenda.svg?branch=master)](https://travis-ci.org/andstatus/todoagenda)
 
-Todo Agenda is a home screen widget for your Android device. It displays a list of upcoming calendar events 
+Todo Agenda is a home screen widget for your Android device. 
+It displays a list of upcoming calendar events and tasks
 so that you can easily have a glimpse at your appointments.
 
+<table style="border-collapse:collapse; margin:0; padding:0">
+<tr>
+<td>
 <a href="https://play.google.com/store/apps/details?id=org.andstatus.todoagenda">
-<img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" width="150px"/>
+<img alt="Get it on Google Play" 
+    src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" 
+    width="150px"/>
 </a>
+</td>
+<td>
+<a href="https://f-droid.org/en/packages/com.plusonelabs.calendar">
+<img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" width="175px"/>
+</a>
+</td>
+</tr>
+</table>
 
-Want to contribute to the project? Start by translating the widget to another language. Visit the [project at crowdin.net](http://crowdin.net/project/plusonelabs-calendar-widget) and be part of the next release. :)
+Want to contribute to the project? Start by translating the widget to another language. Visit the 
+[project at crowdin.net](http://crowdin.net/project/plusonelabs-calendar-widget) and be part of the next release. :)
 ![Calendar Widget Screenshots](assets/screenshots/widget-device.png)
 
 ## Features
 
-* Displays all events from your calendars. Optionally shows past events.
+* Displays all events from your calendars and task lists. Optionally shows past events.
 * Automatically updates when you add/delete/modify an event. Or you may update the list instantly.
 * Select only the calendars you want to see in the widget.
 * Create several widgets, if you need. Each widget will have its own settings, including filters 
@@ -26,7 +41,13 @@ and selected calendars.
 * Indicators for alerts and recurring events.
 * Lock time zone when travelling to different time zones.
 * Turn off Day headers and see dates in the "Days from today" column.
-* Android 4 to 7 supported. Supports Android tablets.
+* Android 4+ supported. Supports Android tablets.
+
+Note on Tasks support: As there is no unified way to access tasks created in different applications, 
+each application needs its own implementation. Currently supported:
+* [OpenTasks (by dmfs GmbH)](https://github.com/dmfs/opentasks).
+* Tasks of Samsung Calendar ([looks like a deprecating feature...](
+  https://eu.community.samsung.com/t5/Galaxy-S9-S9/New-Update-Calendar-Issues/td-p/940866)). 
 
 ## Collaborate
 
@@ -39,6 +60,13 @@ Please [opt-in here](https://play.google.com/apps/testing/org.andstatus.todoagen
 We are also looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
 
 ## Changelog
+
+### [v2.1](https://github.com/plusonelabs/calendar-widget/issues/308) Tasks support
+* Tasks support added. Two Task apps are supported: [OpenTasks (by dmfs GmbH)](https://github.com/dmfs/opentasks)
+  and Tasks of Samsung Calendar ([looks like a deprecating feature...](
+  https://eu.community.samsung.com/t5/Galaxy-S9-S9/New-Update-Calendar-Issues/td-p/940866)). 
+* New option "Header for past/due events". If turned on, it shows all past/due events under one "Past and due" header. 
+  Applied both to calendar events and to tasks.
 
 ### [v2.0.0](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
 

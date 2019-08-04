@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         versionCode getCommitCount()
-        versionName '2.0.1' + "-" + versionCode
+        versionName '2.1.0' + "-" + versionCode
         minSdkVersion 15
         targetSdkVersion 27
 

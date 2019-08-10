@@ -33,10 +33,6 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
         }
     }
 
-    private EnvironmentChangedReceiver() {
-        // Empty
-    }
-
     private void unRegister(Context context) {
         context.unregisterReceiver(this);
     }

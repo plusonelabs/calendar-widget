@@ -11,6 +11,7 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.util.SparseArray;
 
 import org.andstatus.todoagenda.prefs.EventSource;
@@ -154,6 +155,8 @@ public class CalendarEventProvider extends EventProvider {
                     }
                 }
             }
+        } catch (Exception e) {
+            Log.w(this.getClass().getSimpleName(), "Failed to queryList uri:" + uri + ", selection:" + selection, e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();

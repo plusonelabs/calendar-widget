@@ -3,7 +3,9 @@ package org.andstatus.todoagenda.util;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
+import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -75,16 +77,27 @@ public class RemoteViewsUtil {
 
     private static int getColorValue(Context context, int attrId) {
         TypedValue outValue = new TypedValue();
-        context.getTheme().resolveAttribute(attrId, outValue, true);
-        int colorId = outValue.resourceId;
-        return context.getResources().getColor(colorId);
+        if (context.getTheme().resolveAttribute(attrId, outValue, true)) {
+            int colorResourceId = outValue.resourceId;
+            try {
+                return context.getResources().getColor(colorResourceId);
+            } catch (Exception e) {
+                Log.w(RemoteViewsUtil.class.getSimpleName(), "context.getResources() failed to resolve color for" +
+                        " resource Id:" + colorResourceId +
+                        " derived from attribute Id:" + attrId, e);
+                return Color.GRAY;
+            }
+        }
+        Log.w(RemoteViewsUtil.class.getSimpleName(),
+                "getColorValue failed to resolve color for attribute Id:" + attrId);
+        return Color.GRAY;
     }
 
-    private static float getDimension(Context context, int dimenId) {
+    private static float getDimension(Context context, int dimensionResourceId) {
         try {
-            return context.getResources().getDimension(dimenId);
+            return context.getResources().getDimension(dimensionResourceId);
         } catch (NotFoundException e) {
-            // resource might not exist
+            Log.w(RemoteViewsUtil.class.getSimpleName(), "getDimension failed for dimension resource Id:" + dimensionResourceId);
             return 0f;
         }
     }

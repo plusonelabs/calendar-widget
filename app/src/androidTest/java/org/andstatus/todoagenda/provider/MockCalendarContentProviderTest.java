@@ -115,8 +115,7 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
         QueryResultsStorage inputs1 = provider.loadResults(getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.birthday);
         JSONObject jsonOutput = inputs1.toJson(provider.getContext(), provider.getWidgetId());
-        QueryResultsStorage inputs2 =
-                QueryResultsStorage.fromJson(provider.getContext(), jsonOutput);
+        QueryResultsStorage inputs2 = QueryResultsStorage.fromTestData(provider.getContext(), jsonOutput);
         assertEquals(inputs1, inputs2);
     }
 }

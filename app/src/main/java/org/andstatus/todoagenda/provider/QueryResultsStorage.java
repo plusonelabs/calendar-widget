@@ -127,7 +127,7 @@ public class QueryResultsStorage {
         return json;
     }
 
-    public static QueryResultsStorage fromJson(Context context, JSONObject json) throws JSONException {
+    static QueryResultsStorage fromTestData(Context context, JSONObject json) throws JSONException {
         InstanceSettings settings = InstanceSettings.fromJson(context, json.getJSONObject(KEY_SETTINGS));
         InstanceSettings.getInstances(context).put(settings.getWidgetId(), settings);
         QueryResultsStorage results = new QueryResultsStorage();

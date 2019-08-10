@@ -7,7 +7,8 @@ import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.R;
-import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.provider.EventProvider;
+import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 
 import java.util.Collections;
@@ -22,13 +23,9 @@ import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
 
 public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
-    public final Context context;
-    public final int widgetId;
-
 
     public DayHeaderVisualizer(Context context, int widgetId) {
-        this.context = context;
-        this.widgetId = widgetId;
+        super(new EventProvider(EventProviderType.EMPTY, context, widgetId));
     }
 
     @Override
@@ -37,18 +34,18 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
 
         DayHeader dayHeader = (DayHeader) eventEntry;
         String alignment = getSettings().getDayHeaderAlignment();
-        RemoteViews rv = new RemoteViews(context.getPackageName(), Alignment.valueOf(alignment).getLayoutId());
+        RemoteViews rv = new RemoteViews(getContext().getPackageName(), Alignment.valueOf(alignment).getLayoutId());
         String dateString = (dayHeader.getStartDate().equals(DateUtil.DATETIME_MIN)
-                ? context.getString(R.string.past_header)
+                ? getContext().getString(R.string.past_header)
                 : DateUtil.createDayHeaderTitle(getSettings(), dayHeader.getStartDate()))
             .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
-        setTextColorFromAttr(context, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
+        setTextColorFromAttr(getContext(), rv, R.id.day_header_title, R.attr.dayHeaderTitle);
         setBackgroundColor(rv, R.id.day_header,
                 dayHeader.getStartDay().plusDays(1).isBefore(DateUtil.now(getSettings().getTimeZone())) ?
                         getSettings().getPastEventsBackgroundColor() : Color.TRANSPARENT);
-        setBackgroundColorFromAttr(context, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
+        setBackgroundColorFromAttr(getContext(), rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(getSettings(), rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
                 R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
         Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());
@@ -64,9 +61,5 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
     @Override
     public List<DayHeader> getEventEntries() {
         return Collections.emptyList();
-    }
-
-    private InstanceSettings getSettings() {
-        return InstanceSettings.fromId(context, widgetId);
     }
 }

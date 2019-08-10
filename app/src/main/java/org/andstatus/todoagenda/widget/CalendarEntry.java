@@ -5,11 +5,10 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-
+import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 
 public class CalendarEntry extends WidgetEntry<CalendarEntry> {

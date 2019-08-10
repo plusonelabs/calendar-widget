@@ -114,9 +114,9 @@ public class InstanceSettings {
 
     @NonNull
     public static InstanceSettings fromId(Context context, Integer widgetId) {
-        ensureInstancesAreLoaded(context);
+        ensureLoadedFromFiles(context);
         InstanceSettings settings = instances.get(widgetId);
-        return settings != null ? settings : newInstance(context, widgetId);
+        return settings == null ? newInstance(context, widgetId) : settings;
     }
 
     @NonNull
@@ -139,7 +139,7 @@ public class InstanceSettings {
         }
     }
 
-    private static void ensureInstancesAreLoaded(Context context) {
+    public static void ensureLoadedFromFiles(Context context) {
         if (instancesLoaded) {
             return;
         }
@@ -161,7 +161,7 @@ public class InstanceSettings {
         }
     }
 
-    public static void fromJson(Context context, JSONArray jsonArray) throws JSONException {
+    public static void loadFromTestData(Context context, JSONArray jsonArray) throws JSONException {
         synchronized (instances) {
             instances.clear();
             for (int index = 0; index < jsonArray.length(); index++) {
@@ -280,7 +280,7 @@ public class InstanceSettings {
         }
     }
 
-    public static InstanceSettings fromApplicationPreferences(Context context, int widgetId) {
+    private static InstanceSettings fromApplicationPreferences(Context context, int widgetId) {
         InstanceSettings settings = new InstanceSettings(context, widgetId,
                 ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
                         ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, "")));
@@ -319,7 +319,7 @@ public class InstanceSettings {
     }
 
     public static JSONArray toJson(Context context) {
-        ensureInstancesAreLoaded(context);
+        ensureLoadedFromFiles(context);
         return new JSONArray(instances.values());
     }
 
@@ -329,11 +329,9 @@ public class InstanceSettings {
     }
 
     public static void delete(Context context, int widgetId) {
-        ensureInstancesAreLoaded(context);
+        ensureLoadedFromFiles(context);
         synchronized (instances) {
-            if (instances.containsKey(widgetId)) {
-                instances.remove(widgetId);
-            }
+            instances.remove(widgetId);
             SettingsStorage.delete(context, getStorageKey(widgetId));
             if (ApplicationPreferences.getWidgetId(context) == widgetId) {
                 ApplicationPreferences.setWidgetId(context, 0);
@@ -584,7 +582,7 @@ public class InstanceSettings {
     }
 
     public static Map<Integer, InstanceSettings> getInstances(Context context) {
-        ensureInstancesAreLoaded(context);
+        ensureLoadedFromFiles(context);
         return instances;
     }
 }

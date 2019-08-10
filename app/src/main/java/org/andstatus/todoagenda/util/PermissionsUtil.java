@@ -33,7 +33,8 @@ public class PermissionsUtil {
     }
 
     public static boolean arePermissionsGranted(Context context) {
-        for (String permission: EventProviderType.getNeededPermissions(context)) {
+        InstanceSettings.ensureLoadedFromFiles(context);
+        for (String permission: EventProviderType.getNeededPermissions()) {
             if (isPermissionNeeded(context, permission)) {
                 return false;
             }

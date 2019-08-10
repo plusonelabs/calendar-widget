@@ -27,6 +27,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
     private final CalendarEventProvider eventProvider;
 
     public CalendarEventVisualizer(EventProvider eventProvider) {
+        super(eventProvider);
         this.eventProvider = (CalendarEventProvider) eventProvider;
     }
 
@@ -35,7 +36,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
 
         CalendarEntry entry = (CalendarEntry) eventEntry;
         EventEntryLayout eventEntryLayout = getSettings().getEventEntryLayout();
-        RemoteViews rv = new RemoteViews(eventProvider.context.getPackageName(), eventEntryLayout.layoutId);
+        RemoteViews rv = new RemoteViews(getContext().getPackageName(), eventEntryLayout.layoutId);
         rv.setOnClickFillInIntent(R.id.event_entry, eventProvider.createViewEventIntent(entry.getEvent()));
         eventEntryLayout.visualizeEvent(entry, rv);
         setAlarmActive(entry, rv);
@@ -57,7 +58,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
     private void setIndicator(RemoteViews rv, boolean showIndication, int viewId, int imageAttrId) {
         if (showIndication) {
             rv.setViewVisibility(viewId, View.VISIBLE);
-            setImageFromAttr(eventProvider.context, rv, viewId, imageAttrId);
+            setImageFromAttr(getContext(), rv, viewId, imageAttrId);
             int themeId = themeNameToResId(getSettings().getEntryTheme());
             int alpha = 255;
             if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
@@ -76,11 +77,6 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         } else {
             setBackgroundColor(rv, R.id.event_entry, 0);
         }
-    }
-
-    @NonNull
-    private InstanceSettings getSettings() {
-        return InstanceSettings.fromId(eventProvider.context, eventProvider.widgetId);
     }
 
     public int getViewTypeCount() {

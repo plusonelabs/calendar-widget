@@ -101,7 +101,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         JSONObject json = settings.toJson();
         JSONArray jsonArray = new JSONArray();
         jsonArray.put(json);
-        InstanceSettings.fromJson(context, jsonArray);
+        InstanceSettings.loadFromTestData(context, jsonArray);
     }
 
     public void tearDown() throws JSONException {
@@ -109,7 +109,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
             InstanceSettings.delete(getContext(), id);
         }
         ApplicationPreferences.setWidgetId(getContext(), 0);
-        InstanceSettings.fromJson(getBaseContext(getContext()), storedSettings);
+        InstanceSettings.loadFromTestData(getBaseContext(getContext()), storedSettings);
         DateUtil.setNow(null);
         DateTimeZone.setDefault(storedZone);
         EventAppWidgetProvider.updateAllWidgets(getBaseContext(getContext()));
@@ -226,6 +226,6 @@ public class MockCalendarContentProvider extends MockContentProvider {
             throws IOException, JSONException {
         JSONObject json = new JSONObject(RawResourceUtils.getString(context, jsonResId));
         json.getJSONObject(KEY_SETTINGS).put(PREF_WIDGET_ID, widgetId);
-        return QueryResultsStorage.fromJson(getContext(), json);
+        return QueryResultsStorage.fromTestData(getContext(), json);
     }
 }

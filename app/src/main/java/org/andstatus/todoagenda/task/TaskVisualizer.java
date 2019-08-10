@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
-import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -24,6 +23,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
     private final AbstractTaskProvider eventProvider;
 
     public TaskVisualizer(EventProvider eventProvider) {
+        super(eventProvider);
         this.eventProvider = (AbstractTaskProvider) eventProvider;
     }
 
@@ -32,7 +32,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         if (!(eventEntry instanceof TaskEntry)) return null;
 
         TaskEntry entry = (TaskEntry) eventEntry;
-        RemoteViews rv = new RemoteViews(eventProvider.context.getPackageName(), R.layout.task_entry);
+        RemoteViews rv = new RemoteViews(getContext().getPackageName(), R.layout.task_entry);
         setColor(entry, rv);
         setDaysToEvent(entry, rv);
         setTitle(entry, rv);
@@ -77,10 +77,6 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         setTextSize(getSettings(), rv, R.id.event_entry_title, R.dimen.event_entry_title);
         setTextColorFromAttr(getSettings().getEntryThemeContext(), rv, R.id.event_entry_title, R.attr.eventEntryTitle);
         setMultiline(rv, R.id.event_entry_title, getSettings().isTitleMultiline());
-    }
-
-    public InstanceSettings getSettings() {
-        return InstanceSettings.fromId(eventProvider.context, eventProvider.widgetId);
     }
 
     @Override

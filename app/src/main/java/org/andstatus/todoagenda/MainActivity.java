@@ -21,10 +21,10 @@ import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView = (ListView) findViewById(android.R.id.list);
+        listView = findViewById(android.R.id.list);
         checkPermissions();
         if (preparedToOpen()) {
             updateScreen();
@@ -62,10 +62,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void checkPermissionsAndRequestThem() {
         checkPermissions();
         if (!permissionsGranted) {
-            Log.d(this.getLocalClassName(), "Requesting permissions: " +
-                    Arrays.asList(EventProviderType.getNeededPermissions(this)));
-            ActivityCompat.requestPermissions(this,
-                    EventProviderType.getNeededPermissions(this).toArray(new String[]{}), 1);
+            Set<String> neededPermissions = EventProviderType.getNeededPermissions();
+            Log.d(this.getLocalClassName(), "Requesting permissions: " + neededPermissions);
+            ActivityCompat.requestPermissions(this, neededPermissions.toArray(new String[]{}), 1);
         }
     }
 

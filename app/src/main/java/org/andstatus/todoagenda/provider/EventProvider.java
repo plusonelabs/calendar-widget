@@ -62,7 +62,7 @@ public class EventProvider {
     }
 
     @NonNull
-    protected InstanceSettings getSettings() {
+    public InstanceSettings getSettings() {
         return InstanceSettings.fromId(context, widgetId);
     }
 

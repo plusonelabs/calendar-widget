@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.PermissionsUtil;
@@ -76,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         int newWidgetId = 0;
         if (permissionsGranted) {
             newWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
-            if (newWidgetId == 0 && InstanceSettings.getInstances(this).size() == 1) {
-                newWidgetId = InstanceSettings.getInstances(this).keySet().iterator().next();
+            if (newWidgetId == 0 && AllSettings.getInstances(this).size() == 1) {
+                newWidgetId = AllSettings.getInstances(this).keySet().iterator().next();
             }
             if (newWidgetId != 0) {
                 startActivity(WidgetConfigurationActivity.intentToStartMe(this, newWidgetId));
@@ -90,31 +91,31 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void updateScreen() {
         int messageResourceId = R.string.permissions_justification;
         if (permissionsGranted) {
-            if (InstanceSettings.getInstances(this).isEmpty()) {
+            if (AllSettings.getInstances(this).isEmpty()) {
                 messageResourceId = R.string.no_widgets_found;
             } else {
                 messageResourceId = R.string.select_a_widget_to_configure;
             }
         }
-        TextView message = ((TextView) this.findViewById(R.id.message));
+        TextView message = this.findViewById(R.id.message);
         if (message != null) {
             message.setText(messageResourceId);
         }
 
-        if (!InstanceSettings.getInstances(this).isEmpty() && permissionsGranted) {
+        if (!AllSettings.getInstances(this).isEmpty() && permissionsGranted) {
             fillWidgetList();
             listView.setVisibility(View.VISIBLE);
         } else {
             listView.setVisibility(View.GONE);
         }
 
-        Button goToHomeScreenButton = (Button) findViewById(R.id.go_to_home_screen_button);
+        Button goToHomeScreenButton = findViewById(R.id.go_to_home_screen_button);
         if (goToHomeScreenButton != null) {
             goToHomeScreenButton.setVisibility(permissionsGranted &&
-                    InstanceSettings.getInstances(this).isEmpty() ? View.VISIBLE : View.GONE);
+                    AllSettings.getInstances(this).isEmpty() ? View.VISIBLE : View.GONE);
         }
 
-        Button grantPermissionsButton = (Button) findViewById(R.id.grant_permissions);
+        Button grantPermissionsButton = findViewById(R.id.grant_permissions);
         if (grantPermissionsButton != null) {
             grantPermissionsButton.setVisibility(permissionsGranted ? View.GONE : View.VISIBLE);
         }
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     private void fillWidgetList() {
         final List<Map<String, String>> data = new ArrayList<>();
-        for (InstanceSettings settings : InstanceSettings.getInstances(this).values()) {
+        for (InstanceSettings settings : AllSettings.getInstances(this).values()) {
             Map<String, String> map = new HashMap<>();
             map.put(KEY_VISIBLE_NAME, settings.getWidgetInstanceName());
             map.put(KEY_ID, Integer.toString(settings.getWidgetId()));

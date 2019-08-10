@@ -16,6 +16,7 @@ import android.util.Log;
 import org.andstatus.todoagenda.BaseWidgetTest;
 import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -46,7 +47,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     private static final String[] ZONE_IDS = {"America/Los_Angeles", "Europe/Moscow", "Asia/Kuala_Lumpur", "UTC"};
     private volatile int queriesCount = 0;
     private final List<QueryResult> results = new CopyOnWriteArrayList<>();
-    private final JSONArray storedSettings;
+    private final JSONArray storedAllSettings;
     private final DateTimeZone storedZone;
     private final int numberOfOpenTaskSources;
 
@@ -68,7 +69,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     private MockCalendarContentProvider(Context context, int numberOfOpenTaskSources) {
         super(context);
-        storedSettings = InstanceSettings.toJson(getBaseContext(context));
+        storedAllSettings = AllSettings.toJson(getBaseContext(context));
         this.numberOfOpenTaskSources = numberOfOpenTaskSources;
         storedZone = DateTimeZone.getDefault();
     }
@@ -83,8 +84,8 @@ public class MockCalendarContentProvider extends MockContentProvider {
         DateTimeZone.setDefault(zone);
         Log.i(getClass().getSimpleName(), "Default Time zone set to " + zone);
 
-        if (InstanceSettings.getInstances(context).isEmpty()) {
-            InstanceSettings.save(context, widgetId.incrementAndGet());
+        if (AllSettings.getInstances(context).isEmpty()) {
+            AllSettings.saveFromApplicationPreferences(context, widgetId.incrementAndGet());
         }
 
         ApplicationPreferences.startEditing(context, widgetId.incrementAndGet());
@@ -97,19 +98,19 @@ public class MockCalendarContentProvider extends MockContentProvider {
         ApplicationPreferences.setActiveEventSources(context, sources);
         ApplicationPreferences.save(context, widgetId.get());
 
-        InstanceSettings settings = InstanceSettings.fromId(context, widgetId.get());
+        InstanceSettings settings = AllSettings.instanceFromId(context, widgetId.get());
         JSONObject json = settings.toJson();
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put(json);
-        InstanceSettings.loadFromTestData(context, jsonArray);
+        JSONArray allSettingsJsonArray = new JSONArray();
+        allSettingsJsonArray.put(json);
+        AllSettings.loadFromTestData(context, allSettingsJsonArray);
     }
 
     public void tearDown() throws JSONException {
         for(int id = WIDGET_ID_MIN; id <= getWidgetId(); id++) {
-            InstanceSettings.delete(getContext(), id);
+            AllSettings.delete(getContext(), id);
         }
         ApplicationPreferences.setWidgetId(getContext(), 0);
-        InstanceSettings.loadFromTestData(getBaseContext(getContext()), storedSettings);
+        AllSettings.loadFromTestData(getBaseContext(getContext()), storedAllSettings);
         DateUtil.setNow(null);
         DateTimeZone.setDefault(storedZone);
         EventAppWidgetProvider.updateAllWidgets(getBaseContext(getContext()));
@@ -193,7 +194,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     @NonNull
     public InstanceSettings getSettings() {
-        return InstanceSettings.fromId(getBaseContext(getContext()), getWidgetId());
+        return AllSettings.instanceFromId(getBaseContext(getContext()), getWidgetId());
     }
 
     public void clear() {

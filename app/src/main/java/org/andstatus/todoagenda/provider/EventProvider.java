@@ -3,6 +3,7 @@ package org.andstatus.todoagenda.provider;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.KeywordsFilter;
@@ -63,7 +64,7 @@ public class EventProvider {
 
     @NonNull
     public InstanceSettings getSettings() {
-        return InstanceSettings.fromId(context, widgetId);
+        return AllSettings.instanceFromId(context, widgetId);
     }
 
     protected int getAsOpaque(int color) {

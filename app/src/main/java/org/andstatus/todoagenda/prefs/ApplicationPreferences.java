@@ -68,7 +68,7 @@ public class ApplicationPreferences {
     }
 
     public static void startEditing(Context context, Integer widgetId) {
-        InstanceSettings settings = InstanceSettings.fromId(context, widgetId);
+        InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
         setWidgetId(context, widgetId == 0 ? settings.getWidgetId() : widgetId);
         setString(context, PREF_WIDGET_INSTANCE_NAME, settings.getWidgetInstanceName());
         setActiveEventSources(context, settings.getActiveEventSources());
@@ -102,12 +102,12 @@ public class ApplicationPreferences {
 
     public static void save(Context context, int wigdetId) {
         if (wigdetId != 0 && wigdetId == getWidgetId(context)) {
-            InstanceSettings.save(context, wigdetId);
+            AllSettings.saveFromApplicationPreferences(context, wigdetId);
         }
     }
 
     public static InstanceSettings currentSettings(Context context) {
-        return InstanceSettings.fromId(context, getWidgetId(context));
+        return AllSettings.instanceFromId(context, getWidgetId(context));
     }
 
     public static int getWidgetId(Context context) {

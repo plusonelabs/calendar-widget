@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -60,7 +61,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
 
     @NonNull
     private InstanceSettings getSettings() {
-        return InstanceSettings.fromId(context, widgetId);
+        return AllSettings.instanceFromId(context, widgetId);
     }
 
     public void onDataSetChanged() {

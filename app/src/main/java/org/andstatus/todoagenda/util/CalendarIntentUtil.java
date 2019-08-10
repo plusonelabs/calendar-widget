@@ -8,7 +8,6 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 

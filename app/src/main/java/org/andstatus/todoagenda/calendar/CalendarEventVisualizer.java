@@ -1,11 +1,9 @@
 package org.andstatus.todoagenda.calendar;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
-import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;

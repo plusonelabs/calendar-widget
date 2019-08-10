@@ -14,6 +14,7 @@ import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -51,14 +52,14 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
         for (int widgetId : appWidgetIds) {
-            InstanceSettings.delete(context, widgetId);
+            AllSettings.delete(context, widgetId);
         }
     }
 
     @Override
     public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int widgetId : appWidgetIds) {
-            InstanceSettings settings = InstanceSettings.fromId(baseContext, widgetId);
+            InstanceSettings settings = AllSettings.instanceFromId(baseContext, widgetId);
             AlarmReceiver.scheduleAlarm(settings.getHeaderThemeContext());
             RemoteViews rv = new RemoteViews(baseContext.getPackageName(), R.layout.widget);
             configureBackground(settings, rv);

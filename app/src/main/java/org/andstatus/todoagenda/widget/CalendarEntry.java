@@ -7,6 +7,7 @@ import android.text.format.DateUtils;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;

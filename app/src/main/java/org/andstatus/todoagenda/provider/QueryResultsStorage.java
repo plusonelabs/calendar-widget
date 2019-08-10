@@ -10,6 +10,7 @@ import android.util.Log;
 
 import org.andstatus.todoagenda.EventRemoteViewsFactory;
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
@@ -114,22 +115,22 @@ public class QueryResultsStorage {
         json.put(KEY_RESULTS_VERSION, RESULTS_VERSION);
         json.put(KEY_DEVICE_INFO, getDeviceInfo());
         json.put(KEY_APP_INFO, getAppInfo(context));
-        json.put(KEY_SETTINGS, InstanceSettings.fromId(context, widgetId).toJson());
-        if (results != null) {
-            JSONArray jsonArray = new JSONArray();
-            for (QueryResult result : results) {
-                if (result.getWidgetId() == widgetId) {
-                    jsonArray.put(result.toJson());
-                }
+        json.put(KEY_SETTINGS, AllSettings.instanceFromId(context, widgetId).toJson());
+
+        JSONArray jsonArray = new JSONArray();
+        for (QueryResult result : results) {
+            if (result.getWidgetId() == widgetId) {
+                jsonArray.put(result.toJson());
             }
-            json.put(KEY_RESULTS, jsonArray);
         }
+        json.put(KEY_RESULTS, jsonArray);
+
         return json;
     }
 
     static QueryResultsStorage fromTestData(Context context, JSONObject json) throws JSONException {
         InstanceSettings settings = InstanceSettings.fromJson(context, json.getJSONObject(KEY_SETTINGS));
-        InstanceSettings.getInstances(context).put(settings.getWidgetId(), settings);
+        AllSettings.getInstances(context).put(settings.getWidgetId(), settings);
         QueryResultsStorage results = new QueryResultsStorage();
         JSONArray jsonResults = json.getJSONArray(KEY_RESULTS);
         for (int ind = 0; ind < jsonResults.length(); ind++) {

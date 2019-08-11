@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -40,6 +41,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(this.getClass().getName(), "Received intent: " + intent);
+        AllSettings.ensureLoadedFromFiles(context, false);
         String action = intent == null
                 ? ""
                 : (intent.getAction() == null ? "" : intent.getAction());
@@ -48,7 +50,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
             case Intent.ACTION_TIME_CHANGED:
             case Intent.ACTION_DATE_CHANGED:
             case Intent.ACTION_TIMEZONE_CHANGED:
-                EventAppWidgetProvider.updateAllWidgets(context);
+                EventAppWidgetProvider.updateWidgetsWithData(context);
                 break;
             default:
                 EventAppWidgetProvider.updateEventList(context);

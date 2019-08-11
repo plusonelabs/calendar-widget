@@ -46,7 +46,8 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
                 dayHeader.getStartDay().plusDays(1).isBefore(DateUtil.now(getSettings().getTimeZone())) ?
                         getSettings().getPastEventsBackgroundColor() : Color.TRANSPARENT);
         setBackgroundColorFromAttr(getContext(), rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
-        setPadding(getSettings(), rv, R.id.day_header_title, 0, R.dimen.day_header_padding_top,
+        setPadding(getSettings(), rv, R.id.day_header_title,
+                R.dimen.day_header_padding_left, R.dimen.day_header_padding_top,
                 R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
         Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());
         rv.setOnClickFillInIntent(R.id.day_header, intent);

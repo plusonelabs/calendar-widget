@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.Theme;
-import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 
 import java.util.List;
@@ -119,9 +118,8 @@ public class ApplicationPreferences {
     }
 
     public static List<EventSource> getActiveEventSources(Context context) {
-        List<EventSource> storedSources = EventSource.fromStringSet(PreferenceManager.getDefaultSharedPreferences(context)
+        return EventSource.fromStringSet(PreferenceManager.getDefaultSharedPreferences(context)
                 .getStringSet(PREF_ACTIVE_SOURCES, null));
-        return storedSources.isEmpty() ? EventProviderType.getAvailableSources() : storedSources;
     }
 
     public static void setActiveEventSources(Context context, List<EventSource> sources) {

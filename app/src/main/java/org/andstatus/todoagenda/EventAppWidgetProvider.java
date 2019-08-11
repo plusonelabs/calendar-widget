@@ -44,8 +44,10 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     public static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
 
     public static int[] getWidgetIds(Context context) {
-        return AppWidgetManager.getInstance(context)
-                .getAppWidgetIds(new ComponentName(context, EventAppWidgetProvider.class));
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        return appWidgetManager == null
+            ? new int[]{}
+            : appWidgetManager.getAppWidgetIds(new ComponentName(context, EventAppWidgetProvider.class));
     }
 
     @Override
@@ -174,15 +176,36 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         setTextColorFromAttr(settings.getEntryThemeContext(), rv, emptyViewId, R.attr.eventEntryTitle);
     }
 
-    public static void updateEventList(Context context) {
-        AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(getWidgetIds(context), R.id.event_list);
+    public static void updateWidgetsWithData(Context context) {
+        updateAllWidgets(context);
+        updateEventList(context);
     }
 
-    public static void updateAllWidgets(Context context) {
+    public static void updateEventList(Context context) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        if (appWidgetManager != null) {
+            appWidgetManager.notifyAppWidgetViewDataChanged(getWidgetIds(context), R.id.event_list);
+        }
+    }
+
+    private static void updateAllWidgets(Context context) {
         Intent intent = new Intent(context, EventAppWidgetProvider.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, getWidgetIds(context));
         context.sendBroadcast(intent);
+    }
+
+    public static void updateWidgetWithData(Context context, int widgetId) {
+        int[] idAsArray = {widgetId};
+        Intent intent = new Intent(context, EventAppWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, idAsArray);
+        context.sendBroadcast(intent);
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        if (appWidgetManager != null) {
+            appWidgetManager.notifyAppWidgetViewDataChanged(idAsArray, R.id.event_list);
+        }
     }
 
 }

@@ -7,9 +7,10 @@
     <dimen name="event_entry_title">18dp</dimen>
     <dimen name="event_entry_details">14dp</dimen>
     <dimen name="entry_bottom_padding">2dp</dimen>
-    <dimen name="day_header_padding_bottom">2dp</dimen>
-    <dimen name="day_header_padding_right">10dp</dimen>
+    <dimen name="day_header_padding_left">12dp</dimen>
     <dimen name="day_header_padding_top">12dp</dimen>
+    <dimen name="day_header_padding_right">10dp</dimen>
+    <dimen name="day_header_padding_bottom">2dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

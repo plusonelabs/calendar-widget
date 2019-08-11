@@ -38,7 +38,7 @@ public class SettingsStorage {
     }
 
     @NonNull
-    public static JSONObject loadJson(Context context, String key) throws IOException {
+    public static JSONObject loadJsonFromFile(Context context, String key) throws IOException {
         return getJSONObject(jsonFile(context, key));
     }
 

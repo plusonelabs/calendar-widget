@@ -111,7 +111,7 @@ public class InstanceSettings {
         }
         if (json.has(PREF_ACTIVE_SOURCES)) {
             JSONArray jsonArray = json.getJSONArray(PREF_ACTIVE_SOURCES);
-            settings.activeEventSources = EventSource.fromJsonArray(jsonArray);
+            settings.setActiveEventSources(EventSource.fromJsonArray(jsonArray));
         }
         if (json.has(PREF_EVENT_RANGE)) {
             settings.eventRange = json.getInt(PREF_EVENT_RANGE);
@@ -196,7 +196,7 @@ public class InstanceSettings {
         InstanceSettings settings = new InstanceSettings(context, widgetId,
                 ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
                         ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, "")));
-        settings.activeEventSources = ApplicationPreferences.getActiveEventSources(context);
+        settings.setActiveEventSources(ApplicationPreferences.getActiveEventSources(context));
         settings.eventRange = ApplicationPreferences.getEventRange(context);
         settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);
         settings.fillAllDayEvents = ApplicationPreferences.getFillAllDayEvents(context);
@@ -241,6 +241,11 @@ public class InstanceSettings {
     }
 
     void save() {
+        if (widgetId == 0) {
+            logMe(InstanceSettings.class, "Skipped save", widgetId);
+            return;
+        }
+        logMe(InstanceSettings.class, "save", widgetId);
         try {
             saveJson(context, getStorageKey(widgetId), toJson());
         } catch (IOException e) {
@@ -253,7 +258,7 @@ public class InstanceSettings {
         try {
             json.put(PREF_WIDGET_ID, widgetId);
             json.put(PREF_WIDGET_INSTANCE_NAME, widgetInstanceName);
-            json.put(PREF_ACTIVE_SOURCES, EventSource.toJsonArray(activeEventSources));
+            json.put(PREF_ACTIVE_SOURCES, EventSource.toJsonArray(getActiveEventSources()));
             json.put(PREF_EVENT_RANGE, eventRange);
             json.put(PREF_EVENTS_ENDED, eventsEnded.save());
             json.put(PREF_FILL_ALL_DAY, fillAllDayEvents);
@@ -297,16 +302,22 @@ public class InstanceSettings {
         return widgetInstanceName;
     }
 
+    public void setActiveEventSources(List<EventSource> activeEventSources) {
+        this.activeEventSources = activeEventSources;
+    }
+
     public List<EventSource> getActiveEventSources(EventProviderType type) {
         List<EventSource> sources = new ArrayList<>();
-        for(EventSource source: activeEventSources) {
+        for(EventSource source: getActiveEventSources()) {
             if (source.providerType == type) sources.add(source);
         }
         return sources;
     }
 
-    List<EventSource> getActiveEventSources() {
-        return activeEventSources;
+    public List<EventSource> getActiveEventSources() {
+        return activeEventSources.isEmpty()
+                ? EventProviderType.getAvailableSources()
+                : activeEventSources;
     }
 
     public int getEventRange() {
@@ -448,5 +459,9 @@ public class InstanceSettings {
 
     public String getDayHeaderAlignment() {
         return dayHeaderAlignment;
+    }
+
+    public void logMe(Class tag, String message, int widgetId) {
+        Log.v(tag.getSimpleName(), message + ", widgetId:" + widgetId + "\n" + toJson());
     }
 }

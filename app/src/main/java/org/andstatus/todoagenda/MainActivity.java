@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (grantPermissionsButton != null) {
             grantPermissionsButton.setVisibility(permissionsGranted ? View.GONE : View.VISIBLE);
         }
+        EventAppWidgetProvider.updateWidgetsWithData(this);
     }
 
     private void fillWidgetList() {
@@ -153,11 +154,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        EventProviderType.initialize(this, true);
+        AllSettings.ensureLoadedFromFiles(this, true);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         checkPermissions();
         updateScreen();
-        EventAppWidgetProvider.updateEventList(this);
+        EventAppWidgetProvider.updateWidgetsWithData(this);
     }
 
     public void onHomeButtonClick(View view) {

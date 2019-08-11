@@ -13,11 +13,4 @@ public class EventDetailsPreferencesFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences_event_details);
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        EventAppWidgetProvider.updateEventList(getActivity());
-        EventAppWidgetProvider.updateAllWidgets(getActivity());
-    }
 }

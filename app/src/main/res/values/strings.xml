@@ -99,6 +99,10 @@
     <string name="appearance_past_events_background_color_desc">Adjust background color of past events</string>
     <string name="appearance_header_theme_title">Widget header shading</string>
     <string name="appearance_header_theme_desc">Show the header of the widget in dark or light shade</string>
+    <string name="widget_header_background_color_desc">Adjust color of the widget header. Transparent by default</string>
+    <string name="widget_header_background_color_title">Widget header background color</string>
+    <string name="day_header_theme_title">Day header shading</string>
+    <string name="day_header_theme_desc">Show day header text in dark or light shade</string>
     <string name="appearance_entries_theme_title">Event shading</string>
     <string name="appearance_entries_theme_desc">Show event text in dark or light shade</string>
     <string name="appearance_theme_black">White</string>

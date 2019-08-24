@@ -32,6 +32,8 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DATE_FO
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DATE_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_THEME;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_THEME_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENTS_ENDED;
@@ -40,8 +42,6 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_R
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_RANGE_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_HEADER_THEME;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_HEADER_THEME_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_HIDE_BASED_ON_KEYWORDS;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_INDICATE_ALERTS;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_INDICATE_RECURRING;
@@ -62,6 +62,10 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PA
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_BACKGROUND_COLOR;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_THEME;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_THEME_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME;
 import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
@@ -72,8 +76,9 @@ import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
  */
 public class InstanceSettings {
     private final Context context;
+    private volatile ContextThemeWrapper widgetHeaderThemeContext = null;
+    private volatile ContextThemeWrapper dayHeaderThemeContext = null;
     private volatile ContextThemeWrapper entryThemeContext = null;
-    private volatile ContextThemeWrapper headerThemeContext = null;
 
     final int widgetId;
     private final String widgetInstanceName;
@@ -82,6 +87,7 @@ public class InstanceSettings {
     private EndedSomeTimeAgo eventsEnded = EndedSomeTimeAgo.NONE;
     private boolean fillAllDayEvents = PREF_FILL_ALL_DAY_DEFAULT;
     private String hideBasedOnKeywords = "";
+    private int widgetHeaderBackgroundColor = PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
     private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
     private boolean showDaysWithoutEvents = false;
     private boolean showDayHeaders = true;
@@ -97,9 +103,10 @@ public class InstanceSettings {
     private boolean showOnlyClosestInstanceOfRecurringEvent = false;
     private boolean indicateAlerts = true;
     private boolean indicateRecurring = false;
-    private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
-    private String headerTheme = PREF_HEADER_THEME_DEFAULT;
     private boolean showWidgetHeader = true;
+    private String widgetHeaderTheme = PREF_WIDGET_HEADER_THEME_DEFAULT;
+    private String dayHeaderTheme = PREF_DAY_HEADER_THEME_DEFAULT;
+    private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
     private int backgroundColor = PREF_BACKGROUND_COLOR_DEFAULT;
     private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
     private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
@@ -125,6 +132,9 @@ public class InstanceSettings {
         }
         if (json.has(PREF_HIDE_BASED_ON_KEYWORDS)) {
             settings.hideBasedOnKeywords = json.getString(PREF_HIDE_BASED_ON_KEYWORDS);
+        }
+        if (json.has(PREF_WIDGET_HEADER_BACKGROUND_COLOR)) {
+            settings.widgetHeaderBackgroundColor = json.getInt(PREF_WIDGET_HEADER_BACKGROUND_COLOR);
         }
         if (json.has(PREF_PAST_EVENTS_BACKGROUND_COLOR)) {
             settings.pastEventsBackgroundColor = json.getInt(PREF_PAST_EVENTS_BACKGROUND_COLOR);
@@ -172,14 +182,17 @@ public class InstanceSettings {
         if (json.has(PREF_INDICATE_RECURRING)) {
             settings.indicateRecurring = json.getBoolean(PREF_INDICATE_RECURRING);
         }
-        if (json.has(PREF_ENTRY_THEME)) {
-            settings.entryTheme = json.getString(PREF_ENTRY_THEME);
-        }
-        if (json.has(PREF_HEADER_THEME)) {
-            settings.headerTheme = json.getString(PREF_HEADER_THEME);
+        if (json.has(PREF_WIDGET_HEADER_THEME)) {
+            settings.widgetHeaderTheme = json.getString(PREF_WIDGET_HEADER_THEME);
         }
         if (json.has(PREF_SHOW_WIDGET_HEADER)) {
             settings.showWidgetHeader = json.getBoolean(PREF_SHOW_WIDGET_HEADER);
+        }
+        if (json.has(PREF_DAY_HEADER_THEME)) {
+            settings.dayHeaderTheme = json.getString(PREF_DAY_HEADER_THEME);
+        }
+        if (json.has(PREF_ENTRY_THEME)) {
+            settings.entryTheme = json.getString(PREF_ENTRY_THEME);
         }
         if (json.has(PREF_BACKGROUND_COLOR)) {
             settings.backgroundColor = json.getInt(PREF_BACKGROUND_COLOR);
@@ -202,6 +215,7 @@ public class InstanceSettings {
         settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);
         settings.fillAllDayEvents = ApplicationPreferences.getFillAllDayEvents(context);
         settings.hideBasedOnKeywords = ApplicationPreferences.getHideBasedOnKeywords(context);
+        settings.widgetHeaderBackgroundColor = ApplicationPreferences.getWidgetHeaderBackgroundColor(context);
         settings.pastEventsBackgroundColor = ApplicationPreferences.getPastEventsBackgroundColor(context);
         settings.showDaysWithoutEvents = ApplicationPreferences.getShowDaysWithoutEvents(context);
         settings.showDayHeaders = ApplicationPreferences.getShowDayHeaders(context);
@@ -218,9 +232,10 @@ public class InstanceSettings {
                 .getShowOnlyClosestInstanceOfRecurringEvent(context);
         settings.indicateAlerts = ApplicationPreferences.getBoolean(context, PREF_INDICATE_ALERTS, true);
         settings.indicateRecurring = ApplicationPreferences.getBoolean(context, PREF_INDICATE_RECURRING, false);
-        settings.entryTheme = ApplicationPreferences.getString(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
-        settings.headerTheme = ApplicationPreferences.getString(context, PREF_HEADER_THEME, PREF_HEADER_THEME_DEFAULT);
+        settings.widgetHeaderTheme = ApplicationPreferences.getString(context, PREF_WIDGET_HEADER_THEME, PREF_WIDGET_HEADER_THEME_DEFAULT);
         settings.showWidgetHeader = ApplicationPreferences.getBoolean(context, PREF_SHOW_WIDGET_HEADER, true);
+        settings.dayHeaderTheme = ApplicationPreferences.getString(context, PREF_DAY_HEADER_THEME, PREF_DAY_HEADER_THEME_DEFAULT);
+        settings.entryTheme = ApplicationPreferences.getString(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
         settings.backgroundColor = ApplicationPreferences.getInt(context, PREF_BACKGROUND_COLOR,
                 PREF_BACKGROUND_COLOR_DEFAULT);
         settings.textSizeScale = ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE,
@@ -264,6 +279,7 @@ public class InstanceSettings {
             json.put(PREF_EVENTS_ENDED, eventsEnded.save());
             json.put(PREF_FILL_ALL_DAY, fillAllDayEvents);
             json.put(PREF_HIDE_BASED_ON_KEYWORDS, hideBasedOnKeywords);
+            json.put(PREF_WIDGET_HEADER_BACKGROUND_COLOR, widgetHeaderBackgroundColor);
             json.put(PREF_PAST_EVENTS_BACKGROUND_COLOR, pastEventsBackgroundColor);
             json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, showDaysWithoutEvents);
             json.put(PREF_SHOW_DAY_HEADERS, showDayHeaders);
@@ -279,9 +295,10 @@ public class InstanceSettings {
             json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, showOnlyClosestInstanceOfRecurringEvent);
             json.put(PREF_INDICATE_ALERTS, indicateAlerts);
             json.put(PREF_INDICATE_RECURRING, indicateRecurring);
-            json.put(PREF_ENTRY_THEME, entryTheme);
-            json.put(PREF_HEADER_THEME, headerTheme);
             json.put(PREF_SHOW_WIDGET_HEADER, showWidgetHeader);
+            json.put(PREF_WIDGET_HEADER_THEME, widgetHeaderTheme);
+            json.put(PREF_DAY_HEADER_THEME, dayHeaderTheme);
+            json.put(PREF_ENTRY_THEME, entryTheme);
             json.put(PREF_BACKGROUND_COLOR, backgroundColor);
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
@@ -335,6 +352,11 @@ public class InstanceSettings {
 
     public String getHideBasedOnKeywords() {
         return hideBasedOnKeywords;
+    }
+
+
+    public int getWidgetHeaderBackgroundColor() {
+        return widgetHeaderBackgroundColor;
     }
 
     public int getPastEventsBackgroundColor() {
@@ -424,15 +446,26 @@ public class InstanceSettings {
         return indicateRecurring;
     }
 
-    public String getHeaderTheme() {
-        return headerTheme;
+    public String getWidgetHeaderTheme() {
+        return widgetHeaderTheme;
     }
 
-    public ContextThemeWrapper getHeaderThemeContext() {
-        if (headerThemeContext == null) {
-            headerThemeContext = new ContextThemeWrapper(context, themeNameToResId(headerTheme));
+    public ContextThemeWrapper getWidgetHeaderThemeContext() {
+        if (widgetHeaderThemeContext == null) {
+            widgetHeaderThemeContext = new ContextThemeWrapper(context, themeNameToResId(widgetHeaderTheme));
         }
-        return headerThemeContext;
+        return widgetHeaderThemeContext;
+    }
+
+    public String getDayHeaderTheme() {
+        return dayHeaderTheme;
+    }
+
+    public ContextThemeWrapper getDayHeaderThemeContext() {
+        if (dayHeaderThemeContext == null) {
+            dayHeaderThemeContext = new ContextThemeWrapper(context, themeNameToResId(dayHeaderTheme));
+        }
+        return dayHeaderThemeContext;
     }
 
     public String getEntryTheme() {

@@ -68,7 +68,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     public void onDataSetChanged() {
         context.setTheme(themeNameToResId(getSettings().getEntryTheme()));
         visualizers.clear();
-        visualizers.add(new DayHeaderVisualizer(context, widgetId));
+        visualizers.add(new DayHeaderVisualizer(getSettings().getDayHeaderThemeContext(), widgetId));
         for (EventProviderType type : EventProviderType.values()) {
             if (type.hasEventSources()) {
                 visualizers.add(type.getVisualizer(context, widgetId));

@@ -34,6 +34,7 @@ import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalenda
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarPendingIntent;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setAlpha;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setBackgroundColor;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setColorFilter;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setImageFromAttr;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
@@ -63,7 +64,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context baseContext, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int widgetId : appWidgetIds) {
             InstanceSettings settings = AllSettings.instanceFromId(baseContext, widgetId);
-            AlarmReceiver.scheduleAlarm(settings.getHeaderThemeContext());
+            AlarmReceiver.scheduleAlarm(settings.getWidgetHeaderThemeContext());
             RemoteViews rv = new RemoteViews(baseContext.getPackageName(), R.layout.widget);
             configureBackground(settings, rv);
             configureWidgetHeader(settings, rv);
@@ -74,6 +75,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
     private void configureBackground(InstanceSettings settings, RemoteViews rv) {
         if (settings.getShowWidgetHeader()) {
+            setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
             rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
         } else {
             rv.setViewVisibility(R.id.action_bar, View.GONE);
@@ -97,14 +99,14 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         String formattedDate = DateUtil.createDateString(settings,
                 DateUtil.now(settings.getTimeZone())).toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.calendar_current_date, formattedDate);
-        setTextColorFromAttr(settings.getHeaderThemeContext(), rv, R.id.calendar_current_date, R.attr.header);
+        setTextColorFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.calendar_current_date, R.attr.header);
     }
 
     private void setActionIcons(InstanceSettings settings, RemoteViews rv) {
-        setImageFromAttr(settings.getHeaderThemeContext(), rv, R.id.add_event, R.attr.header_action_add_event);
-        setImageFromAttr(settings.getHeaderThemeContext(), rv, R.id.refresh, R.attr.header_action_refresh);
-        setImageFromAttr(settings.getHeaderThemeContext(), rv, R.id.overflow_menu, R.attr.header_action_overflow);
-        int themeId = themeNameToResId(settings.getHeaderTheme());
+        setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.add_event, R.attr.header_action_add_event);
+        setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.refresh, R.attr.header_action_refresh);
+        setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.overflow_menu, R.attr.header_action_overflow);
+        int themeId = themeNameToResId(settings.getWidgetHeaderTheme());
         int alpha = 255;
         if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
             alpha = 154;

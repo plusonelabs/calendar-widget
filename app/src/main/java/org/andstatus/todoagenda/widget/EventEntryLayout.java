@@ -42,16 +42,16 @@ public enum EventEntryLayout {
 
         @Override
         protected void setEventDate(CalendarEntry entry, RemoteViews rv) {
-            if (entry.getSettings().getShowDayHeaders()) {
-                rv.setViewVisibility(R.id.event_entry_date, View.GONE);
-                rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
-            } else {
+            if (entry.getSettings().getShowNumberOfDaysToEvent()) {
                 int days = entry.getDaysFromToday();
                 int viewToShow = days < -1 || days > 1 ? R.id.event_entry_date_right : R.id.event_entry_date;
                 int viewToHide = viewToShow == R.id.event_entry_date ? R.id.event_entry_date_right : R.id.event_entry_date;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
                 rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(entry.getSettings().getEntryThemeContext(), days));
+            } else {
+                rv.setViewVisibility(R.id.event_entry_date, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
             }
         }
 

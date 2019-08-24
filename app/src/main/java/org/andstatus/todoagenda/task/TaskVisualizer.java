@@ -41,7 +41,12 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
     }
 
     private void setColor(TaskEntry entry, RemoteViews rv) {
-        rv.setTextColor(R.id.event_entry_icon, entry.getEvent().getColor());
+        if (getSettings().getShowEventIcon()) {
+            rv.setViewVisibility(R.id.event_entry_icon, View.VISIBLE);
+            rv.setTextColor(R.id.event_entry_icon, entry.getEvent().getColor());
+        } else {
+            rv.setViewVisibility(R.id.event_entry_icon, View.GONE);
+        }
         if (entry.getEvent().getDueDate().isBefore(DateUtil.now(entry.getEvent().getDueDate().getZone()))) {
             setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
         } else {
@@ -55,11 +60,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
             rv.setViewVisibility(R.id.task_one_line_days_right, View.GONE);
             rv.setViewVisibility(R.id.task_one_line_spacer, View.GONE);
         } else {
-            if (getSettings().getShowDayHeaders()) {
-                rv.setViewVisibility(R.id.task_one_line_days, View.GONE);
-                rv.setViewVisibility(R.id.task_one_line_days_right, View.GONE);
-                rv.setViewVisibility(R.id.task_one_line_spacer, View.VISIBLE);
-            } else {
+            if (getSettings().getShowNumberOfDaysToEvent()) {
                 int days = entry.getDaysFromToday();
                 int viewToShow = days < -1 || days > 1 ? R.id.task_one_line_days_right : R.id.task_one_line_days;
                 int viewToHide = viewToShow == R.id.task_one_line_days ? R.id.task_one_line_days_right : R.id.task_one_line_days;
@@ -67,13 +68,19 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
                 rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(getSettings().getEntryThemeContext(), days));
                 rv.setViewVisibility(R.id.task_one_line_spacer, View.VISIBLE);
+            } else {
+                rv.setViewVisibility(R.id.task_one_line_days, View.GONE);
+                rv.setViewVisibility(R.id.task_one_line_days_right, View.GONE);
+                rv.setViewVisibility(R.id.task_one_line_spacer, View.VISIBLE);
             }
         }
     }
 
     private void setTitle(TaskEntry entry, RemoteViews rv) {
         rv.setTextViewText(R.id.event_entry_title, entry.getTitle());
-        setTextSize(getSettings(), rv, R.id.event_entry_icon, R.dimen.event_entry_title);
+        if (getSettings().getShowEventIcon()) {
+            setTextSize(getSettings(), rv, R.id.event_entry_icon, R.dimen.event_entry_title);
+        }
         setTextSize(getSettings(), rv, R.id.event_entry_title, R.dimen.event_entry_title);
         setTextColorFromAttr(getSettings().getEntryThemeContext(), rv, R.id.event_entry_title, R.attr.eventEntryTitle);
         setMultiline(rv, R.id.event_entry_title, getSettings().isTitleMultiline());

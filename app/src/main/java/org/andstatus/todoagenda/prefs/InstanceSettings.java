@@ -54,8 +54,10 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DA
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DAY_HEADERS;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_END_TIME;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_END_TIME_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_EVENT_ICON;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_LOCATION;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_LOCATION_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
@@ -93,6 +95,8 @@ public class InstanceSettings {
     private boolean showDayHeaders = true;
     private boolean showPastEventsUnderOneHeader = false;
     private boolean showPastEventsWithDefaultColor = false;
+    private boolean showNumberOfDaysToEvent = true;
+    private boolean showEventIcon = true;
     private boolean showEndTime = PREF_SHOW_END_TIME_DEFAULT;
     private boolean showLocation = PREF_SHOW_LOCATION_DEFAULT;
     private String dateFormat = PREF_DATE_FORMAT_DEFAULT;
@@ -150,6 +154,12 @@ public class InstanceSettings {
         }
         if (json.has(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR)) {
             settings.showPastEventsWithDefaultColor = json.getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR);
+        }
+        if (json.has(PREF_SHOW_EVENT_ICON)) {
+            settings.showEventIcon = json.getBoolean(PREF_SHOW_EVENT_ICON);
+        }
+        if (json.has(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT)) {
+            settings.showNumberOfDaysToEvent = json.getBoolean(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT);
         }
         if (json.has(PREF_SHOW_END_TIME)) {
             settings.showEndTime = json.getBoolean(PREF_SHOW_END_TIME);
@@ -221,6 +231,8 @@ public class InstanceSettings {
         settings.showDayHeaders = ApplicationPreferences.getShowDayHeaders(context);
         settings.showPastEventsUnderOneHeader = ApplicationPreferences.getShowPastEventsUnderOneHeader(context);
         settings.showPastEventsWithDefaultColor = ApplicationPreferences.getShowPastEventsWithDefaultColor(context);
+        settings.showEventIcon = ApplicationPreferences.getShowEventIcon(context);
+        settings.showNumberOfDaysToEvent = ApplicationPreferences.getShowNumberOfDaysToEvent(context);
         settings.showEndTime = ApplicationPreferences.getShowEndTime(context);
         settings.showLocation = ApplicationPreferences.getShowLocation(context);
         settings.dateFormat = ApplicationPreferences.getDateFormat(context);
@@ -285,6 +297,8 @@ public class InstanceSettings {
             json.put(PREF_SHOW_DAY_HEADERS, showDayHeaders);
             json.put(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, showPastEventsUnderOneHeader);
             json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, showPastEventsWithDefaultColor);
+            json.put(PREF_SHOW_EVENT_ICON, showEventIcon);
+            json.put(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, showNumberOfDaysToEvent);
             json.put(PREF_SHOW_END_TIME, showEndTime);
             json.put(PREF_SHOW_LOCATION, showLocation);
             json.put(PREF_DATE_FORMAT, dateFormat);
@@ -377,6 +391,14 @@ public class InstanceSettings {
 
     public boolean getShowPastEventsWithDefaultColor() {
         return showPastEventsWithDefaultColor;
+    }
+
+    public boolean getShowNumberOfDaysToEvent() {
+        return showNumberOfDaysToEvent;
+    }
+
+    public boolean getShowEventIcon() {
+        return showEventIcon;
     }
 
     public boolean getShowEndTime() {

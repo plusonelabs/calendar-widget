@@ -54,6 +54,8 @@ public class ApplicationPreferences {
     static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
     static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
     static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
+    static final String PREF_SHOW_EVENT_ICON = "showEventIcon";
+    static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent";
     static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
     static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
     static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
@@ -86,6 +88,8 @@ public class ApplicationPreferences {
         setShowDayHeaders(context, settings.getShowDayHeaders());
         setShowPastEventsUnderOneHeader(context, settings.getShowPastEventsUnderOneHeader());
         setShowPastEventsWithDefaultColor(context, settings.getShowPastEventsWithDefaultColor());
+        setShowEventIcon(context, settings.getShowEventIcon());
+        setShowNumberOfDaysToEvent(context, settings.getShowNumberOfDaysToEvent());
         setBoolean(context, PREF_SHOW_END_TIME, settings.getShowEndTime());
         setBoolean(context, PREF_SHOW_LOCATION, settings.getShowLocation());
         setString(context, PREF_DATE_FORMAT, settings.getDateFormat());
@@ -208,6 +212,24 @@ public class ApplicationPreferences {
 
     private static void setShowPastEventsUnderOneHeader(Context context, boolean value) {
         setBoolean(context, PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, value);
+    }
+
+    public static boolean getShowEventIcon(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_EVENT_ICON, false);
+    }
+
+    public static boolean getShowNumberOfDaysToEvent(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, false);
+    }
+
+    public static void setShowEventIcon(Context context, boolean value) {
+        setBoolean(context, PREF_SHOW_EVENT_ICON, value);
+    }
+
+    public static void setShowNumberOfDaysToEvent(Context context, boolean value) {
+        setBoolean(context, PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, value);
     }
 
     public static boolean getShowPastEventsWithDefaultColor(Context context) {

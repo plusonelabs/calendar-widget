@@ -90,6 +90,10 @@
     <string name="appearance_display_header_desc">Show the date and settings header</string>
     <string name="show_past_events_under_one_header_title">Header for past/due events</string>
     <string name="show_past_events_under_one_header_desc">Show all past/due events under one "Past and due" header</string>
+    <string name="show_event_icon_title">Show event icon</string>
+    <string name="show_event_icon_desc">Show Calendar color bar / Task icon for event</string>
+    <string name="show_number_of_days_to_event_title">Show number of days to event</string>
+    <string name="show_number_of_days_to_event_desc">Show column with a number of days to event in the \"All in one row\" event layout</string>
 
     <!-- Preference header: Colors -->
     <string name="appearance_group_color_title">Colors</string>

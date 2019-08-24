@@ -52,6 +52,20 @@
         android:title="@string/pref_event_entry_layout_title" />
 
     <CheckBoxPreference
+        android:key="showEventIcon"
+        android:defaultValue="true"
+        android:summary="@string/show_event_icon_desc"
+        android:title="@string/show_event_icon_title">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
+        android:key="showNumberOfDaysToEvent"
+        android:defaultValue="true"
+        android:summary="@string/show_number_of_days_to_event_desc"
+        android:title="@string/show_number_of_days_to_event_title">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
         android:key="multiline_title"
         android:defaultValue="false"
         android:summary="@string/appearance_multiline_title_desc"

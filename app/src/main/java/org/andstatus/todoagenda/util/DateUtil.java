@@ -1,7 +1,6 @@
 package org.andstatus.todoagenda.util;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -13,6 +12,8 @@ import org.joda.time.DateTimeZone;
 
 import java.util.Formatter;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 public class DateUtil {
 

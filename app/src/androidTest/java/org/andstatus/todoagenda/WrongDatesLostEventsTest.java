@@ -5,8 +5,13 @@ import android.util.Log;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.json.JSONException;
+import org.junit.Test;
 
 import java.io.IOException;
+
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -16,9 +21,10 @@ public class WrongDatesLostEventsTest extends BaseWidgetTest {
     /**
      * https://github.com/plusonelabs/calendar-widget/issues/205
      */
+    @Test
     public void testIssue205() throws IOException, JSONException {
         final String method = "testIssue205";
-        QueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.wrong_dates_lost_events);
         provider.addResults(inputs.getResults());
         Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());

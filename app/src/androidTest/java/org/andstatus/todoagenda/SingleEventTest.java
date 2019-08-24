@@ -6,6 +6,11 @@ import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -14,6 +19,7 @@ public class SingleEventTest extends BaseWidgetTest {
 
     private int eventId = 0;
 
+    @Test
     public void testEventAttributes() {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         DateUtil.setNow(today.plusHours(10));
@@ -35,6 +41,7 @@ public class SingleEventTest extends BaseWidgetTest {
         assertOneEvent(event, true);
     }
 
+    @Test
     public void testAlldayEventAttributes() {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         DateUtil.setNow(today.plusHours(10));
@@ -53,6 +60,7 @@ public class SingleEventTest extends BaseWidgetTest {
     }
 
 
+    @Test
     public void testAlldayEventMillis() {
         DateTime today = DateUtil.now(DateTimeZone.UTC).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),

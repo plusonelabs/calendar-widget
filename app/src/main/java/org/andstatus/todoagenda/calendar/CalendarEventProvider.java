@@ -10,7 +10,6 @@ import android.os.Build;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -29,6 +28,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class CalendarEventProvider extends EventProvider {
     private static final String[] EVENT_SOURCES_PROJECTION = new String[]{CalendarContract.Calendars._ID,

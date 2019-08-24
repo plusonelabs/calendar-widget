@@ -11,8 +11,15 @@ import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Test;
 
 import java.io.IOException;
+
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests of the Testing framework itself
@@ -26,21 +33,23 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     private long eventId = 0;
 
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         QueryResultsStorage.setNeedToStoreResults(true);
     }
 
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         QueryResultsStorage.setNeedToStoreResults(false);
         super.tearDown();
     }
 
+    @Test
     public void testTestMode() {
         assertTrue("isTestMode should be true", PermissionsUtil.isTestMode());
     }
 
+    @Test
     public void testTwoEventsToday() {
         QueryResult input1 = addOneResult("");
         QueryResult input2 = addOneResult("SOMETHING=1");
@@ -111,8 +120,9 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
         return result;
     }
 
+    @Test
     public void testJsonToAndFrom() throws IOException, JSONException {
-        QueryResultsStorage inputs1 = provider.loadResults(getInstrumentation().getContext(),
+        QueryResultsStorage inputs1 = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.birthday);
         JSONObject jsonOutput = inputs1.toJson(provider.getContext(), provider.getWidgetId());
         QueryResultsStorage inputs2 = QueryResultsStorage.fromTestData(provider.getContext(), jsonOutput);

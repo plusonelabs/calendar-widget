@@ -6,7 +6,6 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 
-import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.R;
 
 public class EventFiltersPreferencesFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {

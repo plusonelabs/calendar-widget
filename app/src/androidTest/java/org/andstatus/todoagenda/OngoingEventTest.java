@@ -5,6 +5,12 @@ import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -16,6 +22,7 @@ public class OngoingEventTest extends BaseWidgetTest {
     /**
      * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/199">Issue 199</a>
      */
+    @Test
     public void testTodaysOngoingEvent() {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
@@ -45,6 +52,7 @@ public class OngoingEventTest extends BaseWidgetTest {
     /**
      * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/199">Issue 199</a>
      */
+    @Test
     public void testYesterdaysOngoingEvent() {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
@@ -73,6 +81,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         assertEquals("End Time didn't change for yesterday's event", event.getEndDate(), entry.getEndDate());
     }
 
+    @Test
     public void testEventWhichCarryOverToTheNextDay() {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),

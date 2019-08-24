@@ -1,7 +1,5 @@
 package org.andstatus.todoagenda.prefs;
 
-import android.support.annotation.NonNull;
-
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.json.JSONArray;
 
@@ -11,6 +9,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import androidx.annotation.NonNull;
 
 public class EventSource {
     public final static EventSource EMPTY = new EventSource(EventProviderType.EMPTY, 0, "Empty", "", 0);

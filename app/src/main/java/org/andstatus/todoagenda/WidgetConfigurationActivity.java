@@ -7,12 +7,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.support.annotation.NonNull;
 
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class WidgetConfigurationActivity extends PreferenceActivity {
 

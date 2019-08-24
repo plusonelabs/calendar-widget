@@ -1,22 +1,22 @@
 apply plugin: 'com.android.application'
 
-dependencies {
-    implementation 'joda-time:joda-time:2.10.3'
-    implementation project(':colorpicker')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-}
-
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    useLibrary 'android.test.runner'
+
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 
     defaultConfig {
         versionCode getCommitCount()
         versionName '2.2.0' + "-" + versionCode
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
 
         testApplicationId "org.andstatus.todoagenda.tests"
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         project.ext.archivesBaseName = "TodoAgenda-$versionName".toString()
     }
 
@@ -54,6 +54,17 @@ android {
             && new File(project.property("todoagenda.signing").toString() + ".gradle").exists()) {
         apply from: project.property("todoagenda.signing") + ".gradle";
     }
+}
+
+dependencies {
+    implementation "joda-time:joda-time:$jodaTimeVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation project(':colorpicker')
+
+    androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
 }
 
 static getCommitCount() {

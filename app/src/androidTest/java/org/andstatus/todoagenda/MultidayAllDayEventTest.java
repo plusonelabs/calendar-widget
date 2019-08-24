@@ -9,17 +9,24 @@ import org.andstatus.todoagenda.widget.DayHeader;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
 import org.json.JSONException;
+import org.junit.Test;
 
 import java.io.IOException;
+
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class MultidayAllDayEventTest extends BaseWidgetTest {
 
+    @Test
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";
-        QueryResultsStorage inputs = provider.loadResults(this.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.multi_day);
         provider.addResults(inputs.getResults());
 

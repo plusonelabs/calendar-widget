@@ -1,7 +1,6 @@
 package org.andstatus.todoagenda.provider;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.EventSource;
@@ -13,6 +12,8 @@ import org.joda.time.DateTimeZone;
 
 import java.util.Collection;
 import java.util.Collections;
+
+import androidx.annotation.NonNull;
 
 import static android.graphics.Color.argb;
 import static android.graphics.Color.blue;

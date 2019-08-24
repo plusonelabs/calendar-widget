@@ -25,10 +25,12 @@ ext {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 20402
         versionName '2.4.2'
     }

@@ -1,16 +1,19 @@
 package org.andstatus.todoagenda.widget;
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RemoteViewsUtil;
 
-import static org.andstatus.todoagenda.util.RemoteViewsUtil.*;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.StringRes;
+
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setMultiline;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
 
 /**
  * @author yvolk@yurivolkov.com

@@ -1,7 +1,6 @@
 package org.andstatus.todoagenda.prefs;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -21,6 +20,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+
+import androidx.annotation.NonNull;
 
 /**
  * @author yvolk@yurivolkov.com

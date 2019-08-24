@@ -11,7 +11,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 
-import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.provider.EventProviderType;
 

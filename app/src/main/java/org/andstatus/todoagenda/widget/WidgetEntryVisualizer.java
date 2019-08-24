@@ -1,13 +1,14 @@
 package org.andstatus.todoagenda.widget;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProvider;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public abstract class WidgetEntryVisualizer<T extends WidgetEntry<T>> {
     private final EventProvider eventProvider;

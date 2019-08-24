@@ -1,14 +1,16 @@
 package org.andstatus.todoagenda;
 
-import android.test.InstrumentationTestCase;
-
 import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.joda.time.DateTime;
+import org.junit.After;
+import org.junit.Before;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author yvolk@yurivolkov.com
  */
-public class BaseWidgetTest extends InstrumentationTestCase {
+public class BaseWidgetTest {
 
     final String TAG = this.getClass().getSimpleName();
 
@@ -19,18 +21,16 @@ public class BaseWidgetTest extends InstrumentationTestCase {
         return 0;
     }
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         provider = MockCalendarContentProvider.getContentProvider(this, getNumberOfOpenTasksSources());
         factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().isEmpty());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         provider.tearDown();
-        super.tearDown();
     }
 
     DateTime dateTime(

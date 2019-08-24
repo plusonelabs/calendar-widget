@@ -2,11 +2,14 @@ package org.andstatus.todoagenda.prefs;
 
 import android.test.InstrumentationTestCase;
 
+import org.junit.Test;
+
 /**
  * @author yvolk@yurivolkov.com
  */
 public class KeywordsFilterTest extends InstrumentationTestCase {
 
+    @Test
     public void testPhrases() {
         String query = "\"do it\"";
         final String keywordDN = "do it";

@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.RawRes;
 import android.test.IsolatedContext;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
@@ -32,6 +30,10 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RawRes;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS;
 
@@ -53,7 +55,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     public static MockCalendarContentProvider getContentProvider(BaseWidgetTest testCase, int numberOfOpenTasksSources) throws JSONException {
         MockContentResolver mockResolver = new MockContentResolver();
-        Context targetContext = testCase.getInstrumentation().getTargetContext();
+        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Context isolatedContext = new IsolatedContext(mockResolver, targetContext);
         MockCalendarContentProvider contentProvider =
                 new MockCalendarContentProvider(targetContext, isolatedContext, numberOfOpenTasksSources);

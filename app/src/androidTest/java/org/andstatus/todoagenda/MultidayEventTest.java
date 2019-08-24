@@ -7,6 +7,13 @@ import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -20,6 +27,7 @@ public class MultidayEventTest extends BaseWidgetTest {
     /**
      * Issue #206 https://github.com/plusonelabs/calendar-widget/issues/206
      */
+    @Test
     public void testEventWhichCarryOverToTheNextDay() {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
@@ -64,6 +72,7 @@ public class MultidayEventTest extends BaseWidgetTest {
     /**
      * https://github.com/plusonelabs/calendar-widget/issues/184#issuecomment-142671469
      */
+    @Test
     public void testThreeDaysEvent() {
         DateTime friday = dateTime(2015, 9, 18);
         DateTime sunday = friday.plusDays(2);

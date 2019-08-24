@@ -4,9 +4,26 @@ buildscript {
         jcenter()
     }
 
+    ext {
+        compileSdkVersion = 28 as int
+        buildToolsVersion = '28.0.3'
+        minSdkVersion = 15 as int
+        targetSdkVersion = 28 as int
+
+        // Lookup the latest here: https://mvnrepository.com/
+        annotationVersion = '1.0.1'
+        appCompatVersion = '1.0.2'        // https://mvnrepository.com/artifact/androidx.appcompat/appcompat
+        espressoCoreVersion = '3.1.1'
+        grgitVersion = '2.1.0'
+        jodaTimeVersion = '2.10.3'
+        junitVersion = '4.13-beta-3'
+        testRulesVersion = '1.1.1'
+        testRunnerVersion = '1.1.1'
+    }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'
-        classpath 'org.ajoberstar:grgit:2.1.0'
+        classpath "org.ajoberstar:grgit:$grgitVersion"
     }
 }
 allprojects {

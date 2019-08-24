@@ -3,7 +3,6 @@ package org.andstatus.todoagenda.provider;
 import android.Manifest;
 import android.content.Context;
 import android.content.IntentFilter;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.andstatus.todoagenda.EnvironmentChangedReceiver;
@@ -24,6 +23,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
+
+import androidx.annotation.NonNull;
 
 /** All supported Event providers */
 public enum EventProviderType {

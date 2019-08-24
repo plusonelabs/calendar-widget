@@ -5,12 +5,13 @@ import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.DimenRes;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+
+import androidx.annotation.DimenRes;
 
 import static java.lang.Float.parseFloat;
 

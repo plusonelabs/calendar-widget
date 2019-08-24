@@ -6,8 +6,11 @@ import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
+import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -20,6 +23,7 @@ public class RecurringEventsTest extends BaseWidgetTest {
      * @see <a href="https://github.com/plusonelabs/calendar-widget/issues/191">Issue 191</a> and
      * <a href="https://github.com/plusonelabs/calendar-widget/issues/46">Issue 46</a>
      */
+    @Test
     public void testShowRecurringEvents() {
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 15, countCalendarEntries());

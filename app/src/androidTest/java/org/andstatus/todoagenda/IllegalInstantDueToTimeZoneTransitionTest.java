@@ -6,12 +6,16 @@ import org.andstatus.todoagenda.provider.QueryRow;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
+import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -28,6 +32,7 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends BaseWidgetTest {
      * <p>
      * I couldn't reproduce the problem though.
      */
+    @Test
     public void testIllegalInstantDueToTimeZoneOffsetTransition() {
         reproducedTimeZoneOffsetTransitionException();
         oneTimeDst("2014-09-07T00:00:00+00:00");

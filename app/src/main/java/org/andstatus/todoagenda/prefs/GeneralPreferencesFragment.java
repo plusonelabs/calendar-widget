@@ -7,7 +7,6 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
-import org.andstatus.todoagenda.EventAppWidgetProvider;
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -15,29 +14,21 @@ import org.joda.time.DateTimeZone;
 
 import java.util.TimeZone;
 
-public class AppearancePreferencesFragment extends PreferenceFragment
+public class GeneralPreferencesFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.preferences_appearance);
+        addPreferencesFromResource(R.xml.preferences_general);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         showLockTimeZone(true);
-        showEventEntryLayout();
         showWidgetInstanceName();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-    }
-
-    private void showEventEntryLayout() {
-        Preference preference = findPreference(ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT);
-        if (preference != null) {
-            preference.setSummary(ApplicationPreferences.getEventEntryLayout(getActivity()).summaryResId);
-        }
     }
 
     private void showLockTimeZone(boolean setAlso) {
@@ -59,14 +50,6 @@ public class AppearancePreferencesFragment extends PreferenceFragment
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         switch (preference.getKey()) {
-            case ApplicationPreferences.PREF_BACKGROUND_COLOR:
-                new BackgroundTransparencyDialog().show(getFragmentManager(),
-                        ApplicationPreferences.PREF_BACKGROUND_COLOR);
-                break;
-            case ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR:
-                new BackgroundTransparencyDialog().show(getFragmentManager(),
-                        ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR);
-                break;
             case ApplicationPreferences.PREF_LOCK_TIME_ZONE:
                 if (preference instanceof CheckBoxPreference) {
                     CheckBoxPreference checkPref = (CheckBoxPreference) preference;
@@ -90,9 +73,6 @@ public class AppearancePreferencesFragment extends PreferenceFragment
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
-            case ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT:
-                showEventEntryLayout();
-                break;
             case ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME:
                 getActivity().finish();
                 startActivity(MainActivity.intentToConfigure(getActivity(), ApplicationPreferences

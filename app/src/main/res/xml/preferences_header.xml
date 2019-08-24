@@ -1,9 +1,14 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header
-        android:fragment="org.andstatus.todoagenda.prefs.AppearancePreferencesFragment"
-        android:summary="@string/appearance_prefs_desc"
-        android:title="@string/appearance_prefs" />
+        android:fragment="org.andstatus.todoagenda.prefs.GeneralPreferencesFragment"
+        android:title="@string/general_prefs" />
+    <header
+        android:fragment="org.andstatus.todoagenda.prefs.LayoutPreferencesFragment"
+        android:title="@string/layout_prefs" />
+    <header
+        android:fragment="org.andstatus.todoagenda.prefs.ColorsPreferencesFragment"
+        android:title="@string/appearance_group_color_title" />
     <header
         android:fragment="org.andstatus.todoagenda.prefs.EventDetailsPreferencesFragment"
         android:summary="@string/event_details_prefs_desc"

@@ -1,0 +1,34 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ListPreference
+            android:key="headerTheme"
+            android:defaultValue="DARK"
+            android:entries="@array/pref_theme_entries"
+            android:entryValues="@array/pref_theme_values"
+            android:summary="@string/appearance_header_theme_desc"
+            android:title="@string/appearance_header_theme_title" />
+
+        <com.rarepebble.colorpicker.ColorPreference
+            android:key="pastEventsBackgroundColor"
+            android:defaultValue="#8000FF00"
+            android:summary="@string/appearance_past_events_background_color_desc"
+            android:title="@string/appearance_past_events_background_color_title"
+            app:colorpicker_selectNoneButtonText="@string/default_value" />
+
+        <ListPreference
+            android:key="entryTheme"
+            android:defaultValue="BLACK"
+            android:entries="@array/pref_theme_entries"
+            android:entryValues="@array/pref_theme_values"
+            android:summary="@string/appearance_entries_theme_desc"
+            android:title="@string/appearance_entries_theme_title" />
+
+        <com.rarepebble.colorpicker.ColorPreference
+            android:key="backgroundColor"
+            android:defaultValue="#80000000"
+            android:summary="@string/appearance_background_color_desc"
+            android:title="@string/appearance_background_color_title"
+            app:colorpicker_selectNoneButtonText="@string/default_value" />
+
+</PreferenceScreen>

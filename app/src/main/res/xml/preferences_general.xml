@@ -1,0 +1,39 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="widgetInstanceName"
+        android:title="@string/widget_instance_name"
+        android:singleLine="true" />
+
+    <ListPreference
+        android:key="textSizeScale"
+        android:defaultValue="1.0"
+        android:entries="@array/pref_text_size_entries"
+        android:entryValues="@array/pref_text_size_values"
+        android:summary="@string/appearance_text_size_desc"
+        android:title="@string/appearance_text_size_title" />
+
+    <ListPreference
+        android:key="dateFormat"
+        android:defaultValue="auto"
+        android:entries="@array/pref_date_format_entries"
+        android:entryValues="@array/pref_date_format_values"
+        android:summary="@string/appearance_date_format_desc"
+        android:title="@string/appearance_date_format_title" />
+
+    <CheckBoxPreference
+        android:key="abbreviateDates"
+        android:defaultValue="false"
+        android:summary="@string/appearance_abbreviate_dates_desc"
+        android:title="@string/appearance_abbreviate_dates_title">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
+        android:key="lockTimeZone"
+        android:defaultValue="false"
+        android:persistent="false"
+        android:summary="@string/lock_time_zone_off_desc"
+        android:title="@string/lock_time_zone_title">
+    </CheckBoxPreference>
+
+</PreferenceScreen>

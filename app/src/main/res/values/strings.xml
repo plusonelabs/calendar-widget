@@ -47,7 +47,8 @@
     <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
     <string name="task_source_samsung">Samsung Calendar</string>
 
-    <!-- Preference header: Appearance -->
+    <!-- Preference header: General -->
+    <string name="general_prefs">General</string>
     <string name="appearance_prefs">Appearance</string>
     <string name="appearance_prefs_desc">Adjust the appearance of the widget</string>
     <string name="appearance_text_size_title">Text size</string>
@@ -57,35 +58,45 @@
     <string name="appearance_text_size_medium">Medium</string>
     <string name="appearance_text_size_large">Large</string>
     <string name="appearance_text_size_very_large">Very large</string>
-    <string name="pref_event_entry_layout_title">Event entry layout</string>
-    <string name="default_multiline_layout">Time below title</string>
-    <string name="single_line_layout">All in one row</string>
-    <string name="appearance_multiline_title_title">Multiline title</string>
-    <string name="appearance_multiline_title_desc">Spread event title over multiple lines</string>
     <string name="appearance_date_format_desc">Show time in am/pm or 24 hours format</string>
     <string name="appearance_date_format_title">Date format</string>
     <string name="appearance_date_format_auto">Automatic</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>
+    <string name="lock_time_zone_off_desc">Unlocked, current zone: %s</string>
+    <string name="lock_time_zone_on_desc">Locked at %s</string>
+    <string name="lock_time_zone_title">Lock time zone</string>
+    <string name="appearance_abbreviate_dates_title">Abbreviate dates</string>
+    <string name="appearance_abbreviate_dates_desc">Use three-letter format for dates in Widget and Day headers etc.</string>
+
+    <!-- Preference header: Layout -->
+    <string name="layout_prefs">Layout</string>
+    <string name="pref_event_entry_layout_title">Event entry layout</string>
+    <string name="default_multiline_layout">Time below title</string>
+    <string name="default_value">Default</string>
+    <string name="single_line_layout">All in one row</string>
+    <string name="appearance_day_header_alignment_desc">Set the alignment of the day header</string>
+    <string name="appearance_day_header_alignment_title">Day header alignment</string>
+    <string name="appearance_day_header_alignment_left">Left</string>
+    <string name="appearance_day_header_alignment_center">Center</string>
+    <string name="appearance_day_header_alignment_right">Right</string>
+    <string name="appearance_multiline_title_title">Multiline title</string>
+    <string name="appearance_multiline_title_desc">Spread event title over multiple lines</string>
     <string name="appearance_show_days_without_events_title">Show days without events</string>
     <string name="appearance_show_days_without_events_desc">Show day headers for days without events</string>
     <string name="appearance_show_day_headers_title">Show day headers</string>
     <string name="appearance_show_day_headers_desc">Show day headers at all</string>
     <string name="appearance_display_header_title">Show widget header</string>
     <string name="appearance_display_header_desc">Show the date and settings header</string>
-    <string name="lock_time_zone_off_desc">Unlocked, current zone: %s</string>
-    <string name="lock_time_zone_on_desc">Locked at %s</string>
-    <string name="lock_time_zone_title">Lock time zone</string>
+    <string name="show_past_events_under_one_header_title">Header for past/due events</string>
+    <string name="show_past_events_under_one_header_desc">Show all past/due events under one "Past and due" header</string>
+
+    <!-- Preference header: Colors -->
     <string name="appearance_group_color_title">Colors</string>
     <string name="appearance_background_color_title">Background color</string>
     <string name="appearance_background_color_desc">Adjust the color of the background</string>
     <string name="appearance_past_events_background_color_title">Past events background color</string>
     <string name="appearance_past_events_background_color_desc">Adjust background color of past events</string>
-    <string name="appearance_day_header_alignment_desc">Set the alignment of the day header</string>
-    <string name="appearance_day_header_alignment_title">Day header alignment</string>
-    <string name="appearance_day_header_alignment_left">Left</string>
-    <string name="appearance_day_header_alignment_center">Center</string>
-    <string name="appearance_day_header_alignment_right">Right</string>
     <string name="appearance_header_theme_title">Widget header shading</string>
     <string name="appearance_header_theme_desc">Show the header of the widget in dark or light shade</string>
     <string name="appearance_entries_theme_title">Event shading</string>
@@ -94,10 +105,6 @@
     <string name="appearance_theme_dark">Light</string>
     <string name="appearance_theme_light">Dark</string>
     <string name="appearance_theme_white">Black</string>
-    <string name="appearance_abbreviate_dates_title">Abbreviate dates</string>
-    <string name="appearance_abbreviate_dates_desc">Use three-letter format for dates in Widget and Day headers etc.</string>
-    <string name="show_past_events_under_one_header_title">Header for past/due events</string>
-    <string name="show_past_events_under_one_header_desc">Show all past/due events under one "Past and due" header</string>
 
     <!-- Preference header: Event details -->
     <string name="event_details_prefs">Event details</string>

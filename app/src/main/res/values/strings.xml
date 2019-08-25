@@ -47,8 +47,9 @@
     <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
     <string name="task_source_samsung">Samsung Calendar</string>
 
-    <!-- Preference header: General -->
-    <string name="general_prefs">General</string>
+    <!-- Preference header: Other -->
+    <string name="other_prefs_desc">Date and time format, time zone etc.</string>
+    <string name="other_prefs_title">Other settings</string>
     <string name="appearance_prefs">Appearance</string>
     <string name="appearance_prefs_desc">Adjust the appearance of the widget</string>
     <string name="appearance_text_size_title">Text size</string>
@@ -70,7 +71,8 @@
     <string name="appearance_abbreviate_dates_desc">Use three-letter format for dates in Widget and Day headers etc.</string>
 
     <!-- Preference header: Layout -->
-    <string name="layout_prefs">Layout</string>
+    <string name="layout_prefs_desc">Place, show and hide widget elements</string>
+    <string name="layout_prefs_title">Layout</string>
     <string name="pref_event_entry_layout_title">Event entry layout</string>
     <string name="default_multiline_layout">Time below title</string>
     <string name="default_value">Default</string>
@@ -96,6 +98,7 @@
     <string name="show_number_of_days_to_event_desc">Show column with a number of days to event in the \"All in one row\" event layout</string>
 
     <!-- Preference header: Colors -->
+    <string name="colors_prefs_desc">Colors and opacity of texts and backgrounds</string>
     <string name="appearance_group_color_title">Colors</string>
     <string name="appearance_background_color_title">Background color</string>
     <string name="appearance_background_color_desc">Adjust the color of the background</string>

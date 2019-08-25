@@ -14,13 +14,13 @@ import org.joda.time.DateTimeZone;
 
 import java.util.TimeZone;
 
-public class GeneralPreferencesFragment extends PreferenceFragment
+public class OtherPreferencesFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.preferences_general);
+        addPreferencesFromResource(R.xml.preferences_other);
     }
 
     @Override

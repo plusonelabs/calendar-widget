@@ -28,8 +28,6 @@ public class ApplicationPreferences {
     static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
     static final String PREF_INDICATE_RECURRING = "indicateRecurring";
     static final String PREF_INDICATE_ALERTS = "indicateAlerts";
-    static final String PREF_BACKGROUND_COLOR = "backgroundColor";
-    static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
     static final String PREF_DATE_FORMAT = "dateFormat";
     static final String PREF_DATE_FORMAT_DEFAULT = "auto";
     static final String PREF_EVENT_RANGE = "eventRange";
@@ -54,6 +52,8 @@ public class ApplicationPreferences {
     static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
     static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
     static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
+    static final String PREF_BACKGROUND_COLOR = "backgroundColor";
+    static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
     static final String PREF_SHOW_EVENT_ICON = "showEventIcon";
     static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent";
     static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";

@@ -34,7 +34,7 @@
 
         <com.rarepebble.colorpicker.ColorPreference
             android:key="pastEventsBackgroundColor"
-            android:defaultValue="#8000FF00"
+            android:defaultValue="#4affff2b"
             android:summary="@string/appearance_past_events_background_color_desc"
             android:title="@string/appearance_past_events_background_color_title"
             app:colorpicker_selectNoneButtonText="@string/default_value" />

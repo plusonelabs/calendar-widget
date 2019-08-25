@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RemoteViewsUtil;
 
@@ -14,6 +15,7 @@ import androidx.annotation.StringRes;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setMultiline;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setViewWidth;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -23,14 +25,14 @@ public enum EventEntryLayout {
         @Override
         protected void setEventDetails(CalendarEntry entry, RemoteViews rv) {
             String eventDetails = entry.getEventTimeString() + entry.getLocationString();
+            int viewId = R.id.event_entry_details;
             if (TextUtils.isEmpty(eventDetails)) {
-                rv.setViewVisibility(R.id.event_entry_details, View.GONE);
+                rv.setViewVisibility(viewId, View.GONE);
             } else {
-                rv.setViewVisibility(R.id.event_entry_details, View.VISIBLE);
-                rv.setTextViewText(R.id.event_entry_details, eventDetails);
-                setTextSize(entry.getSettings(), rv, R.id.event_entry_details, R.dimen.event_entry_details);
-                setTextColorFromAttr(entry.getSettings().getEntryThemeContext(), rv, R.id.event_entry_details,
-                        R.attr.eventEntryDetails);
+                rv.setViewVisibility(viewId, View.VISIBLE);
+                rv.setTextViewText(viewId, eventDetails);
+                setTextSize(entry.getSettings(), rv, viewId, R.dimen.event_entry_details);
+                setTextColorFromAttr(entry.getSettings().getDayHeaderThemeContext(), rv, viewId, R.attr.dayHeaderTitle);
             }
         }
     },
@@ -41,14 +43,18 @@ public enum EventEntryLayout {
         }
 
         @Override
-        protected void setEventDate(CalendarEntry entry, RemoteViews rv) {
+        protected void setDaysToEvent(CalendarEntry entry, RemoteViews rv) {
             if (entry.getSettings().getShowNumberOfDaysToEvent()) {
                 int days = entry.getDaysFromToday();
                 int viewToShow = days < -1 || days > 1 ? R.id.event_entry_date_right : R.id.event_entry_date;
                 int viewToHide = viewToShow == R.id.event_entry_date ? R.id.event_entry_date_right : R.id.event_entry_date;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
-                rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(entry.getSettings().getEntryThemeContext(), days));
+                rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(entry.getContext(), days));
+                InstanceSettings settings = entry.getSettings();
+                setViewWidth(settings, rv, viewToShow, R.dimen.days_to_event_width);
+                setTextSize(settings, rv, viewToShow, R.dimen.event_entry_details);
+                setTextColorFromAttr(settings.getDayHeaderThemeContext(), rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
                 rv.setViewVisibility(R.id.event_entry_date, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
@@ -57,9 +63,14 @@ public enum EventEntryLayout {
 
         @Override
         protected void setEventTime(CalendarEntry entry, RemoteViews rv) {
-            RemoteViewsUtil.setMultiline(rv, R.id.event_entry_time, entry.getSettings().getShowEndTime());
-            rv.setTextViewText(R.id.event_entry_time, entry.getEventTimeString().replace(CalendarEntry
-                    .SPACE_DASH_SPACE, " "));
+            int viewId = R.id.event_entry_time;
+            RemoteViewsUtil.setMultiline(rv, viewId, entry.getSettings().getShowEndTime());
+            rv.setTextViewText(viewId, entry.getEventTimeString().replace(CalendarEntry
+                    .SPACE_DASH_SPACE, "\n"));
+            InstanceSettings settings = entry.getSettings();
+            setViewWidth(settings, rv, viewId, R.dimen.event_time_width);
+            setTextSize(settings, rv, viewId, R.dimen.event_entry_details);
+            setTextColorFromAttr(settings.getDayHeaderThemeContext(), rv, viewId, R.attr.dayHeaderTitle);
         }
     };
 
@@ -88,23 +99,24 @@ public enum EventEntryLayout {
 
     public void visualizeEvent(CalendarEntry entry, RemoteViews rv) {
         setTitle(entry, rv);
-        setEventDate(entry, rv);
+        setDaysToEvent(entry, rv);
         setEventTime(entry, rv);
         setEventDetails(entry, rv);
     }
 
     protected void setTitle(CalendarEntry event, RemoteViews rv) {
-        rv.setTextViewText(R.id.event_entry_title, getTitleString(event));
-        setTextSize(event.getSettings(), rv, R.id.event_entry_title, R.dimen.event_entry_title);
-        setTextColorFromAttr(event.getSettings().getEntryThemeContext(), rv, R.id.event_entry_title, R.attr.eventEntryTitle);
-        setMultiline(rv, R.id.event_entry_title, event.getSettings().isTitleMultiline());
+        int viewId = R.id.event_entry_title;
+        rv.setTextViewText(viewId, getTitleString(event));
+        setTextSize(event.getSettings(), rv, viewId, R.dimen.event_entry_title);
+        setTextColorFromAttr(event.getSettings().getEntryThemeContext(), rv, viewId, R.attr.eventEntryTitle);
+        setMultiline(rv, viewId, event.getSettings().isTitleMultiline());
     }
 
     protected String getTitleString(CalendarEntry event) {
         return event.getTitle();
     }
 
-    protected void setEventDate(CalendarEntry entry, RemoteViews rv) {
+    protected void setDaysToEvent(CalendarEntry entry, RemoteViews rv) {
         // Empty
     }
 

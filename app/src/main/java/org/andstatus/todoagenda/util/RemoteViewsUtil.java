@@ -22,6 +22,7 @@ public class RemoteViewsUtil {
     private static final String METHOD_SET_SINGLE_LINE = "setSingleLine";
     private static final String METHOD_SET_ALPHA = "setAlpha";
     private static final String METHOD_SET_COLOR_FILTER = "setColorFilter";
+    private static final String METHOD_SET_WIDTH = "setWidth";
 
     private RemoteViewsUtil() {
         // prohibit instantiation
@@ -47,6 +48,10 @@ public class RemoteViewsUtil {
         rv.setInt(viewId, METHOD_SET_COLOR_FILTER, color);
     }
 
+    public static void setViewWidth(InstanceSettings settings, RemoteViews rv, int viewId, int dimenId) {
+        rv.setInt(viewId, METHOD_SET_WIDTH, getScaledValue(settings, dimenId).intValue());
+    }
+
     public static void setTextSize(InstanceSettings settings, RemoteViews rv, int viewId, int dimenId) {
         rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValue(settings, dimenId));
     }
@@ -70,9 +75,9 @@ public class RemoteViewsUtil {
         return resValue * prefTextScale;
     }
 
-    private static float getScaledValue(InstanceSettings settings, int dimenId) {
-        float resValue = getDimension(settings.getEntryThemeContext(), dimenId);
-        float density = settings.getEntryThemeContext().getResources().getDisplayMetrics().density;
+    private static Float getScaledValue(InstanceSettings settings, int dimenId) {
+        float resValue = getDimension(settings.getContext(), dimenId);
+        float density = settings.getContext().getResources().getDisplayMetrics().density;
         float prefTextScale = parseFloat(settings.getTextSizeScale());
         return resValue * prefTextScale / density;
     }

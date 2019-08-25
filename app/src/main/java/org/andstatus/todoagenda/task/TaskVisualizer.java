@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -18,6 +19,7 @@ import static org.andstatus.todoagenda.util.RemoteViewsUtil.setBackgroundColor;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setMultiline;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setViewWidth;
 
 public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
     private final AbstractTaskProvider eventProvider;
@@ -66,24 +68,28 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
                 int viewToHide = viewToShow == R.id.task_one_line_days ? R.id.task_one_line_days_right : R.id.task_one_line_days;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
-                rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(getSettings().getEntryThemeContext(), days));
-                rv.setViewVisibility(R.id.task_one_line_spacer, View.VISIBLE);
+                setViewWidth(getSettings(), rv, viewToShow, R.dimen.days_to_event_width);
+                rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(getSettings().getContext(), days));
+                setTextSize(getSettings(), rv, viewToShow, R.dimen.event_entry_details);
+                setTextColorFromAttr(getSettings().getDayHeaderThemeContext(), rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
                 rv.setViewVisibility(R.id.task_one_line_days, View.GONE);
                 rv.setViewVisibility(R.id.task_one_line_days_right, View.GONE);
-                rv.setViewVisibility(R.id.task_one_line_spacer, View.VISIBLE);
             }
+            setViewWidth(getSettings(), rv, R.id.task_one_line_spacer, R.dimen.days_to_event_width);
+            rv.setViewVisibility(R.id.task_one_line_spacer, View.VISIBLE);
         }
     }
 
     private void setTitle(TaskEntry entry, RemoteViews rv) {
-        rv.setTextViewText(R.id.event_entry_title, entry.getTitle());
+        int viewId = R.id.event_entry_title;
+        rv.setTextViewText(viewId, entry.getTitle());
         if (getSettings().getShowEventIcon()) {
             setTextSize(getSettings(), rv, R.id.event_entry_icon, R.dimen.event_entry_title);
         }
-        setTextSize(getSettings(), rv, R.id.event_entry_title, R.dimen.event_entry_title);
-        setTextColorFromAttr(getSettings().getEntryThemeContext(), rv, R.id.event_entry_title, R.attr.eventEntryTitle);
-        setMultiline(rv, R.id.event_entry_title, getSettings().isTitleMultiline());
+        setTextSize(getSettings(), rv, viewId, R.dimen.event_entry_title);
+        setTextColorFromAttr(getSettings().getEntryThemeContext(), rv, viewId, R.attr.eventEntryTitle);
+        setMultiline(rv, viewId, getSettings().isTitleMultiline());
     }
 
     @Override

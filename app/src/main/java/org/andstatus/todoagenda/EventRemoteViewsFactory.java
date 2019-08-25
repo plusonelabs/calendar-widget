@@ -21,7 +21,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
-import static org.andstatus.todoagenda.Theme.themeNameToResId;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 
 public class EventRemoteViewsFactory implements RemoteViewsFactory {
@@ -66,7 +65,6 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
     }
 
     public void onDataSetChanged() {
-        context.setTheme(themeNameToResId(getSettings().getEntryTheme()));
         visualizers.clear();
         visualizers.add(new DayHeaderVisualizer(getSettings().getDayHeaderThemeContext(), widgetId));
         for (EventProviderType type : EventProviderType.values()) {

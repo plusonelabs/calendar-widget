@@ -37,7 +37,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     public String getTitle() {
         String title = event.getTitle();
         if (TextUtils.isEmpty(title)) {
-            title = getSettings().getEntryThemeContext().getResources().getString(R.string.no_title);
+            title = getContext().getResources().getString(R.string.no_title);
         }
         return title;
     }
@@ -91,8 +91,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     }
 
     public String getEventTimeString() {
-        return hideEventDetails() ? "" :
-                createTimeSpanString(getSettings().getEntryThemeContext());
+        return hideEventDetails() ? "" : createTimeSpanString(getContext());
     }
 
     String getLocationString() {
@@ -154,6 +153,10 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
         }
         return DateUtil.formatDateTime(getSettings(), time,
                 DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
+    }
+
+    public Context getContext() {
+        return event.getContext();
     }
 
     public InstanceSettings getSettings() {

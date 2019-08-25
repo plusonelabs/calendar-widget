@@ -228,4 +228,8 @@ public class CalendarEvent {
     public InstanceSettings getSettings() {
         return AllSettings.instanceFromId(context, widgetId);
     }
+
+    public Context getContext() {
+        return context;
+    }
 }

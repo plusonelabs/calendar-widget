@@ -34,33 +34,32 @@
             <TextView
                 android:id="@+id/event_entry_date"
                 style="@style/EventEntryTitle"
-                android:layout_width="55dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:paddingRight="4dp"
+                android:layout_marginRight="4dp"
                 tools:ignore="SelectableText"
                 tools:text="@string/today"/>
 
             <TextView
                 android:id="@+id/event_entry_date_right"
                 style="@style/EventEntryTitle"
-                android:layout_width="55dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="end"
                 android:textAlignment="gravity"
-                android:paddingRight="12dp"
+                android:layout_marginRight="12dp"
                 tools:ignore="SelectableText"
                 tools:text="-325"/>
 
             <TextView
                 android:id="@+id/event_entry_time"
                 style="@style/EventEntryDetails"
-                android:layout_width="45dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:paddingTop="2dp"
-                android:paddingRight="4dp"
+                android:layout_marginRight="4dp"
                 tools:ignore="SelectableText"
                 tools:text="13:40"/>
 

@@ -19,25 +19,26 @@
 
     <TextView
         android:id="@+id/task_one_line_days"
-        android:layout_width="55dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/EventEntryTitle"
         tools:ignore="SelectableText" />
 
     <TextView
         android:id="@+id/task_one_line_days_right"
-        android:layout_width="55dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/EventEntryTitle"
-        android:paddingRight="12.5dp"
+        android:layout_marginRight="12dp"
         android:gravity="end"
         android:textAlignment="gravity"
         tools:ignore="SelectableText" />
 
     <TextView
         android:id="@+id/task_one_line_spacer"
-        android:layout_width="45dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
         tools:ignore="SelectableText" />
 
     <TextView

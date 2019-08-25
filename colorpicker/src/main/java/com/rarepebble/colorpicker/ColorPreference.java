@@ -40,6 +40,7 @@ public class ColorPreference extends DialogPreference {
 	private final boolean showHex;
 	private final boolean showPreview;
 	private View thumbnail;
+	private ColorPickerView mPicker = null;
 
 	public ColorPreference(Context context) {
 		this(context, null);
@@ -189,6 +190,7 @@ public class ColorPreference extends DialogPreference {
 				}
 			});
 		}
+		mPicker = picker;
 	}
 
 	@Override
@@ -199,6 +201,17 @@ public class ColorPreference extends DialogPreference {
 		// apply to the dialog, so needs to be in code:
 		Window window = getDialog().getWindow();
 		window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+		if (selectNoneButtonText != null && defaultColor != null && mPicker != null) {
+			// In order to prevent dialog from closing use the solution from https://stackoverflow.com/a/15619098/297710
+			((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(
+					new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							mPicker.setCurrentColor(defaultColor);
+						}
+					});
+		}
 	}
 
 	private void removeSetting() {

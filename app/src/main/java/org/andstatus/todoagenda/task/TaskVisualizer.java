@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
-import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -58,35 +57,35 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
 
     private void setDaysToEvent(TaskEntry entry, RemoteViews rv) {
         if (getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT) {
-            rv.setViewVisibility(R.id.task_one_line_days, View.GONE);
-            rv.setViewVisibility(R.id.task_one_line_days_right, View.GONE);
-            rv.setViewVisibility(R.id.task_one_line_spacer, View.GONE);
+            rv.setViewVisibility(R.id.event_entry_days, View.GONE);
+            rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
+            rv.setViewVisibility(R.id.event_entry_time, View.GONE);
         } else {
             if (getSettings().getShowNumberOfDaysToEvent()) {
                 int days = entry.getDaysFromToday();
-                int viewToShow = days < -1 || days > 1 ? R.id.task_one_line_days_right : R.id.task_one_line_days;
-                int viewToHide = viewToShow == R.id.task_one_line_days ? R.id.task_one_line_days_right : R.id.task_one_line_days;
+                boolean daysAsText = days > -2 && days < 2;
+                int viewToShow = daysAsText ? R.id.event_entry_days : R.id.event_entry_days_right;
+                int viewToHide = daysAsText ? R.id.event_entry_days_right : R.id.event_entry_days;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
-                setViewWidth(getSettings(), rv, viewToShow, R.dimen.days_to_event_width);
+                setViewWidth(getSettings(), rv, viewToShow, daysAsText
+                        ? R.dimen.days_to_event_width
+                        : R.dimen.days_to_event_right_width);
                 rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(getSettings().getContext(), days));
                 setTextSize(getSettings(), rv, viewToShow, R.dimen.event_entry_details);
                 setTextColorFromAttr(getSettings().getDayHeaderThemeContext(), rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
-                rv.setViewVisibility(R.id.task_one_line_days, View.GONE);
-                rv.setViewVisibility(R.id.task_one_line_days_right, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_days, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
             }
-            setViewWidth(getSettings(), rv, R.id.task_one_line_spacer, R.dimen.days_to_event_width);
-            rv.setViewVisibility(R.id.task_one_line_spacer, View.VISIBLE);
+            setViewWidth(getSettings(), rv, R.id.event_entry_time, R.dimen.event_time_width);
+            rv.setViewVisibility(R.id.event_entry_time, View.VISIBLE);
         }
     }
 
     private void setTitle(TaskEntry entry, RemoteViews rv) {
         int viewId = R.id.event_entry_title;
         rv.setTextViewText(viewId, entry.getTitle());
-        if (getSettings().getShowEventIcon()) {
-            setTextSize(getSettings(), rv, R.id.event_entry_icon, R.dimen.event_entry_title);
-        }
         setTextSize(getSettings(), rv, viewId, R.dimen.event_entry_title);
         setTextColorFromAttr(getSettings().getEntryThemeContext(), rv, viewId, R.attr.eventEntryTitle);
         setMultiline(rv, viewId, getSettings().isTitleMultiline());

@@ -46,18 +46,21 @@ public enum EventEntryLayout {
         protected void setDaysToEvent(CalendarEntry entry, RemoteViews rv) {
             if (entry.getSettings().getShowNumberOfDaysToEvent()) {
                 int days = entry.getDaysFromToday();
-                int viewToShow = days < -1 || days > 1 ? R.id.event_entry_date_right : R.id.event_entry_date;
-                int viewToHide = viewToShow == R.id.event_entry_date ? R.id.event_entry_date_right : R.id.event_entry_date;
+                boolean daysAsText = days > -2 && days < 2;
+                int viewToShow = daysAsText ? R.id.event_entry_days : R.id.event_entry_days_right;
+                int viewToHide = daysAsText ? R.id.event_entry_days_right : R.id.event_entry_days;
                 rv.setViewVisibility(viewToHide, View.GONE);
                 rv.setViewVisibility(viewToShow, View.VISIBLE);
                 rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(entry.getContext(), days));
                 InstanceSettings settings = entry.getSettings();
-                setViewWidth(settings, rv, viewToShow, R.dimen.days_to_event_width);
+                setViewWidth(settings, rv, viewToShow, daysAsText
+                        ? R.dimen.days_to_event_width
+                        : R.dimen.days_to_event_right_width);
                 setTextSize(settings, rv, viewToShow, R.dimen.event_entry_details);
                 setTextColorFromAttr(settings.getDayHeaderThemeContext(), rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
-                rv.setViewVisibility(R.id.event_entry_date, View.GONE);
-                rv.setViewVisibility(R.id.event_entry_date_right, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_days, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
             }
         }
 

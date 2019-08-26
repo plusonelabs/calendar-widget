@@ -2,11 +2,13 @@
 <resources>
 
     <dimen name="widget_padding">8dp</dimen>
+    <dimen name="widget_header_title">14dp</dimen>
     <dimen name="calender_padding">8dp</dimen>
     <dimen name="day_header_title">14dp</dimen>
     <dimen name="event_entry_title">18dp</dimen>
     <dimen name="event_entry_details">14dp</dimen>
-    <dimen name="days_to_event_width">80dp</dimen>
+    <dimen name="days_to_event_right_width">80dp</dimen>
+    <dimen name="days_to_event_width">88dp</dimen>
     <dimen name="event_time_width">80dp</dimen>
     <dimen name="entry_bottom_padding">2dp</dimen>
     <dimen name="day_header_padding_left">12dp</dimen>

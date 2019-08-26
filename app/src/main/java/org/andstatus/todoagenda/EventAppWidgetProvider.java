@@ -95,11 +95,13 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {
-        rv.setOnClickPendingIntent(R.id.calendar_current_date, createOpenCalendarPendingIntent(settings));
+        int viewId = R.id.calendar_current_date;
+        rv.setOnClickPendingIntent(viewId, createOpenCalendarPendingIntent(settings));
         String formattedDate = DateUtil.createDateString(settings,
                 DateUtil.now(settings.getTimeZone())).toUpperCase(Locale.getDefault());
-        rv.setTextViewText(R.id.calendar_current_date, formattedDate);
-        setTextColorFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.calendar_current_date, R.attr.header);
+        rv.setTextViewText(viewId, formattedDate);
+        setTextSize(settings, rv, viewId, R.dimen.widget_header_title);
+        setTextColorFromAttr(settings.getWidgetHeaderThemeContext(), rv, viewId, R.attr.header);
     }
 
     private void setActionIcons(InstanceSettings settings, RemoteViews rv) {

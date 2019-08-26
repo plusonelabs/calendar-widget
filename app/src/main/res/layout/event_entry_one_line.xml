@@ -24,34 +24,34 @@
             android:id="@+id/text_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_alignWithParentIfMissing="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_alignWithParentIfMissing="true"
             android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/event_entry_date"
+                android:id="@+id/event_entry_days"
                 style="@style/EventEntryTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_marginRight="4dp"
                 tools:ignore="SelectableText"
-                tools:text="@string/today"/>
+                tools:text="@string/today" />
 
             <TextView
-                android:id="@+id/event_entry_date_right"
+                android:id="@+id/event_entry_days_right"
                 style="@style/EventEntryTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
+                android:layout_marginRight="8dp"
                 android:gravity="end"
                 android:textAlignment="gravity"
-                android:layout_marginRight="12dp"
                 tools:ignore="SelectableText"
-                tools:text="-325"/>
+                tools:text="-325" />
 
             <TextView
                 android:id="@+id/event_entry_time"
@@ -61,16 +61,16 @@
                 android:layout_gravity="top"
                 android:layout_marginRight="4dp"
                 tools:ignore="SelectableText"
-                tools:text="13:40"/>
+                tools:text="13:40" />
 
             <TextView
                 android:id="@+id/event_entry_title"
                 style="@style/EventEntryTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                tools:text="Event Entry Title. It may be long and may doesn't fit in one line"
-                tools:ignore="SelectableText"/>
+                android:gravity="top"
+                tools:ignore="SelectableText"
+                tools:text="Event Entry Title. It may be long and may doesn't fit in one line" />
         </LinearLayout>
 
         <include

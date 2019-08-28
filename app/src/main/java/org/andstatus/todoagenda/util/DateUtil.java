@@ -83,6 +83,18 @@ public class DateUtil {
         }
     }
 
+    public static boolean isToday(DateTime date) {
+        return !isBeforeToday(date) && date.isBefore(DateUtil.now(date.getZone()).plusDays(1).withTimeAtStartOfDay());
+    }
+
+    public static boolean isBeforeToday(DateTime date) {
+        return date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay());
+    }
+
+    public static boolean isBeforeNow(DateTime date) {
+        return date.isBefore(now(date.getZone()));
+    }
+
     public static void setNow(DateTime now) {
         mNowSetAt = DateTime.now();
         mNow = now;

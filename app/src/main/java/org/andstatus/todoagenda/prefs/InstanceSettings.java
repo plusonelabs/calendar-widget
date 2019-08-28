@@ -26,8 +26,6 @@ import static org.andstatus.todoagenda.Theme.themeNameToResId;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ACTIVE_SOURCES;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DATE_FORMAT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DATE_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT;
@@ -36,6 +34,8 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEA
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_THEME_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENTS_BACKGROUND_COLOR;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENTS_ENDED;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_RANGE;
@@ -64,6 +64,8 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PA
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TODAYS_EVENTS_BACKGROUND_COLOR;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_THEME;
@@ -91,6 +93,8 @@ public class InstanceSettings {
     private String hideBasedOnKeywords = "";
     private int widgetHeaderBackgroundColor = PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
     private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
+    private int todaysEventsBackgroundColor = PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
+    private int eventsBackgroundColor = PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
     private boolean showDaysWithoutEvents = false;
     private boolean showDayHeaders = true;
     private boolean showPastEventsUnderOneHeader = false;
@@ -111,7 +115,6 @@ public class InstanceSettings {
     private String widgetHeaderTheme = PREF_WIDGET_HEADER_THEME_DEFAULT;
     private String dayHeaderTheme = PREF_DAY_HEADER_THEME_DEFAULT;
     private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
-    private int backgroundColor = PREF_BACKGROUND_COLOR_DEFAULT;
     private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
     private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
 
@@ -142,6 +145,12 @@ public class InstanceSettings {
         }
         if (json.has(PREF_PAST_EVENTS_BACKGROUND_COLOR)) {
             settings.pastEventsBackgroundColor = json.getInt(PREF_PAST_EVENTS_BACKGROUND_COLOR);
+        }
+        if (json.has(PREF_TODAYS_EVENTS_BACKGROUND_COLOR)) {
+            settings.todaysEventsBackgroundColor = json.getInt(PREF_TODAYS_EVENTS_BACKGROUND_COLOR);
+        }
+        if (json.has(PREF_EVENTS_BACKGROUND_COLOR)) {
+            settings.eventsBackgroundColor = json.getInt(PREF_EVENTS_BACKGROUND_COLOR);
         }
         if (json.has(PREF_SHOW_DAYS_WITHOUT_EVENTS)) {
             settings.showDaysWithoutEvents = json.getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS);
@@ -204,9 +213,6 @@ public class InstanceSettings {
         if (json.has(PREF_ENTRY_THEME)) {
             settings.entryTheme = json.getString(PREF_ENTRY_THEME);
         }
-        if (json.has(PREF_BACKGROUND_COLOR)) {
-            settings.backgroundColor = json.getInt(PREF_BACKGROUND_COLOR);
-        }
         if (json.has(PREF_TEXT_SIZE_SCALE)) {
             settings.textSizeScale = json.getString(PREF_TEXT_SIZE_SCALE);
         }
@@ -227,6 +233,8 @@ public class InstanceSettings {
         settings.hideBasedOnKeywords = ApplicationPreferences.getHideBasedOnKeywords(context);
         settings.widgetHeaderBackgroundColor = ApplicationPreferences.getWidgetHeaderBackgroundColor(context);
         settings.pastEventsBackgroundColor = ApplicationPreferences.getPastEventsBackgroundColor(context);
+        settings.todaysEventsBackgroundColor = ApplicationPreferences.getTodaysEventsBackgroundColor(context);
+        settings.eventsBackgroundColor = ApplicationPreferences.getEventsBackgroundColor(context);
         settings.showDaysWithoutEvents = ApplicationPreferences.getShowDaysWithoutEvents(context);
         settings.showDayHeaders = ApplicationPreferences.getShowDayHeaders(context);
         settings.showPastEventsUnderOneHeader = ApplicationPreferences.getShowPastEventsUnderOneHeader(context);
@@ -248,8 +256,6 @@ public class InstanceSettings {
         settings.showWidgetHeader = ApplicationPreferences.getBoolean(context, PREF_SHOW_WIDGET_HEADER, true);
         settings.dayHeaderTheme = ApplicationPreferences.getString(context, PREF_DAY_HEADER_THEME, PREF_DAY_HEADER_THEME_DEFAULT);
         settings.entryTheme = ApplicationPreferences.getString(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
-        settings.backgroundColor = ApplicationPreferences.getInt(context, PREF_BACKGROUND_COLOR,
-                PREF_BACKGROUND_COLOR_DEFAULT);
         settings.textSizeScale = ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE,
                 PREF_TEXT_SIZE_SCALE_DEFAULT);
         settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
@@ -293,6 +299,8 @@ public class InstanceSettings {
             json.put(PREF_HIDE_BASED_ON_KEYWORDS, hideBasedOnKeywords);
             json.put(PREF_WIDGET_HEADER_BACKGROUND_COLOR, widgetHeaderBackgroundColor);
             json.put(PREF_PAST_EVENTS_BACKGROUND_COLOR, pastEventsBackgroundColor);
+            json.put(PREF_TODAYS_EVENTS_BACKGROUND_COLOR, todaysEventsBackgroundColor);
+            json.put(PREF_EVENTS_BACKGROUND_COLOR, eventsBackgroundColor);
             json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, showDaysWithoutEvents);
             json.put(PREF_SHOW_DAY_HEADERS, showDayHeaders);
             json.put(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, showPastEventsUnderOneHeader);
@@ -313,7 +321,6 @@ public class InstanceSettings {
             json.put(PREF_WIDGET_HEADER_THEME, widgetHeaderTheme);
             json.put(PREF_DAY_HEADER_THEME, dayHeaderTheme);
             json.put(PREF_ENTRY_THEME, entryTheme);
-            json.put(PREF_BACKGROUND_COLOR, backgroundColor);
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
         } catch (JSONException e) {
@@ -375,6 +382,14 @@ public class InstanceSettings {
 
     public int getPastEventsBackgroundColor() {
         return pastEventsBackgroundColor;
+    }
+
+    public int getTodaysEventsBackgroundColor() {
+        return todaysEventsBackgroundColor;
+    }
+
+    public int getEventsBackgroundColor() {
+        return eventsBackgroundColor;
     }
 
     public boolean getShowDaysWithoutEvents() {
@@ -503,10 +518,6 @@ public class InstanceSettings {
 
     public boolean getShowWidgetHeader() {
         return showWidgetHeader;
-    }
-
-    public int getBackgroundColor() {
-        return backgroundColor;
     }
 
     public String getTextSizeScale() {

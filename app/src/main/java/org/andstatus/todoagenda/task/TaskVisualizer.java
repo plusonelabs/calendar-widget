@@ -48,11 +48,11 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         } else {
             rv.setViewVisibility(R.id.event_entry_icon, View.GONE);
         }
-        if (entry.getEvent().getDueDate().isBefore(DateUtil.now(entry.getEvent().getDueDate().getZone()))) {
-            setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
-        } else {
-            setBackgroundColor(rv, R.id.event_entry, 0);
-        }
+        setBackgroundColor(rv, R.id.event_entry, entry.isBeforeToday()
+            ? getSettings().getPastEventsBackgroundColor()
+            : entry.isToday()
+                ? getSettings().getTodaysEventsBackgroundColor()
+                : getSettings().getEventsBackgroundColor());
     }
 
     private void setDaysToEvent(TaskEntry entry, RemoteViews rv) {

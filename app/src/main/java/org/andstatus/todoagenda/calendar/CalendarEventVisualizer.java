@@ -75,11 +75,11 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         } else {
             rv.setViewVisibility(R.id.event_entry_icon, View.GONE);
         }
-        if (entry.getEndDate().isBefore(DateUtil.now(entry.getEndDate().getZone()))) {
-            setBackgroundColor(rv, R.id.event_entry, getSettings().getPastEventsBackgroundColor());
-        } else {
-            setBackgroundColor(rv, R.id.event_entry, 0);
-        }
+        setBackgroundColor(rv, R.id.event_entry, entry.isBeforeToday()
+            ? getSettings().getPastEventsBackgroundColor()
+            : entry.isToday()
+                ? getSettings().getTodaysEventsBackgroundColor()
+                : getSettings().getEventsBackgroundColor());
     }
 
     public int getViewTypeCount() {

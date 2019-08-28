@@ -41,4 +41,12 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         }
         return Integer.signum(getPriority() - otherEvent.getPriority());
     }
+
+    public boolean isBeforeToday() {
+        return DateUtil.isBeforeToday(getStartDate());
+    }
+
+    public boolean isToday() {
+        return DateUtil.isToday(getStartDate());
+    }
 }

@@ -50,13 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/background_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/widget_background"
-            tools:ignore="ContentDescription" />
-
         <ListView
             android:id="@+id/event_list"
             android:layout_width="match_parent"

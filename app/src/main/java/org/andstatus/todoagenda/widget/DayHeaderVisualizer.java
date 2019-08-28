@@ -2,7 +2,6 @@ package org.andstatus.todoagenda.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.Alignment;
@@ -32,24 +31,26 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
     public RemoteViews getRemoteView(WidgetEntry eventEntry) {
         if(!(eventEntry instanceof DayHeader)) return null;
 
-        DayHeader dayHeader = (DayHeader) eventEntry;
+        DayHeader entry = (DayHeader) eventEntry;
         String alignment = getSettings().getDayHeaderAlignment();
         RemoteViews rv = new RemoteViews(getContext().getPackageName(), Alignment.valueOf(alignment).getLayoutId());
-        String dateString = (dayHeader.getStartDate().equals(DateUtil.DATETIME_MIN)
+        String dateString = (entry.getStartDate().equals(DateUtil.DATETIME_MIN)
                 ? getContext().getString(R.string.past_header)
-                : DateUtil.createDayHeaderTitle(getSettings(), dayHeader.getStartDate()))
+                : DateUtil.createDayHeaderTitle(getSettings(), entry.getStartDate()))
             .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
         setTextColorFromAttr(getContext(), rv, R.id.day_header_title, R.attr.dayHeaderTitle);
-        setBackgroundColor(rv, R.id.day_header,
-                dayHeader.getStartDay().plusDays(1).isBefore(DateUtil.now(getSettings().getTimeZone())) ?
-                        getSettings().getPastEventsBackgroundColor() : Color.TRANSPARENT);
+        setBackgroundColor(rv, R.id.day_header, entry.isBeforeToday()
+            ? getSettings().getPastEventsBackgroundColor()
+            : entry.isToday()
+                ? getSettings().getTodaysEventsBackgroundColor()
+                : getSettings().getEventsBackgroundColor());
         setBackgroundColorFromAttr(getContext(), rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(getSettings(), rv, R.id.day_header_title,
                 R.dimen.day_header_padding_left, R.dimen.day_header_padding_top,
                 R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
-        Intent intent = createOpenCalendarAtDayIntent(dayHeader.getStartDate());
+        Intent intent = createOpenCalendarAtDayIntent(entry.getStartDate());
         rv.setOnClickFillInIntent(R.id.day_header, intent);
         return rv;
     }

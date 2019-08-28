@@ -14,7 +14,6 @@ import org.andstatus.todoagenda.widget.EventEntryLayout;
 import java.util.List;
 
 public class ApplicationPreferences {
-
     public static final String PREF_WIDGET_ID = "widgetId";
 
     static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
@@ -41,21 +40,15 @@ public class ApplicationPreferences {
     static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
     static final String PREF_WIDGET_HEADER_THEME = "headerTheme";
     static final String PREF_WIDGET_HEADER_THEME_DEFAULT = Theme.DARK.name();
-    static final String PREF_WIDGET_HEADER_BACKGROUND_COLOR = "widgetHeaderBackgroundColor";
-    static final int PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT = Color.TRANSPARENT;
     static final String PREF_DAY_HEADER_THEME = "dayHeaderTheme";
     static final String PREF_DAY_HEADER_THEME_DEFAULT = Theme.DARK.name();
     static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
     static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
     static final String PREF_ENTRY_THEME = "entryTheme";
     public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
-    static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
-    static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
-    static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
-    static final String PREF_BACKGROUND_COLOR = "backgroundColor";
-    static final int PREF_BACKGROUND_COLOR_DEFAULT = 0x80000000;
     static final String PREF_SHOW_EVENT_ICON = "showEventIcon";
     static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent";
+    static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
     static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
     static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
     static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
@@ -66,6 +59,16 @@ public class ApplicationPreferences {
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
+
+    // Colors
+    static final String PREF_WIDGET_HEADER_BACKGROUND_COLOR = "widgetHeaderBackgroundColor";
+    static final int PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT = Color.TRANSPARENT;
+    static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
+    static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
+    static final String PREF_TODAYS_EVENTS_BACKGROUND_COLOR = "todaysEventsBackgroundColor";
+    static final int PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4A5FFF5D;
+    static final String PREF_EVENTS_BACKGROUND_COLOR = "backgroundColor";
+    static final int PREF_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x80000000;
 
     private static volatile String lockedTimeZoneId = null;
 
@@ -84,6 +87,8 @@ public class ApplicationPreferences {
         setHideBasedOnKeywords(context, settings.getHideBasedOnKeywords());
         setInt(context, PREF_WIDGET_HEADER_BACKGROUND_COLOR, settings.getWidgetHeaderBackgroundColor());
         setInt(context, PREF_PAST_EVENTS_BACKGROUND_COLOR, settings.getPastEventsBackgroundColor());
+        setInt(context, PREF_TODAYS_EVENTS_BACKGROUND_COLOR, settings.getTodaysEventsBackgroundColor());
+        setInt(context, PREF_EVENTS_BACKGROUND_COLOR, settings.getEventsBackgroundColor());
         setShowDaysWithoutEvents(context, settings.getShowDaysWithoutEvents());
         setShowDayHeaders(context, settings.getShowDayHeaders());
         setShowPastEventsUnderOneHeader(context, settings.getShowPastEventsUnderOneHeader());
@@ -105,7 +110,6 @@ public class ApplicationPreferences {
         setString(context, PREF_DAY_HEADER_THEME, settings.getDayHeaderTheme());
         setString(context, PREF_ENTRY_THEME, settings.getEntryTheme());
         setBoolean(context, PREF_SHOW_WIDGET_HEADER, settings.getShowWidgetHeader());
-        setInt(context, PREF_BACKGROUND_COLOR, settings.getBackgroundColor());
         setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale());
         setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());
     }
@@ -185,6 +189,18 @@ public class ApplicationPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(
                 PREF_PAST_EVENTS_BACKGROUND_COLOR,
                 PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT);
+    }
+
+    public static int getTodaysEventsBackgroundColor(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(
+                PREF_TODAYS_EVENTS_BACKGROUND_COLOR,
+                PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT);
+    }
+
+    public static int getEventsBackgroundColor(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(
+                PREF_EVENTS_BACKGROUND_COLOR,
+                PREF_EVENTS_BACKGROUND_COLOR_DEFAULT);
     }
 
     public static boolean getShowDaysWithoutEvents(Context context) {
@@ -323,15 +339,11 @@ public class ApplicationPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(key, defaultValue);
     }
 
-    public static void setInt(Context context, String key, int value) {
+    private static void setInt(Context context, String key, int value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(key, value);
         editor.apply();
-    }
-
-    public static int getInt(Context context, String key, int defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(key, defaultValue);
     }
 
     public static String getWidgetInstanceName(Context context) {

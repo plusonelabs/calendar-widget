@@ -40,6 +40,13 @@
             app:colorpicker_selectNoneButtonText="@string/default_value" />
 
         <com.rarepebble.colorpicker.ColorPreference
+            android:key="todaysEventsBackgroundColor"
+            android:defaultValue="#4A5FFF5D"
+            android:summary="@string/todays_events_background_color_desc"
+            android:title="@string/todays_events_background_color_title"
+            app:colorpicker_selectNoneButtonText="@string/default_value" />
+
+        <com.rarepebble.colorpicker.ColorPreference
             android:key="backgroundColor"
             android:defaultValue="#80000000"
             android:summary="@string/appearance_background_color_desc"

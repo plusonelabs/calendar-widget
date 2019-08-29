@@ -13,6 +13,8 @@ import org.andstatus.todoagenda.widget.EventEntryLayout;
 
 import java.util.List;
 
+import androidx.annotation.ColorInt;
+
 public class ApplicationPreferences {
     public static final String PREF_WIDGET_ID = "widgetId";
 
@@ -62,13 +64,13 @@ public class ApplicationPreferences {
 
     // Colors
     static final String PREF_WIDGET_HEADER_BACKGROUND_COLOR = "widgetHeaderBackgroundColor";
-    static final int PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT = Color.TRANSPARENT;
+    @ColorInt static final int PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT = Color.TRANSPARENT;
     static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
-    static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4affff2b;
+    @ColorInt static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF78782C;
     static final String PREF_TODAYS_EVENTS_BACKGROUND_COLOR = "todaysEventsBackgroundColor";
-    static final int PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x4A5FFF5D;
+    @ColorInt static final int PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF3E96AB;
     static final String PREF_EVENTS_BACKGROUND_COLOR = "backgroundColor";
-    static final int PREF_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x80000000;
+    @ColorInt static final int PREF_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x80000000;
 
     private static volatile String lockedTimeZoneId = null;
 

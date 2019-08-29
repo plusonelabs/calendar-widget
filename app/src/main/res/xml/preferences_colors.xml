@@ -34,14 +34,14 @@
 
         <com.rarepebble.colorpicker.ColorPreference
             android:key="pastEventsBackgroundColor"
-            android:defaultValue="#4affff2b"
+            android:defaultValue="#BF78782C"
             android:summary="@string/appearance_past_events_background_color_desc"
             android:title="@string/appearance_past_events_background_color_title"
             app:colorpicker_selectNoneButtonText="@string/default_value" />
 
         <com.rarepebble.colorpicker.ColorPreference
             android:key="todaysEventsBackgroundColor"
-            android:defaultValue="#4A5FFF5D"
+            android:defaultValue="#BF3E96AB"
             android:summary="@string/todays_events_background_color_desc"
             android:title="@string/todays_events_background_color_title"
             app:colorpicker_selectNoneButtonText="@string/default_value" />

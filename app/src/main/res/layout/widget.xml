@@ -21,6 +21,18 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:id="@+id/go_to_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:layout_weight="0"
+            android:contentDescription="@string/go_to_today"
+            android:src="@drawable/ic_action_today_light" />
+
+        <ImageView
             android:id="@+id/add_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

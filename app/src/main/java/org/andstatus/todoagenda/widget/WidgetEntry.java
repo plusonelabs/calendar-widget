@@ -49,4 +49,8 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     public boolean isToday() {
         return DateUtil.isToday(getStartDate());
     }
+
+    public boolean isAfterToday() {
+        return DateUtil.isAfterToday(getStartDate());
+    }
 }

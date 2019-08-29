@@ -36,8 +36,13 @@ import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
 
-    private static final String PACKAGE = EventAppWidgetProvider.class.getPackage().getName();
+    private static final String PACKAGE = "org.andstatus.todoagenda";
     public static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
+    public static final String ACTION_GOTO_POSITIONS = PACKAGE + ".action.GOTO_TODAY";
+    public static final String EXTRA_WIDGET_LIST_POSITION1 = "widgetListPosition1";
+    public static final String EXTRA_WIDGET_LIST_POSITION2 = "widgetListPosition2";
+    public static final int REQUEST_CODE_EMPTY = 1;
+    public static final int REQUEST_CODE_ADD_EVENT = 3;
 
     public static int[] getWidgetIds(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -60,7 +65,6 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
             InstanceSettings settings = AllSettings.instanceFromId(baseContext, widgetId);
             AlarmReceiver.scheduleAlarm(settings.getWidgetHeaderThemeContext());
             RemoteViews rv = new RemoteViews(baseContext.getPackageName(), R.layout.widget);
-            configureBackground(settings, rv);
             configureWidgetHeader(settings, rv);
             configureList(settings, widgetId, rv);
             configureNoEvents(settings, rv);
@@ -68,25 +72,18 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private void configureBackground(InstanceSettings settings, RemoteViews rv) {
+    private void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
         if (settings.getShowWidgetHeader()) {
             setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
+            configureCurrentDate(settings, rv);
+            setActionIcons(settings, rv);
+            configureAddEvent(settings, rv);
+            configureRefresh(settings, rv);
+            configureOverflowMenu(settings, rv);
             rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
         } else {
             rv.setViewVisibility(R.id.action_bar, View.GONE);
         }
-//        int color = settings.getEventsBackgroundColor();
-//        int opaqueColor = Color.rgb(red(color), green(color), blue(color));
-//        setColorFilter(rv, R.id.background_image, opaqueColor);
-//        setAlpha(rv, R.id.background_image, alpha(color));
-    }
-
-    private void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
-        configureCurrentDate(settings, rv);
-        setActionIcons(settings, rv);
-        configureAddEvent(settings, rv);
-        configureRefresh(settings.getContext(), rv);
-        configureOverflowMenu(settings, rv);
     }
 
     private void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {
@@ -100,6 +97,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
     }
 
     private void setActionIcons(InstanceSettings settings, RemoteViews rv) {
+        setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.go_to_today, R.attr.header_action_go_to_today);
         setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.add_event, R.attr.header_action_add_event);
         setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.refresh, R.attr.header_action_refresh);
         setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.overflow_menu, R.attr.header_action_overflow);
@@ -108,6 +106,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
             alpha = 154;
         }
+        setAlpha(rv, R.id.go_to_today, alpha);
         setAlpha(rv, R.id.add_event, alpha);
         setAlpha(rv, R.id.refresh, alpha);
         setAlpha(rv, R.id.overflow_menu, alpha);
@@ -119,38 +118,37 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 
     private PendingIntent getPermittedAddEventPendingIntent(InstanceSettings settings) {
         Context context = settings.getContext();
-        Intent intent = PermissionsUtil.getPermittedIntent(context,
+        Intent intent = PermissionsUtil.getPermittedActivityIntent(context,
                 CalendarIntentUtil.createNewEventIntent(settings.getTimeZone()));
         return isIntentAvailable(context, intent) ?
-                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT) :
+                PendingIntent.getActivity(context, REQUEST_CODE_ADD_EVENT, intent, PendingIntent.FLAG_UPDATE_CURRENT) :
                 getEmptyPendingIntent(context);
     }
 
-    private static PendingIntent getEmptyPendingIntent(Context context) {
+    public static PendingIntent getEmptyPendingIntent(Context context) {
         return PendingIntent.getActivity(
                 context.getApplicationContext(),
-                0,
+                REQUEST_CODE_EMPTY,
                 new Intent(),
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private void configureRefresh(Context context, RemoteViews rv) {
-        Intent intent = new Intent(context, EnvironmentChangedReceiver.class);
+    private void configureRefresh(InstanceSettings settings, RemoteViews rv) {
+        Intent intent = new Intent(settings.getContext(), EnvironmentChangedReceiver.class);
         intent.setAction(ACTION_REFRESH);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent pendingIntent = PermissionsUtil.getPermittedPendingBroadcastIntent(settings, intent);
         rv.setOnClickPendingIntent(R.id.refresh, pendingIntent);
     }
 
     private void configureOverflowMenu(InstanceSettings settings, RemoteViews rv) {
         Intent intent = MainActivity.intentToConfigure(settings.getContext(), settings.getWidgetId());
-        PendingIntent menuPendingIntent = PermissionsUtil.getPermittedPendingIntent(settings, intent);
-        rv.setOnClickPendingIntent(R.id.overflow_menu, menuPendingIntent);
+        PendingIntent pendingIntent = PermissionsUtil.getPermittedPendingActivityIntent(settings, intent);
+        rv.setOnClickPendingIntent(R.id.overflow_menu, pendingIntent);
     }
 
     private static boolean isIntentAvailable(Context context, Intent intent) {
         PackageManager packageManager = context.getPackageManager();
-        List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
-                PackageManager.MATCH_DEFAULT_ONLY);
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
 

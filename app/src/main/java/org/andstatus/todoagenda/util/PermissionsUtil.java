@@ -23,14 +23,25 @@ public class PermissionsUtil {
     }
 
     @NonNull
-    public static PendingIntent getPermittedPendingIntent(InstanceSettings settings, Intent intent) {
-        Intent intentPermitted = getPermittedIntent(settings.getContext(), intent);
+    public static PendingIntent getPermittedPendingBroadcastIntent(InstanceSettings settings, Intent intent) {
+        // We need unique request codes for each widget
+        int requestCode = (intent.getAction() == null ? 1 : intent.getAction().hashCode()) + settings.getWidgetId();
+        return arePermissionsGranted(settings.getContext())
+                ? PendingIntent.getBroadcast(settings.getContext(), requestCode, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT)
+                : PendingIntent.getActivity(settings.getContext(), settings.getWidgetId(),
+                MainActivity.intentToStartMe(settings.getContext()), PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    @NonNull
+    public static PendingIntent getPermittedPendingActivityIntent(InstanceSettings settings, Intent intent) {
+        Intent intentPermitted = getPermittedActivityIntent(settings.getContext(), intent);
         return PendingIntent.getActivity(settings.getContext(), settings.getWidgetId(), intentPermitted, PendingIntent
                 .FLAG_UPDATE_CURRENT);
     }
 
     @NonNull
-    public static Intent getPermittedIntent(@NonNull Context context, @NonNull Intent intent) {
+    public static Intent getPermittedActivityIntent(@NonNull Context context, @NonNull Intent intent) {
         return arePermissionsGranted(context) ? intent : MainActivity.intentToStartMe(context);
     }
 

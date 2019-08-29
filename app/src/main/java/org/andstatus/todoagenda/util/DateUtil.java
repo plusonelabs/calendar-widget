@@ -91,6 +91,10 @@ public class DateUtil {
         return date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay());
     }
 
+    public static boolean isAfterToday(DateTime date) {
+        return !date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay().plusDays(1));
+    }
+
     public static boolean isBeforeNow(DateTime date) {
         return date.isBefore(now(date.getZone()));
     }

@@ -1,6 +1,9 @@
 package org.andstatus.todoagenda;
 
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -9,6 +12,7 @@ import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
 import org.andstatus.todoagenda.widget.DayHeaderVisualizer;
 import org.andstatus.todoagenda.widget.WidgetEntry;
@@ -77,6 +81,22 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
             widgetEntries = addDayHeaders(getEventEntries());
         else
             widgetEntries = getEventEntries();
+
+        configureGotoToday(getSettings(), getTomorrowsPosition(), getTodaysPosition());
+    }
+
+    private int getTodaysPosition() {
+        for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
+            if (!getWidgetEntries().get(ind).isBeforeToday()) return ind;
+        }
+        return getWidgetEntries().size() - 1;
+    }
+
+    private int getTomorrowsPosition() {
+        for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
+            if (getWidgetEntries().get(ind).isAfterToday()) return ind;
+        }
+        return getWidgetEntries().size() > 0 ? 0 : -1;
     }
 
     private List<WidgetEntry> getEventEntries() {
@@ -158,4 +178,26 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         return true;
     }
 
+    private static void configureGotoToday(InstanceSettings settings, int tomorrowsPosition, int todaysPosition) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(settings.getContext());
+        if (appWidgetManager == null) return;
+
+        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget);
+        int widgetId = settings.getWidgetId();
+        PendingIntent pendingIntent;
+        if (todaysPosition < 0) {
+            pendingIntent = EventAppWidgetProvider.getEmptyPendingIntent(settings.getContext());
+        } else {
+            Intent intent = new Intent(settings.getContext().getApplicationContext(), EnvironmentChangedReceiver.class);
+            intent.setAction(EventAppWidgetProvider.ACTION_GOTO_POSITIONS);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+            intent.putExtra(EventAppWidgetProvider.EXTRA_WIDGET_LIST_POSITION1, tomorrowsPosition);
+            intent.putExtra(EventAppWidgetProvider.EXTRA_WIDGET_LIST_POSITION2, todaysPosition);
+            pendingIntent = PermissionsUtil.getPermittedPendingBroadcastIntent(settings, intent);
+        }
+        rv.setOnClickPendingIntent(R.id.go_to_today, pendingIntent);
+        Log.d("configureGotoToday", "widgetId:" + widgetId +
+                ", position:" + tomorrowsPosition + " -> " + todaysPosition);
+        appWidgetManager.updateAppWidget(widgetId, rv);
+    }
 }

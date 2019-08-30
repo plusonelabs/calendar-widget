@@ -1,82 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical"
-              android:padding="@dimen/widget_padding">
-
-    <LinearLayout
-        android:id="@+id/action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/calendar_current_date"
-            style="@style/HeaderCurrentDate"
-            android:layout_width="0dp"
-            android:paddingTop="4dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/go_to_today"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_weight="0"
-            android:contentDescription="@string/go_to_today"
-            android:src="@drawable/ic_action_today_light" />
-
-        <ImageView
-            android:id="@+id/add_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:contentDescription="@string/add_event_desc"
-            android:src="@drawable/ic_action_add_event_light" />
-
-        <ImageView
-            android:id="@+id/refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:contentDescription="@string/refresh_desc"
-            android:src="@drawable/ic_action_refresh_light" />
-
-        <ImageView
-            android:id="@+id/overflow_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:contentDescription="@string/open_prefs_desc"
-            android:src="@drawable/ic_action_overflow_light" />
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/widget_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@+id/event_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
-
-        <TextView
-            android:id="@+id/empty_event_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="@dimen/calender_padding"
-            android:text="@string/no_upcoming_events"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </FrameLayout>
-
+    android:id="@+id/widget_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_padding">
 </LinearLayout>

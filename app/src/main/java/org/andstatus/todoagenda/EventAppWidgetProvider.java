@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
@@ -64,6 +63,8 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         for (int widgetId : appWidgetIds) {
             InstanceSettings settings = AllSettings.instanceFromId(baseContext, widgetId);
             AlarmReceiver.scheduleAlarm(settings.getWidgetHeaderThemeContext());
+            addWidgetParts(settings, widgetId);
+
             RemoteViews rv = new RemoteViews(baseContext.getPackageName(), R.layout.widget);
             configureWidgetHeader(settings, rv);
             configureList(settings, widgetId, rv);
@@ -72,18 +73,28 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
+    private void addWidgetParts(InstanceSettings settings, int widgetId) {
+        RemoteViews rvParent = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget);
+        rvParent.removeAllViews(R.id.widget_parent);
         if (settings.getShowWidgetHeader()) {
-            setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
-            configureCurrentDate(settings, rv);
-            setActionIcons(settings, rv);
-            configureAddEvent(settings, rv);
-            configureRefresh(settings, rv);
-            configureOverflowMenu(settings, rv);
-            rv.setViewVisibility(R.id.action_bar, View.VISIBLE);
-        } else {
-            rv.setViewVisibility(R.id.action_bar, View.GONE);
+            RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_header_one_line);
+            rvParent.addView(R.id.widget_parent, rv);
         }
+        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_body);
+        rvParent.addView(R.id.widget_parent, rv);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(settings.getContext());
+        appWidgetManager.updateAppWidget(widgetId, rvParent);
+    }
+
+    private void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
+        if (!settings.getShowWidgetHeader()) return;
+
+        setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
+        configureCurrentDate(settings, rv);
+        setActionIcons(settings, rv);
+        configureAddEvent(settings, rv);
+        configureRefresh(settings, rv);
+        configureOverflowMenu(settings, rv);
     }
 
     private void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {

@@ -1,38 +1,72 @@
 package org.andstatus.todoagenda;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
+import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.util.DateUtil;
+import org.joda.time.DateTime;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class EnvironmentChangedReceiver extends BroadcastReceiver {
     private static final AtomicReference<EnvironmentChangedReceiver> registeredReceiver = new AtomicReference<>();
 
-    public static void registerReceivers(Context contextIn) {
-        Context context = contextIn.getApplicationContext();
+    public static void registerReceivers(Map<Integer, InstanceSettings> instances) {
+        if (instances.isEmpty()) return;
+
+        InstanceSettings instanceSettings = instances.values().iterator().next();
+        Context context = instanceSettings.getContext().getApplicationContext();
         synchronized (registeredReceiver) {
             EnvironmentChangedReceiver receiver = new EnvironmentChangedReceiver();
             EventProviderType.registerProviderChangedReceivers(context, receiver);
 
-            IntentFilter userPresent = new IntentFilter();
-            userPresent.addAction("android.intent.action.USER_PRESENT");
-            context.registerReceiver(receiver, userPresent);
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Intent.ACTION_USER_PRESENT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                filter.addAction(Intent.ACTION_DREAMING_STOPPED);
+            }
+            context.registerReceiver(receiver, filter);
 
             EnvironmentChangedReceiver oldReceiver = registeredReceiver.getAndSet(receiver);
             if (oldReceiver != null) {
                 oldReceiver.unRegister(context);
             }
+            scheduleNextAlarms(context, instances);
 
-            Log.i(EventAppWidgetProvider.class.getName(),
-                    "Registered receivers from " + contextIn.getClass().getName());
+            Log.i(AppWidgetProvider.class.getName(),
+                    "Registered receivers from " + instanceSettings.getContext().getClass().getName());
+        }
+    }
+
+    private static void scheduleNextAlarms(Context context, Map<Integer, InstanceSettings> instances) {
+        Set<DateTime> alarmTimes = new HashSet<>();
+        for (InstanceSettings settings : instances.values()) {
+            alarmTimes.add(DateUtil.now(settings.getTimeZone()).withTimeAtStartOfDay().plusDays(1));
+        }
+        int counter = 0;
+        for (DateTime alarmTime : alarmTimes) {
+            Intent intent = new Intent(context, EnvironmentChangedReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                    AppWidgetProvider.REQUEST_CODE_MIDNIGHT_ALARM + counter,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            am.set(AlarmManager.RTC, alarmTime.getMillis(), pendingIntent);
+            counter++;
         }
     }
 
@@ -48,28 +82,22 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 ? ""
                 : (intent.getAction() == null ? "" : intent.getAction());
         switch (action) {
-            case Intent.ACTION_LOCALE_CHANGED:
-            case Intent.ACTION_TIME_CHANGED:
-            case Intent.ACTION_DATE_CHANGED:
-            case Intent.ACTION_TIMEZONE_CHANGED:
-                EventAppWidgetProvider.updateWidgetsWithData(context);
-                break;
-            case EventAppWidgetProvider.ACTION_GOTO_POSITIONS:
+            case AppWidgetProvider.ACTION_GOTO_POSITIONS:
                 int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
-                int position1 = intent.getIntExtra(EventAppWidgetProvider.EXTRA_WIDGET_LIST_POSITION1, 0);
-                int position2 = intent.getIntExtra(EventAppWidgetProvider.EXTRA_WIDGET_LIST_POSITION2, 0);
+                int position1 = intent.getIntExtra(AppWidgetProvider.EXTRA_WIDGET_LIST_POSITION1, 0);
+                int position2 = intent.getIntExtra(AppWidgetProvider.EXTRA_WIDGET_LIST_POSITION2, 0);
                 gotoPosition(context, widgetId, position1);
                 if (position1 >= 0 && position2 >= 0 && position1 != position2) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        // Ignored
                     }
                 }
                 gotoPosition(context, widgetId, position2);
                 break;
             default:
-                EventAppWidgetProvider.updateEventList(context);
+                AppWidgetProvider.updateAllWidgets(context);
                 break;
         }
     }

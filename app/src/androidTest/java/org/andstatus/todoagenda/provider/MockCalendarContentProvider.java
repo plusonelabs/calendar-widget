@@ -12,7 +12,7 @@ import android.test.mock.MockContentResolver;
 import android.util.Log;
 
 import org.andstatus.todoagenda.BaseWidgetTest;
-import org.andstatus.todoagenda.EventAppWidgetProvider;
+import org.andstatus.todoagenda.AppWidgetProvider;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
@@ -195,7 +195,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void refreshWidget() {
-        Intent intent = new Intent(EventAppWidgetProvider.ACTION_REFRESH);
+        Intent intent = new Intent(AppWidgetProvider.ACTION_REFRESH);
         getContext().sendBroadcast(intent);
     }
 

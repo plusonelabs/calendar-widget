@@ -15,7 +15,7 @@ public class BaseWidgetTest {
     final String TAG = this.getClass().getSimpleName();
 
     protected MockCalendarContentProvider provider = null;
-    protected EventRemoteViewsFactory factory = null;
+    protected RemoteViewsFactory factory = null;
 
     protected int getNumberOfOpenTasksSources() {
         return 0;
@@ -24,7 +24,7 @@ public class BaseWidgetTest {
     @Before
     public void setUp() throws Exception {
         provider = MockCalendarContentProvider.getContentProvider(this, getNumberOfOpenTasksSources());
-        factory = new EventRemoteViewsFactory(provider.getContext(), provider.getWidgetId());
+        factory = new RemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().isEmpty());
     }
 

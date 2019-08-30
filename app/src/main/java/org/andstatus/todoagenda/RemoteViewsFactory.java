@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.RemoteViewsService.RemoteViewsFactory;
+import android.widget.RemoteViewsService;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -27,14 +27,14 @@ import androidx.annotation.NonNull;
 
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 
-public class EventRemoteViewsFactory implements RemoteViewsFactory {
+public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private final Context context;
     private final int widgetId;
     private volatile List<? extends WidgetEntry> widgetEntries = new ArrayList<>();
     private final List<WidgetEntryVisualizer<? extends WidgetEntry>> visualizers = new ArrayList<>();
 
-    public EventRemoteViewsFactory(Context context, int widgetId) {
+    public RemoteViewsFactory(Context context, int widgetId) {
         this.context = context;
         this.widgetId = widgetId;
     }
@@ -68,7 +68,9 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         return AllSettings.instanceFromId(context, widgetId);
     }
 
+    @Override
     public void onDataSetChanged() {
+        Log.d("onDataSetChanged", "WidgetId:" + widgetId);
         visualizers.clear();
         visualizers.add(new DayHeaderVisualizer(getSettings().getDayHeaderThemeContext(), widgetId));
         for (EventProviderType type : EventProviderType.values()) {
@@ -76,12 +78,7 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
                 visualizers.add(type.getVisualizer(context, widgetId));
             }
         }
-
-        if (getSettings().getShowDayHeaders())
-            widgetEntries = addDayHeaders(getEventEntries());
-        else
-            widgetEntries = getEventEntries();
-
+        widgetEntries = getSettings().getShowDayHeaders() ? addDayHeaders(getEventEntries()) : getEventEntries();
         configureGotoToday(getSettings(), getTomorrowsPosition(), getTodaysPosition());
     }
 
@@ -186,13 +183,13 @@ public class EventRemoteViewsFactory implements RemoteViewsFactory {
         int widgetId = settings.getWidgetId();
         PendingIntent pendingIntent;
         if (todaysPosition < 0) {
-            pendingIntent = EventAppWidgetProvider.getEmptyPendingIntent(settings.getContext());
+            pendingIntent = AppWidgetProvider.getEmptyPendingIntent(settings.getContext());
         } else {
             Intent intent = new Intent(settings.getContext().getApplicationContext(), EnvironmentChangedReceiver.class);
-            intent.setAction(EventAppWidgetProvider.ACTION_GOTO_POSITIONS);
+            intent.setAction(AppWidgetProvider.ACTION_GOTO_POSITIONS);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-            intent.putExtra(EventAppWidgetProvider.EXTRA_WIDGET_LIST_POSITION1, tomorrowsPosition);
-            intent.putExtra(EventAppWidgetProvider.EXTRA_WIDGET_LIST_POSITION2, todaysPosition);
+            intent.putExtra(AppWidgetProvider.EXTRA_WIDGET_LIST_POSITION1, tomorrowsPosition);
+            intent.putExtra(AppWidgetProvider.EXTRA_WIDGET_LIST_POSITION2, todaysPosition);
             pendingIntent = PermissionsUtil.getPermittedPendingBroadcastIntent(settings, intent);
         }
         rv.setOnClickPendingIntent(R.id.go_to_today, pendingIntent);

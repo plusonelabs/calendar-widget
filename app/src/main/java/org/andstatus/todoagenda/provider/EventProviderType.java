@@ -88,7 +88,6 @@ public enum EventProviderType {
                 permissionsNeeded.add(type.permission);
             }
         }
-        EnvironmentChangedReceiver.registerReceivers(context);
         initialized = true;
     }
 

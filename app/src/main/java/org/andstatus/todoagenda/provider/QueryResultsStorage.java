@@ -8,7 +8,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.andstatus.todoagenda.EventRemoteViewsFactory;
+import org.andstatus.todoagenda.RemoteViewsFactory;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -62,7 +62,7 @@ public class QueryResultsStorage {
         try {
             Log.i(TAG, method + " started");
             setNeedToStoreResults(true);
-            EventRemoteViewsFactory factory = new EventRemoteViewsFactory(context, widgetId);
+            RemoteViewsFactory factory = new RemoteViewsFactory(context, widgetId);
             factory.onDataSetChanged();
             String results = theStorage.getResultsAsString(context, widgetId);
             if (TextUtils.isEmpty(results)) {

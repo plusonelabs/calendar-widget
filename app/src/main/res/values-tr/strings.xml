@@ -31,8 +31,7 @@
   <string name="appearance_date_format_24">17:00</string>
   <string name="appearance_date_format_12">17:00</string>
   <string name="appearance_show_days_without_events_title">Günleri olaylar olmadan göster</string>
-  <string name="appearance_display_header_title">Widget üstbilgisini göster</string>
-  <string name="appearance_group_color_title">Renkler</string>
+  <string name="widget_header_layout">Widget üstbilgisini göster</string>
   <string name="appearance_background_color_title">Arkaplan Rengi</string>
   <string name="appearance_background_color_desc">Arkaplan rengini ayarla</string>
   <string name="appearance_day_header_alignment_left">Sol</string>

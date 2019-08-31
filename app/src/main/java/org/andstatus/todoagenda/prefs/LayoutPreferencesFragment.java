@@ -20,6 +20,7 @@ public class LayoutPreferencesFragment extends PreferenceFragment
     public void onResume() {
         super.onResume();
         showEventEntryLayout();
+        showWidgetHeaderLayout();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -27,6 +28,13 @@ public class LayoutPreferencesFragment extends PreferenceFragment
         Preference preference = findPreference(ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT);
         if (preference != null) {
             preference.setSummary(ApplicationPreferences.getEventEntryLayout(getActivity()).summaryResId);
+        }
+    }
+
+    private void showWidgetHeaderLayout() {
+        Preference preference = findPreference(ApplicationPreferences.PREF_WIDGET_HEADER_LAYOUT);
+        if (preference != null) {
+            preference.setSummary(ApplicationPreferences.getWidgetHeaderLayout(getActivity()).summaryResId);
         }
     }
 
@@ -41,6 +49,9 @@ public class LayoutPreferencesFragment extends PreferenceFragment
         switch (key) {
             case ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT:
                 showEventEntryLayout();
+                break;
+            case ApplicationPreferences.PREF_WIDGET_HEADER_LAYOUT:
+                showWidgetHeaderLayout();
                 break;
             default:
                 break;

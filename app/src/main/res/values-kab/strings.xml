@@ -49,8 +49,7 @@
   <string name="appearance_show_days_without_events_desc">Sken ass iqeṛṛa i wussan s war tidyanin</string>
   <string name="appearance_show_day_headers_title">Sken iqeṛṛa n wussan</string>
   <string name="appearance_show_day_headers_desc">Sken iqeṛṛa n wass akk</string>
-  <string name="appearance_display_header_title">Sken aqeṛṛu n usfaylurar</string>
-  <string name="appearance_display_header_desc">Sken aqeṛṛu n wazemz akked iɣewwaṛen</string>
+  <string name="widget_header_layout">Sken aqeṛṛu n usfaylurar</string>
   <string name="lock_time_zone_off_desc">Yewḥel, tamnaṭ tamirant: %s</string>
   <string name="lock_time_zone_on_desc">Yewḥel di %s</string>
   <string name="lock_time_zone_title">Sewḥel iẓdi usrig</string>

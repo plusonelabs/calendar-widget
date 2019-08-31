@@ -33,8 +33,7 @@
   <string name="appearance_date_format_12">5:00 pm</string>
   <string name="appearance_show_days_without_events_title">Visualizza i giorni senza eventi</string>
   <string name="appearance_show_days_without_events_desc">Visualizza le intestazioni del giorno per giorni senza eventi</string>
-  <string name="appearance_display_header_title">Mostra intestazione widget</string>
-  <string name="appearance_display_header_desc">Mostra data e strumenti nell\'intestazione</string>
+  <string name="widget_header_layout">Mostra intestazione widget</string>
   <string name="appearance_group_color_title">Colori</string>
   <string name="appearance_background_color_title">Sfondo trasparente</string>
   <string name="appearance_background_color_desc">Imposta la trasparenza dello sfondo</string>

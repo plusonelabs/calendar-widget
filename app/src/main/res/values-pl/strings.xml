@@ -47,8 +47,7 @@
   <string name="appearance_show_days_without_events_desc">Wyświetla nagłówek dnia dla dni bez wydarzeń</string>
   <string name="appearance_show_day_headers_title">Nagłówki dla każdego dnia</string>
   <string name="appearance_show_day_headers_desc">Wyświetlaj nagłówki dla każdego dnia</string>
-  <string name="appearance_display_header_title">Nagłówek widżetu</string>
-  <string name="appearance_display_header_desc">Wyświetla nagłówek z datą i ustawieniami</string>
+  <string name="widget_header_layout">Nagłówek widżetu</string>
   <string name="lock_time_zone_off_desc">Odblokowana. Aktualna strefa: %s</string>
   <string name="lock_time_zone_on_desc">Zablokowana na %s</string>
   <string name="lock_time_zone_title">Blokada strefy czasowej</string>

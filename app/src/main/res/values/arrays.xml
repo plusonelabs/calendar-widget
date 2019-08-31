@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
+    <string-array name="pref_widget_header_layout_entries">
+        <item>@string/single_line_layout</item>
+        <item>@string/two_rows_layout</item>
+        <item>@string/hidden</item>
+    </string-array>
+    <string-array name="pref_widget_header_layout_values" tools:ignore="MissingTranslation">
+        <item>ONE_ROW</item>
+        <item>TWO_ROWS</item>
+        <item>HIDDEN</item>
+    </string-array>
     <string-array name="pref_text_size_entries">
         <item>@string/appearance_text_size_very_small</item>
         <item>@string/appearance_text_size_small</item>

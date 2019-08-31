@@ -16,6 +16,7 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
+import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
 import org.joda.time.DateTime;
 
 import java.util.AbstractList;
@@ -58,9 +59,13 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.d("onUpdate", "WidgetIds:" + asList(appWidgetIds));
         for (int widgetId : appWidgetIds) {
-            addWidgetViews(context, widgetId);
-            updateWidget(context, widgetId);
+            recreateWidget(context, widgetId);
         }
+    }
+
+    public static void recreateWidget(Context context, int widgetId) {
+        addWidgetViews(context, widgetId);
+        updateWidget(context, widgetId);
     }
 
     public static void addWidgetViews(Context context, int widgetId) {
@@ -72,24 +77,29 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         configureWidgetHeader(settings, rv);
         configureList(settings, widgetId, rv);
         configureNoEvents(settings, rv);
-        appWidgetManager.updateAppWidget(widgetId, rv);
+        if (appWidgetManager != null) {
+            appWidgetManager.updateAppWidget(widgetId, rv);
+        }
     }
 
     private static void addWidgetParts(InstanceSettings settings, int widgetId) {
         RemoteViews rvParent = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget);
         rvParent.removeAllViews(R.id.widget_parent);
-        if (settings.getShowWidgetHeader()) {
-            RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_header_one_line);
+        if (settings.getWidgetHeaderLayout() != WidgetHeaderLayout.HIDDEN) {
+            RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(),
+                    settings.getWidgetHeaderLayout().layoutId);
             rvParent.addView(R.id.widget_parent, rv);
         }
         RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_body);
         rvParent.addView(R.id.widget_parent, rv);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(settings.getContext());
-        appWidgetManager.updateAppWidget(widgetId, rvParent);
+        if (appWidgetManager != null) {
+            appWidgetManager.updateAppWidget(widgetId, rvParent);
+        }
     }
 
     private static void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
-        if (!settings.getShowWidgetHeader()) return;
+        if (settings.getWidgetHeaderLayout() == WidgetHeaderLayout.HIDDEN) return;
 
         setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
         configureCurrentDate(settings, rv);
@@ -208,11 +218,11 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
                 : appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidgetProvider.class));
     }
 
-    public static void updateWidget(Context context, int widgetId) {
+    private static void updateWidget(Context context, int widgetId) {
         updateWidgets(context, new int[]{widgetId});
     }
 
-    public static void updateWidgets(Context context, int[] widgetIds) {
+    private static void updateWidgets(Context context, int[] widgetIds) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         if (appWidgetManager != null) {
             for (int widgetId : widgetIds) {

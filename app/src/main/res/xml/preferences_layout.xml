@@ -1,11 +1,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:key="showHeader"
-        android:defaultValue="true"
-        android:summary="@string/appearance_display_header_desc"
-        android:title="@string/appearance_display_header_title">
-    </CheckBoxPreference>
+    <ListPreference
+        android:key="widgetHeaderLayout"
+        android:defaultValue="ONE_ROW"
+        android:entries="@array/pref_widget_header_layout_entries"
+        android:entryValues="@array/pref_widget_header_layout_values"
+        android:summary="@string/single_line_layout"
+        android:title="@string/widget_header_layout" />
 
     <CheckBoxPreference
         android:key="showDayHeaders"

@@ -40,8 +40,7 @@
   <string name="appearance_date_format_12">5:00 pm</string>
   <string name="appearance_show_days_without_events_title">نمایش روزهای بدون رویداد</string>
   <string name="appearance_show_days_without_events_desc">نمایش عنوان روز برای روزهای بدون رویداد</string>
-  <string name="appearance_display_header_title">نمایش سرصفحه ویدجت</string>
-  <string name="appearance_display_header_desc">نمایش تاریخ و سربرگ تنظیمات</string>
+  <string name="widget_header_layout">نمایش سرصفحه ویدجت</string>
   <string name="appearance_group_color_title">رنگ ها</string>
   <string name="appearance_background_color_title">رنگ پس زمینه</string>
   <string name="appearance_background_color_desc">تنظیم رنگ پس زمینه</string>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/action_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/calendar_current_date"
+        style="@style/HeaderCurrentDate"
+        android:layout_width="wrap_content"
+        android:paddingTop="4dp"
+        android:text="@string/today"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/go_to_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:layout_weight="0"
+            android:contentDescription="@string/go_to_today"
+            android:src="@drawable/ic_action_today_light" />
+
+        <ImageView
+            android:id="@+id/add_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:contentDescription="@string/add_event_desc"
+            android:src="@drawable/ic_action_add_event_light" />
+
+        <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:contentDescription="@string/refresh_desc"
+            android:src="@drawable/ic_action_refresh_light" />
+
+        <ImageView
+            android:id="@+id/overflow_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:contentDescription="@string/open_prefs_desc"
+            android:src="@drawable/ic_action_overflow_light" />
+    </LinearLayout>
+</LinearLayout>

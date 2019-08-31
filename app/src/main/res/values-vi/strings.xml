@@ -32,8 +32,7 @@
   <string name="appearance_date_format_12">5:00 pm</string>
   <string name="appearance_show_days_without_events_title">Không hiển thị sự kiện theo ngày</string>
   <string name="appearance_show_days_without_events_desc">Chỉ hiển thị tiêu đề ngày</string>
-  <string name="appearance_display_header_title">Hiển thị tiêu đề widget</string>
-  <string name="appearance_display_header_desc">Hiển thị ngày tháng và tiêu đề cài đặt</string>
+  <string name="widget_header_layout">Hiển thị tiêu đề widget</string>
   <string name="appearance_group_color_title">Màu sắc</string>
   <string name="appearance_background_color_title">Màu nền</string>
   <string name="appearance_background_color_desc">Điều chỉnh màu nền</string>

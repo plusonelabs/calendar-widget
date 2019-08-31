@@ -33,8 +33,7 @@
   <string name="appearance_date_format_12">5:00 pm</string>
   <string name="appearance_show_days_without_events_title">Vis dage uden aftaler</string>
   <string name="appearance_show_days_without_events_desc">Vis dagsoverskrifter for dage uden aftaler</string>
-  <string name="appearance_display_header_title">Vis widget header</string>
-  <string name="appearance_display_header_desc">Vis dato og indstillings header</string>
+  <string name="widget_header_layout">Vis widget header</string>
   <string name="appearance_group_color_title">Farver</string>
   <string name="appearance_background_color_title">Baggrunds farve</string>
   <string name="appearance_background_color_desc">Juster baggrundsfarven</string>

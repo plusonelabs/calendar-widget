@@ -33,8 +33,7 @@
   <string name="appearance_date_format_12">下午5：00</string>
   <string name="appearance_show_days_without_events_title">显示无日程安排日期</string>
   <string name="appearance_show_days_without_events_desc">为无安排日期显示日期标题</string>
-  <string name="appearance_display_header_title">显示小部件顶栏</string>
-  <string name="appearance_display_header_desc">显示日期和设置标题</string>
+  <string name="widget_header_layout">显示小部件顶栏</string>
   <string name="appearance_group_color_title">颜色</string>
   <string name="appearance_background_color_title">背景色</string>
   <string name="appearance_background_color_desc">调整背景色</string>

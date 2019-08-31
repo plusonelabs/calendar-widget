@@ -47,8 +47,7 @@
   <string name="appearance_show_days_without_events_desc">イベントのない日のヘッダーを表示します</string>
   <string name="appearance_show_day_headers_title">日のヘッダーを表示</string>
   <string name="appearance_show_day_headers_desc">すべての日ヘッダーを表示</string>
-  <string name="appearance_display_header_title">ウィジェットのヘッダ表示</string>
-  <string name="appearance_display_header_desc">日付と設定のヘッダを表示します</string>
+  <string name="widget_header_layout">ウィジェットのヘッダ表示</string>
   <string name="lock_time_zone_off_desc">ロック解除されました。現在のゾーン: %s</string>
   <string name="lock_time_zone_on_desc">%s でロックされています</string>
   <string name="lock_time_zone_title">タイム ゾーンをロック</string>

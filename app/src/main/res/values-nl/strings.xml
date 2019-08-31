@@ -45,8 +45,7 @@
   <string name="appearance_show_days_without_events_desc">Toon dag titels voor dagen zonder gebeurtenissen</string>
   <string name="appearance_show_day_headers_title">Laat dag titels zien</string>
   <string name="appearance_show_day_headers_desc">Laat dag titels zien</string>
-  <string name="appearance_display_header_title">Widget kop weergeven</string>
-  <string name="appearance_display_header_desc">Toon de datum en instellingen kop</string>
+  <string name="widget_header_layout">Widget kop weergeven</string>
   <string name="lock_time_zone_off_desc">Ontgrendeld, de huidige tijdzone: %s</string>
   <string name="lock_time_zone_on_desc">Vergrendeld op %s</string>
   <string name="lock_time_zone_title">Zet de tijdzone vast</string>

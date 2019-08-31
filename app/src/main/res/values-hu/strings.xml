@@ -36,8 +36,7 @@
   <string name="appearance_date_format_12">5:00</string>
   <string name="appearance_show_days_without_events_title">Esemény nélküli napok megjelenítése</string>
   <string name="appearance_show_days_without_events_desc">Nap-fejlécek mutatása a napokhoz események nélkül</string>
-  <string name="appearance_display_header_title">Mutassa a modul fejlécét</string>
-  <string name="appearance_display_header_desc">Mutassa a dátumot és a parancs ikonokat a fejlécben</string>
+  <string name="widget_header_layout">Mutassa a modul fejlécét</string>
   <string name="lock_time_zone_off_desc">Feloldva, a jelenlegi időzóna: %s</string>
   <string name="lock_time_zone_title">Időzóna rögzítése</string>
   <string name="appearance_group_color_title">Színek</string>

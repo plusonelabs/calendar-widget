@@ -33,8 +33,7 @@
   <string name="appearance_date_format_12">5:00 pm</string>
   <string name="appearance_show_days_without_events_title">Показва дни без събития</string>
   <string name="appearance_show_days_without_events_desc">Показва заглавие за дни без събития</string>
-  <string name="appearance_display_header_title">Показва заглавие</string>
-  <string name="appearance_display_header_desc">Показва датата и бутон за настройки</string>
+  <string name="widget_header_layout">Показва заглавие</string>
   <string name="appearance_group_color_title">Цветове</string>
   <string name="appearance_background_color_title">Цвят на фона</string>
   <string name="appearance_background_color_desc">Настройка за цвета на фона</string>

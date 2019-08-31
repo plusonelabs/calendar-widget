@@ -47,8 +47,7 @@
   <string name="appearance_show_days_without_events_desc">Zeige Tageskopfzeile für Tage ohne Einträge</string>
   <string name="appearance_show_day_headers_title">Zeige Tagesüberschriften</string>
   <string name="appearance_show_day_headers_desc">Zeige Tagesüberschriften in Widget an</string>
-  <string name="appearance_display_header_title">Kopfzeile anzeigen</string>
-  <string name="appearance_display_header_desc">Kopfzeile ein- und ausblenden</string>
+  <string name="widget_header_layout">Kopfzeile anzeigen</string>
   <string name="lock_time_zone_off_desc">Nicht fixiert, aktuelle Zeitzone: %s</string>
   <string name="lock_time_zone_on_desc">Fixiert auf %s</string>
   <string name="lock_time_zone_title">Zeitzone fixieren</string>

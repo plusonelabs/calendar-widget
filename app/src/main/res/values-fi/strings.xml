@@ -47,8 +47,7 @@
   <string name="appearance_show_days_without_events_desc">Näytä päiväysotsikot päiville ilman tapahtumia</string>
   <string name="appearance_show_day_headers_title">Näytä päiväysotsikot</string>
   <string name="appearance_show_day_headers_desc">Näytä tai piilota päiväysotsikot</string>
-  <string name="appearance_display_header_title">Näytä widgetin otsikko</string>
-  <string name="appearance_display_header_desc">Näytä päivämäärä ja asetukset -otsikko</string>
+  <string name="widget_header_layout">Näytä widgetin otsikko</string>
   <string name="lock_time_zone_off_desc">Ei lukittu, nykyinen aikavyöhyke: %s</string>
   <string name="lock_time_zone_on_desc">Lukittu: %s</string>
   <string name="lock_time_zone_title">Lukitse aikavyöhyke</string>

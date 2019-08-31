@@ -48,8 +48,7 @@
   <string name="appearance_show_days_without_events_desc">Exibir cabeçalho para dias sem eventos</string>
   <string name="appearance_show_day_headers_title">Mostrar os cabeçalhos do dia</string>
   <string name="appearance_show_day_headers_desc">Mostrar os cabeçalhos do dia completamente</string>
-  <string name="appearance_display_header_title">Mostrar cabeçalho do widget</string>
-  <string name="appearance_display_header_desc">Mostrar data e configurações no cabeçalho</string>
+  <string name="widget_header_layout">Mostrar cabeçalho do widget</string>
   <string name="lock_time_zone_off_desc">Desbloqueado, zona atual: %s</string>
   <string name="lock_time_zone_on_desc">Trancado em %s</string>
   <string name="lock_time_zone_title">Trancar fuso horário</string>

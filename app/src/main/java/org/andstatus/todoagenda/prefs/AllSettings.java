@@ -50,7 +50,7 @@ public class AllSettings {
                     instances.put(widgetId, settings);
                     EventProviderType.initialize(context, true);
                     EnvironmentChangedReceiver.registerReceivers(instances);
-                    AppWidgetProvider.updateWidget(context, widgetId);
+                    AppWidgetProvider.recreateWidget(context, widgetId);
                 }
             }
             return settings;

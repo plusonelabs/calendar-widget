@@ -10,6 +10,7 @@ import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.Theme;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
+import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
 
 import java.util.List;
 
@@ -18,49 +19,42 @@ import androidx.annotation.ColorInt;
 public class ApplicationPreferences {
     public static final String PREF_WIDGET_ID = "widgetId";
 
-    static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
-    static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
+    // Layout
+    @Deprecated
+    static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
+    static final String PREF_WIDGET_HEADER_LAYOUT = "widgetHeaderLayout";
     static final String PREF_MULTILINE_TITLE = "multiline_title";
     static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
-    static final String PREF_ACTIVE_SOURCES = "activeSources";
     static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
     static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
     static final String PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER = "showPastEventsUnderOneHeader";
-    static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
+    static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
+    static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
+    static final String PREF_SHOW_EVENT_ICON = "showEventIcon";
+    static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent";
+    static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
+
+    // Event details
     static final String PREF_INDICATE_RECURRING = "indicateRecurring";
     static final String PREF_INDICATE_ALERTS = "indicateAlerts";
-    static final String PREF_DATE_FORMAT = "dateFormat";
-    static final String PREF_DATE_FORMAT_DEFAULT = "auto";
-    static final String PREF_EVENT_RANGE = "eventRange";
-    static final String PREF_EVENT_RANGE_DEFAULT = "30";
-    static final String PREF_EVENTS_ENDED = "eventsEnded";
     static final String PREF_SHOW_END_TIME = "showEndTime";
     static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
     static final String PREF_SHOW_LOCATION = "showLocation";
     static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
     static final String PREF_FILL_ALL_DAY = "fillAllDay";
     static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
-    static final String PREF_WIDGET_HEADER_THEME = "headerTheme";
-    static final String PREF_WIDGET_HEADER_THEME_DEFAULT = Theme.DARK.name();
-    static final String PREF_DAY_HEADER_THEME = "dayHeaderTheme";
-    static final String PREF_DAY_HEADER_THEME_DEFAULT = Theme.DARK.name();
-    static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
-    static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
-    static final String PREF_ENTRY_THEME = "entryTheme";
-    public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
-    static final String PREF_SHOW_EVENT_ICON = "showEventIcon";
-    static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent";
+
+    // Event filters
+    static final String PREF_EVENT_RANGE = "eventRange";
+    static final String PREF_EVENT_RANGE_DEFAULT = "30";
+    static final String PREF_EVENTS_ENDED = "eventsEnded";
     static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
     static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
-    static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
-    static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
-    static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
-    static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
-    static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
-    static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
-    static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
+
+    // Calendars and task lists
+    static final String PREF_ACTIVE_SOURCES = "activeSources";
 
     // Colors
     static final String PREF_WIDGET_HEADER_BACKGROUND_COLOR = "widgetHeaderBackgroundColor";
@@ -68,9 +62,29 @@ public class ApplicationPreferences {
     static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
     @ColorInt static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF78782C;
     static final String PREF_TODAYS_EVENTS_BACKGROUND_COLOR = "todaysEventsBackgroundColor";
-    @ColorInt static final int PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF3E96AB;
+    @ColorInt static final int PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF29626F;
     static final String PREF_EVENTS_BACKGROUND_COLOR = "backgroundColor";
     @ColorInt static final int PREF_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x80000000;
+    static final String PREF_WIDGET_HEADER_THEME = "headerTheme";
+    static final String PREF_WIDGET_HEADER_THEME_DEFAULT = Theme.DARK.name();
+    static final String PREF_DAY_HEADER_THEME = "dayHeaderTheme";
+    static final String PREF_DAY_HEADER_THEME_DEFAULT = Theme.DARK.name();
+    static final String PREF_ENTRY_THEME = "entryTheme";
+    public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
+
+    // Other
+    static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
+    static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
+    static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
+    static final String PREF_DATE_FORMAT = "dateFormat";
+    static final String PREF_DATE_FORMAT_DEFAULT = "auto";
+    static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
+    static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
+    static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
+    static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
+
+    // Feedback
+    static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
 
     private static volatile String lockedTimeZoneId = null;
 
@@ -111,7 +125,7 @@ public class ApplicationPreferences {
         setString(context, PREF_WIDGET_HEADER_THEME, settings.getWidgetHeaderTheme());
         setString(context, PREF_DAY_HEADER_THEME, settings.getDayHeaderTheme());
         setString(context, PREF_ENTRY_THEME, settings.getEntryTheme());
-        setBoolean(context, PREF_SHOW_WIDGET_HEADER, settings.getShowWidgetHeader());
+        setString(context, PREF_WIDGET_HEADER_LAYOUT, settings.getWidgetHeaderLayout().value);
         setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale());
         setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());
     }
@@ -350,5 +364,9 @@ public class ApplicationPreferences {
 
     public static String getWidgetInstanceName(Context context) {
         return getString(context, PREF_WIDGET_INSTANCE_NAME, "");
+    }
+
+    public static WidgetHeaderLayout getWidgetHeaderLayout(Context context) {
+        return WidgetHeaderLayout.fromValue(getString(context, PREF_WIDGET_HEADER_LAYOUT, ""));
     }
 }

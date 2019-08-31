@@ -9,6 +9,7 @@ import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
+import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +69,7 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TODAYS_
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_LAYOUT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_THEME;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_THEME_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
@@ -111,7 +113,7 @@ public class InstanceSettings {
     private boolean showOnlyClosestInstanceOfRecurringEvent = false;
     private boolean indicateAlerts = true;
     private boolean indicateRecurring = false;
-    private boolean showWidgetHeader = true;
+    private WidgetHeaderLayout widgetHeaderLayout = WidgetHeaderLayout.defaultValue;
     private String widgetHeaderTheme = PREF_WIDGET_HEADER_THEME_DEFAULT;
     private String dayHeaderTheme = PREF_DAY_HEADER_THEME_DEFAULT;
     private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
@@ -204,8 +206,11 @@ public class InstanceSettings {
         if (json.has(PREF_WIDGET_HEADER_THEME)) {
             settings.widgetHeaderTheme = json.getString(PREF_WIDGET_HEADER_THEME);
         }
-        if (json.has(PREF_SHOW_WIDGET_HEADER)) {
-            settings.showWidgetHeader = json.getBoolean(PREF_SHOW_WIDGET_HEADER);
+        if (json.has(PREF_WIDGET_HEADER_LAYOUT)) {
+            settings.widgetHeaderLayout = WidgetHeaderLayout.fromValue(json.getString(PREF_WIDGET_HEADER_LAYOUT));
+        } else if (json.has(PREF_SHOW_WIDGET_HEADER)) {
+            settings.widgetHeaderLayout = json.getBoolean(PREF_SHOW_WIDGET_HEADER)
+                ? WidgetHeaderLayout.defaultValue : WidgetHeaderLayout.HIDDEN;
         }
         if (json.has(PREF_DAY_HEADER_THEME)) {
             settings.dayHeaderTheme = json.getString(PREF_DAY_HEADER_THEME);
@@ -253,7 +258,7 @@ public class InstanceSettings {
         settings.indicateAlerts = ApplicationPreferences.getBoolean(context, PREF_INDICATE_ALERTS, true);
         settings.indicateRecurring = ApplicationPreferences.getBoolean(context, PREF_INDICATE_RECURRING, false);
         settings.widgetHeaderTheme = ApplicationPreferences.getString(context, PREF_WIDGET_HEADER_THEME, PREF_WIDGET_HEADER_THEME_DEFAULT);
-        settings.showWidgetHeader = ApplicationPreferences.getBoolean(context, PREF_SHOW_WIDGET_HEADER, true);
+        settings.widgetHeaderLayout = ApplicationPreferences.getWidgetHeaderLayout(context);
         settings.dayHeaderTheme = ApplicationPreferences.getString(context, PREF_DAY_HEADER_THEME, PREF_DAY_HEADER_THEME_DEFAULT);
         settings.entryTheme = ApplicationPreferences.getString(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
         settings.textSizeScale = ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE,
@@ -317,7 +322,7 @@ public class InstanceSettings {
             json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, showOnlyClosestInstanceOfRecurringEvent);
             json.put(PREF_INDICATE_ALERTS, indicateAlerts);
             json.put(PREF_INDICATE_RECURRING, indicateRecurring);
-            json.put(PREF_SHOW_WIDGET_HEADER, showWidgetHeader);
+            json.put(PREF_WIDGET_HEADER_LAYOUT, widgetHeaderLayout.value);
             json.put(PREF_WIDGET_HEADER_THEME, widgetHeaderTheme);
             json.put(PREF_DAY_HEADER_THEME, dayHeaderTheme);
             json.put(PREF_ENTRY_THEME, entryTheme);
@@ -516,8 +521,8 @@ public class InstanceSettings {
         return entryThemeContext;
     }
 
-    public boolean getShowWidgetHeader() {
-        return showWidgetHeader;
+    public WidgetHeaderLayout getWidgetHeaderLayout() {
+        return widgetHeaderLayout;
     }
 
     public String getTextSizeScale() {

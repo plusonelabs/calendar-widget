@@ -47,8 +47,7 @@
   <string name="appearance_show_days_without_events_desc">Відображати заголовки днів без подій</string>
   <string name="appearance_show_day_headers_title">Показувати заголовки дня</string>
   <string name="appearance_show_day_headers_desc">Показувати усі заголовки дня</string>
-  <string name="appearance_display_header_title">Відображати шапку віджета</string>
-  <string name="appearance_display_header_desc">Відображати в шапці дату і налаштування</string>
+  <string name="widget_header_layout">Відображати шапку віджета</string>
   <string name="lock_time_zone_off_desc">Розблоковано, поточна зона: %s</string>
   <string name="lock_time_zone_on_desc">Заблоковано в %s</string>
   <string name="lock_time_zone_title">Блокування часового поясу</string>

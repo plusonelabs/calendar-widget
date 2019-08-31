@@ -47,8 +47,7 @@
   <string name="appearance_show_days_without_events_desc">Montrer les en-têtes pour les jours sans évènement</string>
   <string name="appearance_show_day_headers_title">Afficher les jours</string>
   <string name="appearance_show_day_headers_desc">Afficher l\'en-tête dédiée aux jours</string>
-  <string name="appearance_display_header_title">Afficher l\'en-tête du widget</string>
-  <string name="appearance_display_header_desc">Afficher les en-têtes Date et Paramètres</string>
+  <string name="widget_header_layout">Afficher l\'en-tête du widget</string>
   <string name="lock_time_zone_off_desc">Déverrouillée, zone actuelle : %s</string>
   <string name="lock_time_zone_on_desc">Verrouillée sur %s</string>
   <string name="lock_time_zone_title">Verrouiller le fuseau horaire</string>

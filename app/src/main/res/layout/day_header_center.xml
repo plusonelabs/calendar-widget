@@ -11,18 +11,18 @@
               android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
+        android:id="@+id/day_header_separator"
+        style="@style/DayHeaderSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        tools:ignore="SelectableText" />
+
+    <TextView
         android:id="@+id/day_header_title"
         style="@style/DayHeaderTitle"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        tools:ignore="SelectableText" />
-
-    <TextView
-        android:id="@+id/day_header_separator"
-        style="@style/DayHeaderSeparator"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
         tools:ignore="SelectableText" />
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-# Todo Agenda - Calendar and Task widgets for Android
+# [Todo Agenda](https://github.com/andstatus/todoagenda#readme) - Calendar and Task widgets for Android
 
 [![Build Status](https://travis-ci.org/andstatus/todoagenda.svg?branch=master)](https://travis-ci.org/andstatus/todoagenda)
 
@@ -29,18 +29,19 @@ Want to contribute to the project? Start by translating the widget to another la
 
 ## Features
 
+* No advertising. Free and Open Source.
 * Displays all events from your calendars and task lists. Optionally shows past events.
 * Automatically updates when you add/delete/modify an event. Or you may update the list instantly.
 * Select only the calendars you want to see in the widget.
-* Create several widgets, if you need. Each widget will have its own settings, including filters 
+* Create several widgets, if you need. Each widget will have its own settings, including layouts, colors, filters 
 and selected calendars.
-* Customize colors of the widget background and texts.
-* Scroll through the list of upcoming events.
+* Customize background colors and transparency of different widget parts, text's black and white shading.
+* Scroll through the list of events. Use "Go to Today" button to return to today instantly.
 * Customize the text size of the widget.
-* Fully resizable widget with two alternative layouts.
+* Fully resizable widget with alternative layouts.
 * Indicators for alerts and recurring events.
 * Lock time zone when travelling to different time zones.
-* Turn off Day headers and see dates in the "Days from today" column.
+* Turn off Widget or Day headers, event icons, Days from today, etc. and see only what you need.
 * Android 4+ supported. Supports Android tablets.
 
 Note on Tasks support: As there is no unified way to access tasks created in different applications, 

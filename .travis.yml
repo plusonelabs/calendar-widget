@@ -3,7 +3,7 @@ jdk:
 - oraclejdk8
 env:
   global:
-  - ANDROID_API=27
+  - ANDROID_API=28
   - EMULATOR_API=24
   - ANDROID_BUILD_TOOLS=28.0.3
 android:
@@ -55,23 +55,23 @@ script:
   fi
 
 - |
-  adb shell am instrument -w -r -e debug false org.andstatus.todoagenda.tests/android.test.InstrumentationTestRunner |& tee build/adb-test.log
+  adb shell am instrument -w -r -e debug false org.andstatus.todoagenda.tests/androidx.test.runner.AndroidJUnitRunner |& tee build/adb-test.log
   retval=$?
   if [ $retval -ne 0 ]; then
     echo "error in adb, exit code: "$retval
     exit $retval
   fi
 
-  # adb doesn't propagate exit code from tests, see https://code.google.com/p/android/issues/detail?id=3254
-  # So we need to parse saved terminal log
-  - |
-    cat build/adb-test.log | grep -A2 "INSTRUMENTATION_STATUS: stack="
-    if [ $? -eq 0 ]; then
-      echo "Test failure found"
-      exit 1
-    else
-      cat build/adb-test.log | grep "Test results for InstrumentationTestRunner"
-    fi
+# adb doesn't propagate exit code from tests, see https://code.google.com/p/android/issues/detail?id=3254
+# So we need to parse saved terminal log
+- |
+  cat build/adb-test.log | grep "INSTRUMENTATION_STATUS: stack=" | grep -v "org.junit.AssumptionViolatedException"
+  if [ $? -eq 0 ]; then
+    echo "Test failure found"
+    exit 1
+  else
+    cat build/adb-test.log | grep "OK ("
+  fi
 
 notifications:
   email: false
@@ -82,4 +82,4 @@ cache:
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
 before_install:
-- yes | sdkmanager "platforms;android-27"
+- yes | sdkmanager "platforms;android-$ANDROID_API"

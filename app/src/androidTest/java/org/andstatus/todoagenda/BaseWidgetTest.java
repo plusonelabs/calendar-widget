@@ -23,14 +23,14 @@ public class BaseWidgetTest {
 
     @Before
     public void setUp() throws Exception {
-        provider = MockCalendarContentProvider.getContentProvider(this, getNumberOfOpenTasksSources());
+        provider = MockCalendarContentProvider.getContentProvider(getNumberOfOpenTasksSources());
         factory = new RemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().isEmpty());
     }
 
     @After
     public void tearDown() throws Exception {
-        provider.tearDown();
+        MockCalendarContentProvider.tearDown();
     }
 
     DateTime dateTime(

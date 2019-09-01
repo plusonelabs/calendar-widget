@@ -121,7 +121,7 @@ public class AllSettings {
     }
 
     @NonNull
-    private static String getStorageKey(int widgetId) {
+    public static String getStorageKey(int widgetId) {
         return "instanceSettings" + widgetId;
     }
 
@@ -168,5 +168,14 @@ public class AllSettings {
     public static Map<Integer, InstanceSettings> getInstances(Context context) {
         ensureLoadedFromFiles(context, false);
         return instances;
+    }
+
+    public static Map<Integer, InstanceSettings> getLoadedInstances() {
+        return instances;
+    }
+
+    public static void forget() {
+        instances.clear();
+        instancesLoaded = false;
     }
 }

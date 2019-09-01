@@ -9,7 +9,7 @@ public class RemoteViewsService extends android.widget.RemoteViewsService {
 
     @Override
     public void onCreate() {
-        AllSettings.ensureLoadedFromFiles(this, true);
+        AllSettings.ensureLoadedFromFiles(this, false);
     }
 
     @Override

@@ -53,7 +53,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        try {
+            setContentView(R.layout.activity_main);
+        } catch (Exception e) {
+            Log.w("onCreate", "Failed to find layout", e);
+            finish();
+            return;
+        }
         listView = findViewById(android.R.id.list);
         checkPermissions();
         if (preparedToOpen()) {

@@ -10,12 +10,12 @@ import android.test.mock.MockContentResolver;
 import android.util.Log;
 
 import org.andstatus.todoagenda.AppWidgetProvider;
-import org.andstatus.todoagenda.BaseWidgetTest;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.MockSettingsProvider;
+import org.andstatus.todoagenda.prefs.SettingsStorage;
 import org.andstatus.todoagenda.testcompat.IsolatedContext;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RawResourceUtils;
@@ -25,14 +25,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RawRes;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import static org.andstatus.todoagenda.prefs.AllSettings.getStorageKey;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS;
 
@@ -42,22 +46,20 @@ import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS
 public class MockCalendarContentProvider extends MockContentProvider {
 
     final String TAG = this.getClass().getSimpleName();
-    private static final int WIDGET_ID_MIN = 434892;
+    private static final int TEST_WIDGET_ID_MIN = 434892;
     private static final String[] ZONE_IDS = {"America/Los_Angeles", "Europe/Moscow", "Asia/Kuala_Lumpur", "UTC"};
     private volatile int queriesCount = 0;
     private final List<QueryResult> results = new CopyOnWriteArrayList<>();
-    private final Context targetContext;
-    private final DateTimeZone storedZone;
     private final int numberOfOpenTaskSources;
 
-    private final static AtomicInteger widgetId = new AtomicInteger(WIDGET_ID_MIN);
+    private final static AtomicInteger widgetId = new AtomicInteger(TEST_WIDGET_ID_MIN);
 
-    public static MockCalendarContentProvider getContentProvider(BaseWidgetTest testCase, int numberOfOpenTasksSources) throws JSONException {
+    public static MockCalendarContentProvider getContentProvider(int numberOfOpenTasksSources) throws JSONException {
         MockContentResolver mockResolver = new MockContentResolver();
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Context isolatedContext = new IsolatedContext(mockResolver, targetContext);
         MockCalendarContentProvider contentProvider =
-                new MockCalendarContentProvider(targetContext, isolatedContext, numberOfOpenTasksSources);
+                new MockCalendarContentProvider(isolatedContext, numberOfOpenTasksSources);
 
         mockResolver.addProvider("com.android.calendar", contentProvider);
         if (numberOfOpenTasksSources > 0) {
@@ -69,11 +71,9 @@ public class MockCalendarContentProvider extends MockContentProvider {
         return contentProvider;
     }
 
-    private MockCalendarContentProvider(Context targetContext, Context context, int numberOfOpenTaskSources) {
+    private MockCalendarContentProvider(Context context, int numberOfOpenTaskSources) {
         super(context);
-        this.targetContext = targetContext;
         this.numberOfOpenTaskSources = numberOfOpenTaskSources;
-        storedZone = DateTimeZone.getDefault();
     }
 
     private void setPreferences(Context context) throws JSONException {
@@ -88,14 +88,19 @@ public class MockCalendarContentProvider extends MockContentProvider {
         AllSettings.loadFromTestData(context, allSettingsJsonArray);
     }
 
-    public void tearDown() {
-        for(int id = WIDGET_ID_MIN; id <= getWidgetId(); id++) {
-            AllSettings.delete(targetContext, id);
+    public static void tearDown() {
+        List<Integer> toDelete = new ArrayList<>();
+        Map<Integer, InstanceSettings> instances = AllSettings.getLoadedInstances();
+        for(InstanceSettings settings : instances.values()) {
+            if (settings.getWidgetId() >= TEST_WIDGET_ID_MIN) {
+                toDelete.add(settings.getWidgetId());
+            }
         }
-        ApplicationPreferences.setWidgetId(targetContext, WIDGET_ID_MIN);
-        DateUtil.setNow(null);
-        DateTimeZone.setDefault(storedZone);
-        AllSettings.ensureLoadedFromFiles(targetContext, true);
+        for(int widgetId : toDelete) {
+            instances.remove(widgetId);
+            SettingsStorage.delete(ApplicationProvider.getApplicationContext(), getStorageKey(widgetId));
+        }
+        ApplicationPreferences.setWidgetId(ApplicationProvider.getApplicationContext(), TEST_WIDGET_ID_MIN);
     }
 
     @Override

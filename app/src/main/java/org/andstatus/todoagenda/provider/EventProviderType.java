@@ -108,6 +108,12 @@ public enum EventProviderType {
         return sources;
     }
 
+    public static void forget() {
+        sources.clear();
+        permissionsNeeded.clear();
+        initialized = false;
+    }
+
     public EventProvider getEventProvider(Context context, int widgetId) {
         return new EventProvider(this, context, widgetId);
     }

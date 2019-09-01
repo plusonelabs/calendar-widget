@@ -70,6 +70,10 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
         }
     }
 
+    public static void forget() {
+        registeredReceiver.set(null);
+    }
+
     private void unRegister(Context context) {
         context.unregisterReceiver(this);
     }

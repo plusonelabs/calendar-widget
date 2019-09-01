@@ -1,12 +1,10 @@
 package org.andstatus.todoagenda.provider;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.test.IsolatedContext;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.util.Log;
@@ -18,6 +16,7 @@ import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.MockSettingsProvider;
+import org.andstatus.todoagenda.testcompat.IsolatedContext;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RawResourceUtils;
 import org.joda.time.DateTimeZone;
@@ -75,11 +74,6 @@ public class MockCalendarContentProvider extends MockContentProvider {
         this.targetContext = targetContext;
         this.numberOfOpenTaskSources = numberOfOpenTaskSources;
         storedZone = DateTimeZone.getDefault();
-    }
-
-    static Context getBaseContext(Context context) {
-        return ContextWrapper.class.isAssignableFrom(context.getClass()) ? ((ContextWrapper)
-                context).getBaseContext() : context;
     }
 
     private void setPreferences(Context context) throws JSONException {

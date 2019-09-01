@@ -61,6 +61,30 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## Changelog
 
+### v3.0 More colors and layout customizations
+Due to lots of internal changes existing widgets should be recreated. Sorry for inconvenience.
+
+* One "Appearance" Settings section split into: Layout, Colors and Other settings.
+* Old and confusing [Android Holo ColorPicker](https://github.com/LarsWerkman/HoloColorPicker) is replaced with a customized version of [HSV-Alpha Color Picker for Android]
+ (https://github.com/martin-stone/hsv-alpha-color-picker-android).
+* ["Widget header layout"](https://github.com/plusonelabs/calendar-widget/issues/28) option added with two actual layouts 
+ ("All in one row" and "Two rows layout") and one "Hidden".
+ This replaces and extends previous "Show widget header" checkbox.
+* "Widget header background color" added.
+* ["Go to Today"](https://github.com/plusonelabs/calendar-widget/issues/293) button added to the Widget's header to
+ ease navigation to Today's events.
+* ["Today's events background color"](https://github.com/plusonelabs/calendar-widget/issues/124) option added,
+  so Today's events may be visually highlighted.
+* "Day header shading" added. Now the color can be changed independently from "Event entry shading".
+* ["Show event icon"](https://github.com/plusonelabs/calendar-widget/issues/174) added, 
+    allowing to hide calendar's color bars and tasks icons.
+* ["Show number of days to event"](https://github.com/plusonelabs/calendar-widget/issues/283) option added
+ (in the "All in one row" event layout) allowing to hide this info independently from the "Show day header" option.
+* [Horizontal lines (separators) are now above Day headers, not below them]
+ (https://github.com/plusonelabs/calendar-widget/issues/154) to avoid Users' confusion.
+* Hopefully fixed intermittent "No events" display instead of actual list of events. 
+ Separate "ToDo Agenda Loading..." layout added to see the widget, when it is not initialized yet (i.e. after device reboot).
+
 ### [v2.1](https://github.com/plusonelabs/calendar-widget/issues/308) Tasks support
 * Tasks support added. Two Task apps are supported: [OpenTasks (by dmfs GmbH)](https://github.com/dmfs/opentasks)
   and Tasks of Samsung Calendar ([looks like a deprecating feature...](
@@ -68,7 +92,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 * New option "Header for past/due events". If turned on, it shows all past/due events under one "Past and due" header. 
   Applied both to calendar events and to tasks.
 
-### [v2.0.0](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
+### [v2.0](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
 
 * The "Calendar Widget" renamed to "Todo Agenda" and published to Google Play as [the new application](https://play.google.com/store/apps/details?id=org.andstatus.todoagenda).
 

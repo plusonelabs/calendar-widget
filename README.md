@@ -62,7 +62,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## Changelog
 
-### v3.0 More colors and layout customizations
+### <a id="v3.0"/> v3.0 More colors and layout customizations
 Due to lots of internal changes existing widgets should be recreated. Sorry for inconvenience.
 
 * One "Appearance" Settings section split into: Layout, Colors and Other settings.
@@ -81,8 +81,8 @@ Due to lots of internal changes existing widgets should be recreated. Sorry for 
     allowing to hide calendar's color bars and tasks icons.
 * ["Show number of days to event"](https://github.com/plusonelabs/calendar-widget/issues/283) option added
  (in the "All in one row" event layout) allowing to hide this info independently from the "Show day header" option.
-* [Horizontal lines (separators) are now above Day headers, not below them]
- (https://github.com/plusonelabs/calendar-widget/issues/154) to avoid Users' confusion.
+* [Horizontal lines (separators) are now above Day headers, not below them](https://github.com/plusonelabs/calendar-widget/issues/154)
+ to avoid Users' confusion.
 * Hopefully fixed intermittent "No events" display instead of actual list of events. 
  Separate "ToDo Agenda Loading..." layout added to see the widget, when it is not initialized yet (i.e. after device reboot).
 

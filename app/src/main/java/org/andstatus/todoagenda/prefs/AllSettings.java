@@ -63,6 +63,7 @@ public class AllSettings {
         }
         synchronized (instances) {
             if (!instancesLoaded || reInitialize) {
+                instances.clear();
                 EventProviderType.initialize(context, reInitialize);
                 for (int widgetId : getWidgetIds(context)) {
                     InstanceSettings settings;

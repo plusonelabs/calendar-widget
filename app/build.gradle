@@ -59,6 +59,7 @@ dependencies {
     implementation project(':colorpicker')
 
     androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test:core:$testRunnerVersion"
     androidTestImplementation "androidx.test:runner:$testRunnerVersion"
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"

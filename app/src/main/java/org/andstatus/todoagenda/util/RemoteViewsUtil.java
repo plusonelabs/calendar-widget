@@ -32,10 +32,10 @@ public class RemoteViewsUtil {
     public static void setPadding(InstanceSettings settings, RemoteViews rv, int viewId,
           @DimenRes int leftDimenId, @DimenRes int topDimenId, @DimenRes int rightDimenId, @DimenRes int bottomDimenId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            int leftPadding = Math.round(getScaledValueInPixel(settings, leftDimenId));
-            int topPadding = Math.round(getScaledValueInPixel(settings, topDimenId));
-            int rightPadding = Math.round(getScaledValueInPixel(settings, rightDimenId));
-            int bottomPadding = Math.round(getScaledValueInPixel(settings, bottomDimenId));
+            int leftPadding = getScaledValueInPixels(settings, leftDimenId);
+            int topPadding = getScaledValueInPixels(settings, topDimenId);
+            int rightPadding = getScaledValueInPixels(settings, rightDimenId);
+            int bottomPadding = getScaledValueInPixels(settings, bottomDimenId);
             rv.setViewPadding(viewId, leftPadding, topPadding, rightPadding, bottomPadding);
         }
     }
@@ -49,11 +49,11 @@ public class RemoteViewsUtil {
     }
 
     public static void setViewWidth(InstanceSettings settings, RemoteViews rv, int viewId, int dimenId) {
-        rv.setInt(viewId, METHOD_SET_WIDTH, getScaledValue(settings, dimenId).intValue());
+        rv.setInt(viewId, METHOD_SET_WIDTH, getScaledValueInPixels(settings, dimenId));
     }
 
     public static void setTextSize(InstanceSettings settings, RemoteViews rv, int viewId, int dimenId) {
-        rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValue(settings, dimenId));
+        rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValueInScaledPixels(settings, dimenId));
     }
 
     public static void setTextColorFromAttr(Context context, RemoteViews rv, int viewId, int colorAttrId) {
@@ -69,13 +69,13 @@ public class RemoteViewsUtil {
         rv.setInt(viewId, METHOD_SET_BACKGROUND_COLOR, color);
     }
 
-    private static float getScaledValueInPixel(InstanceSettings settings, int dimenId) {
+    private static int getScaledValueInPixels(InstanceSettings settings, int dimenId) {
         float resValue = getDimension(settings.getContext(), dimenId);
         float prefTextScale = parseFloat(settings.getTextSizeScale());
-        return resValue * prefTextScale;
+        return  Math.round(resValue * prefTextScale);
     }
 
-    private static Float getScaledValue(InstanceSettings settings, int dimenId) {
+    private static float getScaledValueInScaledPixels(InstanceSettings settings, int dimenId) {
         float resValue = getDimension(settings.getContext(), dimenId);
         float density = settings.getContext().getResources().getDisplayMetrics().density;
         float prefTextScale = parseFloat(settings.getTextSizeScale());

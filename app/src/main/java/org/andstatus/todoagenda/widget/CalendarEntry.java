@@ -91,17 +91,21 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     }
 
     public String getEventTimeString() {
-        return hideEventDetails() ? "" : createTimeSpanString(getContext());
+        return hideEventTime() ? "" : createTimeSpanString(getContext());
+    }
+
+    private boolean hideEventTime() {
+        return spansOneFullDay() && !(isStartOfMultiDayEvent() || isEndOfMultiDayEvent()) ||
+                isAllDay();
     }
 
     String getLocationString() {
-        return getLocation() == null || getLocation().isEmpty() || hideEventDetails() ||
-                !getSettings().getShowLocation() ? "" : SPACE_PIPE_SPACE + getLocation();
+        return hideLocation() ? "" : SPACE_PIPE_SPACE + getLocation();
     }
 
-    private boolean hideEventDetails() {
-        return spansOneFullDay() && !(isStartOfMultiDayEvent() || isEndOfMultiDayEvent()) ||
-                isAllDay() && getSettings().getFillAllDayEvents();
+    private boolean hideLocation() {
+        return getLocation() == null || getLocation().isEmpty() ||
+                !getSettings().getShowLocation();
     }
 
     private String createTimeSpanString(Context context) {

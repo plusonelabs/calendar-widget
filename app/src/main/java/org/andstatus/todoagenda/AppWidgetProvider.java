@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -47,8 +48,38 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     public static final int REQUEST_CODE_ADD_EVENT = 2;
     public static final int REQUEST_CODE_MIDNIGHT_ALARM = REQUEST_CODE_ADD_EVENT + MAX_NUMBER_OF_WIDGETS;
 
+    public AppWidgetProvider() {
+        super();
+        Log.d(this.getClass().getSimpleName(), "init");
+    }
+
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        Log.d(this.getClass().getSimpleName(), "onAppWidgetOptionsChanged, widgetId:" + appWidgetId);
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.d(this.getClass().getSimpleName(), "onReceive, intent:" + intent);
+        super.onReceive(context, intent);
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        Log.d(this.getClass().getSimpleName(), "onEnabled, context:" + context);
+        super.onEnabled(context);
+    }
+
+    @Override
+    public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
+        Log.d(this.getClass().getSimpleName(), "onRestored, oldWidgetIds:" + asList(oldWidgetIds) + ", newWidgetIds:" + asList(newWidgetIds));
+        super.onRestored(context, oldWidgetIds, newWidgetIds);
+    }
+
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
+        Log.d(this.getClass().getSimpleName(), "onDeleted, widgetIds:" + asList(appWidgetIds));
         super.onDeleted(context, appWidgetIds);
         for (int widgetId : appWidgetIds) {
             AllSettings.delete(context, widgetId);
@@ -57,34 +88,38 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("onUpdate", "WidgetIds:" + asList(appWidgetIds));
+        Log.d(this.getClass().getSimpleName(), "onUpdate, widgetIds:" + asList(appWidgetIds));
         for (int widgetId : appWidgetIds) {
             recreateWidget(context, widgetId);
         }
     }
 
     public static void recreateWidget(Context context, int widgetId) {
-        addWidgetViews(context, widgetId);
-        updateWidget(context, widgetId);
+        Log.d(AppWidgetProvider.class.getSimpleName(), "recreateWidget, widgetId:" + widgetId + ", context:" + context);
+        try {
+            addWidgetViews(context, widgetId);
+            updateWidget(context, widgetId);
+        } catch (Exception e) {
+            Log.w(AppWidgetProvider.class.getSimpleName(), "Exception on recreateWidget, widgetId:" + widgetId + ", context:" + context, e);
+        }
     }
 
     public static void addWidgetViews(Context context, int widgetId) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
-        addWidgetParts(settings, widgetId);
-
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
+        RemoteViews rv = buildWidgetRemoteViews(settings);
         configureWidgetHeader(settings, rv);
         configureList(settings, widgetId, rv);
         configureNoEvents(settings, rv);
         if (appWidgetManager != null) {
             appWidgetManager.updateAppWidget(widgetId, rv);
+        } else {
+            Log.d(AppWidgetProvider.class.getSimpleName(), "addWidgetViews, appWidgetManager is null. widgetId:" + widgetId + ", context:" + context);
         }
     }
 
-    private static void addWidgetParts(InstanceSettings settings, int widgetId) {
-        RemoteViews rvParent = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget);
-        rvParent.removeAllViews(R.id.widget_parent);
+    private static RemoteViews buildWidgetRemoteViews(InstanceSettings settings) {
+        RemoteViews rvParent = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_parent);
         if (settings.getWidgetHeaderLayout() != WidgetHeaderLayout.HIDDEN) {
             RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(),
                     settings.getWidgetHeaderLayout().layoutId);
@@ -92,10 +127,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         }
         RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_body);
         rvParent.addView(R.id.widget_parent, rv);
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(settings.getContext());
-        if (appWidgetManager != null) {
-            appWidgetManager.updateAppWidget(widgetId, rvParent);
-        }
+        return rvParent;
     }
 
     private static void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
@@ -207,8 +239,10 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         };
     }
 
-    static void updateAllWidgets(Context context) {
-        updateWidgets(context, getWidgetIds(context));
+    static void recreateAllWidgets(Context context) {
+        for (int widgetId : getWidgetIds(context)) {
+            recreateWidget(context, widgetId);
+        }
     }
 
     public static int[] getWidgetIds(Context context) {
@@ -219,16 +253,11 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     }
 
     private static void updateWidget(Context context, int widgetId) {
-        updateWidgets(context, new int[]{widgetId});
-    }
-
-    private static void updateWidgets(Context context, int[] widgetIds) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         if (appWidgetManager != null) {
-            for (int widgetId : widgetIds) {
-                appWidgetManager.notifyAppWidgetViewDataChanged(new int[]{widgetId}, R.id.event_list);
-            }
+            appWidgetManager.notifyAppWidgetViewDataChanged(new int[]{widgetId}, R.id.event_list);
+        } else {
+            Log.d(AppWidgetProvider.class.getSimpleName(), "updateWidget, appWidgetManager is null. widgetId:" + widgetId + ", context:" + context);
         }
     }
-
 }

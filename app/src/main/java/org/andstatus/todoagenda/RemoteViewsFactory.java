@@ -32,15 +32,17 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     private final Context context;
     private final int widgetId;
     private volatile List<? extends WidgetEntry> widgetEntries = new ArrayList<>();
-    private final List<WidgetEntryVisualizer<? extends WidgetEntry>> visualizers = new ArrayList<>();
+    private volatile List<WidgetEntryVisualizer<? extends WidgetEntry>> visualizers = new ArrayList<>();
 
     public RemoteViewsFactory(Context context, int widgetId) {
+        Log.d(this.getClass().getSimpleName(), "Init widgetId:" + widgetId);
         this.context = context;
         this.widgetId = widgetId;
     }
 
     public void onCreate() {
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
+        Log.d(this.getClass().getSimpleName(), "onCreate, widgetId:" + widgetId);
+        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_parent);
         rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(getSettings()));
     }
 
@@ -49,6 +51,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     public int getCount() {
+        Log.d(this.getClass().getSimpleName(), "getCount:" + widgetEntries.size());
         return widgetEntries.size();
     }
 
@@ -70,16 +73,21 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public void onDataSetChanged() {
-        Log.d("onDataSetChanged", "WidgetId:" + widgetId);
-        visualizers.clear();
+        Log.d(this.getClass().getSimpleName(), "onDataSetChanged, WidgetId:" + widgetId);
+        visualizers = getVisualizers();
+        widgetEntries = getSettings().getShowDayHeaders() ? addDayHeaders(getEventEntries()) : getEventEntries();
+        configureGotoToday(getSettings(), getTomorrowsPosition(), getTodaysPosition());
+    }
+
+    private List<WidgetEntryVisualizer<? extends WidgetEntry>> getVisualizers() {
+        List<WidgetEntryVisualizer<? extends WidgetEntry>> visualizers = new ArrayList<>();
         visualizers.add(new DayHeaderVisualizer(getSettings().getDayHeaderThemeContext(), widgetId));
         for (EventProviderType type : EventProviderType.values()) {
             if (type.hasEventSources()) {
                 visualizers.add(type.getVisualizer(context, widgetId));
             }
         }
-        widgetEntries = getSettings().getShowDayHeaders() ? addDayHeaders(getEventEntries()) : getEventEntries();
-        configureGotoToday(getSettings(), getTomorrowsPosition(), getTodaysPosition());
+        return visualizers;
     }
 
     private int getTodaysPosition() {
@@ -156,6 +164,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     public RemoteViews getLoadingView() {
+        Log.d(this.getClass().getSimpleName(), "getLoadingView");
         return null;
     }
 
@@ -164,6 +173,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         for (WidgetEntryVisualizer<?> visualizer : visualizers) {
             result += visualizer.getViewTypeCount();
         }
+        Log.d(this.getClass().getSimpleName(), "getViewTypeCount:" + result);
         return result;
     }
 
@@ -179,7 +189,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(settings.getContext());
         if (appWidgetManager == null) return;
 
-        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget);
+        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_parent);
         int widgetId = settings.getWidgetId();
         PendingIntent pendingIntent;
         if (todaysPosition < 0) {

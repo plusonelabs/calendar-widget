@@ -36,6 +36,8 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
 
             IntentFilter filter = new IntentFilter();
             filter.addAction(Intent.ACTION_USER_PRESENT);
+            filter.addAction(Intent.ACTION_PROVIDER_CHANGED);
+            filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 filter.addAction(Intent.ACTION_DREAMING_STOPPED);
             }
@@ -47,7 +49,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
             }
             scheduleNextAlarms(context, instances);
 
-            Log.i(AppWidgetProvider.class.getName(),
+            Log.i(AppWidgetProvider.class.getSimpleName(),
                     "Registered receivers from " + instanceSettings.getContext().getClass().getName());
         }
     }
@@ -80,7 +82,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(this.getClass().getName(), "Received intent: " + intent);
+        Log.i(this.getClass().getSimpleName(), "Received intent: " + intent);
         AllSettings.ensureLoadedFromFiles(context, false);
         String action = intent == null
                 ? ""
@@ -101,7 +103,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 gotoPosition(context, widgetId, position2);
                 break;
             default:
-                AppWidgetProvider.updateAllWidgets(context);
+                AppWidgetProvider.recreateAllWidgets(context);
                 break;
         }
     }
@@ -110,7 +112,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
         if (widgetId == 0 || position < 0) return;
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget);
+        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_parent);
         Log.d("gotoToday", "Scrolling widget " + widgetId + " to position " + position);
         rv.setScrollPosition(R.id.event_list, position);
         appWidgetManager.updateAppWidget(widgetId, rv);

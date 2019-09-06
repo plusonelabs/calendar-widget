@@ -3,7 +3,6 @@ package org.andstatus.todoagenda.calendar;
 import android.content.Context;
 import android.util.Log;
 
-import org.andstatus.todoagenda.BuildConfig;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -57,6 +56,7 @@ public class CalendarEvent {
         return allDay ? fromAllDayMillis(millis) : new DateTime(millis, zone);
     }
 
+    private static volatile long fixTimeOfAllDayEventLoggedAt = 0;
     /**
      * Implemented based on this answer: http://stackoverflow.com/a/5451245/297710
      */
@@ -77,7 +77,8 @@ public class CalendarEvent {
             }
             fixed = ldt.toDateTime(zone);
             msgLog += " -> " + fixed;
-            if (BuildConfig.DEBUG) {
+            if (Math.abs(System.currentTimeMillis() - fixTimeOfAllDayEventLoggedAt) > 1000) {
+                fixTimeOfAllDayEventLoggedAt = System.currentTimeMillis();
                 Log.v("fixTimeOfAllDayEvent", msgLog);
             }
         } catch (org.joda.time.IllegalInstantException e) {

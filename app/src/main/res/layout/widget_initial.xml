@@ -12,11 +12,11 @@
         >
 
         <ImageView
-            android:id="@+id/go_to_today"
+            android:id="@+id/widget_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:contentDescription="@string/no_widgets_found"
+            android:contentDescription="@string/widget_name"
             android:src="@drawable/ic_launcher" />
 
         <TextView

@@ -85,6 +85,13 @@
         <item>@string/ended_four_hours_ago</item>
         <item>@string/ended_today</item>
         <item>@string/ended_yesterday</item>
+        <item>@string/ended_one_week_ago</item>
+        <item>@string/ended_two_weeks_ago</item>
+        <item>@string/ended_one_month_ago</item>
+        <item>@string/ended_two_months_ago</item>
+        <item>@string/ended_three_months_ago</item>
+        <item>@string/ended_six_months_ago</item>
+        <item>@string/ended_one_year_ago</item>
     </string-array>
     <string-array name="pref_events_ended_values" tools:ignore="MissingTranslation">
         <item>NONE</item>
@@ -93,6 +100,13 @@
         <item>FOUR_HOURS</item>
         <item>TODAY</item>
         <item>YESTERDAY</item>
+        <item>ONE_WEEK</item>
+        <item>TWO_WEEKS</item>
+        <item>ONE_MONTH</item>
+        <item>TWO_MONTHS</item>
+        <item>THREE_MONTHS</item>
+        <item>SIX_MONTHS</item>
+        <item>ONE_YEAR</item>
     </string-array>
     <string-array name="pref_event_entry_layout_entries">
         <item>@string/default_multiline_layout</item>

@@ -162,6 +162,13 @@
     <string name="ended_four_hours_ago">Ended four hours ago</string>
     <string name="ended_today">Ended today</string>
     <string name="ended_yesterday">Ended yesterday</string>
+    <string name="ended_one_week_ago">Ended one week ago</string>
+    <string name="ended_two_weeks_ago">Ended two weeks ago</string>
+    <string name="ended_one_month_ago">Ended one month ago</string>
+    <string name="ended_two_months_ago">Ended two months ago</string>
+    <string name="ended_three_months_ago">Ended three months ago</string>
+    <string name="ended_six_months_ago">Ended six months ago</string>
+    <string name="ended_one_year_ago">Ended one year ago</string>
     <string name="pref_hide_based_on_keywords_title">Hide based on keywords in a title</string>
     <string name="show_only_closest_instance_of_recurring_event">Show only the closest instance of a recurring event</string>
 

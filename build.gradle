@@ -25,6 +25,18 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.ajoberstar:grgit:$grgitVersion"
     }
+
+    // https://github.com/facebook/flipper/issues/146#issuecomment-463667556
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == "androidx") {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion "${targetSdkVersion}.+"
+                }
+            }
+        }
+    }
 }
 allprojects {
     repositories {

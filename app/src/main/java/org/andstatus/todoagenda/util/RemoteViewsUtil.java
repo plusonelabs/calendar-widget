@@ -115,8 +115,13 @@ public class RemoteViewsUtil {
 
     public static void setImageFromAttr(Context context, RemoteViews rv, int viewId, int attrResId) {
         TypedValue outValue = new TypedValue();
-        context.getTheme().resolveAttribute(attrResId, outValue, true);
-        setImage(rv, viewId, outValue.resourceId);
+        if (context.getTheme().resolveAttribute(attrResId, outValue, true)) {
+            setImage(rv, viewId, outValue.resourceId);
+        } else {
+            Log.w(RemoteViewsUtil.class.getSimpleName(),
+            "setImageFromAttr: not found; attrResId:" + attrResId + ", resourceId:" + outValue.resourceId +
+                    ", out:" + outValue + ", context:" + context);
+        }
     }
 
     public static void setImage(RemoteViews rv, int viewId, int resId) {

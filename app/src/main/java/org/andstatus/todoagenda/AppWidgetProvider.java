@@ -107,31 +107,25 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     public static void addWidgetViews(Context context, int widgetId) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
-        RemoteViews rv = buildWidgetRemoteViews(settings);
+        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_parent);
+        rv.removeAllViews(R.id.widget_parent);
         configureWidgetHeader(settings, rv);
-        configureList(settings, widgetId, rv);
-        configureNoEvents(settings, rv);
+        configureWidgetBody(settings, rv);
         if (appWidgetManager != null) {
             appWidgetManager.updateAppWidget(widgetId, rv);
         } else {
-            Log.d(AppWidgetProvider.class.getSimpleName(), "addWidgetViews, appWidgetManager is null. widgetId:" + widgetId + ", context:" + context);
+            Log.d(AppWidgetProvider.class.getSimpleName(), "addWidgetViews, appWidgetManager is null. widgetId:" +
+                    widgetId + ", context:" + context);
         }
-    }
-
-    private static RemoteViews buildWidgetRemoteViews(InstanceSettings settings) {
-        RemoteViews rvParent = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_parent);
-        if (settings.getWidgetHeaderLayout() != WidgetHeaderLayout.HIDDEN) {
-            RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(),
-                    settings.getWidgetHeaderLayout().layoutId);
-            rvParent.addView(R.id.widget_parent, rv);
-        }
-        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_body);
-        rvParent.addView(R.id.widget_parent, rv);
-        return rvParent;
     }
 
     private static void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
+        Log.d(AppWidgetProvider.class.getSimpleName(), "configureWidgetHeader, layout:" + settings.getWidgetHeaderLayout());
         if (settings.getWidgetHeaderLayout() == WidgetHeaderLayout.HIDDEN) return;
+
+        RemoteViews rvChild = new RemoteViews(settings.getContext().getPackageName(),
+                settings.getWidgetHeaderLayout().layoutId);
+        rv.addView(R.id.widget_parent, rvChild);
 
         setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
         configureCurrentDate(settings, rv);
@@ -207,9 +201,17 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         return list.size() > 0;
     }
 
-    private static void configureList(InstanceSettings settings, int widgetId, RemoteViews rv) {
+    public static void configureWidgetBody(InstanceSettings settings, RemoteViews rv) {
+        RemoteViews rvChild = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_body);
+        rv.addView(R.id.widget_parent, rvChild);
+
+        configureList(settings, rv);
+        configureNoEvents(settings, rv);
+    }
+
+    private static void configureList(InstanceSettings settings, RemoteViews rv) {
         Intent intent = new Intent(settings.getContext(), RemoteViewsService.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, settings.getWidgetId());
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         rv.setRemoteAdapter(R.id.event_list, intent);
     }

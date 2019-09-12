@@ -51,6 +51,7 @@ import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_MULTILI
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE_DEFAULT;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
+import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DATE_ON_WIDGET_HEADER;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DAY_HEADERS;
 import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_END_TIME;
@@ -97,6 +98,7 @@ public class InstanceSettings {
     private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
     private int todaysEventsBackgroundColor = PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
     private int eventsBackgroundColor = PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
+    private boolean showDateOnWidgetHeader = true;
     private boolean showDaysWithoutEvents = false;
     private boolean showDayHeaders = true;
     private boolean showPastEventsUnderOneHeader = false;
@@ -125,6 +127,9 @@ public class InstanceSettings {
                 json.optString(PREF_WIDGET_INSTANCE_NAME));
         if (settings.widgetId == 0) {
             return settings;
+        }
+        if (json.has(PREF_SHOW_DATE_ON_WIDGET_HEADER)) {
+            settings.showDateOnWidgetHeader = json.getBoolean(PREF_SHOW_DATE_ON_WIDGET_HEADER);
         }
         if (json.has(PREF_ACTIVE_SOURCES)) {
             JSONArray jsonArray = json.getJSONArray(PREF_ACTIVE_SOURCES);
@@ -231,6 +236,7 @@ public class InstanceSettings {
         InstanceSettings settings = new InstanceSettings(context, widgetId,
                 ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
                         ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, "")));
+        settings.showDateOnWidgetHeader = ApplicationPreferences.getShowDateOnWidgetHeader(context);
         settings.setActiveEventSources(ApplicationPreferences.getActiveEventSources(context));
         settings.eventRange = ApplicationPreferences.getEventRange(context);
         settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);
@@ -296,6 +302,7 @@ public class InstanceSettings {
         JSONObject json = new JSONObject();
         try {
             json.put(PREF_WIDGET_ID, widgetId);
+            json.put(PREF_SHOW_DATE_ON_WIDGET_HEADER, showDateOnWidgetHeader);
             json.put(PREF_WIDGET_INSTANCE_NAME, widgetInstanceName);
             json.put(PREF_ACTIVE_SOURCES, EventSource.toJsonArray(getActiveEventSources()));
             json.put(PREF_EVENT_RANGE, eventRange);
@@ -535,5 +542,9 @@ public class InstanceSettings {
 
     public void logMe(Class tag, String message, int widgetId) {
         Log.v(tag.getSimpleName(), message + ", widgetId:" + widgetId + "\n" + toJson());
+    }
+
+    public boolean getShowDateOnWidgetHeader() {
+        return showDateOnWidgetHeader;
     }
 }

@@ -138,8 +138,9 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     private static void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {
         int viewId = R.id.calendar_current_date;
         rv.setOnClickPendingIntent(viewId, createOpenCalendarPendingIntent(settings));
-        String formattedDate = DateUtil.createDateString(settings,
-                DateUtil.now(settings.getTimeZone())).toUpperCase(Locale.getDefault());
+        String formattedDate = settings.getShowDateOnWidgetHeader()
+            ? DateUtil.createDateString(settings, DateUtil.now(settings.getTimeZone())).toUpperCase(Locale.getDefault())
+            : "                    ";
         rv.setTextViewText(viewId, formattedDate);
         setTextSize(settings, rv, viewId, R.dimen.widget_header_title);
         setTextColorFromAttr(settings.getWidgetHeaderThemeContext(), rv, viewId, R.attr.header);

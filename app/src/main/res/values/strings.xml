@@ -41,7 +41,7 @@
     <string name="app_description_4000_chars_max_part11">Indicators for alerts and recurring events.</string>
     <string name="app_description_4000_chars_max_part12">Lock time zone when travelling to different time zones.</string>
     <string name="app_description_4000_chars_max_part13">Turn off Day headers and see dates in the \"Days from today\" column.</string>
-    <string name="app_description_4000_chars_max_part14">Android 4 to 7 supported. Supports Android tablets.</string>
+    <string name="app_description_4000_chars_max_part14">Android 4 to 9 supported. Supports Android tablets.</string>
 
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendars and Task Lists</string>
@@ -78,6 +78,7 @@
     <string name="widget_header_layout">Widget header layout</string>
     <string name="pref_event_entry_layout_title">Event entry layout</string>
     <string name="default_multiline_layout">Time below title</string>
+    <string name="show_date_on_widget_header">Show date on widget header</string>
     <string name="default_value">Default</string>
     <string name="single_line_layout">All in one row</string>
     <string name="two_rows_layout">Two rows layout</string>

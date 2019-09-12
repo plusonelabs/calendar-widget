@@ -9,6 +9,14 @@
         android:title="@string/widget_header_layout" />
 
     <CheckBoxPreference
+        android:key="showDateOnWidgetHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:defaultValue="true"
+        android:title="@string/show_date_on_widget_header">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
         android:key="showDayHeaders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

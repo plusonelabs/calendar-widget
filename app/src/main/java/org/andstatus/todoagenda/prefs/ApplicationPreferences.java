@@ -23,6 +23,7 @@ public class ApplicationPreferences {
     @Deprecated
     static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
     static final String PREF_WIDGET_HEADER_LAYOUT = "widgetHeaderLayout";
+    static final String PREF_SHOW_DATE_ON_WIDGET_HEADER = "showDateOnWidgetHeader";
     static final String PREF_MULTILINE_TITLE = "multiline_title";
     static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
     static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
@@ -95,6 +96,7 @@ public class ApplicationPreferences {
     public static void startEditing(Context context, Integer widgetId) {
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
         setWidgetId(context, widgetId == 0 ? settings.getWidgetId() : widgetId);
+        setBoolean(context, PREF_SHOW_DATE_ON_WIDGET_HEADER, settings.getShowDateOnWidgetHeader());
         setString(context, PREF_WIDGET_INSTANCE_NAME, settings.getWidgetInstanceName());
         setActiveEventSources(context, settings.getActiveEventSources());
         setEventRange(context, settings.getEventRange());
@@ -368,5 +370,9 @@ public class ApplicationPreferences {
 
     public static WidgetHeaderLayout getWidgetHeaderLayout(Context context) {
         return WidgetHeaderLayout.fromValue(getString(context, PREF_WIDGET_HEADER_LAYOUT, ""));
+    }
+
+    public static boolean getShowDateOnWidgetHeader(Context context) {
+        return getBoolean(context, PREF_SHOW_DATE_ON_WIDGET_HEADER, true);
     }
 }

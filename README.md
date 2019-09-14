@@ -63,7 +63,16 @@ We are also looking for new and improved translations over at http://crowdin.net
 ## Changelog
 
 ### <a id="v3.0"/> v3.0 More colors and layout customizations
-Due to lots of internal changes existing widgets should be recreated. Sorry for inconvenience.
+**Attention!** Due to lots of internal changes:
+
+1. Old "ToDo Agenda" app version should be uninstalled first, 
+2. Device restarted,
+3. And then the new version installed. 
+4. Widgets should be recreated. 
+
+Sorry for inconvenience.
+
+**Changes in this version**
 
 * One "Appearance" Settings section split into: Layout, Colors and Other settings.
 * Old and confusing [Android Holo ColorPicker](https://github.com/LarsWerkman/HoloColorPicker) is replaced with a customized version of [HSV-Alpha Color Picker for Android]
@@ -76,13 +85,23 @@ Due to lots of internal changes existing widgets should be recreated. Sorry for 
  ease navigation to Today's events.
 * ["Today's events background color"](https://github.com/plusonelabs/calendar-widget/issues/124) option added,
   so Today's events may be visually highlighted.
-* "Day header shading" added. Now the color can be changed independently from "Event entry shading".
+* "Day header shading" added. Now the Day header color can be changed independently from "Event entry shading".
 * ["Show event icon"](https://github.com/plusonelabs/calendar-widget/issues/174) added, 
     allowing to hide calendar's color bars and tasks icons.
 * ["Show number of days to event"](https://github.com/plusonelabs/calendar-widget/issues/283) option added
- (in the "All in one row" event layout) allowing to hide this info independently from the "Show day header" option.
+  (in the "All in one row" event layout) allowing to hide this info independently from the "Show day header" option.
 * [Horizontal lines (separators) are now above Day headers, not below them](https://github.com/plusonelabs/calendar-widget/issues/154)
- to avoid Users' confusion.
+  to avoid Users' confusion.
+* [Text size scaling improved](https://github.com/plusonelabs/calendar-widget/issues/301) - Now size of text in all parts
+  of the widget changes, when you change "Text size" option.
+* [Don't show time for All day events](https://github.com/plusonelabs/calendar-widget/issues/236).
+* [Display location independently of time](https://github.com/plusonelabs/calendar-widget/issues/221), 
+  including showing location for All day events.
+* [Added more values to "Show events that ended recently](https://github.com/plusonelabs/calendar-widget/issues/319), 
+  up to one year.
+* Added "[Show date on widget header](https://github.com/plusonelabs/calendar-widget/issues/281)" option.
+* [32 language translations](https://crowdin.com/project/plusonelabs-calendar-widget) updated and 5 new translations added!
+  Thank you all!
 * Hopefully fixed intermittent "No events" display instead of actual list of events. 
  Separate "ToDo Agenda Loading..." layout added to see the widget, when it is not initialized yet (i.e. after device reboot).
 

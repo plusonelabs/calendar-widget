@@ -110,13 +110,13 @@
     <string name="appearance_past_events_background_color_desc">Adjust background color of past events</string>
     <string name="todays_events_background_color_title">Today\'s events background color</string>
     <string name="todays_events_background_color_desc">Adjust background color of today\'s events</string>
-    <string name="appearance_header_theme_title">Widget header shading</string>
+    <string name="appearance_header_theme_title">Widget header text shading</string>
     <string name="appearance_header_theme_desc">Show the header of the widget in dark or light shade</string>
     <string name="widget_header_background_color_desc">Adjust color of the widget header. Transparent by default</string>
     <string name="widget_header_background_color_title">Widget header background color</string>
-    <string name="day_header_theme_title">Day header shading</string>
+    <string name="day_header_theme_title">Day header text shading</string>
     <string name="day_header_theme_desc">Show day header text in dark or light shade</string>
-    <string name="appearance_entries_theme_title">Event shading</string>
+    <string name="appearance_entries_theme_title">Event text shading</string>
     <string name="appearance_entries_theme_desc">Show event text in dark or light shade</string>
     <string name="appearance_theme_black">White</string>
     <string name="appearance_theme_dark">Light</string>
@@ -157,7 +157,7 @@
     <string name="event_range_one_year">One year</string>
     <string name="show_past_events_with_default_color_title">Show all past events having default color</string>
     <string name="this_option_is_turned_off">(disabled)</string>
-    <string name="pref_events_ended_title">Show events that ended recently</string>
+    <string name="pref_events_ended_title">Show past events</string>
     <string name="ended_one_hour_ago">Ended one hour ago</string>
     <string name="ended_two_hours_ago">Ended two hours ago</string>
     <string name="ended_four_hours_ago">Ended four hours ago</string>

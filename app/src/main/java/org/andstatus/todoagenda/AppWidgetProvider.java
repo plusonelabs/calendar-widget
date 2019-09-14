@@ -54,14 +54,15 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     }
 
     @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        Log.d(this.getClass().getSimpleName(), "onAppWidgetOptionsChanged, widgetId:" + appWidgetId);
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int widgetId, Bundle newOptions) {
+        Log.d(this.getClass().getSimpleName(), widgetId + " onOptionsChanged");
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, widgetId, newOptions);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(this.getClass().getSimpleName(), "onReceive, intent:" + intent);
+        AllSettings.ensureLoadedFromFiles(context, false);
         super.onReceive(context, intent);
     }
 
@@ -73,7 +74,8 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
     @Override
     public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
-        Log.d(this.getClass().getSimpleName(), "onRestored, oldWidgetIds:" + asList(oldWidgetIds) + ", newWidgetIds:" + asList(newWidgetIds));
+        Log.d(this.getClass().getSimpleName(), "onRestored, oldWidgetIds:" + asList(oldWidgetIds) +
+                ", newWidgetIds:" + asList(newWidgetIds));
         super.onRestored(context, oldWidgetIds, newWidgetIds);
     }
 
@@ -95,12 +97,12 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     }
 
     public static void recreateWidget(Context context, int widgetId) {
-        Log.d(AppWidgetProvider.class.getSimpleName(), "recreateWidget, widgetId:" + widgetId + ", context:" + context);
+        Log.d(AppWidgetProvider.class.getSimpleName(), widgetId +" recreateWidget, context:" + context);
         try {
             addWidgetViews(context, widgetId);
-            updateWidget(context, widgetId);
         } catch (Exception e) {
-            Log.w(AppWidgetProvider.class.getSimpleName(), "Exception on recreateWidget, widgetId:" + widgetId + ", context:" + context, e);
+            Log.w(AppWidgetProvider.class.getSimpleName(), widgetId + " Exception on recreateWidget" +
+                    ", context:" + context, e);
         }
     }
 
@@ -114,13 +116,14 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         if (appWidgetManager != null) {
             appWidgetManager.updateAppWidget(widgetId, rv);
         } else {
-            Log.d(AppWidgetProvider.class.getSimpleName(), "addWidgetViews, appWidgetManager is null. widgetId:" +
-                    widgetId + ", context:" + context);
+            Log.d(AppWidgetProvider.class.getSimpleName(), widgetId + " addWidgetViews, appWidgetManager is null" +
+                    ", context:" + context);
         }
     }
 
     private static void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
-        Log.d(AppWidgetProvider.class.getSimpleName(), "configureWidgetHeader, layout:" + settings.getWidgetHeaderLayout());
+        Log.d(AppWidgetProvider.class.getSimpleName(), settings.getWidgetId() + " configureWidgetHeader" +
+                ", layout:" + settings.getWidgetHeaderLayout());
         if (settings.getWidgetHeaderLayout() == WidgetHeaderLayout.HIDDEN) return;
 
         RemoteViews rvChild = new RemoteViews(settings.getContext().getPackageName(),
@@ -260,7 +263,8 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         if (appWidgetManager != null) {
             appWidgetManager.notifyAppWidgetViewDataChanged(new int[]{widgetId}, R.id.event_list);
         } else {
-            Log.d(AppWidgetProvider.class.getSimpleName(), "updateWidget, appWidgetManager is null. widgetId:" + widgetId + ", context:" + context);
+            Log.d(AppWidgetProvider.class.getSimpleName(), widgetId + " updateWidget, appWidgetManager is null" +
+                    ", context:" + context);
         }
     }
 }

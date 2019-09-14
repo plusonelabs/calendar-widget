@@ -5,36 +5,59 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:padding="@dimen/widget_padding">
+
     <LinearLayout
+        android:id="@+id/header_parent"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/widget_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:contentDescription="@string/widget_name"
-            android:src="@drawable/ic_launcher" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/header_initial"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:gravity="center"
-            android:background="#60000000"
-            android:text="@string/widget_name" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/widget_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:contentDescription="@string/widget_name"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:background="#60000000"
+                android:text="@string/widget_name" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/list_parent"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:gravity="center"
-        android:background="#60000000"
-        android:text="@string/loading_with_dots"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/event_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+        <TextView
+            android:id="@+id/empty_event_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/calender_padding"
+            android:text="@string/no_upcoming_events"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
 </LinearLayout>

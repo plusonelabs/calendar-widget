@@ -195,7 +195,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(settings.getContext());
         if (appWidgetManager == null) return;
 
-        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_parent);
+        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_initial);
         int widgetId = settings.getWidgetId();
         PendingIntent pendingIntent;
         if (todaysPosition < 0) {

@@ -100,6 +100,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         Log.d(AppWidgetProvider.class.getSimpleName(), widgetId +" recreateWidget, context:" + context);
         try {
             addWidgetViews(context, widgetId);
+            updateWidget(context, widgetId);
         } catch (Exception e) {
             Log.w(AppWidgetProvider.class.getSimpleName(), widgetId + " Exception on recreateWidget" +
                     ", context:" + context, e);
@@ -109,8 +110,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     public static void addWidgetViews(Context context, int widgetId) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
-        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_parent);
-        rv.removeAllViews(R.id.widget_parent);
+        RemoteViews rv = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_initial);
         configureWidgetHeader(settings, rv);
         configureWidgetBody(settings, rv);
         if (appWidgetManager != null) {
@@ -124,11 +124,12 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     private static void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
         Log.d(AppWidgetProvider.class.getSimpleName(), settings.getWidgetId() + " configureWidgetHeader" +
                 ", layout:" + settings.getWidgetHeaderLayout());
+        rv.removeAllViews(R.id.header_parent);
         if (settings.getWidgetHeaderLayout() == WidgetHeaderLayout.HIDDEN) return;
 
-        RemoteViews rvChild = new RemoteViews(settings.getContext().getPackageName(),
+        RemoteViews headerView = new RemoteViews(settings.getContext().getPackageName(),
                 settings.getWidgetHeaderLayout().layoutId);
-        rv.addView(R.id.widget_parent, rvChild);
+        rv.addView(R.id.header_parent, headerView);
 
         setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
         configureCurrentDate(settings, rv);
@@ -189,6 +190,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     private static void configureRefresh(InstanceSettings settings, RemoteViews rv) {
         Intent intent = new Intent(settings.getContext(), EnvironmentChangedReceiver.class);
         intent.setAction(ACTION_REFRESH);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, settings.getWidgetId());
         PendingIntent pendingIntent = PermissionsUtil.getPermittedPendingBroadcastIntent(settings, intent);
         rv.setOnClickPendingIntent(R.id.refresh, pendingIntent);
     }
@@ -206,9 +208,6 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     }
 
     public static void configureWidgetBody(InstanceSettings settings, RemoteViews rv) {
-        RemoteViews rvChild = new RemoteViews(settings.getContext().getPackageName(), R.layout.widget_body);
-        rv.addView(R.id.widget_parent, rvChild);
-
         configureList(settings, rv);
         configureNoEvents(settings, rv);
     }

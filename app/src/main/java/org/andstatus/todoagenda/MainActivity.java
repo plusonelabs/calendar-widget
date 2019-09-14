@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         }
         listView = findViewById(android.R.id.list);
         checkPermissions();
-        if (preparedToOpen()) {
+        if (openThisActivity()) {
             updateScreen();
         }
     }
@@ -80,19 +80,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         permissionsGranted = PermissionsUtil.arePermissionsGranted(this);
     }
 
-    private boolean preparedToOpen() {
-        int newWidgetId = 0;
+    private boolean openThisActivity() {
+        int widgetIdToConfigure = 0;
         if (permissionsGranted) {
-            newWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
-            if (newWidgetId == 0 && AllSettings.getInstances(this).size() == 1) {
-                newWidgetId = AllSettings.getInstances(this).keySet().iterator().next();
+            widgetIdToConfigure = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+            if (widgetIdToConfigure == 0 && AllSettings.getInstances(this).size() == 1) {
+                widgetIdToConfigure = AllSettings.getInstances(this).keySet().iterator().next();
             }
-            if (newWidgetId != 0) {
-                startActivity(WidgetConfigurationActivity.intentToStartMe(this, newWidgetId));
+            if (widgetIdToConfigure != 0) {
+                startActivity(WidgetConfigurationActivity.intentToStartMe(this, widgetIdToConfigure));
                 finish();
             }
         }
-        return newWidgetId == 0;
+        return widgetIdToConfigure == 0;
     }
 
     private void updateScreen() {

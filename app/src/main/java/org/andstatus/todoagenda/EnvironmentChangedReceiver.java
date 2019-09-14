@@ -101,7 +101,14 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 gotoPosition(context, widgetId, position2);
                 break;
             default:
-                AppWidgetProvider.recreateAllWidgets(context);
+                int widgetId2 = intent == null
+                    ? 0
+                    : intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+                if (widgetId2 == 0) {
+                    AppWidgetProvider.recreateAllWidgets(context);
+                } else {
+                    AppWidgetProvider.recreateWidget(context, widgetId2);
+                }
                 break;
         }
     }
@@ -110,7 +117,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
         if (widgetId == 0 || position < 0) return;
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_parent);
+        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_initial);
         Log.d("gotoToday", "Scrolling widget " + widgetId + " to position " + position);
         rv.setScrollPosition(R.id.event_list, position);
         appWidgetManager.updateAppWidget(widgetId, rv);

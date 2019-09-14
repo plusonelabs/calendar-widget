@@ -137,13 +137,17 @@ public class AllSettings {
     }
 
     public static String uniqueInstanceName(Context context, int widgetId, String proposedInstanceName) {
-         if (proposedInstanceName != null &&
-             proposedInstanceName.trim().length() > 0 &&
-             !existsInstanceName(widgetId, proposedInstanceName)) {
-                return proposedInstanceName;
-         }
+        if (proposedInstanceName != null && proposedInstanceName.trim().length() > 0 &&
+          !existsInstanceName(widgetId, proposedInstanceName)) {
+            return proposedInstanceName;
+        }
 
-        int index = instances.size() == 0 ? 1 : instances.size();
+        String nameByWidgetId = defaultInstanceName(context, widgetId);
+        if (!existsInstanceName(widgetId, nameByWidgetId)) {
+            return nameByWidgetId;
+        }
+
+        int index = 1;
         String name;
         do {
             name = defaultInstanceName(context, index);

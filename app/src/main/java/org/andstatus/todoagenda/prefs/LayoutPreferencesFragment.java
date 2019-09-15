@@ -25,14 +25,14 @@ public class LayoutPreferencesFragment extends PreferenceFragment
     }
 
     private void showEventEntryLayout() {
-        Preference preference = findPreference(ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT);
+        Preference preference = findPreference(InstanceSettings.PREF_EVENT_ENTRY_LAYOUT);
         if (preference != null) {
             preference.setSummary(ApplicationPreferences.getEventEntryLayout(getActivity()).summaryResId);
         }
     }
 
     private void showWidgetHeaderLayout() {
-        Preference preference = findPreference(ApplicationPreferences.PREF_WIDGET_HEADER_LAYOUT);
+        Preference preference = findPreference(InstanceSettings.PREF_WIDGET_HEADER_LAYOUT);
         if (preference != null) {
             preference.setSummary(ApplicationPreferences.getWidgetHeaderLayout(getActivity()).summaryResId);
         }
@@ -47,10 +47,10 @@ public class LayoutPreferencesFragment extends PreferenceFragment
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
-            case ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT:
+            case InstanceSettings.PREF_EVENT_ENTRY_LAYOUT:
                 showEventEntryLayout();
                 break;
-            case ApplicationPreferences.PREF_WIDGET_HEADER_LAYOUT:
+            case InstanceSettings.PREF_WIDGET_HEADER_LAYOUT:
                 showWidgetHeaderLayout();
                 break;
             default:

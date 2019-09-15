@@ -37,7 +37,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.andstatus.todoagenda.prefs.AllSettings.getStorageKey;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS;
 
 /**
@@ -148,7 +148,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         if (!results.isEmpty()) {
             Context context = getSettings().getContext();
             int widgetId = getSettings().getWidgetId();
-            ApplicationPreferences.startEditing(context, widgetId);
+            ApplicationPreferences.fromInstanceSettings(context, widgetId);
             ApplicationPreferences.setLockedTimeZoneId(context, results.get(0).getExecutedAt().getZone().getID());
             ApplicationPreferences.save(context, widgetId);
         }
@@ -203,7 +203,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void startEditing() {
-        ApplicationPreferences.startEditing(getContext(), getWidgetId());
+        ApplicationPreferences.fromInstanceSettings(getContext(), getWidgetId());
     }
 
     public void saveSettings() {

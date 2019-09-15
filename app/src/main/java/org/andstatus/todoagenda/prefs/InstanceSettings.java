@@ -1,11 +1,14 @@
 package org.andstatus.todoagenda.prefs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
+import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
+import org.andstatus.todoagenda.Theme;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -21,60 +24,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 
 import static org.andstatus.todoagenda.Theme.themeNameToResId;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ABBREVIATE_DATES_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ACTIVE_SOURCES;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DATE_FORMAT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DATE_FORMAT_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_THEME;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_DAY_HEADER_THEME_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENTS_BACKGROUND_COLOR;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENTS_ENDED;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_ENTRY_LAYOUT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_RANGE;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_EVENT_RANGE_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_FILL_ALL_DAY_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_HIDE_BASED_ON_KEYWORDS;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_INDICATE_ALERTS;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_INDICATE_RECURRING;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_LOCKED_TIME_ZONE_ID;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_MULTILINE_TITLE_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DATE_ON_WIDGET_HEADER;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DAYS_WITHOUT_EVENTS;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_DAY_HEADERS;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_END_TIME;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_END_TIME_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_EVENT_ICON;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_LOCATION;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_LOCATION_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_SHOW_WIDGET_HEADER;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TEXT_SIZE_SCALE_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TODAYS_EVENTS_BACKGROUND_COLOR;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_BACKGROUND_COLOR;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_LAYOUT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_THEME;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_HEADER_THEME_DEFAULT;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_ID;
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_WIDGET_INSTANCE_NAME;
 import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
 
 /**
@@ -83,56 +36,125 @@ import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
  */
 public class InstanceSettings {
     private final Context context;
+
+    public static final String PREF_WIDGET_ID = "widgetId";
     final int widgetId;
 
+    // ----------------------------------------------------------------------------------
     // Layout
+    @Deprecated
+    static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
+    static final String PREF_WIDGET_HEADER_LAYOUT = "widgetHeaderLayout";
     private WidgetHeaderLayout widgetHeaderLayout = WidgetHeaderLayout.defaultValue;
-    private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+    static final String PREF_SHOW_DATE_ON_WIDGET_HEADER = "showDateOnWidgetHeader";
     private boolean showDateOnWidgetHeader = true;
-    private boolean showDaysWithoutEvents = false;
+    static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
     private boolean showDayHeaders = true;
+    static final String PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER = "showPastEventsUnderOneHeader";
     private boolean showPastEventsUnderOneHeader = false;
-    private boolean showNumberOfDaysToEvent = true;
+    static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
+    static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
+    private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+    static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
+    private boolean showDaysWithoutEvents = false;
+    static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
     private EventEntryLayout eventEntryLayout = EventEntryLayout.DEFAULT;
+    static final String PREF_SHOW_EVENT_ICON = "showEventIcon";
     private boolean showEventIcon = true;
+    static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent";
+    private boolean showNumberOfDaysToEvent = true;
+    static final String PREF_MULTILINE_TITLE = "multiline_title";
+    static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
     private boolean titleMultiline = PREF_MULTILINE_TITLE_DEFAULT;
 
+    // ----------------------------------------------------------------------------------
     // Colors
-    private int widgetHeaderBackgroundColor = PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
-    private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
-    private int todaysEventsBackgroundColor = PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
-    private int eventsBackgroundColor = PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
+    static final String PREF_WIDGET_HEADER_THEME = "headerTheme";
+    static final String PREF_WIDGET_HEADER_THEME_DEFAULT = Theme.DARK.name();
     private String widgetHeaderTheme = PREF_WIDGET_HEADER_THEME_DEFAULT;
-    private String dayHeaderTheme = PREF_DAY_HEADER_THEME_DEFAULT;
-    private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
-
     private volatile ContextThemeWrapper widgetHeaderThemeContext = null;
+
+    static final String PREF_WIDGET_HEADER_BACKGROUND_COLOR = "widgetHeaderBackgroundColor";
+    @ColorInt
+    static final int PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT = Color.TRANSPARENT;
+    private int widgetHeaderBackgroundColor = PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
+
+    static final String PREF_DAY_HEADER_THEME = "dayHeaderTheme";
+    static final String PREF_DAY_HEADER_THEME_DEFAULT = Theme.DARK.name();
+    private String dayHeaderTheme = PREF_DAY_HEADER_THEME_DEFAULT;
     private volatile ContextThemeWrapper dayHeaderThemeContext = null;
+
+    static final String PREF_ENTRY_THEME = "entryTheme";
+    public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
+    private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
     private volatile ContextThemeWrapper entryThemeContext = null;
 
+    static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
+    @ColorInt static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF78782C;
+    private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
+    static final String PREF_TODAYS_EVENTS_BACKGROUND_COLOR = "todaysEventsBackgroundColor";
+    @ColorInt static final int PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF29626F;
+    private int todaysEventsBackgroundColor = PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
+    static final String PREF_EVENTS_BACKGROUND_COLOR = "backgroundColor";
+    @ColorInt static final int PREF_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x80000000;
+    private int eventsBackgroundColor = PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
+
+    // ----------------------------------------------------------------------------------
     // Event details
+    static final String PREF_SHOW_END_TIME = "showEndTime";
+    static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
     private boolean showEndTime = PREF_SHOW_END_TIME_DEFAULT;
+    static final String PREF_SHOW_LOCATION = "showLocation";
+    static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
     private boolean showLocation = PREF_SHOW_LOCATION_DEFAULT;
+    static final String PREF_FILL_ALL_DAY = "fillAllDay";
+    static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
     private boolean fillAllDayEvents = PREF_FILL_ALL_DAY_DEFAULT;
+    static final String PREF_INDICATE_ALERTS = "indicateAlerts";
     private boolean indicateAlerts = true;
+    static final String PREF_INDICATE_RECURRING = "indicateRecurring";
     private boolean indicateRecurring = false;
 
+    // ----------------------------------------------------------------------------------
     // Event filters
+    static final String PREF_EVENTS_ENDED = "eventsEnded";
     private EndedSomeTimeAgo eventsEnded = EndedSomeTimeAgo.NONE;
+    static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
     private boolean showPastEventsWithDefaultColor = false;
-    private boolean showOnlyClosestInstanceOfRecurringEvent = false;
+    static final String PREF_EVENT_RANGE = "eventRange";
+    static final String PREF_EVENT_RANGE_DEFAULT = "30";
     private int eventRange = Integer.valueOf(PREF_EVENT_RANGE_DEFAULT);
+    static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
     private String hideBasedOnKeywords = "";
+    static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
+            "showOnlyClosestInstanceOfRecurringEvent";
+    private boolean showOnlyClosestInstanceOfRecurringEvent = false;
 
+    // ----------------------------------------------------------------------------------
     // Calendars and task lists
+    static final String PREF_ACTIVE_SOURCES = "activeSources";
     private List<EventSource> activeEventSources = Collections.emptyList();
 
+    // ----------------------------------------------------------------------------------
     // Other
+    static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
     private final String widgetInstanceName;
+    static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
+    static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
     private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
+    static final String PREF_DATE_FORMAT = "dateFormat";
+    static final String PREF_DATE_FORMAT_DEFAULT = "auto";
     private String dateFormat = PREF_DATE_FORMAT_DEFAULT;
+    static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
+    static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
     private boolean abbreviateDates = PREF_ABBREVIATE_DATES_DEFAULT;
+    static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
+    static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
     private String lockedTimeZoneId = "";
+
+    // ----------------------------------------------------------------------------------
+    // Feedback
+    static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
 
     public static InstanceSettings fromJson(Context context, JSONObject json) throws JSONException {
         InstanceSettings settings = new InstanceSettings(context, json.optInt(PREF_WIDGET_ID),
@@ -245,45 +267,47 @@ public class InstanceSettings {
     }
 
     static InstanceSettings fromApplicationPreferences(Context context, int widgetId) {
-        InstanceSettings settings = new InstanceSettings(context, widgetId,
-                ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
-                        ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, "")));
-        settings.showDateOnWidgetHeader = ApplicationPreferences.getShowDateOnWidgetHeader(context);
-        settings.setActiveEventSources(ApplicationPreferences.getActiveEventSources(context));
-        settings.eventRange = ApplicationPreferences.getEventRange(context);
-        settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);
-        settings.fillAllDayEvents = ApplicationPreferences.getFillAllDayEvents(context);
-        settings.hideBasedOnKeywords = ApplicationPreferences.getHideBasedOnKeywords(context);
-        settings.widgetHeaderBackgroundColor = ApplicationPreferences.getWidgetHeaderBackgroundColor(context);
-        settings.pastEventsBackgroundColor = ApplicationPreferences.getPastEventsBackgroundColor(context);
-        settings.todaysEventsBackgroundColor = ApplicationPreferences.getTodaysEventsBackgroundColor(context);
-        settings.eventsBackgroundColor = ApplicationPreferences.getEventsBackgroundColor(context);
-        settings.showDaysWithoutEvents = ApplicationPreferences.getShowDaysWithoutEvents(context);
-        settings.showDayHeaders = ApplicationPreferences.getShowDayHeaders(context);
-        settings.showPastEventsUnderOneHeader = ApplicationPreferences.getShowPastEventsUnderOneHeader(context);
-        settings.showPastEventsWithDefaultColor = ApplicationPreferences.getShowPastEventsWithDefaultColor(context);
-        settings.showEventIcon = ApplicationPreferences.getShowEventIcon(context);
-        settings.showNumberOfDaysToEvent = ApplicationPreferences.getShowNumberOfDaysToEvent(context);
-        settings.showEndTime = ApplicationPreferences.getShowEndTime(context);
-        settings.showLocation = ApplicationPreferences.getShowLocation(context);
-        settings.dateFormat = ApplicationPreferences.getDateFormat(context);
-        settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
-        settings.setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
-        settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
-        settings.titleMultiline = ApplicationPreferences.isTitleMultiline(context);
-        settings.showOnlyClosestInstanceOfRecurringEvent = ApplicationPreferences
-                .getShowOnlyClosestInstanceOfRecurringEvent(context);
-        settings.indicateAlerts = ApplicationPreferences.getBoolean(context, PREF_INDICATE_ALERTS, true);
-        settings.indicateRecurring = ApplicationPreferences.getBoolean(context, PREF_INDICATE_RECURRING, false);
-        settings.widgetHeaderTheme = ApplicationPreferences.getString(context, PREF_WIDGET_HEADER_THEME, PREF_WIDGET_HEADER_THEME_DEFAULT);
-        settings.widgetHeaderLayout = ApplicationPreferences.getWidgetHeaderLayout(context);
-        settings.dayHeaderTheme = ApplicationPreferences.getString(context, PREF_DAY_HEADER_THEME, PREF_DAY_HEADER_THEME_DEFAULT);
-        settings.entryTheme = ApplicationPreferences.getString(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
-        settings.textSizeScale = ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE,
-                PREF_TEXT_SIZE_SCALE_DEFAULT);
-        settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
-                PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
-        return settings;
+        synchronized (ApplicationPreferences.class) {
+            InstanceSettings settings = new InstanceSettings(context, widgetId,
+                    ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
+                            ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, "")));
+            settings.showDateOnWidgetHeader = ApplicationPreferences.getShowDateOnWidgetHeader(context);
+            settings.setActiveEventSources(ApplicationPreferences.getActiveEventSources(context));
+            settings.eventRange = ApplicationPreferences.getEventRange(context);
+            settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);
+            settings.fillAllDayEvents = ApplicationPreferences.getFillAllDayEvents(context);
+            settings.hideBasedOnKeywords = ApplicationPreferences.getHideBasedOnKeywords(context);
+            settings.widgetHeaderBackgroundColor = ApplicationPreferences.getWidgetHeaderBackgroundColor(context);
+            settings.pastEventsBackgroundColor = ApplicationPreferences.getPastEventsBackgroundColor(context);
+            settings.todaysEventsBackgroundColor = ApplicationPreferences.getTodaysEventsBackgroundColor(context);
+            settings.eventsBackgroundColor = ApplicationPreferences.getEventsBackgroundColor(context);
+            settings.showDaysWithoutEvents = ApplicationPreferences.getShowDaysWithoutEvents(context);
+            settings.showDayHeaders = ApplicationPreferences.getShowDayHeaders(context);
+            settings.showPastEventsUnderOneHeader = ApplicationPreferences.getShowPastEventsUnderOneHeader(context);
+            settings.showPastEventsWithDefaultColor = ApplicationPreferences.getShowPastEventsWithDefaultColor(context);
+            settings.showEventIcon = ApplicationPreferences.getShowEventIcon(context);
+            settings.showNumberOfDaysToEvent = ApplicationPreferences.getShowNumberOfDaysToEvent(context);
+            settings.showEndTime = ApplicationPreferences.getShowEndTime(context);
+            settings.showLocation = ApplicationPreferences.getShowLocation(context);
+            settings.dateFormat = ApplicationPreferences.getDateFormat(context);
+            settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
+            settings.setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
+            settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
+            settings.titleMultiline = ApplicationPreferences.isTitleMultiline(context);
+            settings.showOnlyClosestInstanceOfRecurringEvent = ApplicationPreferences
+                    .getShowOnlyClosestInstanceOfRecurringEvent(context);
+            settings.indicateAlerts = ApplicationPreferences.getBoolean(context, PREF_INDICATE_ALERTS, true);
+            settings.indicateRecurring = ApplicationPreferences.getBoolean(context, PREF_INDICATE_RECURRING, false);
+            settings.widgetHeaderTheme = ApplicationPreferences.getString(context, PREF_WIDGET_HEADER_THEME, PREF_WIDGET_HEADER_THEME_DEFAULT);
+            settings.widgetHeaderLayout = ApplicationPreferences.getWidgetHeaderLayout(context);
+            settings.dayHeaderTheme = ApplicationPreferences.getString(context, PREF_DAY_HEADER_THEME, PREF_DAY_HEADER_THEME_DEFAULT);
+            settings.entryTheme = ApplicationPreferences.getString(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
+            settings.textSizeScale = ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE,
+                    PREF_TEXT_SIZE_SCALE_DEFAULT);
+            settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
+                    PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
+            return settings;
+        }
     }
 
     @NonNull

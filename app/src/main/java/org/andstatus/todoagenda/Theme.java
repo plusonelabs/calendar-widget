@@ -1,6 +1,6 @@
 package org.andstatus.todoagenda;
 
-import static org.andstatus.todoagenda.prefs.ApplicationPreferences.PREF_ENTRY_THEME_DEFAULT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ENTRY_THEME_DEFAULT;
 
 public enum Theme {
 

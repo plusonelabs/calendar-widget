@@ -43,11 +43,12 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        prepareForNewIntent(getIntent());
-        super.onCreate(savedInstanceState);
+        if (openThisActivity(getIntent())) {
+            super.onCreate(savedInstanceState);
+        }
     }
 
-    private void prepareForNewIntent(Intent newIntent) {
+    private boolean openThisActivity(Intent newIntent) {
         int newWidgetId = newIntent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
         if (newWidgetId == 0) {
             newWidgetId = ApplicationPreferences.getWidgetId(this);
@@ -59,13 +60,14 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
             restartIntent = MainActivity.intentToConfigure(this, newWidgetId);
         } else if (widgetId == 0) {
             widgetId = newWidgetId;
-            ApplicationPreferences.startEditing(this, widgetId);
+            ApplicationPreferences.fromInstanceSettings(this, widgetId);
         }
         if (restartIntent != null) {
             widgetId = 0;
             startActivity(restartIntent);
             finish();
         }
+        return restartIntent == null;
     }
 
     private void restartIfNeeded() {

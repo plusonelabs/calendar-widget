@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -73,7 +74,8 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
                         : R.dimen.days_to_event_right_width);
                 rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(getSettings().getContext(), days));
                 setTextSize(getSettings(), rv, viewToShow, R.dimen.event_entry_details);
-                setTextColorFromAttr(getSettings().getDayHeaderThemeContext(), rv, viewToShow, R.attr.dayHeaderTitle);
+                setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.DAY_HEADER),
+                        rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
                 rv.setViewVisibility(R.id.event_entry_days, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
@@ -87,7 +89,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         int viewId = R.id.event_entry_title;
         rv.setTextViewText(viewId, entry.getTitle());
         setTextSize(getSettings(), rv, viewId, R.dimen.event_entry_title);
-        setTextColorFromAttr(getSettings().getEntryThemeContext(), rv, viewId, R.attr.eventEntryTitle);
+        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.ENTRY), rv, viewId, R.attr.eventEntryTitle);
         setMultiline(rv, viewId, getSettings().isTitleMultiline());
     }
 

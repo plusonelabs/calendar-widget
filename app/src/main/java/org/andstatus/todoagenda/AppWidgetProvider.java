@@ -10,10 +10,12 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
@@ -26,7 +28,6 @@ import java.util.Locale;
 
 import androidx.annotation.IdRes;
 
-import static org.andstatus.todoagenda.Theme.themeNameToResId;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarPendingIntent;
@@ -147,17 +148,18 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
             : "                    ";
         rv.setTextViewText(viewId, formattedDate);
         setTextSize(settings, rv, viewId, R.dimen.widget_header_title);
-        setTextColorFromAttr(settings.getWidgetHeaderThemeContext(), rv, viewId, R.attr.header);
+        setTextColorFromAttr(settings.getShadingContext(TextShadingPref.WIDGET_HEADER), rv, viewId, R.attr.header);
     }
 
     private static void setActionIcons(InstanceSettings settings, RemoteViews rv) {
-        setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.go_to_today, R.attr.header_action_go_to_today);
-        setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.add_event, R.attr.header_action_add_event);
-        setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.refresh, R.attr.header_action_refresh);
-        setImageFromAttr(settings.getWidgetHeaderThemeContext(), rv, R.id.overflow_menu, R.attr.header_action_overflow);
-        int themeId = themeNameToResId(settings.getWidgetHeaderTheme());
+        ContextThemeWrapper themeContext = settings.getShadingContext(TextShadingPref.WIDGET_HEADER);
+        setImageFromAttr(themeContext, rv, R.id.go_to_today, R.attr.header_action_go_to_today);
+        setImageFromAttr(themeContext, rv, R.id.add_event, R.attr.header_action_add_event);
+        setImageFromAttr(themeContext, rv, R.id.refresh, R.attr.header_action_refresh);
+        setImageFromAttr(themeContext, rv, R.id.overflow_menu, R.attr.header_action_overflow);
+        TextShading textShading = settings.getShading(TextShadingPref.WIDGET_HEADER);
         int alpha = 255;
-        if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
+        if (textShading == TextShading.DARK || textShading == TextShading.LIGHT) {
             alpha = 154;
         }
         setAlpha(rv, R.id.go_to_today, alpha);
@@ -234,7 +236,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         }
         setTextSize(settings, rv, viewId, R.dimen.event_entry_details);
         setBackgroundColor(rv, viewId, settings.getEventsBackgroundColor());
-        setTextColorFromAttr(settings.getEntryThemeContext(), rv, viewId, R.attr.eventEntryTitle);
+        setTextColorFromAttr(settings.getShadingContext(TextShadingPref.ENTRY), rv, viewId, R.attr.eventEntryTitle);
     }
 
     private static List<Integer> asList(final int[] is) {

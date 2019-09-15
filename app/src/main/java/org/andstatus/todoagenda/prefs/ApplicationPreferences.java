@@ -6,10 +6,12 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
+import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES_DEFAULT;
@@ -17,8 +19,6 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ACTIVE_SOURCE
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DATE_FORMAT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DATE_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_ALIGNMENT;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_THEME;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ENTRY_THEME;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_ENDED;
@@ -53,7 +53,6 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TODAYS_EVENTS
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_LAYOUT;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_THEME;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_INSTANCE_NAME;
 
@@ -95,9 +94,9 @@ public class ApplicationPreferences {
                     .getShowOnlyClosestInstanceOfRecurringEvent());
             setBoolean(context, PREF_INDICATE_ALERTS, settings.getIndicateAlerts());
             setBoolean(context, PREF_INDICATE_RECURRING, settings.getIndicateRecurring());
-            setString(context, PREF_WIDGET_HEADER_THEME, settings.getWidgetHeaderTheme());
-            setString(context, PREF_DAY_HEADER_THEME, settings.getDayHeaderTheme());
-            setString(context, PREF_ENTRY_THEME, settings.getEntryTheme());
+            for (Map.Entry<TextShadingPref, TextShading> entry: settings.shadings.entrySet()) {
+                setString(context, entry.getKey().preferenceName, entry.getValue().name());
+            }
             setString(context, PREF_WIDGET_HEADER_LAYOUT, settings.getWidgetHeaderLayout().value);
             setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale());
             setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());

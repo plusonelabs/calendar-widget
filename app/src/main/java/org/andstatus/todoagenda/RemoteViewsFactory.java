@@ -10,6 +10,7 @@ import android.widget.RemoteViewsService;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
@@ -93,10 +94,13 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     private List<WidgetEntryVisualizer<? extends WidgetEntry>> getVisualizers() {
         List<WidgetEntryVisualizer<? extends WidgetEntry>> visualizers = new ArrayList<>();
-        visualizers.add(new DayHeaderVisualizer(getSettings().getDayHeaderThemeContext(), widgetId));
+        DayHeaderVisualizer dayHeaderVisualizer = new DayHeaderVisualizer(
+                getSettings().getShadingContext(TextShadingPref.DAY_HEADER),
+                widgetId);
+        visualizers.add(dayHeaderVisualizer);
         for (EventProviderType type : EventProviderType.values()) {
             if (type.hasEventSources()) {
-                visualizers.add(type.getVisualizer(getSettings().getEntryThemeContext(), widgetId));
+                visualizers.add(type.getVisualizer(getSettings().getShadingContext(TextShadingPref.ENTRY), widgetId));
             }
         }
         return visualizers;

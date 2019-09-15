@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.TextShading;
+import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
@@ -16,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.andstatus.todoagenda.Theme.themeNameToResId;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setAlpha;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setBackgroundColor;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setImageFromAttr;
@@ -57,9 +58,9 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         if (showIndication) {
             rv.setViewVisibility(viewId, View.VISIBLE);
             setImageFromAttr(getContext(), rv, viewId, imageAttrId);
-            int themeId = themeNameToResId(getSettings().getEntryTheme());
+            TextShading textShading = getSettings().getShading(TextShadingPref.ENTRY);
             int alpha = 255;
-            if (themeId == R.style.Theme_Calendar_Dark || themeId == R.style.Theme_Calendar_Light) {
+            if (textShading == TextShading.DARK || textShading == TextShading.LIGHT) {
                 alpha = 128;
             }
             setAlpha(rv, viewId, alpha);

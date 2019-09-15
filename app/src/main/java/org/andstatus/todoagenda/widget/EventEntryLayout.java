@@ -6,6 +6,7 @@ import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RemoteViewsUtil;
 
@@ -32,7 +33,8 @@ public enum EventEntryLayout {
                 rv.setViewVisibility(viewId, View.VISIBLE);
                 rv.setTextViewText(viewId, eventDetails);
                 setTextSize(entry.getSettings(), rv, viewId, R.dimen.event_entry_details);
-                setTextColorFromAttr(entry.getSettings().getDayHeaderThemeContext(), rv, viewId, R.attr.dayHeaderTitle);
+                setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.DAY_HEADER),
+                        rv, viewId, R.attr.dayHeaderTitle);
             }
         }
     },
@@ -57,7 +59,8 @@ public enum EventEntryLayout {
                         ? R.dimen.days_to_event_width
                         : R.dimen.days_to_event_right_width);
                 setTextSize(settings, rv, viewToShow, R.dimen.event_entry_details);
-                setTextColorFromAttr(settings.getDayHeaderThemeContext(), rv, viewToShow, R.attr.dayHeaderTitle);
+                setTextColorFromAttr(settings.getShadingContext(TextShadingPref.DAY_HEADER),
+                        rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
                 rv.setViewVisibility(R.id.event_entry_days, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
@@ -73,7 +76,8 @@ public enum EventEntryLayout {
             InstanceSettings settings = entry.getSettings();
             setViewWidth(settings, rv, viewId, R.dimen.event_time_width);
             setTextSize(settings, rv, viewId, R.dimen.event_entry_details);
-            setTextColorFromAttr(settings.getDayHeaderThemeContext(), rv, viewId, R.attr.dayHeaderTitle);
+            setTextColorFromAttr(settings.getShadingContext(TextShadingPref.DAY_HEADER),
+                    rv, viewId, R.attr.dayHeaderTitle);
         }
     };
 
@@ -111,7 +115,8 @@ public enum EventEntryLayout {
         int viewId = R.id.event_entry_title;
         rv.setTextViewText(viewId, getTitleString(event));
         setTextSize(event.getSettings(), rv, viewId, R.dimen.event_entry_title);
-        setTextColorFromAttr(event.getSettings().getEntryThemeContext(), rv, viewId, R.attr.eventEntryTitle);
+        setTextColorFromAttr(event.getSettings().getShadingContext(TextShadingPref.ENTRY),
+                rv, viewId, R.attr.eventEntryTitle);
         setMultiline(rv, viewId, event.getSettings().isTitleMultiline());
     }
 

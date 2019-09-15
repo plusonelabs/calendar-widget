@@ -8,7 +8,7 @@ import android.view.ContextThemeWrapper;
 
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
-import org.andstatus.todoagenda.Theme;
+import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -22,12 +22,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 
-import static org.andstatus.todoagenda.Theme.themeNameToResId;
 import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
 
 /**
@@ -69,26 +70,12 @@ public class InstanceSettings {
 
     // ----------------------------------------------------------------------------------
     // Colors
-    static final String PREF_WIDGET_HEADER_THEME = "headerTheme";
-    static final String PREF_WIDGET_HEADER_THEME_DEFAULT = Theme.DARK.name();
-    private String widgetHeaderTheme = PREF_WIDGET_HEADER_THEME_DEFAULT;
-    private volatile ContextThemeWrapper widgetHeaderThemeContext = null;
+    final Map<TextShadingPref, TextShading> shadings = new ConcurrentHashMap<>();
 
     static final String PREF_WIDGET_HEADER_BACKGROUND_COLOR = "widgetHeaderBackgroundColor";
     @ColorInt
     static final int PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT = Color.TRANSPARENT;
     private int widgetHeaderBackgroundColor = PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
-
-    static final String PREF_DAY_HEADER_THEME = "dayHeaderTheme";
-    static final String PREF_DAY_HEADER_THEME_DEFAULT = Theme.DARK.name();
-    private String dayHeaderTheme = PREF_DAY_HEADER_THEME_DEFAULT;
-    private volatile ContextThemeWrapper dayHeaderThemeContext = null;
-
-    static final String PREF_ENTRY_THEME = "entryTheme";
-    public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
-    private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
-    private volatile ContextThemeWrapper entryThemeContext = null;
-
     static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
     @ColorInt static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF78782C;
     private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
@@ -242,20 +229,17 @@ public class InstanceSettings {
         if (json.has(PREF_INDICATE_RECURRING)) {
             settings.indicateRecurring = json.getBoolean(PREF_INDICATE_RECURRING);
         }
-        if (json.has(PREF_WIDGET_HEADER_THEME)) {
-            settings.widgetHeaderTheme = json.getString(PREF_WIDGET_HEADER_THEME);
+        for (TextShadingPref pref: TextShadingPref.values()) {
+            if (json.has(pref.preferenceName)) {
+                settings.shadings.put(pref,
+                        TextShading.fromName(json.getString(pref.preferenceName), pref.defaultShading));
+            }
         }
         if (json.has(PREF_WIDGET_HEADER_LAYOUT)) {
             settings.widgetHeaderLayout = WidgetHeaderLayout.fromValue(json.getString(PREF_WIDGET_HEADER_LAYOUT));
         } else if (json.has(PREF_SHOW_WIDGET_HEADER)) {
             settings.widgetHeaderLayout = json.getBoolean(PREF_SHOW_WIDGET_HEADER)
                 ? WidgetHeaderLayout.defaultValue : WidgetHeaderLayout.HIDDEN;
-        }
-        if (json.has(PREF_DAY_HEADER_THEME)) {
-            settings.dayHeaderTheme = json.getString(PREF_DAY_HEADER_THEME);
-        }
-        if (json.has(PREF_ENTRY_THEME)) {
-            settings.entryTheme = json.getString(PREF_ENTRY_THEME);
         }
         if (json.has(PREF_TEXT_SIZE_SCALE)) {
             settings.textSizeScale = json.getString(PREF_TEXT_SIZE_SCALE);
@@ -298,10 +282,12 @@ public class InstanceSettings {
                     .getShowOnlyClosestInstanceOfRecurringEvent(context);
             settings.indicateAlerts = ApplicationPreferences.getBoolean(context, PREF_INDICATE_ALERTS, true);
             settings.indicateRecurring = ApplicationPreferences.getBoolean(context, PREF_INDICATE_RECURRING, false);
-            settings.widgetHeaderTheme = ApplicationPreferences.getString(context, PREF_WIDGET_HEADER_THEME, PREF_WIDGET_HEADER_THEME_DEFAULT);
             settings.widgetHeaderLayout = ApplicationPreferences.getWidgetHeaderLayout(context);
-            settings.dayHeaderTheme = ApplicationPreferences.getString(context, PREF_DAY_HEADER_THEME, PREF_DAY_HEADER_THEME_DEFAULT);
-            settings.entryTheme = ApplicationPreferences.getString(context, PREF_ENTRY_THEME, PREF_ENTRY_THEME_DEFAULT);
+            for (TextShadingPref pref: TextShadingPref.values()) {
+                String themeName = ApplicationPreferences.getString(context, pref.preferenceName,
+                        pref.defaultShading.name());
+                settings.shadings.put(pref, TextShading.fromName(themeName, pref.defaultShading));
+            }
             settings.textSizeScale = ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE,
                     PREF_TEXT_SIZE_SCALE_DEFAULT);
             settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
@@ -366,9 +352,9 @@ public class InstanceSettings {
             json.put(PREF_INDICATE_ALERTS, indicateAlerts);
             json.put(PREF_INDICATE_RECURRING, indicateRecurring);
             json.put(PREF_WIDGET_HEADER_LAYOUT, widgetHeaderLayout.value);
-            json.put(PREF_WIDGET_HEADER_THEME, widgetHeaderTheme);
-            json.put(PREF_DAY_HEADER_THEME, dayHeaderTheme);
-            json.put(PREF_ENTRY_THEME, entryTheme);
+            for (TextShadingPref pref: TextShadingPref.values()) {
+                json.put(pref.preferenceName, getShading(pref).name());
+            }
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
         } catch (JSONException e) {
@@ -531,37 +517,13 @@ public class InstanceSettings {
         return indicateRecurring;
     }
 
-    public String getWidgetHeaderTheme() {
-        return widgetHeaderTheme;
+    public TextShading getShading(TextShadingPref pref) {
+        TextShading shading = shadings.get(pref);
+        return shading == null ? pref.defaultShading : shading;
     }
 
-    public ContextThemeWrapper getWidgetHeaderThemeContext() {
-        if (widgetHeaderThemeContext == null) {
-            widgetHeaderThemeContext = new ContextThemeWrapper(context, themeNameToResId(widgetHeaderTheme));
-        }
-        return widgetHeaderThemeContext;
-    }
-
-    public String getDayHeaderTheme() {
-        return dayHeaderTheme;
-    }
-
-    public ContextThemeWrapper getDayHeaderThemeContext() {
-        if (dayHeaderThemeContext == null) {
-            dayHeaderThemeContext = new ContextThemeWrapper(context, themeNameToResId(dayHeaderTheme));
-        }
-        return dayHeaderThemeContext;
-    }
-
-    public String getEntryTheme() {
-        return entryTheme;
-    }
-
-    public ContextThemeWrapper getEntryThemeContext() {
-        if (entryThemeContext == null) {
-            entryThemeContext = new ContextThemeWrapper(context, themeNameToResId(entryTheme));
-        }
-        return entryThemeContext;
+    public ContextThemeWrapper getShadingContext(TextShadingPref pref) {
+        return new ContextThemeWrapper(context, getShading(pref).themeResId);
     }
 
     public WidgetHeaderLayout getWidgetHeaderLayout() {

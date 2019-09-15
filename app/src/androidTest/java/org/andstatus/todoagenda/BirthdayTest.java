@@ -71,10 +71,6 @@ public class BirthdayTest extends BaseWidgetTest {
         ApplicationPreferences.setShowPastEventsWithDefaultColor(provider.getContext(), true);
         provider.saveSettings();
         playAtOneTime(inputs, dateTime(2015, 9, 11, 0, 30), 0);
-
-        // TODO: This doesn't work yet. We need to inject a MockCalendarContentProvider deeper,
-        // so it could work in a normal Context also
-        provider.refreshWidget();
     }
 
     private void playAtOneTime(QueryResultsStorage inputs, DateTime now, int numberOfEntriesExpected) {

@@ -11,8 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import androidx.annotation.NonNull;
 
@@ -26,12 +28,15 @@ import static org.andstatus.todoagenda.prefs.SettingsStorage.loadJsonFromFile;
 public class AllSettings {
     private static volatile boolean instancesLoaded = false;
     private static final Map<Integer, InstanceSettings> instances = new ConcurrentHashMap<>();
+    private static volatile List<Integer> allowedWidgets = new CopyOnWriteArrayList<>();
 
     @NonNull
     public static InstanceSettings instanceFromId(Context context, Integer widgetId) {
         ensureLoadedFromFiles(context, false);
-        InstanceSettings settings = instances.get(widgetId);
-        return settings == null ? newInstance(context, widgetId) : settings;
+        synchronized (instances) {
+            InstanceSettings settings = instances.get(widgetId);
+            return settings == null ? newInstance(context, widgetId) : settings;
+        }
     }
 
     @NonNull
@@ -44,7 +49,7 @@ public class AllSettings {
                 } else {
                     settings = new InstanceSettings(context, widgetId, "");
                 }
-                if (widgetId != 0) {
+                if (widgetId != 0 && isWidgetAllowed(widgetId)) {
                     settings.save();
                     settings.logMe(AllSettings.class, "newInstance put", widgetId);
                     instances.put(widgetId, settings);
@@ -88,6 +93,7 @@ public class AllSettings {
 
     public static void loadFromTestData(Context context, JSONArray jsonArray) throws JSONException {
         synchronized (instances) {
+            allowedWidgets.clear();
             instances.clear();
             EventProviderType.initialize(context, true);
             for (int index = 0; index < jsonArray.length(); index++) {
@@ -97,6 +103,7 @@ public class AllSettings {
                     if (settings.widgetId == 0) {
                         settings.logMe(AllSettings.class, "Skipped loadFromTestData", settings.widgetId);
                     } else {
+                        allowedWidgets.add(settings.widgetId);
                         settings.logMe(AllSettings.class, "loadFromTestData put", settings.widgetId);
                         instances.put(settings.widgetId, settings);
                     }
@@ -178,8 +185,15 @@ public class AllSettings {
         return instances;
     }
 
+    public static boolean isWidgetAllowed(int widgetId) {
+        return  allowedWidgets.isEmpty() || allowedWidgets.contains(widgetId);
+    }
+
     public static void forget() {
-        instances.clear();
-        instancesLoaded = false;
+        synchronized (instances) {
+            instances.clear();
+            instancesLoaded = false;
+            allowedWidgets.clear();
+        }
     }
 }

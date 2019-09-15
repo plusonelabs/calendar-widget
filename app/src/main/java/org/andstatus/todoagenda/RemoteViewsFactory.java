@@ -80,6 +80,11 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     private void reload() {
+        if (!AllSettings.isWidgetAllowed(widgetId)) {
+            logEvent("reload, skip as the widget is not allowed");
+            return;
+        }
+
         visualizers = getVisualizers();
         widgetEntries = getSettings().getShowDayHeaders() ? addDayHeaders(getEventEntries()) : getEventEntries();
         logEvent("reload, visualizers:" + visualizers.size() + ", count:" + widgetEntries.size());

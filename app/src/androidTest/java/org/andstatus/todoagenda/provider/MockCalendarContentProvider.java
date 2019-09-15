@@ -193,11 +193,6 @@ public class MockCalendarContentProvider extends MockContentProvider {
         return queriesCount;
     }
 
-    public void refreshWidget() {
-        Intent intent = new Intent(AppWidgetProvider.ACTION_REFRESH);
-        getContext().sendBroadcast(intent);
-    }
-
     public int getWidgetId() {
         return widgetId.get();
     }

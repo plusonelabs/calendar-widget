@@ -244,7 +244,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         };
     }
 
-    static void recreateAllWidgets(Context context) {
+    public static void recreateAllWidgets(Context context) {
         for (int widgetId : getWidgetIds(context)) {
             recreateWidget(context, widgetId);
         }

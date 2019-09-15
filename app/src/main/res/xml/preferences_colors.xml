@@ -1,56 +1,95 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <ListPreference
-            android:key="headerTheme"
-            android:defaultValue="DARK"
-            android:entries="@array/pref_theme_entries"
-            android:entryValues="@array/pref_theme_values"
-            android:summary="@string/appearance_header_theme_desc"
-            android:title="@string/appearance_header_theme_title" />
+        <PreferenceCategory android:title="@string/widget_header">
+                <ListPreference
+                    android:key="headerTheme"
+                    android:defaultValue="DARK"
+                    android:entries="@array/pref_theme_entries"
+                    android:entryValues="@array/pref_theme_values"
+                    android:summary="@string/appearance_header_theme_desc"
+                    android:title="@string/appearance_header_theme_title" />
 
-        <com.rarepebble.colorpicker.ColorPreference
-            android:key="widgetHeaderBackgroundColor"
-            android:defaultValue="#00000000"
-            android:summary="@string/widget_header_background_color_desc"
-            android:title="@string/widget_header_background_color_title"
-            app:colorpicker_selectNoneButtonText="@string/default_value" />
+                <com.rarepebble.colorpicker.ColorPreference
+                    android:key="widgetHeaderBackgroundColor"
+                    android:defaultValue="#00000000"
+                    android:summary="@string/widget_header_background_color_desc"
+                    android:title="@string/widget_header_background_color_title"
+                    app:colorpicker_selectNoneButtonText="@string/default_value" />
+        </PreferenceCategory>
 
-        <ListPreference
-            android:key="dayHeaderTheme"
-            android:defaultValue="DARK"
-            android:entries="@array/pref_theme_entries"
-            android:entryValues="@array/pref_theme_values"
-            android:summary="@string/day_header_theme_desc"
-            android:title="@string/day_header_theme_title" />
+        <PreferenceCategory android:title="@string/past_events">
+                <ListPreference
+                    android:key="dayHeaderThemePast"
+                    android:defaultValue="DARK"
+                    android:entries="@array/pref_theme_entries"
+                    android:entryValues="@array/pref_theme_values"
+                    android:summary="@string/day_header_theme_desc"
+                    android:title="@string/day_header_theme_title" />
 
-        <ListPreference
-            android:key="entryTheme"
-            android:defaultValue="BLACK"
-            android:entries="@array/pref_theme_entries"
-            android:entryValues="@array/pref_theme_values"
-            android:summary="@string/appearance_entries_theme_desc"
-            android:title="@string/appearance_entries_theme_title" />
+                <ListPreference
+                    android:key="entryThemePast"
+                    android:defaultValue="BLACK"
+                    android:entries="@array/pref_theme_entries"
+                    android:entryValues="@array/pref_theme_values"
+                    android:summary="@string/appearance_entries_theme_desc"
+                    android:title="@string/appearance_entries_theme_title" />
 
-        <com.rarepebble.colorpicker.ColorPreference
-            android:key="pastEventsBackgroundColor"
-            android:defaultValue="#BF78782C"
-            android:summary="@string/appearance_past_events_background_color_desc"
-            android:title="@string/appearance_past_events_background_color_title"
-            app:colorpicker_selectNoneButtonText="@string/default_value" />
+                <com.rarepebble.colorpicker.ColorPreference
+                    android:key="pastEventsBackgroundColor"
+                    android:defaultValue="#BF78782C"
+                    android:summary="@string/appearance_past_events_background_color_desc"
+                    android:title="@string/appearance_past_events_background_color_title"
+                    app:colorpicker_selectNoneButtonText="@string/default_value" />
+        </PreferenceCategory>
 
-        <com.rarepebble.colorpicker.ColorPreference
-            android:key="todaysEventsBackgroundColor"
-            android:defaultValue="#BF29626F"
-            android:summary="@string/todays_events_background_color_desc"
-            android:title="@string/todays_events_background_color_title"
-            app:colorpicker_selectNoneButtonText="@string/default_value" />
+        <PreferenceCategory android:title="@string/todays_events">
+                <ListPreference
+                    android:key="dayHeaderTheme"
+                    android:defaultValue="DARK"
+                    android:entries="@array/pref_theme_entries"
+                    android:entryValues="@array/pref_theme_values"
+                    android:summary="@string/day_header_theme_desc"
+                    android:title="@string/day_header_theme_title" />
 
-        <com.rarepebble.colorpicker.ColorPreference
-            android:key="backgroundColor"
-            android:defaultValue="#80000000"
-            android:summary="@string/appearance_background_color_desc"
-            android:title="@string/appearance_background_color_title"
-            app:colorpicker_selectNoneButtonText="@string/default_value" />
+                <ListPreference
+                    android:key="entryTheme"
+                    android:defaultValue="BLACK"
+                    android:entries="@array/pref_theme_entries"
+                    android:entryValues="@array/pref_theme_values"
+                    android:summary="@string/appearance_entries_theme_desc"
+                    android:title="@string/appearance_entries_theme_title" />
 
+                <com.rarepebble.colorpicker.ColorPreference
+                    android:key="todaysEventsBackgroundColor"
+                    android:defaultValue="#BF29626F"
+                    android:summary="@string/todays_events_background_color_desc"
+                    android:title="@string/todays_events_background_color_title"
+                    app:colorpicker_selectNoneButtonText="@string/default_value" />
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/future_events">
+                <ListPreference
+                    android:key="dayHeaderThemeFuture"
+                    android:defaultValue="DARK"
+                    android:entries="@array/pref_theme_entries"
+                    android:entryValues="@array/pref_theme_values"
+                    android:summary="@string/day_header_theme_desc"
+                    android:title="@string/day_header_theme_title" />
+
+                <ListPreference
+                    android:key="entryThemeFuture"
+                    android:defaultValue="BLACK"
+                    android:entries="@array/pref_theme_entries"
+                    android:entryValues="@array/pref_theme_values"
+                    android:summary="@string/appearance_entries_theme_desc"
+                    android:title="@string/appearance_entries_theme_title" />
+
+                <com.rarepebble.colorpicker.ColorPreference
+                    android:key="backgroundColor"
+                    android:defaultValue="#80000000"
+                    android:summary="@string/appearance_background_color_desc"
+                    android:title="@string/appearance_background_color_title"
+                    app:colorpicker_selectNoneButtonText="@string/default_value" />
+        </PreferenceCategory>
 </PreferenceScreen>

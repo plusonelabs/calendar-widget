@@ -24,6 +24,9 @@
     <string name="go_to_home_screen">Go to home screen</string>
     <string name="task_icon" translatable="false">✔</string>
     <string name="loading_with_dots">Loading...</string>
+    <string name="widget_header">Widget header</string>
+    <string name="todays_events">Today\'s events</string>
+    <string name="future_events">Future events</string>
 
     <!-- Descriptions for app markets -->
     <string name="app_description_80_chars_max">Widgets displaying lists of upcoming (and past…) events from selected calendars</string>

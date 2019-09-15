@@ -33,7 +33,7 @@ public enum EventEntryLayout {
                 rv.setViewVisibility(viewId, View.VISIBLE);
                 rv.setTextViewText(viewId, eventDetails);
                 setTextSize(entry.getSettings(), rv, viewId, R.dimen.event_entry_details);
-                setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.DAY_HEADER),
+                setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.getDayHeader(entry)),
                         rv, viewId, R.attr.dayHeaderTitle);
             }
         }
@@ -59,7 +59,7 @@ public enum EventEntryLayout {
                         ? R.dimen.days_to_event_width
                         : R.dimen.days_to_event_right_width);
                 setTextSize(settings, rv, viewToShow, R.dimen.event_entry_details);
-                setTextColorFromAttr(settings.getShadingContext(TextShadingPref.DAY_HEADER),
+                setTextColorFromAttr(settings.getShadingContext(TextShadingPref.getDayHeader(entry)),
                         rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
                 rv.setViewVisibility(R.id.event_entry_days, View.GONE);
@@ -76,7 +76,7 @@ public enum EventEntryLayout {
             InstanceSettings settings = entry.getSettings();
             setViewWidth(settings, rv, viewId, R.dimen.event_time_width);
             setTextSize(settings, rv, viewId, R.dimen.event_entry_details);
-            setTextColorFromAttr(settings.getShadingContext(TextShadingPref.DAY_HEADER),
+            setTextColorFromAttr(settings.getShadingContext(TextShadingPref.getDayHeader(entry)),
                     rv, viewId, R.attr.dayHeaderTitle);
         }
     };
@@ -111,13 +111,13 @@ public enum EventEntryLayout {
         setEventDetails(entry, rv);
     }
 
-    protected void setTitle(CalendarEntry event, RemoteViews rv) {
+    protected void setTitle(CalendarEntry entry, RemoteViews rv) {
         int viewId = R.id.event_entry_title;
-        rv.setTextViewText(viewId, getTitleString(event));
-        setTextSize(event.getSettings(), rv, viewId, R.dimen.event_entry_title);
-        setTextColorFromAttr(event.getSettings().getShadingContext(TextShadingPref.ENTRY),
+        rv.setTextViewText(viewId, getTitleString(entry));
+        setTextSize(entry.getSettings(), rv, viewId, R.dimen.event_entry_title);
+        setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.getEntry(entry)),
                 rv, viewId, R.attr.eventEntryTitle);
-        setMultiline(rv, viewId, event.getSettings().isTitleMultiline());
+        setMultiline(rv, viewId, entry.getSettings().isTitleMultiline());
     }
 
     protected String getTitleString(CalendarEntry event) {

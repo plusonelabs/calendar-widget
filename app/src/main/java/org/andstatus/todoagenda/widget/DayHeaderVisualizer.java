@@ -6,6 +6,7 @@ import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -40,12 +41,13 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
             .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
-        setTextColorFromAttr(getContext(), rv, R.id.day_header_title, R.attr.dayHeaderTitle);
-        setBackgroundColor(rv, R.id.day_header, entry.isBeforeToday()
-            ? getSettings().getPastEventsBackgroundColor()
-            : entry.isToday()
-                ? getSettings().getTodaysEventsBackgroundColor()
-                : getSettings().getEventsBackgroundColor());
+        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.getDayHeader(entry)),
+                rv, R.id.day_header_title, R.attr.dayHeaderTitle);
+        setBackgroundColor(rv, R.id.day_header, entry.getTimeSection().select(
+                getSettings().getPastEventsBackgroundColor(),
+                getSettings().getTodaysEventsBackgroundColor(),
+                getSettings().getEventsBackgroundColor())
+        );
         setBackgroundColorFromAttr(getContext(), rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(getSettings(), rv, R.id.day_header_title,
                 R.dimen.day_header_padding_left, R.dimen.day_header_padding_top,

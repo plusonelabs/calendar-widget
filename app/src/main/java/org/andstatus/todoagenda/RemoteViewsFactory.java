@@ -10,12 +10,12 @@ import android.widget.RemoteViewsService;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
 import org.andstatus.todoagenda.widget.DayHeaderVisualizer;
+import org.andstatus.todoagenda.widget.TimeSection;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.andstatus.todoagenda.widget.WidgetEntryVisualizer;
 import org.joda.time.DateTime;
@@ -95,12 +95,12 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     private List<WidgetEntryVisualizer<? extends WidgetEntry>> getVisualizers() {
         List<WidgetEntryVisualizer<? extends WidgetEntry>> visualizers = new ArrayList<>();
         DayHeaderVisualizer dayHeaderVisualizer = new DayHeaderVisualizer(
-                getSettings().getShadingContext(TextShadingPref.DAY_HEADER),
+                getSettings().getContext(),
                 widgetId);
         visualizers.add(dayHeaderVisualizer);
         for (EventProviderType type : EventProviderType.values()) {
             if (type.hasEventSources()) {
-                visualizers.add(type.getVisualizer(getSettings().getShadingContext(TextShadingPref.ENTRY), widgetId));
+                visualizers.add(type.getVisualizer(getSettings().getContext(), widgetId));
             }
         }
         return visualizers;
@@ -108,14 +108,14 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     private int getTodaysPosition() {
         for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
-            if (!getWidgetEntries().get(ind).isBeforeToday()) return ind;
+            if (getWidgetEntries().get(ind).getTimeSection() != TimeSection.PAST) return ind;
         }
         return getWidgetEntries().size() - 1;
     }
 
     private int getTomorrowsPosition() {
         for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
-            if (getWidgetEntries().get(ind).isAfterToday()) return ind;
+            if (getWidgetEntries().get(ind).getTimeSection() == TimeSection.FUTURE) return ind;
         }
         return getWidgetEntries().size() > 0 ? 0 : -1;
     }

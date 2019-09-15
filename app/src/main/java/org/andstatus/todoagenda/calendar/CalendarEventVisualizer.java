@@ -46,19 +46,20 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
 
     private void setAlarmActive(CalendarEntry entry, RemoteViews rv) {
         boolean showIndication = entry.isAlarmActive() && getSettings().getIndicateAlerts();
-        setIndicator(rv, showIndication, R.id.event_entry_indicator_alarm, R.attr.eventEntryAlarm);
+        setIndicator(entry, rv, showIndication, R.id.event_entry_indicator_alarm, R.attr.eventEntryAlarm);
     }
 
     private void setRecurring(CalendarEntry entry, RemoteViews rv) {
         boolean showIndication = entry.isRecurring() && getSettings().getIndicateRecurring();
-        setIndicator(rv, showIndication, R.id.event_entry_indicator_recurring, R.attr.eventEntryRecurring);
+        setIndicator(entry, rv, showIndication, R.id.event_entry_indicator_recurring, R.attr.eventEntryRecurring);
     }
 
-    private void setIndicator(RemoteViews rv, boolean showIndication, int viewId, int imageAttrId) {
+    private void setIndicator(CalendarEntry entry, RemoteViews rv, boolean showIndication, int viewId, int imageAttrId) {
         if (showIndication) {
             rv.setViewVisibility(viewId, View.VISIBLE);
-            setImageFromAttr(getContext(), rv, viewId, imageAttrId);
-            TextShading textShading = getSettings().getShading(TextShadingPref.ENTRY);
+            TextShadingPref pref = TextShadingPref.getEntry(entry);
+            setImageFromAttr(getSettings().getShadingContext(pref), rv, viewId, imageAttrId);
+            TextShading textShading = getSettings().getShading(pref);
             int alpha = 255;
             if (textShading == TextShading.DARK || textShading == TextShading.LIGHT) {
                 alpha = 128;
@@ -76,11 +77,11 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         } else {
             rv.setViewVisibility(R.id.event_entry_icon, View.GONE);
         }
-        setBackgroundColor(rv, R.id.event_entry, entry.isBeforeToday()
-            ? getSettings().getPastEventsBackgroundColor()
-            : entry.isToday()
-                ? getSettings().getTodaysEventsBackgroundColor()
-                : getSettings().getEventsBackgroundColor());
+        setBackgroundColor(rv, R.id.event_entry, entry.getTimeSection().select(
+           getSettings().getPastEventsBackgroundColor(),
+           getSettings().getTodaysEventsBackgroundColor(),
+           getSettings().getEventsBackgroundColor())
+        );
     }
 
     public int getViewTypeCount() {

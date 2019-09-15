@@ -83,44 +83,56 @@ import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
  */
 public class InstanceSettings {
     private final Context context;
-    private volatile ContextThemeWrapper widgetHeaderThemeContext = null;
-    private volatile ContextThemeWrapper dayHeaderThemeContext = null;
-    private volatile ContextThemeWrapper entryThemeContext = null;
-
     final int widgetId;
-    private final String widgetInstanceName;
-    private List<EventSource> activeEventSources = Collections.emptyList();
-    private int eventRange = Integer.valueOf(PREF_EVENT_RANGE_DEFAULT);
-    private EndedSomeTimeAgo eventsEnded = EndedSomeTimeAgo.NONE;
-    private boolean fillAllDayEvents = PREF_FILL_ALL_DAY_DEFAULT;
-    private String hideBasedOnKeywords = "";
-    private int widgetHeaderBackgroundColor = PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
-    private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
-    private int todaysEventsBackgroundColor = PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
-    private int eventsBackgroundColor = PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
+
+    // Layout
+    private WidgetHeaderLayout widgetHeaderLayout = WidgetHeaderLayout.defaultValue;
+    private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
     private boolean showDateOnWidgetHeader = true;
     private boolean showDaysWithoutEvents = false;
     private boolean showDayHeaders = true;
     private boolean showPastEventsUnderOneHeader = false;
-    private boolean showPastEventsWithDefaultColor = false;
     private boolean showNumberOfDaysToEvent = true;
-    private boolean showEventIcon = true;
-    private boolean showEndTime = PREF_SHOW_END_TIME_DEFAULT;
-    private boolean showLocation = PREF_SHOW_LOCATION_DEFAULT;
-    private String dateFormat = PREF_DATE_FORMAT_DEFAULT;
-    private boolean abbreviateDates = PREF_ABBREVIATE_DATES_DEFAULT;
-    private String lockedTimeZoneId = "";
     private EventEntryLayout eventEntryLayout = EventEntryLayout.DEFAULT;
+    private boolean showEventIcon = true;
     private boolean titleMultiline = PREF_MULTILINE_TITLE_DEFAULT;
-    private boolean showOnlyClosestInstanceOfRecurringEvent = false;
-    private boolean indicateAlerts = true;
-    private boolean indicateRecurring = false;
-    private WidgetHeaderLayout widgetHeaderLayout = WidgetHeaderLayout.defaultValue;
+
+    // Colors
+    private int widgetHeaderBackgroundColor = PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
+    private int pastEventsBackgroundColor = PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
+    private int todaysEventsBackgroundColor = PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
+    private int eventsBackgroundColor = PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
     private String widgetHeaderTheme = PREF_WIDGET_HEADER_THEME_DEFAULT;
     private String dayHeaderTheme = PREF_DAY_HEADER_THEME_DEFAULT;
     private String entryTheme = PREF_ENTRY_THEME_DEFAULT;
+
+    private volatile ContextThemeWrapper widgetHeaderThemeContext = null;
+    private volatile ContextThemeWrapper dayHeaderThemeContext = null;
+    private volatile ContextThemeWrapper entryThemeContext = null;
+
+    // Event details
+    private boolean showEndTime = PREF_SHOW_END_TIME_DEFAULT;
+    private boolean showLocation = PREF_SHOW_LOCATION_DEFAULT;
+    private boolean fillAllDayEvents = PREF_FILL_ALL_DAY_DEFAULT;
+    private boolean indicateAlerts = true;
+    private boolean indicateRecurring = false;
+
+    // Event filters
+    private EndedSomeTimeAgo eventsEnded = EndedSomeTimeAgo.NONE;
+    private boolean showPastEventsWithDefaultColor = false;
+    private boolean showOnlyClosestInstanceOfRecurringEvent = false;
+    private int eventRange = Integer.valueOf(PREF_EVENT_RANGE_DEFAULT);
+    private String hideBasedOnKeywords = "";
+
+    // Calendars and task lists
+    private List<EventSource> activeEventSources = Collections.emptyList();
+
+    // Other
+    private final String widgetInstanceName;
     private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
-    private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+    private String dateFormat = PREF_DATE_FORMAT_DEFAULT;
+    private boolean abbreviateDates = PREF_ABBREVIATE_DATES_DEFAULT;
+    private String lockedTimeZoneId = "";
 
     public static InstanceSettings fromJson(Context context, JSONObject json) throws JSONException {
         InstanceSettings settings = new InstanceSettings(context, json.optInt(PREF_WIDGET_ID),

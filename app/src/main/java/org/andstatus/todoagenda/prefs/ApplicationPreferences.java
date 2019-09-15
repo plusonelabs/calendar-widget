@@ -24,54 +24,54 @@ public class ApplicationPreferences {
     static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
     static final String PREF_WIDGET_HEADER_LAYOUT = "widgetHeaderLayout";
     static final String PREF_SHOW_DATE_ON_WIDGET_HEADER = "showDateOnWidgetHeader";
-    static final String PREF_MULTILINE_TITLE = "multiline_title";
-    static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
-    static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
     static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
     static final String PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER = "showPastEventsUnderOneHeader";
     static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
     static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
+    static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
+    static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
     static final String PREF_SHOW_EVENT_ICON = "showEventIcon";
     static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent";
-    static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
-
-    // Event details
-    static final String PREF_INDICATE_RECURRING = "indicateRecurring";
-    static final String PREF_INDICATE_ALERTS = "indicateAlerts";
-    static final String PREF_SHOW_END_TIME = "showEndTime";
-    static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
-    static final String PREF_SHOW_LOCATION = "showLocation";
-    static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
-    static final String PREF_FILL_ALL_DAY = "fillAllDay";
-    static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
-
-    // Event filters
-    static final String PREF_EVENT_RANGE = "eventRange";
-    static final String PREF_EVENT_RANGE_DEFAULT = "30";
-    static final String PREF_EVENTS_ENDED = "eventsEnded";
-    static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
-    static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
-    static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
-            "showOnlyClosestInstanceOfRecurringEvent";
-
-    // Calendars and task lists
-    static final String PREF_ACTIVE_SOURCES = "activeSources";
+    static final String PREF_MULTILINE_TITLE = "multiline_title";
+    static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
 
     // Colors
+    static final String PREF_WIDGET_HEADER_THEME = "headerTheme";
+    static final String PREF_WIDGET_HEADER_THEME_DEFAULT = Theme.DARK.name();
     static final String PREF_WIDGET_HEADER_BACKGROUND_COLOR = "widgetHeaderBackgroundColor";
     @ColorInt static final int PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT = Color.TRANSPARENT;
+    static final String PREF_DAY_HEADER_THEME = "dayHeaderTheme";
+    static final String PREF_DAY_HEADER_THEME_DEFAULT = Theme.DARK.name();
+    static final String PREF_ENTRY_THEME = "entryTheme";
+    public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
     static final String PREF_PAST_EVENTS_BACKGROUND_COLOR = "pastEventsBackgroundColor";
     @ColorInt static final int PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF78782C;
     static final String PREF_TODAYS_EVENTS_BACKGROUND_COLOR = "todaysEventsBackgroundColor";
     @ColorInt static final int PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT = 0xBF29626F;
     static final String PREF_EVENTS_BACKGROUND_COLOR = "backgroundColor";
     @ColorInt static final int PREF_EVENTS_BACKGROUND_COLOR_DEFAULT = 0x80000000;
-    static final String PREF_WIDGET_HEADER_THEME = "headerTheme";
-    static final String PREF_WIDGET_HEADER_THEME_DEFAULT = Theme.DARK.name();
-    static final String PREF_DAY_HEADER_THEME = "dayHeaderTheme";
-    static final String PREF_DAY_HEADER_THEME_DEFAULT = Theme.DARK.name();
-    static final String PREF_ENTRY_THEME = "entryTheme";
-    public static final String PREF_ENTRY_THEME_DEFAULT = Theme.BLACK.name();
+
+    // Event details
+    static final String PREF_SHOW_END_TIME = "showEndTime";
+    static final boolean PREF_SHOW_END_TIME_DEFAULT = true;
+    static final String PREF_SHOW_LOCATION = "showLocation";
+    static final boolean PREF_SHOW_LOCATION_DEFAULT = true;
+    static final String PREF_FILL_ALL_DAY = "fillAllDay";
+    static final boolean PREF_FILL_ALL_DAY_DEFAULT = true;
+    static final String PREF_INDICATE_ALERTS = "indicateAlerts";
+    static final String PREF_INDICATE_RECURRING = "indicateRecurring";
+
+    // Event filters
+    static final String PREF_EVENTS_ENDED = "eventsEnded";
+    static final String PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR = "showPastEventsWithDefaultColor";
+    static final String PREF_EVENT_RANGE = "eventRange";
+    static final String PREF_EVENT_RANGE_DEFAULT = "30";
+    static final String PREF_HIDE_BASED_ON_KEYWORDS = "hideBasedOnKeywords";
+    static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
+            "showOnlyClosestInstanceOfRecurringEvent";
+
+    // Calendars and task lists
+    static final String PREF_ACTIVE_SOURCES = "activeSources";
 
     // Other
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";

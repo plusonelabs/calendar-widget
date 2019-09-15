@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.EventSource;
@@ -130,6 +131,9 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         Cursor cursor;
         try {
             cursor = context.getContentResolver().query(SamsungTasksContract.TaskLists.PROVIDER_URI, projection, null, null, null);
+        } catch (android.database.sqlite.SQLiteException e) {
+            Log.i(SamsungTasksProvider.class.getSimpleName(), "fetchAvailableSources: " + e.getMessage());
+            cursor = null;
         } catch (IllegalArgumentException e) {
             cursor = null;
         }

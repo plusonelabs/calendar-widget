@@ -117,6 +117,14 @@ public class ApplicationPreferences {
         setInt(context, PREF_WIDGET_ID, value);
     }
 
+    public static boolean noTaskSources(Context context) {
+        List<EventSource> sources = getActiveEventSources(context);
+        for(EventSource source: sources) {
+            if (!source.providerType.isCalendar) return false;
+        }
+        return true;
+    }
+
     public static List<EventSource> getActiveEventSources(Context context) {
         return EventSource.fromStringSet(PreferenceManager.getDefaultSharedPreferences(context)
                 .getStringSet(PREF_ACTIVE_SOURCES, null));

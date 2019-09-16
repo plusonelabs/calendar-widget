@@ -18,7 +18,7 @@
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>
 
-        <PreferenceCategory android:title="@string/past_events">
+        <PreferenceCategory android:title="@string/past_events" android:key="PastTime">
                 <ListPreference
                     android:key="dayHeaderThemePast"
                     android:defaultValue="DARK"
@@ -43,7 +43,7 @@
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>
 
-        <PreferenceCategory android:title="@string/todays_events">
+        <PreferenceCategory android:title="@string/todays_events"  android:key="TodayTime">
                 <ListPreference
                     android:key="dayHeaderTheme"
                     android:defaultValue="DARK"
@@ -68,7 +68,7 @@
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>
 
-        <PreferenceCategory android:title="@string/future_events">
+        <PreferenceCategory android:title="@string/future_events" android:key="FutureTime">
                 <ListPreference
                     android:key="dayHeaderThemeFuture"
                     android:defaultValue="DARK"

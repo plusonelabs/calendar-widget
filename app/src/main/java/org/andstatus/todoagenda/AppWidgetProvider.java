@@ -236,7 +236,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         }
         setTextSize(settings, rv, viewId, R.dimen.event_entry_details);
         setBackgroundColor(rv, viewId, settings.getEventsBackgroundColor());
-        setTextColorFromAttr(settings.getShadingContext(TextShadingPref.ENTRY), rv, viewId, R.attr.eventEntryTitle);
+        setTextColorFromAttr(settings.getShadingContext(TextShadingPref.ENTRY_TODAY), rv, viewId, R.attr.eventEntryTitle);
     }
 
     private static List<Integer> asList(final int[] is) {

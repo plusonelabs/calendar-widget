@@ -75,8 +75,8 @@ Sorry for inconvenience.
 **Changes in this version**
 
 * One "Appearance" Settings section split into: Layout, Colors and Other settings.
-* Old and confusing [Android Holo ColorPicker](https://github.com/LarsWerkman/HoloColorPicker) is replaced with a customized version of [HSV-Alpha Color Picker for Android]
- (https://github.com/martin-stone/hsv-alpha-color-picker-android).
+* Old and confusing [Android Holo ColorPicker](https://github.com/LarsWerkman/HoloColorPicker) is replaced with a customized version of 
+  [HSV-Alpha Color Picker for Android](https://github.com/martin-stone/hsv-alpha-color-picker-android).
 * ["Widget header layout"](https://github.com/plusonelabs/calendar-widget/issues/28) option added with two actual layouts 
  ("All in one row" and "Two rows layout") and one "Hidden".
  This replaces and extends previous "Show widget header" checkbox.
@@ -92,7 +92,7 @@ Sorry for inconvenience.
   completely if no past events may be shown and no task sources selected.
 * ["Show event icon"](https://github.com/plusonelabs/calendar-widget/issues/174) added, 
     allowing to hide calendar's color bars and tasks icons.
-* ["Show number of days to event"](https://github.com/plusonelabs/calendar-widget/issues/283) option added
+* "[Show number of days to event](https://github.com/plusonelabs/calendar-widget/issues/283)" option added
   (in the "All in one row" event layout) allowing to hide this info independently from the "Show day header" option.
 * [Horizontal lines (separators) are now above Day headers, not below them](https://github.com/plusonelabs/calendar-widget/issues/154)
   to avoid Users' confusion.
@@ -101,9 +101,10 @@ Sorry for inconvenience.
 * [Don't show time for All day events](https://github.com/plusonelabs/calendar-widget/issues/236).
 * [Display location independently of time](https://github.com/plusonelabs/calendar-widget/issues/221), 
   including showing location for All day events.
-* [Added more values to "Show events that ended recently](https://github.com/plusonelabs/calendar-widget/issues/319), 
+* [Added more values to "Show events that ended recently"](https://github.com/plusonelabs/calendar-widget/issues/319), 
   up to one year.
-* Added "[Show date on widget header](https://github.com/plusonelabs/calendar-widget/issues/281)" option.
+* Added "[Show date on widget header](https://github.com/plusonelabs/calendar-widget/issues/281)" option
+  so you can hide the date.
 * [32 language translations](https://crowdin.com/project/plusonelabs-calendar-widget) updated and 5 new translations added!
   Thank you all!
 * Hopefully fixed intermittent "No events" display instead of actual list of events. 

@@ -23,6 +23,9 @@
     <string name="close">Закрыть</string>
     <string name="go_to_home_screen">Перейти на главный экран</string>
     <string name="loading_with_dots">Загружается...</string>
+    <string name="widget_header">Заголовок виджета</string>
+    <string name="todays_events">Сегодняшние события</string>
+    <string name="future_events">Будущие события</string>
     <!-- Descriptions for app markets -->
     <string name="app_description_80_chars_max">Виджеты, отображающие списки предстоящих (и прошедших...) событий из выбранных календарей</string>
     <string name="app_description_4000_chars_max_part01">Todo Agenda - это виджет домашнего экрана для Вашего Android устройства. Он отображает список предстоящих событий календаря, так что Вы можете легко видеть Ваши дела и встречи.</string>
@@ -72,6 +75,7 @@
     <string name="widget_header_layout">Макет заголовка виджета</string>
     <string name="pref_event_entry_layout_title">Макет представления события</string>
     <string name="default_multiline_layout">Время под заголовком</string>
+    <string name="show_date_on_widget_header">Показывать дату в заголовке виджета</string>
     <string name="default_value">По умолчанию</string>
     <string name="single_line_layout">Всё - в один ряд</string>
     <string name="two_rows_layout">Раскладка в две строки</string>

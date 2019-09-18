@@ -48,7 +48,8 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
                 getSettings().getTodaysEventsBackgroundColor(),
                 getSettings().getEventsBackgroundColor())
         );
-        setBackgroundColorFromAttr(getContext(), rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
+        setBackgroundColorFromAttr(getSettings().getShadingContext(TextShadingPref.getDayHeader(entry)),
+                rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(getSettings(), rv, R.id.day_header_title,
                 R.dimen.day_header_padding_left, R.dimen.day_header_padding_top,
                 R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);

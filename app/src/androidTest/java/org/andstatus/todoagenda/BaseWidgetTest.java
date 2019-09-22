@@ -1,6 +1,7 @@
 package org.andstatus.todoagenda;
 
 import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
+import org.andstatus.todoagenda.widget.LastEntry;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class BaseWidgetTest {
     public void setUp() throws Exception {
         provider = MockCalendarContentProvider.getContentProvider(getNumberOfOpenTasksSources());
         factory = new RemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-        assertTrue(factory.getWidgetEntries().isEmpty());
+        assertTrue(factory.getWidgetEntries().get(0) instanceof LastEntry);
     }
 
     @After

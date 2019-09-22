@@ -30,7 +30,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
     }
 
     @Override
-    public RemoteViews getRemoteView(WidgetEntry eventEntry) {
+    public RemoteViews getRemoteViews(WidgetEntry eventEntry) {
         if (!(eventEntry instanceof TaskEntry)) return null;
 
         TaskEntry entry = (TaskEntry) eventEntry;
@@ -49,11 +49,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         } else {
             rv.setViewVisibility(R.id.event_entry_icon, View.GONE);
         }
-        setBackgroundColor(rv, R.id.event_entry, entry.getTimeSection().select(
-                getSettings().getPastEventsBackgroundColor(),
-                getSettings().getTodaysEventsBackgroundColor(),
-                getSettings().getEventsBackgroundColor())
-        );
+        setBackgroundColor(rv, R.id.event_entry, getSettings().getEntryBackgroundColor(entry));
     }
 
     private void setDaysToEvent(TaskEntry entry, RemoteViews rv) {

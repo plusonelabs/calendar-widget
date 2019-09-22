@@ -32,7 +32,7 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
     protected void onPause() {
         super.onPause();
         ApplicationPreferences.save(this, widgetId);
-        AppWidgetProvider.recreateWidget(this, widgetId);
+        EnvironmentChangedReceiver.updateWidget(this, widgetId);
     }
 
     @Override

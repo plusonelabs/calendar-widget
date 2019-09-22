@@ -12,6 +12,7 @@ import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
+import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -522,6 +523,11 @@ public class InstanceSettings {
         return shading == null ? pref.defaultShading : shading;
     }
 
+    public int getEntryBackgroundColor(WidgetEntry<?> entry) {
+        return entry.getTimeSection()
+                .select(getPastEventsBackgroundColor(), getTodaysEventsBackgroundColor(), getEventsBackgroundColor());
+    }
+
     public ContextThemeWrapper getShadingContext(TextShadingPref pref) {
         return new ContextThemeWrapper(context, getShading(pref).themeResId);
     }
@@ -544,5 +550,18 @@ public class InstanceSettings {
 
     public boolean getShowDateOnWidgetHeader() {
         return showDateOnWidgetHeader;
+    }
+
+    public boolean noPastEvents() {
+        return !getShowPastEventsWithDefaultColor() &&
+                getEventsEnded() == EndedSomeTimeAgo.NONE &&
+                noTaskSources();
+    }
+
+    public boolean noTaskSources() {
+        for(EventSource source: activeEventSources) {
+            if (!source.providerType.isCalendar) return false;
+        }
+        return true;
     }
 }

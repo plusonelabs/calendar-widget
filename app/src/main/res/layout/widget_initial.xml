@@ -16,26 +16,44 @@
             android:id="@+id/header_initial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/widget_icon"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:contentDescription="@string/widget_name"
-                android:src="@drawable/ic_launcher" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/widget_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/widget_name"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="#32000000"
+                    android:padding="@dimen/calender_padding"
+                    android:text="@string/widget_name"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginLeft="@dimen/calender_padding"
+                    android:layout_marginStart="@dimen/calender_padding" />
+            </LinearLayout>
 
             <TextView
+                android:id="@+id/empty_event_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_marginTop="@dimen/calender_padding"
+                android:background="#32000000"
                 android:gravity="center"
-                android:background="#60000000"
-                android:text="@string/widget_name" />
-
+                android:minHeight="48dp"
+                android:padding="@dimen/calender_padding"
+                android:text="@string/not_initialized_yet"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -51,13 +69,5 @@
             android:divider="@null"
             android:dividerHeight="0dp" />
 
-        <TextView
-            android:id="@+id/empty_event_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="@dimen/calender_padding"
-            android:text="@string/no_upcoming_events"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 </LinearLayout>

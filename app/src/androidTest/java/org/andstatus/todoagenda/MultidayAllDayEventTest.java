@@ -6,6 +6,7 @@ import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
+import org.andstatus.todoagenda.widget.LastEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -63,6 +64,8 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
                     assertEquals("No header " + logMsg, dayOfHeaderPrev + 1, dayOfEntry);
                 }
                 dayOfHeaderPrev = dayOfEntry;
+            } else if (entry instanceof LastEntry) {
+                assertEquals(LastEntry.LastEntryType.LAST, ((LastEntry) entry).type);
             } else {
                 if (dayOfEventEntryPrev == 0) {
                     if (entry.getStartDate().withTimeAtStartOfDay().isAfter(today)) {

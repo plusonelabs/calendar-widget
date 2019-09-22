@@ -8,7 +8,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
-import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.widget.TimeSection;
@@ -30,9 +29,7 @@ public class ColorsPreferencesFragment extends PreferenceFragment
         super.onResume();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         hideDayHeader = !ApplicationPreferences.getShowDayHeaders(getActivity());
-        hidePast = !ApplicationPreferences.getShowPastEventsWithDefaultColor(getActivity()) &&
-                ApplicationPreferences.getEventsEnded(getActivity()) == EndedSomeTimeAgo.NONE &&
-                ApplicationPreferences.noTaskSources(getActivity());
+        hidePast = ApplicationPreferences.noPastEvents(getActivity());
         showShadings();
     }
 

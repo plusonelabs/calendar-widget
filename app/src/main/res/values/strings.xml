@@ -7,6 +7,8 @@
     <string name="yesterday">Yesterday</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
+    <string name="not_initialized_yet">Not initialized yet...</string>
+    <string name="no_events_to_show">No events to show</string>
     <string name="no_upcoming_events">No upcoming events</string>
     <string name="open_prefs_desc">Open the settings of the calendar widget</string>
     <string name="go_to_today">Go to Today</string>

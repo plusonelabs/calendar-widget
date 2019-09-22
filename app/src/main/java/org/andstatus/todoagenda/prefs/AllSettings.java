@@ -3,7 +3,6 @@ package org.andstatus.todoagenda.prefs;
 import android.content.Context;
 import android.util.Log;
 
-import org.andstatus.todoagenda.AppWidgetProvider;
 import org.andstatus.todoagenda.EnvironmentChangedReceiver;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.provider.EventProviderType;
@@ -55,7 +54,7 @@ public class AllSettings {
                     instances.put(widgetId, settings);
                     EventProviderType.initialize(context, true);
                     EnvironmentChangedReceiver.registerReceivers(instances);
-                    AppWidgetProvider.recreateWidget(context, widgetId);
+                    EnvironmentChangedReceiver.updateWidget(context, widgetId);
                 }
             }
             return settings;

@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
+import static org.andstatus.todoagenda.RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
@@ -62,6 +63,7 @@ public class SingleEventTest extends BaseWidgetTest {
 
     @Test
     public void testAlldayEventMillis() {
+        EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         DateTime today = DateUtil.now(DateTimeZone.UTC).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
                 provider.getSettings().getTimeZone(), true);
@@ -73,12 +75,13 @@ public class SingleEventTest extends BaseWidgetTest {
     }
 
     private void assertOneEvent(CalendarEvent event, boolean equal) {
+        EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         provider.clear();
         provider.addRow(event);
         factory.onDataSetChanged();
         factory.logWidgetEntries(TAG);
         assertEquals(1, provider.getQueriesCount());
-        assertEquals(factory.getWidgetEntries().toString(), 2, factory.getWidgetEntries().size());
+        assertEquals(factory.getWidgetEntries().toString(), 3, factory.getWidgetEntries().size());
         WidgetEntry entry = factory.getWidgetEntries().get(1);
         assertTrue(entry instanceof CalendarEntry);
         CalendarEvent eventOut = ((CalendarEntry) entry).getEvent();

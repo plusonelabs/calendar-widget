@@ -5,6 +5,7 @@ import android.util.Log;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
+import org.andstatus.todoagenda.widget.LastEntry;
 import org.andstatus.todoagenda.widget.TaskEntry;
 import org.json.JSONException;
 import org.junit.Test;
@@ -48,6 +49,7 @@ public class PastDueHeaderWithTasksTest extends BaseWidgetTest {
         assertEquals("Future task Entry", TaskEntry.class, factory.getWidgetEntries().get(8).getClass());
         assertEquals("Future task Entry", dateTime(2019, 8, 8, 21, 0),
                 (factory.getWidgetEntries().get(8)).getStartDate());
-        assertEquals("Number of entries", 9, factory.getWidgetEntries().size());
+        assertEquals("Last Entry", LastEntry.LastEntryType.LAST, ((LastEntry) factory.getWidgetEntries().get(9)).type);
+        assertEquals("Number of entries", 10, factory.getWidgetEntries().size());
     }
 }

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.andstatus.todoagenda.RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -45,6 +46,7 @@ public class RecurringEventsTest extends BaseWidgetTest {
     }
 
     void generateEventInstances() {
+        EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         provider.clear();
         DateTime date = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         long millis = date.getMillis() + TimeUnit.HOURS.toMillis(10);

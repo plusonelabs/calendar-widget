@@ -30,7 +30,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         this.eventProvider = (CalendarEventProvider) eventProvider;
     }
 
-    public RemoteViews getRemoteView(WidgetEntry eventEntry) {
+    public RemoteViews getRemoteViews(WidgetEntry eventEntry) {
         if (!(eventEntry instanceof CalendarEntry)) return null;
 
         CalendarEntry entry = (CalendarEntry) eventEntry;
@@ -77,11 +77,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         } else {
             rv.setViewVisibility(R.id.event_entry_icon, View.GONE);
         }
-        setBackgroundColor(rv, R.id.event_entry, entry.getTimeSection().select(
-           getSettings().getPastEventsBackgroundColor(),
-           getSettings().getTodaysEventsBackgroundColor(),
-           getSettings().getEventsBackgroundColor())
-        );
+        setBackgroundColor(rv, R.id.event_entry, getSettings().getEntryBackgroundColor(entry));
     }
 
     public int getViewTypeCount() {

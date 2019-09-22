@@ -86,7 +86,8 @@ public class OtherPreferencesFragment extends PreferenceFragment
     private void showWidgetInstanceName() {
         Preference preference = findPreference(InstanceSettings.PREF_WIDGET_INSTANCE_NAME);
         if (preference != null) {
-            preference.setSummary(ApplicationPreferences.getWidgetInstanceName(getActivity()));
+            preference.setSummary(ApplicationPreferences.getWidgetInstanceName(getActivity()) +
+                    " (id:" + ApplicationPreferences.getWidgetId(getActivity()) +")");
         }
     }
 }

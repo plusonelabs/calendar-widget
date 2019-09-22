@@ -22,8 +22,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static org.andstatus.todoagenda.AppWidgetProvider.getWidgetIds;
+
 public class EnvironmentChangedReceiver extends BroadcastReceiver {
     private static final AtomicReference<EnvironmentChangedReceiver> registeredReceiver = new AtomicReference<>();
+    private static final String TAG = EnvironmentChangedReceiver.class.getSimpleName();
 
     public static void registerReceivers(Map<Integer, InstanceSettings> instances) {
         if (instances.isEmpty()) return;
@@ -47,8 +50,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
             }
             scheduleNextAlarms(context, instances);
 
-            Log.i(AppWidgetProvider.class.getSimpleName(),
-                    "Registered receivers from " + instanceSettings.getContext().getClass().getName());
+            Log.i(TAG, "Registered receivers from " + instanceSettings.getContext().getClass().getName());
         }
     }
 
@@ -92,11 +94,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 int position2 = intent.getIntExtra(AppWidgetProvider.EXTRA_WIDGET_LIST_POSITION2, 0);
                 gotoPosition(context, widgetId, position1);
                 if (position1 >= 0 && position2 >= 0 && position1 != position2) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        // Ignored
-                    }
+                    sleep(1000);
                 }
                 gotoPosition(context, widgetId, position2);
                 break;
@@ -105,11 +103,19 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                     ? 0
                     : intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
                 if (widgetId2 == 0) {
-                    AppWidgetProvider.recreateAllWidgets(context);
+                    updateAllWidgets(context);
                 } else {
-                    AppWidgetProvider.recreateWidget(context, widgetId2);
+                    updateWidget(context, widgetId2);
                 }
                 break;
+        }
+    }
+
+    public static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            // Ignored
         }
     }
 
@@ -118,8 +124,25 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_initial);
-        Log.d("gotoToday", "Scrolling widget " + widgetId + " to position " + position);
+        Log.d(TAG, "gotoPosition, Scrolling widget " + widgetId + " to position " + position);
         rv.setScrollPosition(R.id.event_list, position);
         appWidgetManager.updateAppWidget(widgetId, rv);
+    }
+
+    public static void updateWidget(Context context, int widgetId) {
+        Intent intent = new Intent(context, AppWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{widgetId});
+        Log.d(TAG, "updateWidget:" + widgetId + ", context:" + context);
+        context.sendBroadcast(intent);
+    }
+
+    public static void updateAllWidgets(Context context) {
+        Intent intent = new Intent(context, AppWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] widgetIds = getWidgetIds(context);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
+        Log.d(TAG, "updateAllWidgets:" + AppWidgetProvider.asList(widgetIds) + ", context:" + context);
+        context.sendBroadcast(intent);
     }
 }

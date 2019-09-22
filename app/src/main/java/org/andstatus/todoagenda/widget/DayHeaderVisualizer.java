@@ -2,6 +2,7 @@ package org.andstatus.todoagenda.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.ContextThemeWrapper;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.Alignment;
@@ -29,7 +30,7 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
     }
 
     @Override
-    public RemoteViews getRemoteView(WidgetEntry eventEntry) {
+    public RemoteViews getRemoteViews(WidgetEntry eventEntry) {
         if(!(eventEntry instanceof DayHeader)) return null;
 
         DayHeader entry = (DayHeader) eventEntry;
@@ -41,15 +42,10 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
             .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
-        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.getDayHeader(entry)),
-                rv, R.id.day_header_title, R.attr.dayHeaderTitle);
-        setBackgroundColor(rv, R.id.day_header, entry.getTimeSection().select(
-                getSettings().getPastEventsBackgroundColor(),
-                getSettings().getTodaysEventsBackgroundColor(),
-                getSettings().getEventsBackgroundColor())
-        );
-        setBackgroundColorFromAttr(getSettings().getShadingContext(TextShadingPref.getDayHeader(entry)),
-                rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
+        setBackgroundColor(rv, R.id.day_header, getSettings().getEntryBackgroundColor(entry));
+        ContextThemeWrapper shadingContext = getSettings().getShadingContext(TextShadingPref.getDayHeader(entry));
+        setTextColorFromAttr(shadingContext, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
+        setBackgroundColorFromAttr(shadingContext, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
         setPadding(getSettings(), rv, R.id.day_header_title,
                 R.dimen.day_header_padding_left, R.dimen.day_header_padding_top,
                 R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);

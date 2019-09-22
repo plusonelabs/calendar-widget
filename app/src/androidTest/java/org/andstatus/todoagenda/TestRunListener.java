@@ -50,11 +50,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
         Intent intent = new Intent(AppWidgetProvider.ACTION_REFRESH);
         InstrumentationRegistry.getInstrumentation().getTargetContext().sendBroadcast(intent);
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        AppWidgetProvider.recreateAllWidgets(targetContext);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            // Ignored
-        }
+        EnvironmentChangedReceiver.updateAllWidgets(targetContext);
+        EnvironmentChangedReceiver.sleep(2000);
     }
 }

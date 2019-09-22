@@ -345,4 +345,10 @@ public class ApplicationPreferences {
     public static boolean getShowDateOnWidgetHeader(Context context) {
         return getBoolean(context, PREF_SHOW_DATE_ON_WIDGET_HEADER, true);
     }
+
+    public static boolean noPastEvents(Context context) {
+        return !getShowPastEventsWithDefaultColor(context) &&
+                getEventsEnded(context) == EndedSomeTimeAgo.NONE &&
+                noTaskSources(context);
+    }
 }

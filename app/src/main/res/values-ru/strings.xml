@@ -7,6 +7,8 @@
     <string name="yesterday">Вчера</string>
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
+    <string name="not_initialized_yet">Пока не инициализировано...</string>
+    <string name="no_events_to_show">Нет события для просмотра</string>
     <string name="no_upcoming_events">Нет событий</string>
     <string name="open_prefs_desc">Открыть настройки виджета календаря</string>
     <string name="go_to_today">Перейти к сегодняшней дате</string>

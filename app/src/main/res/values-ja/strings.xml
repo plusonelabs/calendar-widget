@@ -23,6 +23,9 @@
     <string name="close">閉じる</string>
     <string name="go_to_home_screen">ホーム画面に移動</string>
     <string name="loading_with_dots">読み込み中...</string>
+    <string name="widget_header">ウィジェットのヘッダー</string>
+    <string name="todays_events">今日のイベント</string>
+    <string name="future_events">今後のイベント</string>
     <!-- Descriptions for app markets -->
     <string name="app_description_80_chars_max">選択したカレンダーから、今後 (および過去の&#8230;) のイベントを表示するウィジェット</string>
     <string name="app_description_4000_chars_max_part01">Todo Agenda は、お使いの Android デバイス用のホーム画面ウィジェットです。今後のカレンダーイベントを一覧表示するので、予定を一目で簡単に把握することができます。</string>

@@ -46,7 +46,7 @@
         <PreferenceCategory android:title="@string/todays_events"  android:key="TodayTime">
                 <ListPreference
                     android:key="dayHeaderTheme"
-                    android:defaultValue="DARK"
+                    android:defaultValue="LIGHT"
                     android:entries="@array/pref_theme_entries"
                     android:entryValues="@array/pref_theme_values"
                     android:summary="@string/day_header_theme_desc"
@@ -54,7 +54,7 @@
 
                 <ListPreference
                     android:key="entryTheme"
-                    android:defaultValue="BLACK"
+                    android:defaultValue="WHITE"
                     android:entries="@array/pref_theme_entries"
                     android:entryValues="@array/pref_theme_values"
                     android:summary="@string/appearance_entries_theme_desc"
@@ -62,7 +62,7 @@
 
                 <com.rarepebble.colorpicker.ColorPreference
                     android:key="todaysEventsBackgroundColor"
-                    android:defaultValue="#BF29626F"
+                    android:defaultValue="#DAFFFFFF"
                     android:summary="@string/todays_events_background_color_desc"
                     android:title="@string/todays_events_background_color_title"
                     app:colorpicker_selectNoneButtonText="@string/default_value" />

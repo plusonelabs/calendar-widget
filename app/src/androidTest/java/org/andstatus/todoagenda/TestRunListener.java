@@ -47,7 +47,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
     // Context is not exactly what the widgets use normally...
     private static void refreshWidgets() {
-        Intent intent = new Intent(AppWidgetProvider.ACTION_REFRESH);
+        Intent intent = new Intent(RemoteViewsFactory.ACTION_REFRESH);
         InstrumentationRegistry.getInstrumentation().getTargetContext().sendBroadcast(intent);
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         EnvironmentChangedReceiver.updateAllWidgets(targetContext);

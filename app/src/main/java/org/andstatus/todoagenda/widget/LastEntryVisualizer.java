@@ -14,7 +14,7 @@ import org.joda.time.DateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static org.andstatus.todoagenda.AppWidgetProvider.getPermittedAddEventPendingIntent;
+import static org.andstatus.todoagenda.RemoteViewsFactory.getPermittedAddEventPendingIntent;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarAtDayIntent;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setBackgroundColor;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;

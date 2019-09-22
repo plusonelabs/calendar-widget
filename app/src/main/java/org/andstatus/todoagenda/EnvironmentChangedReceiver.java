@@ -63,7 +63,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
         for (DateTime alarmTime : alarmTimes) {
             Intent intent = new Intent(context, EnvironmentChangedReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                    AppWidgetProvider.REQUEST_CODE_MIDNIGHT_ALARM + counter,
+                    RemoteViewsFactory.REQUEST_CODE_MIDNIGHT_ALARM + counter,
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -88,10 +88,10 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 ? ""
                 : (intent.getAction() == null ? "" : intent.getAction());
         switch (action) {
-            case AppWidgetProvider.ACTION_GOTO_POSITIONS:
+            case RemoteViewsFactory.ACTION_GOTO_POSITIONS:
                 int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
-                int position1 = intent.getIntExtra(AppWidgetProvider.EXTRA_WIDGET_LIST_POSITION1, 0);
-                int position2 = intent.getIntExtra(AppWidgetProvider.EXTRA_WIDGET_LIST_POSITION2, 0);
+                int position1 = intent.getIntExtra(RemoteViewsFactory.EXTRA_WIDGET_LIST_POSITION1, 0);
+                int position2 = intent.getIntExtra(RemoteViewsFactory.EXTRA_WIDGET_LIST_POSITION2, 0);
                 gotoPosition(context, widgetId, position1);
                 if (position1 >= 0 && position2 >= 0 && position1 != position2) {
                     sleep(1000);

@@ -15,7 +15,6 @@ import org.andstatus.todoagenda.widget.TimeSection;
 public class ColorsPreferencesFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private boolean hideDayHeader;
     private boolean hidePast;
 
     @Override
@@ -28,7 +27,6 @@ public class ColorsPreferencesFragment extends PreferenceFragment
     public void onResume() {
         super.onResume();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-        hideDayHeader = !ApplicationPreferences.getShowDayHeaders(getActivity());
         hidePast = ApplicationPreferences.noPastEvents(getActivity());
         showShadings();
     }
@@ -61,14 +59,7 @@ public class ColorsPreferencesFragment extends PreferenceFragment
         ListPreference preference = (ListPreference) findPreference(prefs.preferenceName);
         if (preference != null) {
             TextShading shading = TextShading.fromName(preference.getValue(), prefs.defaultShading);
-            if (hideDayHeader && prefs.dependsOnDayHeader) {
-                PreferenceCategory category = (PreferenceCategory) findPreference(prefs.timeSection.preferenceCategoryKey);
-                if (category != null) {
-                    category.removePreference(preference);
-                }
-            } else {
-                preference.setSummary(getActivity().getString(shading.titleResId));
-            }
+            preference.setSummary(getActivity().getString(shading.titleResId));
         }
     }
 }

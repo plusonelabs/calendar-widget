@@ -24,7 +24,6 @@
                     android:defaultValue="DARK"
                     android:entries="@array/pref_theme_entries"
                     android:entryValues="@array/pref_theme_values"
-                    android:summary="@string/day_header_theme_desc"
                     android:title="@string/day_header_theme_title" />
 
                 <ListPreference
@@ -32,13 +31,11 @@
                     android:defaultValue="BLACK"
                     android:entries="@array/pref_theme_entries"
                     android:entryValues="@array/pref_theme_values"
-                    android:summary="@string/appearance_entries_theme_desc"
                     android:title="@string/appearance_entries_theme_title" />
 
                 <com.rarepebble.colorpicker.ColorPreference
                     android:key="pastEventsBackgroundColor"
                     android:defaultValue="#BF78782C"
-                    android:summary="@string/appearance_past_events_background_color_desc"
                     android:title="@string/appearance_past_events_background_color_title"
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>
@@ -49,7 +46,6 @@
                     android:defaultValue="LIGHT"
                     android:entries="@array/pref_theme_entries"
                     android:entryValues="@array/pref_theme_values"
-                    android:summary="@string/day_header_theme_desc"
                     android:title="@string/day_header_theme_title" />
 
                 <ListPreference
@@ -57,13 +53,11 @@
                     android:defaultValue="WHITE"
                     android:entries="@array/pref_theme_entries"
                     android:entryValues="@array/pref_theme_values"
-                    android:summary="@string/appearance_entries_theme_desc"
                     android:title="@string/appearance_entries_theme_title" />
 
                 <com.rarepebble.colorpicker.ColorPreference
                     android:key="todaysEventsBackgroundColor"
                     android:defaultValue="#DAFFFFFF"
-                    android:summary="@string/todays_events_background_color_desc"
                     android:title="@string/todays_events_background_color_title"
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>
@@ -74,7 +68,6 @@
                     android:defaultValue="DARK"
                     android:entries="@array/pref_theme_entries"
                     android:entryValues="@array/pref_theme_values"
-                    android:summary="@string/day_header_theme_desc"
                     android:title="@string/day_header_theme_title" />
 
                 <ListPreference
@@ -82,13 +75,11 @@
                     android:defaultValue="BLACK"
                     android:entries="@array/pref_theme_entries"
                     android:entryValues="@array/pref_theme_values"
-                    android:summary="@string/appearance_entries_theme_desc"
                     android:title="@string/appearance_entries_theme_title" />
 
                 <com.rarepebble.colorpicker.ColorPreference
                     android:key="backgroundColor"
                     android:defaultValue="#80000000"
-                    android:summary="@string/appearance_background_color_desc"
                     android:title="@string/appearance_background_color_title"
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>

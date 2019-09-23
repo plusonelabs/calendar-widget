@@ -118,17 +118,16 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             logEvent("reload, skip as the widget is not allowed");
             return;
         }
+        InstanceSettings settings = getSettings();
         long prevReloadMillis = Math.abs(System.currentTimeMillis() - prevReloadFinishedAt);
         if (prevReloadMillis < MIN_MILLIS_BETWEEN_RELOADS) {
             logEvent("reload, skip as done " + prevReloadMillis + " ms ago");
-            return;
+        } else {
+            visualizers = getVisualizers();
+            this.widgetEntries = getWidgetEntries(settings);
+            logEvent("reload, visualizers:" + visualizers.size() + ", entries:" + this.widgetEntries.size());
+            prevReloadFinishedAt = System.currentTimeMillis();
         }
-
-        InstanceSettings settings = getSettings();
-        visualizers = getVisualizers();
-        this.widgetEntries = getWidgetEntries(settings);
-        logEvent("reload, visualizers:" + visualizers.size() + ", entries:" + this.widgetEntries.size());
-
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         if (appWidgetManager != null) {
@@ -143,8 +142,6 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             Log.d(AppWidgetProvider.class.getSimpleName(), widgetId + " reload, appWidgetManager is null" +
                     ", context:" + context);
         }
-
-        prevReloadFinishedAt = System.currentTimeMillis();
     }
 
     private List<WidgetEntryVisualizer<? extends WidgetEntry>> getVisualizers() {

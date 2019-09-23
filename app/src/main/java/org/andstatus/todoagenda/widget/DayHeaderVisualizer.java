@@ -60,7 +60,7 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
     }
 
     @Override
-    public List<DayHeader> getEventEntries() {
+    public List<DayHeader> queryEventEntries() {
         return Collections.emptyList();
     }
 }

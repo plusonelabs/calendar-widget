@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarPendingIntent;
@@ -118,29 +119,37 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             logEvent("reload, skip as the widget is not allowed");
             return;
         }
-        InstanceSettings settings = getSettings();
         long prevReloadMillis = Math.abs(System.currentTimeMillis() - prevReloadFinishedAt);
         if (prevReloadMillis < MIN_MILLIS_BETWEEN_RELOADS) {
             logEvent("reload, skip as done " + prevReloadMillis + " ms ago");
         } else {
             visualizers = getVisualizers();
-            this.widgetEntries = getWidgetEntries(settings);
+            this.widgetEntries = queryWidgetEntries(getSettings());
             logEvent("reload, visualizers:" + visualizers.size() + ", entries:" + this.widgetEntries.size());
             prevReloadFinishedAt = System.currentTimeMillis();
         }
+        updateWidget(context, widgetId, this);
+    }
 
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        if (appWidgetManager != null) {
+    static void updateWidget(Context context, int widgetId, @Nullable RemoteViewsFactory factory) {
+        try {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            if (appWidgetManager == null) {
+                Log.d(TAG, widgetId + " updateWidget, appWidgetManager is null, context:" + context);
+                return;
+            }
+
+            InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_initial);
 
             configureWidgetHeader(settings, rv);
             configureWidgetEntriesList(settings, context, widgetId, rv);
-            configureGotoToday(settings, rv, getTomorrowsPosition(), getTodaysPosition());
-
+            if (factory != null) {
+                factory.configureGotoToday(settings, rv, factory.getTomorrowsPosition(), factory.getTodaysPosition());
+            }
             appWidgetManager.updateAppWidget(widgetId, rv);
-        } else {
-            Log.d(AppWidgetProvider.class.getSimpleName(), widgetId + " reload, appWidgetManager is null" +
-                    ", context:" + context);
+        } catch (Exception e) {
+            Log.w(TAG, widgetId + " Exception in updateWidget, context:" + context, e);
         }
     }
 
@@ -173,10 +182,10 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         return getWidgetEntries().size() > 0 ? 0 : -1;
     }
 
-    private List<WidgetEntry> getWidgetEntries(InstanceSettings settings) {
+    private List<WidgetEntry> queryWidgetEntries(InstanceSettings settings) {
         List<WidgetEntry> eventEntries = new ArrayList<>();
         for (WidgetEntryVisualizer<?> visualizer : visualizers) {
-            eventEntries.addAll(visualizer.getEventEntries());
+            eventEntries.addAll(visualizer.queryEventEntries());
         }
         Collections.sort(eventEntries);
         List<WidgetEntry> widgetEntries = settings.getShowDayHeaders() ? addDayHeaders(eventEntries) : eventEntries;
@@ -318,7 +327,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         rv.setOnClickPendingIntent(R.id.overflow_menu, pendingIntent);
     }
 
-    static void configureWidgetEntriesList(InstanceSettings settings, Context context, int widgetId, RemoteViews rv) {
+    private static void configureWidgetEntriesList(InstanceSettings settings, Context context, int widgetId, RemoteViews rv) {
         Intent intent = new Intent(context, org.andstatus.todoagenda.RemoteViewsService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));

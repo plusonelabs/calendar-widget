@@ -96,8 +96,8 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
     }
 
     @Override
-    public List<TaskEntry> getEventEntries() {
-        return createEntryList(eventProvider.getEvents());
+    public List<TaskEntry> queryEventEntries() {
+        return createEntryList(eventProvider.queryEvents());
     }
 
     private List<TaskEntry> createEntryList(List<TaskEvent> events) {

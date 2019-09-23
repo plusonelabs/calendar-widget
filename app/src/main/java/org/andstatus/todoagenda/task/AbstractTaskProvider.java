@@ -27,7 +27,7 @@ public abstract class AbstractTaskProvider extends EventProvider {
         now = DateUtil.now(zone);
     }
 
-    List<TaskEvent> getEvents() {
+    List<TaskEvent> queryEvents() {
         initialiseParameters();
         if (PermissionsUtil.isPermissionNeeded(context, type.permission) ||
                 getSettings().getActiveEventSources(type).isEmpty()) {

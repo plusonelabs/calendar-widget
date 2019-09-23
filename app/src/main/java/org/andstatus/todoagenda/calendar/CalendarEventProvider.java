@@ -44,7 +44,7 @@ public class CalendarEventProvider extends EventProvider {
         super(type, context, widgetId);
     }
 
-    List<CalendarEvent> getEvents() {
+    List<CalendarEvent> queryEvents() {
         initialiseParameters();
         if (PermissionsUtil.isPermissionNeeded(context, type.permission) ||
                 getSettings().getActiveEventSources(type).isEmpty()) {

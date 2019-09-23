@@ -30,6 +30,6 @@ public abstract class WidgetEntryVisualizer<T extends WidgetEntry<T>> {
 
     public abstract int getViewTypeCount();
 
-    public abstract List<T> getEventEntries();
+    public abstract List<T> queryEventEntries();
 
 }

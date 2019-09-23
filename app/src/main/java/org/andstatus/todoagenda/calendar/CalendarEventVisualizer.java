@@ -15,7 +15,6 @@ import org.andstatus.todoagenda.widget.WidgetEntryVisualizer;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setAlpha;
@@ -85,10 +84,8 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
     }
 
     @Override
-    public List<CalendarEntry> getEventEntries() {
-        List<CalendarEntry> entries = createEntryList(eventProvider.getEvents());
-        Collections.sort(entries);
-        return entries;
+    public List<CalendarEntry> queryEventEntries() {
+        return createEntryList(eventProvider.queryEvents());
     }
 
     private List<CalendarEntry> createEntryList(List<CalendarEvent> eventList) {

@@ -67,7 +67,7 @@ public class LastEntryVisualizer extends WidgetEntryVisualizer<LastEntry> {
     }
 
     @Override
-    public List<LastEntry> getEventEntries() {
+    public List<LastEntry> queryEventEntries() {
         return Collections.emptyList();
     }
 }

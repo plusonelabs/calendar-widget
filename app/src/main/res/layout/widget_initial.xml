@@ -56,18 +56,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/list_parent"
-        android:orientation="vertical"
+    <ListView
+        android:id="@+id/event_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
 
-        <ListView
-            android:id="@+id/event_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
-
-    </LinearLayout>
 </LinearLayout>

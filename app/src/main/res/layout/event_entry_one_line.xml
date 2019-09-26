@@ -18,7 +18,7 @@
     <RelativeLayout
         android:id="@+id/event_entry_text_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/text_container"

@@ -3,6 +3,7 @@ package org.andstatus.todoagenda.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.view.ContextThemeWrapper;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.Alignment;
@@ -30,7 +31,7 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
     }
 
     @Override
-    public RemoteViews getRemoteViews(WidgetEntry eventEntry) {
+    public RemoteViews getRemoteViews(WidgetEntry eventEntry, int position) {
         if(!(eventEntry instanceof DayHeader)) return null;
 
         DayHeader entry = (DayHeader) eventEntry;
@@ -45,9 +46,15 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
         setBackgroundColor(rv, R.id.day_header, getSettings().getEntryBackgroundColor(entry));
         ContextThemeWrapper shadingContext = getSettings().getShadingContext(TextShadingPref.getDayHeader(entry));
         setTextColorFromAttr(shadingContext, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
-        setBackgroundColorFromAttr(shadingContext, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
+        if (position == 0) {
+            rv.setViewVisibility(R.id.day_header_separator, View.GONE);
+        } else {
+            rv.setViewVisibility(R.id.day_header_separator, View.VISIBLE);
+            setBackgroundColorFromAttr(shadingContext, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
+        }
         setPadding(getSettings(), rv, R.id.day_header_title,
-                R.dimen.day_header_padding_left, R.dimen.day_header_padding_top,
+                R.dimen.day_header_padding_left,
+                position == 0 ? R.dimen.day_header_padding_top_first : R.dimen.day_header_padding_top,
                 R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
         Intent intent = createOpenCalendarAtDayIntent(entry.getStartDate());
         rv.setOnClickFillInIntent(R.id.day_header, intent);

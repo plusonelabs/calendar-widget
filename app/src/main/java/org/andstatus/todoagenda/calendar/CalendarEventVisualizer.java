@@ -29,7 +29,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         this.eventProvider = (CalendarEventProvider) eventProvider;
     }
 
-    public RemoteViews getRemoteViews(WidgetEntry eventEntry) {
+    public RemoteViews getRemoteViews(WidgetEntry eventEntry, int position) {
         if (!(eventEntry instanceof CalendarEntry)) return null;
 
         CalendarEntry entry = (CalendarEntry) eventEntry;

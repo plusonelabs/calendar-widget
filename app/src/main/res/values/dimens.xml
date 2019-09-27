@@ -12,6 +12,7 @@
     <dimen name="event_time_width">46dp</dimen>
     <dimen name="entry_bottom_padding">2dp</dimen>
     <dimen name="day_header_padding_left">12dp</dimen>
+    <dimen name="day_header_padding_top_first">6dp</dimen>
     <dimen name="day_header_padding_top">2dp</dimen>
     <dimen name="day_header_padding_right">10dp</dimen>
     <dimen name="day_header_padding_bottom">12dp</dimen>

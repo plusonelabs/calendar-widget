@@ -30,7 +30,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
     }
 
     @Override
-    public RemoteViews getRemoteViews(WidgetEntry eventEntry) {
+    public RemoteViews getRemoteViews(WidgetEntry eventEntry, int position) {
         if (!(eventEntry instanceof TaskEntry)) return null;
 
         TaskEntry entry = (TaskEntry) eventEntry;

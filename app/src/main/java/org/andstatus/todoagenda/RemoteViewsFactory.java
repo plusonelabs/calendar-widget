@@ -95,7 +95,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         if (position < widgetEntries.size()) {
             WidgetEntry entry = widgetEntries.get(position);
             for (WidgetEntryVisualizer<? extends WidgetEntry> visualizer : visualizers) {
-                RemoteViews views = visualizer.getRemoteViews(entry);
+                RemoteViews views = visualizer.getRemoteViews(entry, position);
                 if (views != null) return views;
             }
         }

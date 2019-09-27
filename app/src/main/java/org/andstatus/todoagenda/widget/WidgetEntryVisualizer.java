@@ -17,7 +17,7 @@ public abstract class WidgetEntryVisualizer<T extends WidgetEntry<T>> {
         this.eventProvider = eventProvider;
     }
 
-    public abstract RemoteViews getRemoteViews(WidgetEntry eventEntry);
+    public abstract RemoteViews getRemoteViews(WidgetEntry eventEntry, int position);
 
     @NonNull
     protected InstanceSettings getSettings() {

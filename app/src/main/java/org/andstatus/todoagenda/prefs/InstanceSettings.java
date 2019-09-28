@@ -44,8 +44,6 @@ public class InstanceSettings {
 
     // ----------------------------------------------------------------------------------
     // Layout
-    @Deprecated
-    static final String PREF_SHOW_WIDGET_HEADER = "showHeader";
     static final String PREF_WIDGET_HEADER_LAYOUT = "widgetHeaderLayout";
     private WidgetHeaderLayout widgetHeaderLayout = WidgetHeaderLayout.defaultValue;
     static final String PREF_SHOW_DATE_ON_WIDGET_HEADER = "showDateOnWidgetHeader";
@@ -55,7 +53,7 @@ public class InstanceSettings {
     static final String PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER = "showPastEventsUnderOneHeader";
     private boolean showPastEventsUnderOneHeader = false;
     static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
-    static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
+    private static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
     private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
     static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
     private boolean showDaysWithoutEvents = false;
@@ -238,9 +236,6 @@ public class InstanceSettings {
         }
         if (json.has(PREF_WIDGET_HEADER_LAYOUT)) {
             settings.widgetHeaderLayout = WidgetHeaderLayout.fromValue(json.getString(PREF_WIDGET_HEADER_LAYOUT));
-        } else if (json.has(PREF_SHOW_WIDGET_HEADER)) {
-            settings.widgetHeaderLayout = json.getBoolean(PREF_SHOW_WIDGET_HEADER)
-                ? WidgetHeaderLayout.defaultValue : WidgetHeaderLayout.HIDDEN;
         }
         if (json.has(PREF_TEXT_SIZE_SCALE)) {
             settings.textSizeScale = json.getString(PREF_TEXT_SIZE_SCALE);

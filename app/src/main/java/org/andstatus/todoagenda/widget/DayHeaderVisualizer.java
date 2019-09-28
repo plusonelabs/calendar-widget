@@ -26,8 +26,13 @@ import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
 
 public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
 
+    private final Alignment alignment;
+    private final boolean horizontalLineBelowDayHeader;
+
     public DayHeaderVisualizer(Context context, int widgetId) {
         super(new EventProvider(EventProviderType.EMPTY, context, widgetId));
+        alignment = Alignment.valueOf(getSettings().getDayHeaderAlignment());
+        horizontalLineBelowDayHeader = getSettings().getHorizontalLineBelowDayHeader();
     }
 
     @Override
@@ -35,35 +40,55 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
         if(!(eventEntry instanceof DayHeader)) return null;
 
         DayHeader entry = (DayHeader) eventEntry;
-        String alignment = getSettings().getDayHeaderAlignment();
-        RemoteViews rv = new RemoteViews(getContext().getPackageName(), Alignment.valueOf(alignment).getLayoutId());
+        RemoteViews rv = new RemoteViews(getContext().getPackageName(), horizontalLineBelowDayHeader
+                ? R.layout.day_header_separator_below : R.layout.day_header_separator_above);
+        rv.setInt(R.id.day_header_title_wrapper, "setGravity", alignment.gravity);
+
+        ContextThemeWrapper shadingContext = getSettings().getShadingContext(TextShadingPref.getDayHeader(entry));
+        setBackgroundColor(rv, R.id.day_header, getSettings().getEntryBackgroundColor(entry));
+        setDayHeaderTitle(position, entry, rv, shadingContext);
+        setDayHeaderSeparator(position, rv, shadingContext);
+        Intent intent = createOpenCalendarAtDayIntent(entry.getStartDate());
+        rv.setOnClickFillInIntent(R.id.day_header, intent);
+        return rv;
+    }
+
+    private void setDayHeaderTitle(int position, DayHeader entry, RemoteViews rv, ContextThemeWrapper shadingContext) {
         String dateString = (entry.getStartDate().equals(DateUtil.DATETIME_MIN)
                 ? getContext().getString(R.string.past_header)
                 : DateUtil.createDayHeaderTitle(getSettings(), entry.getStartDate()))
             .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
-        setBackgroundColor(rv, R.id.day_header, getSettings().getEntryBackgroundColor(entry));
-        ContextThemeWrapper shadingContext = getSettings().getShadingContext(TextShadingPref.getDayHeader(entry));
         setTextColorFromAttr(shadingContext, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
-        if (position == 0) {
-            rv.setViewVisibility(R.id.day_header_separator, View.GONE);
-        } else {
-            rv.setViewVisibility(R.id.day_header_separator, View.VISIBLE);
-            setBackgroundColorFromAttr(shadingContext, rv, R.id.day_header_separator, R.attr.dayHeaderSeparator);
-        }
+
+        int paddingTopId = horizontalLineBelowDayHeader
+                ? R.dimen.day_header_padding_bottom
+                : (position == 0 ? R.dimen.day_header_padding_top_first : R.dimen.day_header_padding_top);
+        int paddingBottomId = horizontalLineBelowDayHeader
+                ? R.dimen.day_header_padding_top
+                : R.dimen.day_header_padding_bottom;
         setPadding(getSettings(), rv, R.id.day_header_title,
-                R.dimen.day_header_padding_left,
-                position == 0 ? R.dimen.day_header_padding_top_first : R.dimen.day_header_padding_top,
-                R.dimen.day_header_padding_right, R.dimen.day_header_padding_bottom);
-        Intent intent = createOpenCalendarAtDayIntent(entry.getStartDate());
-        rv.setOnClickFillInIntent(R.id.day_header, intent);
-        return rv;
+                R.dimen.day_header_padding_left, paddingTopId, R.dimen.day_header_padding_right, paddingBottomId);
+    }
+
+    private void setDayHeaderSeparator(int position, RemoteViews rv, ContextThemeWrapper shadingContext) {
+        int viewId = R.id.day_header_separator;
+        if (horizontalLineBelowDayHeader) {
+            setBackgroundColorFromAttr(shadingContext, rv, viewId, R.attr.dayHeaderSeparator);
+        } else {
+            if (position == 0) {
+                rv.setViewVisibility(viewId, View.GONE);
+            } else {
+                rv.setViewVisibility(viewId, View.VISIBLE);
+                setBackgroundColorFromAttr(shadingContext, rv, viewId, R.attr.dayHeaderSeparator);
+            }
+        }
     }
 
     @Override
     public int getViewTypeCount() {
-        return 3; // we have 3 because of the "left", "right" and "center" day headers
+        return 2; // we have 2 because of top and botton separator placement
     }
 
     @Override

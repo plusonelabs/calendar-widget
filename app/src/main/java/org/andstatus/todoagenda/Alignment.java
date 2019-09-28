@@ -1,18 +1,17 @@
 package org.andstatus.todoagenda;
 
+import android.view.Gravity;
+
 public enum Alignment {
 
-    LEFT(R.layout.day_header_left),
-    CENTER(R.layout.day_header_center),
-    RIGHT(R.layout.day_header_right);
+    LEFT(Gravity.LEFT),
+    CENTER(android.view.Gravity.CENTER),
+    RIGHT(Gravity.RIGHT);
 
-    private int layoutId;
+    public final int gravity;
 
-    Alignment(int layoutId) {
-        this.layoutId = layoutId;
+    Alignment(int gravity) {
+        this.gravity = gravity;
     }
 
-    public int getLayoutId() {
-        return layoutId;
-    }
 }

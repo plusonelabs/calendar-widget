@@ -13,16 +13,23 @@
     <TextView
         android:id="@+id/day_header_separator"
         style="@style/DayHeaderSeparator"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         tools:ignore="SelectableText" />
 
-    <TextView
-        android:id="@+id/day_header_title"
-        style="@style/DayHeaderTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        tools:ignore="SelectableText" />
+    <LinearLayout
+        android:id="@+id/day_header_title_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/day_header_title"
+            style="@style/DayHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="SATURDAY, SEPTEMBER 28"
+            tools:ignore="SelectableText" />
+    </LinearLayout>
 
 </LinearLayout>

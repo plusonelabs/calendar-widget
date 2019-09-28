@@ -55,6 +55,8 @@ public class InstanceSettings {
     static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
     private static final String PREF_DAY_HEADER_ALIGNMENT_DEFAULT = Alignment.RIGHT.name();
     private String dayHeaderAlignment = PREF_DAY_HEADER_ALIGNMENT_DEFAULT;
+    static final String PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER = "horizontalLineBelowDayHeader";
+    private boolean horizontalLineBelowDayHeader = false;
     static final String PREF_SHOW_DAYS_WITHOUT_EVENTS = "showDaysWithoutEvents";
     private boolean showDaysWithoutEvents = false;
     static final String PREF_EVENT_ENTRY_LAYOUT = "eventEntryLayout";
@@ -185,6 +187,9 @@ public class InstanceSettings {
         if (json.has(PREF_SHOW_DAY_HEADERS)) {
             settings.showDayHeaders = json.getBoolean(PREF_SHOW_DAY_HEADERS);
         }
+        if (json.has(PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER)) {
+            settings.horizontalLineBelowDayHeader = json.getBoolean(PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER);
+        }
         if (json.has(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER)) {
             settings.showPastEventsUnderOneHeader = json.getBoolean(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER);
         }
@@ -263,6 +268,7 @@ public class InstanceSettings {
             settings.eventsBackgroundColor = ApplicationPreferences.getEventsBackgroundColor(context);
             settings.showDaysWithoutEvents = ApplicationPreferences.getShowDaysWithoutEvents(context);
             settings.showDayHeaders = ApplicationPreferences.getShowDayHeaders(context);
+            settings.horizontalLineBelowDayHeader = ApplicationPreferences.getHorizontalLineBelowDayHeader(context);
             settings.showPastEventsUnderOneHeader = ApplicationPreferences.getShowPastEventsUnderOneHeader(context);
             settings.showPastEventsWithDefaultColor = ApplicationPreferences.getShowPastEventsWithDefaultColor(context);
             settings.showEventIcon = ApplicationPreferences.getShowEventIcon(context);
@@ -333,6 +339,7 @@ public class InstanceSettings {
             json.put(PREF_EVENTS_BACKGROUND_COLOR, eventsBackgroundColor);
             json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, showDaysWithoutEvents);
             json.put(PREF_SHOW_DAY_HEADERS, showDayHeaders);
+            json.put(PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER, horizontalLineBelowDayHeader);
             json.put(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, showPastEventsUnderOneHeader);
             json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, showPastEventsWithDefaultColor);
             json.put(PREF_SHOW_EVENT_ICON, showEventIcon);
@@ -537,6 +544,10 @@ public class InstanceSettings {
 
     public String getDayHeaderAlignment() {
         return dayHeaderAlignment;
+    }
+
+    public boolean getHorizontalLineBelowDayHeader() {
+        return horizontalLineBelowDayHeader;
     }
 
     public void logMe(Class tag, String message, int widgetId) {

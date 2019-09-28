@@ -93,6 +93,7 @@
     <string name="appearance_day_header_alignment_left">Left</string>
     <string name="appearance_day_header_alignment_center">Center</string>
     <string name="appearance_day_header_alignment_right">Right</string>
+    <string name="horizontalLineBelowDayHeader">Horizontal line below Day header</string>
     <string name="appearance_multiline_title_title">Multiline title</string>
     <string name="appearance_multiline_title_desc">Spread event title over multiple lines</string>
     <string name="appearance_show_days_without_events_title">Show days without events</string>

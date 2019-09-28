@@ -14,10 +14,6 @@
 
     <style name="DayHeaderTitle" parent="android:Widget.Holo.TextView">
         <item name="android:ellipsize">marquee</item>
-        <item name="android:gravity">right|top</item>
-        <item name="android:paddingBottom">@dimen/day_header_padding_bottom</item>
-        <item name="android:paddingRight">@dimen/day_header_padding_right</item>
-        <item name="android:paddingTop">@dimen/day_header_padding_top</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/day_header_title_black</item>
         <item name="android:textStyle">bold</item>

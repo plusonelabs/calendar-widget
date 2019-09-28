@@ -45,6 +45,15 @@
         android:title="@string/appearance_day_header_alignment_title" />
 
     <CheckBoxPreference
+        android:key="horizontalLineBelowDayHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:defaultValue="false"
+        android:title="@string/horizontalLineBelowDayHeader"
+        android:dependency="showDayHeaders">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
         android:key="showDaysWithoutEvents"
         android:defaultValue="false"
         android:dependency="showDayHeaders"

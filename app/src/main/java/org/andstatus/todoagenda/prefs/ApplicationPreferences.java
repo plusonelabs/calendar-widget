@@ -28,6 +28,7 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENT_RANGE_D
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_FILL_ALL_DAY;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_FILL_ALL_DAY_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HIDE_BASED_ON_KEYWORDS;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_INDICATE_ALERTS;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_INDICATE_RECURRING;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_LOCKED_TIME_ZONE_ID;
@@ -79,6 +80,7 @@ public class ApplicationPreferences {
             setInt(context, PREF_EVENTS_BACKGROUND_COLOR, settings.getEventsBackgroundColor());
             setShowDaysWithoutEvents(context, settings.getShowDaysWithoutEvents());
             setShowDayHeaders(context, settings.getShowDayHeaders());
+            setHorizontalLineBelowDayHeader(context, settings.getHorizontalLineBelowDayHeader());
             setShowPastEventsUnderOneHeader(context, settings.getShowPastEventsUnderOneHeader());
             setShowPastEventsWithDefaultColor(context, settings.getShowPastEventsWithDefaultColor());
             setShowEventIcon(context, settings.getShowEventIcon());
@@ -194,6 +196,15 @@ public class ApplicationPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(
                 PREF_EVENTS_BACKGROUND_COLOR,
                 PREF_EVENTS_BACKGROUND_COLOR_DEFAULT);
+    }
+
+    public static boolean getHorizontalLineBelowDayHeader(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER, false);
+    }
+
+    private static void setHorizontalLineBelowDayHeader(Context context, boolean value) {
+        setBoolean(context, PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER, value);
     }
 
     public static boolean getShowDaysWithoutEvents(Context context) {

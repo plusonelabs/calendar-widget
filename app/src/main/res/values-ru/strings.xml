@@ -87,6 +87,7 @@
     <string name="appearance_day_header_alignment_left">По левому краю</string>
     <string name="appearance_day_header_alignment_center">По центру</string>
     <string name="appearance_day_header_alignment_right">По правому краю</string>
+    <string name="horizontalLineBelowDayHeader">Горизонтальная строка ниже заголовка дня</string>
     <string name="appearance_multiline_title_title">Многострочный заголовок</string>
     <string name="appearance_multiline_title_desc">Длинные заголовки событий продолжаются на несколько строк</string>
     <string name="appearance_show_days_without_events_title">Показывать дни без событий</string>

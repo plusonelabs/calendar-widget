@@ -95,7 +95,9 @@ Sorry for inconvenience.
 * "[Show number of days to event](https://github.com/plusonelabs/calendar-widget/issues/283)" option added
   (in the "All in one row" event layout) allowing to hide this info independently from the "Show day header" option.
 * [Horizontal lines (separators) are now above Day headers, not below them](https://github.com/plusonelabs/calendar-widget/issues/154)
-  to avoid Users' confusion.
+  to avoid Users' confusion. However, we have a new option 
+  "[Horizontal line below Day header](https://github.com/plusonelabs/calendar-widget/issues/326)" 
+  that allows to restore previous lines placement.
 * [Text size scaling improved](https://github.com/plusonelabs/calendar-widget/issues/301) - Now size of text in all parts
   of the widget changes, when you change "Text size" option.
 * [Don't show time for All day events](https://github.com/plusonelabs/calendar-widget/issues/236).

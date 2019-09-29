@@ -10,6 +10,7 @@
     <dimen name="days_to_event_right_width">50dp</dimen>
     <dimen name="days_to_event_width">53dp</dimen>
     <dimen name="event_time_width">46dp</dimen>
+    <dimen name="event_indicator_size">24dp</dimen>
     <dimen name="entry_bottom_padding">2dp</dimen>
     <dimen name="day_header_padding_left">12dp</dimen>
     <dimen name="day_header_padding_top_first">6dp</dimen>

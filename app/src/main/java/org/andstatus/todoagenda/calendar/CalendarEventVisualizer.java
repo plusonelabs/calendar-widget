@@ -20,6 +20,7 @@ import java.util.List;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setAlpha;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setBackgroundColor;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setImageFromAttr;
+import static org.andstatus.todoagenda.util.RemoteViewsUtil.setViewHeight;
 
 public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry> {
     private final CalendarEventProvider eventProvider;
@@ -56,6 +57,9 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
     private void setIndicator(CalendarEntry entry, RemoteViews rv, boolean showIndication, int viewId, int imageAttrId) {
         if (showIndication) {
             rv.setViewVisibility(viewId, View.VISIBLE);
+            if (!getSettings().getTextSizeScale().equals("1.0")) {
+                setViewHeight(getSettings(), rv, R.id.event_entry_indicator_layout, R.dimen.event_indicator_size);
+            }
             TextShadingPref pref = TextShadingPref.forTitle(entry);
             setImageFromAttr(getSettings().getShadingContext(pref), rv, viewId, imageAttrId);
             TextShading textShading = getSettings().getShading(pref);

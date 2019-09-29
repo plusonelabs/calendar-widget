@@ -78,7 +78,7 @@ Sorry for inconvenience.
 * Old and confusing [Android Holo ColorPicker](https://github.com/LarsWerkman/HoloColorPicker) is replaced with a customized version of 
   [HSV-Alpha Color Picker for Android](https://github.com/martin-stone/hsv-alpha-color-picker-android).
 * ["Widget header layout"](https://github.com/plusonelabs/calendar-widget/issues/28) option added with two actual layouts 
- ("All in one row" and "Two rows layout") and one "Hidden".
+ ("All in one row" and "Two rows layout") and one "Hidden" layout.
  This replaces and extends previous "Show widget header" checkbox.
 * "Widget header background color" added.
 * ["Go to Today"](https://github.com/plusonelabs/calendar-widget/issues/293) button added to the Widget's header to
@@ -109,7 +109,7 @@ Sorry for inconvenience.
 * [32 language translations](https://crowdin.com/project/plusonelabs-calendar-widget) updated and 5 new translations added!
   Thank you all!
 * Hopefully fixed intermittent "No events" display instead of actual list of events. 
- Separate "ToDo Agenda Loading..." layout added to see the widget, when it is not initialized yet (i.e. after device reboot).
+ Separate "ToDo Agenda Loading..." layout added to see the widget, when it is not initialized yet (e.g. after device reboot).
 
 ### [v2.1](https://github.com/plusonelabs/calendar-widget/issues/308) Tasks support
 * Tasks support added. Two Task apps are supported: [OpenTasks (by dmfs GmbH)](https://github.com/dmfs/opentasks)

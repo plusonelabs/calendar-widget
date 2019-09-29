@@ -1,0 +1,704 @@
+{
+  "resultsVersion": 3,
+  "deviceInfo": {
+    "versionCode": 25,
+    "versionRelease": "7.1.1",
+    "versionCodename": "REL",
+    "buildManufacturer": "LENOVO",
+    "buildBrand": "Lenovo",
+    "buildModel": "Lenovo TB-X704L"
+  },
+  "applicationInfo": {
+    "versionName": "3.0.8-524",
+    "versionCode": 524
+  },
+  "settings": {
+    "widgetId": 19,
+    "showDateOnWidgetHeader": true,
+    "widgetInstanceName": "Second page",
+    "activeSources": [
+      "1,1",
+      "1,9",
+      "1,6"
+    ],
+    "eventRange": 30,
+    "eventsEnded": "TODAY",
+    "fillAllDay": true,
+    "hideBasedOnKeywords": "",
+    "widgetHeaderBackgroundColor": 0,
+    "pastEventsBackgroundColor": -1082623956,
+    "todaysEventsBackgroundColor": -1073741825,
+    "backgroundColor": -2147483648,
+    "showDaysWithoutEvents": false,
+    "showDayHeaders": true,
+    "horizontalLineBelowDayHeader": false,
+    "showPastEventsUnderOneHeader": false,
+    "showPastEventsWithDefaultColor": true,
+    "showEventIcon": true,
+    "showNumberOfDaysToEvent": true,
+    "showEndTime": true,
+    "showLocation": true,
+    "dateFormat": "auto",
+    "abbreviateDates": false,
+    "lockedTimeZoneId": "",
+    "eventEntryLayout": "DEFAULT",
+    "multiline_title": true,
+    "showOnlyClosestInstanceOfRecurringEvent": true,
+    "indicateAlerts": true,
+    "indicateRecurring": true,
+    "widgetHeaderLayout": "ONE_ROW",
+    "headerTheme": "DARK",
+    "dayHeaderThemePast": "DARK",
+    "entryThemePast": "BLACK",
+    "dayHeaderTheme": "LIGHT",
+    "entryTheme": "WHITE",
+    "dayHeaderThemeFuture": "DARK",
+    "entryThemeFuture": "BLACK",
+    "textSizeScale": "1.0",
+    "dayHeaderAlignment": "RIGHT"
+  },
+  "results": [
+    {
+      "providerType": 1,
+      "executedAt": 1569733023549,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/1569704400000\/1572325023547",
+      "projection": [
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor"
+      ],
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 1 OR calendar_id = 9 OR calendar_id = 6 )",
+      "selectionArgs": [],
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "rows": [
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Three days meeting with d"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 482
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569673800000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Saint Petersburg, St Petersburg, Russia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1569852900000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Early morning errands"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 529
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569724200000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569727800000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Sunday Supper for the whole family"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 492
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569769200000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569772800000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Vacations week"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 495
+          },
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "begin": {
+            "type": 1,
+            "value": 1570233600000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1571011200000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Dinner during vacations"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 497
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1570428000000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1570431600000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event that is a recurring all day event and has a reminder"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 525
+          },
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "begin": {
+            "type": 1,
+            "value": 1571875200000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1571961600000
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "providerType": 1,
+      "executedAt": 1569733023585,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/0\/1569733023584",
+      "projection": [
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor"
+      ],
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 1 OR calendar_id = 9 OR calendar_id = 6 ) AND (displayColor = calendar_color )",
+      "selectionArgs": [],
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "rows": [
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Day of knowledge"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 503
+          },
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "begin": {
+            "type": 1,
+            "value": 1567382400000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Profsoyuznaya, Moscow, Russia, 117292"
+          },
+          "end": {
+            "type": 1,
+            "value": 1567468800000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "All day event"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 507
+          },
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568073600000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1568160000000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "A Tuesday's walk"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 488
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568131200000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1568134800000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Watch TV"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 517
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568815200000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "SOMA VEIN & LASER CENTRE, 2622 Agricola St, Halifax, NS B3K 4C8, Canada"
+          },
+          "end": {
+            "type": 1,
+            "value": 1568818800000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Another calendar event"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 513
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568898000000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1568901600000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "All day test event. Watching TV all day :-)"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 496
+          },
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568937600000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569024000000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Call me!"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 526
+          },
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569283200000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569369600000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Event with a very long title that spans two lines. For testing"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 524
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569650400000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569654000000
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;UNTIL=20200927T060000Z;WKST=MO"
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Three days meeting with d"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 482
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569673800000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Saint Petersburg, St Petersburg, Russia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1569852900000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Early morning errands"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 529
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569724200000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569727800000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        }
+      ]
+    }
+  ]
+}

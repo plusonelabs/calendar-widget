@@ -44,7 +44,7 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
                 ? R.layout.day_header_separator_below : R.layout.day_header_separator_above);
         rv.setInt(R.id.day_header_title_wrapper, "setGravity", alignment.gravity);
 
-        ContextThemeWrapper shadingContext = getSettings().getShadingContext(TextShadingPref.getDayHeader(entry));
+        ContextThemeWrapper shadingContext = getSettings().getShadingContext(TextShadingPref.forDayHeader(entry));
         setBackgroundColor(rv, R.id.day_header, getSettings().getEntryBackgroundColor(entry));
         setDayHeaderTitle(position, entry, rv, shadingContext);
         setDayHeaderSeparator(position, rv, shadingContext);

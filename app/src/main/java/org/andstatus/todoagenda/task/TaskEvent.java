@@ -70,7 +70,7 @@ public class TaskEvent {
 
     private DateTime toDueDate(Long startMillis, Long dueMillis) {
         DateTime dueDate = dueMillis == null
-                ? DateUtil.now(zone).plusDays(1).withTimeAtStartOfDay().minusSeconds(1)  // End of today
+                ? DateUtil.startOfTomorrow(zone)
                 : new DateTime(dueMillis, zone);
         return startMillis == null
                 ? dueDate.plusSeconds(1)

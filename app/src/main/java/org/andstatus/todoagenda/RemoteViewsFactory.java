@@ -170,14 +170,14 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     private int getTodaysPosition() {
         for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
-            if (getWidgetEntries().get(ind).getTimeSection() != TimeSection.PAST) return ind;
+            if (getWidgetEntries().get(ind).getStartDaySection() != TimeSection.PAST) return ind;
         }
         return getWidgetEntries().size() - 1;
     }
 
     private int getTomorrowsPosition() {
         for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
-            if (getWidgetEntries().get(ind).getTimeSection() == TimeSection.FUTURE) return ind;
+            if (getWidgetEntries().get(ind).getStartDaySection() == TimeSection.FUTURE) return ind;
         }
         return getWidgetEntries().size() > 0 ? 0 : -1;
     }

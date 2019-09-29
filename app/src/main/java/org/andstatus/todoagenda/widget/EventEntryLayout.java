@@ -33,7 +33,7 @@ public enum EventEntryLayout {
                 rv.setViewVisibility(viewId, View.VISIBLE);
                 rv.setTextViewText(viewId, eventDetails);
                 setTextSize(entry.getSettings(), rv, viewId, R.dimen.event_entry_details);
-                setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.getDayHeader(entry)),
+                setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.forDetails(entry)),
                         rv, viewId, R.attr.dayHeaderTitle);
             }
         }
@@ -59,7 +59,7 @@ public enum EventEntryLayout {
                         ? R.dimen.days_to_event_width
                         : R.dimen.days_to_event_right_width);
                 setTextSize(settings, rv, viewToShow, R.dimen.event_entry_details);
-                setTextColorFromAttr(settings.getShadingContext(TextShadingPref.getDayHeader(entry)),
+                setTextColorFromAttr(settings.getShadingContext(TextShadingPref.forDetails(entry)),
                         rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
                 rv.setViewVisibility(R.id.event_entry_days, View.GONE);
@@ -76,7 +76,7 @@ public enum EventEntryLayout {
             InstanceSettings settings = entry.getSettings();
             setViewWidth(settings, rv, viewId, R.dimen.event_time_width);
             setTextSize(settings, rv, viewId, R.dimen.event_entry_details);
-            setTextColorFromAttr(settings.getShadingContext(TextShadingPref.getDayHeader(entry)),
+            setTextColorFromAttr(settings.getShadingContext(TextShadingPref.forDetails(entry)),
                     rv, viewId, R.attr.dayHeaderTitle);
         }
     };
@@ -115,7 +115,7 @@ public enum EventEntryLayout {
         int viewId = R.id.event_entry_title;
         rv.setTextViewText(viewId, getTitleString(entry));
         setTextSize(entry.getSettings(), rv, viewId, R.dimen.event_entry_title);
-        setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.getEntry(entry)),
+        setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.forTitle(entry)),
                 rv, viewId, R.attr.eventEntryTitle);
         setMultiline(rv, viewId, entry.getSettings().isTitleMultiline());
     }

@@ -9,6 +9,7 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
         TaskEntry entry = new TaskEntry();
         entry.event = event;
         entry.setStartDate(event.getStartDate());
+        entry.setEndDate(event.getDueDate());
         return entry;
     }
 

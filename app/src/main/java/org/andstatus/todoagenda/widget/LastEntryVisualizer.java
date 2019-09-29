@@ -55,7 +55,7 @@ public class LastEntryVisualizer extends WidgetEntryVisualizer<LastEntry> {
             rv.setTextViewText(viewId, getContext().getText(R.string.no_upcoming_events));
         }
         setTextSize(getSettings(), rv, viewId, R.dimen.event_entry_title);
-        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.getEntry(entry)),
+        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.forTitle(entry)),
                 rv, viewId, R.attr.eventEntryTitle);
         setBackgroundColor(rv, viewId, getSettings().getEntryBackgroundColor(entry));
         return rv;

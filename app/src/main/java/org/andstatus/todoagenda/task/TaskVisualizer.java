@@ -70,7 +70,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
                         : R.dimen.days_to_event_right_width);
                 rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(getSettings().getContext(), days));
                 setTextSize(getSettings(), rv, viewToShow, R.dimen.event_entry_details);
-                setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.getDayHeader(entry)),
+                setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.forDetails(entry)),
                         rv, viewToShow, R.attr.dayHeaderTitle);
             } else {
                 rv.setViewVisibility(R.id.event_entry_days, View.GONE);
@@ -85,7 +85,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         int viewId = R.id.event_entry_title;
         rv.setTextViewText(viewId, entry.getTitle());
         setTextSize(getSettings(), rv, viewId, R.dimen.event_entry_title);
-        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.getEntry(entry)),
+        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.forTitle(entry)),
                 rv, viewId, R.attr.eventEntryTitle);
         setMultiline(rv, viewId, getSettings().isTitleMultiline());
     }

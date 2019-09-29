@@ -21,14 +21,15 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     static final String SPACE_DASH_SPACE = " - ";
     private static final String SPACE_PIPE_SPACE = "  |  ";
 
-    private DateTime endDate;
     private boolean allDay;
     private CalendarEvent event;
 
-    public static CalendarEntry fromEvent(CalendarEvent event) {
+    public static CalendarEntry fromEvent(CalendarEvent event, DateTime entryDate) {
         CalendarEntry entry = new CalendarEntry();
-        entry.setStartDate(event.getStartDate());
-        entry.endDate = event.getEndDate();
+        entry.setStartDate(entryDate);
+        if (event.getEndDate().isBefore(entry.getEndDate())) {
+            entry.setEndDate(event.getEndDate());
+        }
         entry.allDay = event.isAllDay();
         entry.event = event;
         return entry;
@@ -40,14 +41,6 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
             title = getContext().getResources().getString(R.string.no_title);
         }
         return title;
-    }
-
-    public DateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(DateTime endDate) {
-        this.endDate = endDate;
     }
 
     public int getColor() {
@@ -176,8 +169,10 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     public String toString() {
         return "CalendarEntry ["
                 + "startDate=" + getStartDate()
-                + (endDate != null ? ", endDate=" + getEndDate() : "")
+                + ", endDate=" + getEndDate()
                 + ", allDay=" + allDay
+                + ", time=" + getEventTimeString()
+                + ", location=" + getLocationString()
                 + ", event=" + event
                 + "]";
     }

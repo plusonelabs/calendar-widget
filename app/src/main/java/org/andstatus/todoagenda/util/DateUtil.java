@@ -99,6 +99,21 @@ public class DateUtil {
         return date.isBefore(now(date.getZone()));
     }
 
+    public static DateTime startOfTomorrow(DateTimeZone zone) {
+        return startOfNextDay(DateUtil.now(zone));
+    }
+    public static DateTime startOfNextDay(DateTime date) {
+        return date.plusDays(1).withTimeAtStartOfDay();
+    }
+
+    public static DateTime endOfToday(DateTimeZone zone) {
+        return endOfSameDay(DateUtil.now(zone));
+    }
+
+    public static DateTime endOfSameDay(DateTime date) {
+        return date.plusDays(1).withTimeAtStartOfDay().minusSeconds(1);
+    }
+
     public static void setNow(DateTime now) {
         mNowSetAt = DateTime.now();
         mNow = now;

@@ -7,6 +7,7 @@ import org.joda.time.Days;
 public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparable<WidgetEntry<T>> {
 
     private DateTime startDate;
+    private DateTime endDate;
 
     public DateTime getStartDate() {
         return startDate;
@@ -14,10 +15,19 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
 
     public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
+        endDate = DateUtil.startOfNextDay(startDate);
     }
 
     public DateTime getStartDay() {
         return getStartDate().withTimeAtStartOfDay();
+    }
+
+    public void setEndDate(DateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public DateTime getEndDate() {
+        return endDate;
     }
 
     public abstract int getPriority();
@@ -42,8 +52,14 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return Integer.signum(getPriority() - otherEvent.getPriority());
     }
 
-    public TimeSection getTimeSection() {
+    public TimeSection getStartDaySection() {
         return DateUtil.isBeforeToday(getStartDate())
+                ? TimeSection.PAST
+                : (DateUtil.isToday(getStartDate()) ? TimeSection.TODAY : TimeSection.FUTURE);
+    }
+
+    public TimeSection getEndTimeSection() {
+        return DateUtil.isBeforeNow(getEndDate())
                 ? TimeSection.PAST
                 : (DateUtil.isToday(getStartDate()) ? TimeSection.TODAY : TimeSection.FUTURE);
     }

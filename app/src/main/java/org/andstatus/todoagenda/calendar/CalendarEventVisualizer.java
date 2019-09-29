@@ -56,7 +56,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
     private void setIndicator(CalendarEntry entry, RemoteViews rv, boolean showIndication, int viewId, int imageAttrId) {
         if (showIndication) {
             rv.setViewVisibility(viewId, View.VISIBLE);
-            TextShadingPref pref = TextShadingPref.getEntry(entry);
+            TextShadingPref pref = TextShadingPref.forTitle(entry);
             setImageFromAttr(getSettings().getShadingContext(pref), rv, viewId, imageAttrId);
             TextShading textShading = getSettings().getShading(pref);
             int alpha = 255;
@@ -92,7 +92,8 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         boolean fillAllDayEvents = getSettings().getFillAllDayEvents();
         List<CalendarEntry> entryList = new ArrayList<>();
         for (CalendarEvent event : eventList) {
-            CalendarEntry dayOneEntry = setupDayOneEntry(entryList, event);
+            CalendarEntry dayOneEntry = getDayOneEntry(event);
+            entryList.add(dayOneEntry);
             if (fillAllDayEvents) {
                 createFollowingEntries(entryList, dayOneEntry);
             }
@@ -100,8 +101,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         return entryList;
     }
 
-    private CalendarEntry setupDayOneEntry(List<CalendarEntry> entryList, CalendarEvent event) {
-        CalendarEntry dayOneEntry = CalendarEntry.fromEvent(event);
+    private CalendarEntry getDayOneEntry(CalendarEvent event) {
         DateTime firstDate = event.getStartDate();
         DateTime dayOfStartOfTimeRange = eventProvider.getStartOfTimeRange()
                 .withTimeAtStartOfDay();
@@ -116,13 +116,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         if (event.isActive() && firstDate.isBefore(today)) {
             firstDate = today;
         }
-        dayOneEntry.setStartDate(firstDate);
-        DateTime nextDay = dayOneEntry.getStartDay().plusDays(1);
-        if (event.getEndDate().isAfter(nextDay)) {
-            dayOneEntry.setEndDate(nextDay);
-        }
-        entryList.add(dayOneEntry);
-        return dayOneEntry;
+        return CalendarEntry.fromEvent(event, firstDate);
     }
 
     private void createFollowingEntries(List<CalendarEntry> entryList, CalendarEntry dayOneEntry) {
@@ -132,16 +126,9 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         }
         DateTime thisDay = dayOneEntry.getStartDay().plusDays(1).withTimeAtStartOfDay();
         while (thisDay.isBefore(endDate)) {
-            DateTime nextDay = thisDay.plusDays(1);
-            CalendarEntry nextEntry = CalendarEntry.fromEvent(dayOneEntry.getEvent());
-            nextEntry.setStartDate(thisDay);
-            if (endDate.isAfter(nextDay)) {
-                nextEntry.setEndDate(nextDay);
-            } else {
-                nextEntry.setEndDate(endDate);
-            }
+            CalendarEntry nextEntry = CalendarEntry.fromEvent(dayOneEntry.getEvent(), thisDay);
             entryList.add(nextEntry);
-            thisDay = nextDay;
+            thisDay = thisDay.plusDays(1);
         }
     }
 

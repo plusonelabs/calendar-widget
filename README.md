@@ -88,8 +88,7 @@ Sorry for inconvenience.
 * "Day text header shading" added. Now the Day header color can be changed independently from "Event entry text shading".
 * [Different text shading for past / today's and for future](https://github.com/plusonelabs/calendar-widget/issues/325)
   Day Headers and (separately) for Events. The app hides color settings that are not actual. 
-  It hides color settings for Day headers if "Show Day headers" setting is turned off. "Past events" section is removed
-  completely if no past events may be shown and no task sources selected.
+  "Past events" section is removed completely if no past events may be shown and no task sources selected.
 * ["Show event icon"](https://github.com/plusonelabs/calendar-widget/issues/174) added, 
     allowing to hide calendar's color bars and tasks icons.
 * "[Show number of days to event](https://github.com/plusonelabs/calendar-widget/issues/283)" option added

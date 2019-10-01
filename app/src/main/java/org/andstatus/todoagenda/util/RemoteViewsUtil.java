@@ -14,8 +14,6 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import androidx.annotation.DimenRes;
 import androidx.annotation.IdRes;
 
-import static java.lang.Float.parseFloat;
-
 public class RemoteViewsUtil {
 
     private static final String METHOD_SET_TEXT_SIZE = "setTextSize";
@@ -77,15 +75,13 @@ public class RemoteViewsUtil {
 
     private static int getScaledValueInPixels(InstanceSettings settings, int dimenId) {
         float resValue = getDimension(settings.getContext(), dimenId);
-        float prefTextScale = parseFloat(settings.getTextSizeScale());
-        return  Math.round(resValue * prefTextScale);
+        return  Math.round(resValue * settings.getTextSizeScale().scaleValue);
     }
 
     private static float getScaledValueInScaledPixels(InstanceSettings settings, int dimenId) {
         float resValue = getDimension(settings.getContext(), dimenId);
         float density = settings.getContext().getResources().getDisplayMetrics().density;
-        float prefTextScale = parseFloat(settings.getTextSizeScale());
-        return resValue * prefTextScale / density;
+        return resValue * settings.getTextSizeScale().scaleValue / density;
     }
 
     private static int getColorValue(Context context, int attrId) {

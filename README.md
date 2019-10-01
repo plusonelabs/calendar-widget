@@ -109,7 +109,8 @@ Sorry for inconvenience.
 * [32 language translations](https://crowdin.com/project/plusonelabs-calendar-widget) updated and 5 new translations added!
   Thank you all!
 * Hopefully fixed intermittent "No events" display instead of actual list of events. 
- Separate "ToDo Agenda Loading..." layout added to see the widget, when it is not initialized yet (e.g. after device reboot).
+  Separate "[ToDo Agenda Not Initialized yet...](https://github.com/plusonelabs/calendar-widget/issues/318)" layout added 
+  to see the widget, when it is not initialized yet (e.g. after device reboot).
 
 ### [v2.1](https://github.com/plusonelabs/calendar-widget/issues/308) Tasks support
 * Tasks support added. Two Task apps are supported: [OpenTasks (by dmfs GmbH)](https://github.com/dmfs/opentasks)

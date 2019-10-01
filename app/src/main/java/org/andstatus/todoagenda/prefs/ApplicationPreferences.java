@@ -100,7 +100,7 @@ public class ApplicationPreferences {
                 setString(context, entry.getKey().preferenceName, entry.getValue().name());
             }
             setString(context, PREF_WIDGET_HEADER_LAYOUT, settings.getWidgetHeaderLayout().value);
-            setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale());
+            setString(context, PREF_TEXT_SIZE_SCALE, settings.getTextSizeScale().preferenceValue);
             setString(context, PREF_DAY_HEADER_ALIGNMENT, settings.getDayHeaderAlignment());
         }
     }

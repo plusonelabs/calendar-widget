@@ -9,6 +9,7 @@ import android.view.ContextThemeWrapper;
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.TextShading;
+import org.andstatus.todoagenda.TextSizeScale;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -128,8 +129,7 @@ public class InstanceSettings {
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
     private final String widgetInstanceName;
     static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
-    static final String PREF_TEXT_SIZE_SCALE_DEFAULT = "1.0";
-    private String textSizeScale = PREF_TEXT_SIZE_SCALE_DEFAULT;
+    private TextSizeScale textSizeScale = TextSizeScale.MEDIUM;
     static final String PREF_DATE_FORMAT = "dateFormat";
     static final String PREF_DATE_FORMAT_DEFAULT = "auto";
     private String dateFormat = PREF_DATE_FORMAT_DEFAULT;
@@ -243,7 +243,7 @@ public class InstanceSettings {
             settings.widgetHeaderLayout = WidgetHeaderLayout.fromValue(json.getString(PREF_WIDGET_HEADER_LAYOUT));
         }
         if (json.has(PREF_TEXT_SIZE_SCALE)) {
-            settings.textSizeScale = json.getString(PREF_TEXT_SIZE_SCALE);
+            settings.textSizeScale = TextSizeScale.fromPreferenceValue(json.getString(PREF_TEXT_SIZE_SCALE));
         }
         if (json.has(PREF_DAY_HEADER_ALIGNMENT)) {
             settings.dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
@@ -290,8 +290,8 @@ public class InstanceSettings {
                         pref.defaultShading.name());
                 settings.shadings.put(pref, TextShading.fromName(themeName, pref.defaultShading));
             }
-            settings.textSizeScale = ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE,
-                    PREF_TEXT_SIZE_SCALE_DEFAULT);
+            settings.textSizeScale = TextSizeScale.fromPreferenceValue(
+                    ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE, ""));
             settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
                     PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
             return settings;
@@ -538,7 +538,7 @@ public class InstanceSettings {
         return widgetHeaderLayout;
     }
 
-    public String getTextSizeScale() {
+    public TextSizeScale getTextSizeScale() {
         return textSizeScale;
     }
 

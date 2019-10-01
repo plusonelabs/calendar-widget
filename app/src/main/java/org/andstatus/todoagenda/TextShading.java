@@ -3,6 +3,9 @@ package org.andstatus.todoagenda;
 import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
 
+/**
+ * @author yvolk@yurivolkov.com
+*/
 public enum TextShading {
 
     WHITE(R.style.Theme_Calendar_White, R.string.appearance_theme_white),

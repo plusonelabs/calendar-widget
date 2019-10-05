@@ -358,7 +358,7 @@ public class InstanceSettings {
             for (TextShadingPref pref: TextShadingPref.values()) {
                 json.put(pref.preferenceName, getShading(pref).name());
             }
-            json.put(PREF_TEXT_SIZE_SCALE, textSizeScale);
+            json.put(PREF_TEXT_SIZE_SCALE, textSizeScale.preferenceValue);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
         } catch (JSONException e) {
             throw new RuntimeException("Saving settings to JSON", e);

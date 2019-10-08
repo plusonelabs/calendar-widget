@@ -128,14 +128,14 @@ public class ApplicationPreferences {
     }
 
     public static List<EventSource> getActiveEventSources(Context context) {
-        return EventSource.fromStringSet(PreferenceManager.getDefaultSharedPreferences(context)
-                .getStringSet(PREF_ACTIVE_SOURCES, null));
+        return EventSource.fromJsonString(PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_ACTIVE_SOURCES, null));
     }
 
     public static void setActiveEventSources(Context context, List<EventSource> sources) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putStringSet(PREF_ACTIVE_SOURCES, EventSource.toStringSet(sources));
+        editor.putString(PREF_ACTIVE_SOURCES, EventSource.toJsonString(sources));
         editor.apply();
     }
 

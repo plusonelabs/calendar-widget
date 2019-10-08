@@ -15,7 +15,6 @@ import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.provider.EventProviderType;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,25 +22,23 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     private static final String SOURCE_ID = "sourceId";
 
     List<EventSource> savedActiveSources = Collections.emptyList();
+    List<EventSource> clickedSources = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences_event_sources);
-        populateAvailableSources();
     }
 
 
-    private void populateAvailableSources() {
-        Collection<EventSource> availableSources = EventProviderType.getAvailableSources();
-        for (EventSource source : availableSources) {
-            CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
-            checkboxPref.setTitle(source.getTitle());
-            checkboxPref.setSummary(source.getSummary());
-            checkboxPref.setIcon(createDrawable(source.providerType.isCalendar, source.getColor()));
-            checkboxPref.getExtras().putString(SOURCE_ID, source.toStoredString());
-            getPreferenceScreen().addPreference(checkboxPref);
-        }
+    private void addAsPreference(EventSource source, boolean isChecked ) {
+        CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
+        checkboxPref.setTitle(source.getTitle());
+        checkboxPref.setSummary(source.getSummary());
+        checkboxPref.setIcon(createDrawable(source.providerType.isCalendar, source.getColor()));
+        checkboxPref.getExtras().putString(SOURCE_ID, source.toStoredString());
+        getPreferenceScreen().addPreference(checkboxPref);
+        checkboxPref.setChecked(isChecked);
     }
 
     private Drawable createDrawable(boolean isCalendar, int color) {
@@ -68,12 +65,13 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     }
 
     public void showActiveSources() {
-        for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
-            Preference preference = getPreferenceScreen().getPreference(i);
-            if (preference instanceof CheckBoxPreference) {
-                CheckBoxPreference checkBox = (CheckBoxPreference) preference;
-                EventSource eventSource = EventSource.fromStoredString(checkBox.getExtras().getString(SOURCE_ID));
-                checkBox.setChecked(savedActiveSources.contains(eventSource));
+        getPreferenceScreen().removeAll();
+        for (EventSource saved: savedActiveSources) {
+            addAsPreference(saved, true);
+        }
+        for (EventSource available : EventProviderType.getAvailableSources()) {
+            if (!savedActiveSources.contains(available)) {
+                addAsPreference(available, false);
             }
         }
     }
@@ -100,7 +98,23 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     private List<EventSource> getSelectedSources() {
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         int prefCount = preferenceScreen.getPreferenceCount();
-        List<EventSource> selectedSources = new ArrayList<>();
+        List<EventSource> checkedSources = getCheckedSources(preferenceScreen, prefCount);
+        List<EventSource> clickedSelectedSources = new ArrayList<>();
+        for (EventSource clicked : clickedSources) {
+            if (checkedSources.contains(clicked)) {
+                checkedSources.remove(clicked);
+                clickedSelectedSources.add(clicked);
+            }
+        }
+        // Previously selected sources are first
+        List<EventSource> selectedSources = new ArrayList<>(checkedSources);
+        // Then recently selected sources go
+        selectedSources.addAll(clickedSelectedSources);
+        return selectedSources;
+    }
+
+    private List<EventSource> getCheckedSources(PreferenceScreen preferenceScreen, int prefCount) {
+        List<EventSource> checkedSources = new ArrayList<>();
         for (int i = 0; i < prefCount; i++) {
             Preference preference = preferenceScreen.getPreference(i);
             if (preference instanceof CheckBoxPreference) {
@@ -108,12 +122,12 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
                 if (checkBox.isChecked()) {
                     EventSource eventSource = EventSource.fromStoredString(checkBox.getExtras().getString(SOURCE_ID));
                     if (eventSource != EventSource.EMPTY) {
-                        selectedSources.add(eventSource);
+                        checkedSources.add(eventSource);
                     }
                 }
             }
         }
-        return selectedSources;
+        return checkedSources;
     }
 
     private void loadSelectedInOtherInstances() {
@@ -125,5 +139,15 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference instanceof CheckBoxPreference) {
+            EventSource source = EventSource.fromStoredString(preference.getExtras().getString(SOURCE_ID));
+            clickedSources.remove(source);
+            clickedSources.add(source); // last clicked is the last in the list
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }

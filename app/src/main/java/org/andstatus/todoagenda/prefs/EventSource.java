@@ -1,14 +1,14 @@
 package org.andstatus.todoagenda.prefs;
 
+import android.util.Log;
+
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import androidx.annotation.NonNull;
 
@@ -22,34 +22,42 @@ public class EventSource {
     private String summary;
     private int color;
 
-    public static List<EventSource> fromStringSet(Collection<String> sources) {
+    public static List<EventSource> fromJsonString(String sources) {
         if (sources == null) return Collections.emptyList();
 
-        List<EventSource> eventSources = new ArrayList<>();
-        for(String stringSource: sources) {
-            EventSource source = fromStoredString(stringSource);
-            if (source != EMPTY) {
-                eventSources.add(source);
-            }
+        try {
+            return fromJsonArray(new JSONArray(sources));
+        } catch (JSONException e) {
+            Log.w(EventSource.class.getSimpleName(), "Failed to parse event sources: " + sources, e);
+            return Collections.emptyList();
         }
-        return eventSources;
     }
 
-    public static EventSource fromStoredString(String stored) {
+    static EventSource fromStoredString(String stored) {
         String[] values = stored == null ? new String[]{} : stored.split(STORE_SEPARATOR, 2);
         switch (values.length) {
             case 1:
-                return new EventSource(EventProviderType.CALENDAR, parseIntSafe(values[0]), "", "", 0);
+                return fromTypeAndId(EventProviderType.CALENDAR, parseIntSafe(values[0]));
             case 2:
-                EventProviderType providerType = EventProviderType.fromId(parseIntSafe(values[0]));
-                int id = parseIntSafe(values[1]);
-                return providerType == EventProviderType.EMPTY || id == 0
-                        ? EMPTY
-                        : new EventSource(providerType, id, "", "", 0);
+                return fromTypeAndId(EventProviderType.fromId(parseIntSafe(values[0])), parseIntSafe(values[1]));
             default:
                 return EMPTY;
         }
     }
+
+    public static EventSource fromTypeAndId(EventProviderType providerType, int id) {
+        if (providerType == EventProviderType.EMPTY || id == 0) {
+            return EMPTY;
+        }
+        for (EventSource source: EventProviderType.getAvailableSources()) {
+            if (source.providerType == providerType && source.id == id) {
+                return source;
+            }
+        }
+        Log.w(EventSource.class.getSimpleName(), "Unexpect source " + providerType + ", id:" + id);
+        return new EventSource(providerType, id, "", "", 0);
+    }
+
 
     private static int parseIntSafe(String value) {
         try {
@@ -57,14 +65,6 @@ public class EventSource {
         } catch (Exception e) {
             return 0;
         }
-    }
-
-    public static Set<String> toStringSet(Collection<EventSource> sources) {
-        Set<String> stringSet = new HashSet<>();
-        for(EventSource source: sources) {
-            stringSet.add(source.toStoredString());
-        }
-        return stringSet;
     }
 
     @NonNull
@@ -83,12 +83,23 @@ public class EventSource {
     }
 
     @NonNull
+    public static String toJsonString(List<EventSource> eventSources) {
+        return toJsonArray(eventSources).toString();
+    }
+
+    @NonNull
     public static JSONArray toJsonArray(List<EventSource> eventSources) {
         List<String> strings = new ArrayList<>();
         for(EventSource source: eventSources) {
             strings.add(source.toStoredString());
         }
         return new JSONArray(strings);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return title + " " + summary + ", id:" + id;
     }
 
     @NonNull

@@ -60,17 +60,17 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
         if(!(savedActiveSources.equals(activeSourcesNew))) {
             savedActiveSources = activeSourcesNew;
             Log.i(this.getClass().getSimpleName(), this.toString() + "\nLoaded " + savedActiveSources.size());
-            showActiveSources();
+            showAllSources(activeSourcesNew);
         }
     }
 
-    public void showActiveSources() {
+    private void showAllSources(List<EventSource> activeSources) {
         getPreferenceScreen().removeAll();
-        for (EventSource saved: savedActiveSources) {
+        for (EventSource saved: activeSources) {
             addAsPreference(saved, true);
         }
         for (EventSource available : EventProviderType.getAvailableSources()) {
-            if (!savedActiveSources.contains(available)) {
+            if (!activeSources.contains(available)) {
                 addAsPreference(available, false);
             }
         }
@@ -147,6 +147,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
             EventSource source = EventSource.fromStoredString(preference.getExtras().getString(SOURCE_ID));
             clickedSources.remove(source);
             clickedSources.add(source); // last clicked is the last in the list
+            showAllSources(getSelectedSources());
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

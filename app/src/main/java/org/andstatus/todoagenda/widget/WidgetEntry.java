@@ -1,5 +1,6 @@
 package org.andstatus.todoagenda.widget;
 
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -30,6 +31,11 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return endDate;
     }
 
+    public OrderedEventSource getSource() {
+        return OrderedEventSource.EMPTY;
+    }
+
+    // TODO: remove
     public abstract int getPriority();
 
     @Override
@@ -49,7 +55,11 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         } else if (getStartDate().isBefore(otherEvent.getStartDate())) {
             return -1;
         }
-        return Integer.signum(getPriority() - otherEvent.getPriority());
+        // TODO: remove
+        int priorityDiff = Integer.signum(getPriority() - otherEvent.getPriority());
+        if (priorityDiff != 0) return priorityDiff;
+
+        return Integer.signum(getSource().order - otherEvent.getSource().order);
     }
 
     public TimeSection getStartDaySection() {

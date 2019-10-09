@@ -32,6 +32,7 @@ public class MultidayEventTest extends BaseWidgetTest {
         DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
                 provider.getSettings().getTimeZone(), false);
+        event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Event that carry over to the next day, show as ending midnight");
         event.setStartDate(today.plusHours(19));
@@ -78,6 +79,7 @@ public class MultidayEventTest extends BaseWidgetTest {
         DateTime sunday = friday.plusDays(2);
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
                 provider.getSettings().getTimeZone(), false);
+        event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Leader's weekend");
         event.setStartDate(friday.plusHours(19));

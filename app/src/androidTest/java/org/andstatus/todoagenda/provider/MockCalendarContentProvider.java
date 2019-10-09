@@ -1,7 +1,6 @@
 package org.andstatus.todoagenda.provider;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -9,12 +8,12 @@ import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.util.Log;
 
-import org.andstatus.todoagenda.AppWidgetProvider;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.MockSettingsProvider;
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.prefs.SettingsStorage;
 import org.andstatus.todoagenda.testcompat.IsolatedContext;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -160,6 +159,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
     public void addRow(CalendarEvent event) {
         addRow(new QueryRow()
+                .setCalendarId(event.getEventSource().source.getId())
                 .setEventId(event.getEventId())
                 .setTitle(event.getTitle())
                 .setBegin(event.getStartMillis())
@@ -210,5 +210,12 @@ public class MockCalendarContentProvider extends MockContentProvider {
         JSONObject json = new JSONObject(RawResourceUtils.getString(context, jsonResId));
         json.getJSONObject(KEY_SETTINGS).put(PREF_WIDGET_ID, widgetId);
         return QueryResultsStorage.fromTestData(getContext(), json);
+    }
+
+    public OrderedEventSource getFirstActiveEventSource() {
+        for(OrderedEventSource orderedSource: getSettings().getActiveEventSources()) {
+            return orderedSource;
+        }
+        return OrderedEventSource.EMPTY;
     }
 }

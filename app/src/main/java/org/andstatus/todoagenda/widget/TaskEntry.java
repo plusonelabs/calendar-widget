@@ -1,5 +1,6 @@
 package org.andstatus.todoagenda.widget;
 
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.task.TaskEvent;
 
 public class TaskEntry extends WidgetEntry<TaskEntry> {
@@ -11,6 +12,11 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
         entry.setStartDate(event.getStartDate());
         entry.setEndDate(event.getDueDate());
         return entry;
+    }
+
+    @Override
+    public OrderedEventSource getSource() {
+        return event.getEventSource();
     }
 
     public String getTitle() {

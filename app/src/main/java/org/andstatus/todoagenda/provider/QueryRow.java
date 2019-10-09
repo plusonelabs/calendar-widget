@@ -163,6 +163,10 @@ public class QueryRow {
         return this;
     }
 
+    public QueryRow setCalendarId(Object obj) {
+        return setColumn(CalendarContract.Instances.CALENDAR_ID, obj);
+    }
+
     public QueryRow setEventId(Object obj) {
         return setColumn(CalendarContract.Instances.EVENT_ID, obj);
     }

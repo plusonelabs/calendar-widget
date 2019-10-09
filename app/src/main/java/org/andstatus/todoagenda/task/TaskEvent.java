@@ -1,11 +1,13 @@
 package org.andstatus.todoagenda.task;
 
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 public class TaskEvent {
 
+    private OrderedEventSource eventSource;
     private long id;
     private String title;
     private final DateTimeZone zone;
@@ -15,6 +17,15 @@ public class TaskEvent {
 
     public TaskEvent(DateTimeZone zone) {
         this.zone = zone;
+    }
+
+    public OrderedEventSource getEventSource() {
+        return eventSource;
+    }
+
+    public TaskEvent setEventSource(OrderedEventSource eventSource) {
+        this.eventSource = eventSource;
+        return this;
     }
 
     public long getId() {

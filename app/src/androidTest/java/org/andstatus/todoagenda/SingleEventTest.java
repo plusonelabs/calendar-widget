@@ -26,6 +26,7 @@ public class SingleEventTest extends BaseWidgetTest {
         DateUtil.setNow(today.plusHours(10));
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
                 provider.getSettings().getTimeZone(), false);
+        event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single Event today with all known attributes");
         event.setStartDate(today.plusHours(12));
@@ -48,6 +49,7 @@ public class SingleEventTest extends BaseWidgetTest {
         DateUtil.setNow(today.plusHours(10));
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
                 provider.getSettings().getTimeZone(), true);
+        event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single AllDay event today with all known attributes");
         event.setStartDate(today.minusDays(1));
@@ -67,6 +69,7 @@ public class SingleEventTest extends BaseWidgetTest {
         DateTime today = DateUtil.now(DateTimeZone.UTC).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
                 provider.getSettings().getTimeZone(), true);
+        event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single All day event from millis");
         event.setStartMillis(today.getMillis());

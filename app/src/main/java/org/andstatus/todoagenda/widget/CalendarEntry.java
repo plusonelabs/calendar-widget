@@ -8,6 +8,7 @@ import android.text.format.DateUtils;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 
@@ -163,6 +164,11 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     @Override
     public int getPriority() {
         return 30;
+    }
+
+    @Override
+    public OrderedEventSource getSource() {
+        return event.getEventSource();
     }
 
     @Override

@@ -11,12 +11,12 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
-import static org.andstatus.todoagenda.prefs.EventSource.EMPTY;
-
 /**
  * @author yvolk@yurivolkov.com
  */
 public class OrderedEventSource {
+    public final static OrderedEventSource EMPTY = new OrderedEventSource(EventSource.EMPTY, 0);
+
     public final EventSource source;
     public final int order;
 
@@ -50,7 +50,7 @@ public class OrderedEventSource {
         return addAll(new ArrayList<OrderedEventSource>(), sources);
     }
 
-    public static List<OrderedEventSource> addAll(List<OrderedEventSource> list, List<EventSource> sources) {
+    static List<OrderedEventSource> addAll(List<OrderedEventSource> list, List<EventSource> sources) {
         for(EventSource source: sources) {
             add(list, source);
         }
@@ -58,7 +58,7 @@ public class OrderedEventSource {
     }
 
     private static void add(List<OrderedEventSource> list, EventSource source) {
-        if (source != EMPTY) {
+        if (source != EventSource.EMPTY) {
             list.add(new OrderedEventSource(source, list.size() + 1));
         }
     }
@@ -75,5 +75,25 @@ public class OrderedEventSource {
             strings.add(source.source.toStoredString());
         }
         return new JSONArray(strings);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderedEventSource that = (OrderedEventSource) o;
+
+        return source.equals(that.source);
+    }
+
+    @Override
+    public int hashCode() {
+        return source.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "order:" + order + ", " + source;
     }
 }

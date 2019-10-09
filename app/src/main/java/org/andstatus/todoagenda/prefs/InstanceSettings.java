@@ -570,4 +570,13 @@ public class InstanceSettings {
         }
         return true;
     }
+
+    public OrderedEventSource getActiveEventSource(EventProviderType type, int id) {
+        for(OrderedEventSource orderedSource: activeEventSources) {
+            if (orderedSource.source.providerType == type && orderedSource.source.getId() == id) {
+                return orderedSource;
+            }
+        }
+        return OrderedEventSource.EMPTY;
+    }
 }

@@ -215,8 +215,12 @@ public class CalendarEventProvider extends EventProvider {
     }
 
     private CalendarEvent createCalendarEvent(Cursor cursor) {
+        OrderedEventSource source = getSettings()
+            .getActiveEventSource(type, cursor.getInt(cursor.getColumnIndex(Instances.CALENDAR_ID)));
+
         boolean allDay = cursor.getInt(cursor.getColumnIndex(Instances.ALL_DAY)) > 0;
         CalendarEvent event = new CalendarEvent(context, widgetId, zone, allDay);
+        event.setEventSource(source);
         event.setEventId(cursor.getInt(cursor.getColumnIndex(Instances.EVENT_ID)));
         event.setTitle(cursor.getString(cursor.getColumnIndex(Instances.TITLE)));
         event.setStartMillis(cursor.getLong(cursor.getColumnIndex(Instances.BEGIN)));

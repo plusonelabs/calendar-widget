@@ -31,6 +31,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
     public List<TaskEvent> queryTasks() {
         Uri uri = DmfsOpenTasksContract.Tasks.PROVIDER_URI;
         String[] projection = {
+                DmfsOpenTasksContract.Tasks.COLUMN_LIST_ID,
                 DmfsOpenTasksContract.Tasks.COLUMN_ID,
                 DmfsOpenTasksContract.Tasks.COLUMN_TITLE,
                 DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE,
@@ -75,21 +76,22 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
     private String getWhereClause() {
         StringBuilder whereBuilder = new StringBuilder();
 
-        whereBuilder.append(DmfsOpenTasksContract.Tasks.COLUMN_STATUS).append(NOT_EQUALS).append(DmfsOpenTasksContract.Tasks.STATUS_COMPLETED);
+        whereBuilder.append(DmfsOpenTasksContract.Tasks.COLUMN_STATUS).append(NOT_EQUALS)
+                .append(DmfsOpenTasksContract.Tasks.STATUS_COMPLETED);
 
         // @formatter:off
         whereBuilder.append(AND_BRACKET)
-                .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
-                .append(OR)
-                    .append(OPEN_BRACKET)
-                        .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(IS_NULL)
-                        .append(AND_BRACKET)
-                            .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
-                            .append(OR)
-                            .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(IS_NULL)
-                        .append(CLOSING_BRACKET)
-                    .append(CLOSING_BRACKET)
-                .append(CLOSING_BRACKET);
+        .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
+        .append(OR)
+            .append(OPEN_BRACKET)
+                .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(IS_NULL)
+                .append(AND_BRACKET)
+                    .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
+                    .append(OR)
+                    .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(IS_NULL)
+                .append(CLOSING_BRACKET)
+            .append(CLOSING_BRACKET)
+        .append(CLOSING_BRACKET);
         // @formatter:on
 
         Set<String> taskLists = new HashSet<>();
@@ -108,7 +110,11 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
     }
 
     private TaskEvent createTask(Cursor cursor) {
+        OrderedEventSource source = getSettings()
+                .getActiveEventSource(type,
+                        cursor.getInt(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_LIST_ID)));
         TaskEvent task = new TaskEvent(zone);
+        task.setEventSource(source);
         task.setId(cursor.getLong(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_ID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_TITLE)));
 

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -17,6 +18,7 @@ public class CalendarEvent {
     private final DateTimeZone zone;
     private final boolean allDay;
 
+    private OrderedEventSource eventSource;
     private int eventId;
     private String title;
     private DateTime startDate;
@@ -32,6 +34,15 @@ public class CalendarEvent {
         this.widgetId = widgetId;
         this.zone = zone;
         this.allDay = allDay;
+    }
+
+    public OrderedEventSource getEventSource() {
+        return eventSource;
+    }
+
+    public CalendarEvent setEventSource(OrderedEventSource eventSource) {
+        this.eventSource = eventSource;
+        return this;
     }
 
     public DateTime getStartDate() {
@@ -192,7 +203,8 @@ public class CalendarEvent {
                 + ", allDay=" + allDay
                 + ", alarmActive=" + alarmActive
                 + ", recurring=" + recurring
-                + (location != null ? ", location=" + location : "") + "]";
+                + (location != null ? ", location=" + location : "") +
+                " ; source " + eventSource + "]";
     }
 
     @Override

@@ -120,22 +120,22 @@ public class ApplicationPreferences {
     }
 
     public static boolean noTaskSources(Context context) {
-        List<EventSource> sources = getActiveEventSources(context);
-        for(EventSource source: sources) {
-            if (!source.providerType.isCalendar) return false;
+        List<OrderedEventSource> sources = getActiveEventSources(context);
+        for(OrderedEventSource orderedSource: sources) {
+            if (!orderedSource.source.providerType.isCalendar) return false;
         }
         return true;
     }
 
-    public static List<EventSource> getActiveEventSources(Context context) {
-        return EventSource.fromJsonString(PreferenceManager.getDefaultSharedPreferences(context)
+    public static List<OrderedEventSource> getActiveEventSources(Context context) {
+        return OrderedEventSource.fromJsonString(PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(PREF_ACTIVE_SOURCES, null));
     }
 
-    public static void setActiveEventSources(Context context, List<EventSource> sources) {
+    public static void setActiveEventSources(Context context, List<OrderedEventSource> sources) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PREF_ACTIVE_SOURCES, EventSource.toJsonString(sources));
+        editor.putString(PREF_ACTIVE_SOURCES, OrderedEventSource.toJsonString(sources));
         editor.apply();
     }
 

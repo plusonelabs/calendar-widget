@@ -21,7 +21,7 @@ import java.util.List;
 public class EventSourcesPreferencesFragment extends PreferenceFragment {
     private static final String SOURCE_ID = "sourceId";
 
-    List<EventSource> savedActiveSources = Collections.emptyList();
+    List<OrderedEventSource> savedActiveSources = Collections.emptyList();
     List<EventSource> clickedSources = new ArrayList<>();
 
     @Override
@@ -56,7 +56,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     }
 
     private void loadActiveSources() {
-        List<EventSource> activeSourcesNew = ApplicationPreferences.getActiveEventSources(getActivity());
+        List<OrderedEventSource> activeSourcesNew = ApplicationPreferences.getActiveEventSources(getActivity());
         if(!(savedActiveSources.equals(activeSourcesNew))) {
             savedActiveSources = activeSourcesNew;
             Log.i(this.getClass().getSimpleName(), this.toString() + "\nLoaded " + savedActiveSources.size());
@@ -64,14 +64,14 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
         }
     }
 
-    private void showAllSources(List<EventSource> activeSources) {
+    private void showAllSources(List<OrderedEventSource> activeSources) {
         getPreferenceScreen().removeAll();
-        for (EventSource saved: activeSources) {
-            addAsPreference(saved, true);
+        for (OrderedEventSource saved: activeSources) {
+            addAsPreference(saved.source, true);
         }
-        for (EventSource available : EventProviderType.getAvailableSources()) {
+        for (OrderedEventSource available : EventProviderType.getAvailableSources()) {
             if (!activeSources.contains(available)) {
-                addAsPreference(available, false);
+                addAsPreference(available.source, false);
             }
         }
     }
@@ -87,7 +87,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     private static final Object setLock = new Object();
     public void saveSelectedSources() {
         synchronized (setLock) {
-            List<EventSource> selectedSources = getSelectedSources();
+            List<OrderedEventSource> selectedSources = getSelectedSources();
             Log.i(this.getClass().getSimpleName(), this.toString() + "\nSaving " + selectedSources.size());
             ApplicationPreferences.setActiveEventSources(getActivity(), selectedSources);
             savedActiveSources = selectedSources;
@@ -95,7 +95,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
         loadSelectedInOtherInstances();
     }
 
-    private List<EventSource> getSelectedSources() {
+    private List<OrderedEventSource> getSelectedSources() {
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         int prefCount = preferenceScreen.getPreferenceCount();
         List<EventSource> checkedSources = getCheckedSources(preferenceScreen, prefCount);
@@ -107,10 +107,9 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
             }
         }
         // Previously selected sources are first
-        List<EventSource> selectedSources = new ArrayList<>(checkedSources);
+        List<OrderedEventSource> selectedSources = OrderedEventSource.fromSources(checkedSources);
         // Then recently selected sources go
-        selectedSources.addAll(clickedSelectedSources);
-        return selectedSources;
+        return OrderedEventSource.addAll(selectedSources, clickedSelectedSources);
     }
 
     private List<EventSource> getCheckedSources(PreferenceScreen preferenceScreen, int prefCount) {

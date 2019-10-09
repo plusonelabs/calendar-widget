@@ -11,6 +11,7 @@ import android.util.Log;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResult;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
@@ -19,7 +20,6 @@ import org.andstatus.todoagenda.task.TaskEvent;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -87,8 +87,8 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
                 .append(CLOSING_BRACKET);
 
         Set<String> taskLists = new HashSet<>();
-        for (EventSource source: getSettings().getActiveEventSources(type)) {
-            taskLists.add(Integer.toString(source.getId()));
+        for (OrderedEventSource orderedSource: getSettings().getActiveEventSources(type)) {
+            taskLists.add(Integer.toString(orderedSource.source.getId()));
         }
         if (!taskLists.isEmpty()) {
             whereBuilder.append(AND);
@@ -120,7 +120,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
     }
 
     @Override
-    public Collection<EventSource> fetchAvailableSources() {
+    public List<EventSource> fetchAvailableSources() {
         ArrayList<EventSource> eventSources = new ArrayList<>();
 
         String[] projection = {

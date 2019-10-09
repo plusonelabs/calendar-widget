@@ -122,7 +122,7 @@ public class InstanceSettings {
     // ----------------------------------------------------------------------------------
     // Calendars and task lists
     static final String PREF_ACTIVE_SOURCES = "activeSources";
-    private List<EventSource> activeEventSources = Collections.emptyList();
+    private List<OrderedEventSource> activeEventSources = Collections.emptyList();
 
     // ----------------------------------------------------------------------------------
     // Other
@@ -155,7 +155,7 @@ public class InstanceSettings {
         }
         if (json.has(PREF_ACTIVE_SOURCES)) {
             JSONArray jsonArray = json.getJSONArray(PREF_ACTIVE_SOURCES);
-            settings.setActiveEventSources(EventSource.fromJsonArray(jsonArray));
+            settings.setActiveEventSources(OrderedEventSource.fromJsonArray(jsonArray));
         }
         if (json.has(PREF_EVENT_RANGE)) {
             settings.eventRange = json.getInt(PREF_EVENT_RANGE);
@@ -328,7 +328,7 @@ public class InstanceSettings {
             json.put(PREF_WIDGET_ID, widgetId);
             json.put(PREF_SHOW_DATE_ON_WIDGET_HEADER, showDateOnWidgetHeader);
             json.put(PREF_WIDGET_INSTANCE_NAME, widgetInstanceName);
-            json.put(PREF_ACTIVE_SOURCES, EventSource.toJsonArray(getActiveEventSources()));
+            json.put(PREF_ACTIVE_SOURCES, OrderedEventSource.toJsonArray(getActiveEventSources()));
             json.put(PREF_EVENT_RANGE, eventRange);
             json.put(PREF_EVENTS_ENDED, eventsEnded.save());
             json.put(PREF_FILL_ALL_DAY, fillAllDayEvents);
@@ -378,19 +378,19 @@ public class InstanceSettings {
         return widgetInstanceName;
     }
 
-    public void setActiveEventSources(List<EventSource> activeEventSources) {
+    public void setActiveEventSources(List<OrderedEventSource> activeEventSources) {
         this.activeEventSources = activeEventSources;
     }
 
-    public List<EventSource> getActiveEventSources(EventProviderType type) {
-        List<EventSource> sources = new ArrayList<>();
-        for(EventSource source: getActiveEventSources()) {
-            if (source.providerType == type) sources.add(source);
+    public List<OrderedEventSource> getActiveEventSources(EventProviderType type) {
+        List<OrderedEventSource> sources = new ArrayList<>();
+        for(OrderedEventSource orderedSource: getActiveEventSources()) {
+            if (orderedSource.source.providerType == type) sources.add(orderedSource);
         }
         return sources;
     }
 
-    public List<EventSource> getActiveEventSources() {
+    public List<OrderedEventSource> getActiveEventSources() {
         return activeEventSources.isEmpty()
                 ? EventProviderType.getAvailableSources()
                 : activeEventSources;
@@ -565,8 +565,8 @@ public class InstanceSettings {
     }
 
     public boolean noTaskSources() {
-        for(EventSource source: activeEventSources) {
-            if (!source.providerType.isCalendar) return false;
+        for(OrderedEventSource orderedSource: activeEventSources) {
+            if (!orderedSource.source.providerType.isCalendar) return false;
         }
         return true;
     }

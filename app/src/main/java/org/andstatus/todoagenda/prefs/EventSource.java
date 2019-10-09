@@ -3,12 +3,6 @@ package org.andstatus.todoagenda.prefs;
 import android.util.Log;
 
 import org.andstatus.todoagenda.provider.EventProviderType;
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 
@@ -22,19 +16,10 @@ public class EventSource {
     private String summary;
     private int color;
 
-    public static List<EventSource> fromJsonString(String sources) {
-        if (sources == null) return Collections.emptyList();
-
-        try {
-            return fromJsonArray(new JSONArray(sources));
-        } catch (JSONException e) {
-            Log.w(EventSource.class.getSimpleName(), "Failed to parse event sources: " + sources, e);
-            return Collections.emptyList();
-        }
-    }
-
     static EventSource fromStoredString(String stored) {
-        String[] values = stored == null ? new String[]{} : stored.split(STORE_SEPARATOR, 2);
+        if (stored == null) return  EMPTY;
+
+        String[] values = stored.split(STORE_SEPARATOR, 2);
         switch (values.length) {
             case 1:
                 return fromTypeAndId(EventProviderType.CALENDAR, parseIntSafe(values[0]));
@@ -49,7 +34,8 @@ public class EventSource {
         if (providerType == EventProviderType.EMPTY || id == 0) {
             return EMPTY;
         }
-        for (EventSource source: EventProviderType.getAvailableSources()) {
+        for (OrderedEventSource orderedSource: EventProviderType.getAvailableSources()) {
+            EventSource source = orderedSource.source;
             if (source.providerType == providerType && source.id == id) {
                 return source;
             }
@@ -65,35 +51,6 @@ public class EventSource {
         } catch (Exception e) {
             return 0;
         }
-    }
-
-    @NonNull
-    public static List<EventSource> fromJsonArray(JSONArray jsonArray) {
-        List<EventSource> list = new ArrayList<>();
-        for (int index = 0; index < jsonArray.length(); index++) {
-            String value = jsonArray.optString(index);
-            if (value != null) {
-                EventSource source = fromStoredString(value);
-                if (source != EMPTY) {
-                    list.add(source);
-                }
-            }
-        }
-        return list;
-    }
-
-    @NonNull
-    public static String toJsonString(List<EventSource> eventSources) {
-        return toJsonArray(eventSources).toString();
-    }
-
-    @NonNull
-    public static JSONArray toJsonArray(List<EventSource> eventSources) {
-        List<String> strings = new ArrayList<>();
-        for(EventSource source: eventSources) {
-            strings.add(source.toStoredString());
-        }
-        return new JSONArray(strings);
     }
 
     @NonNull

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResult;
@@ -24,7 +25,6 @@ import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -117,13 +117,13 @@ public class CalendarEventProvider extends EventProvider {
     }
 
     private String getCalendarSelection() {
-        List<EventSource> activeSources = getSettings().getActiveEventSources(type);
+        List<OrderedEventSource> activeSources = getSettings().getActiveEventSources(type);
         StringBuilder stringBuilder = new StringBuilder(EVENT_SELECTION);
         if (!activeSources.isEmpty()) {
             stringBuilder.append(AND_BRACKET);
-            Iterator<EventSource> iterator = activeSources.iterator();
+            Iterator<OrderedEventSource> iterator = activeSources.iterator();
             while (iterator.hasNext()) {
-                EventSource source = iterator.next();
+                EventSource source = iterator.next().source;
                 stringBuilder.append(Instances.CALENDAR_ID);
                 stringBuilder.append(EQUALS);
                 stringBuilder.append(source.getId());
@@ -169,6 +169,7 @@ public class CalendarEventProvider extends EventProvider {
 
     public static String[] getProjection() {
         List<String> columnNames = new ArrayList<>();
+        columnNames.add(Instances.CALENDAR_ID);
         columnNames.add(Instances.EVENT_ID);
         columnNames.add(Instances.TITLE);
         columnNames.add(Instances.BEGIN);
@@ -240,7 +241,7 @@ public class CalendarEventProvider extends EventProvider {
     }
 
     @Override
-    public Collection<EventSource> fetchAvailableSources() {
+    public List<EventSource> fetchAvailableSources() {
         List<EventSource> eventSources = new ArrayList<>();
         Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
         ContentResolver contentResolver = context.getContentResolver();

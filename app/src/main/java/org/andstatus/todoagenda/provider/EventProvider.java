@@ -10,8 +10,8 @@ import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 
@@ -72,7 +72,7 @@ public class EventProvider {
         return argb(255, red(color), green(color), blue(color));
     }
 
-    public Collection<EventSource> fetchAvailableSources() {
+    public List<EventSource> fetchAvailableSources() {
         return Collections.emptyList();
     }
 }

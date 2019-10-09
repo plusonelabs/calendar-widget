@@ -9,6 +9,7 @@ import org.andstatus.todoagenda.EnvironmentChangedReceiver;
 import org.andstatus.todoagenda.calendar.CalendarEventProvider;
 import org.andstatus.todoagenda.calendar.CalendarEventVisualizer;
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.task.TaskVisualizer;
 import org.andstatus.todoagenda.task.dmfs.DmfsOpenTasksContract;
 import org.andstatus.todoagenda.task.dmfs.DmfsOpenTasksProvider;
@@ -16,7 +17,6 @@ import org.andstatus.todoagenda.task.samsung.SamsungTasksProvider;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.andstatus.todoagenda.widget.WidgetEntryVisualizer;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -53,7 +53,7 @@ public enum EventProviderType {
     public final String permission;
     private final String authority;
 
-    private static List<EventSource> sources = new CopyOnWriteArrayList<>();
+    private static List<OrderedEventSource> sources = new CopyOnWriteArrayList<>();
     private static Set<String> permissionsNeeded = new CopyOnWriteArraySet<>();
     private static volatile boolean initialized = false;
 
@@ -70,11 +70,11 @@ public enum EventProviderType {
         sources.clear();
         for(EventProviderType type : EventProviderType.values()) {
             EventProvider provider = type.getEventProvider(context, 0);
-            Collection<EventSource> ss = Collections.emptyList();
+            List<EventSource> ss = Collections.emptyList();
             boolean permissionNeeded = false;
             try {
                 ss = provider.fetchAvailableSources();
-                sources.addAll(ss);
+                sources.addAll(OrderedEventSource.fromSources(ss));
             } catch (SecurityException e) {
                 Log.i(EventProviderType.class.getSimpleName(), "initialize: " + e.getMessage());
                 permissionNeeded = true;
@@ -104,7 +104,7 @@ public enum EventProviderType {
         return permissionsNeeded;
     }
 
-    public static List<EventSource> getAvailableSources() {
+    public static List<OrderedEventSource> getAvailableSources() {
         return sources;
     }
 
@@ -126,8 +126,8 @@ public enum EventProviderType {
     }
 
     public boolean hasEventSources() {
-        for(EventSource source: sources) {
-            if (source.providerType == this) return true;
+        for(OrderedEventSource orderedSource: sources) {
+            if (orderedSource.source.providerType == this) return true;
         }
         return false;
     }

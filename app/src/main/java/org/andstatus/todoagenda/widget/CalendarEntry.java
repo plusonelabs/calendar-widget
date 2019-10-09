@@ -162,11 +162,6 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     }
 
     @Override
-    public int getPriority() {
-        return 30;
-    }
-
-    @Override
     public OrderedEventSource getSource() {
         return event.getEventSource();
     }

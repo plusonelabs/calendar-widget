@@ -40,9 +40,4 @@ public class LastEntry extends WidgetEntry<LastEntry> {
         this.type = type;
         super.setStartDate(date);
     }
-
-    @Override
-    public int getPriority() {
-        return 40;
-    }
 }

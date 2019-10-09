@@ -35,9 +35,6 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return OrderedEventSource.EMPTY;
     }
 
-    // TODO: remove
-    public abstract int getPriority();
-
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + " [startDate=" + startDate + "]";
@@ -55,10 +52,6 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         } else if (getStartDate().isBefore(otherEvent.getStartDate())) {
             return -1;
         }
-        // TODO: remove
-        int priorityDiff = Integer.signum(getPriority() - otherEvent.getPriority());
-        if (priorityDiff != 0) return priorityDiff;
-
         return Integer.signum(getSource().order - otherEvent.getSource().order);
     }
 

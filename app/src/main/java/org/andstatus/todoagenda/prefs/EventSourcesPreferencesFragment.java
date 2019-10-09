@@ -66,11 +66,20 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
 
     private void showAllSources(List<OrderedEventSource> activeSources) {
         getPreferenceScreen().removeAll();
+        List<EventSource> added = new ArrayList<>();
         for (OrderedEventSource saved: activeSources) {
+            added.add(saved.source);
             addAsPreference(saved.source, true);
         }
+        for (EventSource clicked : clickedSources) {
+            if (!added.contains(clicked)) {
+                added.add(clicked);
+                addAsPreference(clicked, false);
+            }
+        }
         for (OrderedEventSource available : EventProviderType.getAvailableSources()) {
-            if (!activeSources.contains(available)) {
+            if (!added.contains(available.source)) {
+                added.add(available.source);
                 addAsPreference(available.source, false);
             }
         }

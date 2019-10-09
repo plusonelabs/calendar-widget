@@ -36,6 +36,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
         return entry;
     }
 
+    @Override
     public String getTitle() {
         String title = event.getTitle();
         if (TextUtils.isEmpty(title)) {
@@ -52,6 +53,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
         return allDay;
     }
 
+    @Override
     public String getLocation() {
         return event.getLocation();
     }

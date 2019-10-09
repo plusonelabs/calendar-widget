@@ -30,5 +30,9 @@
             android:defaultValue="false"
             android:key="showOnlyClosestInstanceOfRecurringEvent"
             android:title="@string/show_only_closest_instance_of_recurring_event" />
+        <org.andstatus.todoagenda.prefs.MultilineCheckBoxPreference
+            android:defaultValue="false"
+            android:key="hideDuplicates"
+            android:title="@string/hide_duplicates" />
     </PreferenceCategory>
 </PreferenceScreen>

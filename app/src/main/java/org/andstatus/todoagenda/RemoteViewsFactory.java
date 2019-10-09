@@ -188,9 +188,28 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             eventEntries.addAll(visualizer.queryEventEntries());
         }
         Collections.sort(eventEntries);
-        List<WidgetEntry> widgetEntries = settings.getShowDayHeaders() ? addDayHeaders(eventEntries) : eventEntries;
+        List<WidgetEntry> deduplicated = settings.getHideDuplicates() ? hideDuplicates(eventEntries) : eventEntries;
+        List<WidgetEntry> widgetEntries = settings.getShowDayHeaders() ? addDayHeaders(deduplicated) : deduplicated;
         widgetEntries.add(LastEntry.from(settings, widgetEntries));
         return widgetEntries;
+    }
+
+    private List<WidgetEntry> hideDuplicates(List<WidgetEntry> inputEntries) {
+        List<WidgetEntry> deduplicated = new ArrayList<>();
+        List<WidgetEntry> hidden = new ArrayList<>();
+        for(int ind1 = 0; ind1 < inputEntries.size(); ind1++) {
+            WidgetEntry inputEntry = inputEntries.get(ind1);
+            if (!hidden.contains(inputEntry)) {
+                deduplicated.add(inputEntry);
+                for(int ind2 = ind1 + 1; ind2 < inputEntries.size(); ind2++) {
+                    WidgetEntry entry2 = inputEntries.get(ind2);
+                    if (!hidden.contains(entry2) && inputEntry.duplicates(entry2)) {
+                        hidden.add(entry2);
+                    }
+                }
+            }
+        }
+        return deduplicated;
     }
 
     private List<WidgetEntry> addDayHeaders(List<WidgetEntry> listIn) {

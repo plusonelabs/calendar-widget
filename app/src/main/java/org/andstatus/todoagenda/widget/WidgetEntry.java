@@ -35,6 +35,14 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return OrderedEventSource.EMPTY;
     }
 
+    public String getTitle() {
+        return getClass().getName();
+    }
+
+    public String getLocation() {
+        return getClass().getName();
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + " [startDate=" + startDate + "]";
@@ -65,5 +73,12 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return DateUtil.isBeforeNow(getEndDate())
                 ? TimeSection.PAST
                 : (DateUtil.isToday(getStartDate()) ? TimeSection.TODAY : TimeSection.FUTURE);
+    }
+
+    public boolean duplicates(WidgetEntry other) {
+        return getStartDate().equals(other.getStartDate()) &&
+            getEndDate().equals(other.getEndDate()) &&
+            getTitle().equals(other.getTitle()) &&
+            getLocation().equals(other.getLocation());
     }
 }

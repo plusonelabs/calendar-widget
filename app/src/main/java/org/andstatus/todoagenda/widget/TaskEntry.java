@@ -19,6 +19,7 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
         return event.getEventSource();
     }
 
+    @Override
     public String getTitle() {
         return event.getTitle();
     }

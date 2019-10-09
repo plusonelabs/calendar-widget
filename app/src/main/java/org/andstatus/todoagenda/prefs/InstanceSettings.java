@@ -118,6 +118,8 @@ public class InstanceSettings {
     static final String PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT =
             "showOnlyClosestInstanceOfRecurringEvent";
     private boolean showOnlyClosestInstanceOfRecurringEvent = false;
+    static final String PREF_HIDE_DUPLICATES = "hideDuplicates";
+    private boolean hideDuplicates = false;
 
     // ----------------------------------------------------------------------------------
     // Calendars and task lists
@@ -227,6 +229,9 @@ public class InstanceSettings {
             settings.showOnlyClosestInstanceOfRecurringEvent = json.getBoolean(
                     PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT);
         }
+        if (json.has(PREF_HIDE_DUPLICATES)) {
+            settings.hideDuplicates = json.getBoolean(PREF_HIDE_DUPLICATES);
+        }
         if (json.has(PREF_INDICATE_ALERTS)) {
             settings.indicateAlerts = json.getBoolean(PREF_INDICATE_ALERTS);
         }
@@ -282,6 +287,7 @@ public class InstanceSettings {
             settings.titleMultiline = ApplicationPreferences.isTitleMultiline(context);
             settings.showOnlyClosestInstanceOfRecurringEvent = ApplicationPreferences
                     .getShowOnlyClosestInstanceOfRecurringEvent(context);
+            settings.hideDuplicates = ApplicationPreferences.getHideDuplicates(context);
             settings.indicateAlerts = ApplicationPreferences.getBoolean(context, PREF_INDICATE_ALERTS, true);
             settings.indicateRecurring = ApplicationPreferences.getBoolean(context, PREF_INDICATE_RECURRING, false);
             settings.widgetHeaderLayout = ApplicationPreferences.getWidgetHeaderLayout(context);
@@ -352,6 +358,7 @@ public class InstanceSettings {
             json.put(PREF_EVENT_ENTRY_LAYOUT, eventEntryLayout.value);
             json.put(PREF_MULTILINE_TITLE, titleMultiline);
             json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, showOnlyClosestInstanceOfRecurringEvent);
+            json.put(PREF_HIDE_DUPLICATES, hideDuplicates);
             json.put(PREF_INDICATE_ALERTS, indicateAlerts);
             json.put(PREF_INDICATE_RECURRING, indicateRecurring);
             json.put(PREF_WIDGET_HEADER_LAYOUT, widgetHeaderLayout.value);
@@ -496,6 +503,10 @@ public class InstanceSettings {
 
     public boolean getShowOnlyClosestInstanceOfRecurringEvent() {
         return showOnlyClosestInstanceOfRecurringEvent;
+    }
+
+    public boolean getHideDuplicates() {
+        return hideDuplicates;
     }
 
     @Override

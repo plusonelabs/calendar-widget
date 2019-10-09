@@ -28,6 +28,7 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENT_RANGE_D
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_FILL_ALL_DAY;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_FILL_ALL_DAY_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HIDE_BASED_ON_KEYWORDS;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HIDE_DUPLICATES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_INDICATE_ALERTS;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_INDICATE_RECURRING;
@@ -94,6 +95,7 @@ public class ApplicationPreferences {
             setBoolean(context, PREF_MULTILINE_TITLE, settings.isTitleMultiline());
             setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, settings
                     .getShowOnlyClosestInstanceOfRecurringEvent());
+            setBoolean(context, PREF_HIDE_DUPLICATES, settings.getHideDuplicates());
             setBoolean(context, PREF_INDICATE_ALERTS, settings.getIndicateAlerts());
             setBoolean(context, PREF_INDICATE_RECURRING, settings.getIndicateRecurring());
             for (Map.Entry<TextShadingPref, TextShading> entry: settings.shadings.entrySet()) {
@@ -314,6 +316,14 @@ public class ApplicationPreferences {
 
     public static void setShowOnlyClosestInstanceOfRecurringEvent(Context context, boolean value) {
         setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, value);
+    }
+
+    public static boolean getHideDuplicates(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREF_HIDE_DUPLICATES, false);
+    }
+
+    public static void setHideDuplicates(Context context, boolean value) {
+        setBoolean(context, PREF_HIDE_DUPLICATES, value);
     }
 
     private static void setString(Context context, String key, String value) {

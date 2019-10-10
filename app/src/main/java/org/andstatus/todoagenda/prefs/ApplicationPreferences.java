@@ -33,6 +33,8 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HORIZONTAL_LI
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_INDICATE_ALERTS;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_INDICATE_RECURRING;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_LOCKED_TIME_ZONE_ID;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_MULTILINE_DETAILS;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_MULTILINE_DETAILS_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_MULTILINE_TITLE;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_MULTILINE_TITLE_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_PAST_EVENTS_BACKGROUND_COLOR;
@@ -93,6 +95,7 @@ public class ApplicationPreferences {
             setLockedTimeZoneId(context, settings.getLockedTimeZoneId());
             setString(context, PREF_EVENT_ENTRY_LAYOUT, settings.getEventEntryLayout().value);
             setBoolean(context, PREF_MULTILINE_TITLE, settings.isTitleMultiline());
+            setBoolean(context, PREF_MULTILINE_DETAILS, settings.isMultilineDetails());
             setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, settings
                     .getShowOnlyClosestInstanceOfRecurringEvent());
             setBoolean(context, PREF_HIDE_DUPLICATES, settings.getHideDuplicates());
@@ -307,6 +310,11 @@ public class ApplicationPreferences {
     public static boolean isTitleMultiline(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT);
+    }
+
+    public static boolean isMultilineDetails(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_MULTILINE_DETAILS, PREF_MULTILINE_DETAILS_DEFAULT);
     }
 
     public static boolean getShowOnlyClosestInstanceOfRecurringEvent(Context context) {

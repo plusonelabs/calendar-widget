@@ -106,6 +106,8 @@
     <string name="show_event_icon_desc">Show Calendar color bar / Task icon for event</string>
     <string name="show_number_of_days_to_event_title">Show number of days to event</string>
     <string name="show_number_of_days_to_event_desc">Show column with a number of days to event in the \"All in one row\" event layout</string>
+    <string name="multiline_details_title">Multiline details</string>
+    <string name="multiline_details_desc">Spread event time and location over multiple lines</string>
 
     <!-- Preference header: Colors -->
     <string name="colors_prefs_desc">Colors and opacity of texts and backgrounds</string>

@@ -35,6 +35,7 @@ public enum EventEntryLayout {
                 setTextSize(entry.getSettings(), rv, viewId, R.dimen.event_entry_details);
                 setTextColorFromAttr(entry.getSettings().getShadingContext(TextShadingPref.forDetails(entry)),
                         rv, viewId, R.attr.dayHeaderTitle);
+                setMultiline(rv, viewId, entry.getSettings().isMultilineDetails());
             }
         }
     },

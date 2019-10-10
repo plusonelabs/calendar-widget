@@ -69,6 +69,9 @@ public class InstanceSettings {
     static final String PREF_MULTILINE_TITLE = "multiline_title";
     static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
     private boolean titleMultiline = PREF_MULTILINE_TITLE_DEFAULT;
+    static final String PREF_MULTILINE_DETAILS = "multiline_details";
+    static final boolean PREF_MULTILINE_DETAILS_DEFAULT = false;
+    private boolean multilineDetails = PREF_MULTILINE_DETAILS_DEFAULT;
 
     // ----------------------------------------------------------------------------------
     // Colors
@@ -225,6 +228,9 @@ public class InstanceSettings {
         if (json.has(PREF_MULTILINE_TITLE)) {
             settings.titleMultiline = json.getBoolean(PREF_MULTILINE_TITLE);
         }
+        if (json.has(PREF_MULTILINE_DETAILS)) {
+            settings.multilineDetails = json.getBoolean(PREF_MULTILINE_DETAILS);
+        }
         if (json.has(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT)) {
             settings.showOnlyClosestInstanceOfRecurringEvent = json.getBoolean(
                     PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT);
@@ -285,6 +291,7 @@ public class InstanceSettings {
             settings.setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
             settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
             settings.titleMultiline = ApplicationPreferences.isTitleMultiline(context);
+            settings.multilineDetails = ApplicationPreferences.isMultilineDetails(context);
             settings.showOnlyClosestInstanceOfRecurringEvent = ApplicationPreferences
                     .getShowOnlyClosestInstanceOfRecurringEvent(context);
             settings.hideDuplicates = ApplicationPreferences.getHideDuplicates(context);
@@ -357,6 +364,7 @@ public class InstanceSettings {
             json.put(PREF_LOCKED_TIME_ZONE_ID, lockedTimeZoneId);
             json.put(PREF_EVENT_ENTRY_LAYOUT, eventEntryLayout.value);
             json.put(PREF_MULTILINE_TITLE, titleMultiline);
+            json.put(PREF_MULTILINE_DETAILS, multilineDetails);
             json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, showOnlyClosestInstanceOfRecurringEvent);
             json.put(PREF_HIDE_DUPLICATES, hideDuplicates);
             json.put(PREF_INDICATE_ALERTS, indicateAlerts);
@@ -499,6 +507,10 @@ public class InstanceSettings {
 
     public boolean isTitleMultiline() {
         return titleMultiline;
+    }
+
+    public boolean isMultilineDetails() {
+        return multilineDetails;
     }
 
     public boolean getShowOnlyClosestInstanceOfRecurringEvent() {

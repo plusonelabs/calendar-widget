@@ -17,9 +17,9 @@
     <string name="indicator_recurring">Индикатор повторяющегося события</string>
     <string name="no_title">(Без заголовка)</string>
     <string name="grant_permissions">Предоставить разрешения</string>
-    <string name="grant_permissions_verbose">Для Виджета требуется разрешение на чтение календарей. \nНажмите здесь, чтобы предоставить это разрешение.</string>
+    <string name="grant_permissions_verbose">Для Виджета требуется разрешение на чтение календарей и задач. \nНажмите здесь, чтобы предоставить это разрешение.</string>
     <string name="past_header">Просроченные</string>
-    <string name="permissions_justification">Добро пожаловать в приложение Todo Agenda - легкий доступ к вашему календарю.\n\nДля того, чтобы получить максимум от этого виджета, Вам необходимо предоставить этому приложению доступ к календарю.</string>
+    <string name="permissions_justification">Добро пожаловать в приложение Todo Agenda - легкий доступ к вашим календарям и задачам.\n\nДля того, чтобы получить максимум от этого виджета, Вам необходимо предоставить этому приложению доступ к календарям и задачам.</string>
     <string name="no_widgets_found">Сначала, пожалуйста, добавьте виджет \"Todo Agenda\" на домашний экран Вашего устройства.</string>
     <string name="select_a_widget_to_configure">Выберите Виджет, который Вы хотите настроить</string>
     <string name="close">Закрыть</string>
@@ -45,7 +45,7 @@
     <string name="app_description_4000_chars_max_part13">Отключение заголовков дней и просмотр даты в столбце \"Дней с сегодняшнего дня\".</string>
     <string name="app_description_4000_chars_max_part14">Поддержка Android версий 4 - 7. Поддержка планшетов.</string>
     <!-- Preference header: Calendars and Task Lists -->
-    <string name="calendars_prefs">Календари</string>
+    <string name="calendars_prefs">Календари и Списки задач</string>
     <string name="calendars_prefs_desc">Выбрать календари для отображения</string>
     <string name="task_source_opentasks">OpenTasks (от dmfs GmbH)</string>
     <string name="task_source_samsung">Календарь Samsung</string>
@@ -100,6 +100,8 @@
     <string name="show_event_icon_desc">Показать цветовую полоску календаря / значок задачи для события</string>
     <string name="show_number_of_days_to_event_title">Показать количество дней до события</string>
     <string name="show_number_of_days_to_event_desc">Показывать столбец с числом дней до события в раскладке \"Всё - в один ряд\"</string>
+    <string name="multiline_details_title">Многострочные подробности</string>
+    <string name="multiline_details_desc">Длинный текст с информацией о времени и местоположении продолжается на несколько строк</string>
     <!-- Preference header: Colors -->
     <string name="colors_prefs_desc">Цвет и прозрачность текста и фона</string>
     <string name="appearance_group_color_title">Цвета</string>
@@ -169,6 +171,7 @@
     <string name="ended_one_year_ago">Завершились год назад</string>
     <string name="pref_hide_based_on_keywords_title">Скрыть при начичии ключевых слов в названии</string>
     <string name="show_only_closest_instance_of_recurring_event">Показать только ближайший экземпляр повторяющегося события</string>
+    <string name="hide_duplicates">Убрать дубликаты</string>
     <!-- Preference header: Feedback -->
     <string name="feedback_prefs">Обратная связь</string>
     <string name="feedback_prefs_desc">Свяжитесь с нами</string>

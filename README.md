@@ -62,6 +62,21 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## Changelog
 
+### <a id="v3.1"/> v3.1 Hide duplicated events
+
+* Selected Calendars (Task lists) [display order](https://github.com/plusonelabs/calendar-widget/issues/287)
+ is determined by the order in which the calendars are selected. 
+ Items in the list are reordered immediately after selection or deselection. 
+ All selected items are at the top of the list now. 
+* [Hide duplicates](https://github.com/plusonelabs/calendar-widget/issues/163) option added.
+ Only the first event is shown, others are hidden. 
+ As written above, display order of Calendars and Task Lists is customized now,
+ so a User can control, events fom which Calendar will be shown.
+* Removed unneeded [vertical bar before location](https://github.com/plusonelabs/calendar-widget/issues/332)
+ (when time is not shown, e.g. for all day events).
+* [Multiline details](https://github.com/plusonelabs/calendar-widget/issues/106) option added, 
+ allowing to see the whole Location in the "Time below title" Event entry layout.   
+
 ### <a id="v3.0"/> v3.0 More colors and layout customizations
 **Attention!** Due to lots of internal changes:
 

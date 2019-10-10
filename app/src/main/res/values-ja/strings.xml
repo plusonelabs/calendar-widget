@@ -7,6 +7,8 @@
     <string name="yesterday">昨日</string>
     <string name="today">今日</string>
     <string name="tomorrow">明日</string>
+    <string name="not_initialized_yet">まだ初期化されていません...</string>
+    <string name="no_events_to_show">表示するイベントはありません</string>
     <string name="no_upcoming_events">直近のイベントはありません</string>
     <string name="open_prefs_desc">カレンダーウィジェットの設定を開きます</string>
     <string name="go_to_today">今日に移動</string>
@@ -85,6 +87,7 @@
     <string name="appearance_day_header_alignment_left">左</string>
     <string name="appearance_day_header_alignment_center">中央</string>
     <string name="appearance_day_header_alignment_right">右</string>
+    <string name="horizontalLineBelowDayHeader">日付けヘッダーの下に横線</string>
     <string name="appearance_multiline_title_title">複数行のタイトル</string>
     <string name="appearance_multiline_title_desc">イベントタイトルを複数行に展開します</string>
     <string name="appearance_show_days_without_events_title">イベントのない日を表示</string>

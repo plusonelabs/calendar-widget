@@ -25,7 +25,8 @@ public enum EventEntryLayout {
     DEFAULT(R.layout.event_entry, "DEFAULT", R.string.default_multiline_layout) {
         @Override
         protected void setEventDetails(CalendarEntry entry, RemoteViews rv) {
-            String eventDetails = entry.getEventTimeString() + entry.getLocationString();
+            String eventDetails = appendWithSeparator(
+                    entry.getEventTimeString(), SPACE_PIPE_SPACE, entry.getLocationString());
             int viewId = R.id.event_entry_details;
             if (TextUtils.isEmpty(eventDetails)) {
                 rv.setViewVisibility(viewId, View.GONE);
@@ -42,7 +43,7 @@ public enum EventEntryLayout {
     ONE_LINE(R.layout.event_entry_one_line, "ONE_LINE", R.string.single_line_layout) {
         @Override
         protected String getTitleString(CalendarEntry event) {
-            return event.getTitle() + event.getLocationString();
+            return appendWithSeparator(event.getTitle(), SPACE_PIPE_SPACE, event.getLocationString());
         }
 
         @Override
@@ -81,6 +82,7 @@ public enum EventEntryLayout {
                     rv, viewId, R.attr.dayHeaderTitle);
         }
     };
+    public static final String SPACE_PIPE_SPACE = "  |  ";
 
     @LayoutRes
     public final int layoutId;
@@ -137,4 +139,11 @@ public enum EventEntryLayout {
         // Empty
     }
 
+    public static String appendWithSeparator(String input, String separator, String toAppend) {
+        return  input == null || input.length() == 0
+                ? toAppend
+                : (toAppend == null || toAppend.length() == 0
+                    ? input
+                    : input + separator + toAppend);
+    }
 }

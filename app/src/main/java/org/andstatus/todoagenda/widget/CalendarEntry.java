@@ -20,7 +20,6 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     private static final String ARROW_SPACE = "→ ";
     private static final String EMPTY_STRING = "";
     static final String SPACE_DASH_SPACE = " - ";
-    private static final String SPACE_PIPE_SPACE = "  |  ";
 
     private boolean allDay;
     private CalendarEvent event;
@@ -96,7 +95,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     }
 
     String getLocationString() {
-        return hideLocation() ? "" : SPACE_PIPE_SPACE + getLocation();
+        return hideLocation() ? "" : getLocation();
     }
 
     private boolean hideLocation() {

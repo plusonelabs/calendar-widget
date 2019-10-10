@@ -87,7 +87,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         setTextSize(getSettings(), rv, viewId, R.dimen.event_entry_title);
         setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.forTitle(entry)),
                 rv, viewId, R.attr.eventEntryTitle);
-        setMultiline(rv, viewId, getSettings().isTitleMultiline());
+        setMultiline(rv, viewId, getSettings().isMultilineTitle());
     }
 
     @Override

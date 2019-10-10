@@ -94,7 +94,7 @@ public class ApplicationPreferences {
             setAbbreviateDates(context, settings.getAbbreviateDates());
             setLockedTimeZoneId(context, settings.getLockedTimeZoneId());
             setString(context, PREF_EVENT_ENTRY_LAYOUT, settings.getEventEntryLayout().value);
-            setBoolean(context, PREF_MULTILINE_TITLE, settings.isTitleMultiline());
+            setBoolean(context, PREF_MULTILINE_TITLE, settings.isMultilineTitle());
             setBoolean(context, PREF_MULTILINE_DETAILS, settings.isMultilineDetails());
             setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, settings
                     .getShowOnlyClosestInstanceOfRecurringEvent());
@@ -307,7 +307,7 @@ public class ApplicationPreferences {
                 PREF_EVENT_ENTRY_LAYOUT, ""));
     }
 
-    public static boolean isTitleMultiline(Context context) {
+    public static boolean isMultilineTitle(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT);
     }

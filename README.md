@@ -64,7 +64,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## <a id="changelog"/> Changelog
 
-### <a id="v3.1"/> v3.1 Hide duplicated events. Backup and restore
+### 2019-10-12 <a id="v3.1"/> v3.1.1 Hide duplicated events. Backup and restore
 
 * Selected Calendars (Task lists) [display order](https://github.com/plusonelabs/calendar-widget/issues/287)
  is determined by the order in which the calendars are selected. 
@@ -75,14 +75,14 @@ We are also looking for new and improved translations over at http://crowdin.net
  As written above, display order of Calendars and Task Lists is customized now,
  so a User can control, events fom which Calendar will be shown.
 * [Backup and Restore widget settings](https://github.com/plusonelabs/calendar-widget/issues/330). 
- Convenient for cloning settings to another widget. 
- Good for moving widget settings to another device, but requires calendars selection adjustment.  
+ Convenient for cloning settings to another widget on the same device. 
+ Good for moving widget settings to another device, but may require calendars selection adjustment in this case.  
 * Removed unneeded [vertical bar before location](https://github.com/plusonelabs/calendar-widget/issues/332)
  (when time is not shown, e.g. for all day events).
 * [Multiline details](https://github.com/plusonelabs/calendar-widget/issues/106) option added, 
  allowing to see the whole Location in the "Time below title" Event entry layout.   
 
-### <a id="v3.0"/> v3.0 More colors and layout customizations
+### 2019-10-05 <a id="v3.0"/> v3.0.11 More colors and layout customizations
 **Attention!** Due to lots of internal changes:
 
 1. Old "ToDo Agenda" app version should be uninstalled first, 
@@ -132,23 +132,23 @@ Sorry for inconvenience.
   Separate "[ToDo Agenda Not Initialized yet...](https://github.com/plusonelabs/calendar-widget/issues/318)" layout added 
   to see the widget, when it is not initialized yet (e.g. after device reboot).
 
-### [v2.1](https://github.com/plusonelabs/calendar-widget/issues/308) Tasks support
+### 2019-08-11 [v2.1.1](https://github.com/plusonelabs/calendar-widget/issues/308) Tasks support
 * Tasks support added. Two Task apps are supported: [OpenTasks (by dmfs GmbH)](https://github.com/dmfs/opentasks)
   and Tasks of Samsung Calendar ([looks like a deprecating feature...](
   https://eu.community.samsung.com/t5/Galaxy-S9-S9/New-Update-Calendar-Issues/td-p/940866)). 
 * New option "Header for past/due events". If turned on, it shows all past/due events under one "Past and due" header. 
   Applied both to calendar events and to tasks.
 
-### [v2.0](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
+### 2019-01-19 [v2.0.1](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
 
 * The "Calendar Widget" renamed to "Todo Agenda" and published to Google Play as [the new application](https://play.google.com/store/apps/details?id=org.andstatus.todoagenda).
 
-### [v1.10.1](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.1)
+### 2017-06-01 [v1.10.1](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.1)
 
 * Fix issue where widget would crash because of unexpected widgetId
 * Translations updates
 
-### [v1.10.0](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.0)
+### 2017-05-02 [v1.10.0](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.0)
 
 * Added: Different settings for different Widget instances allow you to create any number of
 customized views of your events, including configuration of different calendars for different widgets.

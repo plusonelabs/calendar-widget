@@ -100,6 +100,8 @@
     <string name="show_event_icon_desc">カレンダーの色のバー / イベントのタスクアイコンを表示</string>
     <string name="show_number_of_days_to_event_title">イベントの日数を表示</string>
     <string name="show_number_of_days_to_event_desc">\"１行にすべて\" イベントレイアウトで、イベントまでの日数を含む列を表示します</string>
+    <string name="multiline_details_title">複数行の詳細</string>
+    <string name="multiline_details_desc">イベントの時間と場所を複数行に展開します</string>
     <!-- Preference header: Colors -->
     <string name="colors_prefs_desc">テキストと背景の色と透明度</string>
     <string name="appearance_group_color_title">色</string>
@@ -169,7 +171,8 @@
     <string name="ended_one_year_ago">1 年前に終了</string>
     <string name="pref_hide_based_on_keywords_title">タイトルのキーワードに基づいて非表示にする</string>
     <string name="show_only_closest_instance_of_recurring_event">繰り返しイベントの最も近いインスタンスのみを表示</string>
-    <!-- Preference header: Feedback -->
+    <string name="hide_duplicates">重複タスクを非表示</string>
+    <!-- Preference header: Feedback and Backup -->
     <string name="feedback_prefs">フィードバック</string>
     <string name="feedback_prefs_desc">私たちに連絡をください</string>
     <string name="feedback_github_desc">プロジェクトページにフィードバックをお寄せください</string>

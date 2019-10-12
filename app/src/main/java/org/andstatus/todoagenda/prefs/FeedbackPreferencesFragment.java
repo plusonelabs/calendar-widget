@@ -27,6 +27,7 @@ public class FeedbackPreferencesFragment extends PreferenceFragment {
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         int widgetId = ApplicationPreferences.getWidgetId(getActivity());
+        ApplicationPreferences.save(getActivity(), widgetId);
         switch (preference.getKey()) {
             case KEY_SHARE_EVENTS_FOR_DEBUGGING:
                 QueryResultsStorage.shareEventsForDebugging(getActivity(), widgetId);

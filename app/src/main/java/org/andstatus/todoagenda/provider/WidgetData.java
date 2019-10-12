@@ -45,7 +45,6 @@ public class WidgetData {
         } else {
             return new WidgetData(jso);
         }
-
     }
 
     static WidgetData fromWidgetId(Context context, int widgetId) {

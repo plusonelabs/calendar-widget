@@ -146,14 +146,14 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         }
 
         String taskListName = context.getResources().getString(R.string.task_source_samsung);
-        int idIdx = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_ID);
-        int nameIdx = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_NAME);
-        int colorIdx = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_COLOR);
+        int indId = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_ID);
+        int indSummary = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_NAME);
+        int indColor = cursor.getColumnIndex(SamsungTasksContract.TaskLists.COLUMN_COLOR);
         try {
             while (cursor.moveToNext()) {
-                int id = cursor.getInt(idIdx);
+                int id = cursor.getInt(indId);
                 EventSource eventSource = new EventSource(type, id, taskListName,
-                        cursor.getString(nameIdx), getColor(cursor, colorIdx, id));
+                        cursor.getString(indSummary), getColor(cursor, indColor, id), true);
                 eventSources.add(eventSource);
             }
         } finally {

@@ -145,8 +145,8 @@ public class ApplicationPreferences {
     }
 
     public static int getEventRange(Context context) {
-        return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs == null ? 0 : parseIntSafe(prefs.getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
     }
 
     public static void setEventRange(Context context, int value) {
@@ -379,5 +379,13 @@ public class ApplicationPreferences {
         return !getShowPastEventsWithDefaultColor(context) &&
                 getEventsEnded(context) == EndedSomeTimeAgo.NONE &&
                 noTaskSources(context);
+    }
+
+    public static int parseIntSafe(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

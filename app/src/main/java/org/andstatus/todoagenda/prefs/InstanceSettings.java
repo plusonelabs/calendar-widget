@@ -598,14 +598,14 @@ public class InstanceSettings {
     }
 
     public boolean noTaskSources() {
-        for(OrderedEventSource orderedSource: activeEventSources) {
+        for(OrderedEventSource orderedSource: getActiveEventSources()) {
             if (!orderedSource.source.providerType.isCalendar) return false;
         }
         return true;
     }
 
     public OrderedEventSource getActiveEventSource(EventProviderType type, int id) {
-        for(OrderedEventSource orderedSource: activeEventSources) {
+        for(OrderedEventSource orderedSource: getActiveEventSources()) {
             if (orderedSource.source.providerType == type && orderedSource.source.getId() == id) {
                 return orderedSource;
             }

@@ -1,6 +1,8 @@
 package org.andstatus.todoagenda;
 
 import org.andstatus.todoagenda.calendar.CalendarEvent;
+import org.andstatus.todoagenda.prefs.OrderedEventSource;
+import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
@@ -10,6 +12,7 @@ import org.junit.Test;
 
 import static org.andstatus.todoagenda.RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
@@ -82,6 +85,15 @@ public class SingleEventTest extends BaseWidgetTest {
         provider.clear();
         provider.addRow(event);
         factory.onDataSetChanged();
+
+        assertFalse(provider.getSettings().toString(),
+                provider.getSettings().getActiveEventSources(EventProviderType.CALENDAR).isEmpty());
+        OrderedEventSource source = provider.getFirstActiveEventSource();
+        assertTrue(source.toString(), source.source.isAvailable);
+        assertTrue(provider.getSettings().toString(),
+                provider.getSettings().getActiveEventSource(EventProviderType.CALENDAR,
+                        source.source.getId()).source.isAvailable);
+
         factory.logWidgetEntries(TAG);
         assertEquals(1, provider.getQueriesCount());
         assertEquals(factory.getWidgetEntries().toString(), 3, factory.getWidgetEntries().size());

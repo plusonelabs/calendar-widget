@@ -155,14 +155,14 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
             return eventSources;
         }
 
-        int idIdx = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ID);
-        int nameIdx = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_NAME);
-        int colorIdx = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_COLOR);
-        int accountIdx = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ACCOUNT_NAME);
+        int indId = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ID);
+        int indTitle = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_NAME);
+        int indColor = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_COLOR);
+        int indSummary = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ACCOUNT_NAME);
         try {
             while (cursor.moveToNext()) {
-                EventSource eventSource = new EventSource(type, cursor.getInt(idIdx), cursor.getString(nameIdx),
-                        cursor.getString(accountIdx), cursor.getInt(colorIdx));
+                EventSource eventSource = new EventSource(type, cursor.getInt(indId), cursor.getString(indTitle),
+                        cursor.getString(indSummary), cursor.getInt(indColor), true);
                 eventSources.add(eventSource);
             }
         } finally {

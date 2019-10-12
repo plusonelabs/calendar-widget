@@ -256,10 +256,13 @@ public class CalendarEventProvider extends EventProvider {
                 return eventSources;
             }
 
-            for (int i = 0; i < cursor.getCount(); i++) {
-                cursor.moveToPosition(i);
-                EventSource source = new EventSource(type, cursor.getInt(0), cursor.getString(1),
-                        cursor.getString(3), cursor.getInt(2));
+            int indId = cursor.getColumnIndex(CalendarContract.Calendars._ID);
+            int indTitle = cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME);
+            int indSummary = cursor.getColumnIndex(CalendarContract.Calendars.ACCOUNT_NAME);
+            int indColor = cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_COLOR);
+            while (cursor.moveToNext()) {
+                EventSource source = new EventSource(type, cursor.getInt(indId), cursor.getString(indTitle),
+                        cursor.getString(indSummary), cursor.getInt(indColor), true);
                 eventSources.add(source);
             }
         } finally {

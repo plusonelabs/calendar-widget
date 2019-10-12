@@ -33,7 +33,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
 
     private void addAsPreference(EventSource source, boolean isChecked ) {
         CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
-        checkboxPref.setTitle(source.getTitle());
+        checkboxPref.setTitle((source.isAvailable ? "" : getText(R.string.not_found) + ": ") + source.getTitle());
         checkboxPref.setSummary(source.getSummary());
         checkboxPref.setIcon(createDrawable(source.providerType.isCalendar, source.getColor()));
         checkboxPref.getExtras().putString(SOURCE_ID, source.toStoredString());

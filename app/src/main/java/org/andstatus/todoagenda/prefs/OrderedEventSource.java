@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,8 +41,13 @@ public class OrderedEventSource {
     public static List<OrderedEventSource> fromJsonArray(JSONArray jsonArray) {
         List<OrderedEventSource> list = new ArrayList<>();
         for (int index = 0; index < jsonArray.length(); index++) {
-            String value = jsonArray.optString(index);
-            add(list, EventSource.fromStoredString(value));
+            JSONObject jsonObject = jsonArray.optJSONObject(index);
+            EventSource source = jsonObject == null
+                    ? EventSource.fromStoredString(jsonArray.optString(index))
+                    : EventSource.fromJson(jsonObject).toAvailable();
+            if (source != EventSource.EMPTY) {
+                add(list, source);
+            }
         }
         return list;
     }
@@ -70,11 +76,11 @@ public class OrderedEventSource {
 
     @NonNull
     public static JSONArray toJsonArray(List<OrderedEventSource> sources) {
-        List<String> strings = new ArrayList<>();
+        List<JSONObject> jsonObjects = new ArrayList<>();
         for(OrderedEventSource source: sources) {
-            strings.add(source.source.toStoredString());
+            jsonObjects.add(source.source.toJson());
         }
-        return new JSONArray(strings);
+        return new JSONArray(jsonObjects);
     }
 
     @Override

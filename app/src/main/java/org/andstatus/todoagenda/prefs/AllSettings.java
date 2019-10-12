@@ -1,12 +1,13 @@
 package org.andstatus.todoagenda.prefs;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
 import org.andstatus.todoagenda.EnvironmentChangedReceiver;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.provider.EventProviderType;
-import org.json.JSONArray;
+import org.andstatus.todoagenda.provider.WidgetData;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -90,23 +91,17 @@ public class AllSettings {
         }
     }
 
-    public static void loadFromTestData(Context context, JSONArray jsonArray) throws JSONException {
+    public static void loadFromTestData(Context context, InstanceSettings settings) throws JSONException {
         synchronized (instances) {
             allowedWidgets.clear();
             instances.clear();
             EventProviderType.initialize(context, true);
-            for (int index = 0; index < jsonArray.length(); index++) {
-                JSONObject json = jsonArray.optJSONObject(index);
-                if (json != null) {
-                    InstanceSettings settings = InstanceSettings.fromJson(context, json);
-                    if (settings.widgetId == 0) {
-                        settings.logMe(AllSettings.class, "Skipped loadFromTestData", settings.widgetId);
-                    } else {
-                        allowedWidgets.add(settings.widgetId);
-                        settings.logMe(AllSettings.class, "loadFromTestData put", settings.widgetId);
-                        instances.put(settings.widgetId, settings);
-                    }
-                }
+            if (settings.widgetId == 0) {
+                settings.logMe(AllSettings.class, "Skipped loadFromTestData", settings.widgetId);
+            } else {
+                allowedWidgets.add(settings.widgetId);
+                settings.logMe(AllSettings.class, "loadFromTestData put", settings.widgetId);
+                instances.put(settings.widgetId, settings);
             }
             instancesLoaded = true;
             EnvironmentChangedReceiver.registerReceivers(instances);
@@ -194,5 +189,17 @@ public class AllSettings {
             instancesLoaded = false;
             allowedWidgets.clear();
         }
+    }
+
+    public static InstanceSettings restoreWidgetSettings(Activity activity, JSONObject json, int targetWidgetId) {
+        InstanceSettings settings = WidgetData.fromJson(json).getSettingsForWidget(activity, targetWidgetId);
+        if (settings.isEmpty()) {
+            settings.logMe(AllSettings.class, "Skipped restoreWidgetSettings", settings.widgetId);
+        } else {
+            settings.save();
+            settings.logMe(AllSettings.class, "restoreWidgetSettings put", settings.widgetId);
+            instances.put(settings.widgetId, settings);
+        }
+        return settings;
     }
 }

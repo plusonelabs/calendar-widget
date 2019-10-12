@@ -81,10 +81,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         Log.i(getClass().getSimpleName(), "Default Time zone set to " + zone);
 
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId.incrementAndGet());
-        JSONObject json = settings.toJson();
-        JSONArray allSettingsJsonArray = new JSONArray();
-        allSettingsJsonArray.put(json);
-        AllSettings.loadFromTestData(context, allSettingsJsonArray);
+        AllSettings.loadFromTestData(context, settings);
     }
 
     public static void tearDown() {

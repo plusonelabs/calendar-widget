@@ -182,15 +182,20 @@
     <string name="show_only_closest_instance_of_recurring_event">Show only the closest instance of a recurring event</string>
     <string name="hide_duplicates">Hide duplicates</string>
 
-    <!-- Preference header: Feedback -->
-    <string name="feedback_prefs">Feedback</string>
-    <string name="feedback_prefs_desc">Get in touch with us</string>
+    <!-- Preference header: Feedback and Backup -->
+    <string name="feedback_prefs">Feedback and Backup</string>
+    <string name="feedback_prefs_desc">Get in touch with us, backup and restore settings</string>
     <string name="feedback_github_desc">Provide feedback on the project page</string>
     <string name="feedback_github_title">Visit widget on Github</string>
     <string name="feedback_play_store_desc">Rate and comment on Google Play Store</string>
     <string name="feedback_play_store_title">Visit widget on Google Play Store</string>
     <string name="refresh_desc">Refresh</string>
-    <string name="share_events_for_debugging_desc">Create a report to help developers troubleshoot problems</string>
-    <string name="share_events_for_debugging_title">Share events for debugging</string>
+    <string name="share_events_for_debugging_desc">Create a report to help developers troubleshoot problems.
+        Before sharing please filter events to protect your privacy but still demonstrate a problem</string>
+    <string name="share_events_for_debugging_title">Share events and settings for debugging</string>
+    <string name="backup_settings_title">Backup settings</string>
+    <string name="backup_settings_desc">The same as \"Share events for debugging\", but doesn\'t contain events</string>
+    <string name="restore_settings_title">Restore settings from a backup</string>
+    <string name="restore_settings_desc">Settings of each ToDo Agenda widget should be restored separately</string>
 
 </resources>

@@ -4,21 +4,39 @@ import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceActivity;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
+import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.provider.WidgetData;
 import org.andstatus.todoagenda.util.PermissionsUtil;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 
 public class WidgetConfigurationActivity extends PreferenceActivity {
 
+    public static final int REQUEST_ID_RESTORE_SETTINGS = 1;
+    public static final int REQUEST_ID_BACKUP_SETTINGS = 2;
     private static final String PREFERENCES_PACKAGE_NAME = "org.andstatus.todoagenda.prefs";
     private int widgetId = 0;
+    private boolean saveOnPause = true;
 
     @NonNull
     public static Intent intentToStartMe(Context context, int widgetId) {
@@ -31,8 +49,10 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ApplicationPreferences.save(this, widgetId);
-        EnvironmentChangedReceiver.updateWidget(this, widgetId);
+        if (saveOnPause) {
+            ApplicationPreferences.save(this, widgetId);
+            EnvironmentChangedReceiver.updateWidget(this, widgetId);
+        }
     }
 
     @Override
@@ -92,5 +112,118 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
             return true;
         }
         return super.isValidFragment(fragmentName);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_ID_BACKUP_SETTINGS:
+                if (resultCode == RESULT_OK && data != null) {
+                    backupSettings(data.getData());
+                }
+                break;
+            case REQUEST_ID_RESTORE_SETTINGS:
+                if (resultCode == RESULT_OK && data != null) {
+                    restoreSettings(data.getData());
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
+
+    private void backupSettings(Uri uri) {
+        if (uri == null) return;
+
+        InstanceSettings settings = AllSettings.instanceFromId(this, widgetId);
+        String jsonSettings = WidgetData.fromSettings(settings).toJsonString();
+        ParcelFileDescriptor pfd = null;
+        FileOutputStream out = null;
+        try {
+            pfd = this.getContentResolver().openFileDescriptor(uri, "w");
+            out = new FileOutputStream(pfd.getFileDescriptor());
+            out.write(jsonSettings.getBytes());
+        } catch (Exception e) {
+            String msg = "Error while writing " + getText(R.string.app_name) +
+                    " settings to " + uri + "\n" + e.getMessage();
+            Log.w(this.getClass().getSimpleName(), msg, e);
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e2) {
+                    Log.w(this.getClass().getSimpleName(), "Error while closing stream", e2);
+                }
+            }
+            if (pfd != null) {
+                try {
+                    pfd.close();
+                } catch (IOException e2) {
+                    Log.w(this.getClass().getSimpleName(), "Error while closing file descriptor", e2);
+                }
+            }
+        }
+        Toast.makeText(this, getText(R.string.backup_settings_title), Toast.LENGTH_LONG).show();
+    }
+
+    private void restoreSettings(Uri uri) {
+        if (uri == null) return;
+
+        JSONObject jsonObject = readJson(uri);
+        if (jsonObject.length() == 0) return;
+
+        if (!AllSettings.restoreWidgetSettings(this, jsonObject, widgetId).isEmpty()) {
+            saveOnPause = false;
+            int duration = 3000;
+            final WidgetConfigurationActivity context = WidgetConfigurationActivity.this;
+            Toast.makeText(context, context.getText(R.string.restore_settings_title), Toast.LENGTH_LONG).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(intentToStartMe(context, widgetId));
+                    context.finish();
+                }
+            }, duration);
+        }
+    }
+
+    private JSONObject readJson(Uri uri) {
+        final int BUFFER_LENGTH = 10000;
+        InputStream in = null;
+        Reader reader = null;
+        try {
+            in = getContentResolver().openInputStream(uri);
+            char[] buffer = new char[BUFFER_LENGTH];
+            StringBuilder builder = new StringBuilder();
+            int count;
+            reader = new InputStreamReader(in, "UTF-8");
+            while ((count = reader.read(buffer)) != -1) {
+                builder.append(buffer, 0, count);
+            }
+            return new JSONObject(builder.toString());
+        } catch (IOException | JSONException e) {
+            String msg = "Error while reading " + getText(R.string.app_name) +
+                    " settings from " + uri + "\n" + e.getMessage();
+            Log.w(this.getClass().getSimpleName(), msg, e);
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    Log.w(this.getClass().getSimpleName(), "Error while closing stream", e);
+                }
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    Log.w(this.getClass().getSimpleName(), "Error while closing reader", e);
+                }
+            }
+        }
+        return new JSONObject();
     }
 }

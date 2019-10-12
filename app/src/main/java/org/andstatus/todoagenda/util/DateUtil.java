@@ -10,6 +10,9 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import java.text.FieldPosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -154,5 +157,20 @@ public class DateUtil {
             }
         }
         return "";
+    }
+
+    public static String formatLogDateTime(long time) {
+        for (int ind = 0; ind < 2; ind++) {
+            // see http://stackoverflow.com/questions/16763968/android-text-format-dateformat-hh-is-not-recognized-like-with-java-text-simple
+            String formatString = ind==0 ? "yyyy-MM-dd-HH-mm-ss-SSS" : "yyyy-MM-dd-kk-mm-ss-SSS";
+            SimpleDateFormat format = new SimpleDateFormat(formatString);
+            StringBuffer buffer = new StringBuffer();
+            format.format(new Date(time), buffer, new FieldPosition(0));
+            String strTime = buffer.toString();
+            if (!strTime.contains("HH")) {
+                return strTime;
+            }
+        }
+        return Long.toString(time); // Fallback if above doesn't work
     }
 }

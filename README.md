@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/andstatus/todoagenda.svg?branch=master)](https://travis-ci.org/andstatus/todoagenda)
 
 Todo Agenda is home screen widgets for your Android device. 
-It displays a list of calendar events and tasks
+Each widget has its own settings and displays configured list of calendar events and tasks
 so that you can easily have a glimpse at your due, current and upcoming appointments.
 
 <table style="border-collapse:collapse; margin:0; padding:0">
@@ -23,8 +23,10 @@ so that you can easily have a glimpse at your due, current and upcoming appointm
 </tr>
 </table>
 
-Want to contribute to the project? Start by translating the widget to another language. Visit the 
-[project at crowdin.net](http://crowdin.net/project/plusonelabs-calendar-widget) and be part of the next release. :)
+Want to contribute to the project? Start by translating the widget to another language or update existing translation
+at [Translation project at Crowdin](http://crowdin.net/project/plusonelabs-calendar-widget) 
+and be a part of the next release. :)
+
 ![Calendar Widget Screenshots](assets/screenshots/widget-collage.png)
 
 ## Features
@@ -60,9 +62,9 @@ Please [opt-in here](https://play.google.com/apps/testing/org.andstatus.todoagen
 
 We are also looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
 
-## Changelog
+## <a id="changelog"/> Changelog
 
-### <a id="v3.1"/> v3.1 Hide duplicated events
+### <a id="v3.1"/> v3.1 Hide duplicated events. Backup and restore
 
 * Selected Calendars (Task lists) [display order](https://github.com/plusonelabs/calendar-widget/issues/287)
  is determined by the order in which the calendars are selected. 
@@ -72,6 +74,9 @@ We are also looking for new and improved translations over at http://crowdin.net
  Only the first event is shown, others are hidden. 
  As written above, display order of Calendars and Task Lists is customized now,
  so a User can control, events fom which Calendar will be shown.
+* [Backup and Restore widget settings](https://github.com/plusonelabs/calendar-widget/issues/330). 
+ Convenient for cloning settings to another widget. 
+ Good for moving widget settings to another device, but requires calendars selection adjustment.  
 * Removed unneeded [vertical bar before location](https://github.com/plusonelabs/calendar-widget/issues/332)
  (when time is not shown, e.g. for all day events).
 * [Multiline details](https://github.com/plusonelabs/calendar-widget/issues/106) option added, 

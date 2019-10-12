@@ -6,7 +6,7 @@
         android:persistent="false">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://github.com/andstatus/todoagenda" />
+            android:data="https://github.com/andstatus/todoagenda#readme" />
     </Preference>
     <Preference
         android:key="feedbackPlayStore"
@@ -21,5 +21,15 @@
         android:key="shareEventsForDebugging"
         android:summary="@string/share_events_for_debugging_desc"
         android:title="@string/share_events_for_debugging_title"
+        android:persistent="false" />
+    <Preference
+        android:key="backupSettings"
+        android:summary="@string/backup_settings_desc"
+        android:title="@string/backup_settings_title"
+        android:persistent="false" />
+    <Preference
+        android:key="restoreSettings"
+        android:summary="@string/restore_settings_desc"
+        android:title="@string/restore_settings_title"
         android:persistent="false" />
 </PreferenceScreen>

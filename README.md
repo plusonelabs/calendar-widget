@@ -32,18 +32,20 @@ and be a part of the next release. :)
 ## Features
 
 * No advertising. Free and Open Source.
-* Displays all events from your calendars and task lists. Optionally shows past events.
+* Displays events from your calendars and task lists for the selected periods in the past and in the future.
 * Automatically updates when you add/delete/modify an event. Or you may update the list instantly.
-* Select only the calendars you want to see in the widget.
-* Create several widgets, if you need. Each widget will have its own settings, including layouts, colors, filters 
-and selected calendars.
-* Customize background colors and transparency of different widget parts, text's black and white shading.
+* Select only the calendars and task lists that you want to see in the widget.
+* Create several widgets, if you need. Each widget has its own settings, including layouts, colors, filters, 
+selected calendars and task lists.
+* Customize background colors and transparency of different widget parts, black and white shading for texts.
 * Scroll through the list of events. Use "Go to Today" button to return to today instantly.
 * Customize the text size of the widget.
 * Fully resizable widget with alternative layouts.
 * Indicators for alerts and recurring events.
 * Lock time zone when travelling to different time zones.
-* Turn off Widget or Day headers, event icons, Days from today, etc. and see only what you need.
+* Turn off Widget header, Day headers, event icons, Days from today, etc. and see only what you need.
+* Hide duplicated events.
+* Backup and restore settings, cloning widgets on the same or different devices.
 * Android 4+ supported. Supports Android tablets.
 
 Note on Tasks support: As there is no unified way to access tasks created in different applications, 

@@ -17,9 +17,11 @@
     <string name="indicator_recurring">Indicator if the event is recurring</string>
     <string name="no_title">(No title)</string>
     <string name="grant_permissions">Grant permissions</string>
-    <string name="grant_permissions_verbose">Widget requires permission to read calendars and tasks.\nTap here to grant permissions.</string>
+    <string name="grant_permissions_verbose">Widget requires permission to read calendars and tasks.\n
+        Tap here to grant permissions.</string>
     <string name="past_header">Past and due</string>
-    <string name="permissions_justification">Welcome to the Todo Agenda, the easy access to your calendars and tasks.\n\nTo make the most of the widget you need to grant it access to your calendars and tasks.</string>
+    <string name="permissions_justification">Welcome to the Todo Agenda, the easy access to your calendars and tasks.\n\n
+        To make the most of the widget you need to grant it access to your calendars and tasks.</string>
     <string name="no_widgets_found">Please add a \"Todo Agenda\" widget from the home screen of your device first.</string>
     <string name="select_a_widget_to_configure">Select a widget to configure</string>
     <string name="close">Close</string>
@@ -32,22 +34,34 @@
     <string name="not_found">Not found</string>
 
     <!-- Descriptions for app markets -->
-    <string name="app_description_80_chars_max">Widgets displaying lists of upcoming (and past…) events from selected calendars</string>
-    <string name="app_description_4000_chars_max_part01">Todo Agenda is a home screen widget for your Android device.
-        It displays a list of upcoming calendar events so that you can easily have a glimpse at your appointments.</string>
+    <string name="app_description_80_chars_max">Home screen widgets displaying events from selected calendars and task lists</string>
+    <string name="app_description_4000_chars_max_part01">Todo Agenda is home screen widgets for your Android device.
+        Each widget has its own settings and displays configured list of calendar events and tasks
+        so that you can easily have a glimpse at your due, current and upcoming appointments.</string>
     <string name="app_description_4000_chars_max_part02">Features</string>
-    <string name="app_description_4000_chars_max_part03">Displays all events from your calendars. Optionally shows past events.</string>
-    <string name="app_description_4000_chars_max_part04">Automatically updates when you add/delete/modify an event. Or you may update the list instantly.</string>
-    <string name="app_description_4000_chars_max_part05">Select only the calendars you want to see in the widget.</string>
-    <string name="app_description_4000_chars_max_part06">Create several widgets, if you need. Each widget will have its own settings, including filters and selected calendars.</string>
-    <string name="app_description_4000_chars_max_part07">Customize colors of the widget background and texts.</string>
-    <string name="app_description_4000_chars_max_part08">Scroll through the list of upcoming events.</string>
+    <string name="app_description_4000_chars_max_part15">No advertising. Free and Open Source.</string>
+    <string name="app_description_4000_chars_max_part03">Displays events from your calendars and task lists
+        for the selected periods in the past and in the future.</string>
+    <string name="app_description_4000_chars_max_part04">Automatically updates when you add/delete/modify an event.
+        Or you may update the list instantly.</string>
+    <string name="app_description_4000_chars_max_part05">Select only the calendars and task lists
+        that you want to see in the widget.</string>
+    <string name="app_description_4000_chars_max_part06">Create several widgets, if you need. Each widget has its own settings,
+        including layouts, colors, filters, selected calendars and task lists.</string>
+    <string name="app_description_4000_chars_max_part07">Customize background colors and transparency
+        of different widget parts, black and white shading for texts.</string>
+    <string name="app_description_4000_chars_max_part08">Scroll through the list of events.
+        Use "Go to Today" button to return to today instantly.</string>
     <string name="app_description_4000_chars_max_part09">Customize the text size of the widget.</string>
-    <string name="app_description_4000_chars_max_part10">Fully resizable widget with two alternative layouts.</string>
+    <string name="app_description_4000_chars_max_part10">Fully resizable widget with alternative layouts.</string>
     <string name="app_description_4000_chars_max_part11">Indicators for alerts and recurring events.</string>
     <string name="app_description_4000_chars_max_part12">Lock time zone when travelling to different time zones.</string>
-    <string name="app_description_4000_chars_max_part13">Turn off Day headers and see dates in the \"Days from today\" column.</string>
-    <string name="app_description_4000_chars_max_part14">Android 4 to 9 supported. Supports Android tablets.</string>
+    <string name="app_description_4000_chars_max_part13">Turn off Widget header, Day headers, event icons, Days from today,
+        etc. and see only what you need.</string>
+    <string name="app_description_4000_chars_max_part16">Hide duplicated events.</string>
+    <string name="app_description_4000_chars_max_part17">Backup and restore settings,
+        cloning widgets on the same or different devices.</string>
+    <string name="app_description_4000_chars_max_part14">Android 4+ supported. Supports Android tablets.</string>
 
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendars and Task Lists</string>

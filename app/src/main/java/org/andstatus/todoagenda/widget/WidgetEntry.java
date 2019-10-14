@@ -54,13 +54,16 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     }
 
     @Override
-    public int compareTo(WidgetEntry otherEvent) {
-        if (getStartDate().isAfter(otherEvent.getStartDate())) {
+    public int compareTo(WidgetEntry other) {
+        if (getStartDate().isAfter(other.getStartDate())) {
             return 1;
-        } else if (getStartDate().isBefore(otherEvent.getStartDate())) {
+        } else if (getStartDate().isBefore(other.getStartDate())) {
             return -1;
         }
-        return Integer.signum(getSource().order - otherEvent.getSource().order);
+        int sourceSignum = Integer.signum(getSource().order - other.getSource().order);
+        return sourceSignum == 0
+                ? getTitle().compareTo(other.getTitle())
+                : sourceSignum;
     }
 
     public TimeSection getStartDaySection() {

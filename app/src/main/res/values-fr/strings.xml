@@ -7,40 +7,64 @@
     <string name="yesterday">Hier</string>
     <string name="today">Aujourd’hui</string>
     <string name="tomorrow">Demain</string>
+    <string name="not_initialized_yet">Pas encore initialisé...</string>
+    <string name="no_events_to_show">Aucun événement à afficher</string>
     <string name="no_upcoming_events">Aucun événement à venir</string>
     <string name="open_prefs_desc">Ouvrir les paramètres du widget calendrier</string>
+    <string name="go_to_today">Afficher aujourd\'hui</string>
     <string name="add_event_desc">Ajouter un nouvel événement</string>
     <string name="indicator_alarm">Indicator d\'alarme</string>
     <string name="indicator_recurring">Indicateur d\'événement récurent</string>
     <string name="no_title">(Sans titre)</string>
     <string name="grant_permissions">Accorder l’autorisation</string>
     <string name="grant_permissions_verbose">Widget demande l’autorisation de lire les calendriers. \nAppuyer ici pour accorder l’autorisation.</string>
+    <string name="past_header">Passés et à venir</string>
     <string name="permissions_justification">Bienvenue à Todo Agenda Widget, un moyen facile d\'accéder à votre calendrier.\n\nPour l\'utiliser, vous devez lui accorder l\'accès à votre calendrier.</string>
     <string name="no_widgets_found">Veuillez d\'abord ajouter un widget \"Todo Agenda Widget\" depuis l\'écran d\'accueil de votre appareil.</string>
     <string name="select_a_widget_to_configure">Sélectionner un widget à configurer</string>
     <string name="close">Fermer</string>
     <string name="go_to_home_screen">Aller à l\'écran d\'accueil</string>
+    <string name="loading_with_dots">Chargement en cours...</string>
+    <string name="widget_header">En-tête du Widget</string>
+    <string name="todays_events">Événements d\'aujourd\'hui</string>
+    <string name="future_events">Événements à venir</string>
+    <string name="not_found">Non trouvé</string>
     <!-- Descriptions for app markets -->
-    <string name="app_description_80_chars_max">Widgets affichant les listes des événements à venir (et anciens&#8230;) des calendriers sélectionnés</string>
-    <string name="app_description_4000_chars_max_part01">Todo Agenda est un widget d\'écran d\'accueil pour votre appareil Android. Il affiche une liste des prochains événements du calendrier
-        afin que vous puissiez facilement avoir un aperçu de vos rendez-vous.</string>
+    <string name="app_description_80_chars_max">Widgets affichant sur l\'écran d\'accueil les événements des calendriers et des listes de tâches sélectionnés</string>
+    <string name="app_description_4000_chars_max_part01">Todo Agenda est un widget d\'écran d\'accueil pour votre appareil Android.
+        Chaque instance du widget a ses propres paramètres et affiche une liste configurée des événements des calendriers et des tâches sélectionnés
+        afin que vous puissiez facilement avoir un aperçu de vos rendez-vous passés, en cours et à venir.</string>
     <string name="app_description_4000_chars_max_part02">Fonctionnalités </string>
-    <string name="app_description_4000_chars_max_part03">Affiche tous les événements de vos calendriers. Affiche facultativement les événements passés.</string>
+    <string name="app_description_4000_chars_max_part15">Aucune publicité. Gratuit et Open Source.</string>
+    <string name="app_description_4000_chars_max_part03">Affiche les événements de vos calendriers et listes de tâches
+        pour les périodes sélectionnées dans le passé et dans le futur.</string>
     <string name="app_description_4000_chars_max_part04">Mise à jour automatique lorsque vous ajoutez/supprimez/modifiez un événement. Ou vous pouvez mettre à jour la liste instantanément.</string>
-    <string name="app_description_4000_chars_max_part05">Sélectionnez seulement les calendriers que vous voulez voir dans le widget.</string>
-    <string name="app_description_4000_chars_max_part06">Créez plusieurs widgets, si vous en avez besoin. Chaque widget aura ses propres paramètres, y compris les filtres et les calendriers sélectionnés.</string>
-    <string name="app_description_4000_chars_max_part07">Personnaliser les couleurs du fond du widget et des textes.</string>
-    <string name="app_description_4000_chars_max_part08">Parcourez la liste des événements à venir.</string>
+    <string name="app_description_4000_chars_max_part05">Sélectionnez uniquement les calendriers et les listes de tâches
+        que vous souhaitez voir apparaître dans le widget.</string>
+    <string name="app_description_4000_chars_max_part06">Si vous le souhaitez, vous pouvez créer plusieurs widgets. Chaque widget a ses propres paramètres,
+        incluant un choix de mise en page, couleurs, filtres, sélection de calendriers et listes de tâches.</string>
+    <string name="app_description_4000_chars_max_part07">Personnalisez les couleurs de fond et la transparence
+        des différentes parties de widget, l\'ombrage noir et blanc pour les textes.</string>
+    <string name="app_description_4000_chars_max_part08">Parcourez la liste des événements.
+        Utilisez le bouton \"Aller à aujourd\'hui\" pour revenir à aujourd\'hui instantanément.</string>
     <string name="app_description_4000_chars_max_part09">Personnaliser la taille du texte du widget.</string>
-    <string name="app_description_4000_chars_max_part10">Widget entièrement redimensionnable avec deux mises en page alternatives.</string>
+    <string name="app_description_4000_chars_max_part10">Widget entièrement redimensionnable avec différentes mises en page possibles.</string>
     <string name="app_description_4000_chars_max_part11">Indicateurs pour les alertes et les événements récurrents.</string>
     <string name="app_description_4000_chars_max_part12">Verrouillage fuseau horaire lorsque vous voyagez dans différents fuseaux horaires.</string>
-    <string name="app_description_4000_chars_max_part13">Désactivez les en-têtes de jour et consultez les dates dans la colonne \"Jours à partir d\'aujourd\'hui\".</string>
-    <string name="app_description_4000_chars_max_part14">Android 4 à 7 supporté. Supporte les tablettes Android.</string>
+    <string name="app_description_4000_chars_max_part13">Désactivez l\'en-tête Widget, les en-têtes de jour, les icônes d\'événements, le nombre de jours jusqu\'à aujourd\'hui,
+        etc. et n\'affichez que ce dont vous avez besoin.</string>
+    <string name="app_description_4000_chars_max_part16">Masquer les événements en doublon.</string>
+    <string name="app_description_4000_chars_max_part17">Sauvegardez et restaurez les paramètres,
+        clonez des widgets sur des appareils différents ou identiques .</string>
+    <string name="app_description_4000_chars_max_part14">Compatible avec Android 4+. Compatible avec les tablettes Android.</string>
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendriers</string>
     <string name="calendars_prefs_desc">Choisir les calendriers à afficher</string>
+    <string name="task_source_opentasks">OpenTasks (par dmfs GmbH)</string>
+    <string name="task_source_samsung">Calendrier Samsung</string>
     <!-- Preference header: Other -->
+    <string name="other_prefs_desc">Formats de taille, date et heure, etc.</string>
+    <string name="other_prefs_title">Autres paramètres</string>
     <string name="appearance_prefs">Apparence</string>
     <string name="appearance_prefs_desc">Ajuster l\'apparence du widget</string>
     <string name="appearance_text_size_title">Taille de police</string>
@@ -61,20 +85,34 @@
     <string name="appearance_abbreviate_dates_title">Dates abrégées</string>
     <string name="appearance_abbreviate_dates_desc">Utiliser un format de 3 lettres pour les dates du Widget, les en-têtes des Jours, etc.</string>
     <!-- Preference header: Layout -->
+    <string name="layout_prefs_desc">Positionnez,, affichez et masquez les éléments du widget</string>
+    <string name="layout_prefs_title">Disposition</string>
+    <string name="widget_header_layout">Mise en page de l\'en-tête du widget</string>
     <string name="pref_event_entry_layout_title">Disposition des événements</string>
     <string name="default_multiline_layout">Heure en-dessous du titre</string>
+    <string name="show_date_on_widget_header">Afficher la date du jour dans l\'en-tête du widget</string>
+    <string name="default_value">\"Par défaut\"</string>
     <string name="single_line_layout">Tout sur la même ligne</string>
+    <string name="two_rows_layout">Présentation sur deux lignes</string>
+    <string name="hidden">Masqué</string>
     <string name="appearance_day_header_alignment_desc">Choisir l\'alignement de la date dans l\'en-tête</string>
     <string name="appearance_day_header_alignment_title">Alignement de la date de l\'en-tête</string>
     <string name="appearance_day_header_alignment_left">Gauche</string>
     <string name="appearance_day_header_alignment_center">Centre</string>
     <string name="appearance_day_header_alignment_right">Droite</string>
+    <string name="horizontalLineBelowDayHeader">Séparateur horizontal sous l\'en-tête Jour</string>
     <string name="appearance_multiline_title_title">Titre multilignes</string>
     <string name="appearance_multiline_title_desc">Etendre le titre de l\'événement sur plusieurs lignes</string>
     <string name="appearance_show_days_without_events_title">Afficher les jours sans événements</string>
     <string name="appearance_show_days_without_events_desc">Montrer les en-têtes pour les jours sans évènement</string>
     <string name="appearance_show_day_headers_title">Afficher les jours</string>
     <string name="appearance_show_day_headers_desc">Afficher l\'en-tête dédiée aux jours</string>
+    <string name="show_past_events_under_one_header_title">En-tête spécifique pour les événements passés/échus</string>
+    <string name="show_past_events_under_one_header_desc">Afficher tous les événements passés/dus sous un en-tête \"Passés ou échus\"</string>
+    <string name="show_event_icon_title">Afficher l\'icône de l\'événement</string>
+    <string name="show_event_icon_desc">Afficher la barre de couleur du calendrier / l\'icône de tâche pour l\'événement</string>
+    <string name="show_number_of_days_to_event_title">Afficher le nombre de jours jusqu\'à l\'événement</string>
+    <string name="show_number_of_days_to_event_desc">Affichez une colonne indiquant le nombre de jours jusqu\'à l\'événement dans le modèle de présentation \"Tout en une seule ligne\"</string>
     <!-- Preference header: Colors -->
     <string name="appearance_group_color_title">Couleurs</string>
     <string name="appearance_background_color_title">Transparence du fond</string>

@@ -28,22 +28,35 @@
     <string name="widget_header">ウィジェットのヘッダー</string>
     <string name="todays_events">今日のイベント</string>
     <string name="future_events">今後のイベント</string>
+    <string name="not_found">見つかりません</string>
     <!-- Descriptions for app markets -->
-    <string name="app_description_80_chars_max">選択したカレンダーから、今後 (および過去の&#8230;) のイベントを表示するウィジェット</string>
-    <string name="app_description_4000_chars_max_part01">Todo Agenda は、お使いの Android デバイス用のホーム画面ウィジェットです。今後のカレンダーイベントを一覧表示するので、予定を一目で簡単に把握することができます。</string>
+    <string name="app_description_80_chars_max">選択したカレンダーやタスクリストからイベントを表示するホーム画面ウィジェット</string>
+    <string name="app_description_4000_chars_max_part01">Todo アジェンダは、Androidデバイス用のホーム画面ウィジェットです。
+         各ウィジェットには独自の設定があり、カレンダーのイベントとタスクの設定済みリストが表示されます
+         予定、現在、および今後の予定を一目で簡単に見ることができます。</string>
     <string name="app_description_4000_chars_max_part02">機能</string>
-    <string name="app_description_4000_chars_max_part03">カレンダーのすべてのイベントが表示されます。必要に応じて過去のイベントを表示します。</string>
+    <string name="app_description_4000_chars_max_part15">広告はありません。 無料のオープンソース。</string>
+    <string name="app_description_4000_chars_max_part03">過去および未来の選択された期間の
+         カレンダーとタスクリストのイベントを表示します。</string>
     <string name="app_description_4000_chars_max_part04">イベントを追加/削除/変更した時に自動的に更新します。また、即座にリストを更新することもできます。</string>
-    <string name="app_description_4000_chars_max_part05">ウィジェットに表示したいカレンダーのみを選択します。</string>
-    <string name="app_description_4000_chars_max_part06">必要に応じて、いくつかのウィジェットを作成します。各ウィジェットは、フィルター、選択したカレンダーなどの独自の設定があります。</string>
-    <string name="app_description_4000_chars_max_part07">ウィジェットの背景とテキストの色をカスタマイズします。</string>
-    <string name="app_description_4000_chars_max_part08">今後のイベントの一覧をスクロールします。</string>
+    <string name="app_description_4000_chars_max_part05">ウィジェットで表示したい
+         カレンダーとタスクリストのみを選択してください。</string>
+    <string name="app_description_4000_chars_max_part06">必要に応じて、いくつかのウィジェットを作成します。 各ウィジェットには独自の設定があります。
+         レイアウト、色、フィルター、選択したカレンダー、タスクリストなど。</string>
+    <string name="app_description_4000_chars_max_part07">さまざまなウィジェットパーツの背景色と透明度をカスタマイズできます
+         テキストの白や黒の影など。</string>
+    <string name="app_description_4000_chars_max_part08">イベントのリストをスクロールします。
+         「今日に移動」ボタンを使用すると、すぐに今日に戻ることができます。</string>
     <string name="app_description_4000_chars_max_part09">ウィジェットの文字サイズをカスタマイズします。</string>
-    <string name="app_description_4000_chars_max_part10">2 種類のレイアウトで、ウィジェットは完全にサイズ変更可能です。</string>
+    <string name="app_description_4000_chars_max_part10">異なるレイアウトがある完全にサイズ変更可能なウィジェット。</string>
     <string name="app_description_4000_chars_max_part11">アラートおよび定期的なイベントのインジケーター。</string>
     <string name="app_description_4000_chars_max_part12">異なるタイムゾーンに旅行するときは、タイムゾーンをロックします。</string>
-    <string name="app_description_4000_chars_max_part13">日ヘッダーをオフにして、「今日からの日数」列の日付を参照します。</string>
-    <string name="app_description_4000_chars_max_part14">Android 4 から 7 をサポートしています。Android タブレットをサポートしています。</string>
+    <string name="app_description_4000_chars_max_part13">ウィジェットヘッダー、曜日ヘッダー、イベントアイコン、今日からの日数、
+         などをオフにして、必要なものだけを表示します。</string>
+    <string name="app_description_4000_chars_max_part16">重複した予定を非表示にします。</string>
+    <string name="app_description_4000_chars_max_part17">設定のバックアップと復元で、
+         同じまたは異なるデバイスでウィジェットを複製します。</string>
+    <string name="app_description_4000_chars_max_part14">Android 4 以降をサポートしています。Android タブレットをサポートしています。</string>
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">カレンダー</string>
     <string name="calendars_prefs_desc">表示するカレンダーを選択します</string>
@@ -173,13 +186,18 @@
     <string name="show_only_closest_instance_of_recurring_event">繰り返しイベントの最も近いインスタンスのみを表示</string>
     <string name="hide_duplicates">重複タスクを非表示</string>
     <!-- Preference header: Feedback and Backup -->
-    <string name="feedback_prefs">フィードバック</string>
-    <string name="feedback_prefs_desc">私たちに連絡をください</string>
+    <string name="feedback_prefs">フィードバックとバックアップ</string>
+    <string name="feedback_prefs_desc">私たちに連絡したり、設定をバックアップおよび復元します</string>
     <string name="feedback_github_desc">プロジェクトページにフィードバックをお寄せください</string>
     <string name="feedback_github_title">Githubに行く</string>
     <string name="feedback_play_store_desc">Googleプレイストアに評価／コメントしてください</string>
     <string name="feedback_play_store_title">Googleプレイストアに行く</string>
     <string name="refresh_desc">更新</string>
-    <string name="share_events_for_debugging_desc">問題のトラブルシューティングに役立つレポートを作成します</string>
-    <string name="share_events_for_debugging_title">デバッグ用のイベントを共有します</string>
+    <string name="share_events_for_debugging_desc">開発者が問題をトラブルシューティングするのに役立つレポートを作成します。
+         問題を共有する前に、問題が分かるレベルでイベントをフィルタリングしてプライバシーを保護してください</string>
+    <string name="share_events_for_debugging_title">デバッグ用のイベントと設定を共有する</string>
+    <string name="backup_settings_title">設定のバックアップ</string>
+    <string name="backup_settings_desc">「デバッグ用にイベントを共有する」と同じですが、イベントは含まれません</string>
+    <string name="restore_settings_title">バックアップから設定を復元</string>
+    <string name="restore_settings_desc">それぞれのToDoアジェンダウィジェットの設定は個別に復元する必要があります</string>
 </resources>

@@ -70,6 +70,7 @@
     <string name="task_source_samsung">Samsung Calendar</string>
 
     <!-- Preference header: Other -->
+    <string name="device_default">Device default</string>
     <string name="other_prefs_desc">Size, date and time format, etc.</string>
     <string name="other_prefs_title">Other settings</string>
     <string name="appearance_prefs">Appearance</string>

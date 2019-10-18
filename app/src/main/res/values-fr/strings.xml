@@ -113,6 +113,8 @@
     <string name="show_event_icon_desc">Afficher la barre de couleur du calendrier / l\'icône de tâche pour l\'événement</string>
     <string name="show_number_of_days_to_event_title">Afficher le nombre de jours jusqu\'à l\'événement</string>
     <string name="show_number_of_days_to_event_desc">Affichez une colonne indiquant le nombre de jours jusqu\'à l\'événement dans le modèle de présentation \"Tout en une seule ligne\"</string>
+    <string name="multiline_details_title">Présentation multi-ligne des détails des événements</string>
+    <string name="multiline_details_desc">Étendre l\'horaire et le lieu de l\'événement sur plusieurs lignes</string>
     <!-- Preference header: Colors -->
     <string name="appearance_group_color_title">Couleurs</string>
     <string name="appearance_background_color_title">Transparence du fond</string>
@@ -168,14 +170,10 @@
     <string name="ended_yesterday">Terminé hier</string>
     <string name="pref_hide_based_on_keywords_title">Cacher en fonction de mots-clés dans un titre</string>
     <string name="show_only_closest_instance_of_recurring_event">N\'afficher que l\'instance la plus proche d\'un événement récurrent</string>
-    <!-- Preference header: Feedback -->
-    <string name="feedback_prefs">Retours</string>
-    <string name="feedback_prefs_desc">Entrer en contact avec nous</string>
+    <!-- Preference header: Feedback and Backup -->
     <string name="feedback_github_desc">Faire un retour sur la page du projet</string>
     <string name="feedback_github_title">Visiter le widget sur Github</string>
     <string name="feedback_play_store_desc">Noter et commenter sur le Google Play Store</string>
     <string name="feedback_play_store_title">Visiter le widget sur le Google Play Store</string>
     <string name="refresh_desc">Rafraîchir</string>
-    <string name="share_events_for_debugging_desc">Créer un rapport pour aider les développeurs à résoudre les problèmes</string>
-    <string name="share_events_for_debugging_title">Partager des événements pour le débogage</string>
 </resources>

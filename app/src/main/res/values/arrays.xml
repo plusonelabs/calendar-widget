@@ -128,4 +128,92 @@
         <item>@color/task_list_8</item>
         <item>@color/task_list_9</item>
     </integer-array>
+    <string-array name="custom_locale_entries">
+        <item>@string/device_default</item>
+        <item>English</item>
+        <item>Afrikaans</item>
+        <item>Arabic</item>
+        <item>Azerbaijani</item>
+        <item>Bosnian</item>
+        <item>Bulgarian</item>
+        <item>Catalan</item>
+        <item>Czech</item>
+        <item>Chinese Simplified</item>
+        <item>Chinese Traditional</item>
+        <item>Danish</item>
+        <item>Dutch</item>
+        <item>Estonian</item>
+        <item>Filipino</item>
+        <item>Finnish</item>
+        <item>French</item>
+        <item>Galician</item>
+        <item>German</item>
+        <item>Greek</item>
+        <item>Hebrew</item>
+        <item>Hindi</item>
+        <item>Hungarian</item>
+        <item>Indonesian</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Kabyle</item>
+        <item>Korean</item>
+        <item>Norwegian</item>
+        <item>Persian</item>
+        <item>Polish</item>
+        <item>Portuguese</item>
+        <item>Portuguese, Brazilian</item>
+        <item>Romanian</item>
+        <item>Russian</item>
+        <item>Serbian (Cyrillic)</item>
+        <item>Slovak</item>
+        <item>Spanish</item>
+        <item>Swedish</item>
+        <item>Turkish</item>
+        <item>Ukrainian</item>
+        <item>Vietnamese</item>
+    </string-array>
+    <string-array name="custom_locale_values">
+        <item>default</item>
+        <item>en</item>
+        <item>af</item>
+        <item>ar</item>
+        <item>az</item>
+        <item>bs</item>
+        <item>bg</item>
+        <item>ca</item>
+        <item>cs</item>
+        <item>zh-rCN</item>
+        <item>zh-rTW</item>
+        <item>da</item>
+        <item>nl</item>
+        <item>et</item>
+        <item>fil</item>
+        <item>fi</item>
+        <item>fr</item>
+        <item>gl</item>
+        <item>de</item>
+        <item>el</item>
+        <item>iw</item>
+        <item>hi</item>
+        <item>hu</item>
+        <item>in</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>kab</item>
+        <item>ko</item>
+        <item>nb</item>
+        <item>fa</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>pt-rBR</item>
+        <item>ro</item>
+        <item>ru</item>
+        <item>sr</item>
+        <item>sk</item>
+        <item>es</item>
+        <item>sv</item>
+        <item>tr</item>
+        <item>uk</item>
+        <item>vi</item>
+    </string-array>
 </resources>

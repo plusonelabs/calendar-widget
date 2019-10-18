@@ -8,7 +8,7 @@
     <string name="today">Heute</string>
     <string name="tomorrow">Morgen</string>
     <string name="not_initialized_yet">Noch nicht initialisiert...</string>
-    <string name="no_events_to_show">Keine Ereignisse vorhanden</string>
+    <string name="no_events_to_show">Keine Termine vorhanden</string>
     <string name="no_upcoming_events">Keine anstehenden Termine</string>
     <string name="open_prefs_desc">Öffne die Einstellungen des Kalender-Widget</string>
     <string name="go_to_today">Zu heute wechseln</string>
@@ -17,37 +17,51 @@
     <string name="indicator_recurring">Hinweis ob das Ereignis wiederkehrend ist</string>
     <string name="no_title">(Kein Titel)</string>
     <string name="grant_permissions">Berechtigung erteilen</string>
-    <string name="grant_permissions_verbose">Das Widget erfordert die Berechtigung deinen Kalender zu lesen. \nKlicke hier um die Berechtigung zu erteilen.</string>
-    <string name="past_header">Vergangene und fallige Termin</string>
-    <string name="permissions_justification">Willkommen bei Todo Agenda, dem einfachen Zugriff auf deinen Kalender.\n\nUm das Widget zu nutzen musst du Zugriff auf deinen Kalender gewähren.</string>
-    <string name="no_widgets_found">Füge Todo Agenda dem Startbildschirm des Gerätes hinzu.</string>
+    <string name="grant_permissions_verbose">Das Widget erfordert die Berechtigung deinen Kalender zu lesen.\n
+        Klicke hier, um die Berechtigung zu erteilen.</string>
+    <string name="past_header">Vergangene und anstehende</string>
+    <string name="permissions_justification">Willkommen bei Todo Agenda, dem einfachen Zugriff auf deine Kalender und Aufgaben.\n\n
+        Um das Widget bestmöglich zu nutzen, musst du Zugriff auf deine Kalender und Aufgaben gewähren.</string>
+    <string name="no_widgets_found">Füge zuerst das \"Todo Agenda\"-Widget dem Startbildschirm des Gerätes hinzu.</string>
     <string name="select_a_widget_to_configure">Wähle ein Widget zur Konfiguration aus</string>
     <string name="close">Schließen</string>
     <string name="go_to_home_screen">Zum Startbildschirm</string>
     <string name="loading_with_dots">Lädt...</string>
-    <string name="widget_header">Widget Kopfzeile</string>
-    <string name="todays_events">Heutige Ereignisse</string>
+    <string name="widget_header">Widget-Kopfzeile</string>
+    <string name="todays_events">Heutige Termine</string>
     <string name="future_events">Alle zukünftigen Termine</string>
+    <string name="not_found">Nicht gefunden</string>
     <!-- Descriptions for app markets -->
-    <string name="app_description_80_chars_max">Widgets zeigen kommende (und vergangene&#8230;) Ereignisse von ausgewählten Kalendern an</string>
-    <string name="app_description_4000_chars_max_part01">Todo Agenda ist ein Home-Screen-Widget für Ihr Android-Gerät.
-        Es zeigt eine Liste der kommenden Kalender-Ereignisse an, damit Sie leicht einen Einblick in Ihre Termine haben können.</string>
+    <string name="app_description_80_chars_max">Startbildschirm-Widgets, die Termine aus ausgewählten Kalendern und Aufgabenlisten anzeigen</string>
+    <string name="app_description_4000_chars_max_part01">Todo Agenda sind Startbildschirm-Widgets für dein Android-Gerät.
+        Jedes Widget hat seine eigenen Einstellungen und zeigt eine konfigurierte Liste von Kalenderterminen und Aufgaben,
+        sodass du leicht einen Einblick in deine fälligen, aktuellen und bevorstehenden Termine haben kannst.</string>
     <string name="app_description_4000_chars_max_part02">Funktionen</string>
-    <string name="app_description_4000_chars_max_part03">Zeigt ihnen alle Ereignisse ihres Kalenders. Es zeigt auf Wunsch außerdem vergangene Events an.</string>
+    <string name="app_description_4000_chars_max_part15">Keine Werbung. Kostenlos und Open Source.</string>
+    <string name="app_description_4000_chars_max_part03">Zeigt Termine aus deinem Kalender und Aufgabenlisten
+        für die ausgewählten Zeiträume in der Vergangenheit und in der Zukunft an.</string>
     <string name="app_description_4000_chars_max_part04">Automatische Aktualisierung wenn du Events veränderst, hinzufügst oder entfernst.</string>
-    <string name="app_description_4000_chars_max_part05">Wählen sie nur die Kalender die sie im Widget sehen möchten.</string>
-    <string name="app_description_4000_chars_max_part06">Erstellen Sie mehrere Widgets, wenn Sie es benötigen. Jedes Widget hat eigene Einstellungen, einschließlich Filter und ausgewählte Kalender.</string>
-    <string name="app_description_4000_chars_max_part07">Passen sie die Farben des Hintergrundes und des Textes an.</string>
-    <string name="app_description_4000_chars_max_part08">Scrollen sie durch eine List von kommenden Ereignissen.</string>
+    <string name="app_description_4000_chars_max_part05">Wähle nur die Kalender und Aufgabenlisten
+        aus, die du im Widget sehen möchtest.</string>
+    <string name="app_description_4000_chars_max_part06">Erstelle mehrere Widgets, wenn du möchtest. Jedes Widget hat eigene Einstellungen,
+        inklusive Layouts, Farben, Filtern, ausgewählten Kalendern und Aufgabenlisten.</string>
+    <string name="app_description_4000_chars_max_part07">Passe Hintergrundfarben und Transparenz
+        von verschiedenen Widgetteilen sowie die Schwarz- und Weißschattierung von Texten an.</string>
+    <string name="app_description_4000_chars_max_part08">Scrolle durch die Liste der Termine.
+        Verwende \"Zu heute wechseln\", um sofort wieder zum heutigen Tag zu kommen.</string>
     <string name="app_description_4000_chars_max_part09">Passen Sie die Textgröße des Widgets an.</string>
-    <string name="app_description_4000_chars_max_part10">Komplett größenmäßiges Widget mit 2 verschiedenen Layouts.</string>
+    <string name="app_description_4000_chars_max_part10">Voll anpassbares Widget mit verschiedenen Layouts.</string>
     <string name="app_description_4000_chars_max_part11">Indikatoren für Alarme und wiederkehrende Ereignisse.</string>
     <string name="app_description_4000_chars_max_part12">Fixieren sie die Zeitzone wenn sie in andere reisen.</string>
-    <string name="app_description_4000_chars_max_part13">Schalten Sie die Tagesüberschriften aus und sehen Sie die Termine in der Spalte \"Tage von heute\" an.</string>
-    <string name="app_description_4000_chars_max_part14">Android 4 bis 7 unterstützt. Unterstützt Android Tablets.</string>
+    <string name="app_description_4000_chars_max_part13">Deaktiviere Widget-Kopfzeile, Tages-Kopfzeile, Termin-Symbole, Tage von heute,
+        etc. und sieh nur das, was du brauchst.</string>
+    <string name="app_description_4000_chars_max_part16">Blende doppelte Termine aus.</string>
+    <string name="app_description_4000_chars_max_part17">Du kannst Einstellungen sichern und wiederherstellen,
+        um Widgets auf dem gleichen oder verschiedenen Geräten zu klonen.</string>
+    <string name="app_description_4000_chars_max_part14">Android 4+ unterstützt. Unterstützt Android Tablets.</string>
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Kalender</string>
-    <string name="calendars_prefs_desc">Wählen Sie die anzuzeigenden Kalender</string>
+    <string name="calendars_prefs_desc">Die anzuzeigenden Kalender und Aufgabenlisten wählen</string>
     <string name="task_source_opentasks">OpenTasks (von dmfs GmbH)</string>
     <string name="task_source_samsung">Samsung Calendar</string>
     <!-- Preference header: Other -->
@@ -101,6 +115,8 @@
     <string name="show_event_icon_desc">Kalenderfarben Leiste / Aufgabensymbol für Ereignis anzeigen</string>
     <string name="show_number_of_days_to_event_title">Anzahl der Tage bis zum Ereignis anzeigen</string>
     <string name="show_number_of_days_to_event_desc">Spalte mit der Anzahl der Tage bis zum Ereignis in dem \"All in one row\" layout anzeigen</string>
+    <string name="multiline_details_title">Mehrzeilige Details</string>
+    <string name="multiline_details_desc">Terminzeit und -Ort über mehrere Zeilen verteilen</string>
     <!-- Preference header: Colors -->
     <string name="colors_prefs_desc">Farbe und Deckkraft von Texten und Hintergründen</string>
     <string name="appearance_group_color_title">Farben</string>
@@ -170,14 +186,20 @@
     <string name="ended_one_year_ago">Endete vor einem Jahr</string>
     <string name="pref_hide_based_on_keywords_title">Ausblenden basierend auf Schlüsselwörtern in Titel</string>
     <string name="show_only_closest_instance_of_recurring_event">Zeigen nur den nächsten Eintrag eines wiederholenden Ereignisses</string>
-    <!-- Preference header: Feedback -->
-    <string name="feedback_prefs">Feedback</string>
-    <string name="feedback_prefs_desc">Kontakt mit uns aufnehmen</string>
+    <string name="hide_duplicates">Duplikate ausblenden</string>
+    <!-- Preference header: Feedback and Backup -->
+    <string name="feedback_prefs">Feedback und Sicherung</string>
+    <string name="feedback_prefs_desc">Mit uns in Kontakt treten, Einstellungen sichern und wiederherstellen</string>
     <string name="feedback_github_desc">Feedback auf der Projektseite hinterlassen</string>
     <string name="feedback_github_title">Widget auf Github</string>
     <string name="feedback_play_store_desc">Bewerten und kommentieren im Google Play-Shop</string>
     <string name="feedback_play_store_title">Widget im Google Play-Store</string>
     <string name="refresh_desc">Aktualisieren</string>
-    <string name="share_events_for_debugging_desc">Erstelle Bericht um dem Entwicklerteam bei Problembehebungen zu helfen</string>
-    <string name="share_events_for_debugging_title">Versende Bericht zur Problembehebung</string>
+    <string name="share_events_for_debugging_desc">Erstelle einen Bericht, um Entwicklern beim Beheben von Problemen zu helfen.
+        Bevor du ihn teilst, filtere bitte die Termine, sodass deine Privatsphäre geschützt ist, aber das Problem noch dargestellt wird</string>
+    <string name="share_events_for_debugging_title">Termine und Einstellungen zum Debuggen teilen</string>
+    <string name="backup_settings_title">Einstellungen sichern</string>
+    <string name="backup_settings_desc">Das gleiche wie \"Termine für Debugging teilen\", aber enthält nicht Termine</string>
+    <string name="restore_settings_title">Einstellungen aus einer Sicherung wiederherstellen</string>
+    <string name="restore_settings_desc">Einstellungen jedes Todo-Agenda-Widgets sollten getrennt wiederhergestellt werden</string>
 </resources>

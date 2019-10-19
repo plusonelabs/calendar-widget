@@ -66,7 +66,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## <a id="changelog"/> Changelog
 
-### 2019-10-12 <a id="v3.1"/> v3.1.1 Hide duplicated events. Backup and restore
+### 2019-10-19 <a id="v3.1"/> v3.1.4 Hide duplicated events. Backup and restore
 
 * Selected Calendars (Task lists) [display order](https://github.com/plusonelabs/calendar-widget/issues/287)
  is determined by the order in which the calendars are selected. 
@@ -141,9 +141,10 @@ Sorry for inconvenience.
 * New option "Header for past/due events". If turned on, it shows all past/due events under one "Past and due" header. 
   Applied both to calendar events and to tasks.
 
-### 2019-01-19 [v2.0.1](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
+### 2019-01-19  <a id="v2.0.1"/> [v2.0.1](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
 
 * The "Calendar Widget" renamed to "Todo Agenda" and published to Google Play as [the new application](https://play.google.com/store/apps/details?id=org.andstatus.todoagenda).
+  More details: [No longer in Google play?](https://github.com/plusonelabs/calendar-widget/issues/291)
 
 ### 2017-06-01 [v1.10.1](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.10.1)
 
@@ -173,22 +174,7 @@ turned off. See [screenshots](https://github.com/plusonelabs/calendar-widget/iss
 double quotes in order to have space or comma in a filter.
 * Android 7 compatibility, including support of permissions introduced in Android 6.
 
-### [v1.9.3](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.3)
-
-* Date format "auto" now makes use of system wide date settings
-* Bugfixes for the 1.9 release
-* Translation updates
-
-### [v1.9.2](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.2)
-
-* Bugfixes for the 1.9 release
-* Translation updates
-
-### [v1.9.1](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.1)
-
-* Bugfixes for 1.9 release
-
-### [v1.9.0](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9)
+### 2015-11-01 [v1.9.3](https://github.com/plusonelabs/calendar-widget/issues?q=is%3Aissue+milestone%3A1.9.3)
 
 * New preferences to filter the events shown by the widget
   * New "Show events that ended recently" option allows to show events, which ended several hours ago, today or yesterday. [#122](https://github.com/plusonelabs/calendar-widget/issues/122)
@@ -198,8 +184,9 @@ double quotes in order to have space or comma in a filter.
 * Add "Today" option to "Date range", so you can see current and future events for today only (The same "Today" option exists for past events also) [#156](https://github.com/plusonelabs/calendar-widget/issues/156)
 * Add "Refresh" button to widget header to refresh the list of events [#120](https://github.com/plusonelabs/calendar-widget/issues/120)
 * Add "Show days without events" option
+* Date format "auto" now makes use of system wide date settings
 
-### [v1.8.6](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.8.6+is%3Aclosed)
+### 2015-01-20 [v1.8.6](https://github.com/plusonelabs/calendar-widget/issues?q=milestone%3A1.8.6+is%3Aclosed)
 
 * Add styling for Android 5.0 (Lollipop)
 * Adding widget to home screen instantly adds it without showing settings ui
@@ -343,6 +330,6 @@ double quotes in order to have space or comma in a filter.
 * The text size can not be customized as small, medium or large
 * The widget can not be shrinked properly on all devices
 
-### v1.0
+### 2012-05-15 v1.0
 
 * Initial Release

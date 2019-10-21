@@ -28,22 +28,26 @@
     <string name="widget_header">Nagłówek widgetu</string>
     <string name="todays_events">Dzisiejsze wydarzenia</string>
     <string name="future_events">Przyszłe wydarzenia</string>
+    <string name="not_found">Nie znaleziono</string>
     <!-- Descriptions for app markets -->
-    <string name="app_description_80_chars_max">Widżety wyświetlają listę nadchodzących (oraz zakończonych...) wydarzeń z wybranych kalendarzy</string>
-    <string name="app_description_4000_chars_max_part01">Lista nadchodzących wydarzeń to widżet dla urządzeń z androidem. Wyświetla listę nadchodzących wydarzeń z kalendarza, aby nie przegapić żadnego spotkania.</string>
+    <string name="app_description_80_chars_max">Widget wyświetla wydarzenia z wybranych kalendarzy i list zadań</string>
+    <string name="app_description_4000_chars_max_part01">Todo Agenda to bardzo rozbudowany widget kalendarza dla twojego urządzenia z systemem Android. Każdy widget ma swoje własne ustawienia i może pokazywać różne kalendarze czy listy zadań. Dzięki temu możesz łatwo mieć wgląd na wydarzenia przeszłe, obecne i przyszłe.</string>
     <string name="app_description_4000_chars_max_part02">Funkcje</string>
-    <string name="app_description_4000_chars_max_part03">Wyświetla wszystkie wydarzenia z twoich kalendarzy. Opcjonalnie pokazuje zakończone wydarzenia.</string>
+    <string name="app_description_4000_chars_max_part15">Bez reklam. Darmowa aplikacja z otwartym źródłem.</string>
+    <string name="app_description_4000_chars_max_part03">Wyświetla wydarzenia z twoich kalendarzy i list zadań dla wybranych okresów z przeszłości i przyszłości.</string>
     <string name="app_description_4000_chars_max_part04">Aktualizuj automatycznie, gdy dodasz/usuniesz/zmodyfikujesz wydarzenie. Albo zaktualizuj listę już teraz.</string>
-    <string name="app_description_4000_chars_max_part05">Wybierz kalendarze, które chcesz wyświetlić w widżecie.</string>
-    <string name="app_description_4000_chars_max_part06">Jeżeli potrzebujesz, utwórz kilka widżetów. Każdy widżet będzie miał swoje ustawienia, razem z filtrami oraz wybranymi kalendarzami.</string>
-    <string name="app_description_4000_chars_max_part07">Dostosuj kolory tła i tekstu widżetu.</string>
-    <string name="app_description_4000_chars_max_part08">Przewijaj przez listę nadchodzących wydarzeń.</string>
+    <string name="app_description_4000_chars_max_part05">Wybierz tylko te kalendarze i listy zadań które chcesz widzieć na pulpicie.</string>
+    <string name="app_description_4000_chars_max_part06">Twórz wiele widgetów, każdy z nich będzie miał swoje ustawienia takie jsk to układ, kolory, filtry, wybrane kalendarze czy listy zadań.</string>
+    <string name="app_description_4000_chars_max_part07">Dostosuj kolory tła i przezroczystości dla różnych części widgetu.</string>
+    <string name="app_description_4000_chars_max_part08">Przewijaj przez listę wydarzeń. Użyj przycisku \"Go to Today\" aby powrócić do zdarzeń dzisiejszych.</string>
     <string name="app_description_4000_chars_max_part09">Dostosuj rozmiar tekstu widżetu.</string>
-    <string name="app_description_4000_chars_max_part10">W pełni skalowalny widżet z dwoma alternatywnymi układami.</string>
+    <string name="app_description_4000_chars_max_part10">W pełni skalowanie widgety z alternatywnymi wyglądami.</string>
     <string name="app_description_4000_chars_max_part11">Ikony dla powiadomień oraz powtarzających się wydarzeń.</string>
     <string name="app_description_4000_chars_max_part12">Zablokuj swoją strefę czasową, gdy podróżujesz do innych stref czasowych.</string>
-    <string name="app_description_4000_chars_max_part13">Wyłącz nagłówki Dni i wyświetl daty w kolumnie \"Dni od dziś\".</string>
-    <string name="app_description_4000_chars_max_part14">Wsparcie dla Androida od 4 do 7. A także tabletów.</string>
+    <string name="app_description_4000_chars_max_part13">Wyłącz nagłówek widgetu, nagłówek dnia, ikonę wydarzenia itp, aby wyświetlić tylko to co potrzebujesz.</string>
+    <string name="app_description_4000_chars_max_part16">Ukryj powtarzające się wydarzenia.</string>
+    <string name="app_description_4000_chars_max_part17">Twórz kopie zapasowe ustawień, kopiuj widgety na to samo lub inne urządzenie.</string>
+    <string name="app_description_4000_chars_max_part14">Wsparcie dla Androida 4+. Wsparcie również dla tabletów z Androidem.</string>
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Kalendarze</string>
     <string name="calendars_prefs_desc">Wybierz kalendarze do wyświetlenia</string>
@@ -100,6 +104,8 @@
     <string name="show_event_icon_desc">Pokaż pasek koloru kalendarza lub ikonę zadania dla wydarzenia</string>
     <string name="show_number_of_days_to_event_title">Pokaż ilość dni do wydarzenia</string>
     <string name="show_number_of_days_to_event_desc">Pokaż kolumnę z ilością dni do wydarzenia w układzie \"Wszystko w jednym wierszu\"</string>
+    <string name="multiline_details_title">Szczegóły w kilku wierszach</string>
+    <string name="multiline_details_desc">Rozdziel czas i miejsce wydarzenia na kilka wierszy</string>
     <!-- Preference header: Colors -->
     <string name="colors_prefs_desc">Kolory i przezroczystości tekstów i tła</string>
     <string name="appearance_group_color_title">Kolory</string>
@@ -169,14 +175,19 @@
     <string name="ended_one_year_ago">Zakończyły się rok temu</string>
     <string name="pref_hide_based_on_keywords_title">Ukryj gdy zawiera określone słowa kluczowe w tytule</string>
     <string name="show_only_closest_instance_of_recurring_event">Wyświetlaj tylko najbliższe wystąpienia powtarzającego się wydarzenia</string>
-    <!-- Preference header: Feedback -->
-    <string name="feedback_prefs">Opinia</string>
-    <string name="feedback_prefs_desc">Skontaktuj się z nami</string>
+    <string name="hide_duplicates">Ukryj powtarzające się wydarzenia</string>
+    <!-- Preference header: Feedback and Backup -->
+    <string name="feedback_prefs">Opinia i kopia zapasowa</string>
+    <string name="feedback_prefs_desc">Skontaktuj się z nami, kopia zapasowa i przywracanie ustawień</string>
     <string name="feedback_github_desc">Wyraź swoją opinię na stronie projektu</string>
     <string name="feedback_github_title">Odwiedź widżet na stronie Github</string>
     <string name="feedback_play_store_desc">Oceń i skomentuj w sklepie Google Play</string>
     <string name="feedback_play_store_title">Odwiedź widżet w Sklep Google Play</string>
     <string name="refresh_desc">Odśwież</string>
-    <string name="share_events_for_debugging_desc">Utworzy raport, aby pomóc programistom w rozwiązaniu problemu</string>
-    <string name="share_events_for_debugging_title">Udostępnij wydarzenia do debugowania</string>
+    <string name="share_events_for_debugging_desc">Stwórz raport aby pomóc programistom rozpoznać problem. Przed udostępnieniem raportu ukryj wszystkie twoje prywatne dane, ale postaraj się zrobić to tak aby raport nadal przedstawiał problem</string>
+    <string name="share_events_for_debugging_title">Udostępniaj wydarzenia i ustawienia do sprawdzania błędów</string>
+    <string name="backup_settings_title">Ustawienia kopii zapasowej</string>
+    <string name="backup_settings_desc">To samo co \"Udostępnij wydarzenia do sprawdzania błędów\", ale nie zawiera danych wydarzeń</string>
+    <string name="restore_settings_title">Przywróć ustawienia z kopii zapasowej</string>
+    <string name="restore_settings_desc">Ustawienia z każdego widgetu powinny być przywracanie pojedynczo</string>
 </resources>

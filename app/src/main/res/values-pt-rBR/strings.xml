@@ -7,39 +7,64 @@
     <string name="yesterday">Ontem</string>
     <string name="today">Hoje</string>
     <string name="tomorrow">Amanhã</string>
+    <string name="not_initialized_yet">Não inicializado ainda...</string>
+    <string name="no_events_to_show">Nenhum evento</string>
     <string name="no_upcoming_events">Sem novos eventos</string>
     <string name="open_prefs_desc">Configurações do widget do calendário</string>
+    <string name="go_to_today">Ir para Hoje</string>
     <string name="add_event_desc">Adicionar novo evento</string>
     <string name="indicator_alarm">Indicador se um alarme foi definido</string>
     <string name="indicator_recurring">Indicador se um evento é recorrente</string>
     <string name="no_title">(Sem título)</string>
     <string name="grant_permissions">Conceder permissões</string>
     <string name="grant_permissions_verbose">O Widget requer permissão para ler calendários.\nToque aqui para conceder permissão.</string>
+    <string name="past_header">Anteriores</string>
     <string name="permissions_justification">Bem vindo ao Widget de Calendário, o acesso fácil ao seu calendário.\n\nPara aproveitar ao máximo o widget você precisa conceder acesso ao seu calendário.</string>
     <string name="no_widgets_found">Por favor, adicione um \"Widget de Calendário\" na tela inicial do seu dispositivo primeiro.</string>
     <string name="select_a_widget_to_configure">Selecione um widget para configurar</string>
     <string name="close">Fechar</string>
     <string name="go_to_home_screen">Ir para a tela inicial</string>
+    <string name="loading_with_dots">Carregando...</string>
+    <string name="widget_header">Cabeçalho do widget</string>
+    <string name="todays_events">Eventos de hoje</string>
+    <string name="future_events">Eventos futuros</string>
+    <string name="not_found">Não encontrado</string>
     <!-- Descriptions for app markets -->
-    <string name="app_description_80_chars_max">Widget com lista dos próximos compromissos de calendários selecionados</string>
-    <string name="app_description_4000_chars_max_part01">Todo Agenda é um widget para a tela inicial do seu dispositivo Android. Ele exibe a lista dos próximos eventos para que você tenha uma visão rápida da sua agenda.</string>
+    <string name="app_description_80_chars_max">Widgets exibindo eventos dos calendários selecionados</string>
+    <string name="app_description_4000_chars_max_part01">Todo Agenda  é um widget para seu dispositivo Android.
+        Cada widget tem suas próprias configurações e exibe a lista configurada de eventos e tarefas do calendário
+        para que você possa facilmente ver seus eventos anteriores, atuais e futuros.</string>
     <string name="app_description_4000_chars_max_part02">Recursos</string>
-    <string name="app_description_4000_chars_max_part03">Exibe todos os eventos dos seus calendários. Opcionalmente exibe eventos passados.</string>
+    <string name="app_description_4000_chars_max_part15">Sem publicidade. Gratuito e Open Source.</string>
+    <string name="app_description_4000_chars_max_part03">Exibe eventos de seus calendários 
+        para os períodos selecionados no passado e no futuro.</string>
     <string name="app_description_4000_chars_max_part04">A lista é atualizada automaticamente quando um evento é adicionado/removido/modificado. Ou ela pode ser atualizada manualmente.</string>
-    <string name="app_description_4000_chars_max_part05">Selecione apenas os calendários que você deseja ver no widget.</string>
-    <string name="app_description_4000_chars_max_part06">Crie vários widgets, se desejar. Cada widget tem suas próprias configurações, incluindo filtros e calendários selecionados.</string>
-    <string name="app_description_4000_chars_max_part07">Ajuste as cores do fundo do widget e do texto.</string>
-    <string name="app_description_4000_chars_max_part08">Role pela lista dos próximos eventos.</string>
+    <string name="app_description_4000_chars_max_part05">Selecione apenas os calendários
+        que você deseja ver no widget.</string>
+    <string name="app_description_4000_chars_max_part06">Crie vários widgets, se você precisar. Cada widget tem suas próprias configurações,
+        incluindo layouts, cores, filtros e calendários selecionados.</string>
+    <string name="app_description_4000_chars_max_part07">Personalize cores de fundo e transparência
+        de diferentes partes, sombreamento branco e preto para textos.</string>
+    <string name="app_description_4000_chars_max_part08">Role pela lista de eventos.
+        Use o botão \"Ir para Hoje\" para retornar ao dia atual.</string>
     <string name="app_description_4000_chars_max_part09">Ajuste o tamanho do texto do widget.</string>
-    <string name="app_description_4000_chars_max_part10">Widget redimensionável com dois layouts alternativos.</string>
+    <string name="app_description_4000_chars_max_part10">Widget customizável com layouts alternativos.</string>
     <string name="app_description_4000_chars_max_part11">Indicadores para alertas e eventos recorrentes.</string>
     <string name="app_description_4000_chars_max_part12">Bloqueie o fuso horário quando viajar para outros fusos horários.</string>
-    <string name="app_description_4000_chars_max_part13">Esconda os cabeçalhos dos dias e veja datas na coluna \"Dias a partir de hoje\".</string>
-    <string name="app_description_4000_chars_max_part14">Android 4 a 7 suportados. Tablets Android suportados.</string>
+    <string name="app_description_4000_chars_max_part13">Desative o cabeçalho do Widget, do Dia, ícones de eventos, dias a frente,
+        etc. e veja apenas o que precisa.</string>
+    <string name="app_description_4000_chars_max_part16">Ocultar eventos duplicados.</string>
+    <string name="app_description_4000_chars_max_part17">Backup e restauração das configurações,
+        clonando widgets aqui ou em outro aparelho.</string>
+    <string name="app_description_4000_chars_max_part14">Suporte a Android 4+. Suporta tablets Android.</string>
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendários</string>
     <string name="calendars_prefs_desc">Selecione os calendários visíveis</string>
+    <string name="task_source_opentasks">OpenTasks (por dmfs GmbH)</string>
+    <string name="task_source_samsung">Calendário Samsung</string>
     <!-- Preference header: Other -->
+    <string name="other_prefs_desc">Tamanho, data e formato de hora, etc.</string>
+    <string name="other_prefs_title">Outros ajustes</string>
     <string name="appearance_prefs">Aparença</string>
     <string name="appearance_prefs_desc">Ajustar a aparência do widget</string>
     <string name="appearance_text_size_title">Tamanho do texto</string>
@@ -60,29 +85,52 @@
     <string name="appearance_abbreviate_dates_title">Abreviar datas</string>
     <string name="appearance_abbreviate_dates_desc">Use o formato de três letras para datas no Widget e cabeçalhos do Dia etc.</string>
     <!-- Preference header: Layout -->
+    <string name="layout_prefs_desc">Posicione, mostre e oculte elementos do widget</string>
+    <string name="layout_prefs_title">Layout</string>
+    <string name="widget_header_layout">Layout do cabeçalho do widget</string>
     <string name="pref_event_entry_layout_title">Layout de entrada de evento</string>
     <string name="default_multiline_layout">Tempo abaixo do título</string>
+    <string name="show_date_on_widget_header">Mostrar data no cabeçalho do widget</string>
+    <string name="default_value">Padrão</string>
     <string name="single_line_layout">Tudo em uma linha</string>
+    <string name="two_rows_layout">Layout com 2 linhas</string>
+    <string name="hidden">Oculto</string>
     <string name="appearance_day_header_alignment_desc">Ajustar alinhamento do Dia no cabeçalho</string>
     <string name="appearance_day_header_alignment_title">Alinhamento do Cabeçalho do Dia</string>
     <string name="appearance_day_header_alignment_left">Esquerda</string>
     <string name="appearance_day_header_alignment_center">Centralizar</string>
     <string name="appearance_day_header_alignment_right">Direita</string>
+    <string name="horizontalLineBelowDayHeader">Linha abaixo do cabeçalho do Dia</string>
     <string name="appearance_multiline_title_title">Título em múltiplas linhas</string>
     <string name="appearance_multiline_title_desc">Distribuir título por múltiplas linhas</string>
     <string name="appearance_show_days_without_events_title">Exibir dias sem eventos</string>
     <string name="appearance_show_days_without_events_desc">Exibir cabeçalho para dias sem eventos</string>
     <string name="appearance_show_day_headers_title">Mostrar os cabeçalhos do dia</string>
     <string name="appearance_show_day_headers_desc">Mostrar os cabeçalhos do dia completamente</string>
+    <string name="show_past_events_under_one_header_title">Cabeçalho para eventos anteriores</string>
+    <string name="show_past_events_under_one_header_desc">Mostrar todos os eventos anteriores sob um cabeçalho \"Anteriores\"</string>
+    <string name="show_event_icon_title">Mostrar ícone de evento</string>
+    <string name="show_event_icon_desc">Mostrar cores do Calendário / Ícone da tarefa para evento</string>
+    <string name="show_number_of_days_to_event_title">Mostrar quantos dias até o evento</string>
+    <string name="show_number_of_days_to_event_desc">Mostrar coluna com dias faltantes para o evento no layout \"Tudo em 1 linha\"</string>
+    <string name="multiline_details_title">Detalhes em várias linhas</string>
+    <string name="multiline_details_desc">Distribuir hora e localização do evento em várias linhas</string>
     <!-- Preference header: Colors -->
+    <string name="colors_prefs_desc">Cor e opacidade dos textos e dos fundos</string>
     <string name="appearance_group_color_title">Cores</string>
     <string name="appearance_background_color_title">Cor do fundo</string>
     <string name="appearance_background_color_desc">Ajustar a cor de fundo</string>
     <string name="appearance_past_events_background_color_title">Cor de fundo de eventos passados</string>
     <string name="appearance_past_events_background_color_desc">Ajustar cor de fundo dos eventos passados</string>
+    <string name="todays_events_background_color_title">Cor de fundo dos eventos de hoje</string>
+    <string name="todays_events_background_color_desc">Ajustar cor de fundo dos eventos de hoje</string>
     <string name="appearance_header_theme_title">Sombreado do cabeçalho do Widget</string>
     <string name="appearance_header_theme_desc">Mostrar cabeçalho do widget com sombra escura ou clara</string>
-    <string name="appearance_entries_theme_title">Sombra do evento</string>
+    <string name="widget_header_background_color_desc">Ajustar cor do cabeçalho do widget. Transparente por padrão</string>
+    <string name="widget_header_background_color_title">Cor de fundo do cabeçalho do widget</string>
+    <string name="day_header_theme_title">Sombreamento de texto do cabeçalho do Dia</string>
+    <string name="day_header_theme_desc">Mostrar texto do cabeçalho do dia em tom escuro ou claro</string>
+    <string name="appearance_entries_theme_title">Sombreamento do evento</string>
     <string name="appearance_entries_theme_desc">Mostrar texto com sombra escura ou clara</string>
     <string name="appearance_theme_black">Branco</string>
     <string name="appearance_theme_dark">Claro</string>
@@ -127,16 +175,29 @@
     <string name="ended_four_hours_ago">Terminado há quatro horas</string>
     <string name="ended_today">Terminado hoje</string>
     <string name="ended_yesterday">Terminou ontem</string>
+    <string name="ended_one_week_ago">Finalizado há 1 semana</string>
+    <string name="ended_two_weeks_ago">Finalizado há 2 semanas</string>
+    <string name="ended_one_month_ago">Finalizado há 1 mês</string>
+    <string name="ended_two_months_ago">Finalizado há 2 meses</string>
+    <string name="ended_three_months_ago">Finalizado há 3 meses</string>
+    <string name="ended_six_months_ago">Finalizado há 6 meses</string>
+    <string name="ended_one_year_ago">Finalizado há 1 ano</string>
     <string name="pref_hide_based_on_keywords_title">Ocultar baseado em palavras-chave em um título</string>
     <string name="show_only_closest_instance_of_recurring_event">Mostrar apenas a instância mais próxima de um evento recorrente</string>
-    <!-- Preference header: Feedback -->
-    <string name="feedback_prefs">Feedback</string>
-    <string name="feedback_prefs_desc">Entre em contato conosco</string>
+    <string name="hide_duplicates">Ocultar duplicados</string>
+    <!-- Preference header: Feedback and Backup -->
+    <string name="feedback_prefs">Comentários e Backup</string>
+    <string name="feedback_prefs_desc">Fale conosco, configurações de backup e restauração</string>
     <string name="feedback_github_desc">Sua opinião sobre o projeto</string>
     <string name="feedback_github_title">Visite a página do widget no Github</string>
     <string name="feedback_play_store_desc">Avalie e comente no Google Play Store</string>
     <string name="feedback_play_store_title">Visite-nos na Google Play Store</string>
     <string name="refresh_desc">Atualizar</string>
-    <string name="share_events_for_debugging_desc">Criar um relatório para ajudar os desenvolvedores a solucionar problemas</string>
-    <string name="share_events_for_debugging_title">Compartilhar eventos para depuração</string>
+    <string name="share_events_for_debugging_desc">Crie um relatório para ajudar os desenvolvedores a resolver problemas.
+        Antes de compartilhar, por favor filtre os eventos para proteger sua privacidade, mas ainda mostrando o problema</string>
+    <string name="share_events_for_debugging_title">Compartilhar eventos e configurações para depuração</string>
+    <string name="backup_settings_title">Configurações de Backup</string>
+    <string name="backup_settings_desc">O mesmo que \"Compartilhar eventos para depuração\", mas não contém eventos</string>
+    <string name="restore_settings_title">Restaurar configurações de um backup</string>
+    <string name="restore_settings_desc">As configurações de cada widget de Todo Agenda devem ser restauradas separadamente</string>
 </resources>

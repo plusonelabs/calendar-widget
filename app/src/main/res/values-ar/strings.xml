@@ -40,6 +40,7 @@
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">التقويمات</string>
     <string name="calendars_prefs_desc">تحديد التقويمات للعرض</string>
+    <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
     <string name="task_source_samsung">تقويم سامسونج</string>
     <!-- Preference header: Other -->
     <string name="other_prefs_desc">الحجم،ش شكل التاريخ والوقت،...</string>
@@ -135,11 +136,23 @@
     <string name="ended_four_hours_ago">انتهت منذ أربع ساعات</string>
     <string name="ended_today">انتهت اليوم</string>
     <string name="ended_yesterday">انتهى أمس</string>
+    <string name="ended_one_week_ago">انتهت منذ أسبوع واحد</string>
+    <string name="ended_two_weeks_ago">انتهت منذ أسبوعان</string>
+    <string name="ended_one_month_ago">انتهت منذ شهر واحد</string>
+    <string name="ended_two_months_ago">انتهت منذ شهران</string>
+    <string name="ended_three_months_ago">انتهت منذ ثلاثة أشهر</string>
+    <string name="ended_six_months_ago">انتهت منذ ستة أشهر</string>
+    <string name="ended_one_year_ago">انتهت منذ سنة واحدة</string>
     <string name="pref_hide_based_on_keywords_title">إخفاء استناداً إلى الكلمات الأساسية في العنوان</string>
+    <string name="hide_duplicates">إخفاء التكرارات</string>
     <!-- Preference header: Feedback and Backup -->
+    <string name="feedback_prefs">الملاحظات والنسخة الإحتياطية</string>
+    <string name="feedback_prefs_desc">راسلنا، قم بعمل نسخه احتياطيه او استرجاع الإعدادات</string>
     <string name="feedback_github_desc">اضافة تعليقات عن صفحة المشروع</string>
     <string name="feedback_github_title">زيارة القطعة في Github</string>
     <string name="feedback_play_store_desc">التصنيف والتعليق على مخزن لعب جوجل</string>
     <string name="feedback_play_store_title">زيارة القطعة على مخزن لعب جوجل</string>
     <string name="refresh_desc">تحديث(إنعاش)</string>
+    <string name="backup_settings_title">تخزين نسخة احتياطية من الإعدادات</string>
+    <string name="restore_settings_title">استرجاع الإعدادات من النسخة الإحتياطية</string>
 </resources>

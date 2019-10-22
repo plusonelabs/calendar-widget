@@ -18,20 +18,46 @@
     <string name="no_title">(Nessun titolo)</string>
     <string name="grant_permissions">Dai permessi</string>
     <string name="grant_permissions_verbose">Il widget chiede il permesso di leggere i calendari.\nTocca per concederlo.</string>
+    <string name="past_header">Trascorsi non completati</string>
+    <string name="permissions_justification">Benvenuto in Todo Agenda, facile accesso a calendario e attività.
+Per ottenere il massimo dal widget è necessario autorizzare l\'accesso ai calendari ed alle attività.</string>
+    <string name="no_widgets_found">Per prima cosa aggiungere il widget \"Todo Agenda\" alla pagina Home del tuo dispositivo.</string>
     <string name="select_a_widget_to_configure">Seleziona un widget da configurare</string>
     <string name="close">Chiudi</string>
     <string name="go_to_home_screen">Vai alla home</string>
     <string name="loading_with_dots">Caricamento in corso...</string>
+    <string name="widget_header">Intestazione del widget</string>
     <string name="todays_events">Eventi di oggi</string>
     <string name="future_events">Eventi futuri</string>
     <string name="not_found">Non trovato</string>
     <!-- Descriptions for app markets -->
+    <string name="app_description_80_chars_max">Widget per la videata Home che mostra eventi dai calendari selezionati e l\'elenco delle attività</string>
+    <string name="app_description_4000_chars_max_part01">Todo Agenda è un widget per la videata home del tuo dispositivo Android.
+Ogni widget ha le proprie impostazioni e mostra le liste e le attività come configurate in modo da poter facilmente dare un\'occhiata agli appuntamenti, passati, presenti e futuri.</string>
     <string name="app_description_4000_chars_max_part02">Funzioni</string>
     <string name="app_description_4000_chars_max_part15">Nessuna pubblicità. Free e Open Source.</string>
+    <string name="app_description_4000_chars_max_part03">Mostra gli eventi del tuo calendario e le attività per il periodo selezionato nel passato e nel futuro.</string>
+    <string name="app_description_4000_chars_max_part04">Si aggiorna automaticamente aggiungendo/cancellando o modificando un evento, è possibile anche l\'aggiornamento manuale immediato.</string>
+    <string name="app_description_4000_chars_max_part05">Selezionare solo i calendari e le attività che si vuole siano mostrate nel widget.</string>
+    <string name="app_description_4000_chars_max_part06">Create widget multipli, ognuno con le proprie impostazioni, aspetto, colori, filtri calendari e attività.</string>
+    <string name="app_description_4000_chars_max_part07">Personalizza colori di sfondo e trasparenza delle parti del widget nonchè l\'ombreggiatuta del testo nera e bianca.</string>
+    <string name="app_description_4000_chars_max_part08">Muoversi all\'interno della lista di eventi. Usare il bottone \"Vai a oggi\" per tornare immediatamente agli eventi del giorno.</string>
+    <string name="app_description_4000_chars_max_part09">Personalizza le dimensioni del testo del widget.</string>
+    <string name="app_description_4000_chars_max_part10">Widget ridimensionabile con layouts alternativi.</string>
+    <string name="app_description_4000_chars_max_part11">Indicatore per gli allarmi e gli eventi ricorrenti.</string>
+    <string name="app_description_4000_chars_max_part12">Possibilità di bloccare il fuso orario quando si viaggia in zone con orario differente.</string>
+    <string name="app_description_4000_chars_max_part13">Nascondere l\'intestazione del widget o del giorno, icone degli eventi giorni mancanti etc e visualizzare solo il necessario.</string>
+    <string name="app_description_4000_chars_max_part16">Nasconde gli eventi doppi.</string>
+    <string name="app_description_4000_chars_max_part17">Salva e ripristina le impostazioni, clona i widget sul dispositivo stesso o su altri.</string>
+    <string name="app_description_4000_chars_max_part14">Supporta Android 4 e superiore. Supporta tablets Android.</string>
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendari</string>
     <string name="calendars_prefs_desc">Selezionare i calendari da mostrare</string>
+    <string name="task_source_opentasks">Apri attività (di dmfs GmbH)</string>
+    <string name="task_source_samsung">Calendario Samsung</string>
     <!-- Preference header: Other -->
+    <string name="other_prefs_desc">Dimensioni, formato dell\'ora e della data, etc.</string>
+    <string name="other_prefs_title">Altre impostazioni</string>
     <string name="appearance_prefs">Aspetto</string>
     <string name="appearance_prefs_desc">Imposta l\'aspetto del widget</string>
     <string name="appearance_text_size_title">Dimensione testo</string>
@@ -52,28 +78,51 @@
     <string name="appearance_abbreviate_dates_title">Abbrevia date</string>
     <string name="appearance_abbreviate_dates_desc">Usa formato tre lettere per le date nel widget, nell\'intestazione giorno, ecc.</string>
     <!-- Preference header: Layout -->
+    <string name="layout_prefs_desc">Imposta, mostra o nascondi elementi</string>
+    <string name="layout_prefs_title">Aspetto</string>
+    <string name="widget_header_layout">Layout della testata</string>
     <string name="pref_event_entry_layout_title">Formato dell\'evento</string>
     <string name="default_multiline_layout">Ora sotto il titolo</string>
+    <string name="show_date_on_widget_header">Mostra la data in testata</string>
+    <string name="default_value">Default</string>
     <string name="single_line_layout">Tutto in una riga</string>
+    <string name="two_rows_layout">Mostra su due righe</string>
+    <string name="hidden">Nascosto</string>
     <string name="appearance_day_header_alignment_desc">Imposta l\'allineamento dell\'intestazione del giorno</string>
     <string name="appearance_day_header_alignment_title">Allineamento intestazione del giorno</string>
     <string name="appearance_day_header_alignment_left">Sinistra</string>
     <string name="appearance_day_header_alignment_center">Centro</string>
     <string name="appearance_day_header_alignment_right">Destra</string>
+    <string name="horizontalLineBelowDayHeader">Linea orizzontale sotto la testata</string>
     <string name="appearance_multiline_title_title">Titolo multilinea</string>
     <string name="appearance_multiline_title_desc">Disponi il titolo dell\'evento su più righe</string>
     <string name="appearance_show_days_without_events_title">Visualizza i giorni senza eventi</string>
     <string name="appearance_show_days_without_events_desc">Visualizza le intestazioni del giorno per giorni senza eventi</string>
     <string name="appearance_show_day_headers_title">Visualizza l\'intestazione del giorno</string>
     <string name="appearance_show_day_headers_desc">Non visualizzare l\'intestazione del giorno</string>
+    <string name="show_past_events_under_one_header_title">Testata per eventi passati non conclusi</string>
+    <string name="show_past_events_under_one_header_desc">Mostra tutti gli eventi passati e non conclusi sotto l\'intestazione \"Passati e non conclusi\"</string>
+    <string name="show_event_icon_title">Mostra icona dell\'evento</string>
+    <string name="show_event_icon_desc">Mostra barra colorata del calendario/icona dell\'attività per l\'evento</string>
+    <string name="show_number_of_days_to_event_title">Mostra numero di giorni mancanti all\'evento</string>
+    <string name="show_number_of_days_to_event_desc">Mostra colonna con il numero di giorni mancanti all\'evento nel layout \"Tutto su una riga\"</string>
+    <string name="multiline_details_title">Dettagli multilinea</string>
+    <string name="multiline_details_desc">Distribuisci durata e ubicazione evento su più righe</string>
     <!-- Preference header: Colors -->
+    <string name="colors_prefs_desc">Colore e trasparenza dei testi e dello sfondo</string>
     <string name="appearance_group_color_title">Colori</string>
     <string name="appearance_background_color_title">Sfondo trasparente</string>
     <string name="appearance_background_color_desc">Imposta la trasparenza dello sfondo</string>
     <string name="appearance_past_events_background_color_title">Colore di sfondo di eventi passati</string>
     <string name="appearance_past_events_background_color_desc">Regola il colore di sfondo degli eventi passati</string>
+    <string name="todays_events_background_color_title">Colore sfondo per gli eventi di oggi</string>
+    <string name="todays_events_background_color_desc">Modifica colore sfondo per gli eventi di oggi</string>
     <string name="appearance_header_theme_title">Ombreggiatura dell\'intestazione del widget</string>
     <string name="appearance_header_theme_desc">Mostra l\'intestazione del widget con una ombreggiatura chiara o scura</string>
+    <string name="widget_header_background_color_desc">Modifica colore della testata. Default trasparente</string>
+    <string name="widget_header_background_color_title">Colore sfondo della testata</string>
+    <string name="day_header_theme_title">Ombreggiatura testo della testata</string>
+    <string name="day_header_theme_desc">Testo della testata chiaro o scuro</string>
     <string name="appearance_entries_theme_title">Ombreggiatura evento</string>
     <string name="appearance_entries_theme_desc">Mostra il testo dell\'evento con una ombreggiatura chiara o scura</string>
     <string name="appearance_theme_black">Bianco</string>
@@ -119,16 +168,28 @@
     <string name="ended_four_hours_ago">Concluso quattro ore fa</string>
     <string name="ended_today">Concluso oggi</string>
     <string name="ended_yesterday">Conclusi ieri</string>
+    <string name="ended_one_week_ago">Conclusi una settimana fa</string>
+    <string name="ended_two_weeks_ago">Conclusi due settimane fa</string>
+    <string name="ended_one_month_ago">Conclusi un mese fa</string>
+    <string name="ended_two_months_ago">Concluso due mesi fa</string>
+    <string name="ended_three_months_ago">Concluso tre mesi fa</string>
+    <string name="ended_six_months_ago">Concluso sei mesi fa</string>
+    <string name="ended_one_year_ago">Terminato un anno fa</string>
     <string name="pref_hide_based_on_keywords_title">Nascondi in base alla parole chiave nel titolo</string>
     <string name="show_only_closest_instance_of_recurring_event">Visualizza solo l\'istanza piú vicina di un evento ricorrente</string>
-    <!-- Preference header: Feedback -->
-    <string name="feedback_prefs">Feedback</string>
-    <string name="feedback_prefs_desc">Entra in contatto con noi</string>
+    <string name="hide_duplicates">Nascondi duplicati</string>
+    <!-- Preference header: Feedback and Backup -->
+    <string name="feedback_prefs">Feedback e salvataggio</string>
+    <string name="feedback_prefs_desc">Entra in contatto con noi, impostazioni di salvataggio e ripristino</string>
     <string name="feedback_github_desc">Fornisci un feedback sulla pagina del progetto</string>
     <string name="feedback_github_title">Visita su Github</string>
     <string name="feedback_play_store_desc">Vota e commenta su Google Play Store</string>
     <string name="feedback_play_store_title">Visita su Google Play Store</string>
     <string name="refresh_desc">Aggiorna</string>
-    <string name="share_events_for_debugging_desc">Crea un report per aiutare gli sviluppatori a risolvere i problemi</string>
-    <string name="share_events_for_debugging_title">Condividi gli eventi per il debug</string>
+    <string name="share_events_for_debugging_desc">Crea un report per aiutare gli sviluppatori a individuare i problemi. Prima di condividere si consiglia di filtrare gli eventi per proteggere la propria privacy</string>
+    <string name="share_events_for_debugging_title">Condividi eventi ed impostazioni per il debug</string>
+    <string name="backup_settings_title">Impostazioni di salvataggio</string>
+    <string name="backup_settings_desc">Come \"condividi eventi per debugging\" ma non contiene eventi</string>
+    <string name="restore_settings_title">Ripristino impostazioni da un salvataggio</string>
+    <string name="restore_settings_desc">Le impostazioni di ciascun widget devono essere ripristinate separatamente</string>
 </resources>

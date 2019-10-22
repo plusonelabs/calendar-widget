@@ -134,14 +134,14 @@ Sorry for inconvenience.
   Separate "[ToDo Agenda Not Initialized yet...](https://github.com/plusonelabs/calendar-widget/issues/318)" layout added 
   to see the widget, when it is not initialized yet (e.g. after device reboot).
 
-### 2019-08-11 [v2.1.1](https://github.com/plusonelabs/calendar-widget/issues/308) Tasks support
+### 2019-08-11 <a id="v2.1"/> [v2.1.1](https://github.com/plusonelabs/calendar-widget/issues/308) Tasks support
 * Tasks support added. Two Task apps are supported: [OpenTasks (by dmfs GmbH)](https://github.com/dmfs/opentasks)
   and Tasks of Samsung Calendar ([looks like a deprecating feature...](
   https://eu.community.samsung.com/t5/Galaxy-S9-S9/New-Update-Calendar-Issues/td-p/940866)). 
 * New option "Header for past/due events". If turned on, it shows all past/due events under one "Past and due" header. 
   Applied both to calendar events and to tasks.
 
-### 2019-01-19  <a id="v2.0.1"/> [v2.0.1](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
+### 2019-01-19 <a id="v2.0.1"/> [v2.0.1](https://github.com/plusonelabs/calendar-widget/issues/291) Renamed and republished
 
 * The "Calendar Widget" renamed to "Todo Agenda" and published to Google Play as [the new application](https://play.google.com/store/apps/details?id=org.andstatus.todoagenda).
   More details: [No longer in Google play?](https://github.com/plusonelabs/calendar-widget/issues/291)

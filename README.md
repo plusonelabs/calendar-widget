@@ -66,7 +66,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## <a id="changelog"/> Changelog
 
-### 2019-10-19 <a id="v3.1"/> v3.1.4 Hide duplicated events. Backup and restore
+### 2019-10-26 <a id="v3.1"/> v3.1.6 Hide duplicated events. Backup and restore
 
 * Selected Calendars (Task lists) [display order](https://github.com/plusonelabs/calendar-widget/issues/287)
  is determined by the order in which the calendars are selected. 

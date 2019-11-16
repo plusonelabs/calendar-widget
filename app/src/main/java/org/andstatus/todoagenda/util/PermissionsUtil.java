@@ -29,8 +29,12 @@ public class PermissionsUtil {
         return arePermissionsGranted(settings.getContext())
                 ? PendingIntent.getBroadcast(settings.getContext(), requestCode, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT)
-                : PendingIntent.getActivity(settings.getContext(), settings.getWidgetId(),
-                MainActivity.intentToStartMe(settings.getContext()), PendingIntent.FLAG_UPDATE_CURRENT);
+                : getNoPermissionsPendingIntent(settings);
+    }
+
+    public static PendingIntent getNoPermissionsPendingIntent(InstanceSettings settings) {
+        return PendingIntent.getActivity(settings.getContext(), settings.getWidgetId(),
+        MainActivity.intentToStartMe(settings.getContext()), PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @NonNull

@@ -1,5 +1,7 @@
 package org.andstatus.todoagenda;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -9,8 +11,6 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.andstatus.todoagenda.RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS;
 import static org.junit.Assert.assertEquals;
@@ -80,7 +80,8 @@ public class BirthdayTest extends BaseWidgetTest {
         EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         factory.onDataSetChanged();
         factory.logWidgetEntries(TAG);
-        assertEquals(entriesWithoutLastExpected + 1, factory.getWidgetEntries().size());
+        assertEquals(entriesWithoutLastExpected == 0 ? 0 : entriesWithoutLastExpected + 1,
+                factory.getWidgetEntries().size());
         if (entriesWithoutLastExpected > 0) {
             CalendarEntry birthday = (CalendarEntry) factory.getWidgetEntries().get(1);
             assertEquals(9, birthday.getStartDate().dayOfMonth().get());

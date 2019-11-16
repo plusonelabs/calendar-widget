@@ -76,7 +76,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.d(TAG, "onUpdate, widgetIds:" + asList(appWidgetIds) + ", context:" + context);
         for (int widgetId : appWidgetIds) {
-            RemoteViewsFactory.updateWidget(context, widgetId, null);
+            RemoteViewsFactory.updateWidget(context, widgetId, null, false);
             notifyWidgetDataChanged(context, widgetId);
         }
     }

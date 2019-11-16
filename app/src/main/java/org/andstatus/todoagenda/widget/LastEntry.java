@@ -8,17 +8,24 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
+import static org.andstatus.todoagenda.widget.LastEntry.LastEntryType.EMPTY;
+import static org.andstatus.todoagenda.widget.LastEntry.LastEntryType.NO_PERMISSIONS;
+
 /** @author yvolk@yurivolkov.com */
 public class LastEntry extends WidgetEntry<LastEntry> {
 
-    public static LastEntry from(InstanceSettings settings, List<WidgetEntry> widgetEntries) {
-        return widgetEntries.isEmpty()
-            ? new LastEntry(
-                PermissionsUtil.arePermissionsGranted(settings.getContext())
-                        ? LastEntryType.EMPTY
-                        : LastEntryType.NO_PERMISSIONS,
-                DateUtil.now(settings.getTimeZone()))
-            : new LastEntry(LastEntryType.LAST, widgetEntries.get(widgetEntries.size() - 1).getStartDate());
+    public static LastEntry forEmptyList(InstanceSettings settings) {
+        LastEntry.LastEntryType entryType = PermissionsUtil.arePermissionsGranted(settings.getContext())
+                ? EMPTY
+                : NO_PERMISSIONS;
+        return new LastEntry(entryType, DateUtil.now(settings.getTimeZone()));
+    }
+
+    public static void addLast(List<WidgetEntry> widgetEntries) {
+        if (!widgetEntries.isEmpty()) {
+            LastEntry entry = new LastEntry(LastEntryType.LAST, widgetEntries.get(widgetEntries.size() - 1).getStartDate());
+            widgetEntries.add(entry);
+        }
     }
 
     public enum LastEntryType {

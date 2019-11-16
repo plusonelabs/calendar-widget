@@ -12,6 +12,9 @@ import android.view.ContextThemeWrapper;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
@@ -34,9 +37,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarPendingIntent;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setAlpha;
@@ -44,6 +44,7 @@ import static org.andstatus.todoagenda.util.RemoteViewsUtil.setBackgroundColor;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setImageFromAttr;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
+import static org.andstatus.todoagenda.widget.LastEntry.LastEntryType.NOT_LOADED;
 
 public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final String TAG = RemoteViewsFactory.class.getSimpleName();
@@ -69,7 +70,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         this.context = context;
         this.widgetId = widgetId;
         visualizers.add(new LastEntryVisualizer(context, widgetId));
-        widgetEntries.add(new LastEntry(LastEntry.LastEntryType.NOT_LOADED, DateUtil.now(getSettings().getTimeZone())));
+        widgetEntries.add(new LastEntry(NOT_LOADED, DateUtil.now(getSettings().getTimeZone())));
         logEvent("Init");
     }
 
@@ -79,7 +80,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     public void onCreate() {
         logEvent("onCreate");
-        reload();
+        reload(false);
     }
 
     public void onDestroy() {
@@ -111,10 +112,10 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     @Override
     public void onDataSetChanged() {
         logEvent("onDataSetChanged");
-        reload();
+        reload(true);
     }
 
-    private void reload() {
+    private void reload(boolean onDatasetChanged) {
         if (!AllSettings.isWidgetAllowed(widgetId)) {
             logEvent("reload, skip as the widget is not allowed");
             return;
@@ -128,10 +129,10 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             logEvent("reload, visualizers:" + visualizers.size() + ", entries:" + this.widgetEntries.size());
             prevReloadFinishedAt = System.currentTimeMillis();
         }
-        updateWidget(context, widgetId, this);
+        updateWidget(context, widgetId, this, onDatasetChanged);
     }
 
-    static void updateWidget(Context context, int widgetId, @Nullable RemoteViewsFactory factory) {
+    static void updateWidget(Context context, int widgetId, @Nullable RemoteViewsFactory factory, boolean onDatasetChanged) {
         try {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             if (appWidgetManager == null) {
@@ -142,12 +143,15 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_initial);
 
-            configureWidgetHeader(settings, rv);
+            configureWidgetHeader(settings, rv, factory == null || factory.getCount() == 0);
             configureWidgetEntriesList(settings, context, widgetId, rv);
             if (factory != null) {
                 factory.configureGotoToday(settings, rv, factory.getTomorrowsPosition(), factory.getTodaysPosition());
             }
-            appWidgetManager.updateAppWidget(widgetId, rv);
+
+            if (!onDatasetChanged) {
+                appWidgetManager.updateAppWidget(widgetId, rv);
+            }
         } catch (Exception e) {
             Log.w(TAG, widgetId + " Exception in updateWidget, context:" + context, e);
         }
@@ -190,7 +194,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         Collections.sort(eventEntries);
         List<WidgetEntry> deduplicated = settings.getHideDuplicates() ? hideDuplicates(eventEntries) : eventEntries;
         List<WidgetEntry> widgetEntries = settings.getShowDayHeaders() ? addDayHeaders(deduplicated) : deduplicated;
-        widgetEntries.add(LastEntry.from(settings, widgetEntries));
+        LastEntry.addLast(widgetEntries);
         return widgetEntries;
     }
 
@@ -276,28 +280,40 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     public long getItemId(int position) {
-        return position;
+        logEvent("getItemId: " + position);
+        if (position < widgetEntries.size()) {
+            return position + 1;
+        }
+        return 0;
     }
 
     public boolean hasStableIds() {
-        return true;
+        return false;
     }
 
-    private static void configureWidgetHeader(InstanceSettings settings, RemoteViews rv) {
+    private static void configureWidgetHeader(InstanceSettings settings, RemoteViews rv, boolean noEntries) {
         Log.d(TAG, settings.getWidgetId() + " configureWidgetHeader, layout:" + settings.getWidgetHeaderLayout());
         rv.removeAllViews(R.id.header_parent);
-        if (settings.getWidgetHeaderLayout() == WidgetHeaderLayout.HIDDEN) return;
 
-        RemoteViews headerView = new RemoteViews(settings.getContext().getPackageName(),
-                settings.getWidgetHeaderLayout().layoutId);
-        rv.addView(R.id.header_parent, headerView);
+        if (settings.getWidgetHeaderLayout() != WidgetHeaderLayout.HIDDEN) {
+            RemoteViews headerView = new RemoteViews(settings.getContext().getPackageName(),
+                    settings.getWidgetHeaderLayout().layoutId);
+            rv.addView(R.id.header_parent, headerView);
 
-        setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
-        configureCurrentDate(settings, rv);
-        setActionIcons(settings, rv);
-        configureAddEvent(settings, rv);
-        configureRefresh(settings, rv);
-        configureOverflowMenu(settings, rv);
+            setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
+            configureCurrentDate(settings, rv);
+            setActionIcons(settings, rv);
+            configureAddEvent(settings, rv);
+            configureRefresh(settings, rv);
+            configureOverflowMenu(settings, rv);
+        }
+
+        if (noEntries) {
+            LastEntry entry = LastEntry.forEmptyList(settings);
+            LastEntryVisualizer visualizer = new LastEntryVisualizer(settings.getContext(), settings.getWidgetId());
+            RemoteViews views = visualizer.getRemoteViews(entry, -1);
+            rv.addView(R.id.header_parent, views);
+        }
     }
 
     private static void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {
@@ -351,10 +367,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         rv.setRemoteAdapter(R.id.event_list, intent);
-        boolean permissionsGranted = PermissionsUtil.arePermissionsGranted(context);
-        if (permissionsGranted) {
-            rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(settings));
-        }
+        rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(settings));
     }
 
     private void configureGotoToday(InstanceSettings settings, RemoteViews rv, int tomorrowsPosition, int todaysPosition) {

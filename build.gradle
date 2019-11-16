@@ -5,10 +5,10 @@ buildscript {
     }
 
     ext {
-        compileSdkVersion = 28 as int
-        buildToolsVersion = '28.0.3'
+        compileSdkVersion = 29 as int
+        buildToolsVersion = '29.0.2'
         minSdkVersion = 15 as int
-        targetSdkVersion = 28 as int
+        targetSdkVersion = 29 as int
 
         // Lookup the latest here: https://mvnrepository.com/
         annotationVersion = '1.0.1'
@@ -16,13 +16,13 @@ buildscript {
         espressoCoreVersion = '3.2.0'
         grgitVersion = '2.1.0'
         jodaTimeVersion = '2.10.3'
-        junitVersion = '4.13-beta-3'
+        junitVersion = '4.13-rc-1'
         testRulesVersion = '1.2.0'
         testRunnerVersion = '1.2.0'
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath 'com.android.tools.build:gradle:3.5.2'
         classpath "org.ajoberstar:grgit:$grgitVersion"
     }
 

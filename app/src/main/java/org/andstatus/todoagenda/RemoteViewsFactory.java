@@ -83,7 +83,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     public void onCreate() {
         logEvent("onCreate");
-        reload(false);
+        reload();
     }
 
     public void onDestroy() {
@@ -115,10 +115,10 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     @Override
     public void onDataSetChanged() {
         logEvent("onDataSetChanged");
-        reload(true);
+        reload();
     }
 
-    private void reload(boolean onDatasetChanged) {
+    private void reload() {
         if (!AllSettings.isWidgetAllowed(widgetId)) {
             logEvent("reload, skip as the widget is not allowed");
             return;
@@ -132,10 +132,10 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             logEvent("reload, visualizers:" + visualizers.size() + ", entries:" + this.widgetEntries.size());
             prevReloadFinishedAt = System.currentTimeMillis();
         }
-        updateWidget(context, widgetId, this, onDatasetChanged);
+        updateWidget(context, widgetId, this);
     }
 
-    static void updateWidget(Context context, int widgetId, @Nullable RemoteViewsFactory factory, boolean onDatasetChanged) {
+    static void updateWidget(Context context, int widgetId, @Nullable RemoteViewsFactory factory) {
         try {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             if (appWidgetManager == null) {
@@ -146,15 +146,13 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_initial);
 
-            configureWidgetHeader(settings, rv, factory == null || factory.getCount() == 0);
+            configureWidgetHeader(settings, rv, factory != null && factory.getCount() == 0);
             configureWidgetEntriesList(settings, context, widgetId, rv);
             if (factory != null) {
                 factory.configureGotoToday(settings, rv, factory.getTomorrowsPosition(), factory.getTodaysPosition());
             }
 
-            if (!onDatasetChanged) {
-                appWidgetManager.updateAppWidget(widgetId, rv);
-            }
+            appWidgetManager.updateAppWidget(widgetId, rv);
         } catch (Exception e) {
             Log.w(TAG, widgetId + " Exception in updateWidget, context:" + context, e);
         }

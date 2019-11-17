@@ -54,6 +54,7 @@
     <string name="task_source_opentasks">OpenTasks (от dmfs GmbH)</string>
     <string name="task_source_samsung">Календарь Samsung</string>
     <!-- Preference header: Other -->
+    <string name="device_default">По умолчанию</string>
     <string name="other_prefs_desc">Размер, формат даты и времени и т.д.</string>
     <string name="other_prefs_title">Другие настройки</string>
     <string name="appearance_prefs">Отображение</string>
@@ -176,6 +177,9 @@
     <string name="pref_hide_based_on_keywords_title">Скрыть при начичии ключевых слов в названии</string>
     <string name="show_only_closest_instance_of_recurring_event">Показать только ближайший экземпляр повторяющегося события</string>
     <string name="hide_duplicates">Убрать дубликаты</string>
+    <!-- Preference header: Other -->
+    <string name="refresh_period_minutes">Период автообновления, в минутах</string>
+    <string name="refresh_period_minutes_desc">Автоматически обновлять виджет каждые %d минут(ы)</string>
     <!-- Preference header: Feedback and Backup -->
     <string name="feedback_prefs">Обратная связь и Резервное копирование</string>
     <string name="feedback_prefs_desc">Свяжитесь с нами, Резервное копирование и восстановление настроек</string>

@@ -16,10 +16,12 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.andstatus.todoagenda.AppWidgetProvider.getWidgetIds;
@@ -48,13 +50,14 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
             if (oldReceiver != null) {
                 oldReceiver.unRegister(context);
             }
-            scheduleNextAlarms(context, instances);
+            scheduleMidnightAlarms(context, instances);
+            schedulePeriodicAlarms(context, instances);
 
             Log.i(TAG, "Registered receivers from " + instanceSettings.getContext().getClass().getName());
         }
     }
 
-    private static void scheduleNextAlarms(Context context, Map<Integer, InstanceSettings> instances) {
+    private static void scheduleMidnightAlarms(Context context, Map<Integer, InstanceSettings> instances) {
         Set<DateTime> alarmTimes = new HashSet<>();
         for (InstanceSettings settings : instances.values()) {
             alarmTimes.add(DateUtil.now(settings.getTimeZone()).withTimeAtStartOfDay().plusDays(1));
@@ -67,8 +70,36 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            am.set(AlarmManager.RTC, alarmTime.getMillis(), pendingIntent);
+            if (am != null) {
+                am.set(AlarmManager.RTC, alarmTime.getMillis(), pendingIntent);
+            }
             counter++;
+        }
+    }
+
+    private static void schedulePeriodicAlarms(Context context, Map<Integer, InstanceSettings> instances) {
+        DateTime now = DateUtil.now(DateTimeZone.UTC).plusMinutes(1);
+        int periodMinutes = (int) TimeUnit.DAYS.toMinutes(1);
+        for (InstanceSettings settings : instances.values()) {
+            int period = settings.getRefreshPeriodMinutes();
+            if (period > 0 && period < periodMinutes) {
+                periodMinutes = period;
+            }
+        }
+        DateTime alarmTime = new DateTime(now.getYear(), now.getMonthOfYear(),
+                now.getDayOfMonth(), now.getHourOfDay(), now.getMinuteOfHour())
+                .plusMinutes(periodMinutes);
+
+        Intent intent = new Intent(context, EnvironmentChangedReceiver.class);
+        intent.setAction(RemoteViewsFactory.ACTION_PERIODIC_ALARM);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                RemoteViewsFactory.REQUEST_CODE_PERIODIC_ALARM,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (am != null) {
+            am.setInexactRepeating(AlarmManager.RTC, alarmTime.getMillis(),
+                    TimeUnit.MINUTES.toMillis(periodMinutes), pendingIntent);
         }
     }
 
@@ -97,6 +128,9 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                     sleep(1000);
                 }
                 gotoPosition(context, widgetId, position2);
+                break;
+            case RemoteViewsFactory.ACTION_PERIODIC_ALARM:
+                updateAllWidgets(context);
                 break;
             default:
                 int widgetId2 = intent == null

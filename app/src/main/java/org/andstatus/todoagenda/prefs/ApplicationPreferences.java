@@ -39,6 +39,8 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_MULTILINE_TIT
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_MULTILINE_TITLE_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_PAST_EVENTS_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_REFRESH_PERIOD_MINUTES;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_DATE_ON_WIDGET_HEADER;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_DAYS_WITHOUT_EVENTS;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_DAY_HEADERS;
@@ -93,12 +95,13 @@ public class ApplicationPreferences {
             setString(context, PREF_DATE_FORMAT, settings.getDateFormat());
             setAbbreviateDates(context, settings.getAbbreviateDates());
             setLockedTimeZoneId(context, settings.getLockedTimeZoneId());
+            setRefreshPeriodMinutes(context, settings.getRefreshPeriodMinutes());
             setString(context, PREF_EVENT_ENTRY_LAYOUT, settings.getEventEntryLayout().value);
             setBoolean(context, PREF_MULTILINE_TITLE, settings.isMultilineTitle());
             setBoolean(context, PREF_MULTILINE_DETAILS, settings.isMultilineDetails());
             setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, settings
                     .getShowOnlyClosestInstanceOfRecurringEvent());
-            setBoolean(context, PREF_HIDE_DUPLICATES, settings.getHideDuplicates());
+            setHideDuplicates(context, settings.getHideDuplicates());
             setBoolean(context, PREF_INDICATE_ALERTS, settings.getIndicateAlerts());
             setBoolean(context, PREF_INDICATE_RECURRING, settings.getIndicateRecurring());
             for (Map.Entry<TextShadingPref, TextShading> entry: settings.shadings.entrySet()) {
@@ -117,7 +120,7 @@ public class ApplicationPreferences {
     }
 
     public static int getWidgetId(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(PREF_WIDGET_ID, 0);
+        return getInt(context, PREF_WIDGET_ID, 0);
     }
 
     public static void setWidgetId(Context context, int value) {
@@ -163,8 +166,7 @@ public class ApplicationPreferences {
     }
 
     public static boolean getFillAllDayEvents(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
+        return getBoolean(context, PREF_FILL_ALL_DAY, PREF_FILL_ALL_DAY_DEFAULT);
     }
 
     private static void setFillAllDayEvents(Context context, boolean value) {
@@ -180,32 +182,27 @@ public class ApplicationPreferences {
     }
 
     public static int getWidgetHeaderBackgroundColor(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(
-                PREF_WIDGET_HEADER_BACKGROUND_COLOR,
+        return getInt(context, PREF_WIDGET_HEADER_BACKGROUND_COLOR,
                 PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT);
     }
 
     public static int getPastEventsBackgroundColor(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(
-                PREF_PAST_EVENTS_BACKGROUND_COLOR,
+        return getInt(context, PREF_PAST_EVENTS_BACKGROUND_COLOR,
                 PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT);
     }
 
     public static int getTodaysEventsBackgroundColor(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(
-                PREF_TODAYS_EVENTS_BACKGROUND_COLOR,
+        return getInt(context, PREF_TODAYS_EVENTS_BACKGROUND_COLOR,
                 PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT);
     }
 
     public static int getEventsBackgroundColor(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(
-                PREF_EVENTS_BACKGROUND_COLOR,
+        return getInt(context, PREF_EVENTS_BACKGROUND_COLOR,
                 PREF_EVENTS_BACKGROUND_COLOR_DEFAULT);
     }
 
     public static boolean getHorizontalLineBelowDayHeader(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER, false);
+        return getBoolean(context, PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER, false);
     }
 
     private static void setHorizontalLineBelowDayHeader(Context context, boolean value) {
@@ -213,8 +210,7 @@ public class ApplicationPreferences {
     }
 
     public static boolean getShowDaysWithoutEvents(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
+        return getBoolean(context, PREF_SHOW_DAYS_WITHOUT_EVENTS, false);
     }
 
     private static void setShowDaysWithoutEvents(Context context, boolean value) {
@@ -222,8 +218,7 @@ public class ApplicationPreferences {
     }
 
     public static boolean getShowDayHeaders(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_DAY_HEADERS, true);
+        return getBoolean(context, PREF_SHOW_DAY_HEADERS, true);
     }
 
     private static void setShowDayHeaders(Context context, boolean value) {
@@ -231,8 +226,7 @@ public class ApplicationPreferences {
     }
 
     public static boolean getShowPastEventsUnderOneHeader(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, false);
+        return getBoolean(context, PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, false);
     }
 
     private static void setShowPastEventsUnderOneHeader(Context context, boolean value) {
@@ -240,13 +234,11 @@ public class ApplicationPreferences {
     }
 
     public static boolean getShowEventIcon(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_EVENT_ICON, false);
+        return getBoolean(context, PREF_SHOW_EVENT_ICON, false);
     }
 
     public static boolean getShowNumberOfDaysToEvent(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, false);
+        return getBoolean(context, PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, false);
     }
 
     public static void setShowEventIcon(Context context, boolean value) {
@@ -258,8 +250,7 @@ public class ApplicationPreferences {
     }
 
     public static boolean getShowPastEventsWithDefaultColor(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false);
+        return getBoolean(context, PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, false);
     }
 
     public static void setShowPastEventsWithDefaultColor(Context context, boolean value) {
@@ -267,23 +258,19 @@ public class ApplicationPreferences {
     }
 
     public static boolean getShowEndTime(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT);
+        return getBoolean(context, PREF_SHOW_END_TIME, PREF_SHOW_END_TIME_DEFAULT);
     }
 
     public static boolean getShowLocation(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
+        return getBoolean(context, PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
     }
 
     public static String getDateFormat(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(
-                PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
+        return getString(context, PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
     }
 
     public static boolean getAbbreviateDates(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_ABBREVIATE_DATES, PREF_ABBREVIATE_DATES_DEFAULT);
+        return getBoolean(context, PREF_ABBREVIATE_DATES, PREF_ABBREVIATE_DATES_DEFAULT);
     }
 
     public static void setAbbreviateDates(Context context, boolean value) {
@@ -298,28 +285,36 @@ public class ApplicationPreferences {
         setString(context, PREF_LOCKED_TIME_ZONE_ID, value);
     }
 
+    public static void setRefreshPeriodMinutes(Context context, int value) {
+        setString(context, PREF_REFRESH_PERIOD_MINUTES, Integer.toString(value > 0
+                ? value
+                : PREF_REFRESH_PERIOD_MINUTES_DEFAULT));
+    }
+
+    public static int getRefreshPeriodMinutes(Context context) {
+        int stored = getIntStoredAsString(context, PREF_REFRESH_PERIOD_MINUTES, PREF_REFRESH_PERIOD_MINUTES_DEFAULT);
+        return stored > 0 ? stored : PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
+    }
+
     public static boolean isTimeZoneLocked(Context context) {
         return !TextUtils.isEmpty(getLockedTimeZoneId(context));
     }
 
     public static EventEntryLayout getEventEntryLayout(Context context) {
-        return EventEntryLayout.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
-                PREF_EVENT_ENTRY_LAYOUT, ""));
+        return EventEntryLayout.fromValue(
+                getString(context, PREF_EVENT_ENTRY_LAYOUT, ""));
     }
 
     public static boolean isMultilineTitle(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT);
+        return getBoolean(context, PREF_MULTILINE_TITLE, PREF_MULTILINE_TITLE_DEFAULT);
     }
 
     public static boolean isMultilineDetails(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_MULTILINE_DETAILS, PREF_MULTILINE_DETAILS_DEFAULT);
+        return getBoolean(context, PREF_MULTILINE_DETAILS, PREF_MULTILINE_DETAILS_DEFAULT);
     }
 
     public static boolean getShowOnlyClosestInstanceOfRecurringEvent(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, false);
+        return getBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, false);
     }
 
     public static void setShowOnlyClosestInstanceOfRecurringEvent(Context context, boolean value) {
@@ -327,7 +322,7 @@ public class ApplicationPreferences {
     }
 
     public static boolean getHideDuplicates(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREF_HIDE_DUPLICATES, false);
+        return getBoolean(context, PREF_HIDE_DUPLICATES, false);
     }
 
     public static void setHideDuplicates(Context context, boolean value) {
@@ -339,6 +334,17 @@ public class ApplicationPreferences {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(key, value);
         editor.apply();
+    }
+
+    public static int getIntStoredAsString(Context context, String key, int defaultValue) {
+        try {
+            String stringValue = getString(context, key, "");
+            if (TextUtils.isEmpty(stringValue)) return defaultValue;
+
+            return Integer.parseInt(stringValue);
+        } catch (Exception e) {
+            return defaultValue;
+        }
     }
 
     public static String getString(Context context, String key, String defaultValue) {
@@ -361,6 +367,11 @@ public class ApplicationPreferences {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(key, value);
         editor.apply();
+    }
+
+    public static int getInt(Context context, String key, int defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(key, defaultValue);
     }
 
     public static String getWidgetInstanceName(Context context) {

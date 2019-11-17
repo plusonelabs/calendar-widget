@@ -54,11 +54,14 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     private static final int REQUEST_CODE_EMPTY = 1;
     private static final int REQUEST_CODE_ADD_EVENT = 2;
     static final int REQUEST_CODE_MIDNIGHT_ALARM = REQUEST_CODE_ADD_EVENT + MAX_NUMBER_OF_WIDGETS;
+    static final int REQUEST_CODE_PERIODIC_ALARM = REQUEST_CODE_MIDNIGHT_ALARM + MAX_NUMBER_OF_WIDGETS;
     static final String EXTRA_WIDGET_LIST_POSITION1 = "widgetListPosition1";
     static final String EXTRA_WIDGET_LIST_POSITION2 = "widgetListPosition2";
+
     private static final String PACKAGE = "org.andstatus.todoagenda";
     static final String ACTION_GOTO_POSITIONS = PACKAGE + ".action.GOTO_TODAY";
     static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
+    static final String ACTION_PERIODIC_ALARM = PACKAGE + ".action.PERIODIC_ALARM";
 
     private final Context context;
     private final int widgetId;

@@ -6,6 +6,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+
 import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.TextShading;
@@ -27,9 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
 
 import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
 
@@ -145,6 +145,9 @@ public class InstanceSettings {
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
     static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
     private String lockedTimeZoneId = "";
+    public final static String PREF_REFRESH_PERIOD_MINUTES = "refreshPeriodMinutes";
+    public final static int PREF_REFRESH_PERIOD_MINUTES_DEFAULT = 10;
+    private int refreshPeriodMinutes = PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
 
     public static InstanceSettings fromJson(Context context, JSONObject json) throws JSONException {
         InstanceSettings settings = new InstanceSettings(context, json.optInt(PREF_WIDGET_ID),
@@ -224,6 +227,9 @@ public class InstanceSettings {
             if (json.has(PREF_LOCKED_TIME_ZONE_ID)) {
                 setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
             }
+            if (json.has(PREF_REFRESH_PERIOD_MINUTES)) {
+                setRefreshPeriodMinutes(json.getInt(PREF_REFRESH_PERIOD_MINUTES));
+            }
             if (json.has(PREF_EVENT_ENTRY_LAYOUT)) {
                 eventEntryLayout = EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT));
             }
@@ -295,6 +301,7 @@ public class InstanceSettings {
             settings.dateFormat = ApplicationPreferences.getDateFormat(context);
             settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
             settings.setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
+            settings.setRefreshPeriodMinutes(ApplicationPreferences.getRefreshPeriodMinutes(context));
             settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
             settings.multilineTitle = ApplicationPreferences.isMultilineTitle(context);
             settings.multilineDetails = ApplicationPreferences.isMultilineDetails(context);
@@ -372,6 +379,7 @@ public class InstanceSettings {
             json.put(PREF_DATE_FORMAT, dateFormat);
             json.put(PREF_ABBREVIATE_DATES, abbreviateDates);
             json.put(PREF_LOCKED_TIME_ZONE_ID, lockedTimeZoneId);
+            json.put(PREF_REFRESH_PERIOD_MINUTES, refreshPeriodMinutes);
             json.put(PREF_EVENT_ENTRY_LAYOUT, eventEntryLayout.value);
             json.put(PREF_MULTILINE_TITLE, multilineTitle);
             json.put(PREF_MULTILINE_DETAILS, multilineDetails);
@@ -500,6 +508,16 @@ public class InstanceSettings {
 
     public String getLockedTimeZoneId() {
         return lockedTimeZoneId;
+    }
+
+    public void setRefreshPeriodMinutes(int refreshPeriodMinutes) {
+        if (refreshPeriodMinutes > 0) {
+            this.refreshPeriodMinutes = refreshPeriodMinutes;
+        }
+    }
+
+    public int getRefreshPeriodMinutes() {
+        return refreshPeriodMinutes;
     }
 
     public boolean isTimeZoneLocked() {

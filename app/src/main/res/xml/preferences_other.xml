@@ -36,4 +36,9 @@
         android:title="@string/lock_time_zone_title">
     </CheckBoxPreference>
 
+    <EditTextPreference
+        android:key="refreshPeriodMinutes"
+        android:title="@string/refresh_period_minutes"
+        android:singleLine="true" />
+
 </PreferenceScreen>

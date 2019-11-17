@@ -198,6 +198,10 @@
     <string name="show_only_closest_instance_of_recurring_event">Show only the closest instance of a recurring event</string>
     <string name="hide_duplicates">Hide duplicates</string>
 
+    <!-- Preference header: Other -->
+    <string name="refresh_period_minutes">Auto refresh period, minutes</string>
+    <string name="refresh_period_minutes_desc">Automatically refresh the widget every %d minute(s)</string>
+
     <!-- Preference header: Feedback and Backup -->
     <string name="feedback_prefs">Feedback and Backup</string>
     <string name="feedback_prefs_desc">Get in touch with us, backup and restore settings</string>

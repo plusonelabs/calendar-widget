@@ -119,6 +119,7 @@ public class AllSettings {
             settings.logMe(AllSettings.class, "saveFromApplicationPreferences put", widgetId);
             instances.put(widgetId, settings);
         }
+        EnvironmentChangedReceiver.registerReceivers(instances);
     }
 
     @NonNull

@@ -3,6 +3,7 @@ package org.andstatus.todoagenda.prefs;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
@@ -28,6 +29,7 @@ public class OtherPreferencesFragment extends PreferenceFragment
         super.onResume();
         showLockTimeZone(true);
         showWidgetInstanceName();
+        showRefreshPeriod();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -44,6 +46,15 @@ public class OtherPreferencesFragment extends PreferenceFragment
                     getText(isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc).toString(),
                     timeZone.getName(DateUtil.now(timeZone).getMillis()))
             );
+        }
+    }
+
+    private void showRefreshPeriod() {
+        EditTextPreference preference = (EditTextPreference) findPreference(InstanceSettings.PREF_REFRESH_PERIOD_MINUTES);
+
+        if (preference != null) {
+            int value = ApplicationPreferences.getRefreshPeriodMinutes(getActivity());
+            preference.setSummary(String.format(getText(R.string.refresh_period_minutes_desc).toString(), value));
         }
     }
 
@@ -77,6 +88,9 @@ public class OtherPreferencesFragment extends PreferenceFragment
                 getActivity().finish();
                 startActivity(MainActivity.intentToConfigure(getActivity(), ApplicationPreferences
                         .getWidgetId(getActivity())));
+                break;
+            case InstanceSettings.PREF_REFRESH_PERIOD_MINUTES:
+                showRefreshPeriod();
                 break;
             default:
                 break;

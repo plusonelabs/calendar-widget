@@ -28,29 +28,42 @@
     <string name="widget_header">Capçalera del giny</string>
     <string name="todays_events">Esdeveniments per avui</string>
     <string name="future_events">Futurs esdeveniments</string>
+    <string name="not_found">No s\'ha trobat</string>
     <!-- Descriptions for app markets -->
-    <string name="app_description_80_chars_max">Ginys que mostren llistes d\'esdeveniments pròxims (i passats&#8230;) dels calendaris seleccionats</string>
-    <string name="app_description_4000_chars_max_part01">Todo Agenda és un giny per la pantalla principal del vostre dispositiu Android. I mostra una llista d\'esdeveniments  futurs del vostre calendari
-        així que podràs fàcilment donar una ullada a les cites.</string>
+    <string name="app_description_80_chars_max">Ginys de la pantalla d\'inici que mostren esdeveniments de calendaris seleccionats i llistes de tasques</string>
+    <string name="app_description_4000_chars_max_part01">Todo Agenda és un conjunt de ginys de la pantalla d\'inici per al dispositiu Android.
+        Cada giny té la seva pròpia configuració i mostra la llista configurada d’esdeveniments i tasques del calendari
+        de manera que podreu veure fàcilment les vostres cites pendents, actuals i properes.</string>
     <string name="app_description_4000_chars_max_part02">Característiques</string>
-    <string name="app_description_4000_chars_max_part03">Mostra tots els esdeveniments dels teus calendaris. Opcionalment mostra esdeveniments passats.</string>
+    <string name="app_description_4000_chars_max_part15">Sense publicitat. Codi font lliure i gratuït.</string>
+    <string name="app_description_4000_chars_max_part03">Mostra esdeveniments dels vostres calendaris i llistes de tasques
+        per als períodes seleccionats en el passat i el futur.</string>
     <string name="app_description_4000_chars_max_part04">Actualitza automàticament quan afegeixis/eliminis/modifiquis un esdeveniment. O pots actualitzar la llista instantàniament.</string>
-    <string name="app_description_4000_chars_max_part05">Selecciona només els calendaris que vols veure en el giny.</string>
-    <string name="app_description_4000_chars_max_part06">Crear diversos ginys, si és necessari. Cada giny tindrà configuració pròpia, incloent-hi filtres i calendaris seleccionats.</string>
-    <string name="app_description_4000_chars_max_part07">Personalitza els colors de fons i textos del giny.</string>
-    <string name="app_description_4000_chars_max_part08">Moure\'t a través de la llista d\'esdeveniments pròxims.</string>
+    <string name="app_description_4000_chars_max_part05">Seleccioneu només els calendaris i les llistes de tasques
+        que voleu veure al giny.</string>
+    <string name="app_description_4000_chars_max_part06">Creeu diversos ginys, si ho necessiteu. Cada giny té la seva pròpia configuració,
+         inclosos dissenys, colors, filtres, calendaris seleccionats i llistes de tasques.</string>
+    <string name="app_description_4000_chars_max_part07">Personalitza colors i fons de transparència
+        de diferents parts de giny, ombrejat en blanc i negre per a textos.</string>
+    <string name="app_description_4000_chars_max_part08">Desplaça\'t per la llista d\'esdeveniments.
+        Feu servir el botó \"Vés a Avui\" per tornar a avui a l\'instant.</string>
     <string name="app_description_4000_chars_max_part09">Personalitza la mida del text del giny.</string>
     <string name="app_description_4000_chars_max_part10">Giny totalment redimensionable amb dues disposicions alternatives.</string>
     <string name="app_description_4000_chars_max_part11">Indicadors per a alertes i esdeveniments recurrents.</string>
     <string name="app_description_4000_chars_max_part12">Bloqueja la zona horària quan viatgis a diferents zones horàries.</string>
-    <string name="app_description_4000_chars_max_part13">Desactiva les capçaleres dels dies i visualitza les dates a la columna \"Dies des d\'avui\".</string>
-    <string name="app_description_4000_chars_max_part14">Android 4 a 7 suportats. És compatible amb tauletes Android.</string>
+    <string name="app_description_4000_chars_max_part13">Desactiveu la capçalera de giny, capçaleres de dia, icones d\'esdeveniments, dies d\'avui,
+        etc., i només veieu el que necessiteu.</string>
+    <string name="app_description_4000_chars_max_part16">Amaga esdeveniments duplicats.</string>
+    <string name="app_description_4000_chars_max_part17">Configuració de còpia de seguretat i restauració,
+        clonació de ginys en dispositius iguals o diferents.</string>
+    <string name="app_description_4000_chars_max_part14">Compatible amb Android 4+. Admet les tauletes Android.</string>
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendaris</string>
     <string name="calendars_prefs_desc">Seleccioneu els calendaris per mostrar</string>
     <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
     <string name="task_source_samsung">Samsung Calendar</string>
     <!-- Preference header: Other -->
+    <string name="device_default">Per defecte del dispositiu</string>
     <string name="other_prefs_desc">Mida, data i formats de temps, etc.</string>
     <string name="other_prefs_title">Altres configuracions</string>
     <string name="appearance_prefs">Apariència</string>
@@ -101,6 +114,8 @@
     <string name="show_event_icon_desc">Mostra color a barra del Calendari / Icona de Tasca per event</string>
     <string name="show_number_of_days_to_event_title">Mostra número de dies per l\'esdeveniment</string>
     <string name="show_number_of_days_to_event_desc">Mostra columna amb números de dies de l\'esdeveniment \"Tota a una fila\" en la distribució</string>
+    <string name="multiline_details_title">Detalls en diverses línies</string>
+    <string name="multiline_details_desc">Distribueix el temps i la ubicació dels esdeveniments en diverses línies</string>
     <!-- Preference header: Colors -->
     <string name="colors_prefs_desc">Colors i opacitat dels textos i fons</string>
     <string name="appearance_group_color_title">Colors</string>
@@ -170,14 +185,23 @@
     <string name="ended_one_year_ago">Finalitzat fa un any</string>
     <string name="pref_hide_based_on_keywords_title">Amagar en funció de les paraules clau al títol</string>
     <string name="show_only_closest_instance_of_recurring_event">Visualitzar només la instància més propera d\'un esdeveniment recurrent</string>
-    <!-- Preference header: Feedback -->
-    <string name="feedback_prefs">Suggeriments</string>
-    <string name="feedback_prefs_desc">Contacti amb nosaltres</string>
+    <string name="hide_duplicates">Oculta duplicats</string>
+    <!-- Preference header: Other -->
+    <string name="refresh_period_minutes">Període de refresc automàtic, minuts</string>
+    <string name="refresh_period_minutes_desc">Actualitza automàticament el giny cada %d minut(s)</string>
+    <!-- Preference header: Feedback and Backup -->
+    <string name="feedback_prefs">Suport i còpia de seguretat</string>
+    <string name="feedback_prefs_desc">Poseu-vos en contacte amb nosaltres, configuració de còpia de seguretat i restauració</string>
     <string name="feedback_github_desc">Proporcionar suggerències en la pàgina del projecte</string>
     <string name="feedback_github_title">Visita el widget en Github</string>
     <string name="feedback_play_store_desc">Vota i opina en el Google Play Store</string>
     <string name="feedback_play_store_title">Visita el widget en el Google Play Store</string>
     <string name="refresh_desc">Refrescar</string>
-    <string name="share_events_for_debugging_desc">Crea un informe per ajudar els desenvolupadors a solucionar errors</string>
-    <string name="share_events_for_debugging_title">Comparteix esdeveniments per la depuració</string>
+    <string name="share_events_for_debugging_desc">Creeu un informe per ajudar els desenvolupadors a solucionar problemes.
+        Abans de compartir filtreu esdeveniments per protegir la vostra privadesa, però encara demostreu el problema</string>
+    <string name="share_events_for_debugging_title">Compartiu esdeveniments i configuracions per a la depuració</string>
+    <string name="backup_settings_title">Configuració de la Còpia de seguretat</string>
+    <string name="backup_settings_desc">Igual que \"Comparteix esdeveniments per a depuració\", però no conté esdeveniments</string>
+    <string name="restore_settings_title">Restaureu la configuració des d’una còpia de seguretat</string>
+    <string name="restore_settings_desc">La configuració de cada giny de l\'Agenda ToDo s\'hauria de restaurar per separat</string>
 </resources>

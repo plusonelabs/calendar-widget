@@ -63,6 +63,7 @@
     <string name="task_source_opentasks">OpenTasks (por dmfs GmbH)</string>
     <string name="task_source_samsung">Calendário Samsung</string>
     <!-- Preference header: Other -->
+    <string name="device_default">Padrão do dispositivo</string>
     <string name="other_prefs_desc">Tamanho, data e formato de hora, etc.</string>
     <string name="other_prefs_title">Outros ajustes</string>
     <string name="appearance_prefs">Aparença</string>
@@ -185,6 +186,9 @@
     <string name="pref_hide_based_on_keywords_title">Ocultar baseado em palavras-chave em um título</string>
     <string name="show_only_closest_instance_of_recurring_event">Mostrar apenas a instância mais próxima de um evento recorrente</string>
     <string name="hide_duplicates">Ocultar duplicados</string>
+    <!-- Preference header: Other -->
+    <string name="refresh_period_minutes">Período de atualização automática, minutos</string>
+    <string name="refresh_period_minutes_desc">Atualizar automaticamente o widget a cada %d minuto(s)</string>
     <!-- Preference header: Feedback and Backup -->
     <string name="feedback_prefs">Comentários e Backup</string>
     <string name="feedback_prefs_desc">Fale conosco, configurações de backup e restauração</string>

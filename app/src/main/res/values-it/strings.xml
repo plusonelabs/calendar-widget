@@ -56,6 +56,7 @@ Ogni widget ha le proprie impostazioni e mostra le liste e le attività come con
     <string name="task_source_opentasks">Apri attività (di dmfs GmbH)</string>
     <string name="task_source_samsung">Calendario Samsung</string>
     <!-- Preference header: Other -->
+    <string name="device_default">Predefinito del dispositivo</string>
     <string name="other_prefs_desc">Dimensioni, formato dell\'ora e della data, etc.</string>
     <string name="other_prefs_title">Altre impostazioni</string>
     <string name="appearance_prefs">Aspetto</string>
@@ -179,6 +180,8 @@ Ogni widget ha le proprie impostazioni e mostra le liste e le attività come con
     <string name="show_only_closest_instance_of_recurring_event">Visualizza solo l\'istanza piú vicina di un evento ricorrente</string>
     <string name="hide_duplicates">Nascondi duplicati</string>
     <!-- Preference header: Other -->
+    <string name="refresh_period_minutes">Periodo di aggiornamento automatico, minuti</string>
+    <string name="refresh_period_minutes_desc">Aggiorna automaticamente il widget ogni %d minuto(i)</string>
     <!-- Preference header: Feedback and Backup -->
     <string name="feedback_prefs">Feedback e salvataggio</string>
     <string name="feedback_prefs_desc">Entra in contatto con noi, impostazioni di salvataggio e ripristino</string>

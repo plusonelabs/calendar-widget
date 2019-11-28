@@ -63,6 +63,7 @@
     <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
     <string name="task_source_samsung">Samsung カレンダー</string>
     <!-- Preference header: Other -->
+    <string name="device_default">デバイスのデフォルト</string>
     <string name="other_prefs_desc">サイズ、日付と時間の形式、その他。</string>
     <string name="other_prefs_title">その他の設定</string>
     <string name="appearance_prefs">外観</string>
@@ -185,6 +186,9 @@
     <string name="pref_hide_based_on_keywords_title">タイトルのキーワードに基づいて非表示にする</string>
     <string name="show_only_closest_instance_of_recurring_event">繰り返しイベントの最も近いインスタンスのみを表示</string>
     <string name="hide_duplicates">重複タスクを非表示</string>
+    <!-- Preference header: Other -->
+    <string name="refresh_period_minutes">自動更新間隔（分）</string>
+    <string name="refresh_period_minutes_desc">%d 分ごとに自動的にウィジェットを更新します</string>
     <!-- Preference header: Feedback and Backup -->
     <string name="feedback_prefs">フィードバックとバックアップ</string>
     <string name="feedback_prefs_desc">私たちに連絡したり、設定をバックアップおよび復元します</string>

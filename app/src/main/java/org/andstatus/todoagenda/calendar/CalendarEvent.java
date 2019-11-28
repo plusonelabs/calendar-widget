@@ -11,6 +11,9 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
+import static org.andstatus.todoagenda.util.StringUtil.nonEmpty;
+import static org.andstatus.todoagenda.util.StringUtil.notNull;
+
 public class CalendarEvent {
 
     private final Context context;
@@ -20,12 +23,12 @@ public class CalendarEvent {
 
     private OrderedEventSource eventSource;
     private int eventId;
-    private String title;
+    private String title = "";
     private DateTime startDate;
     private DateTime endDate;
     private int color;
     private boolean mHasDefaultCalendarColor;
-    private String location;
+    private String location = "";
     private boolean alarmActive;
     private boolean recurring;
 
@@ -117,7 +120,7 @@ public class CalendarEvent {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = notNull(title);
     }
 
     public DateTime getEndDate() {
@@ -169,7 +172,7 @@ public class CalendarEvent {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.location = notNull(location);
     }
 
     public String getLocation() {
@@ -195,7 +198,7 @@ public class CalendarEvent {
     @Override
     public String toString() {
         return "CalendarEvent [eventId=" + eventId
-                + (title != null ? ", title=" + title : "")
+                + (nonEmpty(title) ? ", title=" + title : "")
                 + ", startDate=" + getStartDate()
                 + (endDate != null ? ", endDate=" + endDate : "")
                 + ", color=" + color
@@ -203,7 +206,7 @@ public class CalendarEvent {
                 + ", allDay=" + allDay
                 + ", alarmActive=" + alarmActive
                 + ", recurring=" + recurring
-                + (location != null ? ", location=" + location : "") +
+                + (nonEmpty(location) ? ", location=" + location : "") +
                 " ; source " + eventSource + "]";
     }
 

@@ -36,11 +36,11 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     }
 
     public String getTitle() {
-        return getClass().getName();
+        return "";
     }
 
     public String getLocation() {
-        return getClass().getName();
+        return "";
     }
 
     @Override

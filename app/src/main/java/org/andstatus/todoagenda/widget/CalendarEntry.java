@@ -99,8 +99,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     }
 
     private boolean hideLocation() {
-        return getLocation() == null || getLocation().isEmpty() ||
-                !getSettings().getShowLocation();
+        return getLocation().isEmpty() || !getSettings().getShowLocation();
     }
 
     private String createTimeSpanString(Context context) {

@@ -5,11 +5,13 @@ import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import static org.andstatus.todoagenda.util.StringUtil.notNull;
+
 public class TaskEvent {
 
     private OrderedEventSource eventSource;
     private long id;
-    private String title;
+    private String title = "";
     private final DateTimeZone zone;
     private DateTime startDate;
     private DateTime dueDate;
@@ -41,7 +43,7 @@ public class TaskEvent {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = notNull(title);
     }
 
     public DateTime getStartDate() {

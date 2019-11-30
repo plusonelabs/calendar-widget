@@ -1,0 +1,1893 @@
+{
+  "deviceInfo": {
+    "versionCode": 28,
+    "versionRelease": "9",
+    "versionCodename": "REL",
+    "buildManufacturer": "samsung",
+    "buildBrand": "samsung",
+    "buildModel": "SM-N950F"
+  },
+  "applicationInfo": {
+    "versionName": "3.1.7-560",
+    "versionCode": 560
+  },
+  "settings": {
+    "widgetId": 14,
+    "showDateOnWidgetHeader": true,
+    "widgetInstanceName": "Todo Agenda 14",
+    "activeSources": [
+      {
+        "providerType": 1,
+        "id": 21,
+        "title": "sebastian@personaldomain.ro",
+        "summary": "sebastian@personaldomain.ro",
+        "color": -12162669,
+        "isAvailable": true
+      }
+    ],
+    "eventRange": 30,
+    "eventsEnded": "TODAY",
+    "fillAllDay": true,
+    "hideBasedOnKeywords": "",
+    "widgetHeaderBackgroundColor": 0,
+    "pastEventsBackgroundColor": -1082623956,
+    "todaysEventsBackgroundColor": -620756993,
+    "backgroundColor": -2147483648,
+    "showDaysWithoutEvents": false,
+    "showDayHeaders": true,
+    "horizontalLineBelowDayHeader": false,
+    "showPastEventsUnderOneHeader": false,
+    "showPastEventsWithDefaultColor": false,
+    "showEventIcon": true,
+    "showNumberOfDaysToEvent": true,
+    "showEndTime": true,
+    "showLocation": true,
+    "dateFormat": "auto",
+    "abbreviateDates": false,
+    "lockedTimeZoneId": "",
+    "refreshPeriodMinutes": 10,
+    "eventEntryLayout": "DEFAULT",
+    "multiline_title": false,
+    "multiline_details": false,
+    "showOnlyClosestInstanceOfRecurringEvent": false,
+    "hideDuplicates": true,
+    "indicateAlerts": true,
+    "indicateRecurring": false,
+    "widgetHeaderLayout": "ONE_ROW",
+    "headerTheme": "DARK",
+    "dayHeaderThemePast": "DARK",
+    "entryThemePast": "BLACK",
+    "dayHeaderTheme": "LIGHT",
+    "entryTheme": "WHITE",
+    "dayHeaderThemeFuture": "DARK",
+    "entryThemeFuture": "BLACK",
+    "textSizeScale": "1.0",
+    "dayHeaderAlignment": "RIGHT"
+  },
+  "resultsVersion": 3,
+  "results": [
+    {
+      "providerType": 1,
+      "executedAt": 1574935132086,
+      "timeZoneId": "Europe\/Bucharest",
+      "millisOffsetUtcToLocal": 7200000,
+      "standardMillisOffsetUtcToLocal": 7200000,
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/1574892000000\/1577527132085",
+      "projection": [
+        "calendar_id",
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor"
+      ],
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 21 )",
+      "selectionArgs": [],
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "rows": [
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=30;BYMONTH=11"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3746
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575099000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ZILE LIBERE - Sf. Andrei"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575097200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=30;BYMONTH=11"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5310
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575099000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ZILE LIBERE - Sf. Andrei"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575097200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=WEEKLY;COUNT=10;INTERVAL=1;BYDAY=SA"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 4823
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575108000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "R&C"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575100800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=WEEKLY;COUNT=10;INTERVAL=1;BYDAY=SA"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5554
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575108000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "R&C"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575100800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=1;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3747
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575185400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ZILE LIBERE - Ziua Nationala a Romaniei"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575183600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=1;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5311
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575185400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ZILE LIBERE - Ziua Nationala a Romaniei"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575183600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 4813
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575304200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Conversatii cu Dumnezeu - Vol. 1 + 2 + 3 , Neale Donald Walsch"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575302400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5535
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575304200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Conversatii cu Dumnezeu - Vol. 1 + 2 + 3 , Neale Donald Walsch"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575302400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 4849
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575307800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "SAVE the DATE -Christmas PARTY - Fratellini, 20.12.2019"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575306000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5541
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575307800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "SAVE the DATE -Christmas PARTY - Fratellini, 20.12.2019"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575306000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=4;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3749
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575504000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Melnik Ases a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575417600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=4;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3753
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575504000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Opri a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575417600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=4;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5313
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575504000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Melnik Ases a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575417600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=4;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5317
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575504000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Opri a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575417600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=6;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3755
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575676800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Martin Cris a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575590400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=6;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5319
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575676800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Martin Cris a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575590400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=7;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3758
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575763200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Antonetta's Birthday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575676800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=7;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5322
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575763200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Antonetta's Birthday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575676800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=WEEKLY;COUNT=10;INTERVAL=1;BYDAY=SA"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 4823
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575712800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "R&C"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575705600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=WEEKLY;COUNT=10;INTERVAL=1;BYDAY=SA"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5554
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575712800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "R&C"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575705600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=8;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3750
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575849600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Donna Roza a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575763200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=8;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5314
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1575849600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Donna Roza a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1575763200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=11;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3751
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576108800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Monika Ponti (MegaImage) a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576022400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=11;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5315
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576108800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Monika Ponti (MegaImage) a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576022400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=14;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3752
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576368000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Elena Ongi (Felix)'s Birthday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576281600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=14;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5316
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576368000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Elena Ongi (Felix)'s Birthday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576281600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 4981
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576432800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Ai activat factura electronică iar acum te răsplătim"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576431000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5578
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576432800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Ai activat factura electronică iar acum te răsplătim"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576431000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=16;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3754
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576540800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Sebastian Gavris's Birthday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576454400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=16;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5318
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576540800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Sebastian Gavris's Birthday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576454400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=17;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3728
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576627200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Dear Ionela a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576540800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=17;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5302
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576627200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Dear Ionela a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576540800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=18;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3705
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576713600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ITL-Sabrina Borbian's Birthday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576627200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=18;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5301
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576713600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ITL-Sabrina Borbian's Birthday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576627200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=21;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3756
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576972800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Bonas Renas [ICE2] a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576886400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=21;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5320
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1576972800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Bonas Renas [ICE2] a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576886400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=24;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3757
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1577232000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "TR - Vovan & Masha a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577145600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=24;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5321
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1577232000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "TR - Vovan & Masha a Zi de naștere"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577145600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=25;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3740
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1577259000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ZILE LIBERE - CRACIUN"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577257200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=25;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5304
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1577259000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ZILE LIBERE - CRACIUN"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577257200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;COUNT=24;INTERVAL=1;BYMONTHDAY=25"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3951
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1577296800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Index MyElectrica"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577295000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;COUNT=24;INTERVAL=1;BYMONTHDAY=25"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5527
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1577296800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "Index MyElectrica"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577295000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=26;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3741
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1577345400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ZILE LIBERE - CRACIUN"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577343600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;INTERVAL=1;BYMONTHDAY=26;BYMONTH=12"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5305
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 21
+          },
+          "eventLocation": {
+            "type": 0
+          },
+          "end": {
+            "type": 1,
+            "value": 1577345400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -12162669
+          },
+          "title": {
+            "type": 3,
+            "value": "ZILE LIBERE - CRACIUN"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577343600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          }
+        }
+      ]
+    }
+  ]
+}

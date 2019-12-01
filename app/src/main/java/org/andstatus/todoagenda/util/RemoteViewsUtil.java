@@ -9,12 +9,13 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
-import org.andstatus.todoagenda.prefs.InstanceSettings;
-
 import androidx.annotation.DimenRes;
 import androidx.annotation.IdRes;
 
+import org.andstatus.todoagenda.prefs.InstanceSettings;
+
 public class RemoteViewsUtil {
+    private static final String TAG = RemoteViewsUtil.class.getSimpleName();
 
     private static final String METHOD_SET_TEXT_SIZE = "setTextSize";
     private static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
@@ -91,14 +92,13 @@ public class RemoteViewsUtil {
             try {
                 return context.getResources().getColor(colorResourceId);
             } catch (Exception e) {
-                Log.w(RemoteViewsUtil.class.getSimpleName(), "context.getResources() failed to resolve color for" +
+                Log.w(TAG, "context.getResources() failed to resolve color for" +
                         " resource Id:" + colorResourceId +
                         " derived from attribute Id:" + attrId, e);
                 return Color.GRAY;
             }
         }
-        Log.w(RemoteViewsUtil.class.getSimpleName(),
-                "getColorValue failed to resolve color for attribute Id:" + attrId);
+        Log.w(TAG, "getColorValue failed to resolve color for attribute Id:" + attrId);
         return Color.GRAY;
     }
 
@@ -106,7 +106,7 @@ public class RemoteViewsUtil {
         try {
             return context.getResources().getDimension(dimensionResourceId);
         } catch (NotFoundException e) {
-            Log.w(RemoteViewsUtil.class.getSimpleName(), "getDimension failed for dimension resource Id:" + dimensionResourceId);
+            Log.w(TAG, "getDimension failed for dimension resource Id:" + dimensionResourceId);
             return 0f;
         }
     }
@@ -120,7 +120,7 @@ public class RemoteViewsUtil {
         if (context.getTheme().resolveAttribute(attrResId, outValue, true)) {
             setImage(rv, viewId, outValue.resourceId);
         } else {
-            Log.w(RemoteViewsUtil.class.getSimpleName(),
+            Log.w(TAG,
             "setImageFromAttr: not found; attrResId:" + attrResId + ", resourceId:" + outValue.resourceId +
                     ", out:" + outValue + ", context:" + context);
         }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
@@ -12,23 +14,22 @@ import org.joda.time.DateTimeZone;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunListener;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-
 /**
  * @author yvolk@yurivolkov.com
  */
-    public class TestRunListener extends RunListener {
+public class TestRunListener extends RunListener {
+    private static final String TAG = "testSuite";
     private final DateTimeZone storedZone;
 
     public TestRunListener() {
-        Log.i("testSuite",  this.getClass().getName() + " created");
+        Log.i(TAG,  "TestRunListener created");
         storedZone = DateTimeZone.getDefault();
     }
 
     @Override
     public void testSuiteFinished(Description description) throws Exception {
         super.testSuiteFinished(description);
-        Log.i("testSuite", "Test Suite finished: " + description);
+        Log.i(TAG, "Test Suite finished: " + description);
         if (description.toString().equals("null")) restoreWidgets();
     }
 
@@ -42,7 +43,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
         EnvironmentChangedReceiver.forget();
 
         refreshWidgets();
-        Log.i("testSuite", "App restored");
+        Log.i(TAG, "App restored");
     }
 
     // Context is not exactly what the widgets use normally...

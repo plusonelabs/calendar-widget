@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.andstatus.todoagenda.EnvironmentChangedReceiver;
 import org.andstatus.todoagenda.calendar.CalendarEventProvider;
 import org.andstatus.todoagenda.calendar.CalendarEventVisualizer;
@@ -23,8 +25,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
-
-import androidx.annotation.NonNull;
 
 /** All supported Event providers */
 public enum EventProviderType {
@@ -48,6 +48,7 @@ public enum EventProviderType {
         }
     };
 
+    private static final String TAG = EventProviderType.class.getSimpleName();
     public final int id;
     public final boolean isCalendar;
     public final String permission;
@@ -76,12 +77,12 @@ public enum EventProviderType {
                 ss = provider.fetchAvailableSources();
                 sources.addAll(OrderedEventSource.fromSources(ss));
             } catch (SecurityException e) {
-                Log.i(EventProviderType.class.getSimpleName(), "initialize: " + e.getMessage());
+                Log.i(TAG, "initialize: " + e.getMessage());
                 permissionNeeded = true;
             } catch (Exception e) {
-                Log.i(EventProviderType.class.getSimpleName(), "initialize: " + e.getMessage(), e);
+                Log.i(TAG, "initialize: " + e.getMessage(), e);
             }
-            Log.i(EventProviderType.class.getSimpleName(), "provider " + type +
+            Log.i(TAG, "provider " + type +
                     ", " + (ss.isEmpty() ? "no" : ss.size()) + " sources" +
                     (permissionNeeded ? ", needs " + type.permission : ""));
             if (permissionNeeded) {

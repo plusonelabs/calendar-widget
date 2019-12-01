@@ -27,4 +27,9 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
     public TaskEvent getEvent() {
         return event;
     }
+
+    @Override
+    public String toString() {
+        return "TaskEntry [startDate=" + event.getStartDate() + ", dueDate=" + event.getDueDate() + "]";
+    }
 }

@@ -207,7 +207,7 @@ public class CalendarEvent {
                 + ", alarmActive=" + alarmActive
                 + ", recurring=" + recurring
                 + (nonEmpty(location) ? ", location=" + location : "") +
-                " ; source " + eventSource + "]";
+                "; Source [" + eventSource + "]]";
     }
 
     @Override

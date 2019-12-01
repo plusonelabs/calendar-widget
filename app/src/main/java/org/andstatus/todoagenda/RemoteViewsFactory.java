@@ -78,7 +78,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     private void logEvent(String message) {
-        Log.d(this.getClass().getSimpleName(), widgetId + " " + message);
+        Log.d(TAG, widgetId + " " + message);
     }
 
     public void onCreate() {

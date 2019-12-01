@@ -8,6 +8,11 @@ import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RawRes;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
@@ -19,7 +24,6 @@ import org.andstatus.todoagenda.testcompat.IsolatedContext;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RawResourceUtils;
 import org.joda.time.DateTimeZone;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,11 +34,6 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RawRes;
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.platform.app.InstrumentationRegistry;
-
 import static org.andstatus.todoagenda.prefs.AllSettings.getStorageKey;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS;
@@ -43,8 +42,7 @@ import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS
  * @author yvolk@yurivolkov.com
  */
 public class MockCalendarContentProvider extends MockContentProvider {
-
-    final String TAG = this.getClass().getSimpleName();
+    final static String TAG = MockCalendarContentProvider.class.getSimpleName();
     private static final int TEST_WIDGET_ID_MIN = 434892;
     private static final String[] ZONE_IDS = {"America/Los_Angeles", "Europe/Moscow", "Asia/Kuala_Lumpur", "UTC"};
     private volatile int queriesCount = 0;
@@ -78,7 +76,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     private void setPreferences(Context context) throws JSONException {
         DateTimeZone zone = DateTimeZone.forID(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
         DateTimeZone.setDefault(zone);
-        Log.i(getClass().getSimpleName(), "Default Time zone set to " + zone);
+        Log.i(TAG, "Default Time zone set to " + zone);
 
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId.incrementAndGet());
         AllSettings.loadFromTestData(context, settings);
@@ -109,7 +107,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
         if ("content://com.android.calendar/calendars".equals(uri.toString())) {
             Log.i(TAG, "query: Available Calendar sources");
             MatrixCursor cursor = new MatrixCursor(projection);
-            cursor.addRow(new Object[]{1L, getClass().getSimpleName(), 0x00FF00, "my.test@example.com"});
+            cursor.addRow(new Object[]{1L, TAG, 0x00FF00, "my.test@example.com"});
             return cursor;
         }
         if ("content://org.dmfs.tasks/tasklists".equals(uri.toString())) {
@@ -118,7 +116,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
 
             MatrixCursor cursor = new MatrixCursor(projection);
             for(int i = 0; i < numberOfOpenTaskSources; i++) {
-                cursor.addRow(new Object[]{2 + i, getClass().getSimpleName() + ".task" + i, 0x0FF0000,
+                cursor.addRow(new Object[]{2 + i, TAG + ".task" + i, 0x0FF0000,
                         "my.task@example.com"});
             }
             return cursor;
@@ -128,7 +126,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
             return null;
         }
 
-        Log.i(MockCalendarContentProvider.class.getSimpleName(), "query: " + uri);
+        Log.i(TAG, "query: " + uri);
         queriesCount++;
         if (results.size() < queriesCount) {
             return null;

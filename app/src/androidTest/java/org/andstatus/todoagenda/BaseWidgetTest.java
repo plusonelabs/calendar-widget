@@ -12,8 +12,7 @@ import static org.junit.Assert.assertTrue;
  * @author yvolk@yurivolkov.com
  */
 public class BaseWidgetTest {
-
-    final String TAG = this.getClass().getSimpleName();
+    final static String TAG = BaseWidgetTest.class.getSimpleName();
 
     protected MockCalendarContentProvider provider = null;
     protected RemoteViewsFactory factory = null;

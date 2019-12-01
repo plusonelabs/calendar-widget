@@ -38,6 +38,7 @@ import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
  * @author yvolk@yurivolkov.com
  */
 public class InstanceSettings {
+    private static final String TAG = InstanceSettings.class.getSimpleName();
     public final static InstanceSettings EMPTY = new InstanceSettings(null, 0, "(empty)");
     private final Context context;
 
@@ -268,7 +269,7 @@ public class InstanceSettings {
                 dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
             }
         } catch (JSONException e) {
-            Log.w(InstanceSettings.class.getSimpleName(), "setFromJson failed, widgetId:" + widgetId + "\n" + json);
+            Log.w(TAG, "setFromJson failed, widgetId:" + widgetId + "\n" + json);
             return this;
         }
         return this;
@@ -341,10 +342,10 @@ public class InstanceSettings {
 
     void save() {
         if (widgetId == 0) {
-            logMe(InstanceSettings.class, "Skipped save", widgetId);
+            logMe(TAG, "Skipped save", widgetId);
             return;
         }
-        logMe(InstanceSettings.class, "save", widgetId);
+        logMe(TAG, "save", widgetId);
         try {
             saveJson(context, getStorageKey(widgetId), toJson());
         } catch (IOException e) {
@@ -601,8 +602,8 @@ public class InstanceSettings {
         return horizontalLineBelowDayHeader;
     }
 
-    public void logMe(Class tag, String message, int widgetId) {
-        Log.v(tag.getSimpleName(), message + ", widgetId:" + widgetId + "\n" + toJson());
+    public void logMe(String tag, String message, int widgetId) {
+        Log.v(tag, message + ", widgetId:" + widgetId + "\n" + toJson());
     }
 
     public boolean getShowDateOnWidgetHeader() {

@@ -43,11 +43,6 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return "";
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() + " [startDate=" + startDate + "]";
-    }
-
     public int getDaysFromToday() {
         return Days.daysBetween(DateUtil.now(startDate.getZone()).withTimeAtStartOfDay(),
                 startDate.withTimeAtStartOfDay()).getDays();

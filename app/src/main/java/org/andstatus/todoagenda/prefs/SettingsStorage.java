@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,12 +23,11 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import androidx.annotation.NonNull;
-
 /**
  * @author yvolk@yurivolkov.com
  */
 public class SettingsStorage {
+    private static final String TAG = SettingsStorage.class.getSimpleName();
 
     private static final int BUFFER_LENGTH = 4 * 1024;
 
@@ -88,8 +89,7 @@ public class SettingsStorage {
                 }
             }
         } else {
-            Log.w(SettingsStorage.class.getSimpleName(),
-                    "The settings file doesn't exist: " + file.getAbsolutePath());
+            Log.w(TAG, "The settings file doesn't exist: " + file.getAbsolutePath());
         }
         return new JSONObject();
     }

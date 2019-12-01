@@ -18,6 +18,7 @@ import java.util.Map;
  * @author yvolk@yurivolkov.com
  */
 public class QueryRow {
+    private static final String TAG = QueryRow.class.getSimpleName();
 
     private static class TypedValue {
 
@@ -204,7 +205,7 @@ public class QueryRow {
         try {
             return toJson().toString(2);
         } catch (JSONException e) {
-            return this.getClass().getSimpleName() + "Error converting to Json "
+            return TAG + " Error converting to Json "
                     + e.getMessage() + "; " + mRow.toString();
         }
     }

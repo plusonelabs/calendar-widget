@@ -13,6 +13,8 @@ import android.provider.CalendarContract.Instances;
 import android.util.Log;
 import android.util.SparseArray;
 
+import androidx.annotation.NonNull;
+
 import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProvider;
@@ -29,9 +31,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 public class CalendarEventProvider extends EventProvider {
+    private static final String TAG = CalendarEventProvider.class.getSimpleName();
     private static final String[] EVENT_SOURCES_PROJECTION = new String[]{CalendarContract.Calendars._ID,
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, CalendarContract.Calendars.CALENDAR_COLOR,
             CalendarContract.Calendars.ACCOUNT_NAME};
@@ -157,7 +158,7 @@ public class CalendarEventProvider extends EventProvider {
                 }
             }
         } catch (Exception e) {
-            Log.w(this.getClass().getSimpleName(), "Failed to queryList uri:" + uri + ", selection:" + selection, e);
+            Log.w(TAG, "Failed to queryList uri:" + uri + ", selection:" + selection, e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();

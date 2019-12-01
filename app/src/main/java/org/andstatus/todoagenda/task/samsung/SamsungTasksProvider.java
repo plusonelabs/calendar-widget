@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 public class SamsungTasksProvider extends AbstractTaskProvider {
+    private static final String TAG = SamsungTasksProvider.class.getSimpleName();
 
     public SamsungTasksProvider(EventProviderType type, Context context, int widgetId) {
         super(type, context, widgetId);
@@ -136,7 +137,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         try {
             cursor = context.getContentResolver().query(SamsungTasksContract.TaskLists.PROVIDER_URI, projection, null, null, null);
         } catch (android.database.sqlite.SQLiteException e) {
-            Log.i(SamsungTasksProvider.class.getSimpleName(), "fetchAvailableSources: " + e.getMessage());
+            Log.i(TAG, "fetchAvailableSources: " + e.getMessage());
             cursor = null;
         } catch (IllegalArgumentException e) {
             cursor = null;

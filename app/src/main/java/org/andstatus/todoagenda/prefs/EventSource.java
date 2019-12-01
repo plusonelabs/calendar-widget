@@ -3,13 +3,14 @@ package org.andstatus.todoagenda.prefs;
 import android.graphics.Color;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import androidx.annotation.NonNull;
-
 public class EventSource {
+    private static final String TAG = EventSource.class.getSimpleName();
     public final static EventSource EMPTY = new EventSource(EventProviderType.EMPTY, 0, "Empty", "", 0, false);
     public static final String STORE_SEPARATOR = ",";
 
@@ -52,7 +53,7 @@ public class EventSource {
                 return source;
             }
         }
-        Log.w(EventSource.class.getSimpleName(), "Unavailable source " + providerType + ", id:" + id);
+        Log.w(TAG, "Unavailable source " + providerType + ", id:" + id);
         return new EventSource(providerType, id, "(id:" + id + ")", "", Color.RED, false);
     }
 
@@ -91,7 +92,7 @@ public class EventSource {
                 return source;
             }
         }
-        Log.i(EventSource.class.getSimpleName(), "Unavailable source " + this);
+        Log.i(TAG, "Unavailable source " + this);
         return this;
     }
 

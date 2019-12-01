@@ -47,4 +47,9 @@ public class LastEntry extends WidgetEntry<LastEntry> {
         this.type = type;
         super.setStartDate(date);
     }
+
+    @Override
+    public String toString() {
+        return "LastEntry [" + type.name() + "]";
+    }
 }

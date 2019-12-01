@@ -53,7 +53,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
             scheduleMidnightAlarms(context, instances);
             schedulePeriodicAlarms(context, instances);
 
-            Log.i(TAG, "Registered receivers from " + instanceSettings.getContext().getClass().getName());
+            Log.i(TAG, "Receivers are registered");
         }
     }
 
@@ -113,7 +113,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(this.getClass().getSimpleName(), "Received intent: " + intent);
+        Log.i(TAG, "Received intent: " + intent);
         AllSettings.ensureLoadedFromFiles(context, false);
         String action = intent == null
                 ? ""

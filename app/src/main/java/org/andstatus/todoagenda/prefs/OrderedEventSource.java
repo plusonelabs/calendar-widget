@@ -2,6 +2,8 @@ package org.andstatus.todoagenda.prefs;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,12 +12,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 /**
  * @author yvolk@yurivolkov.com
  */
 public class OrderedEventSource {
+    private static final String TAG = OrderedEventSource.class.getSimpleName();
     public final static OrderedEventSource EMPTY = new OrderedEventSource(EventSource.EMPTY, 0);
 
     public final EventSource source;
@@ -32,7 +33,7 @@ public class OrderedEventSource {
         try {
             return fromJsonArray(new JSONArray(sources));
         } catch (JSONException e) {
-            Log.w(EventSource.class.getSimpleName(), "Failed to parse event sources: " + sources, e);
+            Log.w(TAG, "Failed to parse event sources: " + sources, e);
             return Collections.emptyList();
         }
     }

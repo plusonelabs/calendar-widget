@@ -13,6 +13,8 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -28,9 +30,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 public class WidgetConfigurationActivity extends PreferenceActivity {
+    private static final String TAG = WidgetConfigurationActivity.class.getSimpleName();
 
     public static final int REQUEST_ID_RESTORE_SETTINGS = 1;
     public static final int REQUEST_ID_BACKUP_SETTINGS = 2;
@@ -147,21 +148,21 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
         } catch (Exception e) {
             String msg = "Error while writing " + getText(R.string.app_name) +
                     " settings to " + uri + "\n" + e.getMessage();
-            Log.w(this.getClass().getSimpleName(), msg, e);
+            Log.w(TAG, msg, e);
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (IOException e2) {
-                    Log.w(this.getClass().getSimpleName(), "Error while closing stream", e2);
+                    Log.w(TAG, "Error while closing stream", e2);
                 }
             }
             if (pfd != null) {
                 try {
                     pfd.close();
                 } catch (IOException e2) {
-                    Log.w(this.getClass().getSimpleName(), "Error while closing file descriptor", e2);
+                    Log.w(TAG, "Error while closing file descriptor", e2);
                 }
             }
         }
@@ -206,21 +207,21 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
         } catch (IOException | JSONException e) {
             String msg = "Error while reading " + getText(R.string.app_name) +
                     " settings from " + uri + "\n" + e.getMessage();
-            Log.w(this.getClass().getSimpleName(), msg, e);
+            Log.w(TAG, msg, e);
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    Log.w(this.getClass().getSimpleName(), "Error while closing stream", e);
+                    Log.w(TAG, "Error while closing stream", e);
                 }
             }
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    Log.w(this.getClass().getSimpleName(), "Error while closing reader", e);
+                    Log.w(TAG, "Error while closing reader", e);
                 }
             }
         }

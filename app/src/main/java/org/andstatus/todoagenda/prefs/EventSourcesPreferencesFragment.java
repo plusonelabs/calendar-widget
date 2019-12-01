@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class EventSourcesPreferencesFragment extends PreferenceFragment {
+    private static final String TAG = EventSourcesPreferencesFragment.class.getSimpleName();
     private static final String SOURCE_ID = "sourceId";
 
     List<OrderedEventSource> savedActiveSources = Collections.emptyList();
@@ -59,7 +60,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
         List<OrderedEventSource> activeSourcesNew = ApplicationPreferences.getActiveEventSources(getActivity());
         if(!(savedActiveSources.equals(activeSourcesNew))) {
             savedActiveSources = activeSourcesNew;
-            Log.i(this.getClass().getSimpleName(), this.toString() + "\nLoaded " + savedActiveSources.size());
+            Log.i(TAG, this.toString() + "\nLoaded " + savedActiveSources.size());
             showAllSources(activeSourcesNew);
         }
     }
@@ -97,7 +98,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     public void saveSelectedSources() {
         synchronized (setLock) {
             List<OrderedEventSource> selectedSources = getSelectedSources();
-            Log.i(this.getClass().getSimpleName(), this.toString() + "\nSaving " + selectedSources.size());
+            Log.i(TAG, this.toString() + "\nSaving " + selectedSources.size());
             ApplicationPreferences.setActiveEventSources(getActivity(), selectedSources);
             savedActiveSources = selectedSources;
         }
@@ -142,7 +143,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             for (Fragment fragment: getActivity().getFragmentManager().getFragments()) {
                 if (fragment instanceof EventSourcesPreferencesFragment && fragment != this) {
-                    Log.i(this.getClass().getSimpleName(), this.toString() + "\nFound loaded " + fragment);
+                    Log.i(TAG, this.toString() + "\nFound loaded " + fragment);
                     ((EventSourcesPreferencesFragment) fragment).loadActiveSources();
                 }
             }

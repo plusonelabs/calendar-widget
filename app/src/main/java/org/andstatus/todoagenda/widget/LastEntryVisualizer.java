@@ -23,6 +23,7 @@ import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
 
 /** @author yvolk@yurivolkov.com */
 public class LastEntryVisualizer extends WidgetEntryVisualizer<LastEntry> {
+    private static final String TAG = LastEntryVisualizer.class.getSimpleName();
 
     public LastEntryVisualizer(Context context, int widgetId) {
         super(new EventProvider(EventProviderType.EMPTY, context, widgetId));
@@ -33,7 +34,7 @@ public class LastEntryVisualizer extends WidgetEntryVisualizer<LastEntry> {
         if(!(eventEntry instanceof LastEntry)) return null;
 
         LastEntry entry = (LastEntry) eventEntry;
-        Log.d(this.getClass().getSimpleName(), "lastEntry: " + entry.type);
+        Log.d(TAG, "lastEntry: " + entry.type);
         RemoteViews rv = new RemoteViews(getContext().getPackageName(), entry.type.layoutId);
 
         int viewId = R.id.event_entry;

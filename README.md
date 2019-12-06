@@ -16,7 +16,7 @@ so that you can easily have a glimpse at your due, current and upcoming appointm
 </a>
 </td>
 <td>
-<a href="https://f-droid.org/en/packages/com.plusonelabs.calendar">
+<a href="https://f-droid.org/en/packages/org.andstatus.todoagenda">
 <img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" width="175px"/>
 </a>
 </td>
@@ -66,7 +66,7 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## <a id="changelog"/> Changelog
 
-### 2019-10-26 <a id="v3.1"/> v3.1.6 Hide duplicated events. Backup and restore
+### 2019-12-01 <a id="v3.1"/> v3.1.9 Hide duplicate events. Backup and restore
 
 * Selected Calendars (Task lists) [display order](https://github.com/plusonelabs/calendar-widget/issues/287)
  is determined by the order in which the calendars are selected. 
@@ -82,7 +82,9 @@ We are also looking for new and improved translations over at http://crowdin.net
 * Removed unneeded [vertical bar before location](https://github.com/plusonelabs/calendar-widget/issues/332)
  (when time is not shown, e.g. for all day events).
 * [Multiline details](https://github.com/plusonelabs/calendar-widget/issues/106) option added, 
- allowing to see the whole Location in the "Time below title" Event entry layout.   
+ allowing to see the whole Location in the "Time below title" Event entry layout.
+* Improved [automatic widget refresh](https://github.com/plusonelabs/calendar-widget/issues/338) via introduction
+ of a configurable Auto refresh period (in Other Settings). Default Auto refresh period is 10 minutes.
 
 ### 2019-10-05 <a id="v3.0"/> v3.0.11 More colors and layout customizations
 **Attention!** Due to lots of internal changes:

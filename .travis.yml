@@ -17,7 +17,7 @@ android:
   - extra-android-support
   - extra-android-m2repository
   - extra-google-m2repository
-  - sys-img-armeabi-v7a-android-$EMULATOR_API
+  - sys-img-arm64-v8a-google_apis-$EMULATOR_API
   licenses:
   - ".+"
 before_script:

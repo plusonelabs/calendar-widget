@@ -7,7 +7,7 @@ buildscript {
     ext {
         compileSdkVersion = 29 as int
         buildToolsVersion = '29.0.2'
-        minSdkVersion = 15 as int
+        minSdkVersion = 25 as int
         targetSdkVersion = 29 as int
 
         // Lookup the latest here: https://mvnrepository.com/
@@ -22,7 +22,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath "org.ajoberstar:grgit:$grgitVersion"
     }
 

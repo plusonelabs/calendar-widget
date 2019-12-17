@@ -23,7 +23,7 @@ android:
   licenses:
   - ".+"
 before_script:
-- echo "y" | android update sdk -a --no-ui --filter $IMAGE_TAG
+- echo "y" | android update sdk -a --no-ui --filter android-$EMULATOR_API
 - echo "y" | android update sdk -a --no-ui --filter sys-img-$ANDROID_ABI-$IMAGE_TAG
 - android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
 - echo no | android create avd --force -n test -t $IMAGE_TAG --abi $ANDROID_ABI

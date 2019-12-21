@@ -84,6 +84,7 @@ install:
   - source ~/.install-jdk-travis.sh
 
 script:
+- chmod +x gradlew
 - |
   ./gradlew build assembleAndroidTest
   retval=$?

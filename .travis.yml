@@ -45,10 +45,6 @@ jobs:
     - stage: unit_test
       env: UNIT_TEST=TRUE API=NONE
       install: skip
-      os: osx
-    - stage: unit_test
-      env: UNIT_TEST=TRUE API=NONE
-      install: skip
       os: linux
     - stage: finalize_coverage
       env: FINALIZE_COVERAGE=TRUE API=NONE

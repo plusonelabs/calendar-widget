@@ -73,7 +73,7 @@ install:
     sudo -E sudo -u $USER -E bash -c "${ANDROID_HOME}/emulator/${EMU_COMMAND} -avd test ${AUDIO} ${EMU_PARAMS} &"
 
   # Wait for emulator to be ready
-  - ./tools/android-wait-for-emulator.sh
+  - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
   # Switch back to our target JDK version to build and run tests

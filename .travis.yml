@@ -114,7 +114,7 @@ install:
 script:
   - |
     if [ "$UNIT_TEST" = "TRUE" ]; then
-      # Nothing here yet...
+      echo "No unit tests yet..."
     fi
 
   - |

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import org.andstatus.todoagenda.R;
@@ -27,6 +28,7 @@ public class EventFiltersPreferencesFragment extends PreferenceFragment implemen
         showEventsEnded();
         showEvenRange();
         showHideBasedOnKeywords();
+        showFilterMode();
     }
 
     private void showEventsEnded() {
@@ -46,6 +48,13 @@ public class EventFiltersPreferencesFragment extends PreferenceFragment implemen
             preference.setSummary(R.string.this_option_is_turned_off);
         } else {
             preference.setSummary(filter.toString());
+        }
+    }
+
+    private void showFilterMode() {
+        Preference preference = findPreference(InstanceSettings.PREF_FILTER_MODE);
+        if (preference != null) {
+            preference.setSummary(ApplicationPreferences.getFilterMode(getActivity()).summaryResId);
         }
     }
 

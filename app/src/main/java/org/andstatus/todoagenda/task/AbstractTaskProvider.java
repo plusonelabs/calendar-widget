@@ -3,6 +3,7 @@ package org.andstatus.todoagenda.task;
 import android.content.Context;
 import android.content.Intent;
 
+import org.andstatus.todoagenda.prefs.FilterMode;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -38,6 +39,21 @@ public abstract class AbstractTaskProvider extends EventProvider {
     }
 
     public abstract List<TaskEvent> queryTasks();
+
+    /**
+     * @return true - include the event in the result
+     */
+    protected boolean matchedFilter(TaskEvent task) {
+        if (getFilterMode() == FilterMode.NO_FILTERING) return true;
+
+        if (getFilterMode() == FilterMode.DEBUG_FILTER) {
+            if (task.getStatus() == TaskStatus.COMPLETED) return false;
+
+            // TODO: other checks...
+        }
+
+        return !mKeywordsFilter.matched(task.getTitle());
+    }
 
     public abstract Intent createViewEventIntent(TaskEvent event);
 }

@@ -16,6 +16,7 @@ public class TaskEvent {
     private DateTime startDate;
     private DateTime dueDate;
     private int color;
+    private TaskStatus status = TaskStatus.UNKNOWN;
 
     public TaskEvent(DateTimeZone zone) {
         this.zone = zone;
@@ -88,5 +89,13 @@ public class TaskEvent {
         return startMillis == null
                 ? dueDate.plusSeconds(1)
                 : dueDate;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 }

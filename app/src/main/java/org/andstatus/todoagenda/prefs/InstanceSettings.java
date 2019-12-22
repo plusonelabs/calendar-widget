@@ -125,6 +125,8 @@ public class InstanceSettings {
     private boolean showOnlyClosestInstanceOfRecurringEvent = false;
     static final String PREF_HIDE_DUPLICATES = "hideDuplicates";
     private boolean hideDuplicates = false;
+    static final String PREF_FILTER_MODE = "filterMode";
+    private FilterMode filterMode = FilterMode.NORMAL_FILTER;
 
     // ----------------------------------------------------------------------------------
     // Calendars and task lists
@@ -247,6 +249,9 @@ public class InstanceSettings {
             if (json.has(PREF_HIDE_DUPLICATES)) {
                 hideDuplicates = json.getBoolean(PREF_HIDE_DUPLICATES);
             }
+            if (json.has(PREF_FILTER_MODE)) {
+                filterMode = FilterMode.fromValue(json.getString(PREF_FILTER_MODE));
+            }
             if (json.has(PREF_INDICATE_ALERTS)) {
                 indicateAlerts = json.getBoolean(PREF_INDICATE_ALERTS);
             }
@@ -309,6 +314,7 @@ public class InstanceSettings {
             settings.showOnlyClosestInstanceOfRecurringEvent = ApplicationPreferences
                     .getShowOnlyClosestInstanceOfRecurringEvent(context);
             settings.hideDuplicates = ApplicationPreferences.getHideDuplicates(context);
+            settings.filterMode = ApplicationPreferences.getFilterMode(context);
             settings.indicateAlerts = ApplicationPreferences.getBoolean(context, PREF_INDICATE_ALERTS, true);
             settings.indicateRecurring = ApplicationPreferences.getBoolean(context, PREF_INDICATE_RECURRING, false);
             settings.widgetHeaderLayout = ApplicationPreferences.getWidgetHeaderLayout(context);
@@ -386,6 +392,7 @@ public class InstanceSettings {
             json.put(PREF_MULTILINE_DETAILS, multilineDetails);
             json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, showOnlyClosestInstanceOfRecurringEvent);
             json.put(PREF_HIDE_DUPLICATES, hideDuplicates);
+            json.put(PREF_FILTER_MODE, filterMode.value);
             json.put(PREF_INDICATE_ALERTS, indicateAlerts);
             json.put(PREF_INDICATE_RECURRING, indicateRecurring);
             json.put(PREF_WIDGET_HEADER_LAYOUT, widgetHeaderLayout.value);
@@ -548,6 +555,14 @@ public class InstanceSettings {
 
     public boolean getHideDuplicates() {
         return hideDuplicates;
+    }
+
+    public FilterMode getFilterMode() {
+        return filterMode;
+    }
+
+    public void setFilterMode(FilterMode filterMode) {
+         this.filterMode = filterMode;
     }
 
     @Override

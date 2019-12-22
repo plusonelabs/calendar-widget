@@ -197,6 +197,10 @@
     <string name="pref_hide_based_on_keywords_title">Hide based on keywords in a title</string>
     <string name="show_only_closest_instance_of_recurring_event">Show only the closest instance of a recurring event</string>
     <string name="hide_duplicates">Hide duplicates</string>
+    <string name="filter_mode">Filters troubleshooter</string>
+    <string name="filter_mode_normal">Normal filtering</string>
+    <string name="filter_mode_debug">Debug filtering</string>
+    <string name="filter_mode_no_filtering">Ignore all filters (turn them off)</string>
 
     <!-- Preference header: Other -->
     <string name="refresh_period_minutes">Auto refresh period, minutes</string>

@@ -63,7 +63,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
                 }
 
                 TaskEvent task = createTask(cursor);
-                if (!mKeywordsFilter.matched(task.getTitle())) {
+                if (matchedFilter(task)) {
                     tasks.add(task);
                 }
             }

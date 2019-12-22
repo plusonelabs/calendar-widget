@@ -2,8 +2,11 @@ package org.andstatus.todoagenda.provider;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.prefs.FilterMode;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.KeywordsFilter;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -12,8 +15,6 @@ import org.joda.time.DateTimeZone;
 
 import java.util.Collections;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 import static android.graphics.Color.argb;
 import static android.graphics.Color.blue;
@@ -74,5 +75,9 @@ public class EventProvider {
 
     public List<EventSource> fetchAvailableSources() {
         return Collections.emptyList();
+    }
+
+    protected FilterMode getFilterMode() {
+        return getSettings().getFilterMode();
     }
 }

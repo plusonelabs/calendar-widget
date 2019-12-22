@@ -34,5 +34,11 @@
             android:defaultValue="false"
             android:key="hideDuplicates"
             android:title="@string/hide_duplicates" />
+        <ListPreference
+            android:key="filterMode"
+            android:defaultValue="normal"
+            android:entries="@array/pref_filter_mode_entries"
+            android:entryValues="@array/pref_filter_mode_values"
+            android:title="@string/filter_mode" />
     </PreferenceCategory>
 </PreferenceScreen>

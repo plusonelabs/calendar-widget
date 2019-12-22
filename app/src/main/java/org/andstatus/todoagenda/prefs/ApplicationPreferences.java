@@ -27,6 +27,7 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENT_RANGE;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENT_RANGE_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_FILL_ALL_DAY;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_FILL_ALL_DAY_DEFAULT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_FILTER_MODE;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HIDE_BASED_ON_KEYWORDS;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HIDE_DUPLICATES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER;
@@ -61,6 +62,7 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_LAYOUT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_INSTANCE_NAME;
+import static org.andstatus.todoagenda.util.StringUtil.isEmpty;
 
 public class ApplicationPreferences {
 
@@ -102,6 +104,7 @@ public class ApplicationPreferences {
             setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, settings
                     .getShowOnlyClosestInstanceOfRecurringEvent());
             setHideDuplicates(context, settings.getHideDuplicates());
+            setString(context, PREF_FILTER_MODE, settings.getFilterMode().value);
             setBoolean(context, PREF_INDICATE_ALERTS, settings.getIndicateAlerts());
             setBoolean(context, PREF_INDICATE_RECURRING, settings.getIndicateRecurring());
             for (Map.Entry<TextShadingPref, TextShading> entry: settings.shadings.entrySet()) {
@@ -136,8 +139,7 @@ public class ApplicationPreferences {
     }
 
     public static List<OrderedEventSource> getActiveEventSources(Context context) {
-        return OrderedEventSource.fromJsonString(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREF_ACTIVE_SOURCES, null));
+        return OrderedEventSource.fromJsonString(getString(context, PREF_ACTIVE_SOURCES, null));
     }
 
     public static void setActiveEventSources(Context context, List<OrderedEventSource> sources) {
@@ -148,8 +150,7 @@ public class ApplicationPreferences {
     }
 
     public static int getEventRange(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs == null ? 0 : parseIntSafe(prefs.getString(PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
+        return parseIntSafe(getString(context, PREF_EVENT_RANGE, PREF_EVENT_RANGE_DEFAULT));
     }
 
     public static void setEventRange(Context context, int value) {
@@ -157,8 +158,7 @@ public class ApplicationPreferences {
     }
 
     public static EndedSomeTimeAgo getEventsEnded(Context context) {
-        return EndedSomeTimeAgo.fromValue(PreferenceManager.getDefaultSharedPreferences(context).getString(
-                PREF_EVENTS_ENDED, ""));
+        return EndedSomeTimeAgo.fromValue(getString(context, PREF_EVENTS_ENDED, ""));
     }
 
     public static void setEventsEnded(Context context, EndedSomeTimeAgo value) {
@@ -174,7 +174,7 @@ public class ApplicationPreferences {
     }
 
     public static String getHideBasedOnKeywords(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_HIDE_BASED_ON_KEYWORDS, "");
+        return getString(context, PREF_HIDE_BASED_ON_KEYWORDS, "");
     }
 
     private static void setHideBasedOnKeywords(Context context, String value) {
@@ -278,7 +278,7 @@ public class ApplicationPreferences {
     }
 
     public static String getLockedTimeZoneId(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_LOCKED_TIME_ZONE_ID, "");
+        return getString(context, PREF_LOCKED_TIME_ZONE_ID, "");
     }
 
     public static void setLockedTimeZoneId(Context context, String value) {
@@ -301,8 +301,7 @@ public class ApplicationPreferences {
     }
 
     public static EventEntryLayout getEventEntryLayout(Context context) {
-        return EventEntryLayout.fromValue(
-                getString(context, PREF_EVENT_ENTRY_LAYOUT, ""));
+        return EventEntryLayout.fromValue(getString(context, PREF_EVENT_ENTRY_LAYOUT, ""));
     }
 
     public static boolean isMultilineTitle(Context context) {
@@ -329,6 +328,10 @@ public class ApplicationPreferences {
         setBoolean(context, PREF_HIDE_DUPLICATES, value);
     }
 
+    public static FilterMode getFilterMode(Context context) {
+        return FilterMode.fromValue(getString(context, PREF_FILTER_MODE, ""));
+    }
+
     private static void setString(Context context, String key, String value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
@@ -348,7 +351,8 @@ public class ApplicationPreferences {
     }
 
     public static String getString(Context context, String key, String defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(key, defaultValue);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs == null ? defaultValue : prefs.getString(key, defaultValue);
     }
 
     private static void setBoolean(Context context, String key, boolean value) {
@@ -359,7 +363,8 @@ public class ApplicationPreferences {
     }
 
     public static boolean getBoolean(Context context, String key, boolean defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(key, defaultValue);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs == null ? defaultValue : prefs.getBoolean(key, defaultValue);
     }
 
     private static void setInt(Context context, String key, int value) {
@@ -370,8 +375,8 @@ public class ApplicationPreferences {
     }
 
     public static int getInt(Context context, String key, int defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(key, defaultValue);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs == null ? defaultValue : prefs.getInt(key, defaultValue);
     }
 
     public static String getWidgetInstanceName(Context context) {
@@ -393,6 +398,8 @@ public class ApplicationPreferences {
     }
 
     public static int parseIntSafe(String value) {
+        if (isEmpty(value)) return 0;
+
         try {
             return Integer.parseInt(value);
         } catch (Exception e) {

@@ -8,12 +8,14 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.prefs.FilterMode;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResult;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.task.AbstractTaskProvider;
 import org.andstatus.todoagenda.task.TaskEvent;
+import org.andstatus.todoagenda.task.TaskStatus;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
                 DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE,
                 DmfsOpenTasksContract.Tasks.COLUMN_START_DATE,
                 DmfsOpenTasksContract.Tasks.COLUMN_COLOR,
+                DmfsOpenTasksContract.Tasks.COLUMN_STATUS,
         };
         String where = getWhereClause();
 
@@ -60,7 +63,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
                 }
 
                 TaskEvent task = createTask(cursor);
-                if (!mKeywordsFilter.matched(task.getTitle())) {
+                if (matchedFilter(task)) {
                     tasks.add(task);
                 }
             }
@@ -76,30 +79,32 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
     private String getWhereClause() {
         StringBuilder whereBuilder = new StringBuilder();
 
-        whereBuilder.append(DmfsOpenTasksContract.Tasks.COLUMN_STATUS).append(NOT_EQUALS)
+        if (getFilterMode() == FilterMode.NORMAL_FILTER) {
+            whereBuilder.append(DmfsOpenTasksContract.Tasks.COLUMN_STATUS).append(NOT_EQUALS)
                 .append(DmfsOpenTasksContract.Tasks.STATUS_COMPLETED);
 
-        // @formatter:off
-        whereBuilder.append(AND_BRACKET)
-        .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
-        .append(OR)
-            .append(OPEN_BRACKET)
+            whereBuilder.append(AND_BRACKET)
+                .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
+                .append(OR)
+                .append(OPEN_BRACKET)
                 .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(IS_NULL)
                 .append(AND_BRACKET)
-                    .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
-                    .append(OR)
-                    .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(IS_NULL)
+                .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
+                .append(OR)
+                .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(IS_NULL)
                 .append(CLOSING_BRACKET)
-            .append(CLOSING_BRACKET)
-        .append(CLOSING_BRACKET);
-        // @formatter:on
+                .append(CLOSING_BRACKET)
+                .append(CLOSING_BRACKET);
+        }
 
         Set<String> taskLists = new HashSet<>();
         for (OrderedEventSource orderedSource: getSettings().getActiveEventSources(type)) {
             taskLists.add(Integer.toString(orderedSource.source.getId()));
         }
         if (!taskLists.isEmpty()) {
-            whereBuilder.append(AND);
+            if (whereBuilder.length() > 0) {
+                whereBuilder.append(AND);
+            }
             whereBuilder.append(DmfsOpenTasksContract.Tasks.COLUMN_LIST_ID);
             whereBuilder.append(" IN ( ");
             whereBuilder.append(TextUtils.join(",", taskLists));
@@ -131,8 +136,27 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         task.setDates(startMillis, dueMillis);
 
         task.setColor(getAsOpaque(cursor.getInt(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_COLOR))));
+        task.setStatus(loadStatus(cursor));
 
         return task;
+    }
+
+    private TaskStatus loadStatus(Cursor cursor) {
+        int columnIndex = cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_STATUS);
+        if (columnIndex < 0) return TaskStatus.UNKNOWN;
+
+        switch (cursor.getInt(columnIndex)) {
+            case 0:
+                return TaskStatus.NEEDS_ACTION;
+            case 1:
+                return TaskStatus.IN_PROGRESS;
+            case 2:
+                return TaskStatus.COMPLETED;
+            case 3:
+                return TaskStatus.CANCELLED;
+            default:
+                return TaskStatus.UNKNOWN;
+        }
     }
 
     @Override

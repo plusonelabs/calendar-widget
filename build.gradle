@@ -7,7 +7,7 @@ buildscript {
     ext {
         compileSdkVersion = 29 as int
         buildToolsVersion = '29.0.2'
-        minSdkVersion = 25 as int
+        minSdkVersion = 24 as int
         targetSdkVersion = 29 as int
 
         // Lookup the latest here: https://mvnrepository.com/

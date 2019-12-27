@@ -125,8 +125,12 @@ public class InstanceSettings {
     private boolean showOnlyClosestInstanceOfRecurringEvent = false;
     static final String PREF_HIDE_DUPLICATES = "hideDuplicates";
     private boolean hideDuplicates = false;
+    static final String PREF_TASK_SCHEDULING = "taskScheduling";
+    private TaskScheduling taskScheduling = TaskScheduling.defaultValue;
+    static final String PREF_TASK_WITHOUT_DATES = "taskWithoutDates";
+    private TasksWithoutDates taskWithoutDates = TasksWithoutDates.defaultValue;
     static final String PREF_FILTER_MODE = "filterMode";
-    private FilterMode filterMode = FilterMode.NORMAL_FILTER;
+    private FilterMode filterMode = FilterMode.defaultValue;
 
     // ----------------------------------------------------------------------------------
     // Calendars and task lists
@@ -249,6 +253,12 @@ public class InstanceSettings {
             if (json.has(PREF_HIDE_DUPLICATES)) {
                 hideDuplicates = json.getBoolean(PREF_HIDE_DUPLICATES);
             }
+            if (json.has(PREF_TASK_SCHEDULING)) {
+                taskScheduling = TaskScheduling.fromValue(json.getString(PREF_TASK_SCHEDULING));
+            }
+            if (json.has(PREF_TASK_WITHOUT_DATES)) {
+                taskWithoutDates = TasksWithoutDates.fromValue(json.getString(PREF_TASK_WITHOUT_DATES));
+            }
             if (json.has(PREF_FILTER_MODE)) {
                 filterMode = FilterMode.fromValue(json.getString(PREF_FILTER_MODE));
             }
@@ -314,6 +324,8 @@ public class InstanceSettings {
             settings.showOnlyClosestInstanceOfRecurringEvent = ApplicationPreferences
                     .getShowOnlyClosestInstanceOfRecurringEvent(context);
             settings.hideDuplicates = ApplicationPreferences.getHideDuplicates(context);
+            settings.taskScheduling = ApplicationPreferences.getTaskScheduling(context);
+            settings.taskWithoutDates = ApplicationPreferences.getTasksWithoutDates(context);
             settings.filterMode = ApplicationPreferences.getFilterMode(context);
             settings.indicateAlerts = ApplicationPreferences.getBoolean(context, PREF_INDICATE_ALERTS, true);
             settings.indicateRecurring = ApplicationPreferences.getBoolean(context, PREF_INDICATE_RECURRING, false);
@@ -392,6 +404,8 @@ public class InstanceSettings {
             json.put(PREF_MULTILINE_DETAILS, multilineDetails);
             json.put(PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, showOnlyClosestInstanceOfRecurringEvent);
             json.put(PREF_HIDE_DUPLICATES, hideDuplicates);
+            json.put(PREF_TASK_SCHEDULING, taskScheduling.value);
+            json.put(PREF_TASK_WITHOUT_DATES, taskWithoutDates.value);
             json.put(PREF_FILTER_MODE, filterMode.value);
             json.put(PREF_INDICATE_ALERTS, indicateAlerts);
             json.put(PREF_INDICATE_RECURRING, indicateRecurring);
@@ -555,6 +569,22 @@ public class InstanceSettings {
 
     public boolean getHideDuplicates() {
         return hideDuplicates;
+    }
+
+    public TaskScheduling getTaskScheduling() {
+        return taskScheduling;
+    }
+
+    public void setTaskScheduling(TaskScheduling taskScheduling) {
+        this.taskScheduling = taskScheduling;
+    }
+
+    public TasksWithoutDates getTaskWithoutDates() {
+        return taskWithoutDates;
+    }
+
+    public void setTaskWithoutDates(TasksWithoutDates taskWithoutDates) {
+        this.taskWithoutDates = taskWithoutDates;
     }
 
     public FilterMode getFilterMode() {

@@ -54,6 +54,8 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_NUMBER_O
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TASK_SCHEDULING;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TASK_WITHOUT_DATES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TEXT_SIZE_SCALE;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TODAYS_EVENTS_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
@@ -104,6 +106,8 @@ public class ApplicationPreferences {
             setBoolean(context, PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT, settings
                     .getShowOnlyClosestInstanceOfRecurringEvent());
             setHideDuplicates(context, settings.getHideDuplicates());
+            setString(context, PREF_TASK_SCHEDULING, settings.getTaskScheduling().value);
+            setString(context, PREF_TASK_WITHOUT_DATES, settings.getTaskWithoutDates().value);
             setString(context, PREF_FILTER_MODE, settings.getFilterMode().value);
             setBoolean(context, PREF_INDICATE_ALERTS, settings.getIndicateAlerts());
             setBoolean(context, PREF_INDICATE_RECURRING, settings.getIndicateRecurring());
@@ -326,6 +330,14 @@ public class ApplicationPreferences {
 
     public static void setHideDuplicates(Context context, boolean value) {
         setBoolean(context, PREF_HIDE_DUPLICATES, value);
+    }
+
+    public static TaskScheduling getTaskScheduling(Context context) {
+        return TaskScheduling.fromValue(getString(context, PREF_TASK_SCHEDULING, ""));
+    }
+
+    public static TasksWithoutDates getTasksWithoutDates(Context context) {
+        return TasksWithoutDates.fromValue(getString(context, PREF_TASK_WITHOUT_DATES, ""));
     }
 
     public static FilterMode getFilterMode(Context context) {

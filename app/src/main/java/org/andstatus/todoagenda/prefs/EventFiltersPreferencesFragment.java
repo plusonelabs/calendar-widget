@@ -28,6 +28,8 @@ public class EventFiltersPreferencesFragment extends PreferenceFragment implemen
         showEventsEnded();
         showEvenRange();
         showHideBasedOnKeywords();
+        showTaskScheduling();
+        showTasksWithoutDates();
         showFilterMode();
     }
 
@@ -51,10 +53,24 @@ public class EventFiltersPreferencesFragment extends PreferenceFragment implemen
         }
     }
 
+    private void showTaskScheduling() {
+        Preference preference = findPreference(InstanceSettings.PREF_TASK_SCHEDULING);
+        if (preference != null) {
+            preference.setSummary(ApplicationPreferences.getTaskScheduling(getActivity()).valueResId);
+        }
+    }
+
+    private void showTasksWithoutDates() {
+        Preference preference = findPreference(InstanceSettings.PREF_TASK_WITHOUT_DATES);
+        if (preference != null) {
+            preference.setSummary(ApplicationPreferences.getTasksWithoutDates(getActivity()).valueResId);
+        }
+    }
+
     private void showFilterMode() {
         Preference preference = findPreference(InstanceSettings.PREF_FILTER_MODE);
         if (preference != null) {
-            preference.setSummary(ApplicationPreferences.getFilterMode(getActivity()).summaryResId);
+            preference.setSummary(ApplicationPreferences.getFilterMode(getActivity()).valueResId);
         }
     }
 

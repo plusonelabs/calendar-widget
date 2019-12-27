@@ -35,6 +35,18 @@
             android:key="hideDuplicates"
             android:title="@string/hide_duplicates" />
         <ListPreference
+            android:key="taskScheduling"
+            android:defaultValue="date_due"
+            android:entries="@array/pref_task_scheduling_entries"
+            android:entryValues="@array/pref_task_scheduling_values"
+            android:title="@string/task_scheduling_title" />
+        <ListPreference
+            android:key="taskWithoutDates"
+            android:defaultValue="end_of_list"
+            android:entries="@array/pref_tasks_wo_dates_entries"
+            android:entryValues="@array/pref_tasks_wo_dates_values"
+            android:title="@string/tasks_wo_dates_title" />
+        <ListPreference
             android:key="filterMode"
             android:defaultValue="normal"
             android:entries="@array/pref_filter_mode_entries"

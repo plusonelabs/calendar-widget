@@ -216,6 +216,24 @@
         <item>uk</item>
         <item>vi</item>
     </string-array>
+    <string-array name="pref_task_scheduling_entries">
+        <item>@string/task_scheduling_date_due</item>
+        <item>@string/task_scheduling_date_started</item>
+    </string-array>
+    <string-array name="pref_task_scheduling_values" tools:ignore="MissingTranslation">
+        <item>date_due</item>
+        <item>date_started</item>
+    </string-array>
+    <string-array name="pref_tasks_wo_dates_entries">
+        <item>@string/tasks_wo_dates_end_of_list</item>
+        <item>@string/tasks_wo_dates_end_of_today</item>
+        <item>@string/tasks_wo_dates_hide</item>
+    </string-array>
+    <string-array name="pref_tasks_wo_dates_values" tools:ignore="MissingTranslation">
+        <item>end_of_list</item>
+        <item>end_of_today</item>
+        <item>hide</item>
+    </string-array>
     <string-array name="pref_filter_mode_entries">
         <item>@string/filter_mode_normal</item>
         <item>@string/filter_mode_debug</item>

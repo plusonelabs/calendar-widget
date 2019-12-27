@@ -12,13 +12,15 @@ public enum FilterMode {
     DEBUG_FILTER("debug", R.string.filter_mode_debug),
     NO_FILTERING("no_filtering", R.string.filter_mode_no_filtering);
 
+    public final static FilterMode defaultValue = NORMAL_FILTER;
+
     public final String value;
     @StringRes
-    public final int summaryResId;
+    public final int valueResId;
 
-    FilterMode(String value, int summaryResId) {
+    FilterMode(String value, int valueResId) {
         this.value = value;
-        this.summaryResId = summaryResId;
+        this.valueResId = valueResId;
     }
 
     public static FilterMode fromValue(String value) {
@@ -27,6 +29,6 @@ public enum FilterMode {
                 return item;
             }
         }
-        return NORMAL_FILTER;
+        return defaultValue;
     }
 }

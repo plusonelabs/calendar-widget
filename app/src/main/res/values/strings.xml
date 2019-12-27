@@ -197,6 +197,13 @@
     <string name="pref_hide_based_on_keywords_title">Hide based on keywords in a title</string>
     <string name="show_only_closest_instance_of_recurring_event">Show only the closest instance of a recurring event</string>
     <string name="hide_duplicates">Hide duplicates</string>
+    <string name="task_scheduling_title">Task scheduling</string>
+    <string name="task_scheduling_date_due">Show tasks under date due</string>
+    <string name="task_scheduling_date_started">Show tasks under date started</string>
+    <string name="tasks_wo_dates_title">Tasks without start and due dates</string>
+    <string name="tasks_wo_dates_end_of_list">Show at the end of the whole event list</string>
+    <string name="tasks_wo_dates_end_of_today">Show at the end of Today</string>
+    <string name="tasks_wo_dates_hide">Hide</string>
     <string name="filter_mode">Filters troubleshooter</string>
     <string name="filter_mode_normal">Normal filtering</string>
     <string name="filter_mode_debug">Debug filtering</string>

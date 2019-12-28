@@ -2,14 +2,14 @@ package org.andstatus.todoagenda;
 
 import android.util.Log;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,8 +33,8 @@ public class WrongDatesLostEventsTest extends BaseWidgetTest {
         factory.logWidgetEntries(method);
         assertEquals("Number of entries", 11, factory.getWidgetEntries().size());
         assertEquals("On Saturday", "Maker Fair", ((CalendarEntry) factory.getWidgetEntries().get(4)).getEvent().getTitle());
-        assertEquals("On Saturday", 6, factory.getWidgetEntries().get(4).getStartDate().getDayOfWeek());
+        assertEquals("On Saturday", 6, factory.getWidgetEntries().get(4).entryDate.getDayOfWeek());
         assertEquals("On Sunday", "Ribakovs", ((CalendarEntry) factory.getWidgetEntries().get(7)).getEvent().getTitle());
-        assertEquals("On Sunday", 7, factory.getWidgetEntries().get(7).getStartDate().getDayOfWeek());
+        assertEquals("On Sunday", 7, factory.getWidgetEntries().get(7).entryDate.getDayOfWeek());
     }
 }

@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.joda.time.DateTime;
@@ -16,14 +19,13 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-
 public class DateUtil {
 
     private static final String COMMA_SPACE = ", ";
     private static volatile DateTime mNow = null;
     private static volatile DateTime mNowSetAt = DateTime.now();
     public static final DateTime DATETIME_MIN = new DateTime(0, DateTimeZone.UTC);
+    public static final DateTime DATETIME_MAX = new DateTime(Long.MAX_VALUE, DateTimeZone.UTC);
 
     public static boolean isMidnight(DateTime date) {
         return date.isEqual(date.withTimeAtStartOfDay());
@@ -86,35 +88,28 @@ public class DateUtil {
         }
     }
 
-    public static boolean isToday(DateTime date) {
-        return !isBeforeToday(date) && date.isBefore(DateUtil.now(date.getZone()).plusDays(1).withTimeAtStartOfDay());
+    public static boolean isToday(@Nullable DateTime date) {
+        return isDateDefined(date) && !isBeforeToday(date) && date.isBefore(DateUtil.now(date.getZone()).plusDays(1).withTimeAtStartOfDay());
     }
 
-    public static boolean isBeforeToday(DateTime date) {
-        return date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay());
+    public static boolean isBeforeToday(@Nullable DateTime date) {
+        return isDateDefined(date) && date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay());
     }
 
-    public static boolean isAfterToday(DateTime date) {
-        return !date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay().plusDays(1));
+    public static boolean isAfterToday(@Nullable DateTime date) {
+        return isDateDefined(date) && !date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay().plusDays(1));
     }
 
-    public static boolean isBeforeNow(DateTime date) {
-        return date.isBefore(now(date.getZone()));
+    public static boolean isBeforeNow(@Nullable DateTime date) {
+        return isDateDefined(date) && date.isBefore(now(date.getZone()));
     }
 
     public static DateTime startOfTomorrow(DateTimeZone zone) {
         return startOfNextDay(DateUtil.now(zone));
     }
+
     public static DateTime startOfNextDay(DateTime date) {
         return date.plusDays(1).withTimeAtStartOfDay();
-    }
-
-    public static DateTime endOfToday(DateTimeZone zone) {
-        return endOfSameDay(DateUtil.now(zone));
-    }
-
-    public static DateTime endOfSameDay(DateTime date) {
-        return date.plusDays(1).withTimeAtStartOfDay().minusSeconds(1);
     }
 
     public static void setNow(DateTime now) {
@@ -172,5 +167,23 @@ public class DateUtil {
             }
         }
         return Long.toString(time); // Fallback if above doesn't work
+    }
+
+    public static boolean isSameDate(@Nullable DateTime date, @Nullable DateTime other) {
+        if (date == null && other == null) return true;
+        if (date == null || other == null) return false;
+
+        return date.equals(other);
+    }
+
+    public static boolean isSameDay(@Nullable DateTime date, @Nullable DateTime other) {
+        if (date == null && other == null) return true;
+        if (date == null || other == null) return false;
+
+        return date.year().equals(other.year()) && date.dayOfYear().equals(other.dayOfYear());
+    }
+
+    public static boolean isDateDefined(@Nullable DateTime dateTime) {
+        return dateTime != null && dateTime.isAfter(DATETIME_MIN) && dateTime.isBefore(DATETIME_MAX);
     }
 }

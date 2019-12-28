@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 
+import androidx.annotation.Nullable;
+
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -12,12 +14,14 @@ import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 
+import static org.andstatus.todoagenda.util.DateUtil.isDateDefined;
+
 public class CalendarEntry extends WidgetEntry<CalendarEntry> {
 
     private static final String TWELVE = "12";
     private static final String AUTO = "auto";
-    private static final String SPACE_ARROW = " →";
-    private static final String ARROW_SPACE = "→ ";
+    private static final String ARROW = "→";
+    private static final String SPACE = " ";
     private static final String EMPTY_STRING = "";
     static final String SPACE_DASH_SPACE = " - ";
 
@@ -25,14 +29,14 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     private CalendarEvent event;
 
     public static CalendarEntry fromEvent(CalendarEvent event, DateTime entryDate) {
-        CalendarEntry entry = new CalendarEntry();
-        entry.setStartDate(entryDate);
-        if (event.getEndDate().isBefore(entry.getEndDate())) {
-            entry.setEndDate(event.getEndDate());
-        }
+        CalendarEntry entry = new CalendarEntry(entryDate, event.getEndDate());
         entry.allDay = event.isAllDay();
         entry.event = event;
         return entry;
+    }
+
+    private CalendarEntry(DateTime entryDate, DateTime eventEndDate) {
+        super(WidgetEntryPosition.ENTRY_DATE, entryDate, eventEndDate);
     }
 
     @Override
@@ -70,15 +74,15 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     }
 
     public boolean isStartOfMultiDayEvent() {
-        return isPartOfMultiDayEvent() && !getEvent().getStartDate().isBefore(getStartDate());
+        return isPartOfMultiDayEvent() && !getEvent().getStartDate().isBefore(entryDate);
     }
 
     public boolean isEndOfMultiDayEvent() {
-        return isPartOfMultiDayEvent() && !getEvent().getEndDate().isAfter(getEndDate());
+        return isPartOfMultiDayEvent() && isLastEntryOfEvent;
     }
 
     public boolean spansOneFullDay() {
-        return getStartDate().plusDays(1).isEqual(getEndDate());
+        return entryDate.plusDays(1).isEqual(event.getEndDate());
     }
 
     public CalendarEvent getEvent() {
@@ -105,7 +109,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     private String createTimeSpanString(Context context) {
         if (isAllDay() && !getSettings().getFillAllDayEvents()) {
             DateTime dateTime = getEvent().getEndDate().minusDays(1);
-            return ARROW_SPACE + DateUtil.createDateString(getSettings(), dateTime);
+            return ARROW + SPACE + DateUtil.createDateString(getSettings(), dateTime);
         } else {
             return createTimeStringForCalendarEntry(context);
         }
@@ -115,20 +119,19 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
         String startStr;
         String endStr;
         String separator = SPACE_DASH_SPACE;
-        if (isPartOfMultiDayEvent() && DateUtil.isMidnight(getStartDate())
-                && !isStartOfMultiDayEvent()) {
-            startStr = ARROW_SPACE;
-            separator = EMPTY_STRING;
+        if (!isDateDefined(entryDate) || (isPartOfMultiDayEvent() && DateUtil.isMidnight(entryDate)
+                && !isStartOfMultiDayEvent())) {
+            startStr = ARROW;
+            separator = SPACE;
         } else {
-            startStr = createTimeString(context, getStartDate());
+            startStr = createTimeString(context, entryDate);
         }
         if (getSettings().getShowEndTime()) {
-            if (isPartOfMultiDayEvent() && DateUtil.isMidnight(getEndDate())
-                    && !isEndOfMultiDayEvent()) {
-                endStr = SPACE_ARROW;
-                separator = EMPTY_STRING;
+            if (!isDateDefined(event.getEndDate()) || (isPartOfMultiDayEvent() && !isLastEntryOfEvent)) {
+                endStr = ARROW;
+                separator = SPACE;
             } else {
-                endStr = createTimeString(context, getEndDate());
+                endStr = createTimeString(context, event.getEndDate());
             }
         } else {
             separator = EMPTY_STRING;
@@ -142,7 +145,9 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
         return startStr + separator + endStr;
     }
 
-    private String createTimeString(Context context, DateTime time) {
+    private String createTimeString(Context context, @Nullable DateTime time) {
+        if (!isDateDefined(time)) return EMPTY_STRING;
+
         String dateFormat = getSettings().getDateFormat();
         if (!DateFormat.is24HourFormat(context) && dateFormat.equals(AUTO)
                 || dateFormat.equals(TWELVE)) {
@@ -168,9 +173,8 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
 
     @Override
     public String toString() {
-        return "CalendarEntry ["
-                + "startDate=" + getStartDate()
-                + ", endDate=" + getEndDate()
+        return super.toString() + " CalendarEntry ["
+                + "endDate=" + getEndDate()
                 + ", allDay=" + allDay
                 + ", time=" + getEventTimeString()
                 + ", location=" + getLocationString()
@@ -187,16 +191,14 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
             return false;
         }
         CalendarEntry that = (CalendarEntry) o;
-        if (!event.equals(that.event) || !getStartDate().equals(that.getStartDate())) {
-            return false;
-        }
-        return true;
+        return event.equals(that.event) && entryDate.equals(that.entryDate);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result += 31 * event.hashCode();
+        result += 31 * entryDate.hashCode();
         return result;
     }
 }

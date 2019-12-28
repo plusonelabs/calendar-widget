@@ -84,10 +84,10 @@ public class BirthdayTest extends BaseWidgetTest {
                 factory.getWidgetEntries().size());
         if (entriesWithoutLastExpected > 0) {
             CalendarEntry birthday = (CalendarEntry) factory.getWidgetEntries().get(1);
-            assertEquals(9, birthday.getStartDate().dayOfMonth().get());
-            assertEquals(0, birthday.getStartDate().hourOfDay().get());
-            assertEquals(0, birthday.getStartDate().minuteOfHour().get());
-            assertEquals(0, birthday.getStartDate().millisOfDay().get());
+            assertEquals(9, birthday.entryDate.dayOfMonth().get());
+            assertEquals(0, birthday.entryDate.hourOfDay().get());
+            assertEquals(0, birthday.entryDate.minuteOfHour().get());
+            assertEquals(0, birthday.entryDate.millisOfDay().get());
             assertEquals(true, birthday.isAllDay());
         }
     }

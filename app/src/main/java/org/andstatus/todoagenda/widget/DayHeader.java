@@ -2,14 +2,11 @@ package org.andstatus.todoagenda.widget;
 
 import org.joda.time.DateTime;
 
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.DAY_HEADER;
+
 public class DayHeader extends WidgetEntry<DayHeader> {
 
     public DayHeader(DateTime date) {
-        setStartDate(date.withTimeAtStartOfDay());
-    }
-
-    @Override
-    public String toString() {
-        return "DayHeader [startDate=" +  getStartDate() + "]";
+        super(DAY_HEADER, date, null);
     }
 }

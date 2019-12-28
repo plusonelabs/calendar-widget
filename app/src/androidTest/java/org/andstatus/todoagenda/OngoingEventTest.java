@@ -46,7 +46,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         assertNotNull(entry);
         assertTrue("Is active event", entry.getEvent().isActive());
         assertFalse("Is not part of Multi Day Event", entry.isPartOfMultiDayEvent());
-        assertEquals("Start Time didn't change for today's event", event.getStartDate(), entry.getStartDate());
+        assertEquals("Start Time didn't change for today's event", event.getStartDate(), entry.entryDate);
         assertEquals("End Time didn't change for today's event", event.getEndDate(), entry.getEndDate());
     }
 
@@ -79,7 +79,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         assertTrue("Is Part of Multi Day Event", entry.isPartOfMultiDayEvent());
         assertFalse("Is not start of Multi Day Event", entry.isStartOfMultiDayEvent());
         assertTrue("Is end of Multi Day Event", entry.isEndOfMultiDayEvent());
-        assertEquals("Yesterday's event entry start time is midnight", today, entry.getStartDate());
+        assertEquals("Yesterday's event entry start time is midnight", today, entry.entryDate);
         assertEquals("End Time didn't change for yesterday's event", event.getEndDate(), entry.getEndDate());
     }
 
@@ -110,8 +110,8 @@ public class OngoingEventTest extends BaseWidgetTest {
         assertTrue("Is Part of Multi Day Event", entry.isPartOfMultiDayEvent());
         assertTrue("Is start of Multi Day Event", entry.isStartOfMultiDayEvent());
         assertFalse("Is not an end of Multi Day Event", entry.isEndOfMultiDayEvent());
-        assertEquals("Start Time didn't change for today's event", event.getStartDate(), entry.getStartDate());
-        assertEquals("Event entry end time is next midnight", today.plusDays(1), entry.getEndDate());
+        assertEquals("Start Time didn't change for today's event", event.getStartDate(), entry.entryDate);
+        assertEquals("Entry end time is the same as Event end time", event.getEndDate(), entry.getEndDate());
     }
 
 }

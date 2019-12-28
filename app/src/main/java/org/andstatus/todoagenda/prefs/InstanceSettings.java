@@ -623,7 +623,7 @@ public class InstanceSettings {
     }
 
     public int getEntryBackgroundColor(WidgetEntry<?> entry) {
-        return entry.getEndTimeSection()
+        return entry.getTimeSection()
                 .select(getPastEventsBackgroundColor(), getTodaysEventsBackgroundColor(), getEventsBackgroundColor());
     }
 

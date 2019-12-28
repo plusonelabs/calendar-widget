@@ -48,16 +48,16 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
             WidgetEntry entry = factory.getWidgetEntries().get(ind);
             String logMsg = method + "; " + String.format("%02d ", ind) + entry.toString();
             Log.v(TAG, logMsg);
-            if (entry.getStartDay().isBefore(today)) {
+            if (entry.getEntryDay().isBefore(today)) {
                 fail("Is present before today " + logMsg);
             }
-            if (entry.getStartDay().isAfter(endOfRangeTime)) {
+            if (entry.getEntryDay().isAfter(endOfRangeTime)) {
                 fail("After end of range " + logMsg);
             }
-            int dayOfEntry = entry.getStartDay().getDayOfYear();
+            int dayOfEntry = entry.getEntryDay().getDayOfYear();
             if (entry instanceof DayHeader) {
                 if (dayOfHeaderPrev == 0) {
-                    if (entry.getStartDate().withTimeAtStartOfDay().isAfter(today)) {
+                    if (entry.entryDate.withTimeAtStartOfDay().isAfter(today)) {
                         fail("No today's header " + logMsg);
                     }
                 } else {
@@ -68,7 +68,7 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
                 assertEquals(LastEntry.LastEntryType.LAST, ((LastEntry) entry).type);
             } else {
                 if (dayOfEventEntryPrev == 0) {
-                    if (entry.getStartDate().withTimeAtStartOfDay().isAfter(today)) {
+                    if (entry.entryDate.withTimeAtStartOfDay().isAfter(today)) {
                         fail("Today not filled " + logMsg);
                     }
                 } else {

@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.andstatus.todoagenda.widget.LastEntry.LastEntryType.EMPTY;
 import static org.andstatus.todoagenda.widget.LastEntry.LastEntryType.NO_PERMISSIONS;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.LIST_FOOTER;
 
 /** @author yvolk@yurivolkov.com */
 public class LastEntry extends WidgetEntry<LastEntry> {
@@ -23,7 +24,7 @@ public class LastEntry extends WidgetEntry<LastEntry> {
 
     public static void addLast(List<WidgetEntry> widgetEntries) {
         if (!widgetEntries.isEmpty()) {
-            LastEntry entry = new LastEntry(LastEntryType.LAST, widgetEntries.get(widgetEntries.size() - 1).getStartDate());
+            LastEntry entry = new LastEntry(LastEntryType.LAST, widgetEntries.get(widgetEntries.size() - 1).entryDate);
             widgetEntries.add(entry);
         }
     }
@@ -44,12 +45,7 @@ public class LastEntry extends WidgetEntry<LastEntry> {
     public final LastEntryType type;
 
     public LastEntry(LastEntryType type, DateTime date) {
+        super(LIST_FOOTER, date, null);
         this.type = type;
-        super.setStartDate(date);
-    }
-
-    @Override
-    public String toString() {
-        return "LastEntry [" + type.name() + "]";
     }
 }

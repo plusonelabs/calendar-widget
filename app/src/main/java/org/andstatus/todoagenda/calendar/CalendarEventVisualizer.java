@@ -134,7 +134,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         if (endDate.isAfter(eventProvider.getEndOfTimeRange())) {
             endDate = eventProvider.getEndOfTimeRange();
         }
-        DateTime thisDay = dayOneEntry.getStartDay().plusDays(1).withTimeAtStartOfDay();
+        DateTime thisDay = dayOneEntry.getEntryDay().plusDays(1).withTimeAtStartOfDay();
         while (thisDay.isBefore(endDate)) {
             CalendarEntry nextEntry = CalendarEntry.fromEvent(dayOneEntry.getEvent(), thisDay);
             entryList.add(nextEntry);

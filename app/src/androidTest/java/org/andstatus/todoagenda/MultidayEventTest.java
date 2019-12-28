@@ -7,6 +7,7 @@ import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -29,9 +30,10 @@ public class MultidayEventTest extends BaseWidgetTest {
      */
     @Test
     public void testEventWhichCarryOverToTheNextDay() {
-        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTimeZone timeZone = provider.getSettings().getTimeZone();
+        DateTime today = DateUtil.now(timeZone).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
-                provider.getSettings().getTimeZone(), false);
+                timeZone, false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Event that carry over to the next day, show as ending midnight");
@@ -58,15 +60,15 @@ public class MultidayEventTest extends BaseWidgetTest {
         assertTrue("Is Part of Multi Day Event", entry1.isPartOfMultiDayEvent());
         assertTrue("Is start of Multi Day Event", entry1.isStartOfMultiDayEvent());
         assertFalse("Is not an end of Multi Day Event", entry1.isEndOfMultiDayEvent());
-        assertEquals("Start Time didn't change for today's event", event.getStartDate(), entry1.getStartDate());
-        assertEquals("Event entry end time is next midnight", today.plusDays(1), entry1.getEndDate());
+        assertEquals("Start Time didn't change for today's event", event.getStartDate(), entry1.entryDate);
+        assertEquals("Entry end time should be the same as Event end time", event.getEndDate(), entry1.getEndDate());
 
         assertNotNull(entry2);
         assertFalse("Is not active event", entry2.getEvent().isActive());
         assertTrue("Is Part of Multi Day Event", entry2.isPartOfMultiDayEvent());
         assertFalse("Is not start of Multi Day Event", entry2.isStartOfMultiDayEvent());
         assertTrue("Is end of Multi Day Event", entry2.isEndOfMultiDayEvent());
-        assertEquals("Start Time of tomorrow's entry is midnight", today.plusDays(1), entry2.getStartDate());
+        assertEquals("Start Time of tomorrow's entry is midnight", today.plusDays(1), entry2.entryDate);
         assertEquals("Tomorrow event entry end time is the same as for the event", entry2.getEvent().getEndDate(), entry2.getEndDate());
     }
 
@@ -92,7 +94,7 @@ public class MultidayEventTest extends BaseWidgetTest {
 
     private void assertSundayEntryAt(CalendarEvent event, DateTime sunday, DateTime currentDateTime) {
         CalendarEntry entry1 = getSundayEntryAt(event, currentDateTime);
-        assertEquals(sunday, entry1.getStartDate());
+        assertEquals(sunday, entry1.entryDate);
         assertEquals(event.getEndDate(), entry1.getEndDate());
         assertEquals(event.getTitle(), entry1.getTitle());
         String timeString = entry1.getEventTimeString();
@@ -111,7 +113,7 @@ public class MultidayEventTest extends BaseWidgetTest {
         for (WidgetEntry item : factory.getWidgetEntries()) {
             if (item instanceof CalendarEntry) {
                 CalendarEntry entry = (CalendarEntry) item;
-                if (entry.getStartDate().getDayOfMonth() == 20) {
+                if (entry.entryDate.getDayOfMonth() == 20) {
                     assertNull(sundayEntry);
                     sundayEntry = entry;
                 }

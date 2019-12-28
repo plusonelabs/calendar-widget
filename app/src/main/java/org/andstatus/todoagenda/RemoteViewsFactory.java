@@ -175,14 +175,14 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     private int getTodaysPosition() {
         for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
-            if (getWidgetEntries().get(ind).getStartDaySection() != TimeSection.PAST) return ind;
+            if (getWidgetEntries().get(ind).getTimeSection() != TimeSection.PAST) return ind;
         }
         return getWidgetEntries().size() - 1;
     }
 
     private int getTomorrowsPosition() {
         for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
-            if (getWidgetEntries().get(ind).getStartDaySection() == TimeSection.FUTURE) return ind;
+            if (getWidgetEntries().get(ind).getTimeSection() == TimeSection.FUTURE) return ind;
         }
         return getWidgetEntries().size() > 0 ? 0 : -1;
     }
@@ -225,17 +225,17 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             DayHeader curDayBucket = new DayHeader(DateUtil.DATETIME_MIN);
             boolean pastEventsHeaderAdded = false;
             for (WidgetEntry entry : listIn) {
-                DateTime nextStartOfDay = entry.getStartDay();
-                if (settings.getShowPastEventsUnderOneHeader() && nextStartOfDay.isBefore(today)) {
+                DateTime nextEntryDay = entry.getEntryDay();
+                if (settings.getShowPastEventsUnderOneHeader() && nextEntryDay.isBefore(today)) {
                     if(!pastEventsHeaderAdded) {
                         listOut.add(curDayBucket);
                         pastEventsHeaderAdded = true;
                     }
-                } else if (!nextStartOfDay.isEqual(curDayBucket.getStartDay())) {
+                } else if (!nextEntryDay.isEqual(curDayBucket.getEntryDay())) {
                     if (settings.getShowDaysWithoutEvents()) {
-                        addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getStartDay(), nextStartOfDay);
+                        addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getEntryDay(), nextEntryDay);
                     }
-                    curDayBucket = new DayHeader(nextStartOfDay);
+                    curDayBucket = new DayHeader(nextEntryDay);
                     listOut.add(curDayBucket);
                 }
                 listOut.add(entry);

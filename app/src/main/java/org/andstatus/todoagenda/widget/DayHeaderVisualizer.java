@@ -48,15 +48,15 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
         setBackgroundColor(rv, R.id.day_header, getSettings().getEntryBackgroundColor(entry));
         setDayHeaderTitle(position, entry, rv, shadingContext);
         setDayHeaderSeparator(position, rv, shadingContext);
-        Intent intent = createOpenCalendarAtDayIntent(entry.getStartDate());
+        Intent intent = createOpenCalendarAtDayIntent(entry.entryDate);
         rv.setOnClickFillInIntent(R.id.day_header, intent);
         return rv;
     }
 
     private void setDayHeaderTitle(int position, DayHeader entry, RemoteViews rv, ContextThemeWrapper shadingContext) {
-        String dateString = (entry.getStartDate().equals(DateUtil.DATETIME_MIN)
+        String dateString = ((entry.entryPosition == WidgetEntryPosition.PAST_AND_DUE_HEADER)
                 ? getContext().getString(R.string.past_header)
-                : DateUtil.createDayHeaderTitle(getSettings(), entry.getStartDate()))
+                : DateUtil.createDayHeaderTitle(getSettings(), entry.entryDate))
             .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);

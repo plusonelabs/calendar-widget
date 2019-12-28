@@ -29,14 +29,20 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     private CalendarEvent event;
 
     public static CalendarEntry fromEvent(CalendarEvent event, DateTime entryDate) {
-        CalendarEntry entry = new CalendarEntry(entryDate, event.getEndDate());
+        CalendarEntry entry = new CalendarEntry(entryDate);
         entry.allDay = event.isAllDay();
         entry.event = event;
         return entry;
     }
 
-    private CalendarEntry(DateTime entryDate, DateTime eventEndDate) {
-        super(WidgetEntryPosition.ENTRY_DATE, entryDate, eventEndDate);
+    private CalendarEntry(DateTime entryDate) {
+        super(WidgetEntryPosition.ENTRY_DATE, entryDate);
+    }
+
+    @Nullable
+    @Override
+    public DateTime getEndDate() {
+        return event.getEndDate();
     }
 
     @Override
@@ -78,7 +84,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     }
 
     public boolean isEndOfMultiDayEvent() {
-        return isPartOfMultiDayEvent() && isLastEntryOfEvent;
+        return isPartOfMultiDayEvent() && isLastEntryOfEvent();
     }
 
     public boolean spansOneFullDay() {
@@ -127,7 +133,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
             startStr = createTimeString(context, entryDate);
         }
         if (getSettings().getShowEndTime()) {
-            if (!isDateDefined(event.getEndDate()) || (isPartOfMultiDayEvent() && !isLastEntryOfEvent)) {
+            if (!isDateDefined(event.getEndDate()) || (isPartOfMultiDayEvent() && !isLastEntryOfEvent())) {
                 endStr = ARROW;
                 separator = SPACE;
             } else {

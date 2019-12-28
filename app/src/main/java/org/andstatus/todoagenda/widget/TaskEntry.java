@@ -1,5 +1,7 @@
 package org.andstatus.todoagenda.widget;
 
+import androidx.annotation.Nullable;
+
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.task.TaskEvent;
 import org.joda.time.DateTime;
@@ -10,13 +12,19 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
     private TaskEvent event;
 
     public static TaskEntry fromEvent(TaskEvent event) {
-        TaskEntry entry = new TaskEntry(ENTRY_DATE, event.getStartDate(), event.getDueDate());
+        TaskEntry entry = new TaskEntry(ENTRY_DATE, event.getStartDate());
         entry.event = event;
         return entry;
     }
 
-    private TaskEntry(WidgetEntryPosition entryPosition, DateTime entryDate, DateTime endDate) {
-        super(entryPosition, entryDate, endDate);
+    private TaskEntry(WidgetEntryPosition entryPosition, DateTime entryDate) {
+        super(entryPosition, entryDate);
+    }
+
+    @Nullable
+    @Override
+    public DateTime getEndDate() {
+        return event.getDueDate();
     }
 
     @Override

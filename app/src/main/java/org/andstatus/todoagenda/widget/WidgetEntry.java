@@ -13,17 +13,10 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
 
     public final WidgetEntryPosition entryPosition;
     public final DateTime entryDate;
-    @Nullable
-    public final DateTime endDate;
-    public final boolean isLastEntryOfEvent;
 
-    protected WidgetEntry(WidgetEntryPosition entryPosition, DateTime entryDate, @Nullable DateTime eventEndDate) {
+    protected WidgetEntry(WidgetEntryPosition entryPosition, DateTime entryDate) {
         this.entryPosition = entryPosition;
         this.entryDate = fixEntryDate(entryPosition, entryDate);
-        endDate = eventEndDate;
-        isLastEntryOfEvent = endDate == null ||
-                !entryPosition.entryDateIsRequired ||
-                endDate.isBefore(DateUtil.startOfNextDay(this.entryDate));
     }
 
     private static DateTime fixEntryDate(WidgetEntryPosition entryPosition, DateTime entryDate) {
@@ -64,12 +57,19 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         }
     }
 
+    public boolean isLastEntryOfEvent() {
+        return getEndDate() == null ||
+                !entryPosition.entryDateIsRequired ||
+                getEndDate().isBefore(DateUtil.startOfNextDay(this.entryDate));
+    }
+
     public DateTime getEntryDay() {
         return entryDate.withTimeAtStartOfDay();
     }
 
+    @Nullable
     public DateTime getEndDate() {
-        return endDate;
+        return null;
     }
 
     public OrderedEventSource getSource() {
@@ -136,7 +136,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         }
         return DateUtil.isBeforeToday(entryDate)
                 ? TimeSection.PAST
-                : (DateUtil.isToday(endDate) ? TimeSection.TODAY : TimeSection.FUTURE);
+                : (DateUtil.isToday(getEndDate()) ? TimeSection.TODAY : TimeSection.FUTURE);
     }
 
     public boolean duplicates(WidgetEntry other) {

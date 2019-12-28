@@ -45,7 +45,7 @@ public class LastEntry extends WidgetEntry<LastEntry> {
     public final LastEntryType type;
 
     public LastEntry(LastEntryType type, DateTime date) {
-        super(LIST_FOOTER, date, null);
+        super(LIST_FOOTER, date);
         this.type = type;
     }
 }

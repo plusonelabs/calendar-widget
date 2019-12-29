@@ -52,9 +52,10 @@ public class CalendarEvent {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public CalendarEvent setStartDate(DateTime startDate) {
         this.startDate = allDay ? startDate.withTimeAtStartOfDay() : startDate;
         fixEndDate();
+        return this;
     }
 
     public void setStartMillis(long startMillis) {
@@ -119,8 +120,9 @@ public class CalendarEvent {
         return title;
     }
 
-    public void setTitle(String title) {
+    public CalendarEvent setTitle(String title) {
         this.title = notNull(title);
+        return this;
     }
 
     public DateTime getEndDate() {

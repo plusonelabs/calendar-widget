@@ -1,11 +1,13 @@
 package org.andstatus.todoagenda.provider;
 
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.andstatus.todoagenda.BaseWidgetTest;
 import org.andstatus.todoagenda.calendar.CalendarEventProvider;
+import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
@@ -14,8 +16,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import androidx.test.platform.app.InstrumentationRegistry;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -35,12 +36,11 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        QueryResultsStorage.setNeedToStoreResults(true);
     }
 
     @Override
     public void tearDown() throws Exception {
-        QueryResultsStorage.setNeedToStoreResults(false);
+        QueryResultsStorage.setNeedToStoreResults(false, 0);
         super.tearDown();
     }
 
@@ -53,18 +53,26 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     public void testTwoEventsToday() {
         QueryResult input1 = addOneResult("");
         QueryResult input2 = addOneResult("SOMETHING=1");
+        provider.setPreferences();
 
-        QueryResult result1 = queryList(input1.getUri(), input1.getSelection());
-        assertEquals(1, provider.getQueriesCount());
+        QueryResultsStorage.setNeedToStoreResults(true, provider.getWidgetId());
+        MyContentResolver resolver = new MyContentResolver(EventProviderType.CALENDAR, provider.getContext(), provider.getWidgetId());
+
+        QueryResult result1 = queryList(resolver, input1.getUri(), input1.getSelection());
+        List<QueryResult> stored1 = QueryResultsStorage.getStorage().getResults(EventProviderType.CALENDAR, provider.getWidgetId());
+
         assertEquals(input1, result1);
         assertEquals(result1, input1);
-        assertEquals(input1, QueryResultsStorage.getStorage().getResults().get(0));
+        assertEquals("Results 1 size\n" + stored1, 1, stored1.size());
+        assertEquals(input1, stored1.get(0));
 
-        QueryResult result2 = queryList(input2.getUri(), input2.getSelection());
-        assertEquals(2, provider.getQueriesCount());
+        QueryResult result2 = queryList(resolver, input2.getUri(), input2.getSelection());
+        List<QueryResult> stored2 = QueryResultsStorage.getStorage().getResults(EventProviderType.CALENDAR, provider.getWidgetId());
+
         assertEquals(input2, result2);
         assertEquals(result2, input2);
-        assertEquals(input2, QueryResultsStorage.getStorage().getResults().get(1));
+        assertEquals("Results 2 size\n" + stored2, 2, stored2.size());
+        assertEquals(input2, stored2.get(1));
 
         assertNotSame(result1, result2);
 
@@ -96,27 +104,16 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
         return input;
     }
 
-    private QueryResult queryList(Uri uri, String selection) {
-        QueryResult result = new QueryResult(EventProviderType.CALENDAR, provider.getSettings(),
+    private QueryResult queryList(MyContentResolver resolver, Uri uri, String selection) {
+        InstanceSettings settings = provider.getSettings();
+        QueryResult result = new QueryResult(EventProviderType.CALENDAR, settings,
                 uri, projection, selection, null, sortOrder);
-        Cursor cursor = null;
-        try {
-            cursor = provider.getContext().getContentResolver().query(uri, projection,
-                    selection, null, sortOrder);
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    if (QueryResultsStorage.getNeedToStoreResults()) {
-                        result.addRow(cursor);
-                    }
-                } while (cursor.moveToNext());
-            }
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
+
+        result = resolver.foldEvents(uri, projection, selection, null, sortOrder, result, r -> cursor -> {
+            r.addRow(cursor);
+            return r;
+        });
         result.dropNullColumns();
-        QueryResultsStorage.store(result);
         return result;
     }
 
@@ -124,7 +121,7 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     public void testJsonToAndFrom() throws IOException, JSONException {
         QueryResultsStorage inputs1 = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.birthday);
-        JSONObject jsonOutput = inputs1.toJson(provider.getContext(), provider.getWidgetId());
+        JSONObject jsonOutput = inputs1.toJson(provider.getContext(), provider.getWidgetId(), true);
         QueryResultsStorage inputs2 = QueryResultsStorage.fromTestData(provider.getContext(), jsonOutput);
         assertEquals(inputs1, inputs2);
     }

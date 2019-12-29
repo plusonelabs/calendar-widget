@@ -84,6 +84,7 @@ public class SingleEventTest extends BaseWidgetTest {
         EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         provider.clear();
         provider.addRow(event);
+        provider.setPreferences();
         factory.onDataSetChanged();
 
         assertFalse(provider.getSettings().toString(),
@@ -95,7 +96,6 @@ public class SingleEventTest extends BaseWidgetTest {
                         source.source.getId()).source.isAvailable);
 
         factory.logWidgetEntries(TAG);
-        assertEquals(1, provider.getQueriesCount());
         assertEquals(factory.getWidgetEntries().toString(), 3, factory.getWidgetEntries().size());
         WidgetEntry entry = factory.getWidgetEntries().get(1);
         assertTrue(entry instanceof CalendarEntry);

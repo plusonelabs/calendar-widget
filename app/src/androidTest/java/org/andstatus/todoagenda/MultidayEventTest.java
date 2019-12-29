@@ -42,6 +42,7 @@ public class MultidayEventTest extends BaseWidgetTest {
 
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
+        provider.setPreferences();
         factory.onDataSetChanged();
         CalendarEntry entry1 = null;
         CalendarEntry entry2 = null;
@@ -106,6 +107,7 @@ public class MultidayEventTest extends BaseWidgetTest {
         DateUtil.setNow(currentDateTime);
         provider.clear();
         provider.addRow(event);
+        provider.setPreferences();
         factory.onDataSetChanged();
         Log.i(TAG, "getSundayEntryAt " + currentDateTime);
         factory.logWidgetEntries(TAG);

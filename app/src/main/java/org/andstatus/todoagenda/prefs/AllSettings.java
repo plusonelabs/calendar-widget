@@ -10,7 +10,6 @@ import org.andstatus.todoagenda.EnvironmentChangedReceiver;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.WidgetData;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -92,20 +91,14 @@ public class AllSettings {
         }
     }
 
-    public static void loadFromTestData(Context context, InstanceSettings settings) throws JSONException {
+    public static void loadFromTestData(Context context, InstanceSettings settings) {
         synchronized (instances) {
-            allowedWidgets.clear();
-            instances.clear();
-            EventProviderType.initialize(context, true);
             if (settings.widgetId == 0) {
                 settings.logMe(TAG, "Skipped loadFromTestData", settings.widgetId);
             } else {
-                allowedWidgets.add(settings.widgetId);
                 settings.logMe(TAG, "loadFromTestData put", settings.widgetId);
                 instances.put(settings.widgetId, settings);
             }
-            instancesLoaded = true;
-            EnvironmentChangedReceiver.registerReceivers(instances);
         }
     }
 

@@ -2,7 +2,9 @@ package org.andstatus.todoagenda;
 
 import android.util.Log;
 
+import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.provider.QueryRow;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
@@ -21,6 +23,7 @@ import static org.junit.Assert.fail;
  * @author yvolk@yurivolkov.com
  */
 public class IllegalInstantDueToTimeZoneTransitionTest extends BaseWidgetTest {
+    private static final String TAG = IllegalInstantDueToTimeZoneTransitionTest.class.getSimpleName();
 
     private int eventId = 0;
 
@@ -40,9 +43,15 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends BaseWidgetTest {
         oneTimeDst("2015-10-25T00:00:00+00:00");
         oneTimeDst("2011-03-27T00:00:00+00:00");
         oneTimeDst("1980-04-06T00:00:00+00:00");
+        provider.addRow(new CalendarEvent(provider.getContext(), provider.getWidgetId(),
+                provider.getSettings().getTimeZone(),false)
+            .setStartDate(DateUtil.startOfTomorrow(provider.getSettings().getTimeZone()))
+            .setEventSource(provider.getFirstActiveEventSource())
+            .setTitle("This will be the only event that will be shown"));
+        provider.setPreferences();
         factory.onDataSetChanged();
         factory.logWidgetEntries(TAG);
-        assertEquals(1, provider.getQueriesCount());
+        assertEquals(3, factory.getWidgetEntries().size());
     }
 
     private void oneTimeDst(String iso8601time) {

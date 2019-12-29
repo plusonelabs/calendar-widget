@@ -35,6 +35,7 @@ public class OngoingEventTest extends BaseWidgetTest {
 
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
+        provider.setPreferences();
         factory.onDataSetChanged();
         factory.logWidgetEntries(TAG);
         CalendarEntry entry = null;
@@ -66,6 +67,7 @@ public class OngoingEventTest extends BaseWidgetTest {
 
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
+        provider.setPreferences();
         factory.onDataSetChanged();
         factory.logWidgetEntries(TAG);
         CalendarEntry entry = null;
@@ -96,6 +98,7 @@ public class OngoingEventTest extends BaseWidgetTest {
 
         DateUtil.setNow(today.plusHours(20).plusMinutes(33));
         provider.addRow(event);
+        provider.setPreferences();
         factory.onDataSetChanged();
         factory.logWidgetEntries(TAG);
         CalendarEntry entry = null;

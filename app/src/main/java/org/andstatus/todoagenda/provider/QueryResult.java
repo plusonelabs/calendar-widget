@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.DateUtil;
@@ -37,7 +38,7 @@ public class QueryResult {
     private static final String KEY_SELECTION_ARGS = "selectionArgs";
     private static final String KEY_SORT_ORDER = "sortOrder";
 
-    private final EventProviderType providerType;
+    public final EventProviderType providerType;
     private final int widgetId;
     private final DateTime executedAt;
     private Uri uri = Uri.EMPTY;
@@ -113,6 +114,24 @@ public class QueryResult {
             cursor.addRow(row.getArray(projection));
         }
         return cursor;
+    }
+
+    Cursor querySource(String[] projection) {
+        Log.i(TAG, "query for source: " + providerType);
+        MatrixCursor cursor = new MatrixCursor(projection);
+        switch (providerType) {
+            case CALENDAR:
+                cursor.addRow(new Object[]{1L, TAG, 0x00FF00, "my.test@example.com"});
+                return cursor;
+            case DMFS_OPEN_TASKS:
+                cursor.addRow(new Object[]{2L, TAG + ".open.task" + 2L, 0x0FF0000,
+                        "my.task@example.com"});
+                return cursor;
+            case SAMSUNG_TASKS:
+                cursor.addRow(new Object[]{3L, TAG + "samsung.task" + 3L, 0x0FF0000});
+                return cursor;
+        }
+        return null;
     }
 
     public void addRow(Cursor cursor) {
@@ -211,9 +230,10 @@ public class QueryResult {
         return jsonArray;
     }
 
-    void dropNullColumns() {
+    QueryResult dropNullColumns() {
         for (QueryRow row : rows) {
             row.dropNullColumns();
         }
+        return this;
     }
 }

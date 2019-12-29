@@ -1,11 +1,6 @@
 package org.andstatus.todoagenda.provider;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.MatrixCursor;
-import android.net.Uri;
-import android.test.mock.MockContentProvider;
-import android.test.mock.MockContentResolver;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,10 +12,8 @@ import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-import org.andstatus.todoagenda.prefs.MockSettingsProvider;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.prefs.SettingsStorage;
-import org.andstatus.todoagenda.testcompat.IsolatedContext;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RawResourceUtils;
 import org.joda.time.DateTimeZone;
@@ -31,7 +24,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.andstatus.todoagenda.prefs.AllSettings.getStorageKey;
@@ -41,44 +33,34 @@ import static org.andstatus.todoagenda.provider.QueryResultsStorage.KEY_SETTINGS
 /**
  * @author yvolk@yurivolkov.com
  */
-public class MockCalendarContentProvider extends MockContentProvider {
+public class MockCalendarContentProvider {
     final static String TAG = MockCalendarContentProvider.class.getSimpleName();
     private static final int TEST_WIDGET_ID_MIN = 434892;
     private static final String[] ZONE_IDS = {"America/Los_Angeles", "Europe/Moscow", "Asia/Kuala_Lumpur", "UTC"};
-    private volatile int queriesCount = 0;
-    private final List<QueryResult> results = new CopyOnWriteArrayList<>();
-    private final int numberOfOpenTaskSources;
+    private final QueryResultsStorage results = new QueryResultsStorage();
+    private final Context context;
 
-    private final static AtomicInteger widgetId = new AtomicInteger(TEST_WIDGET_ID_MIN);
+    private final static AtomicInteger lastWidgetId = new AtomicInteger(TEST_WIDGET_ID_MIN);
+    private final int widgetId;
 
-    public static MockCalendarContentProvider getContentProvider(int numberOfOpenTasksSources) throws JSONException {
-        MockContentResolver mockResolver = new MockContentResolver();
-        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        Context isolatedContext = new IsolatedContext(mockResolver, targetContext);
-        MockCalendarContentProvider contentProvider =
-                new MockCalendarContentProvider(isolatedContext, numberOfOpenTasksSources);
-
-        mockResolver.addProvider("com.android.calendar", contentProvider);
-        if (numberOfOpenTasksSources > 0) {
-            mockResolver.addProvider("org.dmfs.tasks", contentProvider);
-        }
-        mockResolver.addProvider("settings", new MockSettingsProvider());
-
-        contentProvider.setPreferences(isolatedContext);
-        return contentProvider;
-    }
-
-    private MockCalendarContentProvider(Context context, int numberOfOpenTaskSources) {
-        super(context);
-        this.numberOfOpenTaskSources = numberOfOpenTaskSources;
-    }
-
-    private void setPreferences(Context context) throws JSONException {
+    public static MockCalendarContentProvider getContentProvider() {
         DateTimeZone zone = DateTimeZone.forID(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
         DateTimeZone.setDefault(zone);
         Log.i(TAG, "Default Time zone set to " + zone);
 
-        InstanceSettings settings = AllSettings.instanceFromId(context, widgetId.incrementAndGet());
+        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        MockCalendarContentProvider contentProvider = new MockCalendarContentProvider(targetContext);
+        return contentProvider;
+    }
+
+    private MockCalendarContentProvider(Context context) {
+        this.context = context;
+        widgetId = lastWidgetId.incrementAndGet();
+    }
+
+    public void setPreferences() {
+        InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
+        settings.setQueryResults(results);
         AllSettings.loadFromTestData(context, settings);
     }
 
@@ -97,44 +79,6 @@ public class MockCalendarContentProvider extends MockContentProvider {
         ApplicationPreferences.setWidgetId(ApplicationProvider.getApplicationContext(), TEST_WIDGET_ID_MIN);
     }
 
-    @Override
-    public boolean onCreate() {
-        return true;
-    }
-
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if ("content://com.android.calendar/calendars".equals(uri.toString())) {
-            Log.i(TAG, "query: Available Calendar sources");
-            MatrixCursor cursor = new MatrixCursor(projection);
-            cursor.addRow(new Object[]{1L, TAG, 0x00FF00, "my.test@example.com"});
-            return cursor;
-        }
-        if ("content://org.dmfs.tasks/tasklists".equals(uri.toString())) {
-            Log.i(TAG, "query: Available OpenTasks sources");
-            if (numberOfOpenTaskSources == 0) return null;
-
-            MatrixCursor cursor = new MatrixCursor(projection);
-            for(int i = 0; i < numberOfOpenTaskSources; i++) {
-                cursor.addRow(new Object[]{2 + i, TAG + ".task" + i, 0x0FF0000,
-                        "my.task@example.com"});
-            }
-            return cursor;
-        }
-        if ("content://com.android.calendar/TasksAccounts".equals(uri.toString())) {
-            Log.i(TAG, "query: Available Samsung task sources");
-            return null;
-        }
-
-        Log.i(TAG, "query: " + uri);
-        queriesCount++;
-        if (results.size() < queriesCount) {
-            return null;
-        } else {
-            return results.get(queriesCount - 1).query(projection);
-        }
-    }
-
     public void addResults(List<QueryResult> results) {
         for (QueryResult result : results) {
             addResult(result);
@@ -149,7 +93,7 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void addResult(QueryResult result) {
-        results.add(result);
+        results.addResult(result);
     }
 
     public void addRow(CalendarEvent event) {
@@ -168,10 +112,14 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void addRow(QueryRow queryRow) {
-        if (results.isEmpty()) {
-            addResult(new QueryResult(EventProviderType.CALENDAR, getSettings().getWidgetId(), DateUtil.now(getSettings().getTimeZone())));
-        }
-        results.get(0).addRow(queryRow);
+        EventProviderType providerType = EventProviderType.CALENDAR;
+        QueryResult result = results.findLast(providerType).orElseGet( () -> {
+            QueryResult r2 = new QueryResult(providerType, getSettings().getWidgetId(),
+                            DateUtil.now(getSettings().getTimeZone()));
+            results.addResult(r2);
+            return r2;
+        });
+        result.addRow(queryRow);
     }
 
     @NonNull
@@ -180,16 +128,11 @@ public class MockCalendarContentProvider extends MockContentProvider {
     }
 
     public void clear() {
-        queriesCount = 0;
         results.clear();
     }
 
-    public int getQueriesCount() {
-        return queriesCount;
-    }
-
     public int getWidgetId() {
-        return widgetId.get();
+        return widgetId;
     }
 
     public void startEditing() {
@@ -212,5 +155,9 @@ public class MockCalendarContentProvider extends MockContentProvider {
             return orderedSource;
         }
         return OrderedEventSource.EMPTY;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

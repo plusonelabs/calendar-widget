@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.json.JSONException;
@@ -47,19 +49,21 @@ public class WidgetData {
         }
     }
 
-    static WidgetData fromWidgetId(Context context, int widgetId) {
+    static WidgetData fromWidgetId(Context context, int widgetId, boolean withSettings) {
         if ( context == null || widgetId == 0) {
             return EMPTY;
         }
-        return fromSettings(AllSettings.instanceFromId(context, widgetId));
+        return fromSettings(context, withSettings ? AllSettings.instanceFromId(context, widgetId) : null);
     }
 
-    public static WidgetData fromSettings(InstanceSettings settings) {
+    public static WidgetData fromSettings(Context context, @Nullable InstanceSettings settings) {
         JSONObject json = new JSONObject();
         try {
             json.put(KEY_DEVICE_INFO, getDeviceInfo());
-            json.put(KEY_APP_INFO, getAppInfo(settings.getContext()));
-            json.put(KEY_SETTINGS, settings.toJson());
+            json.put(KEY_APP_INFO, getAppInfo(context));
+            if (settings != null){
+                json.put(KEY_SETTINGS, settings.toJson());
+            }
         } catch (JSONException e) {
             Log.w(TAG,"fromSettings failed; " + settings, e);
         }

@@ -10,9 +10,11 @@ import androidx.annotation.Nullable;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.util.LazyVal;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 /**
@@ -25,17 +27,19 @@ public class MyContentResolver {
     final EventProviderType type;
     final Context context;
     final int widgetId;
-    private volatile int requestsCounter = 0;
+    private final AtomicInteger requestsCounter = new AtomicInteger();
+    private final LazyVal<InstanceSettings> settingsLazyVal;
 
     public MyContentResolver(EventProviderType type, Context context, int widgetId) {
         this.type = type;
         this.context = context;
         this.widgetId = widgetId;
+        settingsLazyVal = LazyVal.ofNullable(() -> AllSettings.instanceFromId(context, widgetId));
     }
 
     @NonNull
     public InstanceSettings getSettings() {
-        return AllSettings.instanceFromId(context, widgetId);
+        return settingsLazyVal.get();
     }
 
     public boolean isPermissionNeeded(Context context, String permission) {
@@ -45,7 +49,7 @@ public class MyContentResolver {
     public <R> R foldAvailableSources(@NonNull Uri uri, @Nullable String[] projection,
                             R identity, Function<R, Function<Cursor, R>> foldingFunction) {
         R folded = identity;
-        try (Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null)) {
+        try (Cursor cursor = queryAvailableSources(uri, projection)) {
             if (cursor != null) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
@@ -62,19 +66,26 @@ public class MyContentResolver {
         return folded;
     }
 
+    private Cursor queryAvailableSources(@NonNull Uri uri, @Nullable String[] projection) {
+        return widgetId == 0 || getSettings().getQueryResults() == null
+                ? context.getContentResolver().query(uri, projection, null, null, null)
+                : getSettings().getQueryResults().getResult(type, requestsCounter.incrementAndGet() - 1)
+                    .map(r -> r.querySource(projection)).orElse(null);
+    }
+
     public void onQueryEvents() {
-        requestsCounter = 0;
+        requestsCounter.set(0);
     }
 
     public <R> R foldEvents(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
                           @Nullable String[] selectionArgs, @Nullable String sortOrder,
                                   R identity, Function<R, Function<Cursor, R>> foldingFunction) {
         R folded = identity;
-        boolean needToStoreResults = QueryResultsStorage.getNeedToStoreResults();
+        boolean needToStoreResults = QueryResultsStorage.getNeedToStoreResults(widgetId);
         QueryResult result = needToStoreResults
                 ? new QueryResult(type, getSettings(), uri, projection, selection, null, sortOrder)
                 : null;
-        try (Cursor cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder)) {
+        try (Cursor cursor = queryForEvents(uri, projection, selection, selectionArgs, sortOrder)) {
             if (cursor != null) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
@@ -90,7 +101,15 @@ public class MyContentResolver {
                     ", args:" + Arrays.toString(selectionArgs) +
                     ", sort:" + sortOrder, e);
         }
-        if (needToStoreResults) QueryResultsStorage.store(result);
+        if (needToStoreResults) QueryResultsStorage.store(result.dropNullColumns());
         return folded;
+    }
+
+    private Cursor queryForEvents(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
+                                  @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        return getSettings().getQueryResults() == null
+                ? context.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder)
+                : getSettings().getQueryResults().getResult(type, requestsCounter.incrementAndGet() - 1)
+                    .map(r -> r.query(projection)).orElse(null);
     }
 }

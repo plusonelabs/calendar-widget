@@ -138,7 +138,7 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
         if (uri == null) return;
 
         InstanceSettings settings = AllSettings.instanceFromId(this, widgetId);
-        String jsonSettings = WidgetData.fromSettings(settings).toJsonString();
+        String jsonSettings = WidgetData.fromSettings(this, settings).toJsonString();
         ParcelFileDescriptor pfd = null;
         FileOutputStream out = null;
         try {

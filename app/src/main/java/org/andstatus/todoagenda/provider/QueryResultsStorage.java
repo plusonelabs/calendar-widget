@@ -17,7 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import static org.andstatus.todoagenda.util.DateUtil.formatLogDateTime;
 
@@ -33,13 +35,14 @@ public class QueryResultsStorage {
     public static final String KEY_SETTINGS = "settings";
 
     private static volatile QueryResultsStorage theStorage = null;
+    private static volatile int widgetIdResultsToStore = 0;
 
     private final List<QueryResult> results = new CopyOnWriteArrayList<>();
 
     public static boolean store(QueryResult result) {
         QueryResultsStorage storage = theStorage;
         if (storage != null) {
-            storage.results.add(result);
+            storage.addResult(result);
             return (storage == theStorage);
         }
         return false;
@@ -49,7 +52,7 @@ public class QueryResultsStorage {
         final String method = "shareEventsForDebugging";
         try {
             Log.i(TAG, method + " started");
-            setNeedToStoreResults(true);
+            setNeedToStoreResults(true, widgetId);
             RemoteViewsFactory factory = new RemoteViewsFactory(context, widgetId);
             factory.onDataSetChanged();
             String results = theStorage.toJsonString(context, widgetId);
@@ -70,15 +73,16 @@ public class QueryResultsStorage {
                 Log.i(TAG, method + "; Shared " + results);
             }
         } finally {
-            setNeedToStoreResults(false);
+            setNeedToStoreResults(false, widgetId);
         }
     }
 
-    public static boolean getNeedToStoreResults() {
-        return theStorage != null;
+    public static boolean getNeedToStoreResults(int widgetId) {
+        return theStorage != null && (widgetId == 0 || widgetId == widgetIdResultsToStore);
     }
 
-    public static void setNeedToStoreResults(boolean needToStoreResults) {
+    public static void setNeedToStoreResults(boolean needToStoreResults, int widgetId) {
+        widgetIdResultsToStore = widgetId;
         if (needToStoreResults) {
             theStorage = new QueryResultsStorage();
         } else {
@@ -94,22 +98,53 @@ public class QueryResultsStorage {
         return results;
     }
 
+    public void addResult(QueryResult result) {
+        results.add(result);
+    }
+
+    public List<QueryResult> getResults(EventProviderType type, int widgetId) {
+        return results.stream().filter(result -> type == EventProviderType.EMPTY || result.providerType == type)
+                .filter(result -> widgetId == 0 || result.getWidgetId() == widgetId)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<QueryResult> findLast(EventProviderType type) {
+        for (int index = results.size() - 1; index >=0; index--) {
+            QueryResult result = results.get(index);
+            if (type != EventProviderType.EMPTY && result.providerType != type) continue;
+
+            return Optional.of(result);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<QueryResult> getResult(EventProviderType type, int index) {
+        int foundIndex = -1;
+        for (QueryResult result: results) {
+            if (type != EventProviderType.EMPTY && result.providerType != type) continue;
+
+            foundIndex++;
+            if (foundIndex == index) return Optional.of(result);
+        }
+        return Optional.empty();
+    }
+
     private String toJsonString(Context context, int widgetId) {
         try {
-            return toJson(context, widgetId).toString(2);
+            return toJson(context, widgetId, true).toString(2);
         } catch (JSONException e) {
             return "Error while formatting data " + e;
         }
     }
 
-    JSONObject toJson(Context context, int widgetId) throws JSONException {
+    public JSONObject toJson(Context context, int widgetId, boolean withSettings) throws JSONException {
         JSONArray resultsArray = new JSONArray();
         for (QueryResult result : results) {
             if (result.getWidgetId() == widgetId) {
                 resultsArray.put(result.toJson());
             }
         }
-        JSONObject json = WidgetData.fromWidgetId(context, widgetId).toJson();
+        JSONObject json = WidgetData.fromWidgetId(context, widgetId, withSettings).toJson();
         json.put(KEY_RESULTS_VERSION, RESULTS_VERSION);
         json.put(KEY_RESULTS, resultsArray);
         return json;
@@ -122,14 +157,18 @@ public class QueryResultsStorage {
         // TODO: Map Calendars when moving between devices
 
         AllSettings.getInstances(context).put(settings.getWidgetId(), settings);
-        QueryResultsStorage results = new QueryResultsStorage();
-        JSONArray jsonResults = json.getJSONArray(KEY_RESULTS);
-        for (int ind = 0; ind < jsonResults.length(); ind++) {
-            results.results.add(QueryResult.fromJson(jsonResults.getJSONObject(ind), settings.getWidgetId()));
-        }
+        QueryResultsStorage results = QueryResultsStorage.fromJson(settings.getWidgetId(), json.getJSONArray(KEY_RESULTS));
         if (!results.results.isEmpty()) {
             DateTime now = results.results.get(0).getExecutedAt().toDateTime(DateTimeZone.getDefault());
             DateUtil.setNow(now);
+        }
+        return results;
+    }
+
+    public static QueryResultsStorage fromJson(int widgetId, JSONArray jsonResults) throws JSONException {
+        QueryResultsStorage results = new QueryResultsStorage();
+        for (int ind = 0; ind < jsonResults.length(); ind++) {
+            results.results.add(QueryResult.fromJson(jsonResults.getJSONObject(ind), widgetId));
         }
         return results;
     }
@@ -164,5 +203,9 @@ public class QueryResultsStorage {
     @Override
     public String toString() {
         return TAG + ":" + results;
+    }
+
+    public void clear() {
+        results.clear();
     }
 }

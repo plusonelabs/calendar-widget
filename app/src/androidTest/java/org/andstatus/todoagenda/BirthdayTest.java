@@ -75,9 +75,11 @@ public class BirthdayTest extends BaseWidgetTest {
     }
 
     private void playAtOneTime(QueryResultsStorage inputs, DateTime now, int entriesWithoutLastExpected) {
+        provider.clear();
         provider.addResults(inputs.getResults());
         DateUtil.setNow(now);
         EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
+        provider.setPreferences();
         factory.onDataSetChanged();
         factory.logWidgetEntries(TAG);
         assertEquals(entriesWithoutLastExpected == 0 ? 0 : entriesWithoutLastExpected + 1,

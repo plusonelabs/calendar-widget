@@ -14,6 +14,7 @@ import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.TextSizeScale;
 import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
@@ -156,6 +157,9 @@ public class InstanceSettings {
     public final static int PREF_REFRESH_PERIOD_MINUTES_DEFAULT = 10;
     private int refreshPeriodMinutes = PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
 
+    static final String PREF_QUERY_RESULTS = "queryResults";
+    private volatile QueryResultsStorage queryResults = null;
+
     public static InstanceSettings fromJson(Context context, JSONObject json) throws JSONException {
         InstanceSettings settings = new InstanceSettings(context, json.optInt(PREF_WIDGET_ID),
                 json.optString(PREF_WIDGET_INSTANCE_NAME));
@@ -282,6 +286,9 @@ public class InstanceSettings {
             }
             if (json.has(PREF_DAY_HEADER_ALIGNMENT)) {
                 dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
+            }
+            if (json.has(PREF_QUERY_RESULTS)) {
+                queryResults = QueryResultsStorage.fromJson(widgetId, json.getJSONArray(PREF_QUERY_RESULTS));
             }
         } catch (JSONException e) {
             Log.w(TAG, "setFromJson failed, widgetId:" + widgetId + "\n" + json);
@@ -415,6 +422,9 @@ public class InstanceSettings {
             }
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale.preferenceValue);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
+            if (queryResults != null) {
+                json.put(PREF_QUERY_RESULTS, queryResults.toJson(getContext(), widgetId, false));
+            }
         } catch (JSONException e) {
             throw new RuntimeException("Saving settings to JSON", e);
         }
@@ -680,5 +690,13 @@ public class InstanceSettings {
     public InstanceSettings asForWidget(Context context, int targetWidgetId) {
         String newName = AllSettings.uniqueInstanceName(context, targetWidgetId, widgetInstanceName);
         return new InstanceSettings(context, targetWidgetId, newName).setFromJson(toJson());
+    }
+
+    public QueryResultsStorage getQueryResults() {
+        return queryResults;
+    }
+
+    public void setQueryResults(QueryResultsStorage queryResults) {
+        this.queryResults = queryResults;
     }
 }

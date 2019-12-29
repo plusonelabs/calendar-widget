@@ -45,7 +45,7 @@ public class FeedbackPreferencesFragment extends PreferenceFragment {
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
                     getActivity().startActivityForResult(intent, REQUEST_ID_BACKUP_SETTINGS);
                 } else {
-                    String jsonSettings = WidgetData.fromSettings(settings).toJsonString();
+                    String jsonSettings = WidgetData.fromSettings(settings.getContext(), settings).toJsonString();
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("application/json");
                     intent.putExtra(Intent.EXTRA_SUBJECT, fileName);

@@ -37,6 +37,7 @@ public class PastDueHeaderWithTasksTest extends BaseWidgetTest {
         provider.addResults(inputs.getResults());
         Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());
 
+        provider.setPreferences();
         factory.onDataSetChanged();
         factory.logWidgetEntries(method);
         assertEquals("Past and Due header", DateUtil.DATETIME_MIN, factory.getWidgetEntries().get(0).entryDate);

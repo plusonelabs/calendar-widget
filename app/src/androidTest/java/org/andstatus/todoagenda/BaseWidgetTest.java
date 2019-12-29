@@ -23,7 +23,7 @@ public class BaseWidgetTest {
 
     @Before
     public void setUp() throws Exception {
-        provider = MockCalendarContentProvider.getContentProvider(getNumberOfOpenTasksSources());
+        provider = MockCalendarContentProvider.getContentProvider();
         factory = new RemoteViewsFactory(provider.getContext(), provider.getWidgetId());
         assertTrue(factory.getWidgetEntries().get(0) instanceof LastEntry);
     }

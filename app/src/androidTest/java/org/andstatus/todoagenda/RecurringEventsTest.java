@@ -56,8 +56,6 @@ public class RecurringEventsTest extends BaseWidgetTest {
             provider.addRow(new QueryRow().setEventId(eventId).setTitle("Work each day")
                     .setBegin(millis).setEnd(millis + TimeUnit.HOURS.toMillis(9)));
         }
-        provider.setPreferences();
-        factory.onDataSetChanged();
-        factory.logWidgetEntries(TAG);
+        playResults(TAG);
     }
 }

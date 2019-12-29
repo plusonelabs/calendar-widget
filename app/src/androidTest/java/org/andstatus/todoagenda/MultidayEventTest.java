@@ -42,11 +42,9 @@ public class MultidayEventTest extends BaseWidgetTest {
 
         DateUtil.setNow(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
-        provider.setPreferences();
-        factory.onDataSetChanged();
+        playResults(TAG);
         CalendarEntry entry1 = null;
         CalendarEntry entry2 = null;
-        factory.logWidgetEntries(TAG);
         for (WidgetEntry item : factory.getWidgetEntries()) {
             if (item instanceof CalendarEntry) {
                 if (entry1 == null) {
@@ -107,10 +105,8 @@ public class MultidayEventTest extends BaseWidgetTest {
         DateUtil.setNow(currentDateTime);
         provider.clear();
         provider.addRow(event);
-        provider.setPreferences();
-        factory.onDataSetChanged();
         Log.i(TAG, "getSundayEntryAt " + currentDateTime);
-        factory.logWidgetEntries(TAG);
+        playResults(TAG);
         CalendarEntry sundayEntry = null;
         for (WidgetEntry item : factory.getWidgetEntries()) {
             if (item instanceof CalendarEntry) {

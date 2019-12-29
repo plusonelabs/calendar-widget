@@ -48,9 +48,7 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends BaseWidgetTest {
             .setStartDate(DateUtil.startOfTomorrow(provider.getSettings().getTimeZone()))
             .setEventSource(provider.getFirstActiveEventSource())
             .setTitle("This will be the only event that will be shown"));
-        provider.setPreferences();
-        factory.onDataSetChanged();
-        factory.logWidgetEntries(TAG);
+        playResults(TAG);
         assertEquals(3, factory.getWidgetEntries().size());
     }
 

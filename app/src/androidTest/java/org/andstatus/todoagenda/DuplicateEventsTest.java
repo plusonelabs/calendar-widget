@@ -28,9 +28,7 @@ public class DuplicateEventsTest extends BaseWidgetTest {
         provider.addResults(inputs.getResults());
         Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());
 
-        provider.setPreferences();
-        factory.onDataSetChanged();
-        factory.logWidgetEntries(method);
+        playResults(method);
         assertEquals("Number of entries", 40, factory.getWidgetEntries().size());
     }
 }

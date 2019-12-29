@@ -37,9 +37,7 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
         provider.saveSettings();
         DateTime now = new DateTime(2015, 8, 30, 0, 0, 1, 0, provider.getSettings().getTimeZone());
         DateUtil.setNow(now);
-        provider.setPreferences();
-        factory.onDataSetChanged();
-        factory.logWidgetEntries(method);
+        playResults(method);
 
         DateTime today = now.withTimeAtStartOfDay();
         DateTime endOfRangeTime = today.plusDays(dateRange);

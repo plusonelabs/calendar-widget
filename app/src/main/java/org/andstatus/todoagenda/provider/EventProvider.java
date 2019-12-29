@@ -37,6 +37,7 @@ public class EventProvider {
     public final EventProviderType type;
     public final Context context;
     public final int widgetId;
+    protected final MyContentResolver myContentResolver;
 
     // Below are parameters, which may change in settings
     protected DateTimeZone zone;
@@ -48,6 +49,7 @@ public class EventProvider {
         this.type = type;
         this.context = context;
         this.widgetId = widgetId;
+        myContentResolver =  new MyContentResolver(type, context, widgetId);
     }
 
     protected void initialiseParameters() {

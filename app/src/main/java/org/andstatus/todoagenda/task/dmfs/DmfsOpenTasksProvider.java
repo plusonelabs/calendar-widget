@@ -11,8 +11,6 @@ import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.FilterMode;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProviderType;
-import org.andstatus.todoagenda.provider.QueryResult;
-import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.task.AbstractTaskProvider;
 import org.andstatus.todoagenda.task.TaskEvent;
 import org.andstatus.todoagenda.task.TaskStatus;
@@ -31,6 +29,8 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
 
     @Override
     public List<TaskEvent> queryTasks() {
+        myContentResolver.onQueryEvents();
+
         Uri uri = DmfsOpenTasksContract.Tasks.PROVIDER_URI;
         String[] projection = {
                 DmfsOpenTasksContract.Tasks.COLUMN_LIST_ID,
@@ -43,37 +43,14 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         };
         String where = getWhereClause();
 
-        QueryResult result = new QueryResult(type, getSettings(), uri, projection, where, null, null);
-
-        Cursor cursor;
-        try {
-            cursor = context.getContentResolver().query(uri, projection, where, null, null);
-        } catch (IllegalArgumentException e) {
-            cursor = null;
-        }
-        if (cursor == null) {
-            return new ArrayList<>();
-        }
-
-        List<TaskEvent> tasks = new ArrayList<>();
-        try {
-            while (cursor.moveToNext()) {
-                if (QueryResultsStorage.getNeedToStoreResults()) {
-                    result.addRow(cursor);
-                }
-
-                TaskEvent task = createTask(cursor);
-                if (matchedFilter(task)) {
-                    tasks.add(task);
-                }
-            }
-        } finally {
-            cursor.close();
-        }
-
-        QueryResultsStorage.store(result);
-
-        return tasks;
+        return myContentResolver.foldEvents(uri, projection, where, null, null,
+                new ArrayList<>(), tasks -> cursor -> {
+                    TaskEvent task = createTask(cursor);
+                    if (matchedFilter(task)) {
+                        tasks.add(task);
+                    }
+                    return tasks;
+                });
     }
 
     private String getWhereClause() {
@@ -161,39 +138,27 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
 
     @Override
     public List<EventSource> fetchAvailableSources() {
-        ArrayList<EventSource> eventSources = new ArrayList<>();
-
         String[] projection = {
                 DmfsOpenTasksContract.TaskLists.COLUMN_ID,
                 DmfsOpenTasksContract.TaskLists.COLUMN_NAME,
                 DmfsOpenTasksContract.TaskLists.COLUMN_COLOR,
                 DmfsOpenTasksContract.TaskLists.COLUMN_ACCOUNT_NAME,
         };
-        Cursor cursor;
-        try {
-            cursor = context.getContentResolver().query(DmfsOpenTasksContract.TaskLists.PROVIDER_URI, projection, null, null, null);
-        } catch (IllegalArgumentException e) {
-            cursor = null;
-        }
-        if (cursor == null) {
-            return eventSources;
-        }
 
-        int indId = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ID);
-        int indTitle = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_NAME);
-        int indColor = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_COLOR);
-        int indSummary = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ACCOUNT_NAME);
-        try {
-            while (cursor.moveToNext()) {
-                EventSource eventSource = new EventSource(type, cursor.getInt(indId), cursor.getString(indTitle),
-                        cursor.getString(indSummary), cursor.getInt(indColor), true);
-                eventSources.add(eventSource);
-            }
-        } finally {
-            cursor.close();
-        }
-
-        return eventSources;
+        return myContentResolver.foldAvailableSources(
+                DmfsOpenTasksContract.TaskLists.PROVIDER_URI,
+                projection,
+                new ArrayList<>(),
+                eventSources -> cursor -> {
+                    int indId = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ID);
+                    int indTitle = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_NAME);
+                    int indColor = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_COLOR);
+                    int indSummary = cursor.getColumnIndex(DmfsOpenTasksContract.TaskLists.COLUMN_ACCOUNT_NAME);
+                    EventSource source = new EventSource(type, cursor.getInt(indId), cursor.getString(indTitle),
+                            cursor.getString(indSummary), cursor.getInt(indColor), true);
+                    eventSources.add(source);
+                    return eventSources;
+                });
     }
 
     @Override

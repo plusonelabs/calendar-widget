@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -59,9 +62,12 @@ public class PermissionsUtil {
         return true;
     }
 
+    private final static Set<String> grantedPermissions = new ConcurrentSkipListSet<>();
     public static boolean isPermissionNeeded(Context context, String permission) {
-        return !isTestMode() &&
-                ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED;
+        if (isTestMode() || grantedPermissions.contains(permission)) return false;
+        boolean granted = ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+        if (granted) grantedPermissions.add(permission);
+        return !granted;
     }
 
     private static volatile Boolean isTestMode = null;

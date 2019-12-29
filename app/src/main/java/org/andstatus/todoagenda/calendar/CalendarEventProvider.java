@@ -1,6 +1,5 @@
 package org.andstatus.todoagenda.calendar;
 
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.os.Build;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Attendees;
 import android.provider.CalendarContract.Instances;
-import android.util.Log;
 import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
@@ -19,11 +17,8 @@ import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
-import org.andstatus.todoagenda.provider.QueryResult;
-import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 import org.andstatus.todoagenda.util.DateUtil;
-import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -47,7 +42,8 @@ public class CalendarEventProvider extends EventProvider {
 
     List<CalendarEvent> queryEvents() {
         initialiseParameters();
-        if (PermissionsUtil.isPermissionNeeded(context, type.permission) ||
+        myContentResolver.onQueryEvents();
+        if (myContentResolver.isPermissionNeeded(context, type.permission) ||
                 getSettings().getActiveEventSources(type).isEmpty()) {
             return Collections.emptyList();
         }
@@ -138,34 +134,14 @@ public class CalendarEventProvider extends EventProvider {
     }
 
     private List<CalendarEvent> queryList(Uri uri, String selection) {
-        List<CalendarEvent> eventList = new ArrayList<>();
-        QueryResult result = new QueryResult(type, getSettings(), uri, getProjection(),
-                selection, null, EVENT_SORT_ORDER);
-        Cursor cursor = null;
-        try {
-            cursor = context.getContentResolver().query(uri, getProjection(),
-                    selection, null, EVENT_SORT_ORDER);
-            if (cursor != null) {
-                for (int i = 0; i < cursor.getCount(); i++) {
-                    cursor.moveToPosition(i);
-                    if (QueryResultsStorage.getNeedToStoreResults()) {
-                        result.addRow(cursor);
-                    }
+        return myContentResolver.foldEvents(uri, getProjection(), selection, null, EVENT_SORT_ORDER,
+                new ArrayList<>(), eventList -> cursor -> {
                     CalendarEvent event = createCalendarEvent(cursor);
                     if (!eventList.contains(event) && !mKeywordsFilter.matched(event.getTitle())) {
                         eventList.add(event);
                     }
-                }
-            }
-        } catch (Exception e) {
-            Log.w(TAG, "Failed to queryList uri:" + uri + ", selection:" + selection, e);
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        QueryResultsStorage.store(result);
-        return eventList;
+                    return eventList;
+                });
     }
 
     public static String[] getProjection() {
@@ -247,31 +223,20 @@ public class CalendarEventProvider extends EventProvider {
 
     @Override
     public List<EventSource> fetchAvailableSources() {
-        List<EventSource> eventSources = new ArrayList<>();
-        Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
-        ContentResolver contentResolver = context.getContentResolver();
-        Cursor cursor = null;
-        try {
-            cursor = contentResolver.query(builder.build(), EVENT_SOURCES_PROJECTION, null, null, null);
-            if (cursor == null) {
-                return eventSources;
-            }
-
-            int indId = cursor.getColumnIndex(CalendarContract.Calendars._ID);
-            int indTitle = cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME);
-            int indSummary = cursor.getColumnIndex(CalendarContract.Calendars.ACCOUNT_NAME);
-            int indColor = cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_COLOR);
-            while (cursor.moveToNext()) {
-                EventSource source = new EventSource(type, cursor.getInt(indId), cursor.getString(indTitle),
-                        cursor.getString(indSummary), cursor.getInt(indColor), true);
-                eventSources.add(source);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return eventSources;
+        return myContentResolver.foldAvailableSources(
+                CalendarContract.Calendars.CONTENT_URI.buildUpon().build(),
+                EVENT_SOURCES_PROJECTION,
+                new ArrayList<>(),
+                eventSources -> cursor -> {
+                    int indId = cursor.getColumnIndex(CalendarContract.Calendars._ID);
+                    int indTitle = cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME);
+                    int indSummary = cursor.getColumnIndex(CalendarContract.Calendars.ACCOUNT_NAME);
+                    int indColor = cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_COLOR);
+                    EventSource source = new EventSource(type, cursor.getInt(indId), cursor.getString(indTitle),
+                            cursor.getString(indSummary), cursor.getInt(indColor), true);
+                    eventSources.add(source);
+                    return eventSources;
+                });
     }
 
     public Intent createViewEventIntent(CalendarEvent event) {

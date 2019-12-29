@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Useful for logging and mocking CalendarContentProvider
+ * Useful for logging and mocking ContentProviders
  *
  * @author yvolk@yurivolkov.com
  */

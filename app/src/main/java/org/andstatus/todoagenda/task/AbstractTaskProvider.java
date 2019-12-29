@@ -30,7 +30,7 @@ public abstract class AbstractTaskProvider extends EventProvider {
 
     List<TaskEvent> queryEvents() {
         initialiseParameters();
-        if (PermissionsUtil.isPermissionNeeded(context, type.permission) ||
+        if (myContentResolver.isPermissionNeeded(context, type.permission) ||
                 getSettings().getActiveEventSources(type).isEmpty()) {
             return Collections.emptyList();
         }

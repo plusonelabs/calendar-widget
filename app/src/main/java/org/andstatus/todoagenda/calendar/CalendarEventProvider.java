@@ -99,16 +99,23 @@ public class CalendarEventProvider extends EventProvider {
         ContentUris.appendId(builder, mStartOfTimeRange.getMillis());
         ContentUris.appendId(builder, mEndOfTimeRange.getMillis());
         List<CalendarEvent> eventList = queryList(builder.build(), getCalendarSelection());
-        // Above filters are not exactly correct for AllDay events: for them that filter
-        // time should be moved by a time zone... (i.e. by several hours)
-        // This is why we need to do additional filtering after querying a Content Provider:
-        for (Iterator<CalendarEvent> it = eventList.iterator(); it.hasNext(); ) {
-            CalendarEvent event = it.next();
-            if (!event.getEndDate().isAfter(mStartOfTimeRange)
-                    || !mEndOfTimeRange.isAfter(event.getStartDate())) {
-                // We remove using Iterator to avoid ConcurrentModificationException
-                it.remove();
-            }
+
+        switch (getSettings().getFilterMode()) {   // TODO: Implement fully...
+            case NO_FILTERING:
+                break;
+            default:
+                // Above filters are not exactly correct for AllDay events: for them that filter
+                // time should be moved by a time zone... (i.e. by several hours)
+                // This is why we need to do additional filtering after querying a Content Provider:
+                for (Iterator<CalendarEvent> it = eventList.iterator(); it.hasNext(); ) {
+                    CalendarEvent event = it.next();
+                    if (!event.getEndDate().isAfter(mStartOfTimeRange)
+                            || !mEndOfTimeRange.isAfter(event.getStartDate())) {
+                        // We remove using Iterator to avoid ConcurrentModificationException
+                        it.remove();
+                    }
+                }
+                break;
         }
         return eventList;
     }

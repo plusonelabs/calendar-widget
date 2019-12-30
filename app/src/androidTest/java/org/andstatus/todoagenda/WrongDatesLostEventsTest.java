@@ -24,7 +24,7 @@ public class WrongDatesLostEventsTest extends BaseWidgetTest {
     @Test
     public void testIssue205() throws IOException, JSONException {
         final String method = "testIssue205";
-        QueryResultsStorage inputs = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.wrong_dates_lost_events);
         provider.addResults(inputs.getResults());
         Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());

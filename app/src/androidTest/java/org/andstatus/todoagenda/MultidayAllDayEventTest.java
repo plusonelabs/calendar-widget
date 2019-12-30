@@ -27,7 +27,7 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
     @Test
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";
-        QueryResultsStorage inputs = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.multi_day);
         provider.addResults(inputs.getResults());
 

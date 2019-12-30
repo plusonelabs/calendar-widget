@@ -53,7 +53,7 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     public void testTwoEventsToday() {
         QueryResult input1 = addOneResult("");
         QueryResult input2 = addOneResult("SOMETHING=1");
-        provider.setPreferences();
+        provider.updateAppSettings();
 
         QueryResultsStorage.setNeedToStoreResults(true, provider.getWidgetId());
         MyContentResolver resolver = new MyContentResolver(EventProviderType.CALENDAR, provider.getContext(), provider.getWidgetId());
@@ -119,7 +119,7 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
 
     @Test
     public void testJsonToAndFrom() throws IOException, JSONException {
-        QueryResultsStorage inputs1 = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs1 = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.birthday);
         JSONObject jsonOutput = inputs1.toJson(provider.getContext(), provider.getWidgetId(), true);
         QueryResultsStorage inputs2 = QueryResultsStorage.fromTestData(provider.getContext(), jsonOutput);

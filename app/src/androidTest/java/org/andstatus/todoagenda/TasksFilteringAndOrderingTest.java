@@ -15,20 +15,20 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author yvolk@yurivolkov.com
  */
-public class DuplicateEventsTest extends BaseWidgetTest {
+public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
 
     /**
-     * https://github.com/plusonelabs/calendar-widget/issues/354
+     * https://github.com/plusonelabs/calendar-widget/issues/356
      */
     @Test
-    public void testIssue354() throws IOException, JSONException {
-        final String method = "testIssue354";
+    public void testNoFilters() throws IOException, JSONException {
+        final String method = "testNoFilters";
         QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
-                org.andstatus.todoagenda.tests.R.raw.duplicates);
+                org.andstatus.todoagenda.tests.R.raw.filter_tasks_308_no_filters);
         provider.addResults(inputs.getResults());
         Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());
 
         playResults(method);
-        assertEquals("Number of entries", 40, factory.getWidgetEntries().size());
+        assertEquals("Number of entries", 35, factory.getWidgetEntries().size());
     }
 }

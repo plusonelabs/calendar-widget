@@ -1,0 +1,811 @@
+{
+  "deviceInfo": {
+    "versionCode": 25,
+    "versionRelease": "7.1.1",
+    "versionCodename": "REL",
+    "buildManufacturer": "LENOVO",
+    "buildBrand": "Lenovo",
+    "buildModel": "Lenovo TB-X704L"
+  },
+  "applicationInfo": {
+    "versionName": "4.0.0-591",
+    "versionCode": 591
+  },
+  "settings": {
+    "widgetId": 37,
+    "showDateOnWidgetHeader": true,
+    "widgetInstanceName": "Testing #356, current state",
+    "activeSources": [
+      {
+        "providerType": 1,
+        "id": 6,
+        "title": "ToDo Agenda Shared",
+        "summary": "calendar.widget.android@gmail.com",
+        "color": -6644481,
+        "isAvailable": true
+      },
+      {
+        "providerType": 2,
+        "id": 2,
+        "title": "#356 Tasks filtering part 1",
+        "summary": "Local",
+        "color": -26624,
+        "isAvailable": true
+      },
+      {
+        "providerType": 2,
+        "id": 3,
+        "title": "#356 Tasks filtering part 2",
+        "summary": "Local",
+        "color": -16728876,
+        "isAvailable": true
+      }
+    ],
+    "eventRange": 30,
+    "eventsEnded": "TODAY",
+    "fillAllDay": true,
+    "hideBasedOnKeywords": "",
+    "widgetHeaderBackgroundColor": 0,
+    "pastEventsBackgroundColor": -1082623956,
+    "todaysEventsBackgroundColor": -620756993,
+    "backgroundColor": -2147483648,
+    "showDaysWithoutEvents": false,
+    "showDayHeaders": true,
+    "horizontalLineBelowDayHeader": false,
+    "showPastEventsUnderOneHeader": false,
+    "showPastEventsWithDefaultColor": false,
+    "showEventIcon": true,
+    "showNumberOfDaysToEvent": true,
+    "showEndTime": true,
+    "showLocation": true,
+    "dateFormat": "auto",
+    "abbreviateDates": false,
+    "lockedTimeZoneId": "",
+    "refreshPeriodMinutes": 10,
+    "eventEntryLayout": "DEFAULT",
+    "multiline_title": true,
+    "multiline_details": false,
+    "showOnlyClosestInstanceOfRecurringEvent": false,
+    "hideDuplicates": false,
+    "indicateAlerts": true,
+    "indicateRecurring": false,
+    "widgetHeaderLayout": "ONE_ROW",
+    "headerTheme": "DARK",
+    "dayHeaderThemePast": "DARK",
+    "entryThemePast": "BLACK",
+    "dayHeaderTheme": "LIGHT",
+    "entryTheme": "WHITE",
+    "dayHeaderThemeFuture": "DARK",
+    "entryThemeFuture": "BLACK",
+    "textSizeScale": "0.6",
+    "dayHeaderAlignment": "RIGHT",
+    "filterMode":"no_filtering"
+  },
+  "resultsVersion": 3,
+  "results": [
+    {
+      "providerType": 1,
+      "executedAt": 1577018591967,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/1576962000000\/1579610591965",
+      "projection": [
+        "calendar_id",
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor"
+      ],
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 6 )",
+      "selectionArgs": [],
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "rows": [
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "a Today's event at midnight"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 578
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 6
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576962000000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1576965600000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Today's event at 4AM"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 577
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 6
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576976400000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1576976700000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Today's event at 8:05"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 575
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 6
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576991100000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1576992000000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Today's event later at 9:05PM"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 576
+          },
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 6
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577037900000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1577041500000
+          },
+          "rrule": {
+            "type": 0
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        },
+        {
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event that is a recurring all day event and has a reminder"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 525
+          },
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 6
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577145600000
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1577232000000
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "providerType": 2,
+      "executedAt": 1577018591996,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/org.dmfs.tasks\/tasks",
+      "projection": [
+        "list_id",
+        "_id",
+        "title",
+        "due",
+        "dtstart",
+        "list_color",
+        "status"
+      ],
+      "selection": "list_id IN ( 2,3 )",
+      "selectionArgs": [],
+      "sortOrder": "",
+      "rows": [
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 0
+          },
+          "_id": {
+            "type": 1,
+            "value": 8
+          },
+          "title": {
+            "type": 3,
+            "value": "task14 starting in 39 days, and without due date"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1580456100000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 0
+          },
+          "_id": {
+            "type": 1,
+            "value": 9
+          },
+          "title": {
+            "type": 3,
+            "value": "task9 without start date and without due date (complete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 2
+          },
+          "dtstart": {
+            "type": 0
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 0
+          },
+          "_id": {
+            "type": 1,
+            "value": 10
+          },
+          "title": {
+            "type": 3,
+            "value": "task10 without start date and without due date (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 0
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 0
+          },
+          "_id": {
+            "type": 1,
+            "value": 18
+          },
+          "title": {
+            "type": 3,
+            "value": "task17 starting in 10 days, without due date (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1577874900000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1576407600000
+          },
+          "_id": {
+            "type": 1,
+            "value": 3
+          },
+          "title": {
+            "type": 3,
+            "value": "task11 starting last month and due last week (complete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 2
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1574848800000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1576407600000
+          },
+          "_id": {
+            "type": 1,
+            "value": 4
+          },
+          "title": {
+            "type": 3,
+            "value": "task5 starting last month and due last week (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1574676000000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1577025900000
+          },
+          "_id": {
+            "type": 1,
+            "value": 6
+          },
+          "title": {
+            "type": 3,
+            "value": "task3 without start date and due later today (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 0
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1577041200000
+          },
+          "_id": {
+            "type": 1,
+            "value": 7
+          },
+          "title": {
+            "type": 3,
+            "value": "task1 starting last week and due later today at 10PM (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1576682640000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1577077200000
+          },
+          "_id": {
+            "type": 1,
+            "value": 5
+          },
+          "title": {
+            "type": 3,
+            "value": "task6 starting last month and due tomorrow (complete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 2
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1573456800000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1577080800000
+          },
+          "_id": {
+            "type": 1,
+            "value": 11
+          },
+          "title": {
+            "type": 3,
+            "value": "task7 starting today at 8AM and due tomorrow at 9AM (complete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 2
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1576990800000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1577084400000
+          },
+          "_id": {
+            "type": 1,
+            "value": 12
+          },
+          "title": {
+            "type": 3,
+            "value": "task12 starting today at 7AM and due tomorrow at 10AM (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1576987200000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1578744000000
+          },
+          "_id": {
+            "type": 1,
+            "value": 13
+          },
+          "title": {
+            "type": 3,
+            "value": "task16 without start date and due in 20 days (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 0
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1580634000000
+          },
+          "_id": {
+            "type": 1,
+            "value": 15
+          },
+          "title": {
+            "type": 3,
+            "value": "task8 starting next week, due in 41 days (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1577349720000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1580745900000
+          },
+          "_id": {
+            "type": 1,
+            "value": 14
+          },
+          "title": {
+            "type": 3,
+            "value": "task4 without start date and due in 42 days (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 0
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1580833800000
+          },
+          "_id": {
+            "type": 1,
+            "value": 16
+          },
+          "title": {
+            "type": 3,
+            "value": "task2 starting last week and due in 43 days (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1576479840000
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 2
+          },
+          "list_color": {
+            "type": 1,
+            "value": -26624
+          },
+          "due": {
+            "type": 1,
+            "value": 1580968800000
+          },
+          "_id": {
+            "type": 1,
+            "value": 17
+          },
+          "title": {
+            "type": 3,
+            "value": "task15 starting in 40 days, due in 45 days (incomplete)"
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1580536800000
+          }
+        }
+      ]
+    }
+  ]
+}

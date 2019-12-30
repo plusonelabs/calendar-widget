@@ -43,7 +43,7 @@ public class MyContentResolver {
     }
 
     public boolean isPermissionNeeded(Context context, String permission) {
-        return PermissionsUtil.isPermissionNeeded(context, permission);
+        return getSettings().getResultsStorage() == null && PermissionsUtil.isPermissionNeeded(context, permission);
     }
 
     public <R> R foldAvailableSources(@NonNull Uri uri, @Nullable String[] projection,
@@ -68,9 +68,9 @@ public class MyContentResolver {
 
     private Cursor queryAvailableSources(@NonNull Uri uri, @Nullable String[] projection) {
         try {
-            return widgetId == 0 || getSettings().getQueryResults() == null
+            return widgetId == 0 || getSettings().getResultsStorage() == null
                     ? context.getContentResolver().query(uri, projection, null, null, null)
-                    : getSettings().getQueryResults().getResult(type, requestsCounter.incrementAndGet() - 1)
+                    : getSettings().getResultsStorage().getResult(type, requestsCounter.incrementAndGet() - 1)
                     .map(r -> r.querySource(projection)).orElse(null);
         } catch (Exception e) {
             Log.d(TAG, "Failed to get available sources for " + uri + "; " + e.getMessage());
@@ -112,9 +112,9 @@ public class MyContentResolver {
 
     private Cursor queryForEvents(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
                                   @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return getSettings().getQueryResults() == null
+        return getSettings().getResultsStorage() == null
                 ? context.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder)
-                : getSettings().getQueryResults().getResult(type, requestsCounter.incrementAndGet() - 1)
+                : getSettings().getResultsStorage().getResult(type, requestsCounter.incrementAndGet() - 1)
                     .map(r -> r.query(projection)).orElse(null);
     }
 }

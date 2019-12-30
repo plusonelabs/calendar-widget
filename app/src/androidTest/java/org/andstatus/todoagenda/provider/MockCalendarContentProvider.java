@@ -42,6 +42,7 @@ public class MockCalendarContentProvider {
 
     private final static AtomicInteger lastWidgetId = new AtomicInteger(TEST_WIDGET_ID_MIN);
     private final int widgetId;
+    private volatile InstanceSettings settings;
 
     public static MockCalendarContentProvider getContentProvider() {
         DateTimeZone zone = DateTimeZone.forID(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
@@ -55,13 +56,19 @@ public class MockCalendarContentProvider {
 
     private MockCalendarContentProvider(Context context) {
         this.context = context;
-        widgetId = lastWidgetId.incrementAndGet();
+        InstanceSettings instanceToReuse = AllSettings.getInstances(context).values().stream()
+                .filter(settings -> settings.getWidgetInstanceName().endsWith(InstanceSettings.TEST_REPLAY_SUFFIX)).findFirst().orElse(null);
+
+        widgetId = instanceToReuse == null ? lastWidgetId.incrementAndGet() : instanceToReuse.getWidgetId();
+        settings = new InstanceSettings(context, widgetId,
+                "ToDo Agenda " + widgetId + " " + InstanceSettings.TEST_REPLAY_SUFFIX);
+        AllSettings.addNew(context, settings);
     }
 
-    public void setPreferences() {
+    public void updateAppSettings() {
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
-        settings.setQueryResults(results);
-        AllSettings.loadFromTestData(context, settings);
+        settings.setResultsStorage(results);
+        AllSettings.addNew(context, settings);
     }
 
     public static void tearDown() {
@@ -143,7 +150,7 @@ public class MockCalendarContentProvider {
         ApplicationPreferences.save(getContext(), getWidgetId());
     }
 
-    public QueryResultsStorage loadResults(Context context, @RawRes int jsonResId)
+    public QueryResultsStorage loadResultsAndSettings(Context context, @RawRes int jsonResId)
             throws IOException, JSONException {
         JSONObject json = new JSONObject(RawResourceUtils.getString(context, jsonResId));
         json.getJSONObject(KEY_SETTINGS).put(PREF_WIDGET_ID, widgetId);

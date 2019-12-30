@@ -152,7 +152,11 @@ public class QueryResultsStorage {
                 resultsArray.put(result.toJson());
             }
         }
-        JSONObject json = WidgetData.fromWidgetId(context, widgetId, withSettings).toJson();
+        WidgetData widgetData = context == null || widgetId == 0
+            ? WidgetData.EMPTY
+            : WidgetData.fromSettings(context, withSettings ? AllSettings.instanceFromId(context, widgetId) : null);
+
+        JSONObject json = widgetData.toJson();
         json.put(KEY_RESULTS_VERSION, RESULTS_VERSION);
         json.put(KEY_RESULTS, resultsArray);
         return json;
@@ -160,12 +164,12 @@ public class QueryResultsStorage {
 
     static QueryResultsStorage fromTestData(Context context, JSONObject json) throws JSONException {
         WidgetData widgetData = WidgetData.fromJson(json);
-        InstanceSettings settings = widgetData.getSettings(context);
-
         // TODO: Map Calendars when moving between devices
-
-        AllSettings.getInstances(context).put(settings.getWidgetId(), settings);
-        QueryResultsStorage results = QueryResultsStorage.fromJson(settings.getWidgetId(), json.getJSONArray(KEY_RESULTS));
+        InstanceSettings settings = widgetData.getSettings(context);
+        if (!settings.isEmpty()) {
+            AllSettings.getInstances(context).put(settings.getWidgetId(), settings);
+        }
+        QueryResultsStorage results = QueryResultsStorage.fromJson(settings.getWidgetId(), json);
         if (!results.results.isEmpty()) {
             DateTime now = results.results.get(0).getExecutedAt().toDateTime(DateTimeZone.getDefault());
             DateUtil.setNow(now);
@@ -173,12 +177,15 @@ public class QueryResultsStorage {
         return results;
     }
 
-    public static QueryResultsStorage fromJson(int widgetId, JSONArray jsonResults) throws JSONException {
-        QueryResultsStorage results = new QueryResultsStorage();
-        for (int ind = 0; ind < jsonResults.length(); ind++) {
-            results.results.add(QueryResult.fromJson(jsonResults.getJSONObject(ind), widgetId));
+    public static QueryResultsStorage fromJson(int widgetId, JSONObject jsonStorage) throws JSONException {
+        QueryResultsStorage resultsStorage = new QueryResultsStorage();
+        if (jsonStorage.has(KEY_RESULTS)) {
+            JSONArray jsonResults = jsonStorage.getJSONArray(KEY_RESULTS);
+            for (int ind = 0; ind < jsonResults.length(); ind++) {
+                resultsStorage.results.add(QueryResult.fromJson(jsonResults.getJSONObject(ind), widgetId));
+            }
         }
-        return results;
+        return resultsStorage;
     }
 
     @Override

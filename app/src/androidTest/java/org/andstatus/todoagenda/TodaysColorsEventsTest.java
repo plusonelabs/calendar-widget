@@ -23,7 +23,7 @@ public class TodaysColorsEventsTest extends BaseWidgetTest {
     @Test
     public void testIssue327() throws IOException, JSONException {
         final String method = "testIssue327";
-        QueryResultsStorage inputs = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.todays_colors);
         provider.addResults(inputs.getResults());
         Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());

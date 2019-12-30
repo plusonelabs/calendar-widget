@@ -47,7 +47,7 @@ public class BaseWidgetTest {
     }
 
     protected void playResults(String tag) {
-        provider.setPreferences();
+        provider.updateAppSettings();
         factory.onDataSetChanged();
         factory.logWidgetEntries(tag);
     }

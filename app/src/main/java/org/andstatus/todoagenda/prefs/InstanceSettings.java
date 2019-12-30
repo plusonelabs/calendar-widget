@@ -16,6 +16,7 @@ import org.andstatus.todoagenda.TextSizeScale;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.util.StringUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
@@ -143,6 +144,7 @@ public class InstanceSettings {
     // ----------------------------------------------------------------------------------
     // Other
     static final String PREF_WIDGET_INSTANCE_NAME = "widgetInstanceName";
+    public static final String TEST_REPLAY_SUFFIX = "Test replay";
     private final String widgetInstanceName;
     static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
     private TextSizeScale textSizeScale = TextSizeScale.MEDIUM;
@@ -159,12 +161,22 @@ public class InstanceSettings {
     public final static int PREF_REFRESH_PERIOD_MINUTES_DEFAULT = 10;
     private int refreshPeriodMinutes = PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
 
-    static final String PREF_QUERY_RESULTS = "queryResults";
-    private volatile QueryResultsStorage queryResults = null;
+    static final String PREF_RESULTS_STORAGE = "resultsStorage";
+    private volatile QueryResultsStorage resultsStorage = null;
 
-    public static InstanceSettings fromJson(Context context, JSONObject json) throws JSONException {
-        InstanceSettings settings = new InstanceSettings(context, json.optInt(PREF_WIDGET_ID),
-                json.optString(PREF_WIDGET_INSTANCE_NAME));
+    public static InstanceSettings fromJson(Context context, Map<Integer, InstanceSettings> instances, JSONObject json) {
+        int widgetId = json.optInt(PREF_WIDGET_ID);
+        String instanceName = json.optString(PREF_WIDGET_INSTANCE_NAME);
+
+        InstanceSettings storedSettings = instances.get(widgetId);
+        if (storedSettings != null) {
+            if (storedSettings.getWidgetInstanceName().endsWith(TEST_REPLAY_SUFFIX) &&
+                !instanceName.endsWith(TEST_REPLAY_SUFFIX)) {
+                instanceName = (StringUtil.isEmpty(instanceName) ? "" : instanceName + " - ") + TEST_REPLAY_SUFFIX;
+            }
+        }
+
+        InstanceSettings settings = new InstanceSettings(context, widgetId, instanceName);
         return settings.setFromJson(json);
     }
 
@@ -289,8 +301,8 @@ public class InstanceSettings {
             if (json.has(PREF_DAY_HEADER_ALIGNMENT)) {
                 dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
             }
-            if (json.has(PREF_QUERY_RESULTS)) {
-                setQueryResults(QueryResultsStorage.fromJson(widgetId, json.getJSONArray(PREF_QUERY_RESULTS)));
+            if (json.has(PREF_RESULTS_STORAGE)) {
+                setResultsStorage(QueryResultsStorage.fromJson(widgetId, json.getJSONObject(PREF_RESULTS_STORAGE)));
             }
         } catch (JSONException e) {
             Log.w(TAG, "setFromJson failed, widgetId:" + widgetId + "\n" + json);
@@ -299,7 +311,7 @@ public class InstanceSettings {
         return this;
     }
 
-    static InstanceSettings fromApplicationPreferences(Context context, int widgetId) {
+    static InstanceSettings fromApplicationPreferences(Context context, int widgetId, InstanceSettings settingsStored) {
         synchronized (ApplicationPreferences.class) {
             InstanceSettings settings = new InstanceSettings(context, widgetId,
                     ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
@@ -348,6 +360,10 @@ public class InstanceSettings {
                     ApplicationPreferences.getString(context, PREF_TEXT_SIZE_SCALE, ""));
             settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
                     PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
+
+            if (settingsStored != null) {
+                settings.setResultsStorage(settingsStored.getResultsStorage());
+            }
             return settings;
         }
     }
@@ -357,7 +373,7 @@ public class InstanceSettings {
         return "instanceSettings" + widgetId;
     }
 
-    InstanceSettings(Context context, int widgetId, String proposedInstanceName) {
+    public InstanceSettings(Context context, int widgetId, String proposedInstanceName) {
         this.context = context;
         this.widgetId = widgetId;
         this.widgetInstanceName = AllSettings.uniqueInstanceName(context, widgetId, proposedInstanceName);
@@ -424,8 +440,8 @@ public class InstanceSettings {
             }
             json.put(PREF_TEXT_SIZE_SCALE, textSizeScale.preferenceValue);
             json.put(PREF_DAY_HEADER_ALIGNMENT, dayHeaderAlignment);
-            if (queryResults != null) {
-                json.put(PREF_QUERY_RESULTS, queryResults.toJson(getContext(), widgetId, false));
+            if (resultsStorage != null) {
+                json.put(PREF_RESULTS_STORAGE, resultsStorage.toJson(getContext(), widgetId, false));
             }
         } catch (JSONException e) {
             throw new RuntimeException("Saving settings to JSON", e);
@@ -698,14 +714,14 @@ public class InstanceSettings {
         return new InstanceSettings(context, targetWidgetId, newName).setFromJson(toJson());
     }
 
-    public QueryResultsStorage getQueryResults() {
-        return queryResults;
+    public QueryResultsStorage getResultsStorage() {
+        return resultsStorage;
     }
 
-    public void setQueryResults(QueryResultsStorage queryResults) {
-        this.queryResults = queryResults;
-        if (queryResults != null) {
-            for (EventProviderType providerType : queryResults.getProviderTypes(widgetId)) {
+    public void setResultsStorage(QueryResultsStorage resultsStorage) {
+        this.resultsStorage = resultsStorage;
+        if (resultsStorage != null) {
+            for (EventProviderType providerType : resultsStorage.getProviderTypes(widgetId)) {
                 if (activeEventSources.stream().noneMatch(s -> s.source.providerType == providerType)) {
                     addActiveEventSource(providerType);
                 }

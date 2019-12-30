@@ -49,13 +49,6 @@ public class WidgetData {
         }
     }
 
-    static WidgetData fromWidgetId(Context context, int widgetId, boolean withSettings) {
-        if ( context == null || widgetId == 0) {
-            return EMPTY;
-        }
-        return fromSettings(context, withSettings ? AllSettings.instanceFromId(context, widgetId) : null);
-    }
-
     public static WidgetData fromSettings(Context context, @Nullable InstanceSettings settings) {
         JSONObject json = new JSONObject();
         try {
@@ -126,14 +119,9 @@ public class WidgetData {
 
     public InstanceSettings getSettings(Context context) {
         JSONObject jsonSettings = jsonData.optJSONObject(KEY_SETTINGS);
-        if (jsonSettings == null) return InstanceSettings.EMPTY;
-
-        try {
-            return InstanceSettings.fromJson(context, jsonSettings);
-        } catch (JSONException e) {
-            Log.w(TAG,"InstanceSettings.fromJson failed; " + jsonSettings, e);
-            return InstanceSettings.EMPTY;
-        }
+        return jsonSettings == null
+            ? InstanceSettings.EMPTY
+            : InstanceSettings.fromJson(context, AllSettings.getLoadedInstances(), jsonSettings);
     }
 
     public InstanceSettings getSettingsForWidget(Context context, int targetWidgetId) {

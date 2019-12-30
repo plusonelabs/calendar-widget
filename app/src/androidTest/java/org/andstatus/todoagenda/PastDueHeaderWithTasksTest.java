@@ -27,7 +27,7 @@ public class PastDueHeaderWithTasksTest extends BaseWidgetTest {
     @Test
     public void testPastDueHeaderWithTasks() throws IOException, JSONException {
         final String method = "testPastDueHeaderWithTasks";
-        QueryResultsStorage inputs = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.past_due_header_with_tasks);
         provider.addResults(inputs.getResults());
         Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());

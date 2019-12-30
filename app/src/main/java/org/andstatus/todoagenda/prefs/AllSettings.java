@@ -45,7 +45,7 @@ public class AllSettings {
             InstanceSettings settings = instances.get(widgetId);
             if (settings == null) {
                 if (widgetId != 0 && ApplicationPreferences.getWidgetId(context) == widgetId) {
-                    settings = InstanceSettings.fromApplicationPreferences(context, widgetId);
+                    settings = InstanceSettings.fromApplicationPreferences(context, widgetId, null);
                 } else {
                     settings = new InstanceSettings(context, widgetId, "");
                 }
@@ -73,7 +73,8 @@ public class AllSettings {
                 for (int widgetId : getWidgetIds(context)) {
                     InstanceSettings settings;
                     try {
-                        settings = InstanceSettings.fromJson(context, loadJsonFromFile(context, getStorageKey(widgetId)));
+                        settings = InstanceSettings.fromJson(context, getLoadedInstances(),
+                                loadJsonFromFile(context, getStorageKey(widgetId)));
                         if (settings.widgetId == 0) {
                             newInstance(context, widgetId);
                         } else {
@@ -91,13 +92,14 @@ public class AllSettings {
         }
     }
 
-    public static void loadFromTestData(Context context, InstanceSettings settings) {
+    public static void addNew(Context context, InstanceSettings settings) {
         synchronized (instances) {
             if (settings.widgetId == 0) {
-                settings.logMe(TAG, "Skipped loadFromTestData", settings.widgetId);
+                settings.logMe(TAG, "Skipped addNew", settings.widgetId);
             } else {
-                settings.logMe(TAG, "loadFromTestData put", settings.widgetId);
                 instances.put(settings.widgetId, settings);
+                settings.save();
+                settings.logMe(TAG, "addNew put", settings.widgetId);
             }
         }
     }
@@ -106,9 +108,9 @@ public class AllSettings {
         if (widgetId == 0) {
             return;
         }
-        InstanceSettings settings = InstanceSettings.fromApplicationPreferences(context, widgetId);
-        InstanceSettings settingStored = instanceFromId(context, widgetId);
-        if (settings.widgetId == widgetId && !settings.equals(settingStored)) {
+        InstanceSettings settingsStored = instanceFromId(context, widgetId);
+        InstanceSettings settings = InstanceSettings.fromApplicationPreferences(context, widgetId, settingsStored);
+        if (settings.widgetId == widgetId && !settings.equals(settingsStored)) {
             settings.save();
             settings.logMe(TAG, "saveFromApplicationPreferences put", widgetId);
             instances.put(widgetId, settings);

@@ -22,7 +22,7 @@ public class BirthdayTest extends BaseWidgetTest {
 
     @Test
     public void testBirthdayOneDayOnly() throws IOException, JSONException {
-        QueryResultsStorage inputs = provider.loadResults(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
                 org.andstatus.todoagenda.tests.R.raw.birthday);
 
         provider.startEditing();

@@ -43,7 +43,7 @@ public class MyContentResolver {
     }
 
     public boolean isPermissionNeeded(Context context, String permission) {
-        return getSettings().getResultsStorage() == null && PermissionsUtil.isPermissionNeeded(context, permission);
+        return getSettings().isLiveMode() && PermissionsUtil.isPermissionNeeded(context, permission);
     }
 
     public <R> R foldAvailableSources(@NonNull Uri uri, @Nullable String[] projection,
@@ -68,7 +68,7 @@ public class MyContentResolver {
 
     private Cursor queryAvailableSources(@NonNull Uri uri, @Nullable String[] projection) {
         try {
-            return widgetId == 0 || getSettings().getResultsStorage() == null
+            return widgetId == 0 || getSettings().isLiveMode()
                     ? context.getContentResolver().query(uri, projection, null, null, null)
                     : getSettings().getResultsStorage().getResult(type, requestsCounter.incrementAndGet() - 1)
                     .map(r -> r.querySource(projection)).orElse(null);
@@ -112,7 +112,7 @@ public class MyContentResolver {
 
     private Cursor queryForEvents(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
                                   @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return getSettings().getResultsStorage() == null
+        return getSettings().isLiveMode()
                 ? context.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder)
                 : getSettings().getResultsStorage().getResult(type, requestsCounter.incrementAndGet() - 1)
                     .map(r -> r.query(projection)).orElse(null);

@@ -210,6 +210,10 @@
     <string name="filter_mode_no_filtering">Ignore all filters (turn them off)</string>
 
     <!-- Preference header: Other -->
+    <string name="snapshot_mode">Lock list of events (Snapshot mode)</string>
+    <string name="snapshot_mode_live_data">Live data from real sources</string>
+    <string name="snapshot_mode_time">Snapshot as seen at the time, when it was taken</string>
+    <string name="snapshot_mode_now">Stored snapshot shown at current time</string>
     <string name="refresh_period_minutes">Auto refresh period, minutes</string>
     <string name="refresh_period_minutes_desc">Automatically refresh the widget every %d minute(s)</string>
 

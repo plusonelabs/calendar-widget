@@ -36,6 +36,13 @@
         android:title="@string/lock_time_zone_title">
     </CheckBoxPreference>
 
+    <ListPreference
+        android:key="snapshotMode"
+        android:defaultValue="live_data"
+        android:entries="@array/pref_snapshot_mode_entries"
+        android:entryValues="@array/pref_snapshot_mode_values"
+        android:title="@string/snapshot_mode" />
+
     <EditTextPreference
         android:key="refreshPeriodMinutes"
         android:title="@string/refresh_period_minutes"

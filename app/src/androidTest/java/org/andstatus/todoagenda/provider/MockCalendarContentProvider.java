@@ -14,6 +14,7 @@ import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.prefs.SettingsStorage;
+import org.andstatus.todoagenda.prefs.SnapshotMode;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RawResourceUtils;
 import org.joda.time.DateTimeZone;
@@ -67,7 +68,10 @@ public class MockCalendarContentProvider {
 
     public void updateAppSettings() {
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
-        settings.setResultsStorage(results);
+        if (!results.getResults().isEmpty()) {
+            settings.setResultsStorage(results);
+            settings.setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
+        }
         AllSettings.addNew(context, settings);
     }
 

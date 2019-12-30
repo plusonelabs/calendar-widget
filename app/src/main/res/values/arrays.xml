@@ -244,4 +244,14 @@
         <item>debug</item>
         <item>no_filtering</item>
     </string-array>
+    <string-array name="pref_snapshot_mode_entries">
+        <item>@string/snapshot_mode_live_data</item>
+        <item>@string/snapshot_mode_time</item>
+        <item>@string/snapshot_mode_now</item>
+    </string-array>
+    <string-array name="pref_snapshot_mode_values" tools:ignore="MissingTranslation">
+        <item>live_data</item>
+        <item>snapshot_time</item>
+        <item>snapshot_now</item>
+    </string-array>
 </resources>

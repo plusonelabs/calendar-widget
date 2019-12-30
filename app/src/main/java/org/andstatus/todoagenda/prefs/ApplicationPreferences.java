@@ -54,6 +54,7 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_NUMBER_O
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SNAPSHOT_MODE;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TASK_SCHEDULING;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TASK_WITHOUT_DATES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TEXT_SIZE_SCALE;
@@ -287,6 +288,10 @@ public class ApplicationPreferences {
 
     public static void setLockedTimeZoneId(Context context, String value) {
         setString(context, PREF_LOCKED_TIME_ZONE_ID, value);
+    }
+
+    public static SnapshotMode getSnapshotMode(Context context) {
+        return SnapshotMode.fromValue(getString(context, PREF_SNAPSHOT_MODE, ""));
     }
 
     public static void setRefreshPeriodMinutes(Context context, int value) {

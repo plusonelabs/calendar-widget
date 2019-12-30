@@ -157,6 +157,8 @@ public class InstanceSettings {
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
     static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
     private String lockedTimeZoneId = "";
+    static final String PREF_SNAPSHOT_MODE = "snapshotMode";
+    private SnapshotMode snapshotMode = SnapshotMode.defaultValue;
     public final static String PREF_REFRESH_PERIOD_MINUTES = "refreshPeriodMinutes";
     public final static int PREF_REFRESH_PERIOD_MINUTES_DEFAULT = 10;
     private int refreshPeriodMinutes = PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
@@ -252,6 +254,9 @@ public class InstanceSettings {
             if (json.has(PREF_LOCKED_TIME_ZONE_ID)) {
                 setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
             }
+            if (json.has(PREF_SNAPSHOT_MODE)) {
+                setSnapshotMode(SnapshotMode.fromValue(json.getString(PREF_SNAPSHOT_MODE)));
+            }
             if (json.has(PREF_REFRESH_PERIOD_MINUTES)) {
                 setRefreshPeriodMinutes(json.getInt(PREF_REFRESH_PERIOD_MINUTES));
             }
@@ -338,6 +343,7 @@ public class InstanceSettings {
             settings.dateFormat = ApplicationPreferences.getDateFormat(context);
             settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
             settings.setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
+            settings.setSnapshotMode(ApplicationPreferences.getSnapshotMode(context));
             settings.setRefreshPeriodMinutes(ApplicationPreferences.getRefreshPeriodMinutes(context));
             settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
             settings.multilineTitle = ApplicationPreferences.isMultilineTitle(context);
@@ -423,6 +429,7 @@ public class InstanceSettings {
             json.put(PREF_DATE_FORMAT, dateFormat);
             json.put(PREF_ABBREVIATE_DATES, abbreviateDates);
             json.put(PREF_LOCKED_TIME_ZONE_ID, lockedTimeZoneId);
+            json.put(PREF_SNAPSHOT_MODE, snapshotMode.value);
             json.put(PREF_REFRESH_PERIOD_MINUTES, refreshPeriodMinutes);
             json.put(PREF_EVENT_ENTRY_LAYOUT, eventEntryLayout.value);
             json.put(PREF_MULTILINE_TITLE, multilineTitle);
@@ -558,6 +565,18 @@ public class InstanceSettings {
 
     public String getLockedTimeZoneId() {
         return lockedTimeZoneId;
+    }
+
+    public void setSnapshotMode(SnapshotMode snapshotMode) {
+        this.snapshotMode = snapshotMode;
+    }
+
+    public SnapshotMode getSnapshotMode() {
+        return resultsStorage == null ? SnapshotMode.LIVE_DATA : snapshotMode;
+    }
+
+    public boolean isLiveMode() {
+        return getSnapshotMode() == SnapshotMode.LIVE_DATA;
     }
 
     public void setRefreshPeriodMinutes(int refreshPeriodMinutes) {

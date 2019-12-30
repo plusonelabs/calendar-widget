@@ -29,6 +29,7 @@ public class OtherPreferencesFragment extends PreferenceFragment
         super.onResume();
         showLockTimeZone(true);
         showWidgetInstanceName();
+        showSnapshotMode();
         showRefreshPeriod();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
@@ -46,6 +47,13 @@ public class OtherPreferencesFragment extends PreferenceFragment
                     getText(isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc).toString(),
                     timeZone.getName(DateUtil.now(timeZone).getMillis()))
             );
+        }
+    }
+
+    private void showSnapshotMode() {
+        Preference preference = findPreference(InstanceSettings.PREF_SNAPSHOT_MODE);
+        if (preference != null) {
+            preference.setSummary(ApplicationPreferences.getSnapshotMode(getActivity()).valueResId);
         }
     }
 

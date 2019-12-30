@@ -17,10 +17,6 @@ public class BaseWidgetTest {
     protected MockCalendarContentProvider provider = null;
     protected RemoteViewsFactory factory = null;
 
-    protected int getNumberOfOpenTasksSources() {
-        return 0;
-    }
-
     @Before
     public void setUp() throws Exception {
         provider = MockCalendarContentProvider.getContentProvider();

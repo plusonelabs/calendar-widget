@@ -27,10 +27,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
 
@@ -288,7 +290,7 @@ public class InstanceSettings {
                 dayHeaderAlignment = json.getString(PREF_DAY_HEADER_ALIGNMENT);
             }
             if (json.has(PREF_QUERY_RESULTS)) {
-                queryResults = QueryResultsStorage.fromJson(widgetId, json.getJSONArray(PREF_QUERY_RESULTS));
+                setQueryResults(QueryResultsStorage.fromJson(widgetId, json.getJSONArray(PREF_QUERY_RESULTS)));
             }
         } catch (JSONException e) {
             Log.w(TAG, "setFromJson failed, widgetId:" + widgetId + "\n" + json);
@@ -678,6 +680,10 @@ public class InstanceSettings {
         return true;
     }
 
+    public List<EventProviderType> getTypesOfActiveEventProviders() {
+        return getActiveEventSources().stream().map(s -> s.source.providerType).distinct().collect(Collectors.toList());
+    }
+
     public OrderedEventSource getActiveEventSource(EventProviderType type, int id) {
         for(OrderedEventSource orderedSource: getActiveEventSources()) {
             if (orderedSource.source.providerType == type && orderedSource.source.getId() == id) {
@@ -698,5 +704,32 @@ public class InstanceSettings {
 
     public void setQueryResults(QueryResultsStorage queryResults) {
         this.queryResults = queryResults;
+        if (queryResults != null) {
+            for (EventProviderType providerType : queryResults.getProviderTypes(widgetId)) {
+                if (activeEventSources.stream().noneMatch(s -> s.source.providerType == providerType)) {
+                    addActiveEventSource(providerType);
+                }
+            }
+        }
+    }
+
+    private void addActiveEventSource(EventProviderType providerType) {
+        int id = maxSourceId() + 1;
+        List<OrderedEventSource> list = new ArrayList<>(activeEventSources);
+        list.add(
+            new OrderedEventSource(
+                new EventSource(providerType, id, "Test source " + id, "", Color.CYAN, true),
+                getActiveEventSources().size() + 1
+            )
+        );
+        activeEventSources = list;
+    }
+
+    private int maxSourceId() {
+        int id1 = activeEventSources.stream().map(s -> s.source.getId())
+                .max(Comparator.comparingInt(id -> id)).orElse(1);
+        int id2 = EventProviderType.getAvailableSources().stream().map(s -> s.source.getId())
+                .max(Comparator.comparingInt(id -> id)).orElse(1);
+        return Math.max(id1, id2);
     }
 }

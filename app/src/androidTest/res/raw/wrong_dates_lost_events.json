@@ -253,6 +253,17 @@
     "versionName": "1.10.0"
   },
   "settings": {
+    "widgetInstanceName": "Wrong Dates Lost Events",
+    "activeSources": [
+      {
+        "providerType": 1,
+        "id": 354,
+        "title": "issue354@example.com",
+        "summary": "Test active source",
+        "color": -12162669,
+        "isAvailable": true
+      }
+    ],
     "showDaysWithoutEvents": false,
     "hideBasedOnKeywords": "",
     "eventRange": 7,

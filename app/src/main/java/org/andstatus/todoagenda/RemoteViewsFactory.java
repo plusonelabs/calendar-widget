@@ -164,10 +164,8 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
                 getSettings().getContext(),
                 widgetId);
         visualizers.add(dayHeaderVisualizer);
-        for (EventProviderType type : EventProviderType.values()) {
-            if (type.hasEventSources()) {
-                visualizers.add(type.getVisualizer(getSettings().getContext(), widgetId));
-            }
+        for (EventProviderType type : getSettings().getTypesOfActiveEventProviders()) {
+            visualizers.add(type.getVisualizer(getSettings().getContext(), widgetId));
         }
         visualizers.add(new LastEntryVisualizer(context, widgetId));
         return visualizers;

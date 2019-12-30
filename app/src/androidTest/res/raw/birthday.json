@@ -65,6 +65,17 @@
     "versionName": "1.10.0"
   },
   "settings": {
+    "widgetInstanceName": "Birthday test",
+    "activeSources": [
+      {
+        "providerType": 1,
+        "id": 188,
+        "title": "issue188@example.com",
+        "summary": "Test active source",
+        "color": -12162669,
+        "isAvailable": true
+      }
+    ],
     "showDaysWithoutEvents": false,
     "hideBasedOnKeywords": "",
     "eventRange": 30,

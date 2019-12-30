@@ -64,6 +64,17 @@
     "versionName": "1.10.0"
   },
   "settings": {
+    "widgetInstanceName": "Multiple days events",
+    "activeSources": [
+      {
+        "providerType": 1,
+        "id": 194,
+        "title": "issue194@example.com",
+        "summary": "Test active source",
+        "color": -12162669,
+        "isAvailable": true
+      }
+    ],
     "showDaysWithoutEvents": false,
     "hideBasedOnKeywords": "",
     "eventRange": 30,

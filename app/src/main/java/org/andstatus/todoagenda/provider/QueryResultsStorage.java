@@ -108,6 +108,14 @@ public class QueryResultsStorage {
                 .collect(Collectors.toList());
     }
 
+    public List<EventProviderType> getProviderTypes(int widgetId) {
+        return results.stream()
+                .filter(result -> widgetId == 0 || result.getWidgetId() == widgetId)
+                .map(result -> result.providerType)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
     public Optional<QueryResult> findLast(EventProviderType type) {
         for (int index = results.size() - 1; index >=0; index--) {
             QueryResult result = results.get(index);

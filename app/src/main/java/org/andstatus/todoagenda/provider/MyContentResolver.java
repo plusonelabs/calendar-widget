@@ -67,10 +67,15 @@ public class MyContentResolver {
     }
 
     private Cursor queryAvailableSources(@NonNull Uri uri, @Nullable String[] projection) {
-        return widgetId == 0 || getSettings().getQueryResults() == null
-                ? context.getContentResolver().query(uri, projection, null, null, null)
-                : getSettings().getQueryResults().getResult(type, requestsCounter.incrementAndGet() - 1)
+        try {
+            return widgetId == 0 || getSettings().getQueryResults() == null
+                    ? context.getContentResolver().query(uri, projection, null, null, null)
+                    : getSettings().getQueryResults().getResult(type, requestsCounter.incrementAndGet() - 1)
                     .map(r -> r.querySource(projection)).orElse(null);
+        } catch (Exception e) {
+            Log.d(TAG, "Failed to get available sources for " + uri + "; " + e.getMessage());
+            return null;
+        }
     }
 
     public void onQueryEvents() {

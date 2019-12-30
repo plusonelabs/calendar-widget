@@ -21,11 +21,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class PastDueHeaderWithTasksTest extends BaseWidgetTest {
 
-    @Override
-    protected int getNumberOfOpenTasksSources() {
-        return 1;
-    }
-
     /**
      * https://github.com/plusonelabs/calendar-widget/issues/205
      */

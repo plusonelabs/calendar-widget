@@ -25,7 +25,7 @@ public class SingleEventTest extends BaseWidgetTest {
     @Test
     public void testEventAttributes() {
         DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
-        getSettings().clock().setNow(today.plusHours(10));
+        getSettings().clock().setSnapshotDate(today.plusHours(10));
         CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
@@ -47,7 +47,7 @@ public class SingleEventTest extends BaseWidgetTest {
     @Test
     public void testAlldayEventAttributes() {
         DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
-        getSettings().clock().setNow(today.plusHours(10));
+        getSettings().clock().setSnapshotDate(today.plusHours(10));
         CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), true);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);

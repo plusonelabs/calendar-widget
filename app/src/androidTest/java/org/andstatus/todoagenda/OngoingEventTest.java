@@ -31,7 +31,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         event.setStartDate(today.plusHours(9));
         event.setEndDate(today.plusHours(12));
 
-        getSettings().clock().setNow(today.plusHours(10).plusMinutes(33));
+        getSettings().clock().setSnapshotDate(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;
@@ -60,7 +60,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         event.setStartDate(today.minusDays(1).plusHours(9));
         event.setEndDate(today.plusHours(12));
 
-        getSettings().clock().setNow(today.plusHours(10).plusMinutes(33));
+        getSettings().clock().setSnapshotDate(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;
@@ -88,7 +88,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         event.setStartDate(today.plusHours(19));
         event.setEndDate(today.plusDays(1).plusHours(7));
 
-        getSettings().clock().setNow(today.plusHours(20).plusMinutes(33));
+        getSettings().clock().setSnapshotDate(today.plusHours(20).plusMinutes(33));
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;

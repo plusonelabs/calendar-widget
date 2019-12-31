@@ -71,7 +71,7 @@ public class MockCalendarContentProvider {
     public void updateAppSettings(String tag) {
         if (!results.getResults().isEmpty()) {
             settings.setResultsStorage(results);
-            settings.setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
+            settings.clock().setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
         }
         AllSettings.addNew(context, settings);
         if (results.getResults().size() > 0) {
@@ -164,7 +164,7 @@ public class MockCalendarContentProvider {
         QueryResultsStorage results = QueryResultsStorage.fromJson(widgetId, json);
         if (!results.getResults().isEmpty()) {
             DateTime now = results.getResults().get(0).getExecutedAt();
-            settings.clock().setNow(now);
+            settings.clock().setSnapshotDate(now);
         }
 
         setSettings(settings);

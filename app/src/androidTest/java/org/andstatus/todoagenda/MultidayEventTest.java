@@ -36,7 +36,7 @@ public class MultidayEventTest extends BaseWidgetTest {
         event.setStartDate(today.plusHours(19));
         event.setEndDate(today.plusDays(1).plusHours(7));
 
-        getSettings().clock().setNow(today.plusHours(10).plusMinutes(33));
+        getSettings().clock().setSnapshotDate(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry1 = null;
@@ -97,7 +97,7 @@ public class MultidayEventTest extends BaseWidgetTest {
     }
 
     private CalendarEntry getSundayEntryAt(CalendarEvent event, DateTime currentDateTime) {
-        getSettings().clock().setNow(currentDateTime);
+        getSettings().clock().setSnapshotDate(currentDateTime);
         provider.clear();
         provider.addRow(event);
         Log.i(TAG, "getSundayEntryAt " + currentDateTime);

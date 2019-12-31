@@ -33,7 +33,7 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
         ApplicationPreferences.setEventRange(provider.getContext(), dateRange);
         provider.savePreferences();
         DateTime now = new DateTime(2015, 8, 30, 0, 0, 1, 0, getSettings().clock().getZone());
-        getSettings().clock().setNow(now);
+        getSettings().clock().setSnapshotDate(now);
         playResults(method);
 
         DateTime today = now.withTimeAtStartOfDay();

@@ -2,6 +2,7 @@ package org.andstatus.todoagenda.util;
 
 import androidx.annotation.Nullable;
 
+import org.andstatus.todoagenda.prefs.SnapshotMode;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -13,10 +14,11 @@ public class MyClock {
     public static final DateTime DATETIME_MIN = new DateTime(0, DateTimeZone.UTC);
     public static final DateTime DATETIME_MAX = new DateTime(Long.MAX_VALUE, DateTimeZone.UTC);
 
+    private volatile SnapshotMode snapshotMode = SnapshotMode.defaultValue;
+    private volatile DateTime snapshotDate = null;
+    private volatile DateTime snapshotDateSetAt = null;
     private volatile String lockedTimeZoneId = "";
     private volatile DateTimeZone zone;
-    private volatile DateTime mNow = null;
-    private volatile DateTime mNowSetAt = DateTime.now();
 
     public MyClock() {
         zone = DateTimeZone.getDefault();
@@ -41,21 +43,33 @@ public class MyClock {
         return !StringUtil.isEmpty(lockedTimeZoneId);
     }
 
+    public void setSnapshotMode(SnapshotMode snapshotMode) {
+        this.snapshotMode = snapshotMode;
+    }
+
+    public void setSnapshotDate(DateTime snapshotDate) {
+        this.snapshotDate = snapshotDate;
+        snapshotDateSetAt = DateTime.now();
+        zone = snapshotDate == null
+                ? getLockedOrDefaultZone()
+                : snapshotDate.getZone();
+    }
+
+    public boolean isSnapshotDateSet() {
+        return snapshotDate != null;
+    }
+
+    public SnapshotMode getSnapshotMode() {
+        return snapshotDate == null ? SnapshotMode.LIVE_DATA : snapshotMode;
+    }
+
     public void setFromPrevious(MyClock prevClock) {
         if (prevClock.isTimeZoneLocked()) {
             setLockedTimeZoneId(prevClock.lockedTimeZoneId);
         }
-        if (prevClock.mNow != null) {
-            setNow(prevClock.now());
+        if (prevClock.snapshotDate != null) {
+            setSnapshotDate(prevClock.snapshotDate);
         }
-    }
-
-    public void setNow(DateTime now) {
-        mNowSetAt = DateTime.now();
-        mNow = now;
-        zone = now == null
-            ? getLockedOrDefaultZone()
-            : now.getZone();
     }
 
     /**
@@ -66,12 +80,15 @@ public class MyClock {
     }
 
     public DateTime now(DateTimeZone zone) {
-        DateTime nowSetAt;
-        DateTime now;
-        do {
-            nowSetAt = mNowSetAt;
-            now = mNow;
-        } while (nowSetAt != mNowSetAt); // Ensure concurrent consistency
+        DateTime nowSetAt = null;
+        DateTime now = null;
+        if (getSnapshotMode() == SnapshotMode.SNAPSHOT_TIME) {
+            do {
+                nowSetAt = snapshotDateSetAt;
+                now = snapshotDate;
+            } while (nowSetAt != snapshotDateSetAt); // Ensure concurrent consistency
+        }
+
         if (now == null) {
             return DateTime.now(zone);
         } else {

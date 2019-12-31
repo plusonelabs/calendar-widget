@@ -157,7 +157,6 @@ public class InstanceSettings {
     private volatile MyClock clock = new MyClock();
 
     static final String PREF_SNAPSHOT_MODE = "snapshotMode";
-    private SnapshotMode snapshotMode = SnapshotMode.defaultValue;
     public final static String PREF_REFRESH_PERIOD_MINUTES = "refreshPeriodMinutes";
     public final static int PREF_REFRESH_PERIOD_MINUTES_DEFAULT = 10;
     private int refreshPeriodMinutes = PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
@@ -253,7 +252,7 @@ public class InstanceSettings {
                 clock().setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
             }
             if (json.has(PREF_SNAPSHOT_MODE)) {
-                setSnapshotMode(SnapshotMode.fromValue(json.getString(PREF_SNAPSHOT_MODE)));
+                clock().setSnapshotMode(SnapshotMode.fromValue(json.getString(PREF_SNAPSHOT_MODE)));
             }
             if (json.has(PREF_REFRESH_PERIOD_MINUTES)) {
                 setRefreshPeriodMinutes(json.getInt(PREF_REFRESH_PERIOD_MINUTES));
@@ -340,8 +339,6 @@ public class InstanceSettings {
             settings.showLocation = ApplicationPreferences.getShowLocation(context);
             settings.dateFormat = ApplicationPreferences.getDateFormat(context);
             settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
-            settings.clock().setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
-            settings.setSnapshotMode(ApplicationPreferences.getSnapshotMode(context));
             settings.setRefreshPeriodMinutes(ApplicationPreferences.getRefreshPeriodMinutes(context));
             settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
             settings.multilineTitle = ApplicationPreferences.isMultilineTitle(context);
@@ -365,6 +362,8 @@ public class InstanceSettings {
             settings.dayHeaderAlignment = ApplicationPreferences.getString(context, PREF_DAY_HEADER_ALIGNMENT,
                     PREF_DAY_HEADER_ALIGNMENT_DEFAULT);
 
+            settings.clock().setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
+            settings.clock().setSnapshotMode(ApplicationPreferences.getSnapshotMode(context));
             if (settingsStored != null) {
                 settings.setResultsStorage(settingsStored.getResultsStorage());
                 settings.clock.setFromPrevious(settingsStored.clock);
@@ -428,7 +427,7 @@ public class InstanceSettings {
             json.put(PREF_DATE_FORMAT, dateFormat);
             json.put(PREF_ABBREVIATE_DATES, abbreviateDates);
             json.put(PREF_LOCKED_TIME_ZONE_ID, clock().getLockedTimeZoneId());
-            json.put(PREF_SNAPSHOT_MODE, snapshotMode.value);
+            json.put(PREF_SNAPSHOT_MODE, clock().getSnapshotMode().value);
             json.put(PREF_REFRESH_PERIOD_MINUTES, refreshPeriodMinutes);
             json.put(PREF_EVENT_ENTRY_LAYOUT, eventEntryLayout.value);
             json.put(PREF_MULTILINE_TITLE, multilineTitle);
@@ -562,16 +561,8 @@ public class InstanceSettings {
         return clock;
     }
 
-    public void setSnapshotMode(SnapshotMode snapshotMode) {
-        this.snapshotMode = snapshotMode;
-    }
-
-    public SnapshotMode getSnapshotMode() {
-        return resultsStorage == null ? SnapshotMode.LIVE_DATA : snapshotMode;
-    }
-
     public boolean isLiveMode() {
-        return getSnapshotMode() == SnapshotMode.LIVE_DATA;
+        return clock().getSnapshotMode() == SnapshotMode.LIVE_DATA;
     }
 
     public void setRefreshPeriodMinutes(int refreshPeriodMinutes) {
@@ -730,6 +721,9 @@ public class InstanceSettings {
                 if (activeEventSources.stream().noneMatch(s -> s.source.providerType == providerType)) {
                     addActiveEventSource(providerType);
                 }
+            }
+            if (!resultsStorage.getResults().isEmpty() && !clock().isSnapshotDateSet()) {
+                clock().setSnapshotDate(resultsStorage.getResults().get(0).getExecutedAt());
             }
         }
     }

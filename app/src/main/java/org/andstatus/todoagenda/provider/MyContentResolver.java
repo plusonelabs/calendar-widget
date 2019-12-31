@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
+import io.vavr.control.Try;
+
 /**
  * Testing and mocking Calendar and Tasks Providers
  *
@@ -46,8 +48,8 @@ public class MyContentResolver {
         return getSettings().isLiveMode() && PermissionsUtil.isPermissionNeeded(context, permission);
     }
 
-    public <R> R foldAvailableSources(@NonNull Uri uri, @Nullable String[] projection,
-                            R identity, Function<R, Function<Cursor, R>> foldingFunction) {
+    public <R> Try<R> foldAvailableSources(@NonNull Uri uri, @Nullable String[] projection,
+                                           R identity, Function<R, Function<Cursor, R>> foldingFunction) {
         R folded = identity;
         try (Cursor cursor = queryAvailableSources(uri, projection)) {
             if (cursor != null) {
@@ -56,6 +58,8 @@ public class MyContentResolver {
                     folded = foldingFunction.apply(folded).apply(cursor);
                 }
             }
+        } catch (SecurityException e) {
+            return Try.failure(e);
         } catch (IllegalArgumentException e) {
             Log.d(type.name(), widgetId + " " + e.getMessage());
         } catch (Exception e) {
@@ -63,19 +67,14 @@ public class MyContentResolver {
                             " uri:" + uri +
                             ", projection:" + Arrays.toString(projection), e);
         }
-        return folded;
+        return Try.success(folded);
     }
 
     private Cursor queryAvailableSources(@NonNull Uri uri, @Nullable String[] projection) {
-        try {
-            return widgetId == 0 || getSettings().isLiveMode()
-                    ? context.getContentResolver().query(uri, projection, null, null, null)
-                    : getSettings().getResultsStorage().getResult(type, requestsCounter.incrementAndGet() - 1)
-                    .map(r -> r.querySource(projection)).orElse(null);
-        } catch (Exception e) {
-            Log.d(TAG, "Failed to get available sources for " + uri + "; " + e.getMessage());
-            return null;
-        }
+        return widgetId == 0 || getSettings().isLiveMode()
+                ? context.getContentResolver().query(uri, projection, null, null, null)
+                : getSettings().getResultsStorage().getResult(type, requestsCounter.incrementAndGet() - 1)
+                .map(r -> r.querySource(projection)).orElse(null);
     }
 
     public void onQueryEvents() {

@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import io.vavr.control.Try;
+
 public class CalendarEventProvider extends EventProvider {
     private static final String TAG = CalendarEventProvider.class.getSimpleName();
     private static final String[] EVENT_SOURCES_PROJECTION = new String[]{CalendarContract.Calendars._ID,
@@ -228,7 +230,7 @@ public class CalendarEventProvider extends EventProvider {
     }
 
     @Override
-    public List<EventSource> fetchAvailableSources() {
+    public Try<List<EventSource>> fetchAvailableSources() {
         return myContentResolver.foldAvailableSources(
                 CalendarContract.Calendars.CONTENT_URI.buildUpon().build(),
                 EVENT_SOURCES_PROJECTION,

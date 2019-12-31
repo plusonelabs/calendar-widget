@@ -71,23 +71,18 @@ public enum EventProviderType {
         sources.clear();
         for(EventProviderType type : EventProviderType.values()) {
             EventProvider provider = type.getEventProvider(context, 0);
-            List<EventSource> ss = Collections.emptyList();
-            boolean permissionNeeded = false;
-            try {
-                ss = provider.fetchAvailableSources();
+            provider.fetchAvailableSources()
+            .onSuccess( ss -> {
+                Log.i(TAG, "provider " + type + ", " + (ss.isEmpty() ? "no" : ss.size()) + " sources");
                 sources.addAll(OrderedEventSource.fromSources(ss));
-            } catch (SecurityException e) {
-                Log.i(TAG, "initialize: " + e.getMessage());
-                permissionNeeded = true;
-            } catch (Exception e) {
-                Log.i(TAG, "initialize: " + e.getMessage(), e);
-            }
-            Log.i(TAG, "provider " + type +
-                    ", " + (ss.isEmpty() ? "no" : ss.size()) + " sources" +
-                    (permissionNeeded ? ", needs " + type.permission : ""));
-            if (permissionNeeded) {
-                permissionsNeeded.add(type.permission);
-            }
+            })
+            .onFailure(e -> {
+                Log.i(TAG, "provider " + type + " initialization error: " + e.getMessage());
+                if (e instanceof SecurityException) {
+                    Log.i(TAG, "provider " + type + ", needs " + type.permission);
+                    permissionsNeeded.add(type.permission);
+                }
+            });
         }
         initialized = true;
     }

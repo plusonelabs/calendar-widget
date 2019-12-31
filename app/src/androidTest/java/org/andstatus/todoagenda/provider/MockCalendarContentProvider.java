@@ -57,6 +57,8 @@ public class MockCalendarContentProvider {
         widgetId = instanceToReuse == null ? lastWidgetId.incrementAndGet() : instanceToReuse.getWidgetId();
         InstanceSettings settings = new InstanceSettings(context, widgetId,
                 "ToDo Agenda " + widgetId + " " + InstanceSettings.TEST_REPLAY_SUFFIX);
+        settings.setActiveEventSources(settings.getActiveEventSources());
+
         settings.setLockedTimeZoneId(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
         setSettings(settings);
     }

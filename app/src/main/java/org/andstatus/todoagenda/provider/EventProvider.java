@@ -15,6 +15,8 @@ import org.joda.time.DateTimeZone;
 import java.util.Collections;
 import java.util.List;
 
+import io.vavr.control.Try;
+
 import static android.graphics.Color.argb;
 import static android.graphics.Color.blue;
 import static android.graphics.Color.green;
@@ -74,8 +76,8 @@ public class EventProvider {
         return argb(255, red(color), green(color), blue(color));
     }
 
-    public List<EventSource> fetchAvailableSources() {
-        return Collections.emptyList();
+    public Try<List<EventSource>> fetchAvailableSources() {
+        return Try.success(Collections.emptyList());
     }
 
     protected FilterMode getFilterMode() {

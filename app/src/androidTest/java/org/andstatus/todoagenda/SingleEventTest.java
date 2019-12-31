@@ -97,10 +97,13 @@ public class SingleEventTest extends BaseWidgetTest {
         WidgetEntry entry = factory.getWidgetEntries().get(1);
         assertTrue(entry instanceof CalendarEntry);
         CalendarEvent eventOut = ((CalendarEntry) entry).getEvent();
+        String msgLog = "Comparing events:\n" +
+                "in: " + event.toString() + "\n" +
+                "out:" + eventOut.toString() + "\n";
         if (equal) {
-            assertEquals(event.toString(), eventOut.toString());
+            assertEquals(msgLog, event.toString(), eventOut.toString());
         } else {
-            assertNotSame(event.toString(), eventOut.toString());
+            assertNotSame(msgLog, event.toString(), eventOut.toString());
         }
     }
 }

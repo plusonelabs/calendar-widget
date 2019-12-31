@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import io.vavr.control.Try;
+
 public class SamsungTasksProvider extends AbstractTaskProvider {
     private static final String TAG = SamsungTasksProvider.class.getSimpleName();
 
@@ -101,7 +103,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
     }
 
     @Override
-    public List<EventSource> fetchAvailableSources() {
+    public Try<List<EventSource>> fetchAvailableSources() {
         String[] projection = {
                 SamsungTasksContract.TaskLists.COLUMN_ID,
                 SamsungTasksContract.TaskLists.COLUMN_NAME,

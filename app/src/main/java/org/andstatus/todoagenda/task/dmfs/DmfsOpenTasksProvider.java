@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import io.vavr.control.Try;
+
 public class DmfsOpenTasksProvider extends AbstractTaskProvider {
 
     public DmfsOpenTasksProvider(EventProviderType type, Context context, int widgetId) {
@@ -137,7 +139,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
     }
 
     @Override
-    public List<EventSource> fetchAvailableSources() {
+    public Try<List<EventSource>> fetchAvailableSources() {
         String[] projection = {
                 DmfsOpenTasksContract.TaskLists.COLUMN_ID,
                 DmfsOpenTasksContract.TaskLists.COLUMN_NAME,

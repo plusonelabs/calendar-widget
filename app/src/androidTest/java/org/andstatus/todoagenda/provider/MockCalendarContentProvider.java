@@ -59,7 +59,7 @@ public class MockCalendarContentProvider {
                 "ToDo Agenda " + widgetId + " " + InstanceSettings.TEST_REPLAY_SUFFIX);
         settings.setActiveEventSources(settings.getActiveEventSources());
 
-        settings.setLockedTimeZoneId(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
+        settings.clock().setLockedTimeZoneId(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
         setSettings(settings);
     }
 
@@ -75,7 +75,7 @@ public class MockCalendarContentProvider {
         }
         AllSettings.addNew(context, settings);
         if (results.getResults().size() > 0) {
-            Log.d(tag, "Results executed at " + settings.clock().now(settings.getTimeZone()));
+            Log.d(tag, "Results executed at " + settings.clock().now());
         }
     }
 
@@ -124,7 +124,7 @@ public class MockCalendarContentProvider {
         EventProviderType providerType = EventProviderType.CALENDAR;
         QueryResult result = results.findLast(providerType).orElseGet( () -> {
             QueryResult r2 = new QueryResult(providerType, getSettings().getWidgetId(),
-                    getSettings().clock().now(getSettings().getTimeZone()));
+                    getSettings().clock().now());
             results.addResult(r2);
             return r2;
         });

@@ -2,7 +2,6 @@ package org.andstatus.todoagenda.prefs;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
@@ -15,13 +14,11 @@ import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.TextSizeScale;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.MyClock;
 import org.andstatus.todoagenda.util.StringUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
-import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -157,8 +154,7 @@ public class InstanceSettings {
 
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
     static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
-    private String lockedTimeZoneId = "";
-    private volatile MyClock clock = new MyClock(null);
+    private volatile MyClock clock = new MyClock();
 
     static final String PREF_SNAPSHOT_MODE = "snapshotMode";
     private SnapshotMode snapshotMode = SnapshotMode.defaultValue;
@@ -254,7 +250,7 @@ public class InstanceSettings {
                 abbreviateDates = json.getBoolean(PREF_ABBREVIATE_DATES);
             }
             if (json.has(PREF_LOCKED_TIME_ZONE_ID)) {
-                setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
+                clock().setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
             }
             if (json.has(PREF_SNAPSHOT_MODE)) {
                 setSnapshotMode(SnapshotMode.fromValue(json.getString(PREF_SNAPSHOT_MODE)));
@@ -344,7 +340,7 @@ public class InstanceSettings {
             settings.showLocation = ApplicationPreferences.getShowLocation(context);
             settings.dateFormat = ApplicationPreferences.getDateFormat(context);
             settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
-            settings.setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
+            settings.clock().setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
             settings.setSnapshotMode(ApplicationPreferences.getSnapshotMode(context));
             settings.setRefreshPeriodMinutes(ApplicationPreferences.getRefreshPeriodMinutes(context));
             settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
@@ -371,7 +367,7 @@ public class InstanceSettings {
 
             if (settingsStored != null) {
                 settings.setResultsStorage(settingsStored.getResultsStorage());
-                settings.clock.setNow(settingsStored.clock.now(settingsStored.getTimeZone()));
+                settings.clock.setFromPrevious(settingsStored.clock);
             }
             return settings;
         }
@@ -431,7 +427,7 @@ public class InstanceSettings {
             json.put(PREF_SHOW_LOCATION, showLocation);
             json.put(PREF_DATE_FORMAT, dateFormat);
             json.put(PREF_ABBREVIATE_DATES, abbreviateDates);
-            json.put(PREF_LOCKED_TIME_ZONE_ID, lockedTimeZoneId);
+            json.put(PREF_LOCKED_TIME_ZONE_ID, clock().getLockedTimeZoneId());
             json.put(PREF_SNAPSHOT_MODE, snapshotMode.value);
             json.put(PREF_REFRESH_PERIOD_MINUTES, refreshPeriodMinutes);
             json.put(PREF_EVENT_ENTRY_LAYOUT, eventEntryLayout.value);
@@ -562,14 +558,6 @@ public class InstanceSettings {
         return abbreviateDates;
     }
 
-    public void setLockedTimeZoneId(String lockedTimeZoneId) {
-        this.lockedTimeZoneId = DateUtil.validatedTimeZoneId(lockedTimeZoneId);
-    }
-
-    public String getLockedTimeZoneId() {
-        return lockedTimeZoneId;
-    }
-
     public MyClock clock() {
         return clock;
     }
@@ -594,16 +582,6 @@ public class InstanceSettings {
 
     public int getRefreshPeriodMinutes() {
         return refreshPeriodMinutes;
-    }
-
-    public boolean isTimeZoneLocked() {
-        return !TextUtils.isEmpty(lockedTimeZoneId);
-    }
-
-    public DateTimeZone getTimeZone() {
-        return isTimeZoneLocked()
-                    ? DateTimeZone.forID(DateUtil.validatedTimeZoneId(lockedTimeZoneId))
-                    : clock().getZone(DateTimeZone.getDefault());
     }
 
     public EventEntryLayout getEventEntryLayout() {

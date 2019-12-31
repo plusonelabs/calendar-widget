@@ -13,22 +13,58 @@ public class MyClock {
     public static final DateTime DATETIME_MIN = new DateTime(0, DateTimeZone.UTC);
     public static final DateTime DATETIME_MAX = new DateTime(Long.MAX_VALUE, DateTimeZone.UTC);
 
-    private final DateTimeZone zone;
+    private volatile String lockedTimeZoneId = "";
+    private volatile DateTimeZone zone;
     private volatile DateTime mNow = null;
     private volatile DateTime mNowSetAt = DateTime.now();
 
-    public MyClock(DateTimeZone zone) {
-        this.zone = zone;
+    public MyClock() {
+        zone = DateTimeZone.getDefault();
+    }
+
+    public void setLockedTimeZoneId(String lockedTimeZoneId) {
+        this.lockedTimeZoneId = DateUtil.validatedTimeZoneId(lockedTimeZoneId);
+        zone = getLockedOrDefaultZone();
+    }
+
+    private DateTimeZone getLockedOrDefaultZone() {
+        return isTimeZoneLocked()
+            ? DateTimeZone.forID(DateUtil.validatedTimeZoneId(lockedTimeZoneId))
+            : DateTimeZone.getDefault();
+    }
+
+    public String getLockedTimeZoneId() {
+        return lockedTimeZoneId;
+    }
+
+    public boolean isTimeZoneLocked() {
+        return !StringUtil.isEmpty(lockedTimeZoneId);
+    }
+
+    public void setFromPrevious(MyClock prevClock) {
+        if (prevClock.isTimeZoneLocked()) {
+            setLockedTimeZoneId(prevClock.lockedTimeZoneId);
+        }
+        if (prevClock.mNow != null) {
+            setNow(prevClock.now());
+        }
     }
 
     public void setNow(DateTime now) {
         mNowSetAt = DateTime.now();
         mNow = now;
+        zone = now == null
+            ? getLockedOrDefaultZone()
+            : now.getZone();
     }
 
     /**
      * Usually returns real "now", but may be #setNow to some other time for testing purposes
      */
+    public DateTime now() {
+        return now(zone);
+    }
+
     public DateTime now(DateTimeZone zone) {
         DateTime nowSetAt;
         DateTime now;
@@ -48,9 +84,8 @@ public class MyClock {
         }
     }
 
-    public DateTimeZone getZone(DateTimeZone defaultValue) {
-        DateTime now = mNow;
-        return now == null ? defaultValue : now.getZone();
+    public DateTimeZone getZone() {
+        return zone;
     }
 
     public boolean isToday(@Nullable DateTime date) {

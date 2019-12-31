@@ -50,7 +50,7 @@ public class QueryResult {
 
     public QueryResult(EventProviderType providerType, InstanceSettings settings, Uri uri, String[] projection,
                        String selection, String[] selectionArgs, String sortOrder) {
-        this(providerType, settings.getWidgetId(), settings.clock().now(settings.getTimeZone()));
+        this(providerType, settings.getWidgetId(), settings.clock().now());
         this.uri = uri;
         this.projection = projection;
         this.selection = selection;

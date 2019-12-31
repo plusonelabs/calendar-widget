@@ -74,7 +74,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         this.context = context;
         this.widgetId = widgetId;
         visualizers.add(new LastEntryVisualizer(context, widgetId));
-        widgetEntries.add(new LastEntry(getSettings(), NOT_LOADED, getSettings().clock().now(getSettings().getTimeZone())));
+        widgetEntries.add(new LastEntry(getSettings(), NOT_LOADED, getSettings().clock().now()));
         logEvent("Init");
     }
 
@@ -220,7 +220,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         List<WidgetEntry> listOut = new ArrayList<>();
         if (!listIn.isEmpty()) {
             InstanceSettings settings = getSettings();
-            DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+            DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
             DayHeader curDayBucket = new DayHeader(settings, MyClock.DATETIME_MIN);
             boolean pastEventsHeaderAdded = false;
             for (WidgetEntry entry : listIn) {
@@ -256,7 +256,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     private void addEmptyDayHeadersBetweenTwoDays(List<WidgetEntry> entries, DateTime fromDayExclusive, DateTime toDayExclusive) {
         DateTime emptyDay = fromDayExclusive.plusDays(1);
-        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
         if (emptyDay.isBefore(today)) {
             emptyDay = today;
         }
@@ -320,7 +320,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         int viewId = R.id.calendar_current_date;
         rv.setOnClickPendingIntent(viewId, createOpenCalendarPendingIntent(settings));
         String formattedDate = settings.getShowDateOnWidgetHeader()
-                ? DateUtil.createDateString(settings, settings.clock().now(settings.getTimeZone())).toUpperCase(Locale.getDefault())
+                ? DateUtil.createDateString(settings, settings.clock().now()).toUpperCase(Locale.getDefault())
                 : "                    ";
         rv.setTextViewText(viewId, formattedDate);
         setTextSize(settings, rv, viewId, R.dimen.widget_header_title);
@@ -390,7 +390,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     public static PendingIntent getPermittedAddEventPendingIntent(InstanceSettings settings) {
         Context context = settings.getContext();
         Intent intent = PermissionsUtil.getPermittedActivityIntent(context,
-                CalendarIntentUtil.createNewEventIntent(settings.getTimeZone()));
+                CalendarIntentUtil.createNewEventIntent(settings.clock().getZone()));
         return isIntentAvailable(context, intent) ?
                 PendingIntent.getActivity(context, REQUEST_CODE_ADD_EVENT, intent, PendingIntent.FLAG_UPDATE_CURRENT) :
                 getEmptyPendingIntent(context);

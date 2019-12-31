@@ -18,7 +18,7 @@ public class LastEntry extends WidgetEntry<LastEntry> {
         LastEntry.LastEntryType entryType = PermissionsUtil.arePermissionsGranted(settings.getContext())
                 ? EMPTY
                 : NO_PERMISSIONS;
-        return new LastEntry(settings, entryType, settings.clock().now(settings.getTimeZone()));
+        return new LastEntry(settings, entryType, settings.clock().now());
     }
 
     public static void addLast(InstanceSettings settings, List<WidgetEntry> widgetEntries) {

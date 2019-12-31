@@ -47,7 +47,7 @@ public class RecurringEventsTest extends BaseWidgetTest {
     void generateEventInstances() {
         EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         provider.clear();
-        DateTime date = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTime date = getSettings().clock().now().withTimeAtStartOfDay();
         long millis = date.getMillis() + TimeUnit.HOURS.toMillis(10);
         eventId++;
         for (int ind = 0; ind < 15; ind++) {

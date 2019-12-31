@@ -97,7 +97,7 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         OrderedEventSource source = getSettings()
                 .getActiveEventSource(type,
                         cursor.getInt(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_LIST_ID)));
-        TaskEvent task = new TaskEvent(getSettings(), zone);
+        TaskEvent task = new TaskEvent(getSettings(), getSettings().clock().getZone());
         task.setEventSource(source);
         task.setId(cursor.getLong(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_ID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_TITLE)));

@@ -59,7 +59,7 @@ public class LastEntryVisualizer extends WidgetEntryVisualizer<LastEntry> {
             case EMPTY:
             case NOT_LOADED:
                 if (PermissionsUtil.arePermissionsGranted(getSettings().getContext())) {
-                    return createOpenCalendarAtDayIntent(new DateTime(getSettings().getTimeZone()));
+                    return createOpenCalendarAtDayIntent(new DateTime(getSettings().clock().getZone()));
                 }
                 break;
             default:

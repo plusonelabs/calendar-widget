@@ -6,7 +6,6 @@ import android.util.Log;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
@@ -19,7 +18,6 @@ public class CalendarEvent {
     private final InstanceSettings settings;
     private final Context context;
     private final int widgetId;
-    private final DateTimeZone zone;
     private final boolean allDay;
 
     private OrderedEventSource eventSource;
@@ -33,11 +31,10 @@ public class CalendarEvent {
     private boolean alarmActive;
     private boolean recurring;
 
-    public CalendarEvent(InstanceSettings settings, Context context, int widgetId, DateTimeZone zone, boolean allDay) {
+    public CalendarEvent(InstanceSettings settings, Context context, int widgetId, boolean allDay) {
         this.settings = settings;
         this.context = context;
         this.widgetId = widgetId;
-        this.zone = zone;
         this.allDay = allDay;
     }
 
@@ -70,7 +67,7 @@ public class CalendarEvent {
     }
 
     private DateTime dateFromMillis(long millis) {
-        return allDay ? fromAllDayMillis(millis) : new DateTime(millis, zone);
+        return allDay ? fromAllDayMillis(millis) : new DateTime(millis, getSettings().clock().getZone());
     }
 
     private static volatile long fixTimeOfAllDayEventLoggedAt = 0;
@@ -88,11 +85,11 @@ public class CalendarEvent {
                     .withDayOfMonth(utcDate.getDayOfMonth())
                     .withMillisOfDay(0);
             int hour = 0;
-            while (zone.isLocalDateTimeGap(ldt)) {
+            while (getSettings().clock().getZone().isLocalDateTimeGap(ldt)) {
                 Log.v("fixTimeOfAllDayEvent", "Local Date Time Gap: " + ldt + "; " + msgLog);
                 ldt = ldt.withHourOfDay(++hour);
             }
-            fixed = ldt.toDateTime(zone);
+            fixed = ldt.toDateTime(getSettings().clock().getZone());
             msgLog += " -> " + fixed;
             if (Math.abs(System.currentTimeMillis() - fixTimeOfAllDayEventLoggedAt) > 1000) {
                 fixTimeOfAllDayEventLoggedAt = System.currentTimeMillis();
@@ -237,7 +234,7 @@ public class CalendarEvent {
     }
 
     public boolean isActive() {
-        DateTime now = settings.clock().now(zone);
+        DateTime now = settings.clock().now();
         return startDate.isBefore(now) && endDate.isAfter(now);
     }
 

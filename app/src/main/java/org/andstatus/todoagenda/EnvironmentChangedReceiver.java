@@ -59,7 +59,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
     private static void scheduleMidnightAlarms(Context context, Map<Integer, InstanceSettings> instances) {
         Set<DateTime> alarmTimes = new HashSet<>();
         for (InstanceSettings settings : instances.values()) {
-            alarmTimes.add(settings.clock().now(settings.getTimeZone()).withTimeAtStartOfDay().plusDays(1));
+            alarmTimes.add(settings.clock().now().withTimeAtStartOfDay().plusDays(1));
         }
         int counter = 0;
         for (DateTime alarmTime : alarmTimes) {

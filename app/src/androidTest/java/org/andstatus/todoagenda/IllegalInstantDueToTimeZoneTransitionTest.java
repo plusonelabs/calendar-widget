@@ -42,9 +42,8 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends BaseWidgetTest {
         oneTimeDst("2015-10-25T00:00:00+00:00");
         oneTimeDst("2011-03-27T00:00:00+00:00");
         oneTimeDst("1980-04-06T00:00:00+00:00");
-        provider.addRow(new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
-                getSettings().getTimeZone(),false)
-            .setStartDate(getSettings().clock().startOfTomorrow(getSettings().getTimeZone()))
+        provider.addRow(new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), false)
+            .setStartDate(getSettings().clock().startOfTomorrow(getSettings().clock().getZone()))
             .setEventSource(provider.getFirstActiveEventSource())
             .setTitle("This will be the only event that will be shown"));
         playResults(TAG);

@@ -99,7 +99,7 @@ public class ApplicationPreferences {
             setBoolean(context, PREF_SHOW_LOCATION, settings.getShowLocation());
             setString(context, PREF_DATE_FORMAT, settings.getDateFormat());
             setAbbreviateDates(context, settings.getAbbreviateDates());
-            setLockedTimeZoneId(context, settings.getLockedTimeZoneId());
+            setLockedTimeZoneId(context, settings.clock().getLockedTimeZoneId());
             setRefreshPeriodMinutes(context, settings.getRefreshPeriodMinutes());
             setString(context, PREF_EVENT_ENTRY_LAYOUT, settings.getEventEntryLayout().value);
             setBoolean(context, PREF_MULTILINE_TITLE, settings.isMultilineTitle());

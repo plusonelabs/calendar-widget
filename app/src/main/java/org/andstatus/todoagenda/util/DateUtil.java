@@ -57,8 +57,8 @@ public class DateUtil {
     }
 
     public static String formatDateTime(InstanceSettings settings, DateTime dateTime, int flags) {
-        return settings.isTimeZoneLocked() ?
-                formatDateTimeAtTimeZone(settings, dateTime, flags, settings.getLockedTimeZoneId()) :
+        return settings.clock().isTimeZoneLocked() ?
+                formatDateTimeAtTimeZone(settings, dateTime, flags, settings.clock().getLockedTimeZoneId()) :
                 DateUtils.formatDateTime(settings.getContext(), dateTime.getMillis(), flags);
     }
 

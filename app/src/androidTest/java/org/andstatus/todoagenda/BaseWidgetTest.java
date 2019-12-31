@@ -44,7 +44,7 @@ public class BaseWidgetTest {
             int hourOfDay,
             int minuteOfHour) {
         return new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 0, 0,
-                provider.getSettings().getTimeZone());
+                provider.getSettings().clock().getZone());
     }
 
     protected void playResults(String tag) {

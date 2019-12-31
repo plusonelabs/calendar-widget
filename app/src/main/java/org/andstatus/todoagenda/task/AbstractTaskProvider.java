@@ -23,7 +23,7 @@ public abstract class AbstractTaskProvider extends EventProvider {
     protected void initialiseParameters() {
         super.initialiseParameters();
 
-        now = getSettings().clock().now(zone);
+        now = getSettings().clock().now();
     }
 
     List<TaskEvent> queryEvents() {

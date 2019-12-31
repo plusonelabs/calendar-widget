@@ -34,7 +34,7 @@ public class CalendarIntentUtil {
 
     public static PendingIntent createOpenCalendarPendingIntent(InstanceSettings settings) {
         return PermissionsUtil.getPermittedPendingActivityIntent(settings,
-                createOpenCalendarAtDayIntent(new DateTime(settings.getTimeZone())));
+                createOpenCalendarAtDayIntent(new DateTime(settings.clock().getZone())));
     }
 
     public static Intent createViewIntent() {

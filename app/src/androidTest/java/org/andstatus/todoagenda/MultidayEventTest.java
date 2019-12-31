@@ -6,7 +6,6 @@ import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -29,10 +28,8 @@ public class MultidayEventTest extends BaseWidgetTest {
      */
     @Test
     public void testEventWhichCarryOverToTheNextDay() {
-        DateTimeZone timeZone = getSettings().getTimeZone();
-        DateTime today = getSettings().clock().now(timeZone).withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
-                timeZone, false);
+        DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Event that carry over to the next day, show as ending midnight");
@@ -77,8 +74,7 @@ public class MultidayEventTest extends BaseWidgetTest {
     public void testThreeDaysEvent() {
         DateTime friday = dateTime(2015, 9, 18);
         DateTime sunday = friday.plusDays(2);
-        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
-                getSettings().getTimeZone(), false);
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Leader's weekend");

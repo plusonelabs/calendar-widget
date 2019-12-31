@@ -78,7 +78,7 @@ public class TaskEvent {
             if (dueMillis != null) {
                 startDate = new DateTime(dueMillis, zone);
             } else {
-                startDate = settings.clock().now(zone).withTimeAtStartOfDay();
+                startDate = settings.clock().now().withTimeAtStartOfDay();
             }
         }
         return startDate;

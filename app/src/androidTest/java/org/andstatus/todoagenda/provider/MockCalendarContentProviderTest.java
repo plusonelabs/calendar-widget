@@ -5,7 +5,6 @@ import android.provider.CalendarContract;
 
 import org.andstatus.todoagenda.BaseWidgetTest;
 import org.andstatus.todoagenda.calendar.CalendarEventProvider;
-import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -82,7 +81,7 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     private QueryResult addOneResult(String selection) {
         QueryResult input = new QueryResult(EventProviderType.CALENDAR, getSettings(),
                 CalendarContract.Instances.CONTENT_URI, projection, selection, null, sortOrder);
-        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
         input.addRow(new QueryRow().setEventId(++eventId)
                 .setTitle("First Event today").setBegin(today.plusHours(8).getMillis()));
         input.addRow(new QueryRow()

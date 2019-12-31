@@ -75,9 +75,9 @@ public class CalendarEventProvider extends EventProvider {
             if (otherEvent == null) {
                 eventIds.put(event.getEventId(), event);
             } else if (Math.abs(event.getStartDate().getMillis() -
-                    getSettings().clock().now(zone).getMillis()) <
+                    getSettings().clock().now().getMillis()) <
                     Math.abs(otherEvent.getStartDate().getMillis() -
-                            getSettings().clock().now(zone).getMillis())) {
+                            getSettings().clock().now().getMillis())) {
                 toDelete.add(otherEvent);
                 eventIds.put(event.getEventId(), event);
             } else {
@@ -175,7 +175,7 @@ public class CalendarEventProvider extends EventProvider {
     private List<CalendarEvent> getPastEventsWithColorList() {
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(builder, 0);
-        ContentUris.appendId(builder, getSettings().clock().now(zone).getMillis());
+        ContentUris.appendId(builder, getSettings().clock().now().getMillis());
         List<CalendarEvent> eventList = queryList(builder.build(), getPastEventsWithColorSelection());
         for (CalendarEvent event : eventList) {
             event.setDefaultCalendarColor();
@@ -204,7 +204,7 @@ public class CalendarEventProvider extends EventProvider {
             .getActiveEventSource(type, cursor.getInt(cursor.getColumnIndex(Instances.CALENDAR_ID)));
 
         boolean allDay = cursor.getInt(cursor.getColumnIndex(Instances.ALL_DAY)) > 0;
-        CalendarEvent event = new CalendarEvent(getSettings(), context, widgetId, zone, allDay);
+        CalendarEvent event = new CalendarEvent(getSettings(), context, widgetId, allDay);
         event.setEventSource(source);
         event.setEventId(cursor.getInt(cursor.getColumnIndex(Instances.EVENT_ID)));
         event.setTitle(cursor.getString(cursor.getColumnIndex(Instances.TITLE)));

@@ -24,10 +24,9 @@ public class SingleEventTest extends BaseWidgetTest {
 
     @Test
     public void testEventAttributes() {
-        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
         getSettings().clock().setNow(today.plusHours(10));
-        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
-                getSettings().getTimeZone(), false);
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single Event today with all known attributes");
@@ -47,10 +46,9 @@ public class SingleEventTest extends BaseWidgetTest {
 
     @Test
     public void testAlldayEventAttributes() {
-        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
         getSettings().clock().setNow(today.plusHours(10));
-        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
-                getSettings().getTimeZone(), true);
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), true);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single AllDay event today with all known attributes");
@@ -69,8 +67,7 @@ public class SingleEventTest extends BaseWidgetTest {
     public void testAlldayEventMillis() {
         EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         DateTime today = getSettings().clock().now(DateTimeZone.UTC).withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
-                getSettings().getTimeZone(), true);
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), true);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single All day event from millis");

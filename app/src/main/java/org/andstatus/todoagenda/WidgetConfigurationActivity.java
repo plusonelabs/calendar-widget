@@ -180,12 +180,9 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
             int duration = 3000;
             final WidgetConfigurationActivity context = WidgetConfigurationActivity.this;
             Toast.makeText(context, context.getText(R.string.restore_settings_title), Toast.LENGTH_LONG).show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(intentToStartMe(context, widgetId));
-                    context.finish();
-                }
+            new Handler().postDelayed(() -> {
+                startActivity(intentToStartMe(context, widgetId));
+                context.finish();
             }, duration);
         }
     }

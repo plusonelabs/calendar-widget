@@ -157,11 +157,11 @@ public class InstanceSettings {
     private volatile MyClock clock = new MyClock();
 
     static final String PREF_SNAPSHOT_MODE = "snapshotMode";
-    public final static String PREF_REFRESH_PERIOD_MINUTES = "refreshPeriodMinutes";
-    public final static int PREF_REFRESH_PERIOD_MINUTES_DEFAULT = 10;
+    final static String PREF_REFRESH_PERIOD_MINUTES = "refreshPeriodMinutes";
+    final static int PREF_REFRESH_PERIOD_MINUTES_DEFAULT = 10;
     private int refreshPeriodMinutes = PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
 
-    static final String PREF_RESULTS_STORAGE = "resultsStorage";
+    private static final String PREF_RESULTS_STORAGE = "resultsStorage";
     private volatile QueryResultsStorage resultsStorage = null;
 
     public static InstanceSettings fromJson(Context context, InstanceSettings storedSettings, JSONObject json) {
@@ -365,8 +365,9 @@ public class InstanceSettings {
             settings.clock().setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
             settings.clock().setSnapshotMode(ApplicationPreferences.getSnapshotMode(context));
             if (settingsStored != null) {
-                settings.setResultsStorage(settingsStored.getResultsStorage());
-                settings.clock.setFromPrevious(settingsStored.clock);
+                if (settingsStored.getResultsStorage() != null) {
+                    settings.setResultsStorage(settingsStored.getResultsStorage());
+                }
             }
             return settings;
         }
@@ -717,6 +718,7 @@ public class InstanceSettings {
     public void setResultsStorage(QueryResultsStorage resultsStorage) {
         this.resultsStorage = resultsStorage;
         if (resultsStorage != null) {
+            // TODO: Map Calendars when moving between devices
             for (EventProviderType providerType : resultsStorage.getProviderTypes(widgetId)) {
                 if (activeEventSources.stream().noneMatch(s -> s.source.providerType == providerType)) {
                     addActiveEventSource(providerType);

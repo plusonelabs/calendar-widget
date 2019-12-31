@@ -119,16 +119,16 @@ public class WidgetData {
     }
 
     public InstanceSettings getSettingsForWidget(Context context, InstanceSettings storedSettings, int targetWidgetId) {
-        InstanceSettings inputSettings = getSettings(context, storedSettings);
-        return inputSettings.isEmpty()
-            ? InstanceSettings.EMPTY
-            : inputSettings.asForWidget(context, targetWidgetId);
+        JSONObject jsonSettings = jsonData.optJSONObject(KEY_SETTINGS);
+        if (jsonSettings == null) return InstanceSettings.EMPTY;
+
+        InstanceSettings settings = InstanceSettings.fromJson(context, storedSettings, jsonSettings);
+
+        QueryResultsStorage results = QueryResultsStorage.fromJson(targetWidgetId, jsonData);
+        if (!results.getResults().isEmpty()) {
+            settings.setResultsStorage(results);
+        }
+        return settings.asForWidget(context, targetWidgetId);
     }
 
-    public InstanceSettings getSettings(Context context, InstanceSettings storedSettings) {
-        JSONObject jsonSettings = jsonData.optJSONObject(KEY_SETTINGS);
-        return jsonSettings == null
-                ? InstanceSettings.EMPTY
-                : InstanceSettings.fromJson(context, storedSettings, jsonSettings);
-    }
 }

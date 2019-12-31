@@ -159,12 +159,16 @@ public class QueryResultsStorage {
         return json;
     }
 
-    public static QueryResultsStorage fromJson(int widgetId, JSONObject jsonStorage) throws JSONException {
+    public static QueryResultsStorage fromJson(int widgetId, JSONObject jsonStorage) {
         QueryResultsStorage resultsStorage = new QueryResultsStorage();
         if (jsonStorage.has(KEY_RESULTS)) {
-            JSONArray jsonResults = jsonStorage.getJSONArray(KEY_RESULTS);
-            for (int ind = 0; ind < jsonResults.length(); ind++) {
-                resultsStorage.results.add(QueryResult.fromJson(jsonResults.getJSONObject(ind), widgetId));
+            try {
+                JSONArray jsonResults = jsonStorage.getJSONArray(KEY_RESULTS);
+                for (int ind = 0; ind < jsonResults.length(); ind++) {
+                    resultsStorage.results.add(QueryResult.fromJson(jsonResults.getJSONObject(ind), widgetId));
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Error reading results", e);
             }
         }
         return resultsStorage;

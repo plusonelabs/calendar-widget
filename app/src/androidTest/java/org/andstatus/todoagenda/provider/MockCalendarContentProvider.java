@@ -159,16 +159,9 @@ public class MockCalendarContentProvider {
         json.getJSONObject(KEY_SETTINGS).put(PREF_WIDGET_ID, widgetId);
 
         WidgetData widgetData = WidgetData.fromJson(json);
-        // TODO: Map Calendars when moving between devices
-        InstanceSettings settings = widgetData.getSettings(context, this.settings);
-        QueryResultsStorage results = QueryResultsStorage.fromJson(widgetId, json);
-        if (!results.getResults().isEmpty()) {
-            DateTime now = results.getResults().get(0).getExecutedAt();
-            settings.clock().setSnapshotDate(now);
-        }
-
+        InstanceSettings settings = widgetData.getSettingsForWidget(context, this.settings, widgetId);
         setSettings(settings);
-        return results;
+        return settings.getResultsStorage();
     }
 
     public OrderedEventSource getFirstActiveEventSource() {

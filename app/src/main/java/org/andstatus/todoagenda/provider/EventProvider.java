@@ -9,7 +9,6 @@ import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.FilterMode;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.KeywordsFilter;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -55,8 +54,8 @@ public class EventProvider {
     protected void initialiseParameters() {
         zone = getSettings().getTimeZone();
         mKeywordsFilter = new KeywordsFilter(getSettings().getHideBasedOnKeywords());
-        mStartOfTimeRange = getSettings().getEventsEnded().endedAt(DateUtil.now(zone));
-        mEndOfTimeRange = getEndOfTimeRange(DateUtil.now(zone));
+        mStartOfTimeRange = getSettings().getEventsEnded().endedAt(getSettings().clock().now(zone));
+        mEndOfTimeRange = getEndOfTimeRange(getSettings().clock().now(zone));
     }
 
     private DateTime getEndOfTimeRange(DateTime now) {

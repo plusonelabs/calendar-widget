@@ -2,8 +2,10 @@ package org.andstatus.todoagenda.widget;
 
 import androidx.annotation.Nullable;
 
+import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.util.MyClock;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -13,38 +15,40 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
 
     public final WidgetEntryPosition entryPosition;
     public final DateTime entryDate;
+    protected final InstanceSettings settings;
 
-    protected WidgetEntry(WidgetEntryPosition entryPosition, DateTime entryDate) {
+    protected WidgetEntry(InstanceSettings settings, WidgetEntryPosition entryPosition, DateTime entryDate) {
+        this.settings = settings;
         this.entryPosition = entryPosition;
         this.entryDate = fixEntryDate(entryPosition, entryDate);
     }
 
-    private static DateTime fixEntryDate(WidgetEntryPosition entryPosition, DateTime entryDate) {
+    private DateTime fixEntryDate(WidgetEntryPosition entryPosition, DateTime entryDate) {
         switch (entryPosition) {
             case ENTRY_DATE:
                 throwIfNull(entryPosition, entryDate);
                 return entryDate;
             case PAST_AND_DUE_HEADER:
                 return entryDate == null
-                        ? DateUtil.DATETIME_MIN
+                        ? MyClock.DATETIME_MIN
                         : entryDate;
             case DAY_HEADER:
             case START_OF_DAY:
                 throwIfNull(entryPosition, entryDate);
                 return entryDate.withTimeAtStartOfDay();
             case START_OF_TODAY:
-                return DateUtil.isToday(entryDate)
+                return settings.clock().isToday(entryDate)
                             ? entryDate
-                            : DateUtil.DATETIME_MIN;
+                            : MyClock.DATETIME_MIN;
             case END_OF_TODAY:
-                return DateUtil.isToday(entryDate)
+                return settings.clock().isToday(entryDate)
                             ? entryDate
-                            : DateUtil.DATETIME_MAX;
+                            : MyClock.DATETIME_MAX;
             case END_OF_LIST_HEADER:
             case END_OF_LIST:
             case LIST_FOOTER:
                 return entryDate == null
-                        ? DateUtil.DATETIME_MAX
+                        ? MyClock.DATETIME_MAX
                         : entryDate;
             default:
                 throw new IllegalArgumentException("Invalid position " + entryPosition + "; entryDate: " + entryDate);
@@ -60,7 +64,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     public boolean isLastEntryOfEvent() {
         return getEndDate() == null ||
                 !entryPosition.entryDateIsRequired ||
-                getEndDate().isBefore(DateUtil.startOfNextDay(this.entryDate));
+                getEndDate().isBefore(MyClock.startOfNextDay(this.entryDate));
     }
 
     public DateTime getEntryDay() {
@@ -85,7 +89,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     }
 
     public int getDaysFromToday() {
-        return Days.daysBetween(DateUtil.now(entryDate.getZone()).withTimeAtStartOfDay(),
+        return Days.daysBetween(settings.clock().now(entryDate.getZone()).withTimeAtStartOfDay(),
                 entryDate.withTimeAtStartOfDay()).getDays();
     }
 
@@ -122,21 +126,21 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
             default:
                 break;
         }
-        if (DateUtil.isToday(entryDate)) {
+        if (settings.clock().isToday(entryDate)) {
             switch (entryPosition) {
                 case DAY_HEADER:
                     return TimeSection.TODAY;
                 default:
-                    if (DateUtil.isToday(getEndDate())) {
-                        return DateUtil.isBeforeNow(getEndDate())
+                    if (settings.clock().isToday(getEndDate())) {
+                        return settings.clock().isBeforeNow(getEndDate())
                                 ? TimeSection.PAST
                                 : TimeSection.TODAY;
                     }
             }
         }
-        return DateUtil.isBeforeToday(entryDate)
+        return settings.clock().isBeforeToday(entryDate)
                 ? TimeSection.PAST
-                : (DateUtil.isToday(getEndDate()) ? TimeSection.TODAY : TimeSection.FUTURE);
+                : (settings.clock().isToday(getEndDate()) ? TimeSection.TODAY : TimeSection.FUTURE);
     }
 
     public boolean duplicates(WidgetEntry other) {
@@ -150,8 +154,8 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     @Override
     public String toString() {
         return entryPosition.value + " [entryDate=" +
-                (entryDate == DateUtil.DATETIME_MIN ? "min" :
-                        (entryDate == DateUtil.DATETIME_MAX) ? "max" : entryDate) +
+                (entryDate == MyClock.DATETIME_MIN ? "min" :
+                        (entryDate == MyClock.DATETIME_MAX) ? "max" : entryDate) +
                 "]";
     }
 }

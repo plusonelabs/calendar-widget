@@ -3,7 +3,6 @@ package org.andstatus.todoagenda;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProviderType;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
@@ -25,10 +24,10 @@ public class SingleEventTest extends BaseWidgetTest {
 
     @Test
     public void testEventAttributes() {
-        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
-        DateUtil.setNow(today.plusHours(10));
-        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
-                provider.getSettings().getTimeZone(), false);
+        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        getSettings().clock().setNow(today.plusHours(10));
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
+                getSettings().getTimeZone(), false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single Event today with all known attributes");
@@ -48,10 +47,10 @@ public class SingleEventTest extends BaseWidgetTest {
 
     @Test
     public void testAlldayEventAttributes() {
-        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
-        DateUtil.setNow(today.plusHours(10));
-        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
-                provider.getSettings().getTimeZone(), true);
+        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        getSettings().clock().setNow(today.plusHours(10));
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
+                getSettings().getTimeZone(), true);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single AllDay event today with all known attributes");
@@ -69,9 +68,9 @@ public class SingleEventTest extends BaseWidgetTest {
     @Test
     public void testAlldayEventMillis() {
         EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
-        DateTime today = DateUtil.now(DateTimeZone.UTC).withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
-                provider.getSettings().getTimeZone(), true);
+        DateTime today = getSettings().clock().now(DateTimeZone.UTC).withTimeAtStartOfDay();
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
+                getSettings().getTimeZone(), true);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Single All day event from millis");
@@ -86,12 +85,12 @@ public class SingleEventTest extends BaseWidgetTest {
         provider.addRow(event);
         playResults(TAG);
 
-        assertFalse(provider.getSettings().toString(),
-                provider.getSettings().getActiveEventSources(EventProviderType.CALENDAR).isEmpty());
+        assertFalse(getSettings().toString(),
+                getSettings().getActiveEventSources(EventProviderType.CALENDAR).isEmpty());
         OrderedEventSource source = provider.getFirstActiveEventSource();
         assertTrue(source.toString(), source.source.isAvailable);
-        assertTrue(provider.getSettings().toString(),
-                provider.getSettings().getActiveEventSource(EventProviderType.CALENDAR,
+        assertTrue(getSettings().toString(),
+                getSettings().getActiveEventSource(EventProviderType.CALENDAR,
                         source.source.getId()).source.isAvailable);
 
         assertEquals(factory.getWidgetEntries().toString(), 3, factory.getWidgetEntries().size());

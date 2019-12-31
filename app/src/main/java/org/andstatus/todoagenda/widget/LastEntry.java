@@ -2,7 +2,6 @@ package org.andstatus.todoagenda.widget;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 
@@ -19,12 +18,12 @@ public class LastEntry extends WidgetEntry<LastEntry> {
         LastEntry.LastEntryType entryType = PermissionsUtil.arePermissionsGranted(settings.getContext())
                 ? EMPTY
                 : NO_PERMISSIONS;
-        return new LastEntry(entryType, DateUtil.now(settings.getTimeZone()));
+        return new LastEntry(settings, entryType, settings.clock().now(settings.getTimeZone()));
     }
 
-    public static void addLast(List<WidgetEntry> widgetEntries) {
+    public static void addLast(InstanceSettings settings, List<WidgetEntry> widgetEntries) {
         if (!widgetEntries.isEmpty()) {
-            LastEntry entry = new LastEntry(LastEntryType.LAST, widgetEntries.get(widgetEntries.size() - 1).entryDate);
+            LastEntry entry = new LastEntry(settings, LastEntryType.LAST, widgetEntries.get(widgetEntries.size() - 1).entryDate);
             widgetEntries.add(entry);
         }
     }
@@ -44,8 +43,8 @@ public class LastEntry extends WidgetEntry<LastEntry> {
 
     public final LastEntryType type;
 
-    public LastEntry(LastEntryType type, DateTime date) {
-        super(LIST_FOOTER, date);
+    public LastEntry(InstanceSettings settings, LastEntryType type, DateTime date) {
+        super(settings, LIST_FOOTER, date);
         this.type = type;
     }
 }

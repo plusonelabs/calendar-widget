@@ -14,7 +14,7 @@ import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 
-import static org.andstatus.todoagenda.util.DateUtil.isDateDefined;
+import static org.andstatus.todoagenda.util.MyClock.isDateDefined;
 
 public class CalendarEntry extends WidgetEntry<CalendarEntry> {
 
@@ -28,15 +28,15 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     private boolean allDay;
     private CalendarEvent event;
 
-    public static CalendarEntry fromEvent(CalendarEvent event, DateTime entryDate) {
-        CalendarEntry entry = new CalendarEntry(entryDate);
+    public static CalendarEntry fromEvent(InstanceSettings settings, CalendarEvent event, DateTime entryDate) {
+        CalendarEntry entry = new CalendarEntry(settings, entryDate);
         entry.allDay = event.isAllDay();
         entry.event = event;
         return entry;
     }
 
-    private CalendarEntry(DateTime entryDate) {
-        super(WidgetEntryPosition.ENTRY_DATE, entryDate);
+    private CalendarEntry(InstanceSettings settings, DateTime entryDate) {
+        super(settings, WidgetEntryPosition.ENTRY_DATE, entryDate);
     }
 
     @Nullable

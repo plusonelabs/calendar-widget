@@ -4,12 +4,11 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.AlarmIndicatorScaled;
-import org.andstatus.todoagenda.RecurringIndicatorScaled;
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.RecurringIndicatorScaled;
 import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProvider;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
@@ -122,11 +121,11 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
                 firstDate = dayOfStartOfTimeRange;
             }
         }
-        DateTime today = DateUtil.now(event.getStartDate().getZone()).withTimeAtStartOfDay();
+        DateTime today = getSettings().clock().now(event.getStartDate().getZone()).withTimeAtStartOfDay();
         if (event.isActive() && firstDate.isBefore(today)) {
             firstDate = today;
         }
-        return CalendarEntry.fromEvent(event, firstDate);
+        return CalendarEntry.fromEvent(getSettings(), event, firstDate);
     }
 
     private void createFollowingEntries(List<CalendarEntry> entryList, CalendarEntry dayOneEntry) {
@@ -136,7 +135,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         }
         DateTime thisDay = dayOneEntry.getEntryDay().plusDays(1).withTimeAtStartOfDay();
         while (thisDay.isBefore(endDate)) {
-            CalendarEntry nextEntry = CalendarEntry.fromEvent(dayOneEntry.getEvent(), thisDay);
+            CalendarEntry nextEntry = CalendarEntry.fromEvent(getSettings(), dayOneEntry.getEvent(), thisDay);
             entryList.add(nextEntry);
             thisDay = thisDay.plusDays(1);
         }

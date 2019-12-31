@@ -1,5 +1,6 @@
 package org.andstatus.todoagenda;
 
+import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
 import org.andstatus.todoagenda.widget.LastEntry;
 import org.joda.time.DateTime;
@@ -47,8 +48,12 @@ public class BaseWidgetTest {
     }
 
     protected void playResults(String tag) {
-        provider.updateAppSettings();
+        provider.updateAppSettings(tag);
         factory.onDataSetChanged();
         factory.logWidgetEntries(tag);
+    }
+
+    protected InstanceSettings getSettings() {
+        return provider.getSettings();
     }
 }

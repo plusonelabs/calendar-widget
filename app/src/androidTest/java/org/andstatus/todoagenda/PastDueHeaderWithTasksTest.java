@@ -1,9 +1,7 @@
 package org.andstatus.todoagenda;
 
-import android.util.Log;
-
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
-import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.util.MyClock;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.LastEntry;
 import org.andstatus.todoagenda.widget.TaskEntry;
@@ -11,8 +9,6 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,13 +23,12 @@ public class PastDueHeaderWithTasksTest extends BaseWidgetTest {
     @Test
     public void testPastDueHeaderWithTasks() throws IOException, JSONException {
         final String method = "testPastDueHeaderWithTasks";
-        QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.past_due_header_with_tasks);
         provider.addResults(inputs.getResults());
-        Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());
 
         playResults(method);
-        assertEquals("Past and Due header", DateUtil.DATETIME_MIN, factory.getWidgetEntries().get(0).entryDate);
+        assertEquals("Past and Due header", MyClock.DATETIME_MIN, factory.getWidgetEntries().get(0).entryDate);
         assertEquals("Past Calendar Entry", CalendarEntry.class, factory.getWidgetEntries().get(1).getClass());
         assertEquals("Due task Entry", TaskEntry.class, factory.getWidgetEntries().get(2).getClass());
         assertEquals("Due task Entry", dateTime(2019, 8, 1, 9, 0),

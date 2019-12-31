@@ -9,9 +9,6 @@ import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.RemoteViewsFactory;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-import org.andstatus.todoagenda.util.DateUtil;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -160,21 +157,6 @@ public class QueryResultsStorage {
         json.put(KEY_RESULTS_VERSION, RESULTS_VERSION);
         json.put(KEY_RESULTS, resultsArray);
         return json;
-    }
-
-    static QueryResultsStorage fromTestData(Context context, JSONObject json) throws JSONException {
-        WidgetData widgetData = WidgetData.fromJson(json);
-        // TODO: Map Calendars when moving between devices
-        InstanceSettings settings = widgetData.getSettings(context);
-        if (!settings.isEmpty()) {
-            AllSettings.getInstances(context).put(settings.getWidgetId(), settings);
-        }
-        QueryResultsStorage results = QueryResultsStorage.fromJson(settings.getWidgetId(), json);
-        if (!results.results.isEmpty()) {
-            DateTime now = results.results.get(0).getExecutedAt().toDateTime(DateTimeZone.getDefault());
-            DateUtil.setNow(now);
-        }
-        return results;
     }
 
     public static QueryResultsStorage fromJson(int widgetId, JSONObject jsonStorage) throws JSONException {

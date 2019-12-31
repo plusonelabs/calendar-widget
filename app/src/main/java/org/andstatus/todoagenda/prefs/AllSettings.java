@@ -73,8 +73,8 @@ public class AllSettings {
                 for (int widgetId : getWidgetIds(context)) {
                     InstanceSettings settings;
                     try {
-                        settings = InstanceSettings.fromJson(context, getLoadedInstances(),
-                                loadJsonFromFile(context, getStorageKey(widgetId)));
+                        JSONObject json = loadJsonFromFile(context, getStorageKey(widgetId));
+                        settings = InstanceSettings.fromJson(context, instances.get(widgetId), json);
                         if (settings.widgetId == 0) {
                             newInstance(context, widgetId);
                         } else {
@@ -189,7 +189,8 @@ public class AllSettings {
     }
 
     public static InstanceSettings restoreWidgetSettings(Activity activity, JSONObject json, int targetWidgetId) {
-        InstanceSettings settings = WidgetData.fromJson(json).getSettingsForWidget(activity, targetWidgetId);
+        InstanceSettings settings = WidgetData.fromJson(json)
+                .getSettingsForWidget(activity, instances.get(targetWidgetId), targetWidgetId);
         if (settings.isEmpty()) {
             settings.logMe(TAG, "Skipped restoreWidgetSettings", settings.widgetId);
         } else {

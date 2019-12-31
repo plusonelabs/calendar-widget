@@ -5,7 +5,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RawRes;
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.andstatus.todoagenda.calendar.CalendarEvent;
@@ -15,9 +14,8 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.prefs.SettingsStorage;
 import org.andstatus.todoagenda.prefs.SnapshotMode;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RawResourceUtils;
-import org.joda.time.DateTimeZone;
+import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,10 +44,6 @@ public class MockCalendarContentProvider {
     private volatile InstanceSettings settings;
 
     public static MockCalendarContentProvider getContentProvider() {
-        DateTimeZone zone = DateTimeZone.forID(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
-        DateTimeZone.setDefault(zone);
-        Log.i(TAG, "Default Time zone set to " + zone);
-
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         MockCalendarContentProvider contentProvider = new MockCalendarContentProvider(targetContext);
         return contentProvider;
@@ -61,18 +55,26 @@ public class MockCalendarContentProvider {
                 .filter(settings -> settings.getWidgetInstanceName().endsWith(InstanceSettings.TEST_REPLAY_SUFFIX)).findFirst().orElse(null);
 
         widgetId = instanceToReuse == null ? lastWidgetId.incrementAndGet() : instanceToReuse.getWidgetId();
-        settings = new InstanceSettings(context, widgetId,
+        InstanceSettings settings = new InstanceSettings(context, widgetId,
                 "ToDo Agenda " + widgetId + " " + InstanceSettings.TEST_REPLAY_SUFFIX);
+        settings.setLockedTimeZoneId(ZONE_IDS[(int)(System.currentTimeMillis() % ZONE_IDS.length)]);
+        setSettings(settings);
+    }
+
+    private void setSettings(InstanceSettings settings) {
+        this.settings = settings;
         AllSettings.addNew(context, settings);
     }
 
-    public void updateAppSettings() {
-        InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
+    public void updateAppSettings(String tag) {
         if (!results.getResults().isEmpty()) {
             settings.setResultsStorage(results);
             settings.setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
         }
         AllSettings.addNew(context, settings);
+        if (results.getResults().size() > 0) {
+            Log.d(tag, "Results executed at " + settings.clock().now(settings.getTimeZone()));
+        }
     }
 
     public static void tearDown() {
@@ -83,23 +85,17 @@ public class MockCalendarContentProvider {
                 toDelete.add(settings.getWidgetId());
             }
         }
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         for(int widgetId : toDelete) {
             instances.remove(widgetId);
-            SettingsStorage.delete(ApplicationProvider.getApplicationContext(), getStorageKey(widgetId));
+            SettingsStorage.delete(context, getStorageKey(widgetId));
         }
-        ApplicationPreferences.setWidgetId(ApplicationProvider.getApplicationContext(), TEST_WIDGET_ID_MIN);
+        ApplicationPreferences.setWidgetId(context, TEST_WIDGET_ID_MIN);
     }
 
     public void addResults(List<QueryResult> results) {
         for (QueryResult result : results) {
             addResult(result);
-        }
-        if (!results.isEmpty()) {
-            Context context = getSettings().getContext();
-            int widgetId = getSettings().getWidgetId();
-            ApplicationPreferences.fromInstanceSettings(context, widgetId);
-            ApplicationPreferences.setLockedTimeZoneId(context, results.get(0).getExecutedAt().getZone().getID());
-            ApplicationPreferences.save(context, widgetId);
         }
     }
 
@@ -126,7 +122,7 @@ public class MockCalendarContentProvider {
         EventProviderType providerType = EventProviderType.CALENDAR;
         QueryResult result = results.findLast(providerType).orElseGet( () -> {
             QueryResult r2 = new QueryResult(providerType, getSettings().getWidgetId(),
-                            DateUtil.now(getSettings().getTimeZone()));
+                    getSettings().clock().now(getSettings().getTimeZone()));
             results.addResult(r2);
             return r2;
         });
@@ -135,7 +131,7 @@ public class MockCalendarContentProvider {
 
     @NonNull
     public InstanceSettings getSettings() {
-        return AllSettings.instanceFromId(getContext(), getWidgetId());
+        return settings;
     }
 
     public void clear() {
@@ -146,19 +142,31 @@ public class MockCalendarContentProvider {
         return widgetId;
     }
 
-    public void startEditing() {
+    public void startEditingPreferences() {
         ApplicationPreferences.fromInstanceSettings(getContext(), getWidgetId());
     }
 
-    public void saveSettings() {
+    public void savePreferences() {
         ApplicationPreferences.save(getContext(), getWidgetId());
+        settings = AllSettings.instanceFromId(getContext(), getWidgetId());
     }
 
-    public QueryResultsStorage loadResultsAndSettings(Context context, @RawRes int jsonResId)
+    public QueryResultsStorage loadResultsAndSettings(@RawRes int jsonResId)
             throws IOException, JSONException {
-        JSONObject json = new JSONObject(RawResourceUtils.getString(context, jsonResId));
+        JSONObject json = new JSONObject(RawResourceUtils.getString(InstrumentationRegistry.getInstrumentation().getContext(), jsonResId));
         json.getJSONObject(KEY_SETTINGS).put(PREF_WIDGET_ID, widgetId);
-        return QueryResultsStorage.fromTestData(getContext(), json);
+
+        WidgetData widgetData = WidgetData.fromJson(json);
+        // TODO: Map Calendars when moving between devices
+        InstanceSettings settings = widgetData.getSettings(context, this.settings);
+        QueryResultsStorage results = QueryResultsStorage.fromJson(widgetId, json);
+        if (!results.getResults().isEmpty()) {
+            DateTime now = results.getResults().get(0).getExecutedAt();
+            settings.clock().setNow(now);
+        }
+
+        setSettings(settings);
+        return results;
     }
 
     public OrderedEventSource getFirstActiveEventSource() {

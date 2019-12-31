@@ -1,7 +1,7 @@
 package org.andstatus.todoagenda.task;
 
+import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -12,13 +12,15 @@ public class TaskEvent {
     private OrderedEventSource eventSource;
     private long id;
     private String title = "";
+    private final InstanceSettings settings;
     private final DateTimeZone zone;
     private DateTime startDate;
     private DateTime dueDate;
     private int color;
     private TaskStatus status = TaskStatus.UNKNOWN;
 
-    public TaskEvent(DateTimeZone zone) {
+    public TaskEvent(InstanceSettings settings, DateTimeZone zone) {
+        this.settings = settings;
         this.zone = zone;
     }
 
@@ -76,7 +78,7 @@ public class TaskEvent {
             if (dueMillis != null) {
                 startDate = new DateTime(dueMillis, zone);
             } else {
-                startDate = DateUtil.now(zone).withTimeAtStartOfDay();
+                startDate = settings.clock().now(zone).withTimeAtStartOfDay();
             }
         }
         return startDate;
@@ -84,7 +86,7 @@ public class TaskEvent {
 
     private DateTime toDueDate(Long startMillis, Long dueMillis) {
         DateTime dueDate = dueMillis == null
-                ? DateUtil.startOfTomorrow(zone)
+                ? settings.clock().startOfTomorrow(zone)
                 : new DateTime(dueMillis, zone);
         return startMillis == null
                 ? dueDate.plusSeconds(1)

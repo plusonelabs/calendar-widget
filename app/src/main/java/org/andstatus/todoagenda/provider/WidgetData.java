@@ -8,7 +8,6 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,7 +86,9 @@ public class WidgetData {
         JSONObject json = new JSONObject();
         try {
             PackageManager pm = context.getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(context.getApplicationContext().getPackageName(), 0);
+            Context applicationContext = context.getApplicationContext();
+            PackageInfo pi = pm.getPackageInfo(
+                    (applicationContext == null ? context : applicationContext).getPackageName(), 0);
             json.put(KEY_APP_VERSION_NAME, pi.versionName);
             json.put(KEY_APP_VERSION_CODE, pi.versionCode);
         } catch (PackageManager.NameNotFoundException e) {
@@ -117,17 +118,17 @@ public class WidgetData {
         return TAG + ":" + jsonData;
     }
 
-    public InstanceSettings getSettings(Context context) {
-        JSONObject jsonSettings = jsonData.optJSONObject(KEY_SETTINGS);
-        return jsonSettings == null
-            ? InstanceSettings.EMPTY
-            : InstanceSettings.fromJson(context, AllSettings.getLoadedInstances(), jsonSettings);
-    }
-
-    public InstanceSettings getSettingsForWidget(Context context, int targetWidgetId) {
-        InstanceSettings inputSettings = getSettings(context);
+    public InstanceSettings getSettingsForWidget(Context context, InstanceSettings storedSettings, int targetWidgetId) {
+        InstanceSettings inputSettings = getSettings(context, storedSettings);
         return inputSettings.isEmpty()
             ? InstanceSettings.EMPTY
             : inputSettings.asForWidget(context, targetWidgetId);
+    }
+
+    public InstanceSettings getSettings(Context context, InstanceSettings storedSettings) {
+        JSONObject jsonSettings = jsonData.optJSONObject(KEY_SETTINGS);
+        return jsonSettings == null
+                ? InstanceSettings.EMPTY
+                : InstanceSettings.fromJson(context, storedSettings, jsonSettings);
     }
 }

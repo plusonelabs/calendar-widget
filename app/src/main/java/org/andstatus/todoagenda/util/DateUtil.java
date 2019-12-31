@@ -20,12 +20,7 @@ import java.util.Formatter;
 import java.util.Locale;
 
 public class DateUtil {
-
     private static final String COMMA_SPACE = ", ";
-    private static volatile DateTime mNow = null;
-    private static volatile DateTime mNowSetAt = DateTime.now();
-    public static final DateTime DATETIME_MIN = new DateTime(0, DateTimeZone.UTC);
-    public static final DateTime DATETIME_MAX = new DateTime(Long.MAX_VALUE, DateTimeZone.UTC);
 
     public static boolean isMidnight(DateTime date) {
         return date.isEqual(date.withTimeAtStartOfDay());
@@ -88,57 +83,6 @@ public class DateUtil {
         }
     }
 
-    public static boolean isToday(@Nullable DateTime date) {
-        return isDateDefined(date) && !isBeforeToday(date) && date.isBefore(DateUtil.now(date.getZone()).plusDays(1).withTimeAtStartOfDay());
-    }
-
-    public static boolean isBeforeToday(@Nullable DateTime date) {
-        return isDateDefined(date) && date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay());
-    }
-
-    public static boolean isAfterToday(@Nullable DateTime date) {
-        return isDateDefined(date) && !date.isBefore(DateUtil.now(date.getZone()).withTimeAtStartOfDay().plusDays(1));
-    }
-
-    public static boolean isBeforeNow(@Nullable DateTime date) {
-        return isDateDefined(date) && date.isBefore(now(date.getZone()));
-    }
-
-    public static DateTime startOfTomorrow(DateTimeZone zone) {
-        return startOfNextDay(DateUtil.now(zone));
-    }
-
-    public static DateTime startOfNextDay(DateTime date) {
-        return date.plusDays(1).withTimeAtStartOfDay();
-    }
-
-    public static void setNow(DateTime now) {
-        mNowSetAt = DateTime.now();
-        mNow = now;
-    }
-
-    /**
-     * Usually returns real "now", but may be #setNow to some other time for testing purposes
-     */
-    public static DateTime now(DateTimeZone zone) {
-        DateTime nowSetAt;
-        DateTime now;
-        do {
-            nowSetAt = mNowSetAt;
-            now = mNow;
-        } while (nowSetAt != mNowSetAt); // Ensure concurrent consistency
-        if (now == null) {
-            return DateTime.now(zone);
-        } else {
-            long diffL = DateTime.now().getMillis() - nowSetAt.getMillis();
-            int diff = 0;
-            if (diffL > 0 && diffL < Integer.MAX_VALUE) {
-                diff = (int) diffL;
-            }
-            return new DateTime(now, zone).plusMillis(diff);
-        }
-    }
-
     /**
      * Returns an empty string in a case supplied ID is not a valid Time Zone ID
      */
@@ -181,9 +125,5 @@ public class DateUtil {
         if (date == null || other == null) return false;
 
         return date.year().equals(other.year()) && date.dayOfYear().equals(other.dayOfYear());
-    }
-
-    public static boolean isDateDefined(@Nullable DateTime dateTime) {
-        return dateTime != null && dateTime.isAfter(DATETIME_MIN) && dateTime.isBefore(DATETIME_MAX);
     }
 }

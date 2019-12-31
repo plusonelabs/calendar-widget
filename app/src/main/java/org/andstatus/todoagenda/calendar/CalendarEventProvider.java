@@ -18,7 +18,6 @@ import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -74,9 +73,9 @@ public class CalendarEventProvider extends EventProvider {
             if (otherEvent == null) {
                 eventIds.put(event.getEventId(), event);
             } else if (Math.abs(event.getStartDate().getMillis() -
-                    DateUtil.now(zone).getMillis()) <
+                    getSettings().clock().now(zone).getMillis()) <
                     Math.abs(otherEvent.getStartDate().getMillis() -
-                            DateUtil.now(zone).getMillis())) {
+                            getSettings().clock().now(zone).getMillis())) {
                 toDelete.add(otherEvent);
                 eventIds.put(event.getEventId(), event);
             } else {
@@ -174,7 +173,7 @@ public class CalendarEventProvider extends EventProvider {
     private List<CalendarEvent> getPastEventsWithColorList() {
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(builder, 0);
-        ContentUris.appendId(builder, DateUtil.now(zone).getMillis());
+        ContentUris.appendId(builder, getSettings().clock().now(zone).getMillis());
         List<CalendarEvent> eventList = queryList(builder.build(), getPastEventsWithColorSelection());
         for (CalendarEvent event : eventList) {
             event.setDefaultCalendarColor();
@@ -203,7 +202,7 @@ public class CalendarEventProvider extends EventProvider {
             .getActiveEventSource(type, cursor.getInt(cursor.getColumnIndex(Instances.CALENDAR_ID)));
 
         boolean allDay = cursor.getInt(cursor.getColumnIndex(Instances.ALL_DAY)) > 0;
-        CalendarEvent event = new CalendarEvent(context, widgetId, zone, allDay);
+        CalendarEvent event = new CalendarEvent(getSettings(), context, widgetId, zone, allDay);
         event.setEventSource(source);
         event.setEventId(cursor.getInt(cursor.getColumnIndex(Instances.EVENT_ID)));
         event.setTitle(cursor.getString(cursor.getColumnIndex(Instances.TITLE)));

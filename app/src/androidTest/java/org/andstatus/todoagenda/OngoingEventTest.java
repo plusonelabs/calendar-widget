@@ -1,7 +1,6 @@
 package org.andstatus.todoagenda;
 
 import org.andstatus.todoagenda.calendar.CalendarEvent;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
@@ -24,16 +23,16 @@ public class OngoingEventTest extends BaseWidgetTest {
      */
     @Test
     public void testTodaysOngoingEvent() {
-        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
-                provider.getSettings().getTimeZone(), false);
+        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
+                getSettings().getTimeZone(), false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Ongoing event shows original start time");
         event.setStartDate(today.plusHours(9));
         event.setEndDate(today.plusHours(12));
 
-        DateUtil.setNow(today.plusHours(10).plusMinutes(33));
+        getSettings().clock().setNow(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;
@@ -54,16 +53,16 @@ public class OngoingEventTest extends BaseWidgetTest {
      */
     @Test
     public void testYesterdaysOngoingEvent() {
-        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
-                provider.getSettings().getTimeZone(), false);
+        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
+                getSettings().getTimeZone(), false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Ongoing event, which started yesterday, shows no start time");
         event.setStartDate(today.minusDays(1).plusHours(9));
         event.setEndDate(today.plusHours(12));
 
-        DateUtil.setNow(today.plusHours(10).plusMinutes(33));
+        getSettings().clock().setNow(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;
@@ -83,16 +82,16 @@ public class OngoingEventTest extends BaseWidgetTest {
 
     @Test
     public void testEventWhichCarryOverToTheNextDay() {
-        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
-        CalendarEvent event = new CalendarEvent(provider.getContext(), provider.getWidgetId(),
-                provider.getSettings().getTimeZone(), false);
+        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(),
+                getSettings().getTimeZone(), false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
         event.setTitle("Event that carry over to the next day, show as ending midnight");
         event.setStartDate(today.plusHours(19));
         event.setEndDate(today.plusDays(1).plusHours(7));
 
-        DateUtil.setNow(today.plusHours(20).plusMinutes(33));
+        getSettings().clock().setNow(today.plusHours(20).plusMinutes(33));
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;

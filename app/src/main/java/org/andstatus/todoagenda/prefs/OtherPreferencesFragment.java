@@ -11,6 +11,7 @@ import android.preference.PreferenceScreen;
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.util.DateUtil;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.TimeZone;
@@ -45,7 +46,7 @@ public class OtherPreferencesFragment extends PreferenceFragment
                     ApplicationPreferences.getLockedTimeZoneId(getActivity()) : TimeZone.getDefault().getID()));
             preference.setSummary(String.format(
                     getText(isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc).toString(),
-                    timeZone.getName(DateUtil.now(timeZone).getMillis()))
+                    timeZone.getName(DateTime.now(timeZone).getMillis()))
             );
         }
     }

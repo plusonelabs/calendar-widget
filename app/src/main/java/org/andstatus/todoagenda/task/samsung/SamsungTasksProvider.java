@@ -82,7 +82,7 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
         OrderedEventSource source = getSettings()
                 .getActiveEventSource(type,
                         cursor.getInt(cursor.getColumnIndex(SamsungTasksContract.Tasks.COLUMN_LIST_ID)));
-        TaskEvent task = new TaskEvent(zone);
+        TaskEvent task = new TaskEvent(getSettings(), zone);
         task.setEventSource(source);
         task.setId(cursor.getLong(cursor.getColumnIndex(SamsungTasksContract.Tasks.COLUMN_ID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(SamsungTasksContract.Tasks.COLUMN_TITLE)));

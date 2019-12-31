@@ -1,9 +1,5 @@
 package org.andstatus.todoagenda;
 
-import android.util.Log;
-
-import androidx.test.platform.app.InstrumentationRegistry;
-
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.json.JSONException;
@@ -24,10 +20,9 @@ public class WrongDatesLostEventsTest extends BaseWidgetTest {
     @Test
     public void testIssue205() throws IOException, JSONException {
         final String method = "testIssue205";
-        QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.wrong_dates_lost_events);
         provider.addResults(inputs.getResults());
-        Log.d(method, "Results executed at " + inputs.getResults().get(0).getExecutedAt());
 
         playResults(method);
         assertEquals("Number of entries", 11, factory.getWidgetEntries().size());

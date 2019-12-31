@@ -21,6 +21,7 @@ import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.util.MyClock;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
 import org.andstatus.todoagenda.widget.DayHeaderVisualizer;
@@ -73,7 +74,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         this.context = context;
         this.widgetId = widgetId;
         visualizers.add(new LastEntryVisualizer(context, widgetId));
-        widgetEntries.add(new LastEntry(NOT_LOADED, DateUtil.now(getSettings().getTimeZone())));
+        widgetEntries.add(new LastEntry(getSettings(), NOT_LOADED, getSettings().clock().now(getSettings().getTimeZone())));
         logEvent("Init");
     }
 
@@ -193,7 +194,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         Collections.sort(eventEntries);
         List<WidgetEntry> deduplicated = settings.getHideDuplicates() ? hideDuplicates(eventEntries) : eventEntries;
         List<WidgetEntry> widgetEntries = settings.getShowDayHeaders() ? addDayHeaders(deduplicated) : deduplicated;
-        LastEntry.addLast(widgetEntries);
+        LastEntry.addLast(settings, widgetEntries);
         return widgetEntries;
     }
 
@@ -219,8 +220,8 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         List<WidgetEntry> listOut = new ArrayList<>();
         if (!listIn.isEmpty()) {
             InstanceSettings settings = getSettings();
-            DateTime today = DateUtil.now(getSettings().getTimeZone()).withTimeAtStartOfDay();
-            DayHeader curDayBucket = new DayHeader(DateUtil.DATETIME_MIN);
+            DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+            DayHeader curDayBucket = new DayHeader(settings, MyClock.DATETIME_MIN);
             boolean pastEventsHeaderAdded = false;
             for (WidgetEntry entry : listIn) {
                 DateTime nextEntryDay = entry.getEntryDay();
@@ -233,7 +234,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
                     if (settings.getShowDaysWithoutEvents()) {
                         addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getEntryDay(), nextEntryDay);
                     }
-                    curDayBucket = new DayHeader(nextEntryDay);
+                    curDayBucket = new DayHeader(settings, nextEntryDay);
                     listOut.add(curDayBucket);
                 }
                 listOut.add(entry);
@@ -255,12 +256,12 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     private void addEmptyDayHeadersBetweenTwoDays(List<WidgetEntry> entries, DateTime fromDayExclusive, DateTime toDayExclusive) {
         DateTime emptyDay = fromDayExclusive.plusDays(1);
-        DateTime today = DateUtil.now(getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
         if (emptyDay.isBefore(today)) {
             emptyDay = today;
         }
         while (emptyDay.isBefore(toDayExclusive)) {
-            entries.add(new DayHeader(emptyDay));
+            entries.add(new DayHeader(getSettings(), emptyDay));
             emptyDay = emptyDay.plusDays(1);
         }
     }
@@ -319,7 +320,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         int viewId = R.id.calendar_current_date;
         rv.setOnClickPendingIntent(viewId, createOpenCalendarPendingIntent(settings));
         String formattedDate = settings.getShowDateOnWidgetHeader()
-                ? DateUtil.createDateString(settings, DateUtil.now(settings.getTimeZone())).toUpperCase(Locale.getDefault())
+                ? DateUtil.createDateString(settings, settings.clock().now(settings.getTimeZone())).toUpperCase(Locale.getDefault())
                 : "                    ";
         rv.setTextViewText(viewId, formattedDate);
         setTextSize(settings, rv, viewId, R.dimen.widget_header_title);

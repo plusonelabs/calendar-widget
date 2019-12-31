@@ -14,7 +14,6 @@ import android.widget.RemoteViews;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -60,7 +59,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
     private static void scheduleMidnightAlarms(Context context, Map<Integer, InstanceSettings> instances) {
         Set<DateTime> alarmTimes = new HashSet<>();
         for (InstanceSettings settings : instances.values()) {
-            alarmTimes.add(DateUtil.now(settings.getTimeZone()).withTimeAtStartOfDay().plusDays(1));
+            alarmTimes.add(settings.clock().now(settings.getTimeZone()).withTimeAtStartOfDay().plusDays(1));
         }
         int counter = 0;
         for (DateTime alarmTime : alarmTimes) {
@@ -78,7 +77,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
     }
 
     private static void schedulePeriodicAlarms(Context context, Map<Integer, InstanceSettings> instances) {
-        DateTime now = DateUtil.now(DateTimeZone.UTC).plusMinutes(1);
+        DateTime now = DateTime.now(DateTimeZone.UTC).plusMinutes(1);
         int periodMinutes = (int) TimeUnit.DAYS.toMinutes(1);
         for (InstanceSettings settings : instances.values()) {
             int period = settings.getRefreshPeriodMinutes();

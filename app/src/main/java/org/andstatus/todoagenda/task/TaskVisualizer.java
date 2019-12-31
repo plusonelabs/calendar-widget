@@ -103,7 +103,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
     private List<TaskEntry> createEntryList(List<TaskEvent> events) {
         List<TaskEntry> entries = new ArrayList<>();
         for (TaskEvent event : events) {
-            entries.add(TaskEntry.fromEvent(event));
+            entries.add(TaskEntry.fromEvent(getSettings(), event));
         }
         return entries;
     }

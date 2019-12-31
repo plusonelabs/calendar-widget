@@ -2,7 +2,6 @@ package org.andstatus.todoagenda;
 
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.provider.QueryRow;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.joda.time.DateTime;
@@ -28,9 +27,9 @@ public class RecurringEventsTest extends BaseWidgetTest {
     public void testShowRecurringEvents() {
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 15, countCalendarEntries());
-        provider.startEditing();
+        provider.startEditingPreferences();
         ApplicationPreferences.setShowOnlyClosestInstanceOfRecurringEvent(provider.getContext(), true);
-        provider.saveSettings();
+        provider.savePreferences();
         generateEventInstances();
         assertEquals("Entries: " + factory.getWidgetEntries().size(), 1, countCalendarEntries());
     }
@@ -48,7 +47,7 @@ public class RecurringEventsTest extends BaseWidgetTest {
     void generateEventInstances() {
         EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         provider.clear();
-        DateTime date = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTime date = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
         long millis = date.getMillis() + TimeUnit.HOURS.toMillis(10);
         eventId++;
         for (int ind = 0; ind < 15; ind++) {

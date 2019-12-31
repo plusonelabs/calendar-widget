@@ -3,12 +3,9 @@ package org.andstatus.todoagenda.provider;
 import android.net.Uri;
 import android.provider.CalendarContract;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-
 import org.andstatus.todoagenda.BaseWidgetTest;
 import org.andstatus.todoagenda.calendar.CalendarEventProvider;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -28,6 +25,7 @@ import static org.junit.Assert.assertTrue;
  * @author yvolk@yurivolkov.com
  */
 public class MockCalendarContentProviderTest extends BaseWidgetTest {
+    private final static String TAG = MockCalendarContentProviderTest.class.getSimpleName();
 
     private final String[] projection = CalendarEventProvider.getProjection();
     private final String sortOrder = CalendarEventProvider.EVENT_SORT_ORDER;
@@ -53,7 +51,7 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     public void testTwoEventsToday() {
         QueryResult input1 = addOneResult("");
         QueryResult input2 = addOneResult("SOMETHING=1");
-        provider.updateAppSettings();
+        provider.updateAppSettings(TAG);
 
         QueryResultsStorage.setNeedToStoreResults(true, provider.getWidgetId());
         MyContentResolver resolver = new MyContentResolver(EventProviderType.CALENDAR, provider.getContext(), provider.getWidgetId());
@@ -82,9 +80,9 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     }
 
     private QueryResult addOneResult(String selection) {
-        QueryResult input = new QueryResult(EventProviderType.CALENDAR, provider.getSettings(),
+        QueryResult input = new QueryResult(EventProviderType.CALENDAR, getSettings(),
                 CalendarContract.Instances.CONTENT_URI, projection, selection, null, sortOrder);
-        DateTime today = DateUtil.now(provider.getSettings().getTimeZone()).withTimeAtStartOfDay();
+        DateTime today = getSettings().clock().now(getSettings().getTimeZone()).withTimeAtStartOfDay();
         input.addRow(new QueryRow().setEventId(++eventId)
                 .setTitle("First Event today").setBegin(today.plusHours(8).getMillis()));
         input.addRow(new QueryRow()
@@ -105,8 +103,7 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
     }
 
     private QueryResult queryList(MyContentResolver resolver, Uri uri, String selection) {
-        InstanceSettings settings = provider.getSettings();
-        QueryResult result = new QueryResult(EventProviderType.CALENDAR, settings,
+        QueryResult result = new QueryResult(EventProviderType.CALENDAR, getSettings(),
                 uri, projection, selection, null, sortOrder);
 
         result = resolver.foldEvents(uri, projection, selection, null, sortOrder, result, r -> cursor -> {
@@ -119,10 +116,10 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
 
     @Test
     public void testJsonToAndFrom() throws IOException, JSONException {
-        QueryResultsStorage inputs1 = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs1 = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.birthday);
         JSONObject jsonOutput = inputs1.toJson(provider.getContext(), provider.getWidgetId(), true);
-        QueryResultsStorage inputs2 = QueryResultsStorage.fromTestData(provider.getContext(), jsonOutput);
+        QueryResultsStorage inputs2 = QueryResultsStorage.fromJson(provider.getWidgetId(), jsonOutput);
         assertEquals(inputs1, inputs2);
     }
 }

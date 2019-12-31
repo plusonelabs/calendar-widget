@@ -16,6 +16,7 @@ import static org.andstatus.todoagenda.util.StringUtil.notNull;
 
 public class CalendarEvent {
 
+    private final InstanceSettings settings;
     private final Context context;
     private final int widgetId;
     private final DateTimeZone zone;
@@ -32,7 +33,8 @@ public class CalendarEvent {
     private boolean alarmActive;
     private boolean recurring;
 
-    public CalendarEvent(Context context, int widgetId, DateTimeZone zone, boolean allDay) {
+    public CalendarEvent(InstanceSettings settings, Context context, int widgetId, DateTimeZone zone, boolean allDay) {
+        this.settings = settings;
         this.context = context;
         this.widgetId = widgetId;
         this.zone = zone;
@@ -235,7 +237,7 @@ public class CalendarEvent {
     }
 
     public boolean isActive() {
-        DateTime now = DateUtil.now(zone);
+        DateTime now = settings.clock().now(zone);
         return startDate.isBefore(now) && endDate.isAfter(now);
     }
 

@@ -16,6 +16,7 @@ import org.andstatus.todoagenda.TextSizeScale;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.util.MyClock;
 import org.andstatus.todoagenda.util.StringUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
@@ -31,7 +32,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -154,9 +154,12 @@ public class InstanceSettings {
     static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
     static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
     private boolean abbreviateDates = PREF_ABBREVIATE_DATES_DEFAULT;
+
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
     static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
     private String lockedTimeZoneId = "";
+    private volatile MyClock clock = new MyClock(null);
+
     static final String PREF_SNAPSHOT_MODE = "snapshotMode";
     private SnapshotMode snapshotMode = SnapshotMode.defaultValue;
     public final static String PREF_REFRESH_PERIOD_MINUTES = "refreshPeriodMinutes";
@@ -166,11 +169,10 @@ public class InstanceSettings {
     static final String PREF_RESULTS_STORAGE = "resultsStorage";
     private volatile QueryResultsStorage resultsStorage = null;
 
-    public static InstanceSettings fromJson(Context context, Map<Integer, InstanceSettings> instances, JSONObject json) {
+    public static InstanceSettings fromJson(Context context, InstanceSettings storedSettings, JSONObject json) {
         int widgetId = json.optInt(PREF_WIDGET_ID);
         String instanceName = json.optString(PREF_WIDGET_INSTANCE_NAME);
 
-        InstanceSettings storedSettings = instances.get(widgetId);
         if (storedSettings != null) {
             if (storedSettings.getWidgetInstanceName().endsWith(TEST_REPLAY_SUFFIX) &&
                 !instanceName.endsWith(TEST_REPLAY_SUFFIX)) {
@@ -369,6 +371,7 @@ public class InstanceSettings {
 
             if (settingsStored != null) {
                 settings.setResultsStorage(settingsStored.getResultsStorage());
+                settings.clock.setNow(settingsStored.clock.now(settingsStored.getTimeZone()));
             }
             return settings;
         }
@@ -559,12 +562,16 @@ public class InstanceSettings {
         return abbreviateDates;
     }
 
-    private void setLockedTimeZoneId(String lockedTimeZoneId) {
+    public void setLockedTimeZoneId(String lockedTimeZoneId) {
         this.lockedTimeZoneId = DateUtil.validatedTimeZoneId(lockedTimeZoneId);
     }
 
     public String getLockedTimeZoneId() {
         return lockedTimeZoneId;
+    }
+
+    public MyClock clock() {
+        return clock;
     }
 
     public void setSnapshotMode(SnapshotMode snapshotMode) {
@@ -594,8 +601,9 @@ public class InstanceSettings {
     }
 
     public DateTimeZone getTimeZone() {
-        return DateTimeZone.forID(DateUtil.validatedTimeZoneId(
-                isTimeZoneLocked() ? lockedTimeZoneId : TimeZone.getDefault().getID()));
+        return isTimeZoneLocked()
+                    ? DateTimeZone.forID(DateUtil.validatedTimeZoneId(lockedTimeZoneId))
+                    : clock().getZone(DateTimeZone.getDefault());
     }
 
     public EventEntryLayout getEventEntryLayout() {

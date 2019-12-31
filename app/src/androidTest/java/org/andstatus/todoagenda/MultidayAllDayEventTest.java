@@ -4,7 +4,6 @@ import android.util.Log;
 
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
 import org.andstatus.todoagenda.widget.LastEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
@@ -13,8 +12,6 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -27,16 +24,16 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
     @Test
     public void testInsidePeriod() throws IOException, JSONException {
         final String method = "testInsidePeriod";
-        QueryResultsStorage inputs = provider.loadResultsAndSettings(InstrumentationRegistry.getInstrumentation().getContext(),
+        QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.multi_day);
         provider.addResults(inputs.getResults());
 
         int dateRange = 30;
-        provider.startEditing();
+        provider.startEditingPreferences();
         ApplicationPreferences.setEventRange(provider.getContext(), dateRange);
-        provider.saveSettings();
-        DateTime now = new DateTime(2015, 8, 30, 0, 0, 1, 0, provider.getSettings().getTimeZone());
-        DateUtil.setNow(now);
+        provider.savePreferences();
+        DateTime now = new DateTime(2015, 8, 30, 0, 0, 1, 0, getSettings().getTimeZone());
+        getSettings().clock().setNow(now);
         playResults(method);
 
         DateTime today = now.withTimeAtStartOfDay();

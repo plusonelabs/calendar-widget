@@ -122,13 +122,13 @@ public class WidgetData {
         JSONObject jsonSettings = jsonData.optJSONObject(KEY_SETTINGS);
         if (jsonSettings == null) return InstanceSettings.EMPTY;
 
-        InstanceSettings settings = InstanceSettings.fromJson(context, storedSettings, jsonSettings);
-
+        InstanceSettings originalSettings = InstanceSettings.fromJson(context, storedSettings, jsonSettings);
+        InstanceSettings targetSettings = originalSettings.asForWidget(context, targetWidgetId);
         QueryResultsStorage results = QueryResultsStorage.fromJson(targetWidgetId, jsonData);
         if (!results.getResults().isEmpty()) {
-            settings.setResultsStorage(results);
+            targetSettings.setResultsStorage(results);
         }
-        return settings.asForWidget(context, targetWidgetId);
+        return targetSettings;
     }
 
 }

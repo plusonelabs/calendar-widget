@@ -120,10 +120,6 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     private void reload() {
-        if (!AllSettings.isWidgetAllowed(widgetId)) {
-            logEvent("reload, skip as the widget is not allowed");
-            return;
-        }
         long prevReloadMillis = Math.abs(System.currentTimeMillis() - prevReloadFinishedAt);
         if (prevReloadMillis < MIN_MILLIS_BETWEEN_RELOADS) {
             logEvent("reload, skip as done " + prevReloadMillis + " ms ago");

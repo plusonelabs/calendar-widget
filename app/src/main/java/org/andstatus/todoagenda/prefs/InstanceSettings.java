@@ -364,10 +364,8 @@ public class InstanceSettings {
 
             settings.clock().setLockedTimeZoneId(ApplicationPreferences.getLockedTimeZoneId(context));
             settings.clock().setSnapshotMode(ApplicationPreferences.getSnapshotMode(context));
-            if (settingsStored != null) {
-                if (settingsStored.getResultsStorage() != null) {
-                    settings.setResultsStorage(settingsStored.getResultsStorage());
-                }
+            if (settingsStored != null && settingsStored.hasResults()) {
+                settings.setResultsStorage(settingsStored.getResultsStorage());
             }
             return settings;
         }
@@ -388,17 +386,21 @@ public class InstanceSettings {
         return widgetId == 0;
     }
 
-    void save() {
+    /** @return true if success */
+    boolean save(String method) {
+        String msgLog = "save from " + method;
         if (widgetId == 0) {
-            logMe(TAG, "Skipped save", widgetId);
-            return;
+            logMe(TAG, "Skipped " + msgLog, widgetId);
+            return false;
         }
-        logMe(TAG, "save", widgetId);
+        logMe(TAG, msgLog, widgetId);
         try {
             saveJson(context, getStorageKey(widgetId), toJson());
+            return true;
         } catch (IOException e) {
-            Log.e("save", toString(), e);
+            Log.e(TAG, msgLog + "\n" + toString(), e);
         }
+        return false;
     }
 
     public JSONObject toJson() {
@@ -709,6 +711,10 @@ public class InstanceSettings {
     public InstanceSettings asForWidget(Context context, int targetWidgetId) {
         String newName = AllSettings.uniqueInstanceName(context, targetWidgetId, widgetInstanceName);
         return new InstanceSettings(context, targetWidgetId, newName).setFromJson(toJson());
+    }
+
+    public boolean hasResults() {
+        return resultsStorage != null && !resultsStorage.getResults().isEmpty();
     }
 
     public QueryResultsStorage getResultsStorage() {

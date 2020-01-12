@@ -10,6 +10,7 @@ import android.preference.PreferenceScreen;
 
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -100,6 +101,19 @@ public class OtherPreferencesFragment extends PreferenceFragment
                 break;
             case InstanceSettings.PREF_REFRESH_PERIOD_MINUTES:
                 showRefreshPeriod();
+                break;
+            case InstanceSettings.PREF_SNAPSHOT_MODE:
+                SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
+                if (snapshotMode != SnapshotMode.LIVE_DATA) {
+                    int widgetId = ApplicationPreferences.getWidgetId(getActivity());
+                    InstanceSettings settings = AllSettings.instanceFromId(getActivity(), widgetId);
+                    if (!settings.hasResults()) {
+                        settings.setResultsStorage(QueryResultsStorage.getNewResults(getActivity(), widgetId));
+                        settings.clock().setSnapshotMode(snapshotMode);
+                        settings.save("newResultsForSnapshotMode");
+                    }
+                }
+                showSnapshotMode();
                 break;
             default:
                 break;

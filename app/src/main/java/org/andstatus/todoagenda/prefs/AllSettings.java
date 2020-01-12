@@ -12,10 +12,8 @@ import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.WidgetData;
 import org.json.JSONObject;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.andstatus.todoagenda.AppWidgetProvider.getWidgetIds;
 import static org.andstatus.todoagenda.prefs.SettingsStorage.loadJsonFromFile;
@@ -28,7 +26,6 @@ public class AllSettings {
     private static final String TAG = AllSettings.class.getSimpleName();
     private static volatile boolean instancesLoaded = false;
     private static final Map<Integer, InstanceSettings> instances = new ConcurrentHashMap<>();
-    private static volatile List<Integer> allowedWidgets = new CopyOnWriteArrayList<>();
 
     @NonNull
     public static InstanceSettings instanceFromId(Context context, Integer widgetId) {
@@ -49,10 +46,7 @@ public class AllSettings {
                 } else {
                     settings = new InstanceSettings(context, widgetId, "");
                 }
-                if (widgetId != 0 && isWidgetAllowed(widgetId)) {
-                    settings.save();
-                    settings.logMe(TAG, "newInstance put", widgetId);
-                    instances.put(widgetId, settings);
+                if (save("newInstance", settings)) {
                     EventProviderType.initialize(context, true);
                     EnvironmentChangedReceiver.registerReceivers(instances);
                     EnvironmentChangedReceiver.updateWidget(context, widgetId);
@@ -93,27 +87,27 @@ public class AllSettings {
     }
 
     public static void addNew(Context context, InstanceSettings settings) {
-        synchronized (instances) {
-            if (settings.widgetId == 0) {
-                settings.logMe(TAG, "Skipped addNew", settings.widgetId);
-            } else {
-                instances.put(settings.widgetId, settings);
-                settings.save();
-                settings.logMe(TAG, "addNew put", settings.widgetId);
-            }
+         save("addNew", settings);
+    }
+
+    /** @return true if success */
+    private static boolean save(String method, InstanceSettings settings) {
+        if (settings.isEmpty()) {
+            settings.logMe(TAG, "Skipped save empty from " + method, settings.widgetId);
+        } else if (settings.save(method)) {
+            instances.put(settings.widgetId, settings);
+            return true;
         }
+        return false;
     }
 
     public static void saveFromApplicationPreferences(Context context, Integer widgetId) {
-        if (widgetId == 0) {
-            return;
-        }
+        if (widgetId == 0) return;
+
         InstanceSettings settingsStored = instanceFromId(context, widgetId);
         InstanceSettings settings = InstanceSettings.fromApplicationPreferences(context, widgetId, settingsStored);
         if (settings.widgetId == widgetId && !settings.equals(settingsStored)) {
-            settings.save();
-            settings.logMe(TAG, "saveFromApplicationPreferences put", widgetId);
-            instances.put(widgetId, settings);
+            save("ApplicationPreferences", settings);
         }
         EnvironmentChangedReceiver.registerReceivers(instances);
     }
@@ -176,28 +170,17 @@ public class AllSettings {
         return instances;
     }
 
-    public static boolean isWidgetAllowed(int widgetId) {
-        return  allowedWidgets.isEmpty() || allowedWidgets.contains(widgetId);
-    }
-
     public static void forget() {
         synchronized (instances) {
             instances.clear();
             instancesLoaded = false;
-            allowedWidgets.clear();
         }
     }
 
     public static InstanceSettings restoreWidgetSettings(Activity activity, JSONObject json, int targetWidgetId) {
         InstanceSettings settings = WidgetData.fromJson(json)
                 .getSettingsForWidget(activity, instances.get(targetWidgetId), targetWidgetId);
-        if (settings.isEmpty()) {
-            settings.logMe(TAG, "Skipped restoreWidgetSettings", settings.widgetId);
-        } else {
-            settings.save();
-            settings.logMe(TAG, "restoreWidgetSettings put", settings.widgetId);
-            instances.put(settings.widgetId, settings);
-        }
+        save("restoreWidgetSettings", settings);
         return settings;
     }
 }

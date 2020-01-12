@@ -47,31 +47,40 @@ public class QueryResultsStorage {
 
     public static void shareEventsForDebugging(Context context, int widgetId) {
         final String method = "shareEventsForDebugging";
+        Log.i(TAG, method + " started");
+        InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
+        QueryResultsStorage storage = settings.isLiveMode() || !settings.hasResults()
+                ? settings.getResultsStorage()
+                : getNewResults(context, widgetId);
+        String results = storage.toJsonString(context, widgetId);
+        if (TextUtils.isEmpty(results)) {
+            Log.i(TAG, method + "; Nothing to share");
+        } else {
+            String fileName = (settings.getWidgetInstanceName() + "-" + context.getText(R.string.app_name))
+                    .replaceAll("\\W+", "-") +
+                    "-shareEvents-" + formatLogDateTime(System.currentTimeMillis()) +
+                    ".json";
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("application/json");
+            intent.putExtra(Intent.EXTRA_SUBJECT, fileName);
+            intent.putExtra(Intent.EXTRA_TEXT, results);
+            context.startActivity(
+                    Intent.createChooser(intent, context.getText(R.string.share_events_for_debugging_title)));
+            Log.i(TAG, method + "; Shared " + results);
+        }
+    }
+
+    public static QueryResultsStorage getNewResults(Context context, int widgetId) {
+        QueryResultsStorage resultsStorage;
         try {
-            Log.i(TAG, method + " started");
             setNeedToStoreResults(true, widgetId);
             RemoteViewsFactory factory = new RemoteViewsFactory(context, widgetId);
             factory.onDataSetChanged();
-            String results = theStorage.toJsonString(context, widgetId);
-            if (TextUtils.isEmpty(results)) {
-                Log.i(TAG, method + "; Nothing to share");
-            } else {
-                InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
-                String fileName = (settings.getWidgetInstanceName() + "-" + context.getText(R.string.app_name))
-                        .replaceAll("\\W+", "-") +
-                        "-shareEvents-" + formatLogDateTime(System.currentTimeMillis()) +
-                        ".json";
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("application/json");
-                intent.putExtra(Intent.EXTRA_SUBJECT, fileName);
-                intent.putExtra(Intent.EXTRA_TEXT, results);
-                context.startActivity(
-                        Intent.createChooser(intent, context.getText(R.string.share_events_for_debugging_title)));
-                Log.i(TAG, method + "; Shared " + results);
-            }
+            resultsStorage = QueryResultsStorage.theStorage;
         } finally {
             setNeedToStoreResults(false, widgetId);
         }
+        return resultsStorage;
     }
 
     public static boolean getNeedToStoreResults(int widgetId) {

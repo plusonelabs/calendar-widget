@@ -180,6 +180,9 @@ public class AllSettings {
     public static InstanceSettings restoreWidgetSettings(Activity activity, JSONObject json, int targetWidgetId) {
         InstanceSettings settings = WidgetData.fromJson(json)
                 .getSettingsForWidget(activity, instances.get(targetWidgetId), targetWidgetId);
+        if (settings.hasResults()) {
+            settings.clock().setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
+        }
         save("restoreWidgetSettings", settings);
         return settings;
     }

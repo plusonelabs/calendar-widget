@@ -75,7 +75,6 @@ public class BirthdayTest extends BaseWidgetTest {
         provider.clear();
         provider.addResults(inputs.getResults());
         getSettings().clock().setSnapshotDate(now);
-        EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         playResults(TAG);
         assertEquals(entriesWithoutLastExpected == 0 ? 0 : entriesWithoutLastExpected + 1,
                 factory.getWidgetEntries().size());

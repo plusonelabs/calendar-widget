@@ -9,7 +9,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
-import static org.andstatus.todoagenda.RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
@@ -65,7 +64,6 @@ public class SingleEventTest extends BaseWidgetTest {
 
     @Test
     public void testAlldayEventMillis() {
-        EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         DateTime today = getSettings().clock().now(DateTimeZone.UTC).withTimeAtStartOfDay();
         CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), true);
         event.setEventSource(provider.getFirstActiveEventSource());
@@ -77,7 +75,6 @@ public class SingleEventTest extends BaseWidgetTest {
     }
 
     private void assertOneEvent(CalendarEvent event, boolean equal) {
-        EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
         provider.clear();
         provider.addRow(event);
         playResults(TAG);

@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 
+import static org.andstatus.todoagenda.RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -49,8 +50,13 @@ public class BaseWidgetTest {
 
     protected void playResults(String tag) {
         provider.updateAppSettings(tag);
+
+        EnvironmentChangedReceiver.updateWidget(provider.getContext(), provider.getWidgetId());
+
         factory.onDataSetChanged();
         factory.logWidgetEntries(tag);
+
+        EnvironmentChangedReceiver.sleep(MIN_MILLIS_BETWEEN_RELOADS);
     }
 
     protected InstanceSettings getSettings() {

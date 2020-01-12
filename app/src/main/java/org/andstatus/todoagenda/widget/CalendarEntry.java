@@ -2,8 +2,6 @@ package org.andstatus.todoagenda.widget;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
-import android.text.format.DateUtils;
 
 import androidx.annotation.Nullable;
 
@@ -18,11 +16,8 @@ import static org.andstatus.todoagenda.util.MyClock.isDateDefined;
 
 public class CalendarEntry extends WidgetEntry<CalendarEntry> {
 
-    private static final String TWELVE = "12";
-    private static final String AUTO = "auto";
     private static final String ARROW = "→";
     private static final String SPACE = " ";
-    private static final String EMPTY_STRING = "";
     static final String SPACE_DASH_SPACE = " - ";
 
     private boolean allDay;
@@ -130,18 +125,18 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
             startStr = ARROW;
             separator = SPACE;
         } else {
-            startStr = createTimeString(context, entryDate);
+            startStr = DateUtil.formatTime(this::getSettings, entryDate);
         }
         if (getSettings().getShowEndTime()) {
             if (!isDateDefined(event.getEndDate()) || (isPartOfMultiDayEvent() && !isLastEntryOfEvent())) {
                 endStr = ARROW;
                 separator = SPACE;
             } else {
-                endStr = createTimeString(context, event.getEndDate());
+                endStr = DateUtil.formatTime(this::getSettings, event.getEndDate());
             }
         } else {
-            separator = EMPTY_STRING;
-            endStr = EMPTY_STRING;
+            separator = DateUtil.EMPTY_STRING;
+            endStr = DateUtil.EMPTY_STRING;
         }
 
         if (startStr.equals(endStr)) {
@@ -149,19 +144,6 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
         }
 
         return startStr + separator + endStr;
-    }
-
-    private String createTimeString(Context context, @Nullable DateTime time) {
-        if (!isDateDefined(time)) return EMPTY_STRING;
-
-        String dateFormat = getSettings().getDateFormat();
-        if (!DateFormat.is24HourFormat(context) && dateFormat.equals(AUTO)
-                || dateFormat.equals(TWELVE)) {
-            return DateUtil.formatDateTime(getSettings(), time,
-                    DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
-        }
-        return DateUtil.formatDateTime(getSettings(), time,
-                DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
     }
 
     public Context getContext() {

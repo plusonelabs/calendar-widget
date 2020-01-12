@@ -54,9 +54,24 @@ public class OtherPreferencesFragment extends PreferenceFragment
 
     private void showSnapshotMode() {
         Preference preference = findPreference(InstanceSettings.PREF_SNAPSHOT_MODE);
-        if (preference != null) {
-            preference.setSummary(ApplicationPreferences.getSnapshotMode(getActivity()).valueResId);
+        if (preference == null) return;
+
+        SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
+        if (snapshotMode == SnapshotMode.LIVE_DATA) {
+            preference.setSummary(snapshotMode.valueResId);
+        } else {
+            InstanceSettings settings = getSettings();
+            preference.setSummary(String.format(
+                    getText(snapshotMode.valueResId).toString(),
+                    DateUtil.createDateString(getSettings(), settings.clock().now()) + " " +
+                    DateUtil.formatTime(this::getSettings, settings.clock().now())
+            ));
         }
+    }
+
+    private InstanceSettings getSettings() {
+        int widgetId = ApplicationPreferences.getWidgetId(getActivity());
+        return AllSettings.instanceFromId(getActivity(), widgetId);
     }
 
     private void showRefreshPeriod() {
@@ -105,10 +120,9 @@ public class OtherPreferencesFragment extends PreferenceFragment
             case InstanceSettings.PREF_SNAPSHOT_MODE:
                 SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
                 if (snapshotMode != SnapshotMode.LIVE_DATA) {
-                    int widgetId = ApplicationPreferences.getWidgetId(getActivity());
-                    InstanceSettings settings = AllSettings.instanceFromId(getActivity(), widgetId);
+                    InstanceSettings settings = getSettings();
                     if (!settings.hasResults()) {
-                        settings.setResultsStorage(QueryResultsStorage.getNewResults(getActivity(), widgetId));
+                        settings.setResultsStorage(QueryResultsStorage.getNewResults(getActivity(), settings.widgetId));
                         settings.clock().setSnapshotMode(snapshotMode);
                         settings.save("newResultsForSnapshotMode");
                     }

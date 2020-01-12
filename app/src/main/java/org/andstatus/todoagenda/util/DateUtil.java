@@ -2,6 +2,7 @@ package org.andstatus.todoagenda.util;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.Log;
 
@@ -18,9 +19,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Locale;
+import java.util.function.Supplier;
+
+import static org.andstatus.todoagenda.util.MyClock.isDateDefined;
 
 public class DateUtil {
     private static final String COMMA_SPACE = ", ";
+    private static final String TWELVE = "12";
+    private static final String AUTO = "auto";
+    public static final String EMPTY_STRING = "";
 
     public static boolean isMidnight(DateTime date) {
         return date.isEqual(date.withTimeAtStartOfDay());
@@ -68,6 +75,20 @@ public class DateUtil {
                 new Formatter(new StringBuilder(50), Locale.getDefault()),
                 dateTime.getMillis(), dateTime.getMillis(), flags,
                 timeZoneId).toString();
+    }
+
+    public static String formatTime(Supplier<InstanceSettings> settingsSupplier, @Nullable DateTime time) {
+        if (!isDateDefined(time)) return EMPTY_STRING;
+
+        InstanceSettings settings = settingsSupplier.get();
+        String dateFormat = settings.getDateFormat();
+        if (!DateFormat.is24HourFormat(settings.getContext()) && dateFormat.equals(AUTO)
+                || dateFormat.equals(TWELVE)) {
+            return formatDateTime(settings, time,
+                    DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
+        }
+        return formatDateTime(settings, time,
+                DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
     }
 
     public static CharSequence getDaysFromTodayString(Context context, int daysFromToday) {

@@ -39,12 +39,21 @@ public class OtherPreferencesFragment extends PreferenceFragment
     private void showLockTimeZone(boolean setAlso) {
         CheckBoxPreference preference = (CheckBoxPreference) findPreference(InstanceSettings.PREF_LOCK_TIME_ZONE);
         if (preference != null) {
-            boolean isChecked = setAlso ? ApplicationPreferences.isTimeZoneLocked(getActivity()) : preference.isChecked();
+            SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
+            preference.setEnabled(snapshotMode != SnapshotMode.SNAPSHOT_TIME);
+
+            boolean isChecked = setAlso
+                    ? snapshotMode == SnapshotMode.SNAPSHOT_TIME || ApplicationPreferences.isTimeZoneLocked(getActivity())
+                    : preference.isChecked();
             if (setAlso && preference.isChecked() != isChecked) {
                 preference.setChecked(isChecked);
             }
-            DateTimeZone timeZone = DateTimeZone.forID(DateUtil.validatedTimeZoneId(isChecked ?
+
+            DateTimeZone timeZone = snapshotMode == SnapshotMode.SNAPSHOT_TIME
+                ? getSettings().clock().getZone()
+                : DateTimeZone.forID(DateUtil.validatedTimeZoneId(isChecked ?
                     ApplicationPreferences.getLockedTimeZoneId(getActivity()) : TimeZone.getDefault().getID()));
+
             preference.setSummary(String.format(
                     getText(isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc).toString(),
                     timeZone.getName(DateTime.now(timeZone).getMillis()))
@@ -128,6 +137,7 @@ public class OtherPreferencesFragment extends PreferenceFragment
                     }
                 }
                 showSnapshotMode();
+                showLockTimeZone(false);
                 break;
             default:
                 break;

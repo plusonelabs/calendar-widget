@@ -48,7 +48,7 @@ public class DateUtil {
                             DateUtils.FORMAT_SHOW_WEEKDAY);
         }
         if (forDayHeader) {
-            DateTime timeAtStartOfToday = DateTime.now().withTimeAtStartOfDay();
+            DateTime timeAtStartOfToday = settings.clock().now().withTimeAtStartOfDay();
             if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday)) {
                 return createDateString(settings, dateTime, settings.getContext().getString(R.string.today));
             } else if (dateTime.withTimeAtStartOfDay().isEqual(timeAtStartOfToday.plusDays(1))) {
@@ -64,17 +64,13 @@ public class DateUtil {
     }
 
     public static String formatDateTime(InstanceSettings settings, DateTime dateTime, int flags) {
-        return settings.clock().isTimeZoneLocked() ?
-                formatDateTimeAtTimeZone(settings, dateTime, flags, settings.clock().getLockedTimeZoneId()) :
-                DateUtils.formatDateTime(settings.getContext(), dateTime.getMillis(), flags);
-    }
-
-    private static String formatDateTimeAtTimeZone(InstanceSettings settings, DateTime dateTime,
-                                                   int flags, String timeZoneId) {
         return DateUtils.formatDateRange(settings.getContext(),
                 new Formatter(new StringBuilder(50), Locale.getDefault()),
-                dateTime.getMillis(), dateTime.getMillis(), flags,
-                timeZoneId).toString();
+                dateTime.getMillis(),
+                dateTime.getMillis(),
+                flags,
+                settings.clock().getZone().getID())
+            .toString();
     }
 
     public static String formatTime(Supplier<InstanceSettings> settingsSupplier, @Nullable DateTime time) {

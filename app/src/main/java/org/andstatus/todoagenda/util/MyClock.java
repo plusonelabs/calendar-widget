@@ -36,11 +36,13 @@ public class MyClock {
     }
 
     public String getLockedTimeZoneId() {
-        return lockedTimeZoneId;
+        return snapshotMode == SnapshotMode.SNAPSHOT_TIME
+            ? zone.getID()
+            : lockedTimeZoneId;
     }
 
     public boolean isTimeZoneLocked() {
-        return !StringUtil.isEmpty(lockedTimeZoneId);
+        return snapshotMode == SnapshotMode.SNAPSHOT_TIME || !StringUtil.isEmpty(lockedTimeZoneId);
     }
 
     public void setSnapshotMode(SnapshotMode snapshotMode) {

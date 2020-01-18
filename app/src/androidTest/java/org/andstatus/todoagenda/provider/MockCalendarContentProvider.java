@@ -15,7 +15,6 @@ import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.prefs.SettingsStorage;
 import org.andstatus.todoagenda.prefs.SnapshotMode;
 import org.andstatus.todoagenda.util.RawResourceUtils;
-import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,7 +64,7 @@ public class MockCalendarContentProvider {
 
     private void setSettings(InstanceSettings settings) {
         this.settings = settings;
-        AllSettings.addNew(context, settings);
+        AllSettings.addNew(TAG, context, settings);
     }
 
     public void updateAppSettings(String tag) {
@@ -73,7 +72,7 @@ public class MockCalendarContentProvider {
             settings.setResultsStorage(results);
             settings.clock().setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
         }
-        AllSettings.addNew(context, settings);
+        AllSettings.addNew(tag, context, settings);
         if (results.getResults().size() > 0) {
             Log.d(tag, "Results executed at " + settings.clock().now());
         }

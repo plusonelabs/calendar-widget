@@ -352,7 +352,7 @@
           },
           "title": {
             "type": 3,
-            "value": "task14 starting in 39 days, and without due date"
+            "value": "task14 starting in 39 days, and without due date (incomplete)"
           },
           "status": {
             "type": 1,
@@ -467,7 +467,7 @@
           },
           "title": {
             "type": 3,
-            "value": "task11 starting last month and due last week (complete)"
+            "value": "task11 starting last month (after task5) and due last week (at the same time as task5) (complete)"
           },
           "status": {
             "type": 1,
@@ -586,7 +586,7 @@
           },
           "title": {
             "type": 3,
-            "value": "task6 starting last month and due tomorrow (complete)"
+            "value": "task6 starting last month and due tomorrow at 8AM (complete)"
           },
           "status": {
             "type": 1,

@@ -24,14 +24,14 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     private CalendarEvent event;
 
     public static CalendarEntry fromEvent(InstanceSettings settings, CalendarEvent event, DateTime entryDate) {
-        CalendarEntry entry = new CalendarEntry(settings, entryDate);
+        CalendarEntry entry = new CalendarEntry(settings, entryDate, event.getEndDate());
         entry.allDay = event.isAllDay();
         entry.event = event;
         return entry;
     }
 
-    private CalendarEntry(InstanceSettings settings, DateTime entryDate) {
-        super(settings, WidgetEntryPosition.ENTRY_DATE, entryDate);
+    private CalendarEntry(InstanceSettings settings, DateTime entryDate, DateTime endDate) {
+        super(settings, WidgetEntry.getEntryPosition(settings, entryDate, endDate), entryDate);
     }
 
     @Nullable

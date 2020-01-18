@@ -5,6 +5,7 @@ import org.andstatus.todoagenda.util.MyClock;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.LastEntry;
 import org.andstatus.todoagenda.widget.TaskEntry;
+import org.andstatus.todoagenda.widget.WidgetEntryPosition;
 import org.json.JSONException;
 import org.junit.Test;
 
@@ -28,17 +29,28 @@ public class PastDueHeaderWithTasksTest extends BaseWidgetTest {
         provider.addResults(inputs.getResults());
 
         playResults(method);
+
         assertEquals("Past and Due header", MyClock.DATETIME_MIN, factory.getWidgetEntries().get(0).entryDate);
+        assertEquals(WidgetEntryPosition.PAST_AND_DUE_HEADER, factory.getWidgetEntries().get(0).entryPosition);
+
         assertEquals("Past Calendar Entry", CalendarEntry.class, factory.getWidgetEntries().get(1).getClass());
         assertEquals("Due task Entry", TaskEntry.class, factory.getWidgetEntries().get(2).getClass());
         assertEquals("Due task Entry", dateTime(2019, 8, 1, 9, 0),
                 (factory.getWidgetEntries().get(2)).entryDate);
-        assertEquals("Today header", dateTime(2019, 8, 4),
+        assertEquals("Tomorrow header", dateTime(2019, 8, 5),
                 (factory.getWidgetEntries().get(3)).entryDate);
-        assertEquals("Future task Entry", TaskEntry.class, factory.getWidgetEntries().get(8).getClass());
+
+        assertEquals("Future task Entry", TaskEntry.class, factory.getWidgetEntries().get(6).getClass());
         assertEquals("Future task Entry", dateTime(2019, 8, 8, 21, 0),
-                (factory.getWidgetEntries().get(8)).entryDate);
-        assertEquals("Last Entry", LastEntry.LastEntryType.LAST, ((LastEntry) factory.getWidgetEntries().get(9)).type);
+                (factory.getWidgetEntries().get(6)).entryDate);
+
+        assertEquals("End of list header", MyClock.DATETIME_MAX, factory.getWidgetEntries().get(7).entryDate);
+        assertEquals(WidgetEntryPosition.END_OF_LIST_HEADER, factory.getWidgetEntries().get(7).entryPosition);
+
+        assertEquals(WidgetEntryPosition.END_OF_LIST, factory.getWidgetEntries().get(8).entryPosition);
+
+        assertEquals("Last Entry", LastEntry.LastEntryType.LAST,
+                ((LastEntry) factory.getWidgetEntries().get(factory.getWidgetEntries().size() - 1)).type);
         assertEquals("Number of entries", 10, factory.getWidgetEntries().size());
     }
 }

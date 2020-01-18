@@ -20,6 +20,7 @@
     <string name="grant_permissions_verbose">Widget requires permission to read calendars and tasks.\n
         Tap here to grant permissions.</string>
     <string name="past_header">Past and due</string>
+    <string name="end_of_list_header">Other events</string>
     <string name="permissions_justification">Welcome to the Todo Agenda, the easy access to your calendars and tasks.\n\n
         To make the most of the widget you need to grant it access to your calendars and tasks.</string>
     <string name="no_widgets_found">Please add a \"Todo Agenda\" widget from the home screen of your device first.</string>

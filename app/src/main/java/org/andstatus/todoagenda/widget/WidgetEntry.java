@@ -10,6 +10,9 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import static org.andstatus.todoagenda.util.DateUtil.isSameDate;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.END_OF_LIST;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.ENTRY_DATE;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.PAST_AND_DUE;
 
 public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparable<WidgetEntry<T>> {
 
@@ -29,6 +32,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
                 throwIfNull(entryPosition, entryDate);
                 return entryDate;
             case PAST_AND_DUE_HEADER:
+            case PAST_AND_DUE:
                 return entryDate == null
                         ? MyClock.DATETIME_MIN
                         : entryDate;
@@ -67,8 +71,25 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
                 getEndDate().isBefore(MyClock.startOfNextDay(this.entryDate));
     }
 
+    public static WidgetEntryPosition getEntryPosition(InstanceSettings settings, DateTime mainDate, DateTime otherDate) {
+        if (mainDate == null && otherDate == null) return settings.getTaskWithoutDates().widgetEntryPosition;
+
+        DateTime refDate = mainDate == null ? otherDate : mainDate;
+        if (settings.getShowPastEventsUnderOneHeader() && settings.clock().isBeforeToday(refDate)) {
+            return PAST_AND_DUE;
+        }
+        if (refDate.isAfter(settings.getEndOfTimeRange())) return END_OF_LIST;
+        return ENTRY_DATE;
+    }
+
     public DateTime getEntryDay() {
-        return entryDate.withTimeAtStartOfDay();
+        switch (entryPosition) {
+            case START_OF_TODAY:
+            case END_OF_TODAY:
+                return settings.clock().now().withTimeAtStartOfDay();
+            default:
+                return entryDate.withTimeAtStartOfDay();
+        }
     }
 
     @Nullable
@@ -98,14 +119,23 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         int globalSignum = Integer.signum(entryPosition.globalOrder - other.entryPosition.globalOrder);
         if (globalSignum != 0) return globalSignum;
 
-        int sameDaySignum = Integer.signum(entryPosition.sameDayOrder - other.entryPosition.sameDayOrder);
-        if ((sameDaySignum != 0) && DateUtil.isSameDay(entryDate, other.entryDate)) return sameDaySignum;
+        if (DateUtil.isSameDay(getEntryDay(), other.getEntryDay())) {
+            int sameDaySignum = Integer.signum(entryPosition.sameDayOrder - other.entryPosition.sameDayOrder);
+            if ((sameDaySignum != 0) && DateUtil.isSameDay(getEntryDay(), other.getEntryDay())) return sameDaySignum;
 
-        if (entryDate.isAfter(other.entryDate)) {
-            return 1;
-        } else if (entryDate.isBefore(other.entryDate)) {
-            return -1;
+            if (entryDate.isAfter(other.entryDate)) {
+                return 1;
+            } else if (entryDate.isBefore(other.entryDate)) {
+                return -1;
+            }
+        } else {
+            if (getEntryDay().isAfter(other.getEntryDay())) {
+                return 1;
+            } else if (getEntryDay().isBefore(other.getEntryDay())) {
+                return -1;
+            }
         }
+
         int sourceSignum = Integer.signum(getSource().order - other.getSource().order);
         return sourceSignum == 0
                 ? getTitle().compareTo(other.getTitle())

@@ -53,15 +53,8 @@ public class EventProvider {
 
     protected void initialiseParameters() {
         mKeywordsFilter = new KeywordsFilter(getSettings().getHideBasedOnKeywords());
-        mStartOfTimeRange = getSettings().getEventsEnded().endedAt(getSettings().clock().now());
-        mEndOfTimeRange = getEndOfTimeRange(getSettings().clock().now());
-    }
-
-    private DateTime getEndOfTimeRange(DateTime now) {
-        int dateRange = getSettings().getEventRange();
-        return dateRange > 0
-                ? now.plusDays(dateRange)
-                : now.withTimeAtStartOfDay().plusDays(1);
+        mStartOfTimeRange = getSettings().getStartOfTimeRange();
+        mEndOfTimeRange = getSettings().getEndOfTimeRange();
     }
 
     @NonNull

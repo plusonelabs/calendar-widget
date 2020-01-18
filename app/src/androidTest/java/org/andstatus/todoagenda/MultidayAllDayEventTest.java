@@ -43,7 +43,6 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
         for (int ind = 0; ind < factory.getWidgetEntries().size(); ind++) {
             WidgetEntry entry = factory.getWidgetEntries().get(ind);
             String logMsg = method + "; " + String.format("%02d ", ind) + entry.toString();
-            Log.v(TAG, logMsg);
             if (entry.getEntryDay().isBefore(today)) {
                 fail("Is present before today " + logMsg);
             }

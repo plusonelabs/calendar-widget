@@ -46,6 +46,9 @@ import static org.andstatus.todoagenda.util.RemoteViewsUtil.setImageFromAttr;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextColorFromAttr;
 import static org.andstatus.todoagenda.util.RemoteViewsUtil.setTextSize;
 import static org.andstatus.todoagenda.widget.LastEntry.LastEntryType.NOT_LOADED;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.DAY_HEADER;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.END_OF_LIST_HEADER;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.PAST_AND_DUE_HEADER;
 
 public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final String TAG = RemoteViewsFactory.class.getSimpleName();
@@ -217,21 +220,34 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         if (!listIn.isEmpty()) {
             InstanceSettings settings = getSettings();
             DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
-            DayHeader curDayBucket = new DayHeader(settings, MyClock.DATETIME_MIN);
+            DayHeader curDayBucket = new DayHeader(settings, DAY_HEADER, MyClock.DATETIME_MIN);
             boolean pastEventsHeaderAdded = false;
+            boolean endOfListHeaderAdded = false;
             for (WidgetEntry entry : listIn) {
                 DateTime nextEntryDay = entry.getEntryDay();
-                if (settings.getShowPastEventsUnderOneHeader() && nextEntryDay.isBefore(today)) {
-                    if(!pastEventsHeaderAdded) {
-                        listOut.add(curDayBucket);
-                        pastEventsHeaderAdded = true;
-                    }
-                } else if (!nextEntryDay.isEqual(curDayBucket.getEntryDay())) {
-                    if (settings.getShowDaysWithoutEvents()) {
-                        addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getEntryDay(), nextEntryDay);
-                    }
-                    curDayBucket = new DayHeader(settings, nextEntryDay);
-                    listOut.add(curDayBucket);
+                switch (entry.entryPosition) {
+                    case PAST_AND_DUE:
+                        if(!pastEventsHeaderAdded) {
+                            curDayBucket = new DayHeader(settings, PAST_AND_DUE_HEADER, MyClock.DATETIME_MIN);
+                            listOut.add(curDayBucket);
+                            pastEventsHeaderAdded = true;
+                        }
+                        break;
+                    case END_OF_LIST:
+                        if (!endOfListHeaderAdded) {
+                            endOfListHeaderAdded = true;
+                            curDayBucket = new DayHeader(settings, END_OF_LIST_HEADER, MyClock.DATETIME_MAX);
+                            listOut.add(curDayBucket);
+                        }
+                        break;
+                    default:
+                        if (!nextEntryDay.isEqual(curDayBucket.getEntryDay())) {
+                            if (settings.getShowDaysWithoutEvents()) {
+                                addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getEntryDay(), nextEntryDay);
+                            }
+                            curDayBucket = new DayHeader(settings, DAY_HEADER, nextEntryDay);
+                            listOut.add(curDayBucket);
+                        }
                 }
                 listOut.add(entry);
             }
@@ -240,6 +256,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     public void logWidgetEntries(String tag) {
+        Log.v(tag, "Widget entries: " + getWidgetEntries().size());
         for (int ind = 0; ind < getWidgetEntries().size(); ind++) {
             WidgetEntry widgetEntry = getWidgetEntries().get(ind);
             Log.v(tag, String.format("%02d ", ind) + widgetEntry.toString());
@@ -257,7 +274,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             emptyDay = today;
         }
         while (emptyDay.isBefore(toDayExclusive)) {
-            entries.add(new DayHeader(getSettings(), emptyDay));
+            entries.add(new DayHeader(getSettings(), DAY_HEADER, emptyDay));
             emptyDay = emptyDay.plusDays(1);
         }
     }

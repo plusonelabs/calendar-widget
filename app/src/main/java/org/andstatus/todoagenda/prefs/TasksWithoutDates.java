@@ -3,6 +3,7 @@ package org.andstatus.todoagenda.prefs;
 import androidx.annotation.StringRes;
 
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.widget.WidgetEntryPosition;
 
 /**
  * Where to show tasks without start and due dates
@@ -10,18 +11,20 @@ import org.andstatus.todoagenda.R;
  * @author yvolk@yurivolkov.com
  */
 public enum TasksWithoutDates {
-    END_OF_LIST("end_of_list", R.string.tasks_wo_dates_end_of_list),
-    END_OF_TODAY("end_of_today", R.string.tasks_wo_dates_end_of_today),
-    HIDE("hide", R.string.tasks_wo_dates_hide);
+    END_OF_LIST( "end_of_list",  WidgetEntryPosition.END_OF_LIST,  R.string.tasks_wo_dates_end_of_list),
+    END_OF_TODAY("end_of_today", WidgetEntryPosition.END_OF_TODAY, R.string.tasks_wo_dates_end_of_today),
+    HIDE(        "hide",         WidgetEntryPosition.HIDDEN,       R.string.tasks_wo_dates_hide);
 
     public final static TasksWithoutDates defaultValue = END_OF_LIST;
 
     public final String value;
     @StringRes
     public final int valueResId;
+    public final WidgetEntryPosition widgetEntryPosition;
 
-    TasksWithoutDates(String value, int valueResId) {
+    TasksWithoutDates(String value, WidgetEntryPosition widgetEntryPosition, int valueResId) {
         this.value = value;
+        this.widgetEntryPosition = widgetEntryPosition;
         this.valueResId = valueResId;
     }
 

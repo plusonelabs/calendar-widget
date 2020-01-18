@@ -71,26 +71,19 @@ public class TaskEvent {
     }
 
     private DateTime toStartDate(Long startMillis, Long dueMillis) {
-        DateTime startDate;
-        if (startMillis != null) {
-            startDate = new DateTime(startMillis, zone);
-        } else {
-            if (dueMillis != null) {
-                startDate = new DateTime(dueMillis, zone);
-            } else {
-                startDate = settings.clock().now().withTimeAtStartOfDay();
-            }
-        }
-        return startDate;
+        return startMillis == null ? null : new DateTime(startMillis, zone);
     }
 
     private DateTime toDueDate(Long startMillis, Long dueMillis) {
-        DateTime dueDate = dueMillis == null
-                ? settings.clock().startOfTomorrow(zone)
-                : new DateTime(dueMillis, zone);
-        return startMillis == null
-                ? dueDate.plusSeconds(1)
-                : dueDate;
+        return dueMillis == null ? null : new DateTime(dueMillis, zone);
+    }
+
+    public boolean hasStartDate() {
+        return startDate != null;
+    }
+
+    public boolean hasDueDate() {
+        return dueDate != null;
     }
 
     public TaskStatus getStatus() {

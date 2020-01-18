@@ -46,7 +46,7 @@ public class AllSettings {
                 } else {
                     settings = new InstanceSettings(context, widgetId, "");
                 }
-                if (save("newInstance", settings)) {
+                if (save(TAG, "newInstance", settings)) {
                     EventProviderType.initialize(context, true);
                     EnvironmentChangedReceiver.registerReceivers(instances);
                     EnvironmentChangedReceiver.updateWidget(context, widgetId);
@@ -86,15 +86,15 @@ public class AllSettings {
         }
     }
 
-    public static void addNew(Context context, InstanceSettings settings) {
-         save("addNew", settings);
+    public static void addNew(String tag, Context context, InstanceSettings settings) {
+         save(tag, "addNew", settings);
     }
 
     /** @return true if success */
-    private static boolean save(String method, InstanceSettings settings) {
+    private static boolean save(String tag, String method, InstanceSettings settings) {
         if (settings.isEmpty()) {
-            settings.logMe(TAG, "Skipped save empty from " + method, settings.widgetId);
-        } else if (settings.save(method)) {
+            settings.logMe(tag, "Skipped save empty from " + method, settings.widgetId);
+        } else if (settings.save(tag, method)) {
             instances.put(settings.widgetId, settings);
             return true;
         }
@@ -107,7 +107,7 @@ public class AllSettings {
         InstanceSettings settingsStored = instanceFromId(context, widgetId);
         InstanceSettings settings = InstanceSettings.fromApplicationPreferences(context, widgetId, settingsStored);
         if (settings.widgetId == widgetId && !settings.equals(settingsStored)) {
-            save("ApplicationPreferences", settings);
+            save(TAG, "ApplicationPreferences", settings);
         }
         EnvironmentChangedReceiver.registerReceivers(instances);
     }
@@ -183,7 +183,7 @@ public class AllSettings {
         if (settings.hasResults()) {
             settings.clock().setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
         }
-        save("restoreWidgetSettings", settings);
+        save(TAG, "restoreWidgetSettings", settings);
         return settings;
     }
 }

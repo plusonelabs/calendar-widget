@@ -316,7 +316,7 @@
           },
           "title": {
             "type": 3,
-            "value": "My task 002"
+            "value": "My task 002, without start and due dates"
           },
           "dtstart": {
             "type": 0
@@ -337,7 +337,7 @@
           },
           "title": {
             "type": 3,
-            "value": "Due task 002"
+            "value": "Due task 002, without start date"
           },
           "dtstart": {
             "type": 0
@@ -358,7 +358,7 @@
           },
           "title": {
             "type": 3,
-            "value": "Test task 001"
+            "value": "Test task 001, without start date"
           },
           "dtstart": {
             "type": 0

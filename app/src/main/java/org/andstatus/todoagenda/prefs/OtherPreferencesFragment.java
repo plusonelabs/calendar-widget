@@ -133,7 +133,7 @@ public class OtherPreferencesFragment extends PreferenceFragment
                     if (!settings.hasResults()) {
                         settings.setResultsStorage(QueryResultsStorage.getNewResults(getActivity(), settings.widgetId));
                         settings.clock().setSnapshotMode(snapshotMode);
-                        settings.save("newResultsForSnapshotMode");
+                        settings.save(key, "newResultsForSnapshotMode");
                     }
                 }
                 showSnapshotMode();

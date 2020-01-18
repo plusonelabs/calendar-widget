@@ -6,16 +6,21 @@ package org.andstatus.todoagenda.widget;
  */
 public enum WidgetEntryPosition {
     PAST_AND_DUE_HEADER("PastAndDueHeader",false, 1, 1),
-    DAY_HEADER("DayHeader",                 true, 2, 1),
-    START_OF_TODAY("StartOfToday",         false, 2, 2),
-    START_OF_DAY("StartOfDay",              true, 2, 3),
-    ENTRY_DATE("EntryDate",                 true, 2, 4),
-    END_OF_TODAY("EndOfToday",             false, 2, 5),
-    END_OF_LIST_HEADER("EndOfListHeader",  false, 3, 1),
-    END_OF_LIST("EndOfList",               false, 4, 1),
-    LIST_FOOTER("ListFooter",              false, 5, 1);
+    PAST_AND_DUE("PastAndDue",             false, 2, 2),
+    DAY_HEADER("DayHeader",                 true, 3, 1),
+    START_OF_TODAY("StartOfToday",         false, 3, 2),
+    START_OF_DAY("StartOfDay",              true, 3, 3),
+    ENTRY_DATE("EntryDate",                 true, 3, 4),
+    END_OF_TODAY("EndOfToday",             false, 3, 5),
+    END_OF_LIST_HEADER("EndOfListHeader",  false, 5, 1),
+    END_OF_LIST("EndOfList",               false, 5, 1),
+    LIST_FOOTER("ListFooter",              false, 6, 1),
+    HIDDEN("Hidden",                       false, 9, 9),
+    UNKNOWN("Unknown",                     false, 9, 9);
 
-    final String value;
+    public static WidgetEntryPosition defaultValue = UNKNOWN;
+
+    public final String value;
     final boolean entryDateIsRequired;
     final int globalOrder;
     final int sameDayOrder;
@@ -25,5 +30,14 @@ public enum WidgetEntryPosition {
         this.entryDateIsRequired = dateIsRequired;
         this.globalOrder = globalOrder;
         this.sameDayOrder = sameDayOrder;
+    }
+
+    public static WidgetEntryPosition fromValue(String value) {
+        for (WidgetEntryPosition item : WidgetEntryPosition.values()) {
+            if (item.value.equals(value)) {
+                return item;
+            }
+        }
+        return defaultValue;
     }
 }

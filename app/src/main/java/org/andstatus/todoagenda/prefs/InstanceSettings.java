@@ -19,6 +19,7 @@ import org.andstatus.todoagenda.util.StringUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -387,18 +388,18 @@ public class InstanceSettings {
     }
 
     /** @return true if success */
-    boolean save(String method) {
+    boolean save(String tag, String method) {
         String msgLog = "save from " + method;
         if (widgetId == 0) {
-            logMe(TAG, "Skipped " + msgLog, widgetId);
+            logMe(tag, "Skipped " + msgLog, widgetId);
             return false;
         }
-        logMe(TAG, msgLog, widgetId);
+        logMe(tag, msgLog, widgetId);
         try {
             saveJson(context, getStorageKey(widgetId), toJson());
             return true;
         } catch (IOException e) {
-            Log.e(TAG, msgLog + "\n" + toString(), e);
+            Log.e(tag, msgLog + "\n" + toString(), e);
         }
         return false;
     }
@@ -491,8 +492,18 @@ public class InstanceSettings {
         return eventRange;
     }
 
+    public DateTime getEndOfTimeRange() {
+        return getEventRange() > 0
+                ? clock.now().plusDays(getEventRange())
+                : clock.now().withTimeAtStartOfDay().plusDays(1);
+    }
+
     public EndedSomeTimeAgo getEventsEnded() {
         return eventsEnded;
+    }
+
+    public DateTime getStartOfTimeRange() {
+        return getEventsEnded().endedAt(clock.now());
     }
 
     public boolean getFillAllDayEvents() {
@@ -602,24 +613,27 @@ public class InstanceSettings {
         return taskScheduling;
     }
 
-    public void setTaskScheduling(TaskScheduling taskScheduling) {
+    public InstanceSettings setTaskScheduling(TaskScheduling taskScheduling) {
         this.taskScheduling = taskScheduling;
+        return this;
     }
 
     public TasksWithoutDates getTaskWithoutDates() {
         return taskWithoutDates;
     }
 
-    public void setTaskWithoutDates(TasksWithoutDates taskWithoutDates) {
+    public InstanceSettings setTaskWithoutDates(TasksWithoutDates taskWithoutDates) {
         this.taskWithoutDates = taskWithoutDates;
+        return this;
     }
 
     public FilterMode getFilterMode() {
         return filterMode;
     }
 
-    public void setFilterMode(FilterMode filterMode) {
+    public InstanceSettings setFilterMode(FilterMode filterMode) {
          this.filterMode = filterMode;
+         return this;
     }
 
     @Override

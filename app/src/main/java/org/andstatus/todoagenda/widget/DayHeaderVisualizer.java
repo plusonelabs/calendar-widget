@@ -54,9 +54,7 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
     }
 
     private void setDayHeaderTitle(int position, DayHeader entry, RemoteViews rv, ContextThemeWrapper shadingContext) {
-        String dateString = ((entry.entryPosition == WidgetEntryPosition.PAST_AND_DUE_HEADER)
-                ? getContext().getString(R.string.past_header)
-                : DateUtil.createDayHeaderTitle(getSettings(), entry.entryDate))
+        String dateString = getTitleString(entry)
             .toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
@@ -70,6 +68,17 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
                 : R.dimen.day_header_padding_bottom;
         setPadding(getSettings(), rv, R.id.day_header_title,
                 R.dimen.day_header_padding_left, paddingTopId, R.dimen.day_header_padding_right, paddingBottomId);
+    }
+
+    private String getTitleString(DayHeader entry) {
+        switch (entry.entryPosition) {
+            case PAST_AND_DUE_HEADER:
+                return getContext().getString(R.string.past_header);
+            case END_OF_LIST_HEADER:
+                return getContext().getString(R.string.end_of_list_header);
+            default:
+                return DateUtil.createDayHeaderTitle(getSettings(), entry.entryDate);
+        }
     }
 
     private void setDayHeaderSeparator(int position, RemoteViews rv, ContextThemeWrapper shadingContext) {

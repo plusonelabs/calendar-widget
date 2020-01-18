@@ -11,8 +11,8 @@ import org.joda.time.DateTimeZone;
  * @author yvolk@yurivolkov.com
  */
 public class MyClock {
-    public static final DateTime DATETIME_MIN = new DateTime(0, DateTimeZone.UTC);
-    public static final DateTime DATETIME_MAX = new DateTime(Long.MAX_VALUE, DateTimeZone.UTC);
+    public static final DateTime DATETIME_MIN = new DateTime(0, DateTimeZone.UTC).withTimeAtStartOfDay();
+    public static final DateTime DATETIME_MAX = new DateTime(Long.MAX_VALUE, DateTimeZone.UTC).withTimeAtStartOfDay();
 
     private volatile SnapshotMode snapshotMode = SnapshotMode.defaultValue;
     private volatile DateTime snapshotDate = null;
@@ -123,7 +123,7 @@ public class MyClock {
         return isDateDefined(date) && date.isBefore(now(date.getZone()));
     }
 
-    public DateTime startOfTomorrow(DateTimeZone zone) {
+    public DateTime startOfTomorrow() {
         return startOfNextDay(now(zone));
     }
 

@@ -33,6 +33,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
                 return entryDate;
             case PAST_AND_DUE_HEADER:
             case PAST_AND_DUE:
+            case START_OF_TODAY:
                 return entryDate == null
                         ? MyClock.DATETIME_MIN
                         : entryDate;
@@ -40,14 +41,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
             case START_OF_DAY:
                 throwIfNull(entryPosition, entryDate);
                 return entryDate.withTimeAtStartOfDay();
-            case START_OF_TODAY:
-                return settings.clock().isToday(entryDate)
-                            ? entryDate
-                            : MyClock.DATETIME_MIN;
             case END_OF_TODAY:
-                return settings.clock().isToday(entryDate)
-                            ? entryDate
-                            : MyClock.DATETIME_MAX;
             case END_OF_LIST_HEADER:
             case END_OF_LIST:
             case LIST_FOOTER:

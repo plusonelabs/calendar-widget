@@ -10,6 +10,8 @@ import org.andstatus.todoagenda.util.MyClock;
 import org.joda.time.DateTime;
 
 import static org.andstatus.todoagenda.widget.WidgetEntryPosition.END_OF_LIST;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.ENTRY_DATE;
+import static org.andstatus.todoagenda.widget.WidgetEntryPosition.PAST_AND_DUE;
 import static org.andstatus.todoagenda.widget.WidgetEntryPosition.START_OF_TODAY;
 
 public class TaskEntry extends WidgetEntry<TaskEntry> {
@@ -30,13 +32,26 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
     private static WidgetEntryPosition getEntryPosition(InstanceSettings settings, TaskEvent event) {
         if (!event.hasStartDate() && !event.hasDueDate()) return settings.getTaskWithoutDates().widgetEntryPosition;
 
+        if (event.hasDueDate() && settings.clock().isBeforeToday(event.getDueDate())) {
+            return settings.getShowPastEventsUnderOneHeader() ? PAST_AND_DUE : ENTRY_DATE;
+        }
+
         DateTime mainDate = mainDate(settings, event);
-        DateTime otherDate = otherDate(settings, event);
-        if (mainDate == null) {
-            if (settings.clock().isBeforeToday(otherDate)) return START_OF_TODAY;
-            if (otherDate.isAfter(settings.getEndOfTimeRange())) return END_OF_LIST;
-        } else {
+        if (mainDate != null) {
             if (mainDate.isAfter(settings.getEndOfTimeRange())) return END_OF_LIST;
+        }
+
+        DateTime otherDate = otherDate(settings, event);
+
+        if (settings.getTaskScheduling() == TaskScheduling.DATE_DUE) {
+            if (!event.hasDueDate()) {
+                if (settings.clock().isBeforeToday(event.getStartDate())) return START_OF_TODAY;
+                if (event.getStartDate().isAfter(settings.getEndOfTimeRange())) return END_OF_LIST;
+            }
+        } else {
+            if (!event.hasStartDate() || settings.clock().isBeforeToday(event.getStartDate())) {
+                    return START_OF_TODAY;
+            }
         }
         return WidgetEntry.getEntryPosition(settings, mainDate, otherDate);
     }
@@ -60,21 +75,26 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
             case END_OF_LIST_HEADER:
             case LIST_FOOTER:
             case HIDDEN:
-                return anyDateOrElse(settings, event, MyClock.DATETIME_MAX);
+                return getEntryDateOrElse(settings, event, MyClock.DATETIME_MAX);
             default:
-                return anyDateOrElse(settings, event, MyClock.DATETIME_MIN);
+                return getEntryDateOrElse(settings, event, MyClock.DATETIME_MIN);
         }
     }
 
-    private static DateTime anyDateOrElse(InstanceSettings settings, TaskEvent event, DateTime defaultDate) {
+    private static DateTime getEntryDateOrElse(InstanceSettings settings, TaskEvent event, DateTime defaultDate) {
         if (settings.getTaskScheduling() == TaskScheduling.DATE_DUE) {
             return event.hasDueDate()
                     ? event.getDueDate()
                     : (event.hasStartDate() ? event.getStartDate() : defaultDate);
         } else {
-            return event.hasStartDate()
-                    ? event.getStartDate()
-                    : (event.hasDueDate() ? event.getDueDate() : defaultDate);
+            if (event.hasStartDate()) {
+                if (settings.clock().isBeforeToday(event.getStartDate())) {
+                    return event.hasDueDate() ? event.getDueDate() : defaultDate;
+                }
+                return event.getStartDate();
+            } else {
+                return event.hasDueDate() ? event.getDueDate() : defaultDate;
+            }
         }
     }
 

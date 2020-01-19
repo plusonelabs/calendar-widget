@@ -6,6 +6,6 @@ import org.joda.time.DateTime;
 public class DayHeader extends WidgetEntry<DayHeader> {
 
     public DayHeader(InstanceSettings settings, WidgetEntryPosition entryPosition, DateTime date) {
-        super(settings, entryPosition, date);
+        super(settings, entryPosition, date, null);
     }
 }

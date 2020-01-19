@@ -664,7 +664,7 @@ public class InstanceSettings {
     }
 
     public int getEntryBackgroundColor(WidgetEntry<?> entry) {
-        return entry.getTimeSection()
+        return entry.timeSection
                 .select(getPastEventsBackgroundColor(), getTodaysEventsBackgroundColor(), getEventsBackgroundColor());
     }
 

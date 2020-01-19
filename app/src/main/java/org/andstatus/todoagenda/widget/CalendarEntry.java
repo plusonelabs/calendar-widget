@@ -3,8 +3,6 @@ package org.andstatus.todoagenda.widget;
 import android.content.Context;
 import android.text.TextUtils;
 
-import androidx.annotation.Nullable;
-
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -31,13 +29,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     }
 
     private CalendarEntry(InstanceSettings settings, DateTime entryDate, DateTime endDate) {
-        super(settings, WidgetEntry.getEntryPosition(settings, entryDate, endDate), entryDate);
-    }
-
-    @Nullable
-    @Override
-    public DateTime getEndDate() {
-        return event.getEndDate();
+        super(settings, WidgetEntry.getEntryPosition(settings, entryDate, endDate), entryDate, endDate);
     }
 
     @Override
@@ -162,8 +154,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     @Override
     public String toString() {
         return super.toString() + " CalendarEntry ["
-                + "endDate=" + getEndDate()
-                + ", allDay=" + allDay
+                + "allDay=" + allDay
                 + ", time=" + getEventTimeString()
                 + ", location=" + getLocationString()
                 + ", event=" + event

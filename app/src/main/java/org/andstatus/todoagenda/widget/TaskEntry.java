@@ -1,7 +1,5 @@
 package org.andstatus.todoagenda.widget;
 
-import androidx.annotation.Nullable;
-
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.prefs.TaskScheduling;
@@ -19,13 +17,13 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
 
     public static TaskEntry fromEvent(InstanceSettings settings, TaskEvent event) {
         WidgetEntryPosition entryPosition = getEntryPosition(settings, event);
-        TaskEntry entry = new TaskEntry(settings, entryPosition, getEntryDate(settings, entryPosition, event));
+        TaskEntry entry = new TaskEntry(settings, entryPosition, getEntryDate(settings, entryPosition, event), event.getDueDate());
         entry.event = event;
         return entry;
     }
 
-    private TaskEntry(InstanceSettings settings, WidgetEntryPosition entryPosition, DateTime entryDate) {
-        super(settings, entryPosition, entryDate);
+    private TaskEntry(InstanceSettings settings, WidgetEntryPosition entryPosition, DateTime entryDate, DateTime endDate) {
+        super(settings, entryPosition, entryDate, endDate);
     }
 
     /** See https://github.com/plusonelabs/calendar-widget/issues/356#issuecomment-559910887 **/
@@ -96,12 +94,6 @@ public class TaskEntry extends WidgetEntry<TaskEntry> {
                 return event.hasDueDate() ? event.getDueDate() : defaultDate;
             }
         }
-    }
-
-    @Nullable
-    @Override
-    public DateTime getEndDate() {
-        return event.getDueDate();
     }
 
     @Override

@@ -41,15 +41,15 @@ public enum TextShadingPref {
     }
 
     public static TextShadingPref forDayHeader(WidgetEntry<?> entry) {
-        return entry.getTimeSection().select(DAY_HEADER_PAST, DAY_HEADER_TODAY, DAY_HEADER_FUTURE);
+        return entry.timeSection.select(DAY_HEADER_PAST, DAY_HEADER_TODAY, DAY_HEADER_FUTURE);
     }
 
     public static TextShadingPref forDetails(WidgetEntry<?> entry) {
-        return entry.getTimeSection().select(DAY_HEADER_PAST, DAY_HEADER_TODAY, DAY_HEADER_FUTURE);
+        return entry.timeSection.select(DAY_HEADER_PAST, DAY_HEADER_TODAY, DAY_HEADER_FUTURE);
     }
 
     public static TextShadingPref forTitle(WidgetEntry<?> entry) {
-        return entry.getTimeSection().select(ENTRY_PAST, ENTRY_TODAY, ENTRY_FUTURE);
+        return entry.timeSection.select(ENTRY_PAST, ENTRY_TODAY, ENTRY_FUTURE);
     }
 
 }

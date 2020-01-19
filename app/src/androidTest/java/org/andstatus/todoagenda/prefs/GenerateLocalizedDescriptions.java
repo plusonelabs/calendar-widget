@@ -2,13 +2,12 @@ package org.andstatus.todoagenda.prefs;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.os.Build;
 import android.util.Log;
+
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.andstatus.todoagenda.R;
 import org.junit.Test;
-
-import androidx.test.platform.app.InstrumentationRegistry;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -17,8 +16,6 @@ public class GenerateLocalizedDescriptions {
 
     @Test
     public void localizedDescriptions() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return;
-
         Context context1 = InstrumentationRegistry.getInstrumentation().getTargetContext();
         String[] languages = context1.getResources().getStringArray(R.array.custom_locale_entries);
         String[] locales = context1.getResources().getStringArray(R.array.custom_locale_values);

@@ -1,10 +1,8 @@
 package org.andstatus.todoagenda.util;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
-import android.os.Build;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
@@ -29,16 +27,13 @@ public class RemoteViewsUtil {
         // prohibit instantiation
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void setPadding(InstanceSettings settings, RemoteViews rv, @IdRes int viewId,
           @DimenRes int leftDimenId, @DimenRes int topDimenId, @DimenRes int rightDimenId, @DimenRes int bottomDimenId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            int leftPadding = getScaledValueInPixels(settings, leftDimenId);
-            int topPadding = getScaledValueInPixels(settings, topDimenId);
-            int rightPadding = getScaledValueInPixels(settings, rightDimenId);
-            int bottomPadding = getScaledValueInPixels(settings, bottomDimenId);
-            rv.setViewPadding(viewId, leftPadding, topPadding, rightPadding, bottomPadding);
-        }
+        int leftPadding = getScaledValueInPixels(settings, leftDimenId);
+        int topPadding = getScaledValueInPixels(settings, topDimenId);
+        int rightPadding = getScaledValueInPixels(settings, rightDimenId);
+        int bottomPadding = getScaledValueInPixels(settings, bottomDimenId);
+        rv.setViewPadding(viewId, leftPadding, topPadding, rightPadding, bottomPadding);
     }
 
     public static void setAlpha(RemoteViews rv, int viewId, int alpha) {

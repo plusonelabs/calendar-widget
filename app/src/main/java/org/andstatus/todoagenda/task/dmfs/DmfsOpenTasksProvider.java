@@ -102,16 +102,10 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
         task.setId(cursor.getLong(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_ID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_TITLE)));
 
-        int dueDateIdx = cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE);
-        Long dueMillis = null;
-        if (!cursor.isNull(dueDateIdx)) {
-            dueMillis = cursor.getLong(dueDateIdx);
-        }
         int startDateIdx = cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE);
-        Long startMillis = null;
-        if (!cursor.isNull(startDateIdx)) {
-            startMillis = cursor.getLong(startDateIdx);
-        }
+        Long startMillis = cursor.isNull(startDateIdx) ? null : cursor.getLong(startDateIdx);
+        int dueDateIdx = cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE);
+        Long dueMillis = cursor.isNull(dueDateIdx) ? null : cursor.getLong(dueDateIdx);
         task.setDates(startMillis, dueMillis);
 
         task.setColor(getAsOpaque(cursor.getInt(cursor.getColumnIndex(DmfsOpenTasksContract.Tasks.COLUMN_COLOR))));

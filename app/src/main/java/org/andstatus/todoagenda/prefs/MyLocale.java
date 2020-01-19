@@ -19,18 +19,14 @@ package org.andstatus.todoagenda.prefs;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.LocaleList;
 import android.text.TextUtils;
 
 import java.util.Locale;
 
-import androidx.annotation.RequiresApi;
-
 /**
  * @author yvolk@yurivolkov.com
  */
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class MyLocale {
     public static final String KEY_CUSTOM_LOCALE = "custom_locale";
     private static final String CUSTOM_LOCALE_DEFAULT = "default";

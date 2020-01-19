@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -40,9 +39,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
 
             IntentFilter filter = new IntentFilter();
             filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                filter.addAction(Intent.ACTION_DREAMING_STOPPED);
-            }
+            filter.addAction(Intent.ACTION_DREAMING_STOPPED);
             context.registerReceiver(receiver, filter);
 
             EnvironmentChangedReceiver oldReceiver = registeredReceiver.getAndSet(receiver);

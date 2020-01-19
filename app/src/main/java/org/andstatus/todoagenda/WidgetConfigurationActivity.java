@@ -1,11 +1,9 @@
 package org.andstatus.todoagenda;
 
-import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
@@ -107,7 +105,6 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
     }
 
     @Override
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     protected boolean isValidFragment(String fragmentName) {
         if (fragmentName.startsWith(PREFERENCES_PACKAGE_NAME)) {
             return true;

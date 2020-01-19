@@ -1,8 +1,6 @@
 package org.andstatus.todoagenda.provider;
 
-import android.annotation.TargetApi;
 import android.database.Cursor;
-import android.os.Build;
 import android.provider.CalendarContract;
 
 import org.json.JSONException;
@@ -210,13 +208,8 @@ public class QueryRow {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public QueryRow setDisplayColor(Object obj) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return setColumn(CalendarContract.Instances.DISPLAY_COLOR, obj);
-        } else {
-            return setColumn(CalendarContract.Instances.EVENT_COLOR, obj);
-        }
+        return setColumn(CalendarContract.Instances.DISPLAY_COLOR, obj);
     }
 
     public Object[] getArray(String[] projection) {

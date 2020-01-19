@@ -100,12 +100,12 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         return createEntryList(eventProvider.queryEvents());
     }
 
-    private List<TaskEntry> createEntryList(List<TaskEvent> events) {
-        List<TaskEntry> entries = new ArrayList<>();
-        for (TaskEvent event : events) {
-            entries.add(TaskEntry.fromEvent(event));
-        }
-        return entries;
-    }
+    private static List<TaskEntry> createEntryList(List<TaskEvent> events) {
+		List<TaskEntry> entries = new ArrayList<>();
+		for (TaskEvent event : events) {
+			entries.add(TaskEntry.fromEvent(event));
+		}
+		return entries;
+	}
 
 }

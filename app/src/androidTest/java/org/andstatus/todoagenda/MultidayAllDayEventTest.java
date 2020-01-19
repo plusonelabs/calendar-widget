@@ -1,7 +1,5 @@
 package org.andstatus.todoagenda;
 
-import android.util.Log;
-
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.widget.DayHeader;
@@ -43,13 +41,13 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
         for (int ind = 0; ind < factory.getWidgetEntries().size(); ind++) {
             WidgetEntry entry = factory.getWidgetEntries().get(ind);
             String logMsg = method + "; " + String.format("%02d ", ind) + entry.toString();
-            if (entry.getEntryDay().isBefore(today)) {
+            if (entry.entryDay.isBefore(today)) {
                 fail("Is present before today " + logMsg);
             }
-            if (entry.getEntryDay().isAfter(endOfRangeTime)) {
+            if (entry.entryDay.isAfter(endOfRangeTime)) {
                 fail("After end of range " + logMsg);
             }
-            int dayOfEntry = entry.getEntryDay().getDayOfYear();
+            int dayOfEntry = entry.entryDay.getDayOfYear();
             if (entry instanceof DayHeader) {
                 if (dayOfHeaderPrev == 0) {
                     if (entry.entryDate.withTimeAtStartOfDay().isAfter(today)) {

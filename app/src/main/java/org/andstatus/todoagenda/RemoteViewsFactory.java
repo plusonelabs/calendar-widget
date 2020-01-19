@@ -224,7 +224,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             boolean pastEventsHeaderAdded = false;
             boolean endOfListHeaderAdded = false;
             for (WidgetEntry entry : listIn) {
-                DateTime nextEntryDay = entry.getEntryDay();
+                DateTime nextEntryDay = entry.entryDay;
                 switch (entry.entryPosition) {
                     case PAST_AND_DUE:
                         if(!pastEventsHeaderAdded) {
@@ -241,9 +241,9 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
                         }
                         break;
                     default:
-                        if (!nextEntryDay.isEqual(curDayBucket.getEntryDay())) {
+                        if (!nextEntryDay.isEqual(curDayBucket.entryDay)) {
                             if (settings.getShowDaysWithoutEvents()) {
-                                addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.getEntryDay(), nextEntryDay);
+                                addEmptyDayHeadersBetweenTwoDays(listOut, curDayBucket.entryDay, nextEntryDay);
                             }
                             curDayBucket = new DayHeader(settings, DAY_HEADER, nextEntryDay);
                             listOut.add(curDayBucket);

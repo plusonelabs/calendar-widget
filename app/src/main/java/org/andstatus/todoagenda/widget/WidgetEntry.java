@@ -19,11 +19,23 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     public final WidgetEntryPosition entryPosition;
     public final DateTime entryDate;
     protected final InstanceSettings settings;
+    public final DateTime entryDay;
 
     protected WidgetEntry(InstanceSettings settings, WidgetEntryPosition entryPosition, DateTime entryDate) {
         this.settings = settings;
         this.entryPosition = entryPosition;
         this.entryDate = fixEntryDate(entryPosition, entryDate);
+        entryDay = calcEntryDay(settings, entryPosition, this.entryDate);
+    }
+
+    private DateTime calcEntryDay(InstanceSettings settings, WidgetEntryPosition entryPosition, DateTime entryDate) {
+        switch (entryPosition) {
+            case START_OF_TODAY:
+            case END_OF_TODAY:
+                return settings.clock().now().withTimeAtStartOfDay();
+            default:
+                return entryDate.withTimeAtStartOfDay();
+        }
     }
 
     private DateTime fixEntryDate(WidgetEntryPosition entryPosition, DateTime entryDate) {
@@ -77,16 +89,6 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return ENTRY_DATE;
     }
 
-    public DateTime getEntryDay() {
-        switch (entryPosition) {
-            case START_OF_TODAY:
-            case END_OF_TODAY:
-                return settings.clock().now().withTimeAtStartOfDay();
-            default:
-                return entryDate.withTimeAtStartOfDay();
-        }
-    }
-
     @Nullable
     public DateTime getEndDate() {
         return null;
@@ -114,9 +116,9 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         int globalSignum = Integer.signum(entryPosition.globalOrder - other.entryPosition.globalOrder);
         if (globalSignum != 0) return globalSignum;
 
-        if (DateUtil.isSameDay(getEntryDay(), other.getEntryDay())) {
+        if (DateUtil.isSameDay(entryDay, other.entryDay)) {
             int sameDaySignum = Integer.signum(entryPosition.sameDayOrder - other.entryPosition.sameDayOrder);
-            if ((sameDaySignum != 0) && DateUtil.isSameDay(getEntryDay(), other.getEntryDay())) return sameDaySignum;
+            if ((sameDaySignum != 0) && DateUtil.isSameDay(entryDay, other.entryDay)) return sameDaySignum;
 
             if (entryDate.isAfter(other.entryDate)) {
                 return 1;
@@ -124,9 +126,9 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
                 return -1;
             }
         } else {
-            if (getEntryDay().isAfter(other.getEntryDay())) {
+            if (entryDay.isAfter(other.entryDay)) {
                 return 1;
-            } else if (getEntryDay().isBefore(other.getEntryDay())) {
+            } else if (entryDay.isBefore(other.entryDay)) {
                 return -1;
             }
         }

@@ -9,6 +9,7 @@ import org.andstatus.todoagenda.R;
  */
 public enum FilterMode {
     NORMAL_FILTER("normal", R.string.filter_mode_normal),
+    /** Include filtering that is usually done at the content provider query level */
     DEBUG_FILTER("debug", R.string.filter_mode_debug),
     NO_FILTERING("no_filtering", R.string.filter_mode_no_filtering);
 

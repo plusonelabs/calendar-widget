@@ -105,7 +105,7 @@ public class CalendarEventProvider extends EventProvider {
             case NO_FILTERING:
                 break;
             default:
-                // Above filters are not exactly correct for AllDay events: for them that filter
+                // Filters in a query are not exactly correct for AllDay events: for them that filter
                 // time should be moved by a time zone... (i.e. by several hours)
                 // This is why we need to do additional filtering after querying a Content Provider:
                 for (Iterator<CalendarEvent> it = eventList.iterator(); it.hasNext(); ) {

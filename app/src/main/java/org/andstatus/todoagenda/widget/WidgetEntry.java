@@ -34,6 +34,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
             case PAST_AND_DUE_HEADER:
             case PAST_AND_DUE:
             case START_OF_TODAY:
+            case HIDDEN:
                 return entryDate == null
                         ? MyClock.DATETIME_MIN
                         : entryDate;

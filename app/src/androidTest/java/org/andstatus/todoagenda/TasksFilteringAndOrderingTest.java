@@ -26,8 +26,8 @@ import static org.junit.Assert.assertEquals;
 public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
 
     @Test
-    public void testDateDueNoFilters() throws IOException, JSONException {
-        final String method = "testDateDueNoFilters";
+    public void dateDueNoFilters() throws IOException, JSONException {
+        final String method = "dateDueNoFilters";
         List<String> names = Arrays.asList(
                 WidgetEntryPosition.DAY_HEADER.value,
                 "task11 ", "task5 ",
@@ -52,8 +52,34 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
     }
 
     @Test
-    public void testDateStartedNoFilters() throws IOException, JSONException {
-        final String method = "testDateStartedNoFilters";
+    public void dateDueFiltered() throws IOException, JSONException {
+        final String method = "testDateDueFiltered";
+        List<String> names = Arrays.asList(
+                WidgetEntryPosition.DAY_HEADER.value,
+                "task5 ",
+                WidgetEntryPosition.DAY_HEADER.value,
+                "a Today's event at midnight", "Today's event at 4AM", "Today's event at 8:05",
+                "task3 ",
+                "Today's event later at 9:05PM",
+                "task1 ", "task10 ",
+                "", "task12 ",
+                "", "Test event that",
+                "", "task17 ",
+                "", "task16 ",
+                WidgetEntryPosition.END_OF_LIST_HEADER.value,
+                "task8 ", "task2 ");
+
+        Consumer<InstanceSettings> setter = settings ->
+                settings.setTaskScheduling(TaskScheduling.DATE_DUE)
+                        .setTaskWithoutDates(TasksWithoutDates.END_OF_TODAY)
+                        .setFilterMode(FilterMode.DEBUG_FILTER);
+
+        assertOneCase(method, setter, names);
+    }
+
+    @Test
+    public void dateStartedNoFilters() throws IOException, JSONException {
+        final String method = "dateStartedNoFilters";
         List<String> names = Arrays.asList(
                 WidgetEntryPosition.DAY_HEADER.value,
                 "task11 ", "task5 ",
@@ -74,6 +100,86 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
                 settings.setTaskScheduling(TaskScheduling.DATE_STARTED)
                         .setTaskWithoutDates(TasksWithoutDates.END_OF_TODAY)
                         .setFilterMode(FilterMode.NO_FILTERING);
+
+        assertOneCase(method, setter, names);
+    }
+
+    @Test
+    public void dateStartedEndOfList() throws IOException, JSONException {
+        final String method = "dateStartedEndOfList";
+        List<String> names = Arrays.asList(
+                WidgetEntryPosition.DAY_HEADER.value,
+                "task11 ", "task5 ",
+                WidgetEntryPosition.DAY_HEADER.value,
+                "task3 ", "task1 ", "task6 ", "task16 ", "task4 ", "task2 ",
+                "a Today's event at midnight", "Today's event at 4AM",
+                "task12 ", "task7 ",
+                "Today's event at 8:05",
+                "Today's event later at 9:05PM",
+                "", "Test event that",
+                "", "task8 ",
+                "", "task17 ",
+                WidgetEntryPosition.END_OF_LIST_HEADER.value,
+                "task14 ", "task15 ",
+                "task10 ", "task9 "
+        );
+
+        Consumer<InstanceSettings> setter = settings ->
+                settings.setTaskScheduling(TaskScheduling.DATE_STARTED)
+                        .setTaskWithoutDates(TasksWithoutDates.END_OF_LIST)
+                        .setFilterMode(FilterMode.NO_FILTERING);
+
+        assertOneCase(method, setter, names);
+    }
+
+    @Test
+    public void dateStartedHideNoDates() throws IOException, JSONException {
+        final String method = "dateStartedHideNoDates";
+        List<String> names = Arrays.asList(
+                WidgetEntryPosition.DAY_HEADER.value,
+                "task11 ", "task5 ",
+                WidgetEntryPosition.DAY_HEADER.value,
+                "task3 ", "task1 ", "task6 ", "task16 ", "task4 ", "task2 ",
+                "a Today's event at midnight", "Today's event at 4AM",
+                "task12 ", "task7 ",
+                "Today's event at 8:05",
+                "Today's event later at 9:05PM",
+                "", "Test event that",
+                "", "task8 ",
+                "", "task17 ",
+                WidgetEntryPosition.END_OF_LIST_HEADER.value,
+                "task14 ", "task15 "
+        );
+
+        Consumer<InstanceSettings> setter = settings ->
+                settings.setTaskScheduling(TaskScheduling.DATE_STARTED)
+                        .setTaskWithoutDates(TasksWithoutDates.HIDE)
+                        .setFilterMode(FilterMode.NO_FILTERING);
+
+        assertOneCase(method, setter, names);
+    }
+
+    @Test
+    public void dateStartedFiltered() throws IOException, JSONException {
+        final String method = "dateStartedFiltered";
+        List<String> names = Arrays.asList(
+                WidgetEntryPosition.DAY_HEADER.value,
+                "task5 ",
+                WidgetEntryPosition.DAY_HEADER.value,
+                "task3 ", "task1 ", "task16 ", "task4 ", "task2 ",
+                "a Today's event at midnight", "Today's event at 4AM",
+                "task12 ",
+                "Today's event at 8:05",
+                "Today's event later at 9:05PM",
+                "task10 ",
+                "", "Test event that",
+                "", "task8 ",
+                "", "task17 ");
+
+        Consumer<InstanceSettings> setter = settings ->
+                settings.setTaskScheduling(TaskScheduling.DATE_STARTED)
+                        .setTaskWithoutDates(TasksWithoutDates.END_OF_TODAY)
+                        .setFilterMode(FilterMode.DEBUG_FILTER);
 
         assertOneCase(method, setter, names);
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.andstatus.todoagenda.prefs.FilterMode;
+import org.andstatus.todoagenda.prefs.TaskScheduling;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.joda.time.DateTime;
@@ -46,8 +47,12 @@ public abstract class AbstractTaskProvider extends EventProvider {
 
         if (getFilterMode() == FilterMode.DEBUG_FILTER) {
             if (task.getStatus() == TaskStatus.COMPLETED) return false;
-
-            // TODO: other checks...
+            if (task.hasStartDate() && task.getStartDate().isAfter(getSettings().getEndOfTimeRange())) return false;
+        }
+        if (getSettings().getTaskScheduling() == TaskScheduling.DATE_DUE) {
+            if (!task.hasStartDate()) {
+                if (task.hasDueDate() && task.getDueDate().isAfter(getSettings().getEndOfTimeRange())) return false;
+            }
         }
 
         return !mKeywordsFilter.matched(task.getTitle());

@@ -62,18 +62,10 @@ public class DmfsOpenTasksProvider extends AbstractTaskProvider {
             whereBuilder.append(DmfsOpenTasksContract.Tasks.COLUMN_STATUS).append(NOT_EQUALS)
                 .append(DmfsOpenTasksContract.Tasks.STATUS_COMPLETED);
 
-            whereBuilder.append(AND_BRACKET)
-                .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
-                .append(OR)
-                .append(OPEN_BRACKET)
-                .append(DmfsOpenTasksContract.Tasks.COLUMN_DUE_DATE).append(IS_NULL)
-                .append(AND_BRACKET)
-                .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
-                .append(OR)
-                .append(DmfsOpenTasksContract.Tasks.COLUMN_START_DATE).append(IS_NULL)
-                .append(CLOSING_BRACKET)
-                .append(CLOSING_BRACKET)
-                .append(CLOSING_BRACKET);
+            whereBuilder.append(AND_BRACKET +
+                DmfsOpenTasksContract.Tasks.COLUMN_START_DATE + LTE + mEndOfTimeRange.getMillis() +
+                OR + DmfsOpenTasksContract.Tasks.COLUMN_START_DATE + IS_NULL +
+            CLOSING_BRACKET);
         }
 
         Set<String> taskLists = new HashSet<>();

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.prefs.FilterMode;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.task.AbstractTaskProvider;
@@ -56,14 +57,11 @@ public class SamsungTasksProvider extends AbstractTaskProvider {
 
     private String getWhereClause() {
         StringBuilder whereBuilder = new StringBuilder();
-        whereBuilder.append(SamsungTasksContract.Tasks.COLUMN_COMPLETE).append(EQUALS).append("0");
-        whereBuilder.append(AND).append(SamsungTasksContract.Tasks.COLUMN_DELETED).append(EQUALS).append("0");
+        whereBuilder.append(SamsungTasksContract.Tasks.COLUMN_DELETED).append(EQUALS).append("0");
 
-        whereBuilder.append(AND_BRACKET)
-                .append(SamsungTasksContract.Tasks.COLUMN_DUE_DATE).append(LTE).append(mEndOfTimeRange.getMillis())
-                .append(OR)
-                .append(SamsungTasksContract.Tasks.COLUMN_DUE_DATE).append(IS_NULL)
-                .append(CLOSING_BRACKET);
+        if (getFilterMode() == FilterMode.NORMAL_FILTER) {
+            whereBuilder.append(AND).append(SamsungTasksContract.Tasks.COLUMN_COMPLETE).append(EQUALS).append("0");
+        }
 
         Set<String> taskLists = new HashSet<>();
         for (OrderedEventSource orderedSource: getSettings().getActiveEventSources(type)) {

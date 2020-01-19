@@ -57,7 +57,7 @@ each application needs its own implementation. Currently supported:
 ## Collaborate
 
 We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open 
-[issues](https://github.com/plusonelabs/calendar-widget/issues) and provide 
+[issues](https://github.com/andstatus/todoagenda/issues?q=is%3Aissue+sort%3Aupdated-desc) and provide
 [pull requests](https://github.com/andstatus/todoagenda/pulls). 
 To get timely feedback we are also making use of the open beta feature in the Google Play Store. 
 Please [opt-in here](https://play.google.com/apps/testing/org.andstatus.todoagenda).

@@ -51,6 +51,34 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
         assertOneCase(method, setter, names);
     }
 
+    /** T1 at https://github.com/plusonelabs/calendar-widget/issues/356#issuecomment-559910887 */
+    @Test
+    public void dateDueEndOfList() throws IOException, JSONException {
+        final String method = "dateDueNoFilters";
+        List<String> names = Arrays.asList(
+                WidgetEntryPosition.DAY_HEADER.value,
+                "task11 ", "task5 ",
+                WidgetEntryPosition.DAY_HEADER.value,
+                "a Today's event at midnight", "Today's event at 4AM", "Today's event at 8:05",
+                "task3 ",
+                "Today's event later at 9:05PM",
+                "task1 ",
+                "", "task6 ", "task7 ", "task12 ",
+                "", "Test event that",
+                "", "task17 ",
+                "", "task16 ",
+                WidgetEntryPosition.END_OF_LIST_HEADER.value,
+                "task14 ", "task8 ", "task4 ", "task2 ", "task15 ",
+                "task10 ", "task9 ");
+
+        Consumer<InstanceSettings> setter = settings ->
+                settings.setTaskScheduling(TaskScheduling.DATE_DUE)
+                        .setTaskWithoutDates(TasksWithoutDates.END_OF_LIST)
+                        .setFilterMode(FilterMode.NO_FILTERING);
+
+        assertOneCase(method, setter, names);
+    }
+
     @Test
     public void dateDueFiltered() throws IOException, JSONException {
         final String method = "testDateDueFiltered";
@@ -104,6 +132,7 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
         assertOneCase(method, setter, names);
     }
 
+    /** T2 at https://github.com/plusonelabs/calendar-widget/issues/356#issuecomment-559910887 */
     @Test
     public void dateStartedEndOfList() throws IOException, JSONException {
         final String method = "dateStartedEndOfList";

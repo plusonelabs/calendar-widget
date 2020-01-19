@@ -66,6 +66,26 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## <a id="changelog"/> Changelog
 
+### 2020-01-19 <a id="v4.0"/> v4.0.1 Additional options for tasks filtering and ordering
+* "[Task scheduling](https://github.com/andstatus/todoagenda/issues/4)" option added allowing to define,
+ what date gets main attention for a task. With two values:
+   * Show tasks under date due (Due date gets main attention, and we are showing tasks at their due dates,
+ where it makes sense).
+   * Show tasks under date started (Start date gets main attention, and we are showing tasks at their start dates,
+ where it makes sense).
+* "Tasks without start and due dates" option added to allow changing placement in the list or hiding such tasks;
+ with values:
+   * Show at the end of the whole list (default option)
+   * Show at the end of Today.
+   * Hide.
+* "Filters troubleshooter" option added to debug events filtering and ordering.
+* "Restore settings from a backup" feature extended so that if the backup contains events
+ (stored using "Share events and settings for debugging") than that events
+ can be shown as a snapshot (e.g. for app problem investigation).
+ Corresponding new "Lock list of events (Snapshot mode)" feature allows to switch between "Live data from real sources"
+ (i.e. normal way to see events in the widget), "Snapshot as seen at the time, when it was taken" (Time machine), and
+ "Stored snapshot shown at current time".
+
 ### 2019-12-01 <a id="v3.1"/> v3.1.9 Hide duplicate events. Backup and restore
 
 * Selected Calendars (Task lists) [display order](https://github.com/plusonelabs/calendar-widget/issues/287)

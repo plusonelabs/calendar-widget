@@ -259,7 +259,7 @@ public class InstanceSettings {
                 setRefreshPeriodMinutes(json.getInt(PREF_REFRESH_PERIOD_MINUTES));
             }
             if (json.has(PREF_EVENT_ENTRY_LAYOUT)) {
-                eventEntryLayout = EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT));
+                setEventEntryLayout(EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT)));
             }
             if (json.has(PREF_MULTILINE_TITLE)) {
                 multilineTitle = json.getBoolean(PREF_MULTILINE_TITLE);
@@ -341,7 +341,7 @@ public class InstanceSettings {
             settings.dateFormat = ApplicationPreferences.getDateFormat(context);
             settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
             settings.setRefreshPeriodMinutes(ApplicationPreferences.getRefreshPeriodMinutes(context));
-            settings.eventEntryLayout = ApplicationPreferences.getEventEntryLayout(context);
+            settings.setEventEntryLayout(ApplicationPreferences.getEventEntryLayout(context));
             settings.multilineTitle = ApplicationPreferences.isMultilineTitle(context);
             settings.multilineDetails = ApplicationPreferences.isMultilineDetails(context);
             settings.showOnlyClosestInstanceOfRecurringEvent = ApplicationPreferences
@@ -591,6 +591,11 @@ public class InstanceSettings {
 
     public EventEntryLayout getEventEntryLayout() {
         return eventEntryLayout;
+    }
+
+    public InstanceSettings setEventEntryLayout(EventEntryLayout eventEntryLayout) {
+        this.eventEntryLayout = eventEntryLayout;
+        return this;
     }
 
     public boolean isMultilineTitle() {

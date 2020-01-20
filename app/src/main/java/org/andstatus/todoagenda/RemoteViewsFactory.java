@@ -72,6 +72,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     private volatile List<WidgetEntry> widgetEntries = new ArrayList<>();
     private volatile List<WidgetEntryVisualizer<? extends WidgetEntry>> visualizers = new ArrayList<>();
     private volatile long prevReloadFinishedAt = 0;
+    private volatile boolean waitingForRedraw;
 
     public RemoteViewsFactory(Context context, int widgetId) {
         this.context = context;
@@ -95,8 +96,24 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     public int getCount() {
-        logEvent("getCount:" + widgetEntries.size());
+        logEvent("getCount:" + widgetEntries.size() + (waitingForRedraw ? " waiting" : ""));
+        setWaitingForRedraw(false);
         return widgetEntries.size();
+    }
+
+    public int getCountInternal() {
+        return widgetEntries.size();
+    }
+
+    public boolean isWaitingForRedraw() {
+        return waitingForRedraw;
+    }
+
+    public void setWaitingForRedraw(boolean newValue) {
+        if (newValue != waitingForRedraw) {
+            logEvent("waitingForRedraw: " + newValue);
+            this.waitingForRedraw = newValue;
+        }
     }
 
     public RemoteViews getViewAt(int position) {
@@ -146,7 +163,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_initial);
 
-            configureWidgetHeader(settings, rv, factory != null && factory.getCount() == 0);
+            configureWidgetHeader(settings, rv, factory != null && factory.getCountInternal() == 0);
             configureWidgetEntriesList(settings, context, widgetId, rv);
             if (factory != null) {
                 factory.configureGotoToday(settings, rv, factory.getTomorrowsPosition(), factory.getTodaysPosition());

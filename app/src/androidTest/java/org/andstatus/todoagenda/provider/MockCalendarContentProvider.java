@@ -40,6 +40,7 @@ public class MockCalendarContentProvider {
 
     private final static AtomicInteger lastWidgetId = new AtomicInteger(TEST_WIDGET_ID_MIN);
     private final int widgetId;
+    public final boolean usesActualWidget;
     private volatile InstanceSettings settings;
 
     public static MockCalendarContentProvider getContentProvider() {
@@ -52,8 +53,9 @@ public class MockCalendarContentProvider {
         this.context = context;
         InstanceSettings instanceToReuse = AllSettings.getInstances(context).values().stream()
                 .filter(settings -> settings.getWidgetInstanceName().endsWith(InstanceSettings.TEST_REPLAY_SUFFIX)).findFirst().orElse(null);
+        usesActualWidget = instanceToReuse != null;
 
-        widgetId = instanceToReuse == null ? lastWidgetId.incrementAndGet() : instanceToReuse.getWidgetId();
+        widgetId = usesActualWidget ? instanceToReuse.getWidgetId() : lastWidgetId.incrementAndGet();
         InstanceSettings settings = new InstanceSettings(context, widgetId,
                 "ToDo Agenda " + widgetId + " " + InstanceSettings.TEST_REPLAY_SUFFIX);
         settings.setActiveEventSources(settings.getActiveEventSources());

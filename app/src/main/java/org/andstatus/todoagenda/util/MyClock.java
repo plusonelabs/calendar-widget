@@ -12,7 +12,7 @@ import org.joda.time.DateTimeZone;
  */
 public class MyClock {
     public static final DateTime DATETIME_MIN = new DateTime(0, DateTimeZone.UTC).withTimeAtStartOfDay();
-    public static final DateTime DATETIME_MAX = new DateTime(Long.MAX_VALUE, DateTimeZone.UTC).withTimeAtStartOfDay();
+    public static final DateTime DATETIME_MAX = new DateTime(5000, 1, 1, 0, 0, DateTimeZone.UTC).withTimeAtStartOfDay();
 
     private volatile SnapshotMode snapshotMode = SnapshotMode.defaultValue;
     private volatile DateTime snapshotDate = null;

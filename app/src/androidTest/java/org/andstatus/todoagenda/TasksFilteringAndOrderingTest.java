@@ -5,6 +5,7 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.TaskScheduling;
 import org.andstatus.todoagenda.prefs.TasksWithoutDates;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
+import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.andstatus.todoagenda.widget.WidgetEntryPosition;
 import org.json.JSONException;
@@ -13,14 +14,14 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 import static org.junit.Assert.assertEquals;
 
 /**
- * See https://github.com/plusonelabs/calendar-widget/issues/356
+ * See https://github.com/andstatus/todoagenda/issues/4
  * @author yvolk@yurivolkov.com
  */
 public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
@@ -43,15 +44,15 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
                 WidgetEntryPosition.END_OF_LIST_HEADER.value,
                 "task14 ", "task8 ", "task4 ", "task2 ", "task15 ");
 
-        Consumer<InstanceSettings> setter = settings ->
+        UnaryOperator<InstanceSettings> setter = settings ->
                 settings.setTaskScheduling(TaskScheduling.DATE_DUE)
                         .setTaskWithoutDates(TasksWithoutDates.END_OF_TODAY)
                         .setFilterMode(FilterMode.NO_FILTERING);
 
-        assertOneCase(method, setter, names);
+        oneCase(method, setter, names);
     }
 
-    /** T1 at https://github.com/plusonelabs/calendar-widget/issues/356#issuecomment-559910887 */
+    /** T1 at https://github.com/andstatus/todoagenda/issues/4#issue-551945909 */
     @Test
     public void dateDueEndOfList() throws IOException, JSONException {
         final String method = "dateDueNoFilters";
@@ -71,12 +72,12 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
                 "task14 ", "task8 ", "task4 ", "task2 ", "task15 ",
                 "task10 ", "task9 ");
 
-        Consumer<InstanceSettings> setter = settings ->
+        UnaryOperator<InstanceSettings> setter = settings ->
                 settings.setTaskScheduling(TaskScheduling.DATE_DUE)
                         .setTaskWithoutDates(TasksWithoutDates.END_OF_LIST)
                         .setFilterMode(FilterMode.NO_FILTERING);
 
-        assertOneCase(method, setter, names);
+        oneCase(method, setter, names);
     }
 
     @Test
@@ -97,12 +98,12 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
                 WidgetEntryPosition.END_OF_LIST_HEADER.value,
                 "task8 ", "task2 ");
 
-        Consumer<InstanceSettings> setter = settings ->
+        UnaryOperator<InstanceSettings> setter = settings ->
                 settings.setTaskScheduling(TaskScheduling.DATE_DUE)
                         .setTaskWithoutDates(TasksWithoutDates.END_OF_TODAY)
                         .setFilterMode(FilterMode.DEBUG_FILTER);
 
-        assertOneCase(method, setter, names);
+        oneCase(method, setter, names);
     }
 
     @Test
@@ -124,15 +125,15 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
                 WidgetEntryPosition.END_OF_LIST_HEADER.value,
                 "task14 ", "task15 ");
 
-        Consumer<InstanceSettings> setter = settings ->
+        UnaryOperator<InstanceSettings> setter = settings ->
                 settings.setTaskScheduling(TaskScheduling.DATE_STARTED)
                         .setTaskWithoutDates(TasksWithoutDates.END_OF_TODAY)
                         .setFilterMode(FilterMode.NO_FILTERING);
 
-        assertOneCase(method, setter, names);
+        oneCase(method, setter, names);
     }
 
-    /** T2 at https://github.com/plusonelabs/calendar-widget/issues/356#issuecomment-559910887 */
+    /** T2 at https://github.com/andstatus/todoagenda/issues/4#issue-551945909 */
     @Test
     public void dateStartedEndOfList() throws IOException, JSONException {
         final String method = "dateStartedEndOfList";
@@ -153,12 +154,12 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
                 "task10 ", "task9 "
         );
 
-        Consumer<InstanceSettings> setter = settings ->
+        UnaryOperator<InstanceSettings> setter = settings ->
                 settings.setTaskScheduling(TaskScheduling.DATE_STARTED)
                         .setTaskWithoutDates(TasksWithoutDates.END_OF_LIST)
                         .setFilterMode(FilterMode.NO_FILTERING);
 
-        assertOneCase(method, setter, names);
+        oneCase(method, setter, names);
     }
 
     @Test
@@ -180,12 +181,12 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
                 "task14 ", "task15 "
         );
 
-        Consumer<InstanceSettings> setter = settings ->
+        UnaryOperator<InstanceSettings> setter = settings ->
                 settings.setTaskScheduling(TaskScheduling.DATE_STARTED)
                         .setTaskWithoutDates(TasksWithoutDates.HIDE)
                         .setFilterMode(FilterMode.NO_FILTERING);
 
-        assertOneCase(method, setter, names);
+        oneCase(method, setter, names);
     }
 
     @Test
@@ -205,20 +206,27 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
                 "", "task8 ",
                 "", "task17 ");
 
-        Consumer<InstanceSettings> setter = settings ->
+        UnaryOperator<InstanceSettings> setter = settings ->
                 settings.setTaskScheduling(TaskScheduling.DATE_STARTED)
                         .setTaskWithoutDates(TasksWithoutDates.END_OF_TODAY)
                         .setFilterMode(FilterMode.DEBUG_FILTER);
 
-        assertOneCase(method, setter, names);
+        oneCase(method, setter, names);
     }
 
-    private void assertOneCase(String method, Consumer<InstanceSettings> setter, List<String> names) throws IOException, JSONException {
+    private void oneCase(String method, UnaryOperator<InstanceSettings> setter, List<String> names) throws IOException, JSONException {
         QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.filter_tasks_308_no_filters);
         provider.addResults(inputs.getResults());
 
-        setter.accept(getSettings());
+        oneCaseSettings(method, setter, names);
+        oneCaseSettings(method,
+                settings -> setter.apply(settings).setEventEntryLayout(EventEntryLayout.ONE_LINE),
+                names);
+    }
+
+    private void oneCaseSettings(String method, UnaryOperator<InstanceSettings> setter, List<String> names) throws IOException, JSONException {
+        setter.apply(getSettings());
 
         playResults(method);
 

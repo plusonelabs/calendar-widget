@@ -50,8 +50,8 @@ public class QueryResultsStorage {
         Log.i(TAG, method + " started");
         InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
         QueryResultsStorage storage = settings.isLiveMode() || !settings.hasResults()
-                ? settings.getResultsStorage()
-                : getNewResults(context, widgetId);
+                ? getNewResults(context, widgetId)
+                : settings.getResultsStorage();
         String results = storage.toJsonString(context, widgetId);
         if (TextUtils.isEmpty(results)) {
             Log.i(TAG, method + "; Nothing to share");

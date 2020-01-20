@@ -96,7 +96,7 @@ public class DateUtil {
             case 1:
                 return context.getText(R.string.tomorrow);
             default:
-                return Integer.toString(daysFromToday);
+                return Math.abs(daysFromToday) > 999 ? "..." : Integer.toString(daysFromToday);
         }
     }
 

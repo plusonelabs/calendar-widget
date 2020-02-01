@@ -29,25 +29,35 @@ public class OtherPreferencesFragment extends PreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
-        showLockTimeZone(true);
         showWidgetInstanceName();
+
         showSnapshotMode();
+        setLockTimeZone();
+        showLockTimeZone();
+
         showRefreshPeriod();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
-    private void showLockTimeZone(boolean setAlso) {
+    private void setLockTimeZone() {
+        CheckBoxPreference preference = (CheckBoxPreference) findPreference(InstanceSettings.PREF_LOCK_TIME_ZONE);
+        if (preference != null) {
+            SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
+             boolean isChecked = snapshotMode == SnapshotMode.SNAPSHOT_TIME ||
+                     ApplicationPreferences.isTimeZoneLocked(getActivity());
+            if (preference.isChecked() != isChecked) {
+                preference.setChecked(isChecked);
+            }
+        }
+    }
+
+    private void showLockTimeZone() {
         CheckBoxPreference preference = (CheckBoxPreference) findPreference(InstanceSettings.PREF_LOCK_TIME_ZONE);
         if (preference != null) {
             SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
             preference.setEnabled(snapshotMode != SnapshotMode.SNAPSHOT_TIME);
 
-            boolean isChecked = setAlso
-                    ? snapshotMode == SnapshotMode.SNAPSHOT_TIME || ApplicationPreferences.isTimeZoneLocked(getActivity())
-                    : preference.isChecked();
-            if (setAlso && preference.isChecked() != isChecked) {
-                preference.setChecked(isChecked);
-            }
+            boolean isChecked = preference.isChecked();
 
             DateTimeZone timeZone = snapshotMode == SnapshotMode.SNAPSHOT_TIME
                 ? getSettings().clock().getZone()
@@ -100,7 +110,7 @@ public class OtherPreferencesFragment extends PreferenceFragment
                     CheckBoxPreference checkPref = (CheckBoxPreference) preference;
                     ApplicationPreferences.setLockedTimeZoneId(getActivity(),
                             checkPref.isChecked() ? TimeZone.getDefault().getID() : "");
-                    showLockTimeZone(false);
+                    showLockTimeZone();
                 }
                 break;
             default:
@@ -128,16 +138,15 @@ public class OtherPreferencesFragment extends PreferenceFragment
                 break;
             case InstanceSettings.PREF_SNAPSHOT_MODE:
                 SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
-                if (snapshotMode != SnapshotMode.LIVE_DATA) {
-                    InstanceSettings settings = getSettings();
-                    if (!settings.hasResults()) {
-                        settings.setResultsStorage(QueryResultsStorage.getNewResults(getActivity(), settings.widgetId));
-                        settings.clock().setSnapshotMode(snapshotMode);
-                        settings.save(key, "newResultsForSnapshotMode");
-                    }
+                InstanceSettings settings = getSettings();
+                if (snapshotMode != SnapshotMode.LIVE_DATA && !settings.hasResults()) {
+                    settings.setResultsStorage(QueryResultsStorage.getNewResults(getActivity(), settings.widgetId));
                 }
+                settings.clock().setSnapshotMode(snapshotMode);
+                settings.save(key, "newResultsForSnapshotMode");
                 showSnapshotMode();
-                showLockTimeZone(false);
+                setLockTimeZone();
+                showLockTimeZone();
                 break;
             default:
                 break;

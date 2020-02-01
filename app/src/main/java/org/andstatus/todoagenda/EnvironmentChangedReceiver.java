@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -60,7 +61,9 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
         }
         int counter = 0;
         for (DateTime alarmTime : alarmTimes) {
-            Intent intent = new Intent(context, EnvironmentChangedReceiver.class);
+            Intent intent = new Intent(context, EnvironmentChangedReceiver.class)
+                    .setAction(RemoteViewsFactory.ACTION_MIDNIGHT_ALARM)
+                    .setData(Uri.parse("intent:midnightAlarm" + counter));
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                     RemoteViewsFactory.REQUEST_CODE_MIDNIGHT_ALARM + counter,
                     intent,
@@ -86,8 +89,8 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 now.getDayOfMonth(), now.getHourOfDay(), now.getMinuteOfHour())
                 .plusMinutes(periodMinutes);
 
-        Intent intent = new Intent(context, EnvironmentChangedReceiver.class);
-        intent.setAction(RemoteViewsFactory.ACTION_PERIODIC_ALARM);
+        Intent intent = new Intent(context, EnvironmentChangedReceiver.class)
+            .setAction(RemoteViewsFactory.ACTION_PERIODIC_ALARM);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 RemoteViewsFactory.REQUEST_CODE_PERIODIC_ALARM,
                 intent,

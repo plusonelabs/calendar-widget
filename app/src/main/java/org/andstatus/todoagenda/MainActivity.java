@@ -3,6 +3,7 @@ package org.andstatus.todoagenda;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -23,10 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 /**
  * @author yvolk@yurivolkov.com
@@ -41,13 +42,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @NonNull
     public static Intent intentToConfigure(Context context, int widgetId) {
-        return intentToStartMe(context).putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        return intentToStartMe(context)
+                .setData(Uri.parse("intent:configureMain" + widgetId))
+                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
     }
 
     @NonNull
     public static Intent intentToStartMe(Context context) {
-        return new Intent(context.getApplicationContext(), MainActivity.class).
-                setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        return new Intent(context.getApplicationContext(), MainActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
     }
 
     @Override

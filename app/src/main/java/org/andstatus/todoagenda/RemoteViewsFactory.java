@@ -65,6 +65,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     private static final String PACKAGE = "org.andstatus.todoagenda";
     static final String ACTION_GOTO_POSITIONS = PACKAGE + ".action.GOTO_TODAY";
     static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
+    static final String ACTION_MIDNIGHT_ALARM = PACKAGE + ".action.MIDNIGHT_ALARM";
     static final String ACTION_PERIODIC_ALARM = PACKAGE + ".action.PERIODIC_ALARM";
 
     private final Context context;
@@ -379,9 +380,10 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     private static void configureRefresh(InstanceSettings settings, RemoteViews rv) {
-        Intent intent = new Intent(settings.getContext(), EnvironmentChangedReceiver.class);
-        intent.setAction(ACTION_REFRESH);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, settings.getWidgetId());
+        Intent intent = new Intent(settings.getContext(), EnvironmentChangedReceiver.class)
+                .setAction(ACTION_REFRESH)
+                .setData(Uri.parse("intent:refresh" + settings.getWidgetId()))
+                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, settings.getWidgetId());
         PendingIntent pendingIntent = PermissionsUtil.getPermittedPendingBroadcastIntent(settings, intent);
         rv.setOnClickPendingIntent(R.id.refresh, pendingIntent);
     }
@@ -406,11 +408,12 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         if (todaysPosition < 0) {
             pendingIntent = getEmptyPendingIntent(context);
         } else {
-            Intent intent = new Intent(context.getApplicationContext(), EnvironmentChangedReceiver.class);
-            intent.setAction(ACTION_GOTO_POSITIONS);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-            intent.putExtra(EXTRA_WIDGET_LIST_POSITION1, tomorrowsPosition);
-            intent.putExtra(EXTRA_WIDGET_LIST_POSITION2, todaysPosition);
+            Intent intent = new Intent(context.getApplicationContext(), EnvironmentChangedReceiver.class)
+                .setAction(ACTION_GOTO_POSITIONS)
+                .setData(Uri.parse("intent:gototoday" + widgetId))
+                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+                .putExtra(EXTRA_WIDGET_LIST_POSITION1, tomorrowsPosition)
+                .putExtra(EXTRA_WIDGET_LIST_POSITION2, todaysPosition);
             pendingIntent = PermissionsUtil.getPermittedPendingBroadcastIntent(settings, intent);
         }
         rv.setOnClickPendingIntent(R.id.go_to_today, pendingIntent);

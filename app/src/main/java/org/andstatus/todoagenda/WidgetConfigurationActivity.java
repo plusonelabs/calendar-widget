@@ -39,9 +39,10 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
 
     @NonNull
     public static Intent intentToStartMe(Context context, int widgetId) {
-        Intent intent = new Intent(context, WidgetConfigurationActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP + Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        Intent intent = new Intent(context, WidgetConfigurationActivity.class)
+            .setData(Uri.parse("intent:configure" + widgetId))
+            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP + Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+            .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         return intent;
     }
 

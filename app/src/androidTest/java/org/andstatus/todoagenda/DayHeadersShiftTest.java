@@ -23,13 +23,13 @@ public class DayHeadersShiftTest extends BaseWidgetTest {
         provider.addResults(inputs.getResults());
 
         playResults(method);
-        DayHeader dayHeader0 = (DayHeader) factory.getWidgetEntries().get(0);
+        DayHeader dayHeader0 = (DayHeader) getFactory().getWidgetEntries().get(0);
 
 
-        assertEquals("First day header should be Jan 8\n" + factory.getWidgetEntries(), 8,
+        assertEquals("First day header should be Jan 8\n" + getFactory().getWidgetEntries(), 8,
                 dayHeader0.entryDate.dayOfMonth().get());
         String dayHeaderTitle = DateUtil.createDayHeaderTitle(getSettings(), dayHeader0.entryDate);
-        assertEquals("First day header should show Jan 8\n" + factory.getWidgetEntries() + "\n",
+        assertEquals("First day header should show Jan 8\n" + getFactory().getWidgetEntries() + "\n",
                 "Today, January 8", dayHeaderTitle);
     }
 }

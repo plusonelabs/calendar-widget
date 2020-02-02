@@ -87,8 +87,8 @@ public class SingleEventTest extends BaseWidgetTest {
                 getSettings().getActiveEventSource(EventProviderType.CALENDAR,
                         source.source.getId()).source.isAvailable);
 
-        assertEquals(factory.getWidgetEntries().toString(), 3, factory.getWidgetEntries().size());
-        WidgetEntry entry = factory.getWidgetEntries().get(1);
+        assertEquals(getFactory().getWidgetEntries().toString(), 3, getFactory().getWidgetEntries().size());
+        WidgetEntry entry = getFactory().getWidgetEntries().get(1);
         assertTrue(entry instanceof CalendarEntry);
         CalendarEvent eventOut = ((CalendarEntry) entry).getEvent();
         String msgLog = "Comparing events:\n" +

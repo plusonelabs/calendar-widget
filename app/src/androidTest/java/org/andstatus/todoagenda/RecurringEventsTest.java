@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.andstatus.todoagenda.RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -26,17 +25,17 @@ public class RecurringEventsTest extends BaseWidgetTest {
     @Test
     public void testShowRecurringEvents() {
         generateEventInstances();
-        assertEquals("Entries: " + factory.getWidgetEntries().size(), 15, countCalendarEntries());
+        assertEquals("Entries: " + getFactory().getWidgetEntries().size(), 15, countCalendarEntries());
         provider.startEditingPreferences();
         ApplicationPreferences.setShowOnlyClosestInstanceOfRecurringEvent(provider.getContext(), true);
         provider.savePreferences();
         generateEventInstances();
-        assertEquals("Entries: " + factory.getWidgetEntries().size(), 1, countCalendarEntries());
+        assertEquals("Entries: " + getFactory().getWidgetEntries().size(), 1, countCalendarEntries());
     }
 
     int countCalendarEntries() {
         int count = 0;
-        for (WidgetEntry widgetEntry : factory.getWidgetEntries()) {
+        for (WidgetEntry widgetEntry : getFactory().getWidgetEntries()) {
             if (CalendarEntry.class.isAssignableFrom(widgetEntry.getClass())) {
                 count++;
             }

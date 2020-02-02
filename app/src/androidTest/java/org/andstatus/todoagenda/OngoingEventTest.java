@@ -35,7 +35,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;
-        for (WidgetEntry item : factory.getWidgetEntries()) {
+        for (WidgetEntry item : getFactory().getWidgetEntries()) {
             if (item instanceof CalendarEntry) {
                 entry = (CalendarEntry) item;
             }
@@ -64,7 +64,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;
-        for (WidgetEntry item : factory.getWidgetEntries()) {
+        for (WidgetEntry item : getFactory().getWidgetEntries()) {
             if (item instanceof CalendarEntry) {
                 entry = (CalendarEntry) item;
             }
@@ -92,7 +92,7 @@ public class OngoingEventTest extends BaseWidgetTest {
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry = null;
-        for (WidgetEntry item : factory.getWidgetEntries()) {
+        for (WidgetEntry item : getFactory().getWidgetEntries()) {
             if (item instanceof CalendarEntry) {
                 entry = (CalendarEntry) item;
                 break;

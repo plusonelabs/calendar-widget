@@ -230,7 +230,7 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
 
         playResults(method);
 
-        List<? extends WidgetEntry> widgetEntries = factory.getWidgetEntries();
+        List<? extends WidgetEntry> widgetEntries = getFactory().getWidgetEntries();
         for (int ind = 0; ind < names.size(); ind++) {
             WidgetEntryPosition entryPosition = WidgetEntryPosition.fromValue(names.get(ind));
             switch (entryPosition) {

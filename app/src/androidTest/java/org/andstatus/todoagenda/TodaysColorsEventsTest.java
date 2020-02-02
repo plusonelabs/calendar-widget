@@ -24,6 +24,6 @@ public class TodaysColorsEventsTest extends BaseWidgetTest {
         provider.addResults(inputs.getResults());
 
         playResults(method);
-        assertEquals("Number of entries", 43, factory.getWidgetEntries().size());
+        assertEquals("Number of entries", 43, getFactory().getWidgetEntries().size());
     }
 }

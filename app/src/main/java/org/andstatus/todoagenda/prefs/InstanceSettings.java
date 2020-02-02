@@ -14,6 +14,7 @@ import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.TextSizeScale;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
+import org.andstatus.todoagenda.util.InstanceId;
 import org.andstatus.todoagenda.util.MyClock;
 import org.andstatus.todoagenda.util.StringUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -42,6 +43,7 @@ import static org.andstatus.todoagenda.prefs.SettingsStorage.saveJson;
 public class InstanceSettings {
     private static final String TAG = InstanceSettings.class.getSimpleName();
     public final static InstanceSettings EMPTY = new InstanceSettings(null, 0, "(empty)");
+    public final long instanceId = InstanceId.next();
     private final Context context;
 
     public static final String PREF_WIDGET_ID = "widgetId";
@@ -694,7 +696,7 @@ public class InstanceSettings {
     }
 
     public void logMe(String tag, String message, int widgetId) {
-        Log.v(tag, message + ", widgetId:" + widgetId + "\n" + toJson());
+        Log.v(tag, message + ", widgetId:" + widgetId + " instance:" + instanceId + "\n" + toJson());
     }
 
     public boolean getShowDateOnWidgetHeader() {

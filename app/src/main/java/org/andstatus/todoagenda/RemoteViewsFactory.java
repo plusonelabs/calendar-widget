@@ -21,6 +21,7 @@ import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
 import org.andstatus.todoagenda.util.DateUtil;
+import org.andstatus.todoagenda.util.InstanceId;
 import org.andstatus.todoagenda.util.MyClock;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarEventPendingIntent;
 import static org.andstatus.todoagenda.util.CalendarIntentUtil.createOpenCalendarPendingIntent;
@@ -52,6 +54,8 @@ import static org.andstatus.todoagenda.widget.WidgetEntryPosition.PAST_AND_DUE_H
 
 public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final String TAG = RemoteViewsFactory.class.getSimpleName();
+    private final static ConcurrentHashMap<Integer, Long> waitingForRedraw = new ConcurrentHashMap<>();
+    public final static ConcurrentHashMap<Integer, RemoteViewsFactory> factoriesByLauncher = new ConcurrentHashMap<>();
 
     static final int MIN_MILLIS_BETWEEN_RELOADS = 500;
     private static final int MAX_NUMBER_OF_WIDGETS = 100;
@@ -67,24 +71,29 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
     static final String ACTION_MIDNIGHT_ALARM = PACKAGE + ".action.MIDNIGHT_ALARM";
     static final String ACTION_PERIODIC_ALARM = PACKAGE + ".action.PERIODIC_ALARM";
+    static final int MAX_MILLIS_TO_WAIT_FOR_LAUNCHER_REDRAW = 3000;
 
+    public final long instanceId = InstanceId.next();
     private final Context context;
     private final int widgetId;
+    public final boolean createdByLauncher;
+
     private volatile List<WidgetEntry> widgetEntries = new ArrayList<>();
     private volatile List<WidgetEntryVisualizer<? extends WidgetEntry>> visualizers = new ArrayList<>();
     private volatile long prevReloadFinishedAt = 0;
-    private volatile boolean waitingForRedraw;
 
-    public RemoteViewsFactory(Context context, int widgetId) {
+    public RemoteViewsFactory(Context context, int widgetId, boolean createdByLauncher) {
         this.context = context;
         this.widgetId = widgetId;
+        this.createdByLauncher = createdByLauncher;
         visualizers.add(new LastEntryVisualizer(context, widgetId));
         widgetEntries.add(new LastEntry(getSettings(), NOT_LOADED, getSettings().clock().now()));
-        logEvent("Init");
+        if (createdByLauncher) factoriesByLauncher.put(widgetId, this);
+        logEvent("Init" + (createdByLauncher ? " by Launcher" : ""));
     }
 
     private void logEvent(String message) {
-        Log.d(TAG, widgetId + " " + message);
+        Log.d(TAG, widgetId + " instance:" + instanceId + " " + message);
     }
 
     public void onCreate() {
@@ -97,8 +106,10 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     public int getCount() {
-        logEvent("getCount:" + widgetEntries.size() + (waitingForRedraw ? " waiting" : ""));
-        setWaitingForRedraw(false);
+        logEvent("getCount:" + widgetEntries.size() + (isWaitingForRedraw() ? " waiting" : ""));
+        if (widgetEntries.isEmpty()) {
+            setWaitingForRedraw(widgetId, false);
+        }
         return widgetEntries.size();
     }
 
@@ -107,17 +118,25 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     public boolean isWaitingForRedraw() {
-        return waitingForRedraw;
+        return isWaitingForRedraw(widgetId);
     }
 
-    public void setWaitingForRedraw(boolean newValue) {
-        if (newValue != waitingForRedraw) {
-            logEvent("waitingForRedraw: " + newValue);
-            this.waitingForRedraw = newValue;
+    public static boolean isWaitingForRedraw(int widgetId) {
+        Long start = waitingForRedraw.getOrDefault(widgetId, 0L);
+        return start == 0 || Math.abs(System.currentTimeMillis() - start) < MAX_MILLIS_TO_WAIT_FOR_LAUNCHER_REDRAW;
+    }
+
+    public static void setWaitingForRedraw(int widgetId, boolean newValue) {
+        if (newValue != isWaitingForRedraw(widgetId)) {
+            Log.d(TAG, widgetId + " waitingForRedraw: " + newValue);
+            waitingForRedraw.put(widgetId, newValue ? System.currentTimeMillis() : 0L);
         }
     }
 
     public RemoteViews getViewAt(int position) {
+        if (position == widgetEntries.size() - 1) {
+            setWaitingForRedraw(widgetId, false);
+        }
         if (position < widgetEntries.size()) {
             WidgetEntry entry = widgetEntries.get(position);
             for (WidgetEntryVisualizer<? extends WidgetEntry> visualizer : visualizers) {

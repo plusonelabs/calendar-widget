@@ -41,7 +41,7 @@ public class MultidayEventTest extends BaseWidgetTest {
         playResults(TAG);
         CalendarEntry entry1 = null;
         CalendarEntry entry2 = null;
-        for (WidgetEntry item : factory.getWidgetEntries()) {
+        for (WidgetEntry item : getFactory().getWidgetEntries()) {
             if (item instanceof CalendarEntry) {
                 if (entry1 == null) {
                     entry1 = (CalendarEntry) item;
@@ -103,7 +103,7 @@ public class MultidayEventTest extends BaseWidgetTest {
         Log.i(TAG, "getSundayEntryAt " + currentDateTime);
         playResults(TAG);
         CalendarEntry sundayEntry = null;
-        for (WidgetEntry item : factory.getWidgetEntries()) {
+        for (WidgetEntry item : getFactory().getWidgetEntries()) {
             if (item instanceof CalendarEntry) {
                 CalendarEntry entry = (CalendarEntry) item;
                 if (entry.entryDate.getDayOfMonth() == 20) {

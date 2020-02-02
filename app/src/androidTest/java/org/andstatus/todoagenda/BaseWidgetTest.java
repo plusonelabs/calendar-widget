@@ -1,33 +1,35 @@
 package org.andstatus.todoagenda;
 
+import android.util.Log;
+
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.MockCalendarContentProvider;
-import org.andstatus.todoagenda.widget.LastEntry;
+import org.andstatus.todoagenda.util.LazyVal;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author yvolk@yurivolkov.com
  */
 public class BaseWidgetTest {
     final static String TAG = BaseWidgetTest.class.getSimpleName();
+    private static final int MAX_MILLIS_TO_WAIT_FOR_FACTORY_CREATION = 40000;
 
     protected MockCalendarContentProvider provider = null;
-    protected RemoteViewsFactory factory = null;
+    protected LazyVal<RemoteViewsFactory> factory = LazyVal.of(
+            () -> new RemoteViewsFactory(provider.getContext(), provider.getWidgetId(), false));
 
     @Before
     public void setUp() throws Exception {
         provider = MockCalendarContentProvider.getContentProvider();
-        factory = new RemoteViewsFactory(provider.getContext(), provider.getWidgetId());
-        assertTrue(factory.getWidgetEntries().get(0) instanceof LastEntry);
+        RemoteViewsFactory.setWaitingForRedraw(provider.getWidgetId(), false);
     }
 
     @After
     public void tearDown() throws Exception {
         MockCalendarContentProvider.tearDown();
+        factory.reset();
     }
 
     DateTime dateTime(
@@ -48,22 +50,38 @@ public class BaseWidgetTest {
     }
 
     protected void playResults(String tag) {
+        Log.d(tag, provider.getWidgetId() + " playResults");
         provider.updateAppSettings(tag);
 
         EnvironmentChangedReceiver.updateWidget(provider.getContext(), provider.getWidgetId());
 
-        factory.setWaitingForRedraw(true);
-        factory.onDataSetChanged();
-        factory.logWidgetEntries(tag);
+        if (provider.usesActualWidget) {
+            waitForRemoteViewsFactoryCreation();
+        }
+        getFactory().onDataSetChanged();
+        getFactory().logWidgetEntries(tag);
 
         if (provider.usesActualWidget) {
             waitTillWidgetIsRedrawn();
         }
     }
 
+    private void waitForRemoteViewsFactoryCreation() {
+        long start = System.currentTimeMillis();
+        while (Math.abs(System.currentTimeMillis() - start) <
+                RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS +
+                        (RemoteViewsFactory.factoriesByLauncher.get(getSettings().getWidgetId()) == null
+                                ? MAX_MILLIS_TO_WAIT_FOR_FACTORY_CREATION : 0)){
+            EnvironmentChangedReceiver.sleep(20);
+        }
+        EnvironmentChangedReceiver.sleep(250);
+    }
+
     private void waitTillWidgetIsRedrawn() {
         long start = System.currentTimeMillis();
-        while (factory.isWaitingForRedraw() && Math.abs(System.currentTimeMillis() - start) < 3000){
+        while (Math.abs(System.currentTimeMillis() - start) <
+                RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS +
+                    (getFactory().isWaitingForRedraw() ? RemoteViewsFactory.MAX_MILLIS_TO_WAIT_FOR_LAUNCHER_REDRAW : 0)){
             EnvironmentChangedReceiver.sleep(20);
         }
         EnvironmentChangedReceiver.sleep(250);
@@ -71,5 +89,10 @@ public class BaseWidgetTest {
 
     protected InstanceSettings getSettings() {
         return provider.getSettings();
+    }
+
+    public RemoteViewsFactory getFactory() {
+        RemoteViewsFactory byLauncher = RemoteViewsFactory.factoriesByLauncher.get(provider.getWidgetId());
+        return byLauncher == null ? factory.get() : byLauncher;
     }
 }

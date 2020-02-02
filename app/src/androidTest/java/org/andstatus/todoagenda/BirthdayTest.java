@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.andstatus.todoagenda.RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -77,9 +76,9 @@ public class BirthdayTest extends BaseWidgetTest {
         getSettings().clock().setSnapshotDate(now);
         playResults(TAG);
         assertEquals(entriesWithoutLastExpected == 0 ? 0 : entriesWithoutLastExpected + 1,
-                factory.getWidgetEntries().size());
+                getFactory().getWidgetEntries().size());
         if (entriesWithoutLastExpected > 0) {
-            CalendarEntry birthday = (CalendarEntry) factory.getWidgetEntries().get(1);
+            CalendarEntry birthday = (CalendarEntry) getFactory().getWidgetEntries().get(1);
             assertEquals(9, birthday.entryDate.dayOfMonth().get());
             assertEquals(0, birthday.entryDate.hourOfDay().get());
             assertEquals(0, birthday.entryDate.minuteOfHour().get());

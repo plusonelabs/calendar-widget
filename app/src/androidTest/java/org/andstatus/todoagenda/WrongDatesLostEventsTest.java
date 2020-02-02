@@ -25,10 +25,10 @@ public class WrongDatesLostEventsTest extends BaseWidgetTest {
         provider.addResults(inputs.getResults());
 
         playResults(method);
-        assertEquals("Number of entries", 11, factory.getWidgetEntries().size());
-        assertEquals("On Saturday", "Maker Fair", ((CalendarEntry) factory.getWidgetEntries().get(4)).getEvent().getTitle());
-        assertEquals("On Saturday", 6, factory.getWidgetEntries().get(4).entryDate.getDayOfWeek());
-        assertEquals("On Sunday", "Ribakovs", ((CalendarEntry) factory.getWidgetEntries().get(7)).getEvent().getTitle());
-        assertEquals("On Sunday", 7, factory.getWidgetEntries().get(7).entryDate.getDayOfWeek());
+        assertEquals("Number of entries", 11, getFactory().getWidgetEntries().size());
+        assertEquals("On Saturday", "Maker Fair", ((CalendarEntry) getFactory().getWidgetEntries().get(4)).getEvent().getTitle());
+        assertEquals("On Saturday", 6, getFactory().getWidgetEntries().get(4).entryDate.getDayOfWeek());
+        assertEquals("On Sunday", "Ribakovs", ((CalendarEntry) getFactory().getWidgetEntries().get(7)).getEvent().getTitle());
+        assertEquals("On Sunday", 7, getFactory().getWidgetEntries().get(7).entryDate.getDayOfWeek());
     }
 }

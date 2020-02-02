@@ -47,7 +47,7 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends BaseWidgetTest {
             .setEventSource(provider.getFirstActiveEventSource())
             .setTitle("This will be the only event that will be shown"));
         playResults(TAG);
-        assertEquals(3, factory.getWidgetEntries().size());
+        assertEquals(3, getFactory().getWidgetEntries().size());
     }
 
     private void oneTimeDst(String iso8601time) {

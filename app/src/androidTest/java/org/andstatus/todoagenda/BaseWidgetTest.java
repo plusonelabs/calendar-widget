@@ -70,7 +70,7 @@ public class BaseWidgetTest {
         long start = System.currentTimeMillis();
         while (Math.abs(System.currentTimeMillis() - start) <
                 RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS +
-                        (RemoteViewsFactory.factoriesByLauncher.get(getSettings().getWidgetId()) == null
+                        (RemoteViewsFactory.factories.get(getSettings().getWidgetId()) == null
                                 ? MAX_MILLIS_TO_WAIT_FOR_FACTORY_CREATION : 0)){
             EnvironmentChangedReceiver.sleep(20);
         }
@@ -92,7 +92,7 @@ public class BaseWidgetTest {
     }
 
     public RemoteViewsFactory getFactory() {
-        RemoteViewsFactory byLauncher = RemoteViewsFactory.factoriesByLauncher.get(provider.getWidgetId());
-        return byLauncher == null ? factory.get() : byLauncher;
+        RemoteViewsFactory existingFactory = RemoteViewsFactory.factories.get(provider.getWidgetId());
+        return existingFactory == null ? factory.get() : existingFactory;
     }
 }

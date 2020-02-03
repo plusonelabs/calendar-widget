@@ -74,7 +74,7 @@ public class QueryResultsStorage {
         QueryResultsStorage resultsStorage;
         try {
             setNeedToStoreResults(true, widgetId);
-            RemoteViewsFactory factory = RemoteViewsFactory.factoriesByLauncher.computeIfAbsent(widgetId,
+            RemoteViewsFactory factory = RemoteViewsFactory.factories.computeIfAbsent(widgetId,
                     id -> new RemoteViewsFactory(context, id, false));
             factory.onDataSetChanged();
             resultsStorage = QueryResultsStorage.theStorage;

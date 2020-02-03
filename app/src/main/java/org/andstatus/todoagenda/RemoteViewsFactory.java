@@ -55,7 +55,7 @@ import static org.andstatus.todoagenda.widget.WidgetEntryPosition.PAST_AND_DUE_H
 public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final String TAG = RemoteViewsFactory.class.getSimpleName();
     private final static ConcurrentHashMap<Integer, Long> waitingForRedraw = new ConcurrentHashMap<>();
-    public final static ConcurrentHashMap<Integer, RemoteViewsFactory> factoriesByLauncher = new ConcurrentHashMap<>();
+    public final static ConcurrentHashMap<Integer, RemoteViewsFactory> factories = new ConcurrentHashMap<>();
 
     static final int MIN_MILLIS_BETWEEN_RELOADS = 500;
     private static final int MAX_NUMBER_OF_WIDGETS = 100;
@@ -88,7 +88,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         this.createdByLauncher = createdByLauncher;
         visualizers.add(new LastEntryVisualizer(context, widgetId));
         widgetEntries.add(new LastEntry(getSettings(), NOT_LOADED, getSettings().clock().now()));
-        if (createdByLauncher) factoriesByLauncher.put(widgetId, this);
+        factories.put(widgetId, this);
         logEvent("Init" + (createdByLauncher ? " by Launcher" : ""));
     }
 

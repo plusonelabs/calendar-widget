@@ -53,12 +53,15 @@ public class BaseWidgetTest {
         Log.d(tag, provider.getWidgetId() + " playResults");
         provider.updateAppSettings(tag);
 
-        EnvironmentChangedReceiver.updateWidget(provider.getContext(), provider.getWidgetId());
-
         if (provider.usesActualWidget) {
-            waitForRemoteViewsFactoryCreation();
+            EnvironmentChangedReceiver.updateWidget(provider.getContext(), provider.getWidgetId());
+            if (!RemoteViewsFactory.factories.containsKey(provider.getWidgetId())) {
+                waitForRemoteViewsFactoryCreation();
+            }
+            EnvironmentChangedReceiver.sleep(1000); // TODO: Wait for Widget Updated first...
+        } else {
+            getFactory().onDataSetChanged();
         }
-        getFactory().onDataSetChanged();
         getFactory().logWidgetEntries(tag);
 
         if (provider.usesActualWidget) {

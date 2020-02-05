@@ -118,10 +118,11 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 ? ""
                 : (intent.getAction() == null ? "" : intent.getAction());
         switch (action) {
-            case RemoteViewsFactory.ACTION_GOTO_POSITIONS:
+            case RemoteViewsFactory.ACTION_GOTO_TODAY:
                 int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
-                int position1 = intent.getIntExtra(RemoteViewsFactory.EXTRA_WIDGET_LIST_POSITION1, 0);
-                int position2 = intent.getIntExtra(RemoteViewsFactory.EXTRA_WIDGET_LIST_POSITION2, 0);
+                RemoteViewsFactory factory = RemoteViewsFactory.factories.get(widgetId);
+                int position1 = factory == null ? 0 : factory.getTomorrowsPosition();
+                int position2 = factory == null ? 0 : factory.getTodaysPosition();
                 gotoPosition(context, widgetId, position1);
                 if (position1 >= 0 && position2 >= 0 && position1 != position2) {
                     sleep(1000);

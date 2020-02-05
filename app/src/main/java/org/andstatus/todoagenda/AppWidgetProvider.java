@@ -96,8 +96,8 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
                 : appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidgetProvider.class));
     }
 
-    private static void notifyWidgetDataChanged(Context context, int widgetId) {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+    static void notifyWidgetDataChanged(Context context, int widgetId) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context.getApplicationContext());
         if (appWidgetManager != null) {
             appWidgetManager.notifyAppWidgetViewDataChanged(new int[]{widgetId}, R.id.event_list);
         } else {

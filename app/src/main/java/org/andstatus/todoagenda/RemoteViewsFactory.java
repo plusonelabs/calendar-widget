@@ -57,24 +57,22 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     private final static ConcurrentHashMap<Integer, Long> waitingForRedraw = new ConcurrentHashMap<>();
     public final static ConcurrentHashMap<Integer, RemoteViewsFactory> factories = new ConcurrentHashMap<>();
 
-    static final int MIN_MILLIS_BETWEEN_RELOADS = 500;
+    static final int MIN_MILLIS_BETWEEN_RELOADS = 50;
     private static final int MAX_NUMBER_OF_WIDGETS = 100;
     private static final int REQUEST_CODE_EMPTY = 1;
     private static final int REQUEST_CODE_ADD_EVENT = 2;
     static final int REQUEST_CODE_MIDNIGHT_ALARM = REQUEST_CODE_ADD_EVENT + MAX_NUMBER_OF_WIDGETS;
     static final int REQUEST_CODE_PERIODIC_ALARM = REQUEST_CODE_MIDNIGHT_ALARM + MAX_NUMBER_OF_WIDGETS;
-    static final String EXTRA_WIDGET_LIST_POSITION1 = "widgetListPosition1";
-    static final String EXTRA_WIDGET_LIST_POSITION2 = "widgetListPosition2";
 
     private static final String PACKAGE = "org.andstatus.todoagenda";
-    static final String ACTION_GOTO_POSITIONS = PACKAGE + ".action.GOTO_TODAY";
+    static final String ACTION_GOTO_TODAY = PACKAGE + ".action.GOTO_TODAY";
     static final String ACTION_REFRESH = PACKAGE + ".action.REFRESH";
     static final String ACTION_MIDNIGHT_ALARM = PACKAGE + ".action.MIDNIGHT_ALARM";
     static final String ACTION_PERIODIC_ALARM = PACKAGE + ".action.PERIODIC_ALARM";
     static final int MAX_MILLIS_TO_WAIT_FOR_LAUNCHER_REDRAW = 3000;
 
     public final long instanceId = InstanceId.next();
-    private final Context context;
+    public final Context context;
     private final int widgetId;
     public final boolean createdByLauncher;
 
@@ -98,7 +96,6 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     public void onCreate() {
         logEvent("onCreate");
-        reload();
     }
 
     public void onDestroy() {
@@ -169,7 +166,6 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             logEvent("reload, visualizers:" + visualizers.size() + ", entries:" + this.widgetEntries.size());
             prevReloadFinishedAt = System.currentTimeMillis();
         }
-        updateWidget(context, widgetId, this);
     }
 
     static void updateWidget(Context context, int widgetId, @Nullable RemoteViewsFactory factory) {
@@ -183,11 +179,8 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_initial);
 
-            configureWidgetHeader(settings, rv, factory != null && factory.getCountInternal() == 0);
+            configureWidgetHeader(settings, context, rv, factory != null && factory.getCountInternal() == 0);
             configureWidgetEntriesList(settings, context, widgetId, rv);
-            if (factory != null) {
-                factory.configureGotoToday(settings, rv, factory.getTomorrowsPosition(), factory.getTodaysPosition());
-            }
 
             appWidgetManager.updateAppWidget(widgetId, rv);
         } catch (Exception e) {
@@ -208,14 +201,14 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         return visualizers;
     }
 
-    private int getTodaysPosition() {
+    int getTodaysPosition() {
         for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
             if (getWidgetEntries().get(ind).timeSection != TimeSection.PAST) return ind;
         }
         return getWidgetEntries().size() - 1;
     }
 
-    private int getTomorrowsPosition() {
+    int getTomorrowsPosition() {
         for (int ind = 0; ind < getWidgetEntries().size() - 1; ind++) {
             if (getWidgetEntries().get(ind).timeSection == TimeSection.FUTURE) return ind;
         }
@@ -341,18 +334,19 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         return false;
     }
 
-    private static void configureWidgetHeader(InstanceSettings settings, RemoteViews rv, boolean noEntries) {
+    private static void configureWidgetHeader(InstanceSettings settings, Context context, RemoteViews rv, boolean noEntries) {
         Log.d(TAG, settings.getWidgetId() + " configureWidgetHeader, layout:" + settings.getWidgetHeaderLayout());
         rv.removeAllViews(R.id.header_parent);
 
         if (settings.getWidgetHeaderLayout() != WidgetHeaderLayout.HIDDEN) {
-            RemoteViews headerView = new RemoteViews(settings.getContext().getPackageName(),
+            RemoteViews headerView = new RemoteViews(context.getPackageName(),
                     settings.getWidgetHeaderLayout().layoutId);
             rv.addView(R.id.header_parent, headerView);
 
             setBackgroundColor(rv, R.id.action_bar, settings.getWidgetHeaderBackgroundColor());
             configureCurrentDate(settings, rv);
             setActionIcons(settings, rv);
+            configureGotoToday(settings, context, rv);
             configureAddEvent(settings, rv);
             configureRefresh(settings, rv);
             configureOverflowMenu(settings, rv);
@@ -360,7 +354,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
         if (noEntries) {
             LastEntry entry = LastEntry.forEmptyList(settings);
-            LastEntryVisualizer visualizer = new LastEntryVisualizer(settings.getContext(), settings.getWidgetId());
+            LastEntryVisualizer visualizer = new LastEntryVisualizer(context, settings.getWidgetId());
             RemoteViews views = visualizer.getRemoteViews(entry, -1);
             rv.addView(R.id.header_parent, views);
         }
@@ -421,22 +415,13 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         rv.setPendingIntentTemplate(R.id.event_list, createOpenCalendarEventPendingIntent(settings));
     }
 
-    private void configureGotoToday(InstanceSettings settings, RemoteViews rv, int tomorrowsPosition, int todaysPosition) {
-        int widgetId = settings.getWidgetId();
-        PendingIntent pendingIntent;
-        if (todaysPosition < 0) {
-            pendingIntent = getEmptyPendingIntent(context);
-        } else {
-            Intent intent = new Intent(context.getApplicationContext(), EnvironmentChangedReceiver.class)
-                .setAction(ACTION_GOTO_POSITIONS)
-                .setData(Uri.parse("intent:gototoday" + widgetId))
-                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-                .putExtra(EXTRA_WIDGET_LIST_POSITION1, tomorrowsPosition)
-                .putExtra(EXTRA_WIDGET_LIST_POSITION2, todaysPosition);
-            pendingIntent = PermissionsUtil.getPermittedPendingBroadcastIntent(settings, intent);
-        }
+    private static void configureGotoToday(InstanceSettings settings, Context context, RemoteViews rv) {
+        Intent intent = new Intent(context.getApplicationContext(), EnvironmentChangedReceiver.class)
+            .setAction(ACTION_GOTO_TODAY)
+            .setData(Uri.parse("intent:gototoday" + settings.getWidgetId()))
+            .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, settings.getWidgetId());
+        PendingIntent pendingIntent = PermissionsUtil.getPermittedPendingBroadcastIntent(settings, intent);
         rv.setOnClickPendingIntent(R.id.go_to_today, pendingIntent);
-        logEvent("configureGotoToday, position:" + tomorrowsPosition + " -> " + todaysPosition);
     }
 
     public static PendingIntent getPermittedAddEventPendingIntent(InstanceSettings settings) {

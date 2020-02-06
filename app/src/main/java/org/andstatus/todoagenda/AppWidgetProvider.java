@@ -76,9 +76,9 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.d(TAG, "onUpdate, widgetIds:" + asList(appWidgetIds) + ", context:" + context);
         for (int widgetId : appWidgetIds) {
-            RemoteViewsFactory.setWaitingForRedraw(widgetId, true);
             RemoteViewsFactory.updateWidget(context, widgetId, null);
-            notifyWidgetDataChanged(context, widgetId);
+            InstanceState.updated(widgetId);
+            appWidgetManager.notifyAppWidgetViewDataChanged(new int[]{widgetId}, R.id.event_list);
         }
     }
 
@@ -94,14 +94,5 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         return appWidgetManager == null
                 ? new int[]{}
                 : appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidgetProvider.class));
-    }
-
-    static void notifyWidgetDataChanged(Context context, int widgetId) {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context.getApplicationContext());
-        if (appWidgetManager != null) {
-            appWidgetManager.notifyAppWidgetViewDataChanged(new int[]{widgetId}, R.id.event_list);
-        } else {
-            Log.d(TAG, widgetId + " notifyWidgetDataChanged, appWidgetManager is null, context:" + context);
-        }
     }
 }

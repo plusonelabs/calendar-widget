@@ -14,6 +14,7 @@ import org.junit.Before;
  */
 public class BaseWidgetTest {
     final static String TAG = BaseWidgetTest.class.getSimpleName();
+    private static final int MAX_MILLIS_TO_WAIT_FOR_LAUNCHER = 5000;
     private static final int MAX_MILLIS_TO_WAIT_FOR_FACTORY_CREATION = 40000;
 
     protected MockCalendarContentProvider provider = null;
@@ -23,7 +24,6 @@ public class BaseWidgetTest {
     @Before
     public void setUp() throws Exception {
         provider = MockCalendarContentProvider.getContentProvider();
-        RemoteViewsFactory.setWaitingForRedraw(provider.getWidgetId(), false);
     }
 
     @After
@@ -54,40 +54,64 @@ public class BaseWidgetTest {
         provider.updateAppSettings(tag);
 
         if (provider.usesActualWidget) {
+            InstanceState.clear(provider.getWidgetId());
             EnvironmentChangedReceiver.updateWidget(provider.getContext(), provider.getWidgetId());
             if (!RemoteViewsFactory.factories.containsKey(provider.getWidgetId())) {
                 waitForRemoteViewsFactoryCreation();
             }
-            EnvironmentChangedReceiver.sleep(1000); // TODO: Wait for Widget Updated first...
+            waitTillWidgetIsUpdated(tag);
+            waitTillWidgetIsReloaded(tag);
+            waitTillWidgetIsRedrawn(tag);
+            EnvironmentChangedReceiver.sleep(1000);
+            if (InstanceState.get(provider.getWidgetId()).listReloaded == 0) {
+                Log.d(tag, provider.getWidgetId() + " was not reloaded by a Launcher");
+                getFactory().onDataSetChanged();
+            }
         } else {
             getFactory().onDataSetChanged();
         }
         getFactory().logWidgetEntries(tag);
-
-        if (provider.usesActualWidget) {
-            waitTillWidgetIsRedrawn();
-        }
     }
 
     private void waitForRemoteViewsFactoryCreation() {
         long start = System.currentTimeMillis();
-        while (Math.abs(System.currentTimeMillis() - start) <
-                RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS +
-                        (RemoteViewsFactory.factories.get(getSettings().getWidgetId()) == null
-                                ? MAX_MILLIS_TO_WAIT_FOR_FACTORY_CREATION : 0)){
+        while (RemoteViewsFactory.factories.get(getSettings().getWidgetId()) == null &&
+                Math.abs(System.currentTimeMillis() - start) < MAX_MILLIS_TO_WAIT_FOR_FACTORY_CREATION){
             EnvironmentChangedReceiver.sleep(20);
         }
-        EnvironmentChangedReceiver.sleep(250);
     }
 
-    private void waitTillWidgetIsRedrawn() {
+    private void waitTillWidgetIsUpdated(String tag) {
         long start = System.currentTimeMillis();
-        while (Math.abs(System.currentTimeMillis() - start) <
-                RemoteViewsFactory.MIN_MILLIS_BETWEEN_RELOADS +
-                    (getFactory().isWaitingForRedraw() ? RemoteViewsFactory.MAX_MILLIS_TO_WAIT_FOR_LAUNCHER_REDRAW : 0)){
+        while (Math.abs(System.currentTimeMillis() - start) < MAX_MILLIS_TO_WAIT_FOR_LAUNCHER) {
+            if (InstanceState.get(provider.getWidgetId()).updated > 0) {
+                Log.d(tag, provider.getWidgetId() + " updated");
+                break;
+            }
             EnvironmentChangedReceiver.sleep(20);
         }
-        EnvironmentChangedReceiver.sleep(250);
+    }
+
+    private void waitTillWidgetIsReloaded(String tag) {
+        long start = System.currentTimeMillis();
+        while (Math.abs(System.currentTimeMillis() - start) < MAX_MILLIS_TO_WAIT_FOR_LAUNCHER){
+            if (InstanceState.get(provider.getWidgetId()).listReloaded > 0) {
+                Log.d(tag, provider.getWidgetId() + " reloaded");
+                break;
+            }
+            EnvironmentChangedReceiver.sleep(20);
+        }
+    }
+
+    private void waitTillWidgetIsRedrawn(String tag) {
+        long start = System.currentTimeMillis();
+        while (Math.abs(System.currentTimeMillis() - start) < MAX_MILLIS_TO_WAIT_FOR_LAUNCHER){
+            if (InstanceState.get(provider.getWidgetId()).listRedrawn > 0) {
+                Log.d(tag, provider.getWidgetId() + " redrawn");
+                break;
+            }
+            EnvironmentChangedReceiver.sleep(20);
+        }
     }
 
     protected InstanceSettings getSettings() {

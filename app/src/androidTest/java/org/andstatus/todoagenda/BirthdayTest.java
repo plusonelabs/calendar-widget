@@ -3,6 +3,7 @@ package org.andstatus.todoagenda;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.widget.CalendarEntry;
+import org.andstatus.todoagenda.widget.LastEntry;
 import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.junit.Test;
@@ -75,8 +76,7 @@ public class BirthdayTest extends BaseWidgetTest {
         provider.addResults(inputs.getResults());
         getSettings().clock().setSnapshotDate(now);
         playResults(TAG);
-        assertEquals(entriesWithoutLastExpected == 0 ? 0 : entriesWithoutLastExpected + 1,
-                getFactory().getWidgetEntries().size());
+        assertEquals(entriesWithoutLastExpected + 1, getFactory().getWidgetEntries().size());
         if (entriesWithoutLastExpected > 0) {
             CalendarEntry birthday = (CalendarEntry) getFactory().getWidgetEntries().get(1);
             assertEquals(9, birthday.entryDate.dayOfMonth().get());
@@ -85,5 +85,11 @@ public class BirthdayTest extends BaseWidgetTest {
             assertEquals(0, birthday.entryDate.millisOfDay().get());
             assertEquals(true, birthday.isAllDay());
         }
+        LastEntry lastEntry = (LastEntry) getFactory().getWidgetEntries()
+                .get(getFactory().getWidgetEntries().size() - 1);
+        assertEquals("Last entry: " + lastEntry,
+                entriesWithoutLastExpected == 0 ? LastEntry.LastEntryType.EMPTY : LastEntry.LastEntryType.LAST,
+                lastEntry.type);
+
     }
 }

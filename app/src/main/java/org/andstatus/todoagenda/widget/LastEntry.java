@@ -22,10 +22,10 @@ public class LastEntry extends WidgetEntry<LastEntry> {
     }
 
     public static void addLast(InstanceSettings settings, List<WidgetEntry> widgetEntries) {
-        if (!widgetEntries.isEmpty()) {
-            LastEntry entry = new LastEntry(settings, LastEntryType.LAST, widgetEntries.get(widgetEntries.size() - 1).entryDate);
-            widgetEntries.add(entry);
-        }
+        LastEntry entry = widgetEntries.isEmpty()
+            ? LastEntry.forEmptyList(settings)
+            : new LastEntry(settings, LastEntryType.LAST, widgetEntries.get(widgetEntries.size() - 1).entryDate);
+        widgetEntries.add(entry);
     }
 
     public enum LastEntryType {

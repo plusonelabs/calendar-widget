@@ -13,7 +13,6 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -106,10 +105,6 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         return widgetEntries.size();
     }
 
-    public int getCountInternal() {
-        return widgetEntries.size();
-    }
-
     public RemoteViews getViewAt(int position) {
         if (position < widgetEntries.size()) {
             WidgetEntry entry = widgetEntries.get(position);
@@ -145,7 +140,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         logEvent("reload, visualizers:" + visualizers.size() + ", entries:" + this.widgetEntries.size());
     }
 
-    static void updateWidget(Context context, int widgetId, @Nullable RemoteViewsFactory factory) {
+    static void updateWidget(Context context, int widgetId) {
         try {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             if (appWidgetManager == null) {
@@ -156,7 +151,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_initial);
 
-            configureWidgetHeader(settings, context, rv, factory != null && factory.getCountInternal() == 0);
+            configureWidgetHeader(settings, context, rv);
             configureWidgetEntriesList(settings, context, widgetId, rv);
 
             appWidgetManager.updateAppWidget(widgetId, rv);
@@ -308,7 +303,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         return false;
     }
 
-    private static void configureWidgetHeader(InstanceSettings settings, Context context, RemoteViews rv, boolean noEntries) {
+    private static void configureWidgetHeader(InstanceSettings settings, Context context, RemoteViews rv) {
         Log.d(TAG, settings.getWidgetId() + " configureWidgetHeader, layout:" + settings.getWidgetHeaderLayout());
         rv.removeAllViews(R.id.header_parent);
 
@@ -324,13 +319,6 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             configureAddEvent(settings, rv);
             configureRefresh(settings, rv);
             configureOverflowMenu(settings, rv);
-        }
-
-        if (noEntries) {
-            LastEntry entry = LastEntry.forEmptyList(settings);
-            LastEntryVisualizer visualizer = new LastEntryVisualizer(context, settings.getWidgetId());
-            RemoteViews views = visualizer.getRemoteViews(entry, -1);
-            rv.addView(R.id.header_parent, views);
         }
     }
 

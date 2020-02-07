@@ -14,7 +14,7 @@ import org.junit.Before;
  */
 public class BaseWidgetTest {
     final static String TAG = BaseWidgetTest.class.getSimpleName();
-    private static final int MAX_MILLIS_TO_WAIT_FOR_LAUNCHER = 5000;
+    private static final int MAX_MILLIS_TO_WAIT_FOR_LAUNCHER = 2000;
     private static final int MAX_MILLIS_TO_WAIT_FOR_FACTORY_CREATION = 40000;
 
     protected MockCalendarContentProvider provider = null;
@@ -50,7 +50,7 @@ public class BaseWidgetTest {
     }
 
     protected void playResults(String tag) {
-        Log.d(tag, provider.getWidgetId() + " playResults");
+        Log.d(tag, provider.getWidgetId() + " playResults started");
         provider.updateAppSettings(tag);
 
         if (provider.usesActualWidget) {
@@ -71,6 +71,7 @@ public class BaseWidgetTest {
             getFactory().onDataSetChanged();
         }
         getFactory().logWidgetEntries(tag);
+        Log.d(tag, provider.getWidgetId() + " playResults ended");
     }
 
     private void waitForRemoteViewsFactoryCreation() {

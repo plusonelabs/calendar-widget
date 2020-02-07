@@ -16,6 +16,7 @@ public class TestRunListener extends RunListener {
 
     public TestRunListener() {
         Log.i(TAG,  "TestRunListener created");
+        EnvironmentChangedReceiver.sleep(5000);
     }
 
     @Override
@@ -26,9 +27,10 @@ public class TestRunListener extends RunListener {
     }
 
     private void restoreApp() {
-        MockCalendarContentProvider.tearDown();
-
+        Log.i(TAG, "On restore app");
         EnvironmentChangedReceiver.sleep(2000);
+
+        MockCalendarContentProvider.tearDown();
 
         AllSettings.forget();
         EventProviderType.forget();

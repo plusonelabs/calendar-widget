@@ -291,10 +291,7 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     }
 
     public int getViewTypeCount() {
-        int result = 0;
-        for (WidgetEntryVisualizer<?> visualizer : visualizers) {
-            result += visualizer.getViewTypeCount();
-        }
+        int result = 14;  // Actually this is maximum number of different layoutIDs
         logEvent("getViewTypeCount:" + result);
         return result;
     }

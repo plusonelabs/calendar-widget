@@ -704,7 +704,8 @@ public class InstanceSettings {
     }
 
     public boolean noPastEvents() {
-        return !getShowPastEventsWithDefaultColor() &&
+        return filterMode != FilterMode.NO_FILTERING &&
+                !getShowPastEventsWithDefaultColor() &&
                 getEventsEnded() == EndedSomeTimeAgo.NONE &&
                 noTaskSources();
     }

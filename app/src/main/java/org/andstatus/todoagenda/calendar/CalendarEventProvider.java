@@ -13,10 +13,12 @@ import android.util.SparseArray;
 import androidx.annotation.NonNull;
 
 import org.andstatus.todoagenda.prefs.EventSource;
+import org.andstatus.todoagenda.prefs.FilterMode;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
+import org.andstatus.todoagenda.util.MyClock;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -48,11 +50,13 @@ public class CalendarEventProvider extends EventProvider {
             return Collections.emptyList();
         }
         List<CalendarEvent> eventList = getTimeFilteredEventList();
-        if (getSettings().getShowPastEventsWithDefaultColor()) {
-            addPastEventsWithDefaultColor(eventList);
-        }
-        if (getSettings().getShowOnlyClosestInstanceOfRecurringEvent()) {
-            filterShowOnlyClosestInstanceOfRecurringEvent(eventList);
+        if (getSettings().getFilterMode() != FilterMode.NO_FILTERING) {
+            if (getSettings().getShowPastEventsWithDefaultColor()) {
+                addPastEventsWithDefaultColor(eventList);
+            }
+            if (getSettings().getShowOnlyClosestInstanceOfRecurringEvent()) {
+                filterShowOnlyClosestInstanceOfRecurringEvent(eventList);
+            }
         }
         return eventList;
     }
@@ -95,12 +99,16 @@ public class CalendarEventProvider extends EventProvider {
     }
 
     private List<CalendarEvent> getTimeFilteredEventList() {
+        FilterMode filterMode = getSettings().getFilterMode();
+
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
-        ContentUris.appendId(builder, mStartOfTimeRange.getMillis());
-        ContentUris.appendId(builder, mEndOfTimeRange.getMillis());
+        ContentUris.appendId(builder, (filterMode == FilterMode.NORMAL_FILTER
+                ? mStartOfTimeRange : MyClock.DATETIME_MIN).getMillis());
+        ContentUris.appendId(builder, (filterMode == FilterMode.NORMAL_FILTER
+                ? mEndOfTimeRange : MyClock.DATETIME_MAX).getMillis());
         List<CalendarEvent> eventList = queryList(builder.build(), getCalendarSelection());
 
-        switch (getSettings().getFilterMode()) {   // TODO: Implement fully...
+        switch (filterMode) {   // TODO: Implement fully...
             case NO_FILTERING:
                 break;
             default:

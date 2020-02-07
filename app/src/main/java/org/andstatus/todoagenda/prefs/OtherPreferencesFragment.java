@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
@@ -72,20 +73,32 @@ public class OtherPreferencesFragment extends PreferenceFragment
     }
 
     private void showSnapshotMode() {
-        Preference preference = findPreference(InstanceSettings.PREF_SNAPSHOT_MODE);
+        ListPreference preference = (ListPreference) findPreference(InstanceSettings.PREF_SNAPSHOT_MODE);
         if (preference == null) return;
+
+        InstanceSettings settings = getSettings();
+
+        CharSequence[] entries = {
+            getText(R.string.snapshot_mode_live_data),
+            formatSnapshotModeSummary(settings, R.string.snapshot_mode_time),
+            formatSnapshotModeSummary(settings, R.string.snapshot_mode_now)
+        };
+        preference.setEntries(entries);
 
         SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
         if (snapshotMode == SnapshotMode.LIVE_DATA) {
             preference.setSummary(snapshotMode.valueResId);
         } else {
-            InstanceSettings settings = getSettings();
-            preference.setSummary(String.format(
-                    getText(snapshotMode.valueResId).toString(),
-                    DateUtil.createDateString(getSettings(), settings.clock().now()) + " " +
-                    DateUtil.formatTime(this::getSettings, settings.clock().now())
-            ));
+            preference.setSummary(formatSnapshotModeSummary(settings, snapshotMode.valueResId));
         }
+    }
+
+    private String formatSnapshotModeSummary(InstanceSettings settings, int valueResId) {
+        return String.format(
+                getText(valueResId).toString(),
+                DateUtil.createDateString(getSettings(), settings.clock().now()) + " " +
+                DateUtil.formatTime(this::getSettings, settings.clock().now())
+        );
     }
 
     private InstanceSettings getSettings() {

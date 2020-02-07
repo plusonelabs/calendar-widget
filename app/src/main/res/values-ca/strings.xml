@@ -8,7 +8,7 @@
     <string name="today">Avui</string>
     <string name="tomorrow">Demà</string>
     <string name="not_initialized_yet">No inicialitzat encara...</string>
-    <string name="no_events_to_show">No hi ha esdeveniments per mostrar</string>
+    <string name="no_events_to_show">Cap esdeveniment per mostrar</string>
     <string name="no_upcoming_events">Sense esdeveniments pròxims</string>
     <string name="open_prefs_desc">Obrir la configuració del widget del calendari</string>
     <string name="go_to_today">Ves a avui</string>
@@ -19,15 +19,15 @@
     <string name="grant_permissions">Concedeix permisos</string>
     <string name="grant_permissions_verbose">El giny requereix permís per llegir calendaris.\nPremeu aquí per concedir-li.</string>
     <string name="past_header">Passat i pendent</string>
-    <string name="permissions_justification">Et donem la benvinguda a Todo Agenda, l\'accés fàcil al teu calendari.\n\nPerquè el giny pugui executar totes les funcions necessites donar-li accés al teu calendari.</string>
-    <string name="no_widgets_found">Per favor afegeix el giny \"Todo Agenda\" a la pantalla principal del teu dispositiu.</string>
+    <string name="permissions_justification">Et donem la benvinguda a Todo Agenda, l\'accés fàcil al teu calendari i tasques.\n\nPerquè el giny pugui executar totes les funcions cal donar-li accés al teu calendari.</string>
+    <string name="no_widgets_found">Per favor, primer afegeix el giny \"Todo Agenda\" a la pantalla principal del teu dispositiu.</string>
     <string name="select_a_widget_to_configure">Seleccioneu un giny per configurar</string>
     <string name="close">Tanca</string>
     <string name="go_to_home_screen">Anar a la pantalla d\'inici</string>
     <string name="loading_with_dots">Carregant...</string>
     <string name="widget_header">Capçalera del giny</string>
     <string name="todays_events">Esdeveniments per avui</string>
-    <string name="future_events">Futurs esdeveniments</string>
+    <string name="future_events">Esdeveniments futurs</string>
     <string name="not_found">No s\'ha trobat</string>
     <!-- Descriptions for app markets -->
     <string name="app_description_80_chars_max">Ginys de la pantalla d\'inici que mostren esdeveniments de calendaris seleccionats i llistes de tasques</string>
@@ -37,7 +37,7 @@
     <string name="app_description_4000_chars_max_part02">Característiques</string>
     <string name="app_description_4000_chars_max_part15">Sense publicitat. Codi font lliure i gratuït.</string>
     <string name="app_description_4000_chars_max_part03">Mostra esdeveniments dels vostres calendaris i llistes de tasques
-        per als períodes seleccionats en el passat i el futur.</string>
+        per als períodes seleccionats en el passat i en el futur.</string>
     <string name="app_description_4000_chars_max_part04">Actualitza automàticament quan afegeixis/eliminis/modifiquis un esdeveniment. O pots actualitzar la llista instantàniament.</string>
     <string name="app_description_4000_chars_max_part05">Seleccioneu només els calendaris i les llistes de tasques
         que voleu veure al giny.</string>
@@ -48,7 +48,7 @@
     <string name="app_description_4000_chars_max_part08">Desplaça\'t per la llista d\'esdeveniments.
         Feu servir el botó \"Vés a Avui\" per tornar a avui a l\'instant.</string>
     <string name="app_description_4000_chars_max_part09">Personalitza la mida del text del giny.</string>
-    <string name="app_description_4000_chars_max_part10">Giny totalment redimensionable amb dues disposicions alternatives.</string>
+    <string name="app_description_4000_chars_max_part10">Giny totalment redimensionable amb disposicions alternatives.</string>
     <string name="app_description_4000_chars_max_part11">Indicadors per a alertes i esdeveniments recurrents.</string>
     <string name="app_description_4000_chars_max_part12">Bloqueja la zona horària quan viatgis a diferents zones horàries.</string>
     <string name="app_description_4000_chars_max_part13">Desactiveu la capçalera de giny, capçaleres de dia, icones d\'esdeveniments, dies d\'avui,
@@ -60,10 +60,10 @@
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendaris</string>
     <string name="calendars_prefs_desc">Seleccioneu els calendaris per mostrar</string>
-    <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
+    <string name="task_source_opentasks">OpenTasks (per dmfs GmbH)</string>
     <string name="task_source_samsung">Samsung Calendar</string>
     <!-- Preference header: Other -->
-    <string name="device_default">Per defecte del dispositiu</string>
+    <string name="device_default">Dispositiu per defecte</string>
     <string name="other_prefs_desc">Mida, data i formats de temps, etc.</string>
     <string name="other_prefs_title">Altres configuracions</string>
     <string name="appearance_prefs">Apariència</string>
@@ -104,7 +104,7 @@
     <string name="horizontalLineBelowDayHeader">Línia horitzontal sota la capçalera del Dia</string>
     <string name="appearance_multiline_title_title">Títol amb diverses línies</string>
     <string name="appearance_multiline_title_desc">Títol de l\'esdeveniment repartit en múltiples línies</string>
-    <string name="appearance_show_days_without_events_title">Visualitzar dies sense esdeveniments</string>
+    <string name="appearance_show_days_without_events_title">Mostra dies sense esdeveniments</string>
     <string name="appearance_show_days_without_events_desc">Mostra capçaleres pels dies sense esdeveniments</string>
     <string name="appearance_show_day_headers_title">Mostra capçaleres pels dies</string>
     <string name="appearance_show_day_headers_desc">Mostra l\'encapçalament de tots els dies</string>
@@ -122,8 +122,8 @@
     <string name="appearance_background_color_title">Color de fons</string>
     <string name="appearance_background_color_desc">Ajusteu el color del fons</string>
     <string name="appearance_past_events_background_color_title">Color de fons dels esdeveniments passats</string>
-    <string name="appearance_past_events_background_color_desc">Ajustar color de fons dels esdeveniments passats</string>
-    <string name="todays_events_background_color_title">Color de fons dels esdeveniments actuals</string>
+    <string name="appearance_past_events_background_color_desc">Ajusta el color de fons dels esdeveniments passats</string>
+    <string name="todays_events_background_color_title">Color de fons dels esdeveniments d\'avui</string>
     <string name="todays_events_background_color_desc">Ajusta color de fons dels esdeveniments d\'avui</string>
     <string name="appearance_header_theme_title">Ombrejat de la capçalera de widget</string>
     <string name="appearance_header_theme_desc">Mostra la sombra de la capçalera en oscur o clar</string>
@@ -131,7 +131,7 @@
     <string name="widget_header_background_color_title">Color de la capçalera del fons del giny</string>
     <string name="day_header_theme_title">Ombreig de la capçalera del text del Dia</string>
     <string name="day_header_theme_desc">Mostra la capçalera del dia en fosc o ombreig clar</string>
-    <string name="appearance_entries_theme_title">Ombrejat d\'esdeveniment</string>
+    <string name="appearance_entries_theme_title">Ombreig d\'esdeveniment</string>
     <string name="appearance_entries_theme_desc">Mostra el text de l\'esdeveniment amb l\'ombra clara o fosca</string>
     <string name="appearance_theme_black">Blanc</string>
     <string name="appearance_theme_dark">Clar</string>
@@ -170,21 +170,21 @@
     <string name="event_range_one_year">Un any</string>
     <string name="show_past_events_with_default_color_title">Mostra tots els esdeveniments passats que tenen el color predeterminat</string>
     <string name="this_option_is_turned_off">(desactivat)</string>
-    <string name="pref_events_ended_title">Mostra els esdeveniments que han finalitzat recentment</string>
+    <string name="pref_events_ended_title">Mostra els esdeveniments finalitzats</string>
     <string name="ended_one_hour_ago">Finalitzats fa una hora</string>
-    <string name="ended_two_hours_ago">Finalitzats fa dues hores</string>
-    <string name="ended_four_hours_ago">Finalitzats fa quatre hores</string>
-    <string name="ended_today">Finalitzats avui</string>
-    <string name="ended_yesterday">Finalitzats ahir</string>
+    <string name="ended_two_hours_ago">Finalitzat fa dues hores</string>
+    <string name="ended_four_hours_ago">Finalitzat fa quatre hores</string>
+    <string name="ended_today">Finalitzat avui</string>
+    <string name="ended_yesterday">Finalitzat ahir</string>
     <string name="ended_one_week_ago">Finalitzat fa una setmana</string>
-    <string name="ended_two_weeks_ago">Finalitzat fa una setmana</string>
+    <string name="ended_two_weeks_ago">Finalitzat fa dues setmanes</string>
     <string name="ended_one_month_ago">Finalitzat fa un mes</string>
     <string name="ended_two_months_ago">Finalitzat fa dos mesos</string>
     <string name="ended_three_months_ago">Finalitzat fa tres mesos</string>
     <string name="ended_six_months_ago">Finalitzat fa sis mesos</string>
     <string name="ended_one_year_ago">Finalitzat fa un any</string>
     <string name="pref_hide_based_on_keywords_title">Amagar en funció de les paraules clau al títol</string>
-    <string name="show_only_closest_instance_of_recurring_event">Visualitzar només la instància més propera d\'un esdeveniment recurrent</string>
+    <string name="show_only_closest_instance_of_recurring_event">Mostrar només el cas més proper d\'un esdeveniment periòdic</string>
     <string name="hide_duplicates">Oculta duplicats</string>
     <!-- Preference header: Other -->
     <string name="refresh_period_minutes">Període de refresc automàtic, minuts</string>
@@ -196,7 +196,7 @@
     <string name="feedback_github_title">Visita el widget en Github</string>
     <string name="feedback_play_store_desc">Vota i opina en el Google Play Store</string>
     <string name="feedback_play_store_title">Visita el widget en el Google Play Store</string>
-    <string name="refresh_desc">Refrescar</string>
+    <string name="refresh_desc">Refresca</string>
     <string name="share_events_for_debugging_desc">Creeu un informe per ajudar els desenvolupadors a solucionar problemes.
         Abans de compartir filtreu esdeveniments per protegir la vostra privadesa, però encara demostreu el problema</string>
     <string name="share_events_for_debugging_title">Compartiu esdeveniments i configuracions per a la depuració</string>

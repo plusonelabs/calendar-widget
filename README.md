@@ -46,7 +46,7 @@ selected calendars and task lists.
 * Turn off Widget header, Day headers, event icons, Days from today, etc. and see only what you need.
 * Hide duplicated events.
 * Backup and restore settings, cloning widgets on the same or different devices.
-* Android 4+ supported. Supports Android tablets.
+* Android 7+ supported. Supports Android tablets.
 
 Note on Tasks support: As there is no unified way to access tasks created in different applications, 
 each application needs its own implementation. Currently supported:
@@ -66,7 +66,8 @@ We are also looking for new and improved translations over at http://crowdin.net
 
 ## <a id="changelog"/> Changelog
 
-### 2020-01-19 <a id="v4.0"/> v4.0.1 Additional options for tasks filtering and ordering
+### 2020-02-07 <a id="v4.0"/> v4.0.3 Additional options for tasks filtering and ordering
+* This version is for Android 7+ only.
 * "[Task scheduling](https://github.com/andstatus/todoagenda/issues/4)" option added allowing to define,
  what date gets main attention for a task. With two values:
    * Show tasks under date due (Due date gets main attention, and we are showing tasks at their due dates,

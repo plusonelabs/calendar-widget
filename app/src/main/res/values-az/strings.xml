@@ -7,21 +7,39 @@
     <string name="yesterday">Dünən</string>
     <string name="today">Bugün</string>
     <string name="tomorrow">Sabah</string>
+    <string name="not_initialized_yet">Hələ başladılmayıb...</string>
+    <string name="no_events_to_show">Göstəriləcək heç bir tədbir yoxdur</string>
     <string name="no_upcoming_events">Yaxınlaşan tədbir yoxdur</string>
     <string name="open_prefs_desc">Təqvim vidget tənzimləmələrini aç</string>
+    <string name="go_to_today">Bugünə get</string>
     <string name="add_event_desc">Yeni təqvim tədbiri əlavə et</string>
     <string name="indicator_alarm">Zəngli saat tənzimlənirsə göstərici yarat</string>
     <string name="indicator_recurring">Tədbir təkrarlanırsa göstərici yarat</string>
     <string name="no_title">(Başlıq yoxdur)</string>
     <string name="grant_permissions">Verilən icazələr</string>
     <string name="grant_permissions_verbose">Vidgetə təqvimləri oxumaq üçün icazə vermək lazımdır.\nİcazə vermək üçün toxunun.</string>
+    <string name="past_header">Keçmiş və son olanlar</string>
     <string name="permissions_justification">Təqviminə asanca müraciət edə biləcəyin Todo Gündəm-ə Xoş Gəldiniz.\n\nBir çox vidgeti əldə etmək üçün təqvimə müraciətə icazə vermək lazımdır.</string>
     <string name="no_widgets_found">Zəhmət olmasa əvvəlcə cihazınızın əsas ekranından \"Todo Gündəm\"i əlavə edin.</string>
     <string name="select_a_widget_to_configure">Konfiqurasiya etmək üçün bir vidget seçin</string>
     <string name="close">Bağla</string>
     <string name="go_to_home_screen">Əsas ekrana get</string>
+    <string name="loading_with_dots">Yüklənir...</string>
+    <string name="widget_header">Vidget başlığı</string>
+    <string name="todays_events">Bugünün tədbirləri</string>
+    <string name="future_events">Gələcək tədbirlər</string>
+    <string name="not_found">Tapılmadı</string>
     <!-- Descriptions for app markets -->
-    <string name="app_description_80_chars_max">Seçilmiş təqvimlərdən yaxınlaşan (və keçmiş&#8230;) tədbirlərin siyahılarını görüntüləyən vidgetlər</string>
+    <string name="app_description_80_chars_max">Seçilmiş təqvimlərdən və tapşırıq siyahılarından tədbirləri göstərən əsas ekran vidgetləri</string>
+    <string name="app_description_4000_chars_max_part01">Todo Gündəm, Android cihazınız üçün əsas ekran vidgetləridir.
+        Hər vidgetin öz tənzimləmələri var və konfiqurasiya edilmiş təqvim tədbirləri və tapşırıqların siyahısını göstərər,
+        beləcə, hazırki və gələn görüşlərə asanca baxa biləcəksiniz.</string>
+    <string name="app_description_4000_chars_max_part02">Xüsusiyyətlər</string>
+    <string name="app_description_4000_chars_max_part15">Reklam yoxdur. Ödənişsiz və Açıq Mənbə.</string>
+    <string name="app_description_4000_chars_max_part03">Keçmişdə və gələcəkdəki seçilmiş dövrlər üçün
+        təqvimlərinizdən və tapşırıq siyahınızdan tədbirləri göstərər.</string>
+    <string name="app_description_4000_chars_max_part04">Bir tədbir əlavə edəndə/siləndə/dəyişdirəndə avtomatik olaraq yenilənəcək.
+        Və ya siyahını dərhal yeniləyə bilərsiniz.</string>
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Təqvimlər</string>
     <string name="calendars_prefs_desc">Göstəriləcək təqvimləri seçin</string>
@@ -115,14 +133,11 @@
     <string name="ended_yesterday">Dünən bitdi</string>
     <string name="pref_hide_based_on_keywords_title">Başlıqdakı açar sözləri gizlət</string>
     <string name="show_only_closest_instance_of_recurring_event">Təkrarlanan bir tədbirin yalnız ən yaxın nümunəsini göstər</string>
-    <!-- Preference header: Feedback -->
-    <string name="feedback_prefs">Əks əlaqə</string>
-    <string name="feedback_prefs_desc">Bizimlə əlaqə saxlayın</string>
+    <!-- Preference header: Other -->
+    <!-- Preference header: Feedback and Backup -->
     <string name="feedback_github_desc">Layihə səhifəsinə əks əlaqə verin</string>
     <string name="feedback_github_title">Github-da vidgeti ziyarət edin</string>
     <string name="feedback_play_store_desc">Google Play Store-da rəy bildirin və bizə qiymət verin</string>
     <string name="feedback_play_store_title">Google Play Store-da vidgeti ziyarət edin</string>
     <string name="refresh_desc">Təzələ</string>
-    <string name="share_events_for_debugging_desc">Tərtibatçılara kömək etmək üçün problemlərin hesabatını hazırlayın</string>
-    <string name="share_events_for_debugging_title">Sazlama üçün tədbirləri paylaş</string>
 </resources>

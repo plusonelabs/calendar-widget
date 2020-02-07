@@ -62,7 +62,7 @@
     <string name="app_description_4000_chars_max_part16">Hide duplicated events.</string>
     <string name="app_description_4000_chars_max_part17">Backup and restore settings,
         cloning widgets on the same or different devices.</string>
-    <string name="app_description_4000_chars_max_part14">Android 4+ supported. Supports Android tablets.</string>
+    <string name="app_description_4000_chars_max_part14">Android 7+ supported. Supports Android tablets.</string>
 
     <!-- Preference header: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendars and Task Lists</string>

@@ -16,8 +16,8 @@ buildscript {
         espressoCoreVersion = '3.2.0'
         grgitVersion = '2.1.0'
         jodaTimeVersion = '2.10.3'
-        junitVersion = '4.13-rc-1'
-        junitJupiterVersion = '5.5.2'
+        junitVersion = '4.13'
+        junitJupiterVersion = '5.6.0'
         testRulesVersion = '1.2.0'
         testRunnerVersion = '1.2.0'
     }

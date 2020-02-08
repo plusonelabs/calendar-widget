@@ -23,10 +23,6 @@ so that you can easily have a glimpse at your due, current and upcoming appointm
 </tr>
 </table>
 
-Want to contribute to the project? Start by translating the widget to another language or update existing translation
-at [Translation project at Crowdin](http://crowdin.net/project/plusonelabs-calendar-widget) 
-and be a part of the next release. :)
-
 ![Calendar Widget Screenshots](assets/screenshots/widget-collage.png)
 
 ## Features
@@ -56,18 +52,37 @@ each application needs its own implementation. Currently supported:
 
 ## Collaborate
 
+Want to contribute to the project? Start by translating the widget to another language or update existing translation
+at [Translation project at Crowdin](http://crowdin.net/project/plusonelabs-calendar-widget)
+and be a part of the next release. :)
+
 We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open 
 [issues](https://github.com/andstatus/todoagenda/issues?q=is%3Aissue+sort%3Aupdated-desc) and provide
 [pull requests](https://github.com/andstatus/todoagenda/pulls). 
-To get timely feedback we are also making use of the open beta feature in the Google Play Store. 
-Please [opt-in here](https://play.google.com/apps/testing/org.andstatus.todoagenda).
-
-We are also looking for new and improved translations over at http://crowdin.net/project/plusonelabs-calendar-widget.
+To get timely feedback we are also providing Beta versions,
+  see [Beta testing of ToDo Agenda](https://github.com/andstatus/todoagenda/issues/3).
 
 ## <a id="changelog"/> Changelog
 
+### <a id="troubleshooting"/> Troubleshooting after update
+
+Due to Android design, widgets may misbehave or even may not work at all after an update. In this case, try the below:
+
+1. Restart your device.
+
+If the problem is still present:
+
+1. Uninstall old version of the "ToDo Agenda" app.
+2. Restart your device.
+3. Install the new app version.
+4. Recreate your widgets.
+
+In a case the widget doesn't work properly even after this, please
+ [search, read and follow up on similar issues here](https://github.com/andstatus/todoagenda/issues?q=is%3Aissue+sort%3Aupdated-desc).
+
 ### 2020-02-07 <a id="v4.0"/> v4.0.3 Additional options for tasks filtering and ordering
-* This version is for Android 7+ only.
+* This version is for Android 7+ only. Versions for older devices are still available e.g.
+ [here](https://github.com/andstatus/todoagenda/issues/3).
 * "[Task scheduling](https://github.com/andstatus/todoagenda/issues/4)" option added allowing to define,
  what date gets main attention for a task. With two values:
    * Show tasks under date due (Due date gets main attention, and we are showing tasks at their due dates,
@@ -88,7 +103,6 @@ We are also looking for new and improved translations over at http://crowdin.net
  "Stored snapshot shown at current time".
 
 ### 2019-12-01 <a id="v3.1"/> v3.1.9 Hide duplicate events. Backup and restore
-
 * Selected Calendars (Task lists) [display order](https://github.com/plusonelabs/calendar-widget/issues/287)
  is determined by the order in which the calendars are selected. 
  Items in the list are reordered immediately after selection or deselection. 
@@ -108,17 +122,6 @@ We are also looking for new and improved translations over at http://crowdin.net
  of a configurable Auto refresh period (in Other Settings). Default Auto refresh period is 10 minutes.
 
 ### 2019-10-05 <a id="v3.0"/> v3.0.11 More colors and layout customizations
-**Attention!** Due to lots of internal changes:
-
-1. Old "ToDo Agenda" app version should be uninstalled first, 
-2. Device restarted,
-3. And then the new version installed. 
-4. Widgets should be recreated. 
-
-Sorry for inconvenience.
-
-**Changes in this version**
-
 * One "Appearance" Settings section split into: Layout, Colors and Other settings.
 * Old and confusing [Android Holo ColorPicker](https://github.com/LarsWerkman/HoloColorPicker) is replaced with a customized version of 
   [HSV-Alpha Color Picker for Android](https://github.com/martin-stone/hsv-alpha-color-picker-android).

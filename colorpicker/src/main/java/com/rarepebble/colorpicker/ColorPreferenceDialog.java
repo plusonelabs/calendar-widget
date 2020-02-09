@@ -98,7 +98,7 @@ public class ColorPreferenceDialog extends PreferenceDialogFragmentCompat {
 
 	@Override
 	public void onDialogClosed(boolean positiveResult) {
-		if (positiveResult) {
+		if (positiveResult && mPicker != null) {
 			final int color = mPicker.getColor();
 			if (preference.callChangeListener(color)) {
 				preference.setColor(color);

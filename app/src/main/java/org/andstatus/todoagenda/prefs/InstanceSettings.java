@@ -12,6 +12,8 @@ import org.andstatus.todoagenda.Alignment;
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.TextSizeScale;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatValue;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.InstanceId;
@@ -70,8 +72,10 @@ public class InstanceSettings {
     private EventEntryLayout eventEntryLayout = EventEntryLayout.DEFAULT;
     static final String PREF_SHOW_EVENT_ICON = "showEventIcon";
     private boolean showEventIcon = true;
-    static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent";
-    private boolean showNumberOfDaysToEvent = true;
+    static final String PREF_ENTRY_DATE_FORMAT = "entryDateFormat";
+    static final DateFormatValue PREF_ENTRY_DATE_FORMAT_DEFAULT = DateFormatType.NUMBER_OF_DAYS.defaultValue();
+    private DateFormatValue entryDateFormat = PREF_ENTRY_DATE_FORMAT_DEFAULT;
+    static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent"; // till v 4.0
     static final String PREF_MULTILINE_TITLE = "multiline_title";
     static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
     private boolean multilineTitle = PREF_MULTILINE_TITLE_DEFAULT;
@@ -236,8 +240,15 @@ public class InstanceSettings {
             if (json.has(PREF_SHOW_EVENT_ICON)) {
                 showEventIcon = json.getBoolean(PREF_SHOW_EVENT_ICON);
             }
-            if (json.has(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT)) {
-                showNumberOfDaysToEvent = json.getBoolean(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT);
+            if (json.has(PREF_ENTRY_DATE_FORMAT)) {
+                entryDateFormat = DateFormatValue.load(
+                        json.getString(PREF_ENTRY_DATE_FORMAT), PREF_ENTRY_DATE_FORMAT_DEFAULT);
+            } else if (json.has(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT)) {
+                entryDateFormat = (json.getBoolean(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT) &&
+                            eventEntryLayout == EventEntryLayout.ONE_LINE
+                        ? DateFormatType.NUMBER_OF_DAYS
+                        : DateFormatType.HIDDEN)
+                    .defaultValue();
             }
             if (json.has(PREF_SHOW_END_TIME)) {
                 showEndTime = json.getBoolean(PREF_SHOW_END_TIME);
@@ -337,7 +348,7 @@ public class InstanceSettings {
             settings.showPastEventsUnderOneHeader = ApplicationPreferences.getShowPastEventsUnderOneHeader(context);
             settings.showPastEventsWithDefaultColor = ApplicationPreferences.getShowPastEventsWithDefaultColor(context);
             settings.showEventIcon = ApplicationPreferences.getShowEventIcon(context);
-            settings.showNumberOfDaysToEvent = ApplicationPreferences.getShowNumberOfDaysToEvent(context);
+            settings.entryDateFormat = ApplicationPreferences.getEntryDateFormat(context);
             settings.showEndTime = ApplicationPreferences.getShowEndTime(context);
             settings.showLocation = ApplicationPreferences.getShowLocation(context);
             settings.timeFormat = ApplicationPreferences.getTimeFormat(context);
@@ -427,7 +438,7 @@ public class InstanceSettings {
             json.put(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, showPastEventsUnderOneHeader);
             json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, showPastEventsWithDefaultColor);
             json.put(PREF_SHOW_EVENT_ICON, showEventIcon);
-            json.put(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, showNumberOfDaysToEvent);
+            json.put(PREF_ENTRY_DATE_FORMAT, entryDateFormat.save());
             json.put(PREF_SHOW_END_TIME, showEndTime);
             json.put(PREF_SHOW_LOCATION, showLocation);
             json.put(PREF_TIME_FORMAT, timeFormat);
@@ -549,8 +560,8 @@ public class InstanceSettings {
         return showPastEventsWithDefaultColor;
     }
 
-    public boolean getShowNumberOfDaysToEvent() {
-        return showNumberOfDaysToEvent;
+    public DateFormatValue getEntryDateFormat() {
+        return entryDateFormat;
     }
 
     public boolean getShowEventIcon() {

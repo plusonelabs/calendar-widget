@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager;
 
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.TextShading;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatValue;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
 
@@ -17,9 +18,9 @@ import java.util.Map;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ACTIVE_SOURCES;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TIME_FORMAT;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TIME_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_ALIGNMENT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ENTRY_DATE_FORMAT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ENTRY_DATE_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_ENDED;
@@ -59,6 +60,8 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SNAPSHOT_MODE
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TASK_SCHEDULING;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TASK_WITHOUT_DATES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TEXT_SIZE_SCALE;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TIME_FORMAT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TIME_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TODAYS_EVENTS_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_BACKGROUND_COLOR;
@@ -95,7 +98,7 @@ public class ApplicationPreferences {
             setShowPastEventsUnderOneHeader(context, settings.getShowPastEventsUnderOneHeader());
             setShowPastEventsWithDefaultColor(context, settings.getShowPastEventsWithDefaultColor());
             setShowEventIcon(context, settings.getShowEventIcon());
-            setShowNumberOfDaysToEvent(context, settings.getShowNumberOfDaysToEvent());
+            setEntryDateFormat(context, settings.getEntryDateFormat());
             setBoolean(context, PREF_SHOW_END_TIME, settings.getShowEndTime());
             setBoolean(context, PREF_SHOW_LOCATION, settings.getShowLocation());
             setString(context, PREF_TIME_FORMAT, settings.getTimeFormat());
@@ -243,16 +246,8 @@ public class ApplicationPreferences {
         return getBoolean(context, PREF_SHOW_EVENT_ICON, false);
     }
 
-    public static boolean getShowNumberOfDaysToEvent(Context context) {
-        return getBoolean(context, PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, false);
-    }
-
     public static void setShowEventIcon(Context context, boolean value) {
         setBoolean(context, PREF_SHOW_EVENT_ICON, value);
-    }
-
-    public static void setShowNumberOfDaysToEvent(Context context, boolean value) {
-        setBoolean(context, PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, value);
     }
 
     public static boolean getShowPastEventsWithDefaultColor(Context context) {
@@ -269,6 +264,18 @@ public class ApplicationPreferences {
 
     public static boolean getShowLocation(Context context) {
         return getBoolean(context, PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
+    }
+
+    public static DateFormatValue getEntryDateFormat(Context context) {
+        return getDateFormat(context, PREF_ENTRY_DATE_FORMAT, PREF_ENTRY_DATE_FORMAT_DEFAULT);
+    }
+
+    public static void setEntryDateFormat(Context context, DateFormatValue value) {
+        setString(context, PREF_ENTRY_DATE_FORMAT, value.save());
+    }
+
+    public static DateFormatValue getDateFormat(Context context, String key, DateFormatValue defaultValue) {
+        return DateFormatValue.load(getString(context, key, ""), defaultValue);
     }
 
     public static String getTimeFormat(Context context) {

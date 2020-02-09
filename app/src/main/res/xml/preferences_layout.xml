@@ -70,11 +70,10 @@
         android:summary="@string/show_event_icon_desc"
         android:title="@string/show_event_icon_title" />
 
-    <org.andstatus.todoagenda.prefs.MultilineCheckBoxPreference
-        android:key="showNumberOfDaysToEvent"
-        android:defaultValue="true"
-        android:summary="@string/show_number_of_days_to_event_desc"
-        android:title="@string/show_number_of_days_to_event_title" />
+    <org.andstatus.todoagenda.prefs.dateformat.DateFormatPreference
+        android:key="entryDateFormat"
+        android:defaultValue="days:"
+        android:title="@string/entry_date_format_title" />
 
     <org.andstatus.todoagenda.prefs.MultilineCheckBoxPreference
         android:key="multiline_title"

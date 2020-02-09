@@ -5,6 +5,7 @@ import android.widget.RemoteViews;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
@@ -58,7 +59,7 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
             rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
             rv.setViewVisibility(R.id.event_entry_time, View.GONE);
         } else {
-            if (getSettings().getShowNumberOfDaysToEvent()) {
+            if (getSettings().getEntryDateFormat().type == DateFormatType.NUMBER_OF_DAYS) {
                 int days = entry.getDaysFromToday();
                 boolean daysAsText = days > -2 && days < 2;
                 int viewToShow = daysAsText ? R.id.event_entry_days : R.id.event_entry_days_right;

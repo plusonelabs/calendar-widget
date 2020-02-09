@@ -7,6 +7,7 @@ import android.widget.RemoteViews;
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.RemoteViewsUtil;
 
@@ -48,7 +49,7 @@ public enum EventEntryLayout {
 
         @Override
         protected void setDaysToEvent(CalendarEntry entry, RemoteViews rv) {
-            if (entry.getSettings().getShowNumberOfDaysToEvent()) {
+            if (entry.getSettings().getEntryDateFormat().type == DateFormatType.NUMBER_OF_DAYS) {
                 int days = entry.getDaysFromToday();
                 boolean daysAsText = days > -2 && days < 2;
                 int viewToShow = daysAsText ? R.id.event_entry_days : R.id.event_entry_days_right;

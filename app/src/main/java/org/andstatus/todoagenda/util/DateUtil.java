@@ -63,7 +63,7 @@ public class DateUtil {
         return prefix + COMMA_SPACE + formatDateTime(settings, dateTime, DateUtils.FORMAT_SHOW_DATE);
     }
 
-    public static String formatDateTime(InstanceSettings settings, DateTime dateTime, int flags) {
+    private static String formatDateTime(InstanceSettings settings, DateTime dateTime, int flags) {
         return DateUtils.formatDateRange(settings.getContext(),
                 new Formatter(new StringBuilder(50), Locale.getDefault()),
                 dateTime.getMillis(),

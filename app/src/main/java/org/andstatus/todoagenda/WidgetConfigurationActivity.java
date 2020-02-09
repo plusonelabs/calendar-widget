@@ -92,6 +92,7 @@ public class WidgetConfigurationActivity extends AppCompatActivity implements
 
     @Override
     public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
+        setTitle(pref.getTitle() + " - " + ApplicationPreferences.getWidgetInstanceName(this));
         return false;
     }
 

@@ -30,6 +30,8 @@
     <string name="task_icon" translatable="false">✔</string>
     <string name="loading_with_dots">Loading...</string>
     <string name="widget_header">Widget header</string>
+    <string name="day_header">Day header</string>
+    <string name="event_entry">Event entry</string>
     <string name="todays_events">Today\'s events</string>
     <string name="future_events">Future events</string>
     <string name="not_found">Not found</string>

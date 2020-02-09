@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <PreferenceCategory android:title="@string/widget_header">
+        <PreferenceCategory app:title="@string/widget_header">
                 <ListPreference
                     android:key="headerTheme"
                     android:defaultValue="DARK"
@@ -18,7 +18,7 @@
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>
 
-        <PreferenceCategory android:title="@string/past_events" android:key="PastTime">
+        <PreferenceCategory app:title="@string/past_events" app:key="PastTime">
                 <ListPreference
                     android:key="dayHeaderThemePast"
                     android:defaultValue="DARK"
@@ -40,7 +40,7 @@
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>
 
-        <PreferenceCategory android:title="@string/todays_events"  android:key="TodayTime">
+        <PreferenceCategory app:title="@string/todays_events"  app:key="TodayTime">
                 <ListPreference
                     android:key="dayHeaderTheme"
                     android:defaultValue="LIGHT"
@@ -62,7 +62,7 @@
                     app:colorpicker_selectNoneButtonText="@string/default_value" />
         </PreferenceCategory>
 
-        <PreferenceCategory android:title="@string/future_events" android:key="FutureTime">
+        <PreferenceCategory app:title="@string/future_events" app:key="FutureTime">
                 <ListPreference
                     android:key="dayHeaderThemeFuture"
                     android:defaultValue="DARK"

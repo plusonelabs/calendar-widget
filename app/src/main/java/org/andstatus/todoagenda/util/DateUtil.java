@@ -77,9 +77,9 @@ public class DateUtil {
         if (!isDateDefined(time)) return EMPTY_STRING;
 
         InstanceSettings settings = settingsSupplier.get();
-        String dateFormat = settings.getDateFormat();
-        if (!DateFormat.is24HourFormat(settings.getContext()) && dateFormat.equals(AUTO)
-                || dateFormat.equals(TWELVE)) {
+        String timeFormat = settings.getTimeFormat();
+        if (!DateFormat.is24HourFormat(settings.getContext()) && timeFormat.equals(AUTO)
+                || timeFormat.equals(TWELVE)) {
             return formatDateTime(settings, time,
                     DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR);
         }

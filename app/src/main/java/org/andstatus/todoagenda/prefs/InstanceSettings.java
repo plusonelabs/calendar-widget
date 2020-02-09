@@ -148,9 +148,9 @@ public class InstanceSettings {
     private final String widgetInstanceName;
     static final String PREF_TEXT_SIZE_SCALE = "textSizeScale";
     private TextSizeScale textSizeScale = TextSizeScale.MEDIUM;
-    static final String PREF_DATE_FORMAT = "dateFormat";
-    static final String PREF_DATE_FORMAT_DEFAULT = "auto";
-    private String dateFormat = PREF_DATE_FORMAT_DEFAULT;
+    static final String PREF_TIME_FORMAT = "dateFormat"; // Legacy value...
+    static final String PREF_TIME_FORMAT_DEFAULT = "auto";
+    private String timeFormat = PREF_TIME_FORMAT_DEFAULT;
     static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
     static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
     private boolean abbreviateDates = PREF_ABBREVIATE_DATES_DEFAULT;
@@ -245,8 +245,8 @@ public class InstanceSettings {
             if (json.has(PREF_SHOW_LOCATION)) {
                 showLocation = json.getBoolean(PREF_SHOW_LOCATION);
             }
-            if (json.has(PREF_DATE_FORMAT)) {
-                dateFormat = json.getString(PREF_DATE_FORMAT);
+            if (json.has(PREF_TIME_FORMAT)) {
+                timeFormat = json.getString(PREF_TIME_FORMAT);
             }
             if (json.has(PREF_ABBREVIATE_DATES)) {
                 abbreviateDates = json.getBoolean(PREF_ABBREVIATE_DATES);
@@ -340,7 +340,7 @@ public class InstanceSettings {
             settings.showNumberOfDaysToEvent = ApplicationPreferences.getShowNumberOfDaysToEvent(context);
             settings.showEndTime = ApplicationPreferences.getShowEndTime(context);
             settings.showLocation = ApplicationPreferences.getShowLocation(context);
-            settings.dateFormat = ApplicationPreferences.getDateFormat(context);
+            settings.timeFormat = ApplicationPreferences.getTimeFormat(context);
             settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
             settings.setRefreshPeriodMinutes(ApplicationPreferences.getRefreshPeriodMinutes(context));
             settings.setEventEntryLayout(ApplicationPreferences.getEventEntryLayout(context));
@@ -430,7 +430,7 @@ public class InstanceSettings {
             json.put(PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT, showNumberOfDaysToEvent);
             json.put(PREF_SHOW_END_TIME, showEndTime);
             json.put(PREF_SHOW_LOCATION, showLocation);
-            json.put(PREF_DATE_FORMAT, dateFormat);
+            json.put(PREF_TIME_FORMAT, timeFormat);
             json.put(PREF_ABBREVIATE_DATES, abbreviateDates);
             json.put(PREF_LOCKED_TIME_ZONE_ID, clock().getLockedTimeZoneId());
             json.put(PREF_SNAPSHOT_MODE, clock().getSnapshotMode().value);
@@ -565,8 +565,8 @@ public class InstanceSettings {
         return showLocation;
     }
 
-    public String getDateFormat() {
-        return dateFormat;
+    public String getTimeFormat() {
+        return timeFormat;
     }
 
     public boolean getAbbreviateDates() {

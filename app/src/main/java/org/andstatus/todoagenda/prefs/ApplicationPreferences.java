@@ -2,8 +2,9 @@ package org.andstatus.todoagenda.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import androidx.preference.PreferenceManager;
 import android.text.TextUtils;
+
+import androidx.preference.PreferenceManager;
 
 import org.andstatus.todoagenda.EndedSomeTimeAgo;
 import org.andstatus.todoagenda.TextShading;
@@ -16,8 +17,8 @@ import java.util.Map;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ACTIVE_SOURCES;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DATE_FORMAT;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DATE_FORMAT_DEFAULT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TIME_FORMAT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TIME_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_ALIGNMENT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_BACKGROUND_COLOR_DEFAULT;
@@ -97,7 +98,7 @@ public class ApplicationPreferences {
             setShowNumberOfDaysToEvent(context, settings.getShowNumberOfDaysToEvent());
             setBoolean(context, PREF_SHOW_END_TIME, settings.getShowEndTime());
             setBoolean(context, PREF_SHOW_LOCATION, settings.getShowLocation());
-            setString(context, PREF_DATE_FORMAT, settings.getDateFormat());
+            setString(context, PREF_TIME_FORMAT, settings.getTimeFormat());
             setAbbreviateDates(context, settings.getAbbreviateDates());
             setLockedTimeZoneId(context, settings.clock().getLockedTimeZoneId());
             setRefreshPeriodMinutes(context, settings.getRefreshPeriodMinutes());
@@ -270,8 +271,8 @@ public class ApplicationPreferences {
         return getBoolean(context, PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
     }
 
-    public static String getDateFormat(Context context) {
-        return getString(context, PREF_DATE_FORMAT, PREF_DATE_FORMAT_DEFAULT);
+    public static String getTimeFormat(Context context) {
+        return getString(context, PREF_TIME_FORMAT, PREF_TIME_FORMAT_DEFAULT);
     }
 
     public static boolean getAbbreviateDates(Context context) {

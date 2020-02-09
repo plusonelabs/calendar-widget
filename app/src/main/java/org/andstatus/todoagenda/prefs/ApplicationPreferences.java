@@ -2,7 +2,7 @@ package org.andstatus.todoagenda.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import org.andstatus.todoagenda.EndedSomeTimeAgo;

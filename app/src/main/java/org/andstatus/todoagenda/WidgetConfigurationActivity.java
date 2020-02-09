@@ -7,15 +7,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.andstatus.todoagenda.prefs.RootFragment;
 import org.andstatus.todoagenda.provider.WidgetData;
 import org.andstatus.todoagenda.util.PermissionsUtil;
 import org.json.JSONException;
@@ -26,14 +31,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 
-public class WidgetConfigurationActivity extends PreferenceActivity {
+public class WidgetConfigurationActivity extends AppCompatActivity implements
+        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     private static final String TAG = WidgetConfigurationActivity.class.getSimpleName();
+    public static final String FRAGMENT_TAG = "settings_fragment";
 
     public static final int REQUEST_ID_RESTORE_SETTINGS = 1;
     public static final int REQUEST_ID_BACKUP_SETTINGS = 2;
-    private static final String PREFERENCES_PACKAGE_NAME = "org.andstatus.todoagenda.prefs";
     private int widgetId = 0;
     private boolean saveOnPause = true;
 
@@ -63,9 +69,30 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (openThisActivity(getIntent())) {
-            super.onCreate(savedInstanceState);
+        if (!openThisActivity(getIntent())) return;
+
+        setContentView(R.layout.activity_settings);
+        super.onCreate(savedInstanceState);
+
+        setTitle(ApplicationPreferences.getWidgetInstanceName(this));
+
+        if (savedInstanceState == null) {
+            // Create the fragment only when the activity is created for the first time.
+            // ie. not after orientation changes
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+            if (fragment == null) {
+                fragment = new RootFragment();
+            }
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.settings_container, fragment, FRAGMENT_TAG);
+            ft.commit();
         }
+    }
+
+    @Override
+    public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
+        return false;
     }
 
     private boolean openThisActivity(Intent newIntent) {
@@ -97,20 +124,6 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
             startActivity(MainActivity.intentToStartMe(this));
             finish();
         }
-    }
-
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preferences_header, target);
-        setTitle(ApplicationPreferences.getWidgetInstanceName(this));
-    }
-
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        if (fragmentName.startsWith(PREFERENCES_PACKAGE_NAME)) {
-            return true;
-        }
-        return super.isValidFragment(fragmentName);
     }
 
     @Override
@@ -194,7 +207,7 @@ public class WidgetConfigurationActivity extends PreferenceActivity {
             char[] buffer = new char[BUFFER_LENGTH];
             StringBuilder builder = new StringBuilder();
             int count;
-            reader = new InputStreamReader(in, "UTF-8");
+            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
             while ((count = reader.read(buffer)) != -1) {
                 builder.append(buffer, 0, count);
             }

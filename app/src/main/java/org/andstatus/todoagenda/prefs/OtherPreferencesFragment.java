@@ -2,12 +2,12 @@ package org.andstatus.todoagenda.prefs;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
+
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.R;
@@ -18,14 +18,13 @@ import org.joda.time.DateTimeZone;
 
 import java.util.TimeZone;
 
-public class OtherPreferencesFragment extends PreferenceFragment
+public class OtherPreferencesFragment extends PreferenceFragmentCompat
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences_other);
-    }
+   }
 
     @Override
     public void onResume() {
@@ -116,7 +115,7 @@ public class OtherPreferencesFragment extends PreferenceFragment
     }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    public boolean onPreferenceTreeClick(Preference preference) {
         switch (preference.getKey()) {
             case InstanceSettings.PREF_LOCK_TIME_ZONE:
                 if (preference instanceof CheckBoxPreference) {
@@ -129,7 +128,7 @@ public class OtherPreferencesFragment extends PreferenceFragment
             default:
                 break;
         }
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return super.onPreferenceTreeClick(preference);
     }
 
     @Override

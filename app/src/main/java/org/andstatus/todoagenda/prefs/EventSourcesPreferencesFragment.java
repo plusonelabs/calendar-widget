@@ -1,15 +1,16 @@
 package org.andstatus.todoagenda.prefs;
 
-import android.app.Fragment;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceScreen;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.provider.EventProviderType;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EventSourcesPreferencesFragment extends PreferenceFragment {
+public class EventSourcesPreferencesFragment extends PreferenceFragmentCompat {
     private static final String TAG = EventSourcesPreferencesFragment.class.getSimpleName();
     private static final String SOURCE_ID = "sourceId";
 
@@ -26,11 +27,9 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     List<EventSource> clickedSources = new ArrayList<>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences_event_sources);
     }
-
 
     private void addAsPreference(EventSource source, boolean isChecked ) {
         CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
@@ -141,7 +140,7 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
 
     private void loadSelectedInOtherInstances() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            for (Fragment fragment: getActivity().getFragmentManager().getFragments()) {
+            for (Fragment fragment: getActivity().getSupportFragmentManager().getFragments()) {
                 if (fragment instanceof EventSourcesPreferencesFragment && fragment != this) {
                     Log.i(TAG, this.toString() + "\nFound loaded " + fragment);
                     ((EventSourcesPreferencesFragment) fragment).loadActiveSources();
@@ -151,13 +150,13 @@ public class EventSourcesPreferencesFragment extends PreferenceFragment {
     }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    public boolean onPreferenceTreeClick(Preference preference) {
         if (preference instanceof CheckBoxPreference) {
             EventSource source = EventSource.fromStoredString(preference.getExtras().getString(SOURCE_ID));
             clickedSources.remove(source);
             clickedSources.add(source); // last clicked is the last in the list
             showAllSources(getSelectedSources());
         }
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return super.onPreferenceTreeClick(preference);
     }
 }

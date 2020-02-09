@@ -40,3 +40,8 @@ android {
         }
     }
 }
+
+dependencies {
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.preference:preference:$preferenceVersion"
+}

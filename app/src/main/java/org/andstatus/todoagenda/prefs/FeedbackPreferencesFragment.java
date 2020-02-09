@@ -2,9 +2,9 @@ package org.andstatus.todoagenda.prefs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
+
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
@@ -14,7 +14,7 @@ import static org.andstatus.todoagenda.WidgetConfigurationActivity.REQUEST_ID_BA
 import static org.andstatus.todoagenda.WidgetConfigurationActivity.REQUEST_ID_RESTORE_SETTINGS;
 import static org.andstatus.todoagenda.util.DateUtil.formatLogDateTime;
 
-public class FeedbackPreferencesFragment extends PreferenceFragment {
+public class FeedbackPreferencesFragment extends PreferenceFragmentCompat {
     private static final String TAG = FeedbackPreferencesFragment.class.getSimpleName();
 
     private static final String KEY_SHARE_EVENTS_FOR_DEBUGGING = "shareEventsForDebugging";
@@ -22,7 +22,7 @@ public class FeedbackPreferencesFragment extends PreferenceFragment {
     private static final String KEY_RESTORE_SETTINGS = "restoreSettings";
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    public boolean onPreferenceTreeClick(Preference preference) {
         int widgetId = ApplicationPreferences.getWidgetId(getActivity());
         ApplicationPreferences.save(getActivity(), widgetId);
         switch (preference.getKey()) {
@@ -53,12 +53,11 @@ public class FeedbackPreferencesFragment extends PreferenceFragment {
             default:
                 break;
         }
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return super.onPreferenceTreeClick(preference);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences_feedback);
     }
 }

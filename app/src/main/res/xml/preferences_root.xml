@@ -1,32 +1,30 @@
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <header
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
         android:fragment="org.andstatus.todoagenda.prefs.LayoutPreferencesFragment"
         android:summary="@string/layout_prefs_desc"
         android:title="@string/layout_prefs_title" />
-    <header
+    <Preference
         android:fragment="org.andstatus.todoagenda.prefs.ColorsPreferencesFragment"
         android:summary="@string/colors_prefs_desc"
         android:title="@string/appearance_group_color_title" />
-    <header
+    <Preference
         android:fragment="org.andstatus.todoagenda.prefs.EventDetailsPreferencesFragment"
         android:summary="@string/event_details_prefs_desc"
         android:title="@string/event_details_prefs" />
-    <header
+    <Preference
         android:fragment="org.andstatus.todoagenda.prefs.EventFiltersPreferencesFragment"
         android:summary="@string/event_filters_prefs_desc"
         android:title="@string/event_filters_prefs" />
-    <header
+    <Preference
         android:fragment="org.andstatus.todoagenda.prefs.EventSourcesPreferencesFragment"
         android:summary="@string/calendars_prefs_desc"
         android:title="@string/calendars_prefs" />
-    <header
+    <Preference
         android:fragment="org.andstatus.todoagenda.prefs.OtherPreferencesFragment"
         android:summary="@string/other_prefs_desc"
         android:title="@string/other_prefs_title" />
-    <header
+    <Preference
         android:fragment="org.andstatus.todoagenda.prefs.FeedbackPreferencesFragment"
         android:summary="@string/feedback_prefs_desc"
         android:title="@string/feedback_prefs" />
-
-</preference-headers>
+</PreferenceScreen>

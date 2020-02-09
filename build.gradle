@@ -18,6 +18,7 @@ buildscript {
         jodaTimeVersion = '2.10.3'
         junitVersion = '4.13'
         junitJupiterVersion = '5.6.0'
+        preferenceVersion = '1.1.0'
         testRulesVersion = '1.2.0'
         testRunnerVersion = '1.2.0'
     }

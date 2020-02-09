@@ -16,35 +16,33 @@
 
 package com.rarepebble.colorpicker;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import androidx.preference.DialogPreference;
+import androidx.preference.PreferenceViewHolder;
+
 public class ColorPreference extends DialogPreference {
-	private final String selectNoneButtonText;
-	private Integer defaultColor;
+	final String selectNoneButtonText;
+	Integer defaultColor;
 	private final String noneSelectedSummaryText;
 	private final CharSequence summaryText;
-	private final boolean showAlpha;
-	private final boolean showHex;
-	private final boolean showPreview;
+	final boolean showAlpha;
+	final boolean showHex;
+	final boolean showPreview;
 	private View thumbnail;
 	private ColorPickerView mPicker = null;
 
 	public ColorPreference(Context context) {
 		this(context, null);
 	}
+
 	public ColorPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		summaryText = super.getSummary();
@@ -66,12 +64,11 @@ public class ColorPreference extends DialogPreference {
 		}
 	}
 
-	@Override
-	protected void onBindView(View view) {
-		thumbnail = addThumbnail(view);
+	public void onBindViewHolder(PreferenceViewHolder viewHolder) {
+		thumbnail = addThumbnail(viewHolder.itemView);
 		showColor(getPersistedIntDefaultOrNull());
 		// Only call after showColor sets any summary text:
-		super.onBindView(view);
+		super.onBindViewHolder(viewHolder);
 	}
 
 	@Override
@@ -156,61 +153,6 @@ public class ColorPreference extends DialogPreference {
 		}
 		if (noneSelectedSummaryText != null) {
 			setSummary(thumbColor == null ? noneSelectedSummaryText : summaryText);
-		}
-	}
-
-	@Override
-	protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
-		super.onPrepareDialogBuilder(builder);
-		final ColorPickerView picker = new ColorPickerView(getContext());
-
-		picker.setColor(getPersistedInt(defaultColor == null ? Color.GRAY : defaultColor));
-		picker.showAlpha(showAlpha);
-		picker.showHex(showHex);
-		picker.showPreview(showPreview);
-		builder
-				.setTitle(null)
-				.setView(picker)
-				.setPositiveButton(getPositiveButtonText(), new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						final int color = picker.getColor();
-						if (callChangeListener(color)) {
-							setColor(color);
-						}
-					}
-				});
-		if (selectNoneButtonText != null) {
-			builder.setNeutralButton(selectNoneButtonText, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					if (callChangeListener(null)) {
-						setColor(null);
-					}
-				}
-			});
-		}
-		mPicker = picker;
-	}
-
-	@Override
-	protected void showDialog(Bundle state) {
-		super.showDialog(state);
-		// Nexus 7 needs the keyboard hiding explicitly.
-		// A flag on the activity in the manifest doesn't
-		// apply to the dialog, so needs to be in code:
-		Window window = getDialog().getWindow();
-		window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-		if (selectNoneButtonText != null && defaultColor != null && mPicker != null) {
-			// In order to prevent dialog from closing use the solution from https://stackoverflow.com/a/15619098/297710
-			((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(
-					new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							mPicker.setCurrentColor(defaultColor);
-						}
-					});
 		}
 	}
 

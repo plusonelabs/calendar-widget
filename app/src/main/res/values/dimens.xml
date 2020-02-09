@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="widget_padding">8dp</dimen>
+    <dimen name="widget_padding">0dp</dimen>
     <dimen name="widget_header_title">14dp</dimen>
     <dimen name="calender_padding">8dp</dimen>
     <dimen name="day_header_title">14dp</dimen>

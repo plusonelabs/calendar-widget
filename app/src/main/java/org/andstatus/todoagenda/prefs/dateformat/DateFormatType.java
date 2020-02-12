@@ -12,27 +12,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** See https://github.com/andstatus/todoagenda/issues/7
+ *  @author yvolk@yurivolkov.com
  * */
 public enum DateFormatType {
-    HIDDEN("hidden", R.string.hidden),
-    DEFAULT_DEVICE("device", R.string.device_default),
-    DEFAULT_ABBREVIATED("abbrev", R.string.appearance_abbreviate_dates_title),
-    NUMBER_OF_DAYS("days", R.string.date_format_number_of_days_to_event),
-    CUSTOM("custom-01", R.string.custom),
-    UNKNOWN("unknown", R.string.not_found);
+    HIDDEN("hidden", R.string.hidden, ""),
+    DEVICE_DEFAULT("deviceDefault", R.string.device_default, ""),
+    DEFAULT_WEEKDAY("defaultWeekday", R.string.date_format_default_weekday, ""),
+    DEFAULT_DAYS("defaultDays", R.string.date_format_default_days, ""),
+    ABBREVIATED("abbrev", R.string.appearance_abbreviate_dates_title, ""),
+    NUMBER_OF_DAYS("days", R.string.date_format_number_of_days_to_event, ""),
+    DAY_IN_MONTH("dayInMonth", R.string.date_format_day_in_month, "dd"),
+    MONTH_DAY("monthDay", R.string.date_format_month_day, "MM-dd"),
+    WEEK_YEAR("weekInYear", R.string.date_format_week_in_year, "ww"),
+    CUSTOM("custom-01", R.string.custom_pattern, ""),
+    UNKNOWN("unknown", R.string.not_found, "");
 
     public final String code;
     @StringRes
     public final int titleResourceId;
+    public final String pattern;
 
-    public final static DateFormatType DEFAULT = DEFAULT_DEVICE;
+    public final static DateFormatType DEFAULT = DEFAULT_WEEKDAY;
 
     private final LazyVal<DateFormatValue> defaultValue = LazyVal.of( () ->
             new DateFormatValue(DateFormatType.this, ""));
 
-    DateFormatType(String code, int titleResourceId) {
+    DateFormatType(String code, int titleResourceId, String pattern) {
         this.code = code;
         this.titleResourceId = titleResourceId;
+        this.pattern = pattern;
     }
 
     @NonNull

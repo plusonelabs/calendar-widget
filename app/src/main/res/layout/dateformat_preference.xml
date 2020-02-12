@@ -1,12 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
+    <TextView
+        android:labelFor="@id/date_format_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/simple_options" />
     <Spinner
         android:id="@+id/date_format_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="14dp"
+        android:labelFor="@id/custom_pattern"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_pattern" />
+    <EditText
+        android:id="@+id/custom_pattern"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:inputType="textNoSuggestions|textMultiLine"
+        android:prompt="@string/custom_pattern" />
+
+    <TextView
+        android:layout_marginTop="14dp"
+        android:labelFor="@id/sample_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_date" />
+    <EditText
+        android:id="@+id/sample_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date" />
+
+    <TextView
+        android:layout_marginTop="14dp"
+        android:labelFor="@id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/result_formatted_date" />
+
+    <TextView
+        android:id="@+id/result"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        tools:text="Today, February 10, 2020" />
+
 </LinearLayout>

@@ -10,6 +10,9 @@ import androidx.preference.DialogPreference;
 
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 
+/**
+ * @author yvolk@yurivolkov.com
+ */
 public class DateFormatPreference extends DialogPreference {
     DateFormatValue defaultValue = DateFormatType.unknownValue();
     DateFormatValue value = DateFormatType.unknownValue();

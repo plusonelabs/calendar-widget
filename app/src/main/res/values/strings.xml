@@ -66,37 +66,7 @@
         cloning widgets on the same or different devices.</string>
     <string name="app_description_4000_chars_max_part14">Android 7+ supported. Supports Android tablets.</string>
 
-    <!-- Preference header: Calendars and Task Lists -->
-    <string name="calendars_prefs">Calendars and Task Lists</string>
-    <string name="calendars_prefs_desc">Select the calendars and task lists to display</string>
-    <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
-    <string name="task_source_samsung">Samsung Calendar</string>
-
-    <!-- Preference header: Other -->
-    <string name="device_default">Device default</string>
-    <string name="other_prefs_desc">Size, date and time format, etc.</string>
-    <string name="other_prefs_title">Other settings</string>
-    <string name="appearance_prefs">Appearance</string>
-    <string name="appearance_prefs_desc">Adjust the appearance of the widget</string>
-    <string name="appearance_text_size_title">Text size</string>
-    <string name="appearance_text_size_desc">Adjust the text size</string>
-    <string name="appearance_text_size_very_small">Very small</string>
-    <string name="appearance_text_size_small">Small</string>
-    <string name="appearance_text_size_medium">Medium</string>
-    <string name="appearance_text_size_large">Large</string>
-    <string name="appearance_text_size_very_large">Very large</string>
-    <string name="appearance_date_format_desc">Show time in am/pm or 24 hours format</string>
-    <string name="appearance_date_format_title">Date format</string>
-    <string name="appearance_date_format_auto">Automatic</string>
-    <string name="appearance_date_format_24">17:00</string>
-    <string name="appearance_date_format_12">5:00 pm</string>
-    <string name="lock_time_zone_off_desc">Unlocked, current zone: %s</string>
-    <string name="lock_time_zone_on_desc">Locked at %s</string>
-    <string name="lock_time_zone_title">Lock time zone</string>
-    <string name="appearance_abbreviate_dates_title">Abbreviate dates</string>
-    <string name="appearance_abbreviate_dates_desc">Use three-letter format for dates in Widget and Day headers etc.</string>
-
-    <!-- Preference header: Layout -->
+    <!-- Preference frame: Layout -->
     <string name="layout_prefs_desc">Place, show and hide widget elements</string>
     <string name="layout_prefs_title">Layout</string>
     <string name="widget_header_layout">Widget header layout</string>
@@ -124,12 +94,24 @@
     <string name="show_event_icon_title">Show event icon</string>
     <string name="show_event_icon_desc">Show Calendar color bar / Task icon for event</string>
     <string name="entry_date_format_title">Entry date format</string>
-    <string name="date_format_number_of_days_to_event">Number of days to event</string>
-    <string name="custom">Custom</string>
     <string name="multiline_details_title">Multiline details</string>
     <string name="multiline_details_desc">Spread event time and location over multiple lines</string>
 
-    <!-- Preference header: Colors -->
+    <!-- Date format preference -->
+    <string name="simple_options">Simple options</string>
+    <string name="date_format_default_weekday">Default with Weekday</string>
+    <string name="date_format_default_days">Default with Number of days to event</string>
+    <string name="appearance_abbreviate_dates_title">Abbreviate dates with Weekday</string>
+    <string name="appearance_abbreviate_dates_desc">Use three-letter format for dates</string>
+    <string name="date_format_number_of_days_to_event">Number of days to event</string>
+    <string name="date_format_day_in_month">Day in month</string>
+    <string name="date_format_month_day">Month-Day</string>
+    <string name="date_format_week_in_year">Week in year</string>
+    <string name="custom_pattern">Custom pattern</string>
+    <string name="sample_date">Sample date (in yyyy-MM-dd format)</string>
+    <string name="result_formatted_date">Result, formatted date</string>
+
+    <!-- Preference frame: Colors -->
     <string name="colors_prefs_desc">Colors and opacity of texts and backgrounds</string>
     <string name="appearance_group_color_title">Colors</string>
     <string name="appearance_background_color_title">Background color</string>
@@ -151,7 +133,7 @@
     <string name="appearance_theme_light">Dark</string>
     <string name="appearance_theme_white">Black</string>
 
-    <!-- Preference header: Event details -->
+    <!-- Preference frame: Event details -->
     <string name="event_details_prefs">Event details</string>
     <string name="event_details_prefs_desc">Configure what details to show for an event</string>
     <string name="event_details_show_end_time_title">End time</string>
@@ -166,7 +148,7 @@
     <string name="event_details_indicate_recurring_desc">Show indicator for recurring events</string>
     <string name="event_details_indicate_recurring_title">Recurring events</string>
 
-    <!-- Preference header: Event filters -->
+    <!-- Preference frame: Event filters -->
     <string name="event_filters_prefs">Event filters</string>
     <string name="event_filters_prefs_desc">Which current, future and past events to show</string>
     <string name="all_events">All events</string>
@@ -213,7 +195,33 @@
     <string name="filter_mode_debug">Debug filtering</string>
     <string name="filter_mode_no_filtering">Ignore all filters (turn them off)</string>
 
-    <!-- Preference header: Other -->
+    <!-- Preference frame: Calendars and Task Lists -->
+    <string name="calendars_prefs">Calendars and Task Lists</string>
+    <string name="calendars_prefs_desc">Select the calendars and task lists to display</string>
+    <string name="task_source_opentasks">OpenTasks (by dmfs GmbH)</string>
+    <string name="task_source_samsung">Samsung Calendar</string>
+
+    <!-- Preference frame: Other -->
+    <string name="device_default">Device default</string>
+    <string name="other_prefs_desc">Size, date and time format, etc.</string>
+    <string name="other_prefs_title">Other settings</string>
+    <string name="appearance_prefs">Appearance</string>
+    <string name="appearance_prefs_desc">Adjust the appearance of the widget</string>
+    <string name="appearance_text_size_title">Text size</string>
+    <string name="appearance_text_size_desc">Adjust the text size</string>
+    <string name="appearance_text_size_very_small">Very small</string>
+    <string name="appearance_text_size_small">Small</string>
+    <string name="appearance_text_size_medium">Medium</string>
+    <string name="appearance_text_size_large">Large</string>
+    <string name="appearance_text_size_very_large">Very large</string>
+    <string name="appearance_date_format_desc">Show time in am/pm or 24 hours format</string>
+    <string name="appearance_date_format_title">Date format</string>
+    <string name="appearance_date_format_auto">Automatic</string>
+    <string name="appearance_date_format_24">17:00</string>
+    <string name="appearance_date_format_12">5:00 pm</string>
+    <string name="lock_time_zone_off_desc">Unlocked, current zone: %s</string>
+    <string name="lock_time_zone_on_desc">Locked at %s</string>
+    <string name="lock_time_zone_title">Lock time zone</string>
     <string name="snapshot_mode">Lock list of events (Snapshot mode)</string>
     <string name="snapshot_mode_live_data">Live data from real sources</string>
     <string name="snapshot_mode_time">Snapshot as seen at the time, when it was taken: %s</string>
@@ -221,7 +229,7 @@
     <string name="refresh_period_minutes">Auto refresh period, minutes</string>
     <string name="refresh_period_minutes_desc">Automatically refresh the widget every %d minute(s)</string>
 
-    <!-- Preference header: Feedback and Backup -->
+    <!-- Preference frame: Feedback and Backup -->
     <string name="feedback_prefs">Feedback and Backup</string>
     <string name="feedback_prefs_desc">Get in touch with us, backup and restore settings</string>
     <string name="feedback_github_desc">Provide feedback on the project page</string>

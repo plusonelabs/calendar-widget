@@ -107,6 +107,7 @@
     <string name="date_format_day_in_month">Day in month</string>
     <string name="date_format_month_day">Month-Day</string>
     <string name="date_format_week_in_year">Week in year</string>
+    <string name="pattern_example">Pattern example</string>
     <string name="custom_pattern">Custom pattern</string>
     <string name="sample_date">Sample date (in yyyy-MM-dd format)</string>
     <string name="result_formatted_date">Result, formatted date</string>

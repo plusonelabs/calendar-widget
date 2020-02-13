@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019 yvolk (Yuri Volkov), http://yurivolkov.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.andstatus.todoagenda.prefs.dateformat;
 
 import android.content.Context;
@@ -11,19 +27,18 @@ import org.andstatus.todoagenda.util.LazyVal;
 import java.util.ArrayList;
 import java.util.List;
 
-/** See https://github.com/andstatus/todoagenda/issues/7
- *  @author yvolk@yurivolkov.com
- * */
+/** See https://github.com/andstatus/todoagenda/issues/7 */
 public enum DateFormatType {
     HIDDEN("hidden", R.string.hidden, ""),
     DEVICE_DEFAULT("deviceDefault", R.string.device_default, ""),
     DEFAULT_WEEKDAY("defaultWeekday", R.string.date_format_default_weekday, ""),
     DEFAULT_DAYS("defaultDays", R.string.date_format_default_days, ""),
     ABBREVIATED("abbrev", R.string.appearance_abbreviate_dates_title, ""),
-    NUMBER_OF_DAYS("days", R.string.date_format_number_of_days_to_event, ""),
+    NUMBER_OF_DAYS("days", R.string.date_format_number_of_days_to_event, "bbbbb"),
     DAY_IN_MONTH("dayInMonth", R.string.date_format_day_in_month, "dd"),
     MONTH_DAY("monthDay", R.string.date_format_month_day, "MM-dd"),
-    WEEK_YEAR("weekInYear", R.string.date_format_week_in_year, "ww"),
+    WEEK_IN_YEAR("weekInYear", R.string.date_format_week_in_year, "ww"),
+    PATTERN_EXAMPLE1("example1", R.string.pattern_example, "b EEE, d MMM yyyy 'W'ww"),
     CUSTOM("custom-01", R.string.custom_pattern, ""),
     UNKNOWN("unknown", R.string.not_found, "");
 

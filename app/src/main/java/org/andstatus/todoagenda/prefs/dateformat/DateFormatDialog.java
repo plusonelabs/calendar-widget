@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019 yvolk (Yuri Volkov), http://yurivolkov.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.andstatus.todoagenda.prefs.dateformat;
 
 import android.content.Context;
@@ -26,9 +42,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * @author yvolk@yurivolkov.com
- */
 public class DateFormatDialog extends PreferenceDialogFragmentCompat implements AdapterView.OnItemSelectedListener, View.OnKeyListener, TextWatcher {
     private final DateFormatPreference preference;
     private Spinner typeSpinner;
@@ -126,13 +139,17 @@ public class DateFormatDialog extends PreferenceDialogFragmentCompat implements 
     }
 
     private void calcResult() {
+        DateFormatValue dateFormatValue = getValue();
         SimpleDateFormat sampleFormat = getSampleDateFormat();
         CharSequence result;
         try {
+            if (customPatternText.isEnabled() != (dateFormatValue.type == DateFormatType.CUSTOM)) {
+                customPatternText.setEnabled(dateFormatValue.type == DateFormatType.CUSTOM);
+            }
             Date sampleDate = sampleFormat.parse(sampleDateText.getText().toString());
             result = sampleDate == null
                     ? "null"
-                    : new DateFormatter(this.getContext(), getValue(), getSettings().clock().now())
+                    : new DateFormatter(this.getContext(), dateFormatValue, getSettings().clock().now())
                         .formatMillis(sampleDate.getTime());
         } catch (ParseException e) {
             result = e.getLocalizedMessage();

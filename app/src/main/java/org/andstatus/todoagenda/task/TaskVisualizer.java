@@ -7,7 +7,6 @@ import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
 import org.andstatus.todoagenda.provider.EventProvider;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.TaskEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
@@ -59,9 +58,13 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
             rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
             rv.setViewVisibility(R.id.event_entry_time, View.GONE);
         } else {
-            if (getSettings().getEntryDateFormat().type == DateFormatType.NUMBER_OF_DAYS) {
-                int days = entry.getDaysFromToday();
-                boolean daysAsText = days > -2 && days < 2;
+            if (getSettings().getEntryDateFormat().type == DateFormatType.HIDDEN) {
+                rv.setViewVisibility(R.id.event_entry_days, View.GONE);
+                rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
+            } else {
+                int days = entry.getDaysToEvent();
+                boolean daysAsText = getSettings().getEntryDateFormat().type != DateFormatType.NUMBER_OF_DAYS ||
+                        days > -2 && days < 2;
                 int viewToShow = daysAsText ? R.id.event_entry_days : R.id.event_entry_days_right;
                 int viewToHide = daysAsText ? R.id.event_entry_days_right : R.id.event_entry_days;
                 rv.setViewVisibility(viewToHide, View.GONE);
@@ -69,13 +72,10 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
                 setViewWidth(getSettings(), rv, viewToShow, daysAsText
                         ? R.dimen.days_to_event_width
                         : R.dimen.days_to_event_right_width);
-                rv.setTextViewText(viewToShow, DateUtil.getDaysFromTodayString(getSettings().getContext(), days));
+                rv.setTextViewText(viewToShow, entry.formatEntryDate());
                 setTextSize(getSettings(), rv, viewToShow, R.dimen.event_entry_details);
                 setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.forDetails(entry)),
                         rv, viewToShow, R.attr.dayHeaderTitle);
-            } else {
-                rv.setViewVisibility(R.id.event_entry_days, View.GONE);
-                rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
             }
             setViewWidth(getSettings(), rv, R.id.event_entry_time, R.dimen.event_time_width);
             rv.setViewVisibility(R.id.event_entry_time, View.VISIBLE);

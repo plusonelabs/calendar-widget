@@ -2,6 +2,7 @@ package org.andstatus.todoagenda.widget;
 
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.OrderedEventSource;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.MyClock;
 import org.joda.time.DateTime;
@@ -134,7 +135,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return "";
     }
 
-    public int getDaysFromToday() {
+    public int getDaysToEvent() {
         return Days.daysBetween(settings.clock().now(entryDate.getZone()).withTimeAtStartOfDay(),
                 entryDate.withTimeAtStartOfDay()).getDays();
     }
@@ -173,6 +174,12 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
             isSameDate(endDate, other.endDate) &&
             getTitle().equals(other.getTitle()) &&
             getLocation().equals(other.getLocation());
+    }
+
+    public CharSequence formatEntryDate() {
+        return settings.getEntryDateFormat().type == DateFormatType.HIDDEN
+                ? ""
+                : settings.newDateformatter().formatMillis(entryDate.getMillis());
     }
 
     @Override

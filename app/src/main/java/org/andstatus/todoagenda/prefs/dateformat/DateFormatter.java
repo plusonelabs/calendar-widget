@@ -59,10 +59,10 @@ public class DateFormatter {
                     return formatDateTime(millis, DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
                             DateUtils.FORMAT_SHOW_WEEKDAY);
                 case DEFAULT_DAYS:
-                    return getDaysFromTodayString(context, 5, getDaysFromToday(millis)) + ", " +
+                    return getNumberOfDaysToEventString(context, 5, getNumberOfDaysToEvent(millis)) + ", " +
                             formatDateTime(millis, DateUtils.FORMAT_SHOW_DATE);
                 case NUMBER_OF_DAYS:
-                    return getDaysFromTodayString(context, 5, getDaysFromToday(millis));
+                    return getNumberOfDaysToEventString(context, 5, getNumberOfDaysToEvent(millis));
                 default:
                     return "(not implemented)";
             }
@@ -81,9 +81,9 @@ public class DateFormatter {
                 .toString();
     }
 
-    public static CharSequence getDaysFromTodayString(Context context, int formatLength, int daysFromToday) {
+    public static CharSequence getNumberOfDaysToEventString(Context context, int formatLength, int daysToEvent) {
         if (formatLength > 4) {
-            switch (daysFromToday) {
+            switch (daysToEvent) {
                 case -1:
                     return context.getText(R.string.yesterday);
                 case 0:
@@ -94,10 +94,10 @@ public class DateFormatter {
                     break;
             }
         }
-        return Math.abs(daysFromToday) > 9999 ? "..." : Integer.toString(daysFromToday);
+        return Math.abs(daysToEvent) > 9999 ? "..." : Integer.toString(daysToEvent);
     }
 
-    public int getDaysFromToday(long millis) {
+    public int getNumberOfDaysToEvent(long millis) {
         return Days.daysBetween(now.withTimeAtStartOfDay(),
                 Instant.ofEpochMilli(millis)).getDays();
     }
@@ -120,7 +120,7 @@ public class DateFormatter {
         while (ind2 < pattern.length() && pattern.charAt(ind2) == NUMBER_OF_DAYS_LETTER) {
             ind2++;
         }
-        CharSequence result = getDaysFromTodayString(context, ind2 - ind1, getDaysFromToday(millis));
+        CharSequence result = getNumberOfDaysToEventString(context, ind2 - ind1, getNumberOfDaysToEvent(millis));
         return (ind1 > 0 ? pattern.substring(0, ind1) : "") +
                "'" + result + "'" +
                (ind2 < pattern.length() ? pattern.substring(ind2) : "");

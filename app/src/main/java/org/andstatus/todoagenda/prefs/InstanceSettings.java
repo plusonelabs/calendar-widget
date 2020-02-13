@@ -14,6 +14,7 @@ import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.TextSizeScale;
 import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
 import org.andstatus.todoagenda.prefs.dateformat.DateFormatValue;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatter;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.InstanceId;
@@ -240,6 +241,9 @@ public class InstanceSettings {
             if (json.has(PREF_SHOW_EVENT_ICON)) {
                 showEventIcon = json.getBoolean(PREF_SHOW_EVENT_ICON);
             }
+            if (json.has(PREF_EVENT_ENTRY_LAYOUT)) {
+                setEventEntryLayout(EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT)));
+            }
             if (json.has(PREF_ENTRY_DATE_FORMAT)) {
                 entryDateFormat = DateFormatValue.load(
                         json.getString(PREF_ENTRY_DATE_FORMAT), PREF_ENTRY_DATE_FORMAT_DEFAULT);
@@ -270,9 +274,6 @@ public class InstanceSettings {
             }
             if (json.has(PREF_REFRESH_PERIOD_MINUTES)) {
                 setRefreshPeriodMinutes(json.getInt(PREF_REFRESH_PERIOD_MINUTES));
-            }
-            if (json.has(PREF_EVENT_ENTRY_LAYOUT)) {
-                setEventEntryLayout(EventEntryLayout.fromValue(json.getString(PREF_EVENT_ENTRY_LAYOUT)));
             }
             if (json.has(PREF_MULTILINE_TITLE)) {
                 multilineTitle = json.getBoolean(PREF_MULTILINE_TITLE);
@@ -787,5 +788,9 @@ public class InstanceSettings {
         int id2 = EventProviderType.getAvailableSources().stream().map(s -> s.source.getId())
                 .max(Comparator.comparingInt(id -> id)).orElse(1);
         return Math.max(id1, id2);
+    }
+
+    public DateFormatter newDateformatter() {
+        return new DateFormatter(context, getEntryDateFormat(), clock().now());
     }
 }

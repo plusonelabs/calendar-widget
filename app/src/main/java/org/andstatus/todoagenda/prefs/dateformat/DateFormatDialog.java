@@ -36,6 +36,7 @@ import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.ApplicationPreferences;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.joda.time.DateTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,7 +86,7 @@ public class DateFormatDialog extends PreferenceDialogFragmentCompat implements 
 
     private CharSequence getSampleDateText() {
         return new DateFormatter(getContext(), sampleDateFormatValue, getSettings().clock().now())
-                .formatMillis(getSettings().clock().now().getMillis());
+                .formatDate(getSettings().clock().now());
     }
 
     @Override
@@ -150,7 +151,7 @@ public class DateFormatDialog extends PreferenceDialogFragmentCompat implements 
             result = sampleDate == null
                     ? "null"
                     : new DateFormatter(this.getContext(), dateFormatValue, getSettings().clock().now())
-                        .formatMillis(sampleDate.getTime());
+                        .formatDate(new DateTime(sampleDate.getTime(), getSettings().clock().getZone()));
         } catch (ParseException e) {
             result = e.getLocalizedMessage();
         }

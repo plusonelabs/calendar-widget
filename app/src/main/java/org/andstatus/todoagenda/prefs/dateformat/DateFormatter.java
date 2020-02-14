@@ -20,9 +20,9 @@ import android.content.Context;
 import android.text.format.DateUtils;
 
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.util.StringUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.joda.time.Instant;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,27 +42,27 @@ public class DateFormatter {
         this.now = now;
     }
 
-    public CharSequence formatMillis(long millis) {
+    public CharSequence formatDate(DateTime date) {
         try {
             if(dateFormatValue.hasPattern()) {
-                return formatDateCustom(millis, dateFormatValue.getPattern());
+                return formatDateCustom(date, dateFormatValue.getPattern());
             }
 
             switch (dateFormatValue.type) {
                 case HIDDEN:
                     return "";
                 case DEVICE_DEFAULT:
-                    return formatDateTime(millis, DateUtils.FORMAT_SHOW_DATE);
+                    return formatDateTime(date, DateUtils.FORMAT_SHOW_DATE);
                 case DEFAULT_WEEKDAY:
-                    return formatDateTime(millis, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
+                    return formatDateTime(date, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY);
                 case ABBREVIATED:
-                    return formatDateTime(millis, DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
+                    return formatDateTime(date, DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
                             DateUtils.FORMAT_SHOW_WEEKDAY);
                 case DEFAULT_DAYS:
-                    return getNumberOfDaysToEventString(context, 5, getNumberOfDaysToEvent(millis)) + ", " +
-                            formatDateTime(millis, DateUtils.FORMAT_SHOW_DATE);
+                    return getNumberOfDaysToEventString(context, 5, getNumberOfDaysToEvent(date)) + ", " +
+                            formatDateTime(date, DateUtils.FORMAT_SHOW_DATE);
                 case NUMBER_OF_DAYS:
-                    return getNumberOfDaysToEventString(context, 5, getNumberOfDaysToEvent(millis));
+                    return getNumberOfDaysToEventString(context, 5, getNumberOfDaysToEvent(date));
                 default:
                     return "(not implemented)";
             }
@@ -71,7 +71,8 @@ public class DateFormatter {
         }
     }
 
-    private String formatDateTime(long millis, int flags) {
+    private String formatDateTime(DateTime date, int flags) {
+        long millis = toJavaDate(date).getTime();
         return DateUtils.formatDateRange(context,
                 new Formatter(new StringBuilder(50), locale),
                 millis,
@@ -81,8 +82,12 @@ public class DateFormatter {
                 .toString();
     }
 
+    public static Date toJavaDate(DateTime date) {
+        return new Date(date.getYearOfEra() - 1900, date.getMonthOfYear() - 1, date.getDayOfMonth());
+    }
+
     public static CharSequence getNumberOfDaysToEventString(Context context, int formatLength, int daysToEvent) {
-        if (formatLength > 4) {
+        if (formatLength >= 4) {
             switch (daysToEvent) {
                 case -1:
                     return context.getText(R.string.yesterday);
@@ -94,36 +99,53 @@ public class DateFormatter {
                     break;
             }
         }
-        return Math.abs(daysToEvent) > 9999 ? "..." : Integer.toString(daysToEvent);
+        if (Math.abs(daysToEvent) > 9999) return "...";
+
+        CharSequence days1 = Integer.toString(daysToEvent);
+        if (days1.length() > formatLength) return days1;
+
+        return String.format("%0" + formatLength + "d", daysToEvent);
     }
 
-    public int getNumberOfDaysToEvent(long millis) {
-        return Days.daysBetween(now.withTimeAtStartOfDay(),
-                Instant.ofEpochMilli(millis)).getDays();
+    public int getNumberOfDaysToEvent(DateTime date) {
+        return Days.daysBetween(now.withTimeAtStartOfDay(), date.withTimeAtStartOfDay())
+                .getDays();
     }
 
-    private String formatDateCustom(long millis, String pattern) {
+    private String formatDateCustom(DateTime date, String pattern) {
+        if (StringUtil.isEmpty(pattern)) return "";
+
         try {
-            String pattern2 = preProcessNumberOfDaysToEvent(millis, pattern);
-            SimpleDateFormat format = new SimpleDateFormat(pattern2, locale);
-            Date date = new Date(millis);
-            return format.format(date);
+            String pattern2 = preProcessNumberOfDaysToEvent(date, pattern);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern2, locale);
+            return simpleDateFormat.format(toJavaDate(date));
         } catch (Exception e) {
             return e.getLocalizedMessage();
         }
     }
 
-    private String preProcessNumberOfDaysToEvent(long millis, String pattern) {
-        int ind1 = pattern.indexOf(NUMBER_OF_DAYS_LETTER);
+    private String preProcessNumberOfDaysToEvent(DateTime date, String pattern) {
+        int ind1 = getIndexOfNumberOfDaysLetter(pattern);
         if (ind1 < 0) return pattern;
+
         int ind2 = ind1;
         while (ind2 < pattern.length() && pattern.charAt(ind2) == NUMBER_OF_DAYS_LETTER) {
             ind2++;
         }
-        CharSequence result = getNumberOfDaysToEventString(context, ind2 - ind1, getNumberOfDaysToEvent(millis));
+        CharSequence result = getNumberOfDaysToEventString(context, ind2 - ind1, getNumberOfDaysToEvent(date));
         return (ind1 > 0 ? pattern.substring(0, ind1) : "") +
                "'" + result + "'" +
                (ind2 < pattern.length() ? pattern.substring(ind2) : "");
+    }
+
+    private int getIndexOfNumberOfDaysLetter(String pattern) {
+        boolean inQuotes = false;
+        for (int ind = 0; ind < pattern.length(); ind++) {
+            if ((pattern.charAt(ind) == NUMBER_OF_DAYS_LETTER) && !inQuotes) return ind;
+
+            if (pattern.charAt(ind) == '\'') inQuotes = !inQuotes;
+        }
+        return -1;
     }
 
 }

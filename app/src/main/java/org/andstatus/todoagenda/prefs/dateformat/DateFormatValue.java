@@ -57,7 +57,7 @@ public class DateFormatValue {
     }
 
     public boolean hasPattern() {
-        return StringUtil.nonEmpty(getPattern());
+        return type == CUSTOM || StringUtil.nonEmpty(getPattern());
     }
 
     public String getPattern() {

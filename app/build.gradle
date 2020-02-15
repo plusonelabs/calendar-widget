@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         versionCode getCommitCount()
-        versionName '4.0.3' + "-" + versionCode
+        versionName '4.0.4' + "-" + versionCode
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
 

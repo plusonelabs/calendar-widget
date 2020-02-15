@@ -80,11 +80,17 @@ If the problem is still present:
 In a case the widget doesn't work properly even after this, please
  [search, read and follow up on similar issues here](https://github.com/andstatus/todoagenda/issues?q=is%3Aissue+sort%3Aupdated-desc).
 
-### 2020-02-07 <a id="v4.0"/> v4.0.3 Additional options for tasks filtering and ordering
+### 2020-02-15 <a id="v4.0"/> v4.0.4 Three powerful date format preferences.
 * This version is for Android 7+ only. Versions for older devices are still available e.g.
  [here](https://github.com/andstatus/todoagenda/issues/3).
-* "[Task scheduling](https://github.com/andstatus/todoagenda/issues/4)" option added allowing to define,
- what date gets main attention for a task. With two values:
+* Created "[Date format preference dialog](https://github.com/andstatus/todoagenda/issues/7)" allowing to select
+ date format from several options (including hiding date completely) or define your own custom date format for use in
+ a Widget header, Day header or an Event entry. Custom format allows any
+ [date patterns, described in the Android documentation](https://developer.android.com/reference/java/text/SimpleDateFormat#date-and-time-patterns)
+ plus "b" letter(s) can be used to have in the formatted text "Number of days to event" also.
+ Three separate settings cover many user requests that we received during several years. Enjoy!
+* Additional options for tasks filtering and ordering. "[Task scheduling](https://github.com/andstatus/todoagenda/issues/4)"
+ option added allowing to define, what date gets main attention for a task. With two values:
    * Show tasks under date due (Due date gets main attention, and we are showing tasks at their due dates,
  where it makes sense).
    * Show tasks under date started (Start date gets main attention, and we are showing tasks at their start dates,

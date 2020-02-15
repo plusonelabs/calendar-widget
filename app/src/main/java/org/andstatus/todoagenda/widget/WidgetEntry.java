@@ -135,7 +135,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return "";
     }
 
-    public int getDaysToEvent() {
+    public int getNumberOfDaysToEvent() {
         return Days.daysBetween(settings.clock().now(entryDate.getZone()).withTimeAtStartOfDay(),
                 entryDate.withTimeAtStartOfDay()).getDays();
     }
@@ -179,7 +179,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     public CharSequence formatEntryDate() {
         return settings.getEntryDateFormat().type == DateFormatType.HIDDEN
                 ? ""
-                : settings.newDateformatter().formatDate(entryDate);
+                : settings.entryDateformatter().formatDate(entryDate);
     }
 
     @Override

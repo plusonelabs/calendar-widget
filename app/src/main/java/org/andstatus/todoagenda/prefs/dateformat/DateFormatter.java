@@ -78,7 +78,7 @@ public class DateFormatter {
                 millis,
                 millis,
                 flags,
-                now.getZone().getID())
+                date.getZone().getID())
                 .toString();
     }
 
@@ -108,8 +108,10 @@ public class DateFormatter {
     }
 
     public int getNumberOfDaysToEvent(DateTime date) {
-        return Days.daysBetween(now.withTimeAtStartOfDay(), date.withTimeAtStartOfDay())
-                .getDays();
+        return Days.daysBetween(
+                now.withZone(date.getZone()).withTimeAtStartOfDay(),
+                date.withTimeAtStartOfDay())
+            .getDays();
     }
 
     private String formatDateCustom(DateTime date, String pattern) {

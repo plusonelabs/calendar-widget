@@ -790,7 +790,7 @@ public class InstanceSettings {
         return Math.max(id1, id2);
     }
 
-    public DateFormatter newDateformatter() {
+    public DateFormatter entryDateformatter() {
         return new DateFormatter(context, getEntryDateFormat(), clock().now());
     }
 }

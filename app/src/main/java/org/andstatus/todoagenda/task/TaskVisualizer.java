@@ -36,8 +36,9 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         TaskEntry entry = (TaskEntry) eventEntry;
         RemoteViews rv = new RemoteViews(getContext().getPackageName(), R.layout.task_entry);
         setColor(entry, rv);
-        setDaysToEvent(entry, rv);
         setTitle(entry, rv);
+        setDate(entry, rv);
+        setTime(entry, rv);
         rv.setOnClickFillInIntent(R.id.event_entry, eventProvider.createViewEventIntent(entry.getEvent()));
         return rv;
     }
@@ -52,17 +53,25 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
         setBackgroundColor(rv, R.id.event_entry, getSettings().getEntryBackgroundColor(entry));
     }
 
-    private void setDaysToEvent(TaskEntry entry, RemoteViews rv) {
+    private void setTitle(TaskEntry entry, RemoteViews rv) {
+        int viewId = R.id.event_entry_title;
+        rv.setTextViewText(viewId, entry.getTitle());
+        setTextSize(getSettings(), rv, viewId, R.dimen.event_entry_title);
+        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.forTitle(entry)),
+                rv, viewId, R.attr.eventEntryTitle);
+        setMultiline(rv, viewId, getSettings().isMultilineTitle());
+    }
+
+    private void setDate(TaskEntry entry, RemoteViews rv) {
         if (getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT) {
             rv.setViewVisibility(R.id.event_entry_days, View.GONE);
             rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
-            rv.setViewVisibility(R.id.event_entry_time, View.GONE);
         } else {
             if (getSettings().getEntryDateFormat().type == DateFormatType.HIDDEN) {
                 rv.setViewVisibility(R.id.event_entry_days, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
             } else {
-                int days = entry.getDaysToEvent();
+                int days = entry.getNumberOfDaysToEvent();
                 boolean daysAsText = getSettings().getEntryDateFormat().type != DateFormatType.NUMBER_OF_DAYS ||
                         days > -2 && days < 2;
                 int viewToShow = daysAsText ? R.id.event_entry_days : R.id.event_entry_days_right;
@@ -77,18 +86,16 @@ public class TaskVisualizer extends WidgetEntryVisualizer<TaskEntry> {
                 setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.forDetails(entry)),
                         rv, viewToShow, R.attr.dayHeaderTitle);
             }
-            setViewWidth(getSettings(), rv, R.id.event_entry_time, R.dimen.event_time_width);
-            rv.setViewVisibility(R.id.event_entry_time, View.VISIBLE);
         }
     }
 
-    private void setTitle(TaskEntry entry, RemoteViews rv) {
-        int viewId = R.id.event_entry_title;
-        rv.setTextViewText(viewId, entry.getTitle());
-        setTextSize(getSettings(), rv, viewId, R.dimen.event_entry_title);
-        setTextColorFromAttr(getSettings().getShadingContext(TextShadingPref.forTitle(entry)),
-                rv, viewId, R.attr.eventEntryTitle);
-        setMultiline(rv, viewId, getSettings().isMultilineTitle());
+    private void setTime(TaskEntry entry, RemoteViews rv) {
+        if (getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT) {
+            rv.setViewVisibility(R.id.event_entry_time, View.GONE);
+        } else {
+            setViewWidth(getSettings(), rv, R.id.event_entry_time, R.dimen.event_time_width);
+            rv.setViewVisibility(R.id.event_entry_time, View.VISIBLE);
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package org.andstatus.todoagenda.widget;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -11,6 +10,7 @@ import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
+import org.andstatus.todoagenda.util.MyStringBuilder;
 import org.andstatus.todoagenda.util.RemoteViewsUtil;
 import org.andstatus.todoagenda.util.StringUtil;
 
@@ -25,13 +25,13 @@ import static org.andstatus.todoagenda.util.RemoteViewsUtil.setViewWidth;
 public enum EventEntryLayout {
     DEFAULT(R.layout.event_entry, "DEFAULT", R.string.default_multiline_layout) {
         @Override
-        protected void setEventDetails(CalendarEntry entry, RemoteViews rv) {
-            String eventDetails = appendWithSeparator(entry.formatEntryDate().toString(), " ",
-                    appendWithSeparator(
-                    entry.getEventTimeString(), SPACE_PIPE_SPACE, entry.getLocationString())
-            );
+        protected void setDetails(CalendarEntry entry, RemoteViews rv) {
+            MyStringBuilder eventDetails = MyStringBuilder
+                    .of(entry.formatEntryDate())
+                    .withSpace(entry.getEventTimeString())
+                    .withSeparator(entry.getLocationString(), SPACE_PIPE_SPACE);
             int viewId = R.id.event_entry_details;
-            if (TextUtils.isEmpty(eventDetails)) {
+            if (eventDetails.isEmpty()) {
                 rv.setViewVisibility(viewId, View.GONE);
             } else {
                 rv.setViewVisibility(viewId, View.VISIBLE);
@@ -50,12 +50,12 @@ public enum EventEntryLayout {
         }
 
         @Override
-        protected void setDaysToEvent(CalendarEntry entry, RemoteViews rv) {
+        protected void setDate(CalendarEntry entry, RemoteViews rv) {
             if (entry.getSettings().getEntryDateFormat().type == DateFormatType.HIDDEN) {
                 rv.setViewVisibility(R.id.event_entry_days, View.GONE);
                 rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
             } else {
-                int days = entry.getDaysToEvent();
+                int days = entry.getNumberOfDaysToEvent();
                 boolean daysAsText = entry.getSettings().getEntryDateFormat().type != DateFormatType.NUMBER_OF_DAYS ||
                         (days > -2 && days < 2);
 
@@ -76,7 +76,7 @@ public enum EventEntryLayout {
         }
 
         @Override
-        protected void setEventTime(CalendarEntry entry, RemoteViews rv) {
+        protected void setTime(CalendarEntry entry, RemoteViews rv) {
             int viewId = R.id.event_entry_time;
             RemoteViewsUtil.setMultiline(rv, viewId, entry.getSettings().getShowEndTime());
             rv.setTextViewText(viewId, entry.getEventTimeString().replace(CalendarEntry
@@ -115,9 +115,9 @@ public enum EventEntryLayout {
 
     public void visualizeEvent(CalendarEntry entry, RemoteViews rv) {
         setTitle(entry, rv);
-        setDaysToEvent(entry, rv);
-        setEventTime(entry, rv);
-        setEventDetails(entry, rv);
+        setDate(entry, rv);
+        setTime(entry, rv);
+        setDetails(entry, rv);
     }
 
     protected void setTitle(CalendarEntry entry, RemoteViews rv) {
@@ -133,15 +133,15 @@ public enum EventEntryLayout {
         return event.getTitle();
     }
 
-    protected void setDaysToEvent(CalendarEntry entry, RemoteViews rv) {
+    protected void setDate(CalendarEntry entry, RemoteViews rv) {
         // Empty
     }
 
-    protected void setEventTime(CalendarEntry entry, RemoteViews rv) {
+    protected void setTime(CalendarEntry entry, RemoteViews rv) {
         // Empty
     }
 
-    protected void setEventDetails(CalendarEntry entry, RemoteViews rv) {
+    protected void setDetails(CalendarEntry entry, RemoteViews rv) {
         // Empty
     }
 

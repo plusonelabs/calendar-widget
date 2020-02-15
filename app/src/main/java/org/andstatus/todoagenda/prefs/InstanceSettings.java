@@ -58,7 +58,7 @@ public class InstanceSettings {
     private WidgetHeaderLayout widgetHeaderLayout = WidgetHeaderLayout.defaultValue;
     private static final String PREF_SHOW_DATE_ON_WIDGET_HEADER = "showDateOnWidgetHeader";  // till v 4.0
     static final String PREF_WIDGET_HEADER_DATE_FORMAT = "widgetHeaderDateFormat";
-    static final DateFormatValue PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT = DateFormatType.DEVICE_DEFAULT.defaultValue();
+    static final DateFormatValue PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT = DateFormatType.DEFAULT_WEEKDAY.defaultValue();
     private DateFormatValue widgetHeaderDateFormat = PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT;
     static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
     private boolean showDayHeaders = true;

@@ -84,7 +84,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
 
     @Override
     public String getEventTimeString() {
-        return hideEventTime() ? "" : createTimeSpanString(getContext());
+        return hideEventTime() ? "" : createTimeSpanString();
     }
 
     private boolean hideEventTime() {
@@ -92,16 +92,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
                 isAllDay();
     }
 
-    private String createTimeSpanString(Context context) {
-        if (isAllDay() && !getSettings().getFillAllDayEvents()) {
-            DateTime dateTime = getEvent().getEndDate().minusDays(1);
-            return ARROW + SPACE + DateUtil.createDateString(getSettings(), dateTime);
-        } else {
-            return createTimeStringForCalendarEntry(context);
-        }
-    }
-
-    private String createTimeStringForCalendarEntry(Context context) {
+    private String createTimeSpanString() {
         String startStr;
         String endStr;
         String separator = SPACE_DASH_SPACE;

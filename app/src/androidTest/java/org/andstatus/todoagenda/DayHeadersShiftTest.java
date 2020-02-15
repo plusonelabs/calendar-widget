@@ -1,7 +1,6 @@
 package org.andstatus.todoagenda;
 
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
 import org.json.JSONException;
 import org.junit.Test;
@@ -28,7 +27,7 @@ public class DayHeadersShiftTest extends BaseWidgetTest {
 
         assertEquals("First day header should be Jan 8\n" + getFactory().getWidgetEntries(), 8,
                 dayHeader0.entryDate.dayOfMonth().get());
-        String dayHeaderTitle = DateUtil.createDayHeaderTitle(getSettings(), dayHeader0.entryDate);
+        CharSequence dayHeaderTitle = getSettings().dayHeaderDateFormatter().formatDate(dayHeader0.entryDate);
         assertEquals("First day header should show Jan 8\n" + getFactory().getWidgetEntries() + "\n",
                 "Today, January 8", dayHeaderTitle);
     }

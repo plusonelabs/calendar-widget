@@ -11,6 +11,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import org.andstatus.todoagenda.MainActivity;
 import org.andstatus.todoagenda.R;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
+import org.andstatus.todoagenda.prefs.dateformat.DateFormatter;
 import org.andstatus.todoagenda.provider.QueryResultsStorage;
 import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
@@ -95,8 +97,9 @@ public class OtherPreferencesFragment extends PreferenceFragmentCompat
     private String formatSnapshotModeSummary(InstanceSettings settings, int valueResId) {
         return String.format(
                 getText(valueResId).toString(),
-                DateUtil.createDateString(getSettings(), settings.clock().now()) + " " +
-                DateUtil.formatTime(this::getSettings, settings.clock().now())
+                new DateFormatter(settings.getContext(), DateFormatType.DEFAULT_WEEKDAY.defaultValue(),
+                    settings.clock().now()) + " " +
+                        DateUtil.formatTime(this::getSettings, settings.clock().now())
         );
     }
 

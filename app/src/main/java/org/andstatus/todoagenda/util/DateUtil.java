@@ -33,10 +33,6 @@ public class DateUtil {
         return date.isEqual(date.withTimeAtStartOfDay());
     }
 
-    public static String createDayHeaderTitle(InstanceSettings settings, DateTime dateTime) {
-        return createDateString(settings, dateTime, true);
-    }
-
     public static String createDateString(InstanceSettings settings, DateTime dateTime) {
         return createDateString(settings, dateTime, false);
     }

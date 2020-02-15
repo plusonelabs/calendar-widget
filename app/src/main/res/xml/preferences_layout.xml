@@ -25,6 +25,12 @@
             android:summary="@string/appearance_show_day_headers_desc"
             android:title="@string/appearance_show_day_headers_title" />
 
+        <org.andstatus.todoagenda.prefs.dateformat.DateFormatPreference
+            android:key="dayHeaderDateFormat"
+            android:defaultValue="defaultWeekday:"
+            android:title="@string/day_header_date_format"
+            android:dependency="showDayHeaders" />
+
         <org.andstatus.todoagenda.prefs.MultilineCheckBoxPreference
             android:key="showPastEventsUnderOneHeader"
             android:layout_width="wrap_content"

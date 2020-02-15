@@ -19,6 +19,8 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DA
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ACTIVE_SOURCES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_ALIGNMENT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_DATE_FORMAT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_DATE_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ENTRY_DATE_FORMAT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ENTRY_DATE_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_EVENTS_BACKGROUND_COLOR;
@@ -94,6 +96,7 @@ public class ApplicationPreferences {
             setInt(context, PREF_EVENTS_BACKGROUND_COLOR, settings.getEventsBackgroundColor());
             setShowDaysWithoutEvents(context, settings.getShowDaysWithoutEvents());
             setShowDayHeaders(context, settings.getShowDayHeaders());
+            setDateFormat(context, PREF_DAY_HEADER_DATE_FORMAT, settings.getDayHeaderDateFormat());
             setHorizontalLineBelowDayHeader(context, settings.getHorizontalLineBelowDayHeader());
             setShowPastEventsUnderOneHeader(context, settings.getShowPastEventsUnderOneHeader());
             setShowPastEventsWithDefaultColor(context, settings.getShowPastEventsWithDefaultColor());
@@ -264,6 +267,10 @@ public class ApplicationPreferences {
 
     public static boolean getShowLocation(Context context) {
         return getBoolean(context, PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
+    }
+
+    public static DateFormatValue getDayHeaderDateFormat(Context context) {
+        return getDateFormat(context, PREF_DAY_HEADER_DATE_FORMAT, PREF_DAY_HEADER_DATE_FORMAT_DEFAULT);
     }
 
     public static DateFormatValue getWidgetHeaderDateFormat(Context context) {

@@ -62,6 +62,9 @@ public class InstanceSettings {
     private DateFormatValue widgetHeaderDateFormat = PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT;
     static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
     private boolean showDayHeaders = true;
+    static final String PREF_DAY_HEADER_DATE_FORMAT = "dayHeaderDateFormat";
+    static final DateFormatValue PREF_DAY_HEADER_DATE_FORMAT_DEFAULT = DateFormatType.DEFAULT_DAYS.defaultValue();
+    private DateFormatValue dayHeaderDateFormat = PREF_DAY_HEADER_DATE_FORMAT_DEFAULT;
     static final String PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER = "showPastEventsUnderOneHeader";
     private boolean showPastEventsUnderOneHeader = false;
     static final String PREF_DAY_HEADER_ALIGNMENT = "dayHeaderAlignment";
@@ -236,6 +239,10 @@ public class InstanceSettings {
             if (json.has(PREF_SHOW_DAY_HEADERS)) {
                 showDayHeaders = json.getBoolean(PREF_SHOW_DAY_HEADERS);
             }
+            if (json.has(PREF_DAY_HEADER_DATE_FORMAT)) {
+                dayHeaderDateFormat = DateFormatValue.load(
+                        json.getString(PREF_DAY_HEADER_DATE_FORMAT), PREF_DAY_HEADER_DATE_FORMAT_DEFAULT);
+            }
             if (json.has(PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER)) {
                 horizontalLineBelowDayHeader = json.getBoolean(PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER);
             }
@@ -352,6 +359,7 @@ public class InstanceSettings {
             settings.eventsBackgroundColor = ApplicationPreferences.getEventsBackgroundColor(context);
             settings.showDaysWithoutEvents = ApplicationPreferences.getShowDaysWithoutEvents(context);
             settings.showDayHeaders = ApplicationPreferences.getShowDayHeaders(context);
+            settings.dayHeaderDateFormat = ApplicationPreferences.getDayHeaderDateFormat(context);
             settings.horizontalLineBelowDayHeader = ApplicationPreferences.getHorizontalLineBelowDayHeader(context);
             settings.showPastEventsUnderOneHeader = ApplicationPreferences.getShowPastEventsUnderOneHeader(context);
             settings.showPastEventsWithDefaultColor = ApplicationPreferences.getShowPastEventsWithDefaultColor(context);
@@ -442,6 +450,7 @@ public class InstanceSettings {
             json.put(PREF_EVENTS_BACKGROUND_COLOR, eventsBackgroundColor);
             json.put(PREF_SHOW_DAYS_WITHOUT_EVENTS, showDaysWithoutEvents);
             json.put(PREF_SHOW_DAY_HEADERS, showDayHeaders);
+            json.put(PREF_DAY_HEADER_DATE_FORMAT, dayHeaderDateFormat.save());
             json.put(PREF_HORIZONTAL_LINE_BELOW_DAY_HEADER, horizontalLineBelowDayHeader);
             json.put(PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER, showPastEventsUnderOneHeader);
             json.put(PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR, showPastEventsWithDefaultColor);
@@ -574,6 +583,14 @@ public class InstanceSettings {
 
     public DateFormatValue getWidgetHeaderDateFormat() {
         return widgetHeaderDateFormat;
+    }
+
+    public DateFormatter dayHeaderDateFormatter() {
+        return new DateFormatter(context, getDayHeaderDateFormat(), clock().now());
+    }
+
+    public DateFormatValue getDayHeaderDateFormat() {
+        return dayHeaderDateFormat;
     }
 
     public DateFormatter entryDateFormatter() {

@@ -11,7 +11,6 @@ import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.provider.EventProviderType;
-import org.andstatus.todoagenda.util.DateUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,8 +53,7 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
     }
 
     private void setDayHeaderTitle(int position, DayHeader entry, RemoteViews rv, ContextThemeWrapper shadingContext) {
-        String dateString = getTitleString(entry)
-            .toUpperCase(Locale.getDefault());
+        String dateString = getTitleString(entry).toString().toUpperCase(Locale.getDefault());
         rv.setTextViewText(R.id.day_header_title, dateString);
         setTextSize(getSettings(), rv, R.id.day_header_title, R.dimen.day_header_title);
         setTextColorFromAttr(shadingContext, rv, R.id.day_header_title, R.attr.dayHeaderTitle);
@@ -70,14 +68,14 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
                 R.dimen.day_header_padding_left, paddingTopId, R.dimen.day_header_padding_right, paddingBottomId);
     }
 
-    protected String getTitleString(DayHeader entry) {
+    protected CharSequence getTitleString(DayHeader entry) {
         switch (entry.entryPosition) {
             case PAST_AND_DUE_HEADER:
                 return getContext().getString(R.string.past_header);
             case END_OF_LIST_HEADER:
                 return getContext().getString(R.string.end_of_list_header);
             default:
-                return DateUtil.createDayHeaderTitle(getSettings(), entry.entryDate);
+                return getSettings().dayHeaderDateFormatter().formatDate(entry.entryDate);
         }
     }
 

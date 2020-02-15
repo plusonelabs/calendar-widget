@@ -221,7 +221,6 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         List<WidgetEntry> listOut = new ArrayList<>();
         if (!listIn.isEmpty()) {
             InstanceSettings settings = getSettings();
-            DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
             DayHeader curDayBucket = new DayHeader(settings, DAY_HEADER, MyClock.DATETIME_MIN);
             boolean pastEventsHeaderAdded = false;
             boolean endOfListHeaderAdded = false;

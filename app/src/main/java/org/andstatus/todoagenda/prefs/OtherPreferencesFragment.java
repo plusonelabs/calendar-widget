@@ -98,7 +98,7 @@ public class OtherPreferencesFragment extends PreferenceFragmentCompat
         return String.format(
                 getText(valueResId).toString(),
                 new DateFormatter(settings.getContext(), DateFormatType.DEFAULT_WEEKDAY.defaultValue(),
-                    settings.clock().now()) + " " +
+                    settings.clock().now()).formatDate(settings.clock().now()) + " " +
                         DateUtil.formatTime(this::getSettings, settings.clock().now())
         );
     }

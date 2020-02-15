@@ -4,7 +4,6 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.EventSource;
 import org.andstatus.todoagenda.prefs.FilterMode;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
@@ -59,7 +58,7 @@ public class EventProvider {
 
     @NonNull
     public InstanceSettings getSettings() {
-        return AllSettings.instanceFromId(context, widgetId);
+        return myContentResolver.getSettings();
     }
 
     protected int getAsOpaque(int color) {

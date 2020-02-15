@@ -70,7 +70,7 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
                 R.dimen.day_header_padding_left, paddingTopId, R.dimen.day_header_padding_right, paddingBottomId);
     }
 
-    private String getTitleString(DayHeader entry) {
+    protected String getTitleString(DayHeader entry) {
         switch (entry.entryPosition) {
             case PAST_AND_DUE_HEADER:
                 return getContext().getString(R.string.past_header);
@@ -93,11 +93,6 @@ public class DayHeaderVisualizer extends WidgetEntryVisualizer<DayHeader> {
                 setBackgroundColorFromAttr(shadingContext, rv, viewId, R.attr.dayHeaderSeparator);
             }
         }
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 2; // we have 2 because of top and botton separator placement
     }
 
     @Override

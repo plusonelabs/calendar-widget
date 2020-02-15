@@ -82,6 +82,7 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
         return event;
     }
 
+    @Override
     public String getEventTimeString() {
         return hideEventTime() ? "" : createTimeSpanString(getContext());
     }
@@ -89,14 +90,6 @@ public class CalendarEntry extends WidgetEntry<CalendarEntry> {
     private boolean hideEventTime() {
         return spansOneFullDay() && !(isStartOfMultiDayEvent() || isEndOfMultiDayEvent()) ||
                 isAllDay();
-    }
-
-    String getLocationString() {
-        return hideLocation() ? "" : getLocation();
-    }
-
-    private boolean hideLocation() {
-        return getLocation().isEmpty() || !getSettings().getShowLocation();
     }
 
     private String createTimeSpanString(Context context) {

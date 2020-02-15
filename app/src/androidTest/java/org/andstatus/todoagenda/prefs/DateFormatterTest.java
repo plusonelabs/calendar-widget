@@ -62,7 +62,13 @@ public class DateFormatterTest extends BaseWidgetTest {
         assertPattern(now, "MM-dd bb",  String.format("%02d-%02d", now.monthOfYear().get(), now.dayOfMonth().get()) + " 00");
         assertPattern(now.plusDays(1), "", "");
         assertPattern(now.plusDays(1), "b", "1");
+        assertPattern(now.plusDays(1), "bbb", "001");
+        assertPattern(now.plusDays(5), "b", "5");
+        assertPattern(now.plusDays(5), "bbb", "005");
+        assertPattern(now.plusDays(5), "bbbb", "5");
         assertPattern(now.plusDays(1), "'begin' b", "begin 1");
+        assertPattern(now.minusDays(5), "bbb", "-05");
+        assertPattern(now.minusDays(5), "bbbb", "-5");
     }
 
     private void assertPattern(DateTime date, String pattern, String expected) {

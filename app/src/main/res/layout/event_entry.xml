@@ -9,10 +9,19 @@
               android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
-        android:id="@+id/event_entry_icon"
+        android:id="@+id/event_entry_color"
         style="@style/EventEntryColor"
         android:layout_width="8dp"
         android:layout_height="fill_parent"
+        tools:ignore="SelectableText" />
+
+    <TextView
+        android:id="@+id/event_entry_icon"
+        style="@style/EventEntryIcon"
+        android:layout_width="12dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:text="@string/task_icon"
         tools:ignore="SelectableText" />
 
     <RelativeLayout
@@ -42,17 +51,16 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/event_entry_title"
             android:layout_toLeftOf="@+id/event_entry_indicator_layout_ref"
-            tools:text="Event Entry Details, which could be quite long and span more than one line"
-            tools:ignore="SelectableText"/>
+                tools:text="Event Entry Details, which could be quite long and span more than one line"
+                tools:ignore="SelectableText"/>
 
         <include
             android:id="@+id/event_entry_indicator_layout_ref"
             layout="@layout/event_entry_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/event_entry_title"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/event_entry_title"/>
+            android:layout_alignBottom="@id/event_entry_title"/>
     </RelativeLayout>
 
 </LinearLayout>

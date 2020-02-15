@@ -10,7 +10,6 @@ import org.andstatus.todoagenda.TextShading;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProvider;
 import org.andstatus.todoagenda.widget.CalendarEntry;
-import org.andstatus.todoagenda.widget.EventEntryLayout;
 import org.andstatus.todoagenda.widget.WidgetEntry;
 import org.andstatus.todoagenda.widget.WidgetEntryVisualizer;
 import org.joda.time.DateTime;
@@ -33,15 +32,18 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
     public RemoteViews getRemoteViews(WidgetEntry eventEntry, int position) {
         if (!(eventEntry instanceof CalendarEntry)) return null;
 
+        RemoteViews rv = super.getRemoteViews(eventEntry, position);
         CalendarEntry entry = (CalendarEntry) eventEntry;
-        EventEntryLayout eventEntryLayout = getSettings().getEventEntryLayout();
-        RemoteViews rv = new RemoteViews(getContext().getPackageName(), eventEntryLayout.layoutId);
         rv.setOnClickFillInIntent(R.id.event_entry, eventProvider.createViewEventIntent(entry.getEvent()));
-        eventEntryLayout.visualizeEvent(entry, rv);
+        setIcon(entry, rv);
+        return rv;
+    }
+
+    @Override
+    protected void setIndicators(WidgetEntry eventEntry, RemoteViews rv) {
+        CalendarEntry entry = (CalendarEntry) eventEntry;
         setAlarmActive(entry, rv);
         setRecurring(entry, rv);
-        setColor(entry, rv);
-        return rv;
     }
 
     private void setAlarmActive(CalendarEntry entry, RemoteViews rv) {
@@ -78,18 +80,14 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         }
     }
 
-    private void setColor(CalendarEntry entry, RemoteViews rv) {
+    private void setIcon(CalendarEntry entry, RemoteViews rv) {
         if (getSettings().getShowEventIcon()) {
-            rv.setViewVisibility(R.id.event_entry_icon, View.VISIBLE);
-            setBackgroundColor(rv, R.id.event_entry_icon, entry.getColor());
+            rv.setViewVisibility(R.id.event_entry_color, View.VISIBLE);
+            setBackgroundColor(rv, R.id.event_entry_color, entry.getColor());
         } else {
-            rv.setViewVisibility(R.id.event_entry_icon, View.GONE);
+            rv.setViewVisibility(R.id.event_entry_color, View.GONE);
         }
-        setBackgroundColor(rv, R.id.event_entry, getSettings().getEntryBackgroundColor(entry));
-    }
-
-    public int getViewTypeCount() {
-        return 1;
+        rv.setViewVisibility(R.id.event_entry_icon, View.GONE);
     }
 
     @Override

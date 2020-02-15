@@ -102,7 +102,7 @@ public class DateFormatter {
         if (Math.abs(daysToEvent) > 9999) return "...";
 
         CharSequence days1 = Integer.toString(daysToEvent);
-        if (days1.length() > formatLength) return days1;
+        if (days1.length() > formatLength || formatLength >= 4) return days1;
 
         return String.format("%0" + formatLength + "d", daysToEvent);
     }

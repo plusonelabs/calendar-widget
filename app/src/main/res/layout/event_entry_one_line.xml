@@ -9,10 +9,19 @@
               android:paddingBottom="@dimen/entry_bottom_padding">
 
     <TextView
-        android:id="@+id/event_entry_icon"
+        android:id="@+id/event_entry_color"
         style="@style/EventEntryColor"
         android:layout_width="8dp"
         android:layout_height="fill_parent"
+        tools:ignore="SelectableText" />
+
+    <TextView
+        android:id="@+id/event_entry_icon"
+        style="@style/EventEntryIcon"
+        android:layout_width="12dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:text="@string/task_icon"
         tools:ignore="SelectableText" />
 
     <RelativeLayout

@@ -69,11 +69,6 @@ public class LastEntryVisualizer extends WidgetEntryVisualizer<LastEntry> {
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 1;
-    }
-
-    @Override
     public List<LastEntry> queryEventEntries() {
         return Collections.emptyList();
     }

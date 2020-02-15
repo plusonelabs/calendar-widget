@@ -123,12 +123,24 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return ENTRY_DATE;
     }
 
+    public String getEventTimeString() {
+        return "";
+    }
+
     public OrderedEventSource getSource() {
         return OrderedEventSource.EMPTY;
     }
 
     public String getTitle() {
         return "";
+    }
+
+    String getLocationString() {
+        return hideLocation() ? "" : getLocation();
+    }
+
+    private boolean hideLocation() {
+        return getLocation().isEmpty() || !settings.getShowLocation();
     }
 
     public String getLocation() {

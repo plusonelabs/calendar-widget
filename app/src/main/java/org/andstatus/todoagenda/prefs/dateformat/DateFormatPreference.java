@@ -69,7 +69,7 @@ public class DateFormatPreference extends DialogPreference {
 
     public void setValue(DateFormatValue value) {
         this.value = value;
-        ApplicationPreferences.setEntryDateFormat(getContext(), value);
+        ApplicationPreferences.setDateFormat(getContext(), getKey(), value);
         showValue();
     }
 

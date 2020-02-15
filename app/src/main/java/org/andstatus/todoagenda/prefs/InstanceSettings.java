@@ -56,8 +56,10 @@ public class InstanceSettings {
     // Layout
     static final String PREF_WIDGET_HEADER_LAYOUT = "widgetHeaderLayout";
     private WidgetHeaderLayout widgetHeaderLayout = WidgetHeaderLayout.defaultValue;
-    static final String PREF_SHOW_DATE_ON_WIDGET_HEADER = "showDateOnWidgetHeader";
-    private boolean showDateOnWidgetHeader = true;
+    private static final String PREF_SHOW_DATE_ON_WIDGET_HEADER = "showDateOnWidgetHeader";  // till v 4.0
+    static final String PREF_WIDGET_HEADER_DATE_FORMAT = "widgetHeaderDateFormat";
+    static final DateFormatValue PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT = DateFormatType.DEVICE_DEFAULT.defaultValue();
+    private DateFormatValue widgetHeaderDateFormat = PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT;
     static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
     private boolean showDayHeaders = true;
     static final String PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER = "showPastEventsUnderOneHeader";
@@ -76,7 +78,7 @@ public class InstanceSettings {
     static final String PREF_ENTRY_DATE_FORMAT = "entryDateFormat";
     static final DateFormatValue PREF_ENTRY_DATE_FORMAT_DEFAULT = DateFormatType.NUMBER_OF_DAYS.defaultValue();
     private DateFormatValue entryDateFormat = PREF_ENTRY_DATE_FORMAT_DEFAULT;
-    static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent"; // till v 4.0
+    private static final String PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT = "showNumberOfDaysToEvent"; // till v 4.0
     static final String PREF_MULTILINE_TITLE = "multiline_title";
     static final boolean PREF_MULTILINE_TITLE_DEFAULT = false;
     private boolean multilineTitle = PREF_MULTILINE_TITLE_DEFAULT;
@@ -192,8 +194,13 @@ public class InstanceSettings {
             return InstanceSettings.EMPTY;
         }
         try {
-            if (json.has(PREF_SHOW_DATE_ON_WIDGET_HEADER)) {
-                showDateOnWidgetHeader = json.getBoolean(PREF_SHOW_DATE_ON_WIDGET_HEADER);
+            if (json.has(PREF_WIDGET_HEADER_DATE_FORMAT)) {
+                widgetHeaderDateFormat = DateFormatValue.load(
+                        json.getString(PREF_WIDGET_HEADER_DATE_FORMAT), PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT);
+            } else if (json.has(PREF_SHOW_DATE_ON_WIDGET_HEADER)) {
+                widgetHeaderDateFormat = json.getBoolean(PREF_SHOW_DATE_ON_WIDGET_HEADER)
+                        ? PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT
+                        : DateFormatType.HIDDEN.defaultValue();
             }
             if (json.has(PREF_ACTIVE_SOURCES)) {
                 JSONArray jsonArray = json.getJSONArray(PREF_ACTIVE_SOURCES);
@@ -333,7 +340,7 @@ public class InstanceSettings {
             InstanceSettings settings = new InstanceSettings(context, widgetId,
                     ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME,
                             ApplicationPreferences.getString(context, PREF_WIDGET_INSTANCE_NAME, "")));
-            settings.showDateOnWidgetHeader = ApplicationPreferences.getShowDateOnWidgetHeader(context);
+            settings.widgetHeaderDateFormat = ApplicationPreferences.getWidgetHeaderDateFormat(context);
             settings.setActiveEventSources(ApplicationPreferences.getActiveEventSources(context));
             settings.eventRange = ApplicationPreferences.getEventRange(context);
             settings.eventsEnded = ApplicationPreferences.getEventsEnded(context);
@@ -422,7 +429,7 @@ public class InstanceSettings {
         JSONObject json = new JSONObject();
         try {
             json.put(PREF_WIDGET_ID, widgetId);
-            json.put(PREF_SHOW_DATE_ON_WIDGET_HEADER, showDateOnWidgetHeader);
+            json.put(PREF_WIDGET_HEADER_DATE_FORMAT, widgetHeaderDateFormat.save());
             json.put(PREF_WIDGET_INSTANCE_NAME, widgetInstanceName);
             json.put(PREF_ACTIVE_SOURCES, OrderedEventSource.toJsonArray(getActiveEventSources()));
             json.put(PREF_EVENT_RANGE, eventRange);
@@ -559,6 +566,18 @@ public class InstanceSettings {
 
     public boolean getShowPastEventsWithDefaultColor() {
         return showPastEventsWithDefaultColor;
+    }
+
+    public DateFormatter widgetHeaderDateFormatter() {
+        return new DateFormatter(context, getWidgetHeaderDateFormat(), clock().now());
+    }
+
+    public DateFormatValue getWidgetHeaderDateFormat() {
+        return widgetHeaderDateFormat;
+    }
+
+    public DateFormatter entryDateFormatter() {
+        return new DateFormatter(context, getEntryDateFormat(), clock().now());
     }
 
     public DateFormatValue getEntryDateFormat() {
@@ -711,10 +730,6 @@ public class InstanceSettings {
         Log.v(tag, message + ", widgetId:" + widgetId + " instance:" + instanceId + "\n" + toJson());
     }
 
-    public boolean getShowDateOnWidgetHeader() {
-        return showDateOnWidgetHeader;
-    }
-
     public boolean noPastEvents() {
         return filterMode != FilterMode.NO_FILTERING &&
                 !getShowPastEventsWithDefaultColor() &&
@@ -788,9 +803,5 @@ public class InstanceSettings {
         int id2 = EventProviderType.getAvailableSources().stream().map(s -> s.source.getId())
                 .max(Comparator.comparingInt(id -> id)).orElse(1);
         return Math.max(id1, id2);
-    }
-
-    public DateFormatter entryDateformatter() {
-        return new DateFormatter(context, getEntryDateFormat(), clock().now());
     }
 }

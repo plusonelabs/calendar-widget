@@ -191,7 +191,7 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
     public CharSequence formatEntryDate() {
         return settings.getEntryDateFormat().type == DateFormatType.HIDDEN
                 ? ""
-                : settings.entryDateformatter().formatDate(entryDate);
+                : settings.entryDateFormatter().formatDate(entryDate);
     }
 
     @Override

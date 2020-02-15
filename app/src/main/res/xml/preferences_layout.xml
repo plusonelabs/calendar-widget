@@ -10,12 +10,10 @@
             android:summary="@string/single_line_layout"
             android:title="@string/widget_header_layout" />
 
-        <org.andstatus.todoagenda.prefs.MultilineCheckBoxPreference
-            android:key="showDateOnWidgetHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="true"
-            android:title="@string/show_date_on_widget_header" />
+        <org.andstatus.todoagenda.prefs.dateformat.DateFormatPreference
+            android:key="widgetHeaderDateFormat"
+            android:defaultValue="deviceDefault:"
+            android:title="@string/widget_header_date_format" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/day_header">
@@ -79,7 +77,7 @@
         <org.andstatus.todoagenda.prefs.dateformat.DateFormatPreference
             android:key="entryDateFormat"
             android:defaultValue="days:"
-            android:title="@string/entry_date_format_title" />
+            android:title="@string/entry_date_format" />
 
         <org.andstatus.todoagenda.prefs.MultilineCheckBoxPreference
             android:key="multiline_title"

@@ -44,7 +44,6 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_PAST_EVENTS_B
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_PAST_EVENTS_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_REFRESH_PERIOD_MINUTES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_REFRESH_PERIOD_MINUTES_DEFAULT;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_DATE_ON_WIDGET_HEADER;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_DAYS_WITHOUT_EVENTS;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_DAY_HEADERS;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_END_TIME;
@@ -52,7 +51,6 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_END_TIME
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_EVENT_ICON;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_LOCATION;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_LOCATION_DEFAULT;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_NUMBER_OF_DAYS_TO_EVENT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_ONLY_CLOSEST_INSTANCE_OF_RECURRING_EVENT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_SHOW_PAST_EVENTS_WITH_DEFAULT_COLOR;
@@ -66,6 +64,8 @@ import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TODAYS_EVENTS
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_TODAYS_EVENTS_BACKGROUND_COLOR_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_BACKGROUND_COLOR;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_BACKGROUND_COLOR_DEFAULT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_DATE_FORMAT;
+import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_HEADER_LAYOUT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_ID;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_WIDGET_INSTANCE_NAME;
@@ -81,7 +81,7 @@ public class ApplicationPreferences {
         synchronized (ApplicationPreferences.class) {
             InstanceSettings settings = AllSettings.instanceFromId(context, widgetId);
             setWidgetId(context, widgetId == 0 ? settings.getWidgetId() : widgetId);
-            setBoolean(context, PREF_SHOW_DATE_ON_WIDGET_HEADER, settings.getShowDateOnWidgetHeader());
+            setDateFormat(context, PREF_WIDGET_HEADER_DATE_FORMAT, settings.getWidgetHeaderDateFormat());
             setString(context, PREF_WIDGET_INSTANCE_NAME, settings.getWidgetInstanceName());
             setActiveEventSources(context, settings.getActiveEventSources());
             setEventRange(context, settings.getEventRange());
@@ -98,7 +98,7 @@ public class ApplicationPreferences {
             setShowPastEventsUnderOneHeader(context, settings.getShowPastEventsUnderOneHeader());
             setShowPastEventsWithDefaultColor(context, settings.getShowPastEventsWithDefaultColor());
             setShowEventIcon(context, settings.getShowEventIcon());
-            setEntryDateFormat(context, settings.getEntryDateFormat());
+            setDateFormat(context, PREF_ENTRY_DATE_FORMAT, settings.getEntryDateFormat());
             setBoolean(context, PREF_SHOW_END_TIME, settings.getShowEndTime());
             setBoolean(context, PREF_SHOW_LOCATION, settings.getShowLocation());
             setString(context, PREF_TIME_FORMAT, settings.getTimeFormat());
@@ -266,12 +266,16 @@ public class ApplicationPreferences {
         return getBoolean(context, PREF_SHOW_LOCATION, PREF_SHOW_LOCATION_DEFAULT);
     }
 
+    public static DateFormatValue getWidgetHeaderDateFormat(Context context) {
+        return getDateFormat(context, PREF_WIDGET_HEADER_DATE_FORMAT, PREF_WIDGET_HEADER_DATE_FORMAT_DEFAULT);
+    }
+
     public static DateFormatValue getEntryDateFormat(Context context) {
         return getDateFormat(context, PREF_ENTRY_DATE_FORMAT, PREF_ENTRY_DATE_FORMAT_DEFAULT);
     }
 
-    public static void setEntryDateFormat(Context context, DateFormatValue value) {
-        setString(context, PREF_ENTRY_DATE_FORMAT, value.save());
+    public static void setDateFormat(Context context, String key, DateFormatValue value) {
+        setString(context, key, value.save());
     }
 
     public static DateFormatValue getDateFormat(Context context, String key, DateFormatValue defaultValue) {
@@ -410,10 +414,6 @@ public class ApplicationPreferences {
 
     public static WidgetHeaderLayout getWidgetHeaderLayout(Context context) {
         return WidgetHeaderLayout.fromValue(getString(context, PREF_WIDGET_HEADER_LAYOUT, ""));
-    }
-
-    public static boolean getShowDateOnWidgetHeader(Context context) {
-        return getBoolean(context, PREF_SHOW_DATE_ON_WIDGET_HEADER, true);
     }
 
     public static boolean noPastEvents(Context context) {

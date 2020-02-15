@@ -72,7 +72,7 @@
     <string name="widget_header_layout">Widget header layout</string>
     <string name="pref_event_entry_layout_title">Event entry layout</string>
     <string name="default_multiline_layout">Time below title</string>
-    <string name="show_date_on_widget_header">Show date on widget header</string>
+    <string name="widget_header_date_format">Widget header date format</string>
     <string name="default_value">Default</string>
     <string name="single_line_layout">All in one row</string>
     <string name="two_rows_layout">Two rows layout</string>
@@ -93,7 +93,7 @@
     <string name="show_past_events_under_one_header_desc">Show all past/due events under one "Past and due" header</string>
     <string name="show_event_icon_title">Show event icon</string>
     <string name="show_event_icon_desc">Show Calendar color bar / Task icon for event</string>
-    <string name="entry_date_format_title">Entry date format</string>
+    <string name="entry_date_format">Entry date format</string>
     <string name="multiline_details_title">Multiline details</string>
     <string name="multiline_details_desc">Spread event time and location over multiple lines</string>
 

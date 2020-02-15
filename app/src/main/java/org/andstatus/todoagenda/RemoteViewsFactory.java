@@ -19,10 +19,10 @@ import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.prefs.TextShadingPref;
 import org.andstatus.todoagenda.provider.EventProviderType;
 import org.andstatus.todoagenda.util.CalendarIntentUtil;
-import org.andstatus.todoagenda.util.DateUtil;
 import org.andstatus.todoagenda.util.InstanceId;
 import org.andstatus.todoagenda.util.MyClock;
 import org.andstatus.todoagenda.util.PermissionsUtil;
+import org.andstatus.todoagenda.util.StringUtil;
 import org.andstatus.todoagenda.widget.DayHeader;
 import org.andstatus.todoagenda.widget.DayHeaderVisualizer;
 import org.andstatus.todoagenda.widget.LastEntry;
@@ -325,10 +325,10 @@ public class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     private static void configureCurrentDate(InstanceSettings settings, RemoteViews rv) {
         int viewId = R.id.calendar_current_date;
         rv.setOnClickPendingIntent(viewId, createOpenCalendarPendingIntent(settings));
-        String formattedDate = settings.getShowDateOnWidgetHeader()
-                ? DateUtil.createDateString(settings, settings.clock().now()).toUpperCase(Locale.getDefault())
-                : "                    ";
-        rv.setTextViewText(viewId, formattedDate);
+        String formattedDate = settings.widgetHeaderDateFormatter()
+                .formatDate(settings.clock().now()).toString()
+                .toUpperCase(Locale.getDefault());
+        rv.setTextViewText(viewId, StringUtil.isEmpty(formattedDate) ? "                    " : formattedDate);
         setTextSize(settings, rv, viewId, R.dimen.widget_header_title);
         setTextColorFromAttr(settings.getShadingContext(TextShadingPref.WIDGET_HEADER), rv, viewId, R.attr.header);
     }

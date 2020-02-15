@@ -34,7 +34,7 @@ public enum DateFormatType {
     DEFAULT_WEEKDAY("defaultWeekday", R.string.date_format_default_weekday, ""),
     DEFAULT_DAYS("defaultDays", R.string.date_format_default_days, ""),
     ABBREVIATED("abbrev", R.string.appearance_abbreviate_dates_title, ""),
-    NUMBER_OF_DAYS("days", R.string.date_format_number_of_days_to_event, "bbbbb"),
+    NUMBER_OF_DAYS("days", R.string.date_format_number_of_days_to_event, "bbbb"),
     DAY_IN_MONTH("dayInMonth", R.string.date_format_day_in_month, "dd"),
     MONTH_DAY("monthDay", R.string.date_format_month_day, "MM-dd"),
     WEEK_IN_YEAR("weekInYear", R.string.date_format_week_in_year, "ww"),

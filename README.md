@@ -80,7 +80,7 @@ If the problem is still present:
 In a case the widget doesn't work properly even after this, please
  [search, read and follow up on similar issues here](https://github.com/andstatus/todoagenda/issues?q=is%3Aissue+sort%3Aupdated-desc).
 
-### 2020-02-15 <a id="v4.0"/> v4.0.5 Three powerful date format preferences.
+### 2020-02-16 <a id="v4.0"/> v4.0.6 Three powerful date format preferences.
 * This version is for Android 7+ only. Versions for older devices are still available e.g.
  [here](https://github.com/andstatus/todoagenda/issues/3).
 * Created "[Date format preference dialog](https://github.com/andstatus/todoagenda/issues/7)" allowing to select

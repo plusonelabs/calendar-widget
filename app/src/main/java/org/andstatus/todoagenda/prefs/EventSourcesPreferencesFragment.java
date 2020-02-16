@@ -31,24 +31,6 @@ public class EventSourcesPreferencesFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.preferences_event_sources);
     }
 
-    private void addAsPreference(EventSource source, boolean isChecked ) {
-        CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
-        checkboxPref.setTitle((source.isAvailable ? "" : getText(R.string.not_found) + ": ") + source.getTitle());
-        checkboxPref.setSummary(source.getSummary());
-        checkboxPref.setIcon(createDrawable(source.providerType.isCalendar, source.getColor()));
-        checkboxPref.getExtras().putString(SOURCE_ID, source.toStoredString());
-        getPreferenceScreen().addPreference(checkboxPref);
-        checkboxPref.setChecked(isChecked);
-    }
-
-    private Drawable createDrawable(boolean isCalendar, int color) {
-        Drawable drawable = getResources().getDrawable(
-                isCalendar ? R.drawable.prefs_calendar_entry : R.drawable.task_icon
-        );
-        drawable.setColorFilter(new LightingColorFilter(0x0, color));
-        return drawable;
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -83,6 +65,24 @@ public class EventSourcesPreferencesFragment extends PreferenceFragmentCompat {
                 addAsPreference(available.source, false);
             }
         }
+    }
+
+    private void addAsPreference(EventSource source, boolean isChecked ) {
+        CheckBoxPreference checkboxPref = new CheckBoxPreference(getActivity());
+        checkboxPref.setTitle((source.isAvailable ? "" : getText(R.string.not_found) + ": ") + source.getTitle());
+        checkboxPref.setSummary(source.getSummary());
+        checkboxPref.setIcon(createDrawable(source.providerType.isCalendar, source.getColor()));
+        checkboxPref.getExtras().putString(SOURCE_ID, source.toStoredString());
+        getPreferenceScreen().addPreference(checkboxPref);
+        checkboxPref.setChecked(isChecked);
+    }
+
+    private Drawable createDrawable(boolean isCalendar, int color) {
+        Drawable drawable = getResources().getDrawable(
+                isCalendar ? R.drawable.prefs_calendar_entry : R.drawable.task_icon
+        );
+        drawable.setColorFilter(new LightingColorFilter(0x0, color));
+        return drawable;
     }
 
     @Override

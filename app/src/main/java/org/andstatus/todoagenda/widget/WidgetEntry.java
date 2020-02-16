@@ -147,11 +147,6 @@ public abstract class WidgetEntry<T extends WidgetEntry<T>> implements Comparabl
         return "";
     }
 
-    public int getNumberOfDaysToEvent() {
-        return Days.daysBetween(settings.clock().now(entryDate.getZone()).withTimeAtStartOfDay(),
-                entryDate.withTimeAtStartOfDay()).getDays();
-    }
-
     @Override
     public int compareTo(WidgetEntry other) {
         int globalSignum = Integer.signum(entryPosition.globalOrder - other.entryPosition.globalOrder);

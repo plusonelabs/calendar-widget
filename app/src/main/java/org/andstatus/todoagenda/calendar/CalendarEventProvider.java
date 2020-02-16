@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.vavr.control.Try;
 
@@ -50,10 +51,11 @@ public class CalendarEventProvider extends EventProvider {
             return Collections.emptyList();
         }
         List<CalendarEvent> eventList = getTimeFilteredEventList();
+        if (getSettings().getShowPastEventsWithDefaultColor()) {
+            addPastEventsWithDefaultColor(eventList);
+        }
+
         if (getSettings().getFilterMode() != FilterMode.NO_FILTERING) {
-            if (getSettings().getShowPastEventsWithDefaultColor()) {
-                addPastEventsWithDefaultColor(eventList);
-            }
             if (getSettings().getShowOnlyClosestInstanceOfRecurringEvent()) {
                 filterShowOnlyClosestInstanceOfRecurringEvent(eventList);
             }
@@ -72,22 +74,20 @@ public class CalendarEventProvider extends EventProvider {
 
     private void filterShowOnlyClosestInstanceOfRecurringEvent(@NonNull List<CalendarEvent> eventList) {
         SparseArray<CalendarEvent> eventIds = new SparseArray<>();
-        List<CalendarEvent> toDelete = new ArrayList<>();
+        List<CalendarEvent> toRemove = new ArrayList<>();
         for (CalendarEvent event : eventList) {
             CalendarEvent otherEvent = eventIds.get(event.getEventId());
             if (otherEvent == null) {
                 eventIds.put(event.getEventId(), event);
-            } else if (Math.abs(event.getStartDate().getMillis() -
-                    getSettings().clock().now().getMillis()) <
-                    Math.abs(otherEvent.getStartDate().getMillis() -
-                            getSettings().clock().now().getMillis())) {
-                toDelete.add(otherEvent);
+            } else if (Math.abs(getSettings().clock().getNumberOfMinutesTo(event.getStartDate())) <
+                    Math.abs(getSettings().clock().getNumberOfMinutesTo(otherEvent.getStartDate()))) {
+                toRemove.add(otherEvent);
                 eventIds.put(event.getEventId(), event);
             } else {
-                toDelete.add(event);
+                toRemove.add(event);
             }
         }
-        eventList.removeAll(toDelete);
+        eventList.removeAll(toRemove);
     }
 
     public DateTime getEndOfTimeRange() {
@@ -171,6 +171,7 @@ public class CalendarEventProvider extends EventProvider {
         columnNames.add(Instances.HAS_ALARM);
         columnNames.add(Instances.RRULE);
         columnNames.add(Instances.DISPLAY_COLOR);
+        columnNames.add(Instances.CALENDAR_COLOR);
         return columnNames.toArray(new String[0]);
     }
 
@@ -178,11 +179,9 @@ public class CalendarEventProvider extends EventProvider {
         Uri.Builder builder = Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(builder, 0);
         ContentUris.appendId(builder, getSettings().clock().now().getMillis());
-        List<CalendarEvent> eventList = queryList(builder.build(), getPastEventsWithColorSelection());
-        for (CalendarEvent event : eventList) {
-            event.setDefaultCalendarColor();
-        }
-        return eventList;
+        return queryList(builder.build(), getPastEventsWithColorSelection()).stream()
+            .filter(ev -> getSettings().getFilterMode() != FilterMode.DEBUG_FILTER || ev.hasDefaultCalendarColor())
+            .collect(Collectors.toList());
     }
 
     private String getPastEventsWithColorSelection() {
@@ -207,6 +206,10 @@ public class CalendarEventProvider extends EventProvider {
         event.setAlarmActive(cursor.getInt(cursor.getColumnIndex(Instances.HAS_ALARM)) > 0);
         event.setRecurring(cursor.getString(cursor.getColumnIndex(Instances.RRULE)) != null);
         event.setColor(getAsOpaque(cursor.getInt(cursor.getColumnIndex(Instances.DISPLAY_COLOR))));
+        getColumnIndex(cursor, Instances.CALENDAR_COLOR)
+                .map(ind -> getAsOpaque(cursor.getInt(ind)))
+                .ifPresent(event::setCalendarColor);
+
         return event;
     }
 

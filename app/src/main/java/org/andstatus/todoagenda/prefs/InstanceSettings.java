@@ -683,7 +683,9 @@ public class InstanceSettings {
     }
 
     public FilterMode getFilterMode() {
-        return filterMode;
+        return filterMode == FilterMode.NORMAL_FILTER && clock().getSnapshotMode() != SnapshotMode.LIVE_DATA
+                ? FilterMode.DEBUG_FILTER
+                : filterMode;
     }
 
     public InstanceSettings setFilterMode(FilterMode filterMode) {

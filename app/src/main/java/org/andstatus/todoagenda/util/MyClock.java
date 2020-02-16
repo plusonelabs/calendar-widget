@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import org.andstatus.todoagenda.prefs.SnapshotMode;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.Days;
+import org.joda.time.Minutes;
 
 /**
  * A clock, the can be changed independently from a Device clock
@@ -121,6 +123,18 @@ public class MyClock {
 
     public boolean isBeforeNow(@Nullable DateTime date) {
         return isDateDefined(date) && date.isBefore(now(date.getZone()));
+    }
+
+    public int getNumberOfDaysTo(DateTime date) {
+        return Days.daysBetween(
+                now(date.getZone()).withTimeAtStartOfDay(),
+                date.withTimeAtStartOfDay())
+            .getDays();
+    }
+
+    public int getNumberOfMinutesTo(DateTime date) {
+        return Minutes.minutesBetween(now(date.getZone()), date)
+                .getMinutes();
     }
 
     public DateTime startOfTomorrow() {

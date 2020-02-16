@@ -10,6 +10,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
+import java.util.Optional;
+
 import static org.andstatus.todoagenda.util.StringUtil.nonEmpty;
 import static org.andstatus.todoagenda.util.StringUtil.notNull;
 
@@ -26,7 +28,7 @@ public class CalendarEvent {
     private DateTime startDate;
     private DateTime endDate;
     private int color;
-    private boolean mHasDefaultCalendarColor;
+    private Optional<Integer> calendarColor = Optional.empty();
     private String location = "";
     private boolean alarmActive;
     private boolean recurring;
@@ -156,16 +158,20 @@ public class CalendarEvent {
         return color;
     }
 
+    public int getCalendarColor() {
+        return calendarColor.orElse(color);
+    }
+
     public void setColor(int color) {
         this.color = color;
     }
 
-    public boolean hasDefaultCalendarColor() {
-        return mHasDefaultCalendarColor;
+    public void setCalendarColor(int color) {
+        this.calendarColor = Optional.of(color);
     }
 
-    public void setDefaultCalendarColor() {
-        mHasDefaultCalendarColor = true;
+    public boolean hasDefaultCalendarColor() {
+        return calendarColor.map(cc -> cc == color).orElse(true);
     }
 
     public boolean isAllDay() {
@@ -203,7 +209,9 @@ public class CalendarEvent {
                 + ", startDate=" + getStartDate()
                 + (endDate != null ? ", endDate=" + endDate : "")
                 + ", color=" + color
-                + (mHasDefaultCalendarColor ? " is default" : "")
+                + (hasDefaultCalendarColor()
+                    ? " is default"
+                    : (", calendarColor=" + calendarColor.map(String::valueOf).orElse("???")))
                 + ", allDay=" + allDay
                 + ", alarmActive=" + alarmActive
                 + ", recurring=" + recurring

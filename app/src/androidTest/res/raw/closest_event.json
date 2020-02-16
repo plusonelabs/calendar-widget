@@ -1,0 +1,2379 @@
+{
+  "deviceInfo": {
+    "versionCode": 29,
+    "versionRelease": "10",
+    "versionCodename": "REL",
+    "buildManufacturer": "Google",
+    "buildBrand": "google",
+    "buildModel": "Android SDK built for x86_64"
+  },
+  "applicationInfo": {
+    "versionName": "4.0.5-653",
+    "versionCode": 653
+  },
+  "settings": {
+    "widgetId": 3,
+    "widgetHeaderDateFormat": "defaultDays:",
+    "widgetInstanceName": "Birthday test - Test replay",
+    "activeSources": [
+      {
+        "providerType": 1,
+        "id": 2,
+        "title": "ToDo Agenda Shared",
+        "summary": "calendar.widget.android@gmail.com",
+        "color": -6644481,
+        "isAvailable": true
+      },
+      {
+        "providerType": 2,
+        "id": 1,
+        "title": "My tasks",
+        "summary": "Local",
+        "color": -14776091,
+        "isAvailable": true
+      }
+    ],
+    "eventRange": 365,
+    "eventsEnded": "ONE_YEAR",
+    "fillAllDay": true,
+    "hideBasedOnKeywords": "",
+    "widgetHeaderBackgroundColor": 0,
+    "pastEventsBackgroundColor": -1082623956,
+    "todaysEventsBackgroundColor": -620756993,
+    "backgroundColor": -2147483648,
+    "showDaysWithoutEvents": false,
+    "showDayHeaders": true,
+    "dayHeaderDateFormat": "defaultDays:",
+    "horizontalLineBelowDayHeader": false,
+    "showPastEventsUnderOneHeader": false,
+    "showPastEventsWithDefaultColor": false,
+    "showEventIcon": true,
+    "entryDateFormat": "days:",
+    "showEndTime": true,
+    "showLocation": true,
+    "dateFormat": "auto",
+    "abbreviateDates": false,
+    "lockedTimeZoneId": "Europe\/Moscow",
+    "snapshotMode": "live_data",
+    "refreshPeriodMinutes": 10,
+    "eventEntryLayout": "DEFAULT",
+    "multiline_title": false,
+    "multiline_details": false,
+    "showOnlyClosestInstanceOfRecurringEvent": true,
+    "hideDuplicates": false,
+    "taskScheduling": "date_due",
+    "taskWithoutDates": "end_of_list",
+    "filterMode": "normal",
+    "indicateAlerts": true,
+    "indicateRecurring": false,
+    "widgetHeaderLayout": "ONE_ROW",
+    "headerTheme": "DARK",
+    "dayHeaderThemePast": "DARK",
+    "entryThemePast": "BLACK",
+    "dayHeaderTheme": "LIGHT",
+    "entryTheme": "WHITE",
+    "dayHeaderThemeFuture": "DARK",
+    "entryThemeFuture": "BLACK",
+    "textSizeScale": "1.0",
+    "dayHeaderAlignment": "RIGHT",
+    "resultsStorage": {
+      "deviceInfo": {
+        "versionCode": 29,
+        "versionRelease": "10",
+        "versionCodename": "REL",
+        "buildManufacturer": "Google",
+        "buildBrand": "google",
+        "buildModel": "Android SDK built for x86_64"
+      },
+      "applicationInfo": {
+        "versionName": "4.0.5-653",
+        "versionCode": 653
+      },
+      "resultsVersion": 3,
+      "results": [
+        {
+          "providerType": 1,
+          "executedAt": 1440948396325,
+          "timeZoneId": "Europe\/Moscow",
+          "millisOffsetUtcToLocal": 10800000,
+          "standardMillisOffsetUtcToLocal": 10800000,
+          "uri": "content:\/\/com.android.calendar\/instances\/when\/1440948396325\/1443540396325",
+          "projection": [
+            "event_id",
+            "title",
+            "begin",
+            "end",
+            "allDay",
+            "eventLocation",
+            "hasAlarm",
+            "rrule",
+            "displayColor"
+          ],
+          "selection": "selfAttendeeStatus!=2 AND (calendar_id = 4 )",
+          "selectionArgs": [],
+          "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+          "rows": [
+            {
+              "allDay": {
+                "type": 1,
+                "value": 1
+              },
+              "rrule": {
+                "type": 0
+              },
+              "event_id": {
+                "type": 1,
+                "value": 594
+              },
+              "eventLocation": {
+                "type": 3,
+                "value": ""
+              },
+              "end": {
+                "type": 1,
+                "value": 1441843200000
+              },
+              "displayColor": {
+                "type": 1,
+                "value": -7151168
+              },
+              "title": {
+                "type": 3,
+                "value": "Rita's birthday"
+              },
+              "hasAlarm": {
+                "type": 1,
+                "value": 0
+              },
+              "begin": {
+                "type": 1,
+                "value": 1441756800000
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "resultsVersion": 3,
+  "results": [
+    {
+      "providerType": 1,
+      "executedAt": 1581745686787,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/com.android.calendar\/instances\/when\/1550178000000\/1613281686787",
+      "projection": [
+        "calendar_id",
+        "event_id",
+        "title",
+        "begin",
+        "end",
+        "allDay",
+        "eventLocation",
+        "hasAlarm",
+        "rrule",
+        "displayColor",
+        "calendar_color"
+      ],
+      "selection": "selfAttendeeStatus!=2 AND (calendar_id = 2 )",
+      "selectionArgs": [],
+      "sortOrder": "startDay ASC, allDay DESC, begin ASC ",
+      "rows": [
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 6
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1553670900000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -1973791
+          },
+          "title": {
+            "type": 3,
+            "value": "Call John Smith 2"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1553667300000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "event_id": {
+            "type": 1,
+            "value": 3
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Profsoyuznaya, Moscow, Russia, 117292"
+          },
+          "end": {
+            "type": 1,
+            "value": 1567468800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Day of knowledge"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1567382400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "event_id": {
+            "type": 1,
+            "value": 4
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1568160000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "All day event"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568073600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 5
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1568134800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "A Tuesday's walk"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568131200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 7
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "SOMA VEIN & LASER CENTRE, 2622 Agricola St, Halifax, NS B3K 4C8, Canada"
+          },
+          "end": {
+            "type": 1,
+            "value": 1568818800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Watch TV"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568815200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 9
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1568901600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Another calendar event"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568898000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "event_id": {
+            "type": 1,
+            "value": 8
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569024000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "All day test event. Watching TV all day :-)"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1568937600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1569369600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569283200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;UNTIL=20200927T060000Z;WKST=MO"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 12
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569654000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Event with a very long title that spans two lines. For testing"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569650400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 11
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569772800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Sunday Supper for the whole family"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569769200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 13
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569900600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Early morning errands"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569897000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 14
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1569900660000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Early morning errands"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1569897000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1570431600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Dinner during vacations"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1570428000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "event_id": {
+            "type": 1,
+            "value": 15
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1570579200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "2. Call me!"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1570492800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "event_id": {
+            "type": 1,
+            "value": 17
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Paris, France"
+          },
+          "end": {
+            "type": 1,
+            "value": 1570579200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "5. Another all-day"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1570492800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "event_id": {
+            "type": 1,
+            "value": 18
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Nice, France"
+          },
+          "end": {
+            "type": 1,
+            "value": 1570579200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "4. Staying in Nice"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1570492800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 16
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Saint Petersburg, St Petersburg, Russia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1571062500000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Three days meeting with d"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1570883400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1571961600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1571875200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 19
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1572458100000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Evening show"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1572457800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 21
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1572458700000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Go2"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1572458400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 20
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1572462900000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Sleep"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1572462000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "event_id": {
+            "type": 1,
+            "value": 23
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1574640000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Test Vacations week"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1574035200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1574640000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1574553600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 31
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1576976700000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Today's event at 4AM"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576976400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 29
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1576992000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Today's event at 8:05"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1576991100000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 30
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1577041500000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Today's event later at 9:05PM"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577037900000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1577232000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1577145600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1579910400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1579824000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 32
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1581026400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "a Today's event at midnight"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1581022800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 33
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1581174000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "New event to show"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1581170400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 22
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1581753600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -30596
+          },
+          "title": {
+            "type": 3,
+            "value": "Playing with kids in the park"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1581750000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 34
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1581782400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Testing tasks order"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1581778800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 36
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1581833100000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Tomorrow's event at 8:05AM"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1581829500000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 37
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1581854400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Tomorrow at 2PM, no reminders"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1581850800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "event_id": {
+            "type": 1,
+            "value": 38
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1581855000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "The third meeting on Sunday"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1581851400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 0
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "event_id": {
+            "type": 1,
+            "value": 35
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1582588800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1582502400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1585094400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1585008000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 0
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=YEARLY;WKST=MO"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 2
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": ""
+          },
+          "end": {
+            "type": 1,
+            "value": 1585293300000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -6644481
+          },
+          "title": {
+            "type": 3,
+            "value": "Call John Smith 2"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1585289700000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1587772800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1587686400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1590364800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1590278400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1593043200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1592956800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1595635200000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1595548800000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1598313600000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1598227200000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1600992000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1600905600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1603584000000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1603497600000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1606262400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1606176000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1608854400000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1608768000000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        },
+        {
+          "allDay": {
+            "type": 1,
+            "value": 1
+          },
+          "rrule": {
+            "type": 3,
+            "value": "FREQ=MONTHLY;WKST=SU"
+          },
+          "event_id": {
+            "type": 1,
+            "value": 10
+          },
+          "calendar_id": {
+            "type": 1,
+            "value": 2
+          },
+          "eventLocation": {
+            "type": 3,
+            "value": "Secret cafe, Rhodyho, 4220 Bardejov, Slovakia"
+          },
+          "end": {
+            "type": 1,
+            "value": 1611532800000
+          },
+          "displayColor": {
+            "type": 1,
+            "value": -8722497
+          },
+          "title": {
+            "type": 3,
+            "value": "Test event 2 that is a recurring all day event and has a reminder"
+          },
+          "begin": {
+            "type": 1,
+            "value": 1611446400000
+          },
+          "hasAlarm": {
+            "type": 1,
+            "value": 1
+          },
+          "calendar_color": {
+            "type": 1,
+            "value": -6644481
+          }
+        }
+      ]
+    },
+    {
+      "providerType": 2,
+      "executedAt": 1581745686813,
+      "timeZoneId": "Europe\/Moscow",
+      "millisOffsetUtcToLocal": 10800000,
+      "standardMillisOffsetUtcToLocal": 10800000,
+      "uri": "content:\/\/org.dmfs.tasks\/tasks",
+      "projection": [
+        "list_id",
+        "_id",
+        "title",
+        "due",
+        "dtstart",
+        "list_color",
+        "status"
+      ],
+      "selection": "status != 2 AND (dtstart <= 1613281686813 OR dtstart IS NULL ) AND list_id IN ( 1 )",
+      "selectionArgs": [],
+      "sortOrder": "",
+      "rows": [
+        {
+          "list_id": {
+            "type": 1,
+            "value": 1
+          },
+          "list_color": {
+            "type": 1,
+            "value": -14776091
+          },
+          "_id": {
+            "type": 1,
+            "value": 2
+          },
+          "title": {
+            "type": 3,
+            "value": "The second task"
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1581847200000
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 1
+          },
+          "list_color": {
+            "type": 1,
+            "value": -14776091
+          },
+          "_id": {
+            "type": 1,
+            "value": 3
+          },
+          "title": {
+            "type": 3,
+            "value": "The third task starting on February 16"
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1581858000000
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          }
+        },
+        {
+          "list_id": {
+            "type": 1,
+            "value": 1
+          },
+          "due": {
+            "type": 1,
+            "value": 1582455600000
+          },
+          "list_color": {
+            "type": 1,
+            "value": -14776091
+          },
+          "_id": {
+            "type": 1,
+            "value": 1
+          },
+          "title": {
+            "type": 3,
+            "value": "One line title task 2"
+          },
+          "dtstart": {
+            "type": 1,
+            "value": 1581825600000
+          },
+          "status": {
+            "type": 1,
+            "value": 0
+          }
+        }
+      ]
+    }
+  ]
+}

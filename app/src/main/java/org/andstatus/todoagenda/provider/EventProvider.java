@@ -1,6 +1,7 @@
 package org.andstatus.todoagenda.provider;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import androidx.annotation.NonNull;
 
@@ -12,9 +13,11 @@ import org.joda.time.DateTime;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import io.vavr.control.Try;
 
+import static android.database.Cursor.FIELD_TYPE_NULL;
 import static android.graphics.Color.argb;
 import static android.graphics.Color.blue;
 import static android.graphics.Color.green;
@@ -63,6 +66,12 @@ public class EventProvider {
 
     protected int getAsOpaque(int color) {
         return argb(255, red(color), green(color), blue(color));
+    }
+
+    public static Optional<Integer> getColumnIndex(Cursor cursor, String columnName) {
+        return Optional.of(cursor.getColumnIndex(columnName))
+                .filter(ind -> ind >=0)
+                .filter(ind -> cursor.getType(ind) != FIELD_TYPE_NULL);
     }
 
     public Try<List<EventSource>> fetchAvailableSources() {

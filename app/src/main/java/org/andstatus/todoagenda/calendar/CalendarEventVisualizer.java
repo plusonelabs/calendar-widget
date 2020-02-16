@@ -112,7 +112,7 @@ public class CalendarEventVisualizer extends WidgetEntryVisualizer<CalendarEntry
         DateTime firstDate = event.getStartDate();
         DateTime dayOfStartOfTimeRange = eventProvider.getStartOfTimeRange()
                 .withTimeAtStartOfDay();
-        if (!event.hasDefaultCalendarColor()
+        if (!event.hasDefaultCalendarColor()   // ??? TODO: fix logic
                 && firstDate.isBefore(eventProvider.getStartOfTimeRange())
                 && event.getEndDate().isAfter(eventProvider.getStartOfTimeRange())) {
             if (event.isAllDay() || firstDate.isBefore(dayOfStartOfTimeRange)) {

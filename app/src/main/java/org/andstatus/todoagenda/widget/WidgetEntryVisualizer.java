@@ -108,7 +108,7 @@ public abstract class WidgetEntryVisualizer<T extends WidgetEntry<T>> {
             rv.setViewVisibility(R.id.event_entry_days, View.GONE);
             rv.setViewVisibility(R.id.event_entry_days_right, View.GONE);
         } else {
-            int days = entry.getNumberOfDaysToEvent();
+            int days = getSettings().clock().getNumberOfDaysTo(entry.entryDate);
             boolean daysAsText = getSettings().getEntryDateFormat().type != DateFormatType.NUMBER_OF_DAYS ||
                     (days > -2 && days < 2);
 

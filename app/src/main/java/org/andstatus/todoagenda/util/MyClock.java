@@ -68,14 +68,23 @@ public class MyClock {
     }
 
     public DateTime now(DateTimeZone zone) {
+        DateTime snapshotDate = this.snapshotDate;
+        if (getSnapshotMode() == SnapshotMode.SNAPSHOT_TIME && snapshotDate != null) {
+            return PermissionsUtil.isTestMode()
+                    ? getTimeMachineDate(zone)
+                    : snapshotDate.withZone(zone);
+        } else {
+            return DateTime.now(zone);
+        }
+    }
+
+    private DateTime getTimeMachineDate(DateTimeZone zone) {
         DateTime nowSetAt = null;
         DateTime now = null;
-        if (getSnapshotMode() == SnapshotMode.SNAPSHOT_TIME) {
-            do {
-                nowSetAt = snapshotDateSetAt;
-                now = snapshotDate;
-            } while (nowSetAt != snapshotDateSetAt); // Ensure concurrent consistency
-        }
+        do {
+            nowSetAt = snapshotDateSetAt;
+            now = snapshotDate;
+        } while (nowSetAt != snapshotDateSetAt); // Ensure concurrent consistency
 
         if (now == null) {
             return DateTime.now(zone);

@@ -70,20 +70,20 @@ public class PermissionsUtil {
         return !granted;
     }
 
-    private static volatile Boolean isTestMode = null;
-    /**
-     * Based on
-     * http://stackoverflow.com/questions/21367646/how-to-determine-if-android-application-is-started-with-junit-testing-instrument
-     */
-    public static boolean isTestMode() {
-        if (isTestMode == null) {
-            try {
-                Class.forName("org.andstatus.todoagenda.provider.MockCalendarContentProvider");
-                isTestMode = true;
-            } catch (ClassNotFoundException e) {
-                isTestMode = false;
-            }
+    private static LazyVal<Boolean> isTestMode = LazyVal.of(() -> {
+        /*
+         * Based on
+         * http://stackoverflow.com/questions/21367646/how-to-determine-if-android-application-is-started-with-junit-testing-instrument
+         */
+        try {
+            Class.forName("org.andstatus.todoagenda.provider.MockCalendarContentProvider");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
         }
-        return isTestMode;
+    });
+
+    public static boolean isTestMode() {
+        return isTestMode.get();
     }
 }

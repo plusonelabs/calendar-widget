@@ -54,27 +54,21 @@ public class OtherPreferencesFragment extends PreferenceFragmentCompat
     }
 
     private void showLockTimeZone() {
-        CheckBoxPreference preference = (CheckBoxPreference) findPreference(InstanceSettings.PREF_LOCK_TIME_ZONE);
-        if (preference != null) {
-            SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
-            preference.setEnabled(snapshotMode != SnapshotMode.SNAPSHOT_TIME);
+        CheckBoxPreference preference = findPreference(InstanceSettings.PREF_LOCK_TIME_ZONE);
+        if (preference == null) return;
 
-            boolean isChecked = preference.isChecked();
+        SnapshotMode snapshotMode = ApplicationPreferences.getSnapshotMode(getActivity());
+        preference.setEnabled(snapshotMode != SnapshotMode.SNAPSHOT_TIME);
 
-            DateTimeZone timeZone = snapshotMode == SnapshotMode.SNAPSHOT_TIME
-                ? getSettings().clock().getZone()
-                : DateTimeZone.forID(DateUtil.validatedTimeZoneId(isChecked ?
-                    ApplicationPreferences.getLockedTimeZoneId(getActivity()) : TimeZone.getDefault().getID()));
-
-            preference.setSummary(String.format(
-                    getText(isChecked ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc).toString(),
-                    timeZone.getName(DateTime.now(timeZone).getMillis()))
-            );
-        }
+        DateTimeZone timeZone = getSettings().clock().getZone();
+        preference.setSummary(String.format(
+                getText(preference.isChecked() ? R.string.lock_time_zone_on_desc : R.string.lock_time_zone_off_desc).toString(),
+                timeZone.getName(DateTime.now(timeZone).getMillis()))
+        );
     }
 
     private void showSnapshotMode() {
-        ListPreference preference = (ListPreference) findPreference(InstanceSettings.PREF_SNAPSHOT_MODE);
+        ListPreference preference = findPreference(InstanceSettings.PREF_SNAPSHOT_MODE);
         if (preference == null) return;
 
         InstanceSettings settings = getSettings();
@@ -95,12 +89,12 @@ public class OtherPreferencesFragment extends PreferenceFragmentCompat
     }
 
     private String formatSnapshotModeSummary(InstanceSettings settings, int valueResId) {
-        return String.format(
-                getText(valueResId).toString(),
-                new DateFormatter(settings.getContext(), DateFormatType.DEFAULT_WEEKDAY.defaultValue(),
-                    settings.clock().now()).formatDate(settings.clock().now()) + " " +
-                        DateUtil.formatTime(this::getSettings, settings.clock().now())
-        );
+        CharSequence snapshotDateString = settings.hasResults()
+                ? new DateFormatter(settings.getContext(), DateFormatType.DEFAULT_WEEKDAY.defaultValue(),
+                    settings.clock().now()).formatDate(settings.getResultsStorage().getExecutedAt()) +
+                    " " + DateUtil.formatTime(this::getSettings, settings.getResultsStorage().getExecutedAt())
+                : "...";
+        return String.format(getText(valueResId).toString(), snapshotDateString);
     }
 
     private InstanceSettings getSettings() {

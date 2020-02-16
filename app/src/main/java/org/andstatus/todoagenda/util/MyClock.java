@@ -26,35 +26,38 @@ public class MyClock {
         zone = DateTimeZone.getDefault();
     }
 
-    public void setLockedTimeZoneId(String lockedTimeZoneId) {
-        this.lockedTimeZoneId = DateUtil.validatedTimeZoneId(lockedTimeZoneId);
-        zone = StringUtil.nonEmpty(lockedTimeZoneId)
-            ? DateTimeZone.forID(DateUtil.validatedTimeZoneId(lockedTimeZoneId))
-            : DateTimeZone.getDefault();
-    }
-
-    public String getLockedTimeZoneId() {
-        return snapshotMode == SnapshotMode.SNAPSHOT_TIME
-            ? zone.getID()
-            : lockedTimeZoneId;
-    }
-
     public void setSnapshotMode(SnapshotMode snapshotMode) {
         this.snapshotMode = snapshotMode;
+        updateZone();
     }
 
     public void setSnapshotDate(DateTime snapshotDate) {
         this.snapshotDate = snapshotDate;
         snapshotDateSetAt = DateTime.now();
-        zone = snapshotDate == null
-                ? (snapshotMode == SnapshotMode.SNAPSHOT_TIME || StringUtil.isEmpty(lockedTimeZoneId)
-                    ? zone
-                    : DateTimeZone.forID(DateUtil.validatedTimeZoneId(lockedTimeZoneId)))
-                : snapshotDate.getZone();
+        updateZone();
+    }
+
+    public void setLockedTimeZoneId(String timeZoneId) {
+        lockedTimeZoneId = DateUtil.validatedTimeZoneId(timeZoneId);
+        updateZone();
+    }
+
+    private void updateZone() {
+        if (snapshotMode == SnapshotMode.SNAPSHOT_TIME && snapshotDate != null) {
+            zone = snapshotDate.getZone();
+        } else if (StringUtil.nonEmpty(lockedTimeZoneId)) {
+            zone = DateTimeZone.forID(lockedTimeZoneId);
+        } else {
+            zone = DateTimeZone.getDefault();
+        }
+    }
+
+    public String getLockedTimeZoneId() {
+        return lockedTimeZoneId;
     }
 
     public SnapshotMode getSnapshotMode() {
-        return snapshotDate == null ? SnapshotMode.LIVE_DATA : snapshotMode;
+        return snapshotMode;
     }
 
     /**

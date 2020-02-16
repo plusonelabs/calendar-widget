@@ -15,8 +15,6 @@ import org.andstatus.todoagenda.widget.WidgetHeaderLayout;
 import java.util.List;
 import java.util.Map;
 
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES;
-import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ABBREVIATE_DATES_DEFAULT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_ACTIVE_SOURCES;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_ALIGNMENT;
 import static org.andstatus.todoagenda.prefs.InstanceSettings.PREF_DAY_HEADER_DATE_FORMAT;
@@ -105,7 +103,6 @@ public class ApplicationPreferences {
             setBoolean(context, PREF_SHOW_END_TIME, settings.getShowEndTime());
             setBoolean(context, PREF_SHOW_LOCATION, settings.getShowLocation());
             setString(context, PREF_TIME_FORMAT, settings.getTimeFormat());
-            setAbbreviateDates(context, settings.getAbbreviateDates());
             setLockedTimeZoneId(context, settings.clock().getLockedTimeZoneId());
             setRefreshPeriodMinutes(context, settings.getRefreshPeriodMinutes());
             setString(context, PREF_EVENT_ENTRY_LAYOUT, settings.getEventEntryLayout().value);
@@ -291,14 +288,6 @@ public class ApplicationPreferences {
 
     public static String getTimeFormat(Context context) {
         return getString(context, PREF_TIME_FORMAT, PREF_TIME_FORMAT_DEFAULT);
-    }
-
-    public static boolean getAbbreviateDates(Context context) {
-        return getBoolean(context, PREF_ABBREVIATE_DATES, PREF_ABBREVIATE_DATES_DEFAULT);
-    }
-
-    public static void setAbbreviateDates(Context context, boolean value) {
-        setBoolean(context, PREF_ABBREVIATE_DATES, value);
     }
 
     public static String getLockedTimeZoneId(Context context) {

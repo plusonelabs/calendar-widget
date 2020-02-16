@@ -19,14 +19,7 @@
         android:entries="@array/pref_date_format_entries"
         android:entryValues="@array/pref_date_format_values"
         android:summary="@string/appearance_date_format_desc"
-        android:title="@string/appearance_date_format_title" />
-
-    <CheckBoxPreference
-        android:key="abbreviateDates"
-        android:defaultValue="false"
-        android:summary="@string/appearance_abbreviate_dates_desc"
-        android:title="@string/appearance_abbreviate_dates_title">
-    </CheckBoxPreference>
+        android:title="@string/appearance_time_format_title" />
 
     <CheckBoxPreference
         android:key="lockTimeZone"

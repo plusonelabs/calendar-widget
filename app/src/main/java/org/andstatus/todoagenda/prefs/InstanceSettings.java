@@ -161,9 +161,6 @@ public class InstanceSettings {
     static final String PREF_TIME_FORMAT = "dateFormat"; // Legacy value...
     static final String PREF_TIME_FORMAT_DEFAULT = "auto";
     private String timeFormat = PREF_TIME_FORMAT_DEFAULT;
-    static final String PREF_ABBREVIATE_DATES = "abbreviateDates";
-    static final boolean PREF_ABBREVIATE_DATES_DEFAULT = false;
-    private boolean abbreviateDates = PREF_ABBREVIATE_DATES_DEFAULT;
 
     static final String PREF_LOCK_TIME_ZONE = "lockTimeZone";
     static final String PREF_LOCKED_TIME_ZONE_ID = "lockedTimeZoneId";
@@ -277,9 +274,6 @@ public class InstanceSettings {
             if (json.has(PREF_TIME_FORMAT)) {
                 timeFormat = json.getString(PREF_TIME_FORMAT);
             }
-            if (json.has(PREF_ABBREVIATE_DATES)) {
-                abbreviateDates = json.getBoolean(PREF_ABBREVIATE_DATES);
-            }
             if (json.has(PREF_LOCKED_TIME_ZONE_ID)) {
                 clock().setLockedTimeZoneId(json.getString(PREF_LOCKED_TIME_ZONE_ID));
             }
@@ -368,7 +362,6 @@ public class InstanceSettings {
             settings.showEndTime = ApplicationPreferences.getShowEndTime(context);
             settings.showLocation = ApplicationPreferences.getShowLocation(context);
             settings.timeFormat = ApplicationPreferences.getTimeFormat(context);
-            settings.abbreviateDates = ApplicationPreferences.getAbbreviateDates(context);
             settings.setRefreshPeriodMinutes(ApplicationPreferences.getRefreshPeriodMinutes(context));
             settings.setEventEntryLayout(ApplicationPreferences.getEventEntryLayout(context));
             settings.multilineTitle = ApplicationPreferences.isMultilineTitle(context);
@@ -459,7 +452,6 @@ public class InstanceSettings {
             json.put(PREF_SHOW_END_TIME, showEndTime);
             json.put(PREF_SHOW_LOCATION, showLocation);
             json.put(PREF_TIME_FORMAT, timeFormat);
-            json.put(PREF_ABBREVIATE_DATES, abbreviateDates);
             json.put(PREF_LOCKED_TIME_ZONE_ID, clock().getLockedTimeZoneId());
             json.put(PREF_SNAPSHOT_MODE, clock().getSnapshotMode().value);
             json.put(PREF_REFRESH_PERIOD_MINUTES, refreshPeriodMinutes);
@@ -615,10 +607,6 @@ public class InstanceSettings {
 
     public String getTimeFormat() {
         return timeFormat;
-    }
-
-    public boolean getAbbreviateDates() {
-        return abbreviateDates;
     }
 
     public MyClock clock() {

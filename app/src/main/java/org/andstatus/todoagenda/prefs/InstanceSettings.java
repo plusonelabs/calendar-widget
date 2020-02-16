@@ -798,9 +798,7 @@ public class InstanceSettings {
                     addActiveEventSource(providerType);
                 }
             }
-            if (!resultsStorage.getResults().isEmpty() && !clock().isSnapshotDateSet()) {
-                clock().setSnapshotDate(resultsStorage.getResults().get(0).getExecutedAt());
-            }
+            clock().setSnapshotDate(resultsStorage.getExecutedAt());
         }
     }
 

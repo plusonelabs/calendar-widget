@@ -21,7 +21,7 @@ public class TodaysColorsEventsTest extends BaseWidgetTest {
         final String method = "testIssue327";
         QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.todays_colors);
-        provider.addResults(inputs.getResults());
+        provider.addResults(inputs);
 
         playResults(method);
         assertEquals("Number of entries", 43, getFactory().getWidgetEntries().size());

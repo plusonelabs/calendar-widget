@@ -22,7 +22,7 @@ public class WrongDatesLostEventsTest extends BaseWidgetTest {
         final String method = "testIssue205";
         QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.wrong_dates_lost_events);
-        provider.addResults(inputs.getResults());
+        provider.addResults(inputs);
 
         playResults(method);
         assertEquals("Number of entries", 11, getFactory().getWidgetEntries().size());

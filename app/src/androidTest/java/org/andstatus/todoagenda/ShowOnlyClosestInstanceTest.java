@@ -23,12 +23,13 @@ public class ShowOnlyClosestInstanceTest extends BaseWidgetTest {
         final String method = "testShowOnlyClosestInstance";
         QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.closest_event);
-        provider.addResults(inputs.getResults());
-
-        // TODO: Get rid of this:
-        getSettings().clock().setSnapshotDate(inputs.getResults().get(0).getExecutedAt());
+        provider.addResults(inputs);
 
         playResults(method);
+
+        assertEquals("SnaphotDate", dateTime(2020, 2, 15),
+                getSettings().clock().now().withTimeAtStartOfDay());
+
         List<? extends WidgetEntry> entries = getFactory().getWidgetEntries().stream()
                 .filter(e -> e.getTitle().startsWith("Test event 2 that")).collect(Collectors.toList());
         assertEquals("Number of entries of the test event " + entries, 2, entries.size());

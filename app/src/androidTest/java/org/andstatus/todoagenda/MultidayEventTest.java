@@ -1,7 +1,5 @@
 package org.andstatus.todoagenda;
 
-import android.util.Log;
-
 import org.andstatus.todoagenda.calendar.CalendarEvent;
 import org.andstatus.todoagenda.widget.CalendarEntry;
 import org.andstatus.todoagenda.widget.WidgetEntry;
@@ -35,8 +33,7 @@ public class MultidayEventTest extends BaseWidgetTest {
         event.setTitle("Event that carry over to the next day, show as ending midnight");
         event.setStartDate(today.plusHours(19));
         event.setEndDate(today.plusDays(1).plusHours(7));
-
-        getSettings().clock().setSnapshotDate(today.plusHours(10).plusMinutes(33));
+        provider.setExecutedAt(today.plusHours(10).plusMinutes(33));
         provider.addRow(event);
         playResults(TAG);
         CalendarEntry entry1 = null;
@@ -97,10 +94,9 @@ public class MultidayEventTest extends BaseWidgetTest {
     }
 
     private CalendarEntry getSundayEntryAt(CalendarEvent event, DateTime currentDateTime) {
-        getSettings().clock().setSnapshotDate(currentDateTime);
         provider.clear();
+        provider.setExecutedAt(currentDateTime);
         provider.addRow(event);
-        Log.i(TAG, "getSundayEntryAt " + currentDateTime);
         playResults(TAG);
         CalendarEntry sundayEntry = null;
         for (WidgetEntry item : getFactory().getWidgetEntries()) {

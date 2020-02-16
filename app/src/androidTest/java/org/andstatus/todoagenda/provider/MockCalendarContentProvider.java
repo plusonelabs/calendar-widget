@@ -15,6 +15,7 @@ import org.andstatus.todoagenda.prefs.OrderedEventSource;
 import org.andstatus.todoagenda.prefs.SettingsStorage;
 import org.andstatus.todoagenda.prefs.SnapshotMode;
 import org.andstatus.todoagenda.util.RawResourceUtils;
+import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,8 +71,8 @@ public class MockCalendarContentProvider {
     }
 
     public void updateAppSettings(String tag) {
+        settings.setResultsStorage(results);
         if (!results.getResults().isEmpty()) {
-            settings.setResultsStorage(results);
             settings.clock().setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
         }
         AllSettings.addNew(tag, context, settings);
@@ -96,14 +97,12 @@ public class MockCalendarContentProvider {
         ApplicationPreferences.setWidgetId(context, TEST_WIDGET_ID_MIN);
     }
 
-    public void addResults(List<QueryResult> results) {
-        for (QueryResult result : results) {
-            addResult(result);
-        }
+    public void addResults(QueryResultsStorage newResults) {
+        results.addResults(newResults);
     }
 
-    public void addResult(QueryResult result) {
-        results.addResult(result);
+    public void setExecutedAt(DateTime executedAt) {
+        results.setExecutedAt(executedAt);
     }
 
     public void addRow(CalendarEvent event) {

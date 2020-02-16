@@ -48,8 +48,12 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
 
     @Test
     public void testTwoEventsToday() {
-        QueryResult input1 = addOneResult("");
-        QueryResult input2 = addOneResult("SOMETHING=1");
+        QueryResultsStorage results = new QueryResultsStorage();
+        QueryResult input1 = newResult("");
+        results.addResult(input1);
+        QueryResult input2 = newResult("SOMETHING=1");
+        results.addResult(input2);
+        provider.addResults(results);
         provider.updateAppSettings(TAG);
 
         QueryResultsStorage.setNeedToStoreResults(true, provider.getWidgetId());
@@ -78,7 +82,7 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
         assertNotSame(result1, input1);
     }
 
-    private QueryResult addOneResult(String selection) {
+    private QueryResult newResult(String selection) {
         QueryResult input = new QueryResult(EventProviderType.CALENDAR, getSettings(),
                 CalendarContract.Instances.CONTENT_URI, projection, selection, null, sortOrder);
         DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
@@ -97,7 +101,6 @@ public class MockCalendarContentProviderTest extends BaseWidgetTest {
         );
         assertEquals(CalendarContract.Instances.CONTENT_URI, input.getUri());
         assertEquals(selection, input.getSelection());
-        provider.addResult(input);
         return input;
     }
 

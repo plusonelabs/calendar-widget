@@ -24,7 +24,7 @@ public class SingleEventTest extends BaseWidgetTest {
     @Test
     public void testEventAttributes() {
         DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
-        getSettings().clock().setSnapshotDate(today.plusHours(10));
+
         CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), false);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
@@ -36,17 +36,17 @@ public class SingleEventTest extends BaseWidgetTest {
         event.setAlarmActive(true);
         event.setRecurring(true);
 
-        assertOneEvent(event, true);
+        DateTime executedAt = today.plusHours(10);
+        assertOneEvent(executedAt, event, true);
         event.setAlarmActive(false);
-        assertOneEvent(event, true);
+        assertOneEvent(executedAt, event, true);
         event.setRecurring(false);
-        assertOneEvent(event, true);
+        assertOneEvent(executedAt, event, true);
     }
 
     @Test
     public void testAlldayEventAttributes() {
         DateTime today = getSettings().clock().now().withTimeAtStartOfDay();
-        getSettings().clock().setSnapshotDate(today.plusHours(10));
         CalendarEvent event = new CalendarEvent(getSettings(), provider.getContext(), provider.getWidgetId(), true);
         event.setEventSource(provider.getFirstActiveEventSource());
         event.setEventId(++eventId);
@@ -55,10 +55,12 @@ public class SingleEventTest extends BaseWidgetTest {
         event.setEndDate(today.plusDays(1));
         event.setColor(0xFF92E1C0);
         event.setLocation("somewhere");
-        assertOneEvent(event, false);
+
+        DateTime executedAt = today.plusHours(10);
+        assertOneEvent(executedAt, event, false);
         event.setStartDate(today);
         event.setEndDate(today.plusDays(1));
-        assertOneEvent(event, true);
+        assertOneEvent(executedAt, event, true);
     }
 
 
@@ -74,8 +76,9 @@ public class SingleEventTest extends BaseWidgetTest {
         assertEquals(event.getEndDate().toString(), today.plusDays(1).getMillis(), event.getEndMillis());
     }
 
-    private void assertOneEvent(CalendarEvent event, boolean equal) {
+    private void assertOneEvent(DateTime executedAt, CalendarEvent event, boolean equal) {
         provider.clear();
+        provider.setExecutedAt(executedAt);
         provider.addRow(event);
         playResults(TAG);
 

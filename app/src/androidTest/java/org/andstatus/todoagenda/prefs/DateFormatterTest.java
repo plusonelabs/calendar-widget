@@ -31,7 +31,8 @@ public class DateFormatterTest extends BaseWidgetTest {
 
     private void assertNow(String pattern) {
         DateTime now = DateTime.parse(pattern);
-        getSettings().clock().setSnapshotDate(now);
+        provider.setExecutedAt(now);
+        provider.updateAppSettings("DateFormatterTest pattern:'" + pattern + "'");
 
         assertPattern(now, "MM-dd b",  String.format("%02d-%02d", now.monthOfYear().get(),
                 now.dayOfMonth().get()) + " 0");
@@ -54,7 +55,7 @@ public class DateFormatterTest extends BaseWidgetTest {
         InstanceSettings settings = getSettings();
         settings.clock().setSnapshotMode(SnapshotMode.SNAPSHOT_TIME);
         DateTime now = settings.clock().now().withTimeAtStartOfDay().plusHours(1);
-        settings.clock().setSnapshotDate(now);
+        provider.setExecutedAt(now);
 
         assertPattern(now, "yyyy-MM-dd b",  String.format("%04d-%02d-%02d", now.yearOfEra().get(),
                 now.monthOfYear().get(), now.dayOfMonth().get()) + " 0");

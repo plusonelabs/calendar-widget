@@ -217,7 +217,7 @@ public class TasksFilteringAndOrderingTest extends BaseWidgetTest {
     private void oneCase(String method, UnaryOperator<InstanceSettings> setter, List<String> names) throws IOException, JSONException {
         QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.filter_tasks_308_no_filters);
-        provider.addResults(inputs.getResults());
+        provider.addResults(inputs);
 
         oneCaseSettings(method, setter, names);
         oneCaseSettings(method,

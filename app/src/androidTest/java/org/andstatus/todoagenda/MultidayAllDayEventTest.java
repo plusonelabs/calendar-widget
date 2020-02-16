@@ -24,14 +24,14 @@ public class MultidayAllDayEventTest extends BaseWidgetTest {
         final String method = "testInsidePeriod";
         QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.multi_day);
-        provider.addResults(inputs.getResults());
+        DateTime now = new DateTime(2015, 8, 30, 0, 0, 1, 0, getSettings().clock().getZone());
+        inputs.setExecutedAt(now);
+        provider.addResults(inputs);
 
         int dateRange = 30;
         provider.startEditingPreferences();
         ApplicationPreferences.setEventRange(provider.getContext(), dateRange);
         provider.savePreferences();
-        DateTime now = new DateTime(2015, 8, 30, 0, 0, 1, 0, getSettings().clock().getZone());
-        getSettings().clock().setSnapshotDate(now);
         playResults(method);
 
         DateTime today = now.withTimeAtStartOfDay();

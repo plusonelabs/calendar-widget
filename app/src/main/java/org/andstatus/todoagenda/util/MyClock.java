@@ -28,11 +28,7 @@ public class MyClock {
 
     public void setLockedTimeZoneId(String lockedTimeZoneId) {
         this.lockedTimeZoneId = DateUtil.validatedTimeZoneId(lockedTimeZoneId);
-        zone = getLockedOrDefaultZone();
-    }
-
-    private DateTimeZone getLockedOrDefaultZone() {
-        return isTimeZoneLocked()
+        zone = StringUtil.nonEmpty(lockedTimeZoneId)
             ? DateTimeZone.forID(DateUtil.validatedTimeZoneId(lockedTimeZoneId))
             : DateTimeZone.getDefault();
     }
@@ -43,10 +39,6 @@ public class MyClock {
             : lockedTimeZoneId;
     }
 
-    public boolean isTimeZoneLocked() {
-        return snapshotMode == SnapshotMode.SNAPSHOT_TIME || !StringUtil.isEmpty(lockedTimeZoneId);
-    }
-
     public void setSnapshotMode(SnapshotMode snapshotMode) {
         this.snapshotMode = snapshotMode;
     }
@@ -55,25 +47,14 @@ public class MyClock {
         this.snapshotDate = snapshotDate;
         snapshotDateSetAt = DateTime.now();
         zone = snapshotDate == null
-                ? getLockedOrDefaultZone()
+                ? (snapshotMode == SnapshotMode.SNAPSHOT_TIME || StringUtil.isEmpty(lockedTimeZoneId)
+                    ? zone
+                    : DateTimeZone.forID(DateUtil.validatedTimeZoneId(lockedTimeZoneId)))
                 : snapshotDate.getZone();
-    }
-
-    public boolean isSnapshotDateSet() {
-        return snapshotDate != null;
     }
 
     public SnapshotMode getSnapshotMode() {
         return snapshotDate == null ? SnapshotMode.LIVE_DATA : snapshotMode;
-    }
-
-    public void setFromPrevious(MyClock prevClock) {
-        if (prevClock.isTimeZoneLocked()) {
-            setLockedTimeZoneId(prevClock.lockedTimeZoneId);
-        }
-        if (prevClock.snapshotDate != null) {
-            setSnapshotDate(prevClock.snapshotDate);
-        }
     }
 
     /**

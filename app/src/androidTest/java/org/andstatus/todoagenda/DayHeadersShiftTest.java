@@ -19,7 +19,7 @@ public class DayHeadersShiftTest extends BaseWidgetTest {
         final String method = "testDayHeadersShift";
         QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.day_headers_shift);
-        provider.addResults(inputs.getResults());
+        provider.addResults(inputs);
 
         playResults(method);
         DayHeader dayHeader0 = (DayHeader) getFactory().getWidgetEntries().get(0);

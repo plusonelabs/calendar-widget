@@ -21,7 +21,7 @@ public class DuplicateEventsTest extends BaseWidgetTest {
         final String method = "testIssue354";
         QueryResultsStorage inputs = provider.loadResultsAndSettings(
                 org.andstatus.todoagenda.tests.R.raw.duplicates);
-        provider.addResults(inputs.getResults());
+        provider.addResults(inputs);
 
         playResults(method);
         assertEquals("Number of entries", 40, getFactory().getWidgetEntries().size());

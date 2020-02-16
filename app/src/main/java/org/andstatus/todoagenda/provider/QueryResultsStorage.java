@@ -9,6 +9,7 @@ import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.RemoteViewsFactory;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static org.andstatus.todoagenda.util.DateUtil.formatLogDateTime;
@@ -35,6 +37,7 @@ public class QueryResultsStorage {
     private static volatile int widgetIdResultsToStore = 0;
 
     private final List<QueryResult> results = new CopyOnWriteArrayList<>();
+    private AtomicReference<DateTime> executedAt = new AtomicReference<>(null);
 
     public static boolean store(QueryResult result) {
         QueryResultsStorage storage = theStorage;
@@ -105,7 +108,15 @@ public class QueryResultsStorage {
         return results;
     }
 
+    public void addResults(QueryResultsStorage newResults) {
+        for (QueryResult result : newResults.getResults()) {
+            addResult(result);
+        }
+        setExecutedAt(newResults.getExecutedAt());
+    }
+
     public void addResult(QueryResult result) {
+        executedAt.compareAndSet(null, result.getExecutedAt());
         results.add(result);
     }
 
@@ -175,7 +186,7 @@ public class QueryResultsStorage {
             try {
                 JSONArray jsonResults = jsonStorage.getJSONArray(KEY_RESULTS);
                 for (int ind = 0; ind < jsonResults.length(); ind++) {
-                    resultsStorage.results.add(QueryResult.fromJson(jsonResults.getJSONObject(ind), widgetId));
+                    resultsStorage.addResult(QueryResult.fromJson(jsonResults.getJSONObject(ind), widgetId));
                 }
             } catch (Exception e) {
                 Log.w(TAG, "Error reading results", e);
@@ -218,5 +229,14 @@ public class QueryResultsStorage {
 
     public void clear() {
         results.clear();
+        executedAt.set(null);
+    }
+
+    public void setExecutedAt(DateTime date) {
+        executedAt.set(date);
+    }
+
+    public DateTime getExecutedAt() {
+        return executedAt.get();
     }
 }

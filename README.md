@@ -61,6 +61,14 @@ We are developing this application in public to bring you a tool that _you_ want
 [pull requests](https://github.com/andstatus/todoagenda/pulls). 
 To get timely feedback we are also providing Beta versions,
   see [Beta testing of ToDo Agenda](https://github.com/andstatus/todoagenda/issues/3).
+  
+App development is fun. And it's even more fun, when you have automated testing 
+set up to show you how your code performs. ToDo Agenda has such automated tests, allowing not only 
+to replay event timelines, shared by users and thus figure out problems and understand wishes.
+We can even see all the replayed timelines on an Android device (or an emulator),
+[as this tests execution recording shows](https://youtu.be/oiJkzx86rFg). 
+Create a widget with a name ending with "Test replay" and Tests will start showing in this widget. 
+Source code of these tests is in the repository also.
 
 ## <a id="changelog"/> Changelog
 

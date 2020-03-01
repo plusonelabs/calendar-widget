@@ -63,7 +63,7 @@ public class InstanceSettings {
     static final String PREF_SHOW_DAY_HEADERS = "showDayHeaders";
     private boolean showDayHeaders = true;
     static final String PREF_DAY_HEADER_DATE_FORMAT = "dayHeaderDateFormat";
-    static final DateFormatValue PREF_DAY_HEADER_DATE_FORMAT_DEFAULT = DateFormatType.DEFAULT_DAYS.defaultValue();
+    static final DateFormatValue PREF_DAY_HEADER_DATE_FORMAT_DEFAULT = DateFormatType.DEFAULT_WEEKDAY.defaultValue();
     private DateFormatValue dayHeaderDateFormat = PREF_DAY_HEADER_DATE_FORMAT_DEFAULT;
     static final String PREF_SHOW_PAST_EVENTS_UNDER_ONE_HEADER = "showPastEventsUnderOneHeader";
     private boolean showPastEventsUnderOneHeader = false;

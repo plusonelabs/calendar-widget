@@ -29,6 +29,6 @@ public class DayHeadersShiftTest extends BaseWidgetTest {
                 dayHeader0.entryDate.dayOfMonth().get());
         CharSequence dayHeaderTitle = getSettings().dayHeaderDateFormatter().formatDate(dayHeader0.entryDate);
         assertEquals("First day header should show Jan 8\n" + getFactory().getWidgetEntries() + "\n",
-                "Today, January 8", dayHeaderTitle);
+                "Wednesday, January 8", dayHeaderTitle);
     }
 }

@@ -108,6 +108,7 @@
     <string name="appearance_text_size_large">Голям</string>
     <string name="appearance_text_size_very_large">Много голям</string>
     <string name="appearance_date_format_desc">saggfwdcws</string>
+    <string name="appearance_time_format_title">Формат на времето</string>
     <string name="appearance_date_format_auto">Автоматично</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>

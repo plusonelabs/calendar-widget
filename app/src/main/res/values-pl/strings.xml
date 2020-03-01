@@ -195,6 +195,7 @@
     <string name="appearance_text_size_large">Duży</string>
     <string name="appearance_text_size_very_large">Bardzo duży</string>
     <string name="appearance_date_format_desc">Wyświetlaj czas w formacie am/pm lub 24-godzinnym</string>
+    <string name="appearance_time_format_title">Format czasu</string>
     <string name="appearance_date_format_auto">Automatyczny</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>

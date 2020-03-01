@@ -26,6 +26,8 @@
     <string name="go_to_home_screen">ホーム画面に移動</string>
     <string name="loading_with_dots">読み込み中...</string>
     <string name="widget_header">ウィジェットのヘッダー</string>
+    <string name="day_header">日ヘッダー</string>
+    <string name="event_entry">イベントエントリ</string>
     <string name="todays_events">今日のイベント</string>
     <string name="future_events">今後のイベント</string>
     <string name="not_found">見つかりません</string>
@@ -63,6 +65,7 @@
     <string name="widget_header_layout">ウィジェット ヘッダーのレイアウト</string>
     <string name="pref_event_entry_layout_title">イベントエントリ レイアウト</string>
     <string name="default_multiline_layout">タイトルの下に時間</string>
+    <string name="widget_header_date_format">ウィジェットヘッダーの日付形式</string>
     <string name="default_value">デフォルト</string>
     <string name="single_line_layout">1 行にすべて</string>
     <string name="two_rows_layout">２行レイアウト</string>
@@ -79,13 +82,28 @@
     <string name="appearance_show_days_without_events_desc">イベントのない日のヘッダーを表示します</string>
     <string name="appearance_show_day_headers_title">日のヘッダーを表示</string>
     <string name="appearance_show_day_headers_desc">すべての日ヘッダーを表示</string>
+    <string name="day_header_date_format">日ヘッダーの日付形式</string>
     <string name="show_past_events_under_one_header_title">過去/期限イベントのヘッダー</string>
     <string name="show_past_events_under_one_header_desc">\"過去と期限\" ヘッダーの下にすべての過去/期限イベントを表示します</string>
     <string name="show_event_icon_title">イベントアイコンを表示</string>
     <string name="show_event_icon_desc">カレンダーの色のバー / イベントのタスクアイコンを表示</string>
+    <string name="entry_date_format">入力の日付形式</string>
     <string name="multiline_details_title">複数行の詳細</string>
     <string name="multiline_details_desc">イベントの時間と場所を複数行に展開します</string>
     <!-- Date format preference -->
+    <string name="simple_options">シンプルオプション</string>
+    <string name="date_format_default_weekday">デフォルトで曜日</string>
+    <string name="date_format_default_days">デフォルトでイベントの日数</string>
+    <string name="appearance_abbreviate_dates_title">省略日付と曜日</string>
+    <string name="appearance_abbreviate_dates_desc">３文字形式の日付を使用する</string>
+    <string name="date_format_number_of_days_to_event">イベントの日数</string>
+    <string name="date_format_day_in_month">月の日</string>
+    <string name="date_format_month_day">月-日</string>
+    <string name="date_format_week_in_year">年の週</string>
+    <string name="pattern_example">パターン例</string>
+    <string name="custom_pattern">カスタムパターン</string>
+    <string name="sample_date">サンプル日付 (yyyy-MM-dd 形式)</string>
+    <string name="result_formatted_date">結果。表示形式の日付</string>
     <!-- Preference frame: Colors -->
     <string name="colors_prefs_desc">テキストと背景の色と透明度</string>
     <string name="appearance_group_color_title">色</string>
@@ -186,6 +204,7 @@
     <string name="appearance_text_size_large">大</string>
     <string name="appearance_text_size_very_large">特大</string>
     <string name="appearance_date_format_desc">午前/午後もしくは 24 時間形式で時刻を表示します。</string>
+    <string name="appearance_time_format_title">時刻形式</string>
     <string name="appearance_date_format_auto">自動</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00PM</string>

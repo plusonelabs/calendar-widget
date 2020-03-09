@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import static org.andstatus.todoagenda.util.DateUtil.exactMinutesPlusMinutes;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -99,5 +100,40 @@ public class IllegalInstantDueToTimeZoneTransitionTest extends BaseWidgetTest {
             throw new IllegalArgumentException(iso8601time, e);
         }
         return date.getTime();
+    }
+
+    /** https://github.com/andstatus/todoagenda/issues/13  */
+    @Test
+    public void testPeriodicAlarmTimeDuringTimeGap() {
+        DateTimeZone defaultZone = DateTimeZone.getDefault();
+        try {
+            DateTimeZone zone = DateTimeZone.forID("America/Winnipeg");
+            DateTimeZone.setDefault(zone);
+            int periodMinutes = 10;
+
+            DateTime nowUtc = new DateTime(2020, 3, 8, 2, 15,
+                    DateTimeZone.UTC).plusSeconds(4);
+            assertEquals(new DateTime(2020, 3, 8, 2, 15 + 1 + periodMinutes,
+                    DateTimeZone.UTC),
+                    exactMinutesPlusMinutes(nowUtc, periodMinutes));
+
+            DateTime now1 = nowUtc.plusHours(5).withZone(zone);
+            DateTime next1 = exactMinutesPlusMinutes(now1, periodMinutes);
+            assertEquals("Next time: " + next1, 1, next1.getHourOfDay());
+
+            DateTime now2 = nowUtc.plusHours(6).withZone(zone);
+            DateTime next2 = exactMinutesPlusMinutes(now2, periodMinutes);
+            assertEquals("Next time: " + next2, 3, next2.getHourOfDay());
+
+            DateTime nowWinnipeg = new DateTime(2020, 3, 8,
+                    1,
+                    54, zone).plusSeconds(37);
+            DateTime expWinnipeg = new DateTime(2020, 3, 8,
+                    1 + 2,
+                    54 + 1 + periodMinutes - 60, zone);
+            assertEquals(expWinnipeg, exactMinutesPlusMinutes(nowWinnipeg, periodMinutes));
+        } finally {
+            DateTimeZone.setDefault(defaultZone);
+        }
     }
 }

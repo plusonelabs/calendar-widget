@@ -97,4 +97,11 @@ public class DateUtil {
 
         return date.year().equals(other.year()) && date.dayOfYear().equals(other.dayOfYear());
     }
+
+    public static DateTime exactMinutesPlusMinutes(DateTime nowIn, int periodMinutes) {
+        DateTime now = nowIn.plusMinutes(1);
+        return new DateTime(now.getYear(), now.getMonthOfYear(),
+                now.getDayOfMonth(), now.getHourOfDay(), now.getMinuteOfHour(), now.getZone())
+                .plusMinutes(periodMinutes);
+    }
 }

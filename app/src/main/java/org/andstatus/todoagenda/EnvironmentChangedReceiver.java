@@ -14,8 +14,8 @@ import android.widget.RemoteViews;
 import org.andstatus.todoagenda.prefs.AllSettings;
 import org.andstatus.todoagenda.prefs.InstanceSettings;
 import org.andstatus.todoagenda.provider.EventProviderType;
+import org.andstatus.todoagenda.util.DateUtil;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -77,7 +77,6 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
     }
 
     private static void schedulePeriodicAlarms(Context context, Map<Integer, InstanceSettings> instances) {
-        DateTime now = DateTime.now(DateTimeZone.UTC).plusMinutes(1);
         int periodMinutes = (int) TimeUnit.DAYS.toMinutes(1);
         for (InstanceSettings settings : instances.values()) {
             int period = settings.getRefreshPeriodMinutes();
@@ -85,10 +84,6 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 periodMinutes = period;
             }
         }
-        DateTime alarmTime = new DateTime(now.getYear(), now.getMonthOfYear(),
-                now.getDayOfMonth(), now.getHourOfDay(), now.getMinuteOfHour())
-                .plusMinutes(periodMinutes);
-
         Intent intent = new Intent(context, EnvironmentChangedReceiver.class)
             .setAction(RemoteViewsFactory.ACTION_PERIODIC_ALARM);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
@@ -97,6 +92,7 @@ public class EnvironmentChangedReceiver extends BroadcastReceiver {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (am != null) {
+            DateTime alarmTime = DateUtil.exactMinutesPlusMinutes(DateTime.now(), periodMinutes);
             am.setInexactRepeating(AlarmManager.RTC, alarmTime.getMillis(),
                     TimeUnit.MINUTES.toMillis(periodMinutes), pendingIntent);
         }

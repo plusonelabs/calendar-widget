@@ -30,7 +30,9 @@ import java.util.Formatter;
 import java.util.Locale;
 
 public class DateFormatter {
-    private static final char NUMBER_OF_DAYS_LETTER = 'b';
+    private static final char NUMBER_OF_DAYS_LOWER_LETTER = 'b';
+    private static final char NUMBER_OF_DAYS_UPPER_LETTER = 'B';
+
     private final Context context;
     private final DateFormatValue dateFormatValue;
     private final DateTime now;
@@ -59,10 +61,13 @@ public class DateFormatter {
                     return formatDateTime(date, DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
                             DateUtils.FORMAT_SHOW_WEEKDAY);
                 case DEFAULT_DAYS:
-                    return getNumberOfDaysToEventString(context, 5, getNumberOfDaysToEvent(date)) + ", " +
+                    return formatNumberOfDaysToEvent(context, 5, getNumberOfDaysToEvent(date)) + ", " +
                             formatDateTime(date, DateUtils.FORMAT_SHOW_DATE);
+                case DEFAULT_YTT:
+                    CharSequence str1 = formatNumberOfDaysToEventText(context, 3, getNumberOfDaysToEvent(date));
+                    return (str1.length() == 0 ? "" : str1 + ", ") + formatDateTime(date, DateUtils.FORMAT_SHOW_DATE);
                 case NUMBER_OF_DAYS:
-                    return getNumberOfDaysToEventString(context, 5, getNumberOfDaysToEvent(date));
+                    return formatNumberOfDaysToEvent(context, 5, getNumberOfDaysToEvent(date));
                 default:
                     return "(not implemented)";
             }
@@ -86,18 +91,10 @@ public class DateFormatter {
         return new Date(date.getYearOfEra() - 1900, date.getMonthOfYear() - 1, date.getDayOfMonth());
     }
 
-    public static CharSequence getNumberOfDaysToEventString(Context context, int formatLength, int daysToEvent) {
+    public static CharSequence formatNumberOfDaysToEvent(Context context, int formatLength, int daysToEvent) {
         if (formatLength >= 4) {
-            switch (daysToEvent) {
-                case -1:
-                    return context.getText(R.string.yesterday);
-                case 0:
-                    return context.getText(R.string.today);
-                case 1:
-                    return context.getText(R.string.tomorrow);
-                default:
-                    break;
-            }
+            CharSequence ytt = getYtt(context, daysToEvent);
+            if (ytt.length() > 0) return ytt;
         }
         if (Math.abs(daysToEvent) > 9999) return "...";
 
@@ -107,7 +104,30 @@ public class DateFormatter {
         return String.format("%0" + formatLength + "d", daysToEvent);
     }
 
-    public int getNumberOfDaysToEvent(DateTime date) {
+    public static CharSequence formatNumberOfDaysToEventText(Context context, int formatLength, int daysToEvent) {
+        CharSequence ytt = getYtt(context, daysToEvent);
+        if (ytt.length() > 0) return ytt;
+
+        if (formatLength < 4) return "";
+
+        return String.format(context.getText(daysToEvent < 0 ? R.string.N_days_ago : R.string.in_N_days).toString(),
+                Math.abs(daysToEvent));
+    }
+
+    public static CharSequence getYtt(Context context, int daysToEvent) {
+        switch (daysToEvent) {
+            case -1:
+                return context.getText(R.string.yesterday);
+            case 0:
+                return context.getText(R.string.today);
+            case 1:
+                return context.getText(R.string.tomorrow);
+            default:
+                return "";
+        }
+    }
+
+    private int getNumberOfDaysToEvent(DateTime date) {
         return Days.daysBetween(
                 now.withZone(date.getZone()).withTimeAtStartOfDay(),
                 date.withTimeAtStartOfDay())
@@ -130,20 +150,24 @@ public class DateFormatter {
         int ind1 = getIndexOfNumberOfDaysLetter(pattern);
         if (ind1 < 0) return pattern;
 
+        char patternLetter = pattern.charAt(ind1);
         int ind2 = ind1;
-        while (ind2 < pattern.length() && pattern.charAt(ind2) == NUMBER_OF_DAYS_LETTER) {
+        while (ind2 < pattern.length() && pattern.charAt(ind2) == patternLetter) {
             ind2++;
         }
-        CharSequence result = getNumberOfDaysToEventString(context, ind2 - ind1, getNumberOfDaysToEvent(date));
+        CharSequence result = patternLetter == NUMBER_OF_DAYS_LOWER_LETTER
+            ? formatNumberOfDaysToEvent(context, ind2 - ind1, getNumberOfDaysToEvent(date))
+            : formatNumberOfDaysToEventText(context, ind2 - ind1, getNumberOfDaysToEvent(date));
         return (ind1 > 0 ? pattern.substring(0, ind1) : "") +
-               "'" + result + "'" +
-               (ind2 < pattern.length() ? pattern.substring(ind2) : "");
+                (result.length() == 0 ? "" : "'" + result + "'") +
+                (ind2 < pattern.length() ? pattern.substring(ind2) : "");
     }
 
     private int getIndexOfNumberOfDaysLetter(String pattern) {
         boolean inQuotes = false;
         for (int ind = 0; ind < pattern.length(); ind++) {
-            if ((pattern.charAt(ind) == NUMBER_OF_DAYS_LETTER) && !inQuotes) return ind;
+            if ((pattern.charAt(ind) == NUMBER_OF_DAYS_LOWER_LETTER || pattern.charAt(ind) == NUMBER_OF_DAYS_UPPER_LETTER)
+                    && !inQuotes) return ind;
 
             if (pattern.charAt(ind) == '\'') inQuotes = !inQuotes;
         }

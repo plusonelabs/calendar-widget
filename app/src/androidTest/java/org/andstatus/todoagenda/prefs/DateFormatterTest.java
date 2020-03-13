@@ -1,6 +1,7 @@
 package org.andstatus.todoagenda.prefs;
 
 import org.andstatus.todoagenda.BaseWidgetTest;
+import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.prefs.dateformat.DateFormatType;
 import org.andstatus.todoagenda.prefs.dateformat.DateFormatValue;
 import org.andstatus.todoagenda.prefs.dateformat.DateFormatter;
@@ -64,6 +65,14 @@ public class DateFormatterTest extends BaseWidgetTest {
         assertPattern(now.plusDays(1), "", "");
         assertPattern(now.plusDays(1), "b", "1");
         assertPattern(now.plusDays(1), "bbb", "001");
+        CharSequence tomorrowText = provider.getContext().getText(R.string.tomorrow);
+        assertPattern(now.plusDays(1), "bbbb", tomorrowText.toString());
+        assertPattern(now.plusDays(1), "BBB", tomorrowText.toString());
+        assertPattern(now.plusDays(1), "BBBB", tomorrowText.toString());
+        assertPattern(now.plusDays(-2), "BBB", "");
+        assertPattern(now.plusDays(-2), "BBBB", String.format(provider.getContext().getText(R.string.N_days_ago).toString(), 2));
+        assertPattern(now.plusDays(2), "BBB", "");
+        assertPattern(now.plusDays(2), "BBBB", String.format(provider.getContext().getText(R.string.in_N_days).toString(), 2));
         assertPattern(now.plusDays(5), "b", "5");
         assertPattern(now.plusDays(5), "bbb", "005");
         assertPattern(now.plusDays(5), "bbbb", "5");

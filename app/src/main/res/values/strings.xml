@@ -101,6 +101,7 @@
     <!-- Date format preference -->
     <string name="simple_options">Simple options</string>
     <string name="date_format_default_weekday">Default with Weekday</string>
+    <string name="date_format_default_ytt">Default with Yesterday, Today and Tomorrow</string>
     <string name="date_format_default_days">Default with Number of days to event</string>
     <string name="appearance_abbreviate_dates_title">Abbreviate dates with Weekday</string>
     <string name="appearance_abbreviate_dates_desc">Use three-letter format for dates</string>
@@ -112,6 +113,8 @@
     <string name="custom_pattern">Custom pattern</string>
     <string name="sample_date">Sample date (in yyyy-MM-dd format)</string>
     <string name="result_formatted_date">Result, formatted date</string>
+    <string name="N_days_ago">%d days ago</string>
+    <string name="in_N_days">in %d days</string>
 
     <!-- Preference frame: Colors -->
     <string name="colors_prefs_desc">Colors and opacity of texts and backgrounds</string>

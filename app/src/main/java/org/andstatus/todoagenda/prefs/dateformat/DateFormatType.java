@@ -32,6 +32,7 @@ public enum DateFormatType {
     HIDDEN("hidden", R.string.hidden, ""),
     DEVICE_DEFAULT("deviceDefault", R.string.device_default, ""),
     DEFAULT_WEEKDAY("defaultWeekday", R.string.date_format_default_weekday, ""),
+    DEFAULT_YTT("defaultYtt", R.string.date_format_default_ytt, ""),
     DEFAULT_DAYS("defaultDays", R.string.date_format_default_days, ""),
     ABBREVIATED("abbrev", R.string.appearance_abbreviate_dates_title, ""),
     NUMBER_OF_DAYS("days", R.string.date_format_number_of_days_to_event, "bbbb"),

@@ -61,8 +61,7 @@ public class DateFormatter {
                     return formatDateTime(date, DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_DATE |
                             DateUtils.FORMAT_SHOW_WEEKDAY);
                 case DEFAULT_DAYS:
-                    return formatNumberOfDaysToEvent(context, 5, getNumberOfDaysToEvent(date)) + ", " +
-                            formatDateTime(date, DateUtils.FORMAT_SHOW_DATE);
+                    return formatDefaultWithNumberOfDaysToEvent(date);
                 case DEFAULT_YTT:
                     CharSequence str1 = formatNumberOfDaysToEventText(context, 3, getNumberOfDaysToEvent(date));
                     return (str1.length() == 0 ? "" : str1 + ", ") + formatDateTime(date, DateUtils.FORMAT_SHOW_DATE);
@@ -74,6 +73,12 @@ public class DateFormatter {
         } catch (Exception e) {
             return e.getLocalizedMessage();
         }
+    }
+
+    private CharSequence formatDefaultWithNumberOfDaysToEvent(DateTime date) {
+        String dateStub = "dateStub";
+        return formatDateCustom(date, "BBB, '" + dateStub + "', BBBB")
+                .replace(dateStub, formatDateTime(date, DateUtils.FORMAT_SHOW_DATE));
     }
 
     private String formatDateTime(DateTime date, int flags) {

@@ -22,8 +22,6 @@ import androidx.annotation.NonNull;
 
 import org.andstatus.todoagenda.util.StringUtil;
 
-import static org.andstatus.todoagenda.prefs.dateformat.DateFormatType.CUSTOM;
-
 public class DateFormatValue {
     public final DateFormatType type;
     public final String value;
@@ -46,18 +44,24 @@ public class DateFormatValue {
     }
 
     public static DateFormatValue of(DateFormatType type, String value) {
-         return type == CUSTOM && StringUtil.nonEmpty(value)
+         return type.isCustomPattern() && StringUtil.nonEmpty(value)
             ? new DateFormatValue(type, value)
             : type.defaultValue();
     }
 
     @NonNull
     public String save() {
-        return type == DateFormatType.UNKNOWN ? "" : type.code + ":" + value;
+        if (type == type.toSave()) {
+            return type == DateFormatType.UNKNOWN
+                    ? ""
+                    : type.code + ":" + getPattern();
+        } else {
+            return toSave().save();
+        }
     }
 
     public boolean hasPattern() {
-        return type == CUSTOM || StringUtil.nonEmpty(getPattern());
+        return StringUtil.nonEmpty(getPattern());
     }
 
     public String getPattern() {
@@ -65,6 +69,10 @@ public class DateFormatValue {
     }
 
     public CharSequence getSummary(Context context) {
-        return context.getText(type.titleResourceId) + (type == CUSTOM ? ": " + value : "");
+        return context.getText(type.titleResourceId) + (type.isCustomPattern() ? ": " + value : "");
+    }
+
+    public DateFormatValue toSave() {
+        return DateFormatValue.of(type.toSave(), value);
     }
 }

@@ -98,8 +98,10 @@ public class DateFormatDialog extends PreferenceDialogFragmentCompat implements 
     // Two methods to listen for the Spinner changes
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (getValue().hasPattern()) {
-            customPatternText.setText(getValue().getPattern());
+        if (getValue().type.hasPattern()) {
+            customPatternText.setText(getValue().type.pattern);
+        } else if (!getValue().hasPattern() && getValue().type.isCustomPattern()) {
+            customPatternText.setText(DateFormatType.DEFAULT_EXAMPLE.pattern);
         }
         calcResult();
     }
@@ -125,7 +127,7 @@ public class DateFormatDialog extends PreferenceDialogFragmentCompat implements 
     @Override
     public void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
-            DateFormatValue value = getValue();
+            DateFormatValue value = getValue().toSave();
             if (preference.callChangeListener(value)) {
                 preference.setValue(value);
             }
@@ -134,9 +136,11 @@ public class DateFormatDialog extends PreferenceDialogFragmentCompat implements 
 
     private DateFormatValue getValue() {
         int position = typeSpinner.getSelectedItemPosition();
-        return position >= 0
-            ? DateFormatValue.of(DateFormatType.values()[position], customPatternText.getText().toString())
-            : DateFormatType.UNKNOWN.defaultValue();
+        if (position >= 0) {
+            DateFormatType selectedType = DateFormatType.values()[position];
+            return DateFormatValue.of(selectedType, customPatternText.getText().toString());
+        }
+        return DateFormatType.UNKNOWN.defaultValue();
     }
 
     private void calcResult() {
@@ -144,8 +148,8 @@ public class DateFormatDialog extends PreferenceDialogFragmentCompat implements 
         SimpleDateFormat sampleFormat = getSampleDateFormat();
         CharSequence result;
         try {
-            if (customPatternText.isEnabled() != (dateFormatValue.type == DateFormatType.CUSTOM)) {
-                customPatternText.setEnabled(dateFormatValue.type == DateFormatType.CUSTOM);
+            if (customPatternText.isEnabled() != dateFormatValue.type.isCustomPattern()) {
+                customPatternText.setEnabled(dateFormatValue.type.isCustomPattern());
             }
             Date sampleDate = sampleFormat.parse(sampleDateText.getText().toString());
             result = sampleDate == null

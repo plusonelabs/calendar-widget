@@ -69,7 +69,7 @@ public class DateFormatter {
                 case NUMBER_OF_DAYS:
                     return formatNumberOfDaysToEvent(context, 5, getNumberOfDaysToEvent(date));
                 default:
-                    return "(not implemented)";
+                    return "(not implemented: " + dateFormatValue.getSummary(context) + ")";
             }
         } catch (Exception e) {
             return e.getLocalizedMessage();
@@ -147,25 +147,35 @@ public class DateFormatter {
     }
 
     private String preProcessNumberOfDaysToEvent(DateTime date, String pattern) {
-        int ind1 = getIndexOfNumberOfDaysLetter(pattern);
-        if (ind1 < 0) return pattern;
+        return preProcessNumberOfDaysToEvent(date, pattern, 0, false);
+    }
+
+    private String preProcessNumberOfDaysToEvent(DateTime date, String pattern, int startIndex, boolean alreadyShown) {
+        int ind1 = getIndexOfNumberOfDaysLetter(pattern, startIndex);
+        if (ind1 < startIndex) return pattern;
 
         char patternLetter = pattern.charAt(ind1);
         int ind2 = ind1;
         while (ind2 < pattern.length() && pattern.charAt(ind2) == patternLetter) {
             ind2++;
         }
-        CharSequence result = patternLetter == NUMBER_OF_DAYS_LOWER_LETTER
-            ? formatNumberOfDaysToEvent(context, ind2 - ind1, getNumberOfDaysToEvent(date))
-            : formatNumberOfDaysToEventText(context, ind2 - ind1, getNumberOfDaysToEvent(date));
-        return (ind1 > 0 ? pattern.substring(0, ind1) : "") +
-                (result.length() == 0 ? "" : "'" + result + "'") +
+        CharSequence numberOfDaysFormatted = alreadyShown
+            ? ""
+            : patternLetter == NUMBER_OF_DAYS_LOWER_LETTER
+                ? formatNumberOfDaysToEvent(context, ind2 - ind1, getNumberOfDaysToEvent(date))
+                : formatNumberOfDaysToEventText(context, ind2 - ind1, getNumberOfDaysToEvent(date));
+        String replacement = numberOfDaysFormatted.length() == 0 ? "" : "'" + numberOfDaysFormatted + "'";
+        String pattern2 = (ind1 > 0 ? pattern.substring(0, ind1) : "") +
+                replacement +
                 (ind2 < pattern.length() ? pattern.substring(ind2) : "");
+
+        return preProcessNumberOfDaysToEvent(date, pattern2.trim(), startIndex + replacement.length(),
+                alreadyShown || replacement.length() > 0);
     }
 
-    private int getIndexOfNumberOfDaysLetter(String pattern) {
+    private int getIndexOfNumberOfDaysLetter(String pattern, int startIndex) {
         boolean inQuotes = false;
-        for (int ind = 0; ind < pattern.length(); ind++) {
+        for (int ind = startIndex; ind < pattern.length(); ind++) {
             if ((pattern.charAt(ind) == NUMBER_OF_DAYS_LOWER_LETTER || pattern.charAt(ind) == NUMBER_OF_DAYS_UPPER_LETTER)
                     && !inQuotes) return ind;
 

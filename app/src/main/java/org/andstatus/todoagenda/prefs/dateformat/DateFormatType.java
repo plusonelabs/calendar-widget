@@ -23,6 +23,7 @@ import androidx.annotation.StringRes;
 
 import org.andstatus.todoagenda.R;
 import org.andstatus.todoagenda.util.LazyVal;
+import org.andstatus.todoagenda.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,8 @@ public enum DateFormatType {
     DAY_IN_MONTH("dayInMonth", R.string.date_format_day_in_month, "dd"),
     MONTH_DAY("monthDay", R.string.date_format_month_day, "MM-dd"),
     WEEK_IN_YEAR("weekInYear", R.string.date_format_week_in_year, "ww"),
-    PATTERN_EXAMPLE1("example1", R.string.pattern_example, "b EEE, d MMM yyyy 'W'ww"),
+    DEFAULT_EXAMPLE("example", R.string.pattern_example, "BBB EEEE d MMM yyyy BBBB"),
+    PATTERN_EXAMPLE1("example1", R.string.pattern_example, "b 'days,' EEE, d MMM yyyy, 'week' ww"),
     CUSTOM("custom-01", R.string.custom_pattern, ""),
     UNKNOWN("unknown", R.string.not_found, "");
 
@@ -88,9 +90,10 @@ public enum DateFormatType {
 
     public static List<CharSequence> getSpinnerEntryList(Context context) {
         List<CharSequence> list = new ArrayList<>();
+        int exampleInd = 0;
         for (DateFormatType type: values()) {
             if (type == UNKNOWN) break;
-            list.add(context.getText(type.titleResourceId));
+            list.add(context.getText(type.titleResourceId) + (type.isPatternExample() ? " " + (++exampleInd) : ""));
         }
         return list;
     }
@@ -106,5 +109,21 @@ public enum DateFormatType {
             if (type == this) return position;
         }
         return 0;
+    }
+
+    public boolean hasPattern() {
+        return StringUtil.nonEmpty(pattern);
+    }
+
+    public boolean isPatternExample() {
+        return titleResourceId == R.string.pattern_example;
+    }
+
+    public boolean isCustomPattern() {
+        return isPatternExample() || this == CUSTOM;
+    }
+
+    public DateFormatType toSave() {
+        return isCustomPattern() ? CUSTOM : this;
     }
 }

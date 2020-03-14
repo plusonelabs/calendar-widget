@@ -139,6 +139,7 @@
     <string name="pref_hide_based_on_keywords_title">Esconder eventos con palabra en el título</string>
     <string name="show_only_closest_instance_of_recurring_event">Mostrar sólo la fecha más cercana de un evento recurrente</string>
     <string name="hide_duplicates">Ocultar duplicados</string>
+    <string name="tasks_wo_dates_hide">Ocultar</string>
     <!-- Preference frame: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendarios</string>
     <string name="calendars_prefs_desc">Seleccionar calendarios a mostrar</string>

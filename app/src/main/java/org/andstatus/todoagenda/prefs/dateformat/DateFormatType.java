@@ -40,7 +40,7 @@ public enum DateFormatType {
     DAY_IN_MONTH("dayInMonth", R.string.date_format_day_in_month, "dd"),
     MONTH_DAY("monthDay", R.string.date_format_month_day, "MM-dd"),
     WEEK_IN_YEAR("weekInYear", R.string.date_format_week_in_year, "ww"),
-    DEFAULT_EXAMPLE("example", R.string.pattern_example, "BBB EEEE d MMM yyyy BBBB"),
+    DEFAULT_EXAMPLE("example", R.string.pattern_example, "BBB, EEEE d MMM yyyy, BBBB"),
     PATTERN_EXAMPLE1("example1", R.string.pattern_example, "b 'days,' EEE, d MMM yyyy, 'week' ww"),
     CUSTOM("custom-01", R.string.custom_pattern, ""),
     UNKNOWN("unknown", R.string.not_found, "");

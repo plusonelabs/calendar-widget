@@ -75,11 +75,18 @@ public class DateFormatterTest extends BaseWidgetTest {
         assertPattern(now, "BBB " + javaPattern + " b",  todayText + " " + javaFormatted);
         assertPattern(now.plusDays(1), "BBB " + javaPattern + " b",  tomorrowText + " " +
                 javaFormatted(javaPattern, now.plusDays(1)));
+        assertPattern(now.plusDays(1), "BBB, " + javaPattern + " b",  tomorrowText + ", " +
+                javaFormatted(javaPattern, now.plusDays(1)));
         assertPattern(now.plusDays(2), "BBB " + javaPattern + " b",
+                javaFormatted(javaPattern, now.plusDays(2)) + " 2");
+        assertPattern(now.plusDays(2), "BBB, " + javaPattern + " b",
                 javaFormatted(javaPattern, now.plusDays(2)) + " 2");
 
         assertPattern(now, "BBB " + javaPattern + " BBBB",  todayText + " " + javaFormatted);
+        assertPattern(now, "BBB " + javaPattern + ", BBBB",  todayText + " " + javaFormatted);
         assertPattern(now.plusDays(1), "BBB " + javaPattern + " BBBB",  tomorrowText + " " +
+                javaFormatted(javaPattern, now.plusDays(1)));
+        assertPattern(now.plusDays(1), "BBB " + javaPattern + ", BBBB",  tomorrowText + " " +
                 javaFormatted(javaPattern, now.plusDays(1)));
         assertPattern(now.plusDays(2), "BBB " + javaPattern + " BBBB",
                 javaFormatted(javaPattern, now.plusDays(2)) + " " + inTwoDaysText);

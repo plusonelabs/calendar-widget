@@ -169,8 +169,17 @@ public class DateFormatter {
                 replacement +
                 (ind2 < pattern.length() ? pattern.substring(ind2) : "");
 
-        return preProcessNumberOfDaysToEvent(date, pattern2.trim(), startIndex + replacement.length(),
+        return preProcessNumberOfDaysToEvent(date, trimPattern(pattern2), startIndex + replacement.length(),
                 alreadyShown || replacement.length() > 0);
+    }
+
+    private String trimPattern(String pattern) {
+        String pattern2 = pattern.trim();
+        if (pattern2.endsWith(",")) pattern2 = pattern2.substring(0, pattern2.length()-1);
+        if (pattern2.startsWith(",")) pattern2 = pattern2.substring(1);
+        if (pattern2.equals(pattern)) return pattern;
+
+        return trimPattern(pattern2);
     }
 
     private int getIndexOfNumberOfDaysLetter(String pattern, int startIndex) {

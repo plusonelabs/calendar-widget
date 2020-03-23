@@ -84,6 +84,7 @@
     <!-- Date format preference -->
     <string name="simple_options">Простые варианты</string>
     <string name="date_format_default_weekday">По умолчанию, с днём недели</string>
+    <string name="date_format_default_ytt">По умолчанию,  с Вчера, Сегодня и Завтра</string>
     <string name="date_format_default_days">По умолчанию, с количеством дней до события</string>
     <string name="appearance_abbreviate_dates_title">Сокращённые слова, с днями недели</string>
     <string name="appearance_abbreviate_dates_desc">Использовать трёхбуквенный формат для дат</string>
@@ -95,6 +96,8 @@
     <string name="custom_pattern">Пользовательский шаблон</string>
     <string name="sample_date">Пример даты (в формате yyyy-MM-dd)</string>
     <string name="result_formatted_date">Результат, отформатированная дата</string>
+    <string name="N_days_ago">%d дней назад</string>
+    <string name="in_N_days">через %d дней</string>
     <!-- Preference frame: Colors -->
     <string name="colors_prefs_desc">Цвет и прозрачность текста и фона</string>
     <string name="appearance_group_color_title">Цвета</string>

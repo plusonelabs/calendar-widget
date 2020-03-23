@@ -93,6 +93,7 @@
     <!-- Date format preference -->
     <string name="simple_options">Opcions simples</string>
     <string name="date_format_default_weekday">Per defecte amb dia de la setmana</string>
+    <string name="date_format_default_ytt">Per defecte amb Ahir, Avui i Demà</string>
     <string name="date_format_default_days">Per defecte amb Nombre de dies per l\'esdeveniment</string>
     <string name="appearance_abbreviate_dates_title">Abrevia les dates amb el dia de la setmana</string>
     <string name="appearance_abbreviate_dates_desc">Utilitzeu el format de tres lletres per a les dates</string>
@@ -104,6 +105,8 @@
     <string name="custom_pattern">Patró personalitzat</string>
     <string name="sample_date">Data de l’exemple (en format aaaa-MM-dd)</string>
     <string name="result_formatted_date">Resultat, data formatada</string>
+    <string name="N_days_ago">fa %d dies</string>
+    <string name="in_N_days">en %d dies</string>
     <!-- Preference frame: Colors -->
     <string name="colors_prefs_desc">Colors i opacitat dels textos i fons</string>
     <string name="appearance_group_color_title">Colors</string>

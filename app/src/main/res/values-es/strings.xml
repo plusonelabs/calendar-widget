@@ -78,11 +78,14 @@
     <string name="multiline_details_title">Detalles multilínea</string>
     <!-- Date format preference -->
     <string name="simple_options">Opciones simples</string>
+    <string name="date_format_default_ytt">Predeterminado con Ayer, Hoy y Mañana</string>
     <string name="date_format_day_in_month">Día del mes</string>
     <string name="date_format_month_day">Mes-Día</string>
     <string name="date_format_week_in_year">Semana del año</string>
     <string name="pattern_example">Ejemplo de patrón</string>
     <string name="custom_pattern">Patrón personalizado</string>
+    <string name="N_days_ago">hace %d días</string>
+    <string name="in_N_days">dentro de %d días</string>
     <!-- Preference frame: Colors -->
     <string name="appearance_group_color_title">Colores</string>
     <string name="appearance_background_color_title">Color del fondo</string>

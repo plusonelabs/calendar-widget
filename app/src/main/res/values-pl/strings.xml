@@ -95,6 +95,8 @@
     <string name="custom_pattern">Własny wzór</string>
     <string name="sample_date">Przykładowa data (w formacie rrrr-MM-dd)</string>
     <string name="result_formatted_date">Wynik, data sformatowana</string>
+    <string name="N_days_ago">%d dni temu</string>
+    <string name="in_N_days">za %d dni</string>
     <!-- Preference frame: Colors -->
     <string name="colors_prefs_desc">Kolory i przezroczystości tekstów i tła</string>
     <string name="appearance_group_color_title">Kolory</string>

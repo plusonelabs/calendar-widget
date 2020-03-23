@@ -36,7 +36,7 @@
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00</string>
     <string name="lock_time_zone_off_desc">Feloldva, a jelenlegi időzóna: %s</string>
-    <string name="lock_time_zone_on_desc">Zárolva %on</string>
+    <string name="lock_time_zone_on_desc">Zárolva %s on</string>
     <string name="lock_time_zone_title">Időzóna rögzítése</string>
     <string name="appearance_abbreviate_dates_title">Dátumok rövidítése</string>
     <string name="appearance_abbreviate_dates_desc">Használjon hárombetűs formátumot a Widget és a Day headers dátumaihoz.</string>

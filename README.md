@@ -53,7 +53,7 @@ each application needs its own implementation. Currently supported:
 ## Collaborate
 
 Want to contribute to the project? Start by translating the widget to another language or update existing translation
-at [Translation project at Crowdin](http://crowdin.net/project/plusonelabs-calendar-widget)
+at [Translation project at Crowdin](http://crowdin.net/project/todoagenda)
 and be a part of the next release. :)
 
 We are developing this application in public to bring you a tool that _you_ want to use. Please feel free to open 
@@ -168,7 +168,7 @@ In a case the widget doesn't work properly even after this, please
   up to one year.
 * Added "[Show date on widget header](https://github.com/plusonelabs/calendar-widget/issues/281)" option
   so you can hide the date.
-* [32 language translations](https://crowdin.com/project/plusonelabs-calendar-widget) updated and 5 new translations added!
+* [32 language translations](https://crowdin.com/project/todoagenda) updated and 5 new translations added!
   Thank you all!
 * Hopefully fixed intermittent "No events" display instead of actual list of events. 
   Separate "[ToDo Agenda Not Initialized yet...](https://github.com/plusonelabs/calendar-widget/issues/318)" layout added 

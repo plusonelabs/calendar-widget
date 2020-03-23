@@ -26,6 +26,8 @@
     <string name="go_to_home_screen">Ir para a tela inicial</string>
     <string name="loading_with_dots">Carregando...</string>
     <string name="widget_header">Cabeçalho do widget</string>
+    <string name="day_header">Cabeçalho do dia</string>
+    <string name="event_entry">Entrada de evento</string>
     <string name="todays_events">Eventos de hoje</string>
     <string name="future_events">Eventos futuros</string>
     <string name="not_found">Não encontrado</string>
@@ -63,6 +65,7 @@
     <string name="widget_header_layout">Layout do cabeçalho do widget</string>
     <string name="pref_event_entry_layout_title">Layout de entrada de evento</string>
     <string name="default_multiline_layout">Tempo abaixo do título</string>
+    <string name="widget_header_date_format">Formato data do cabeçalho do widget</string>
     <string name="default_value">Padrão</string>
     <string name="single_line_layout">Tudo em uma linha</string>
     <string name="two_rows_layout">Layout com 2 linhas</string>
@@ -79,13 +82,31 @@
     <string name="appearance_show_days_without_events_desc">Exibir cabeçalho para dias sem eventos</string>
     <string name="appearance_show_day_headers_title">Mostrar os cabeçalhos do dia</string>
     <string name="appearance_show_day_headers_desc">Mostrar os cabeçalhos do dia completamente</string>
+    <string name="day_header_date_format">Formato data do cabeçalho do dia</string>
     <string name="show_past_events_under_one_header_title">Cabeçalho para eventos anteriores</string>
     <string name="show_past_events_under_one_header_desc">Mostrar todos os eventos anteriores sob um cabeçalho \"Anteriores\"</string>
     <string name="show_event_icon_title">Mostrar ícone de evento</string>
     <string name="show_event_icon_desc">Mostrar cores do Calendário / Ícone da tarefa para evento</string>
+    <string name="entry_date_format">Formato de data de entrada</string>
     <string name="multiline_details_title">Detalhes em várias linhas</string>
     <string name="multiline_details_desc">Distribuir hora e localização do evento em várias linhas</string>
     <!-- Date format preference -->
+    <string name="simple_options">Opções simples</string>
+    <string name="date_format_default_weekday">Padrão com Dia de Semana</string>
+    <string name="date_format_default_ytt">Padrão com Ontem, Hoje e Amanhã</string>
+    <string name="date_format_default_days">Padrão com número de dias para evento</string>
+    <string name="appearance_abbreviate_dates_title">Datas abreviadas com o Dia da Semana</string>
+    <string name="appearance_abbreviate_dates_desc">Usar formato de três letras para datas</string>
+    <string name="date_format_number_of_days_to_event">Número de dias para o evento</string>
+    <string name="date_format_day_in_month">Dia no mês</string>
+    <string name="date_format_month_day">Dia do mês</string>
+    <string name="date_format_week_in_year">Semana no ano</string>
+    <string name="pattern_example">Exemplo de padrão</string>
+    <string name="custom_pattern">Padrão personalizado</string>
+    <string name="sample_date">Data de exemplo (no formato aaaa-MM-dd)</string>
+    <string name="result_formatted_date">Resultado, data formatada</string>
+    <string name="N_days_ago">%d dias atrás</string>
+    <string name="in_N_days">em %d dias</string>
     <!-- Preference frame: Colors -->
     <string name="colors_prefs_desc">Cor e opacidade dos textos e dos fundos</string>
     <string name="appearance_group_color_title">Cores</string>
@@ -156,7 +177,17 @@
     <string name="pref_hide_based_on_keywords_title">Ocultar baseado em palavras-chave em um título</string>
     <string name="show_only_closest_instance_of_recurring_event">Mostrar apenas a instância mais próxima de um evento recorrente</string>
     <string name="hide_duplicates">Ocultar duplicados</string>
+    <string name="task_scheduling_title">Agendamento de tarefas</string>
+    <string name="task_scheduling_date_due">Mostrar tarefas na data limite</string>
+    <string name="task_scheduling_date_started">Mostrar tarefas na data iniciada</string>
+    <string name="tasks_wo_dates_title">Tarefas sem data de início e de vencimento</string>
+    <string name="tasks_wo_dates_end_of_list">Mostrar no final de toda a lista de eventos</string>
+    <string name="tasks_wo_dates_end_of_today">Mostrar no final de Hoje</string>
     <string name="tasks_wo_dates_hide">Ocultar</string>
+    <string name="filter_mode">Filtrar solução de problemas</string>
+    <string name="filter_mode_normal">Filtragem normal</string>
+    <string name="filter_mode_debug">Filtragem de depuração</string>
+    <string name="filter_mode_no_filtering">Ignorar todos os filtros (desativá-los)</string>
     <!-- Preference frame: Calendars and Task Lists -->
     <string name="calendars_prefs">Calendários</string>
     <string name="calendars_prefs_desc">Selecione os calendários visíveis</string>
@@ -176,12 +207,17 @@
     <string name="appearance_text_size_large">Grande</string>
     <string name="appearance_text_size_very_large">Muito grande</string>
     <string name="appearance_date_format_desc">Mostrar a hora no formato am/pm ou 24 horas</string>
+    <string name="appearance_time_format_title">Formato de hora</string>
     <string name="appearance_date_format_auto">Automático</string>
     <string name="appearance_date_format_24">17:00</string>
     <string name="appearance_date_format_12">5:00 pm</string>
     <string name="lock_time_zone_off_desc">Desbloqueado, zona atual: %s</string>
     <string name="lock_time_zone_on_desc">Trancado em %s</string>
     <string name="lock_time_zone_title">Trancar fuso horário</string>
+    <string name="snapshot_mode">Bloquear lista de eventos (modo Captura)</string>
+    <string name="snapshot_mode_live_data">Dados ao vivo de fontes reais</string>
+    <string name="snapshot_mode_time">Captura como vista na época em que foi tirada: %s</string>
+    <string name="snapshot_mode_now">Captura armazenada mostrada no momento atual (tirada em %s)</string>
     <string name="refresh_period_minutes">Período de atualização automática, minutos</string>
     <string name="refresh_period_minutes_desc">Atualizar automaticamente o widget a cada %d minuto(s)</string>
     <!-- Preference frame: Feedback and Backup -->

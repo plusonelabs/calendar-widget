@@ -59,6 +59,7 @@
     <string name="widget_header_date_format">Format daty w nagłówku widżetu</string>
     <string name="default_value">Domyślny</string>
     <string name="single_line_layout">Wszystko w jedenym wierszu</string>
+    <string name="above_multiline_layout">Czas nad tytułem</string>
     <string name="two_rows_layout">Układ dwóch wierszy</string>
     <string name="hidden">Ukryty</string>
     <string name="appearance_day_header_alignment_desc">Ustaw wyrównanie nagłówka dnia</string>

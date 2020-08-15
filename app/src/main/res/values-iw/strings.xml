@@ -45,6 +45,7 @@
     <string name="pref_event_entry_layout_title">פריסת אירוע</string>
     <string name="default_multiline_layout">זמן מתחת לכותרת</string>
     <string name="single_line_layout">הכל בשורה אחת</string>
+    <string name="above_multiline_layout">הזמן מעל הכותרת</string>
     <string name="appearance_day_header_alignment_desc">הגדרת את היישור של כותרת היום</string>
     <string name="appearance_day_header_alignment_title">יישור כותרת היום</string>
     <string name="appearance_day_header_alignment_left">שמאל</string>

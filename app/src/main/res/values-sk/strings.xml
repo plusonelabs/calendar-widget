@@ -44,6 +44,7 @@
     <string name="pref_event_entry_layout_title">Vzhľad udalosti</string>
     <string name="default_multiline_layout">Čas pod názvom</string>
     <string name="single_line_layout">Všetko v jednom riadku</string>
+    <string name="above_multiline_layout">Čas nad názvom</string>
     <string name="appearance_day_header_alignment_desc">Zarovnanie hlavičky</string>
     <string name="appearance_day_header_alignment_title">Nastavenie zarovnania hlavičky dňa</string>
     <string name="appearance_day_header_alignment_left">Vľavo</string>

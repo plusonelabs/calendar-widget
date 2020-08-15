@@ -68,6 +68,7 @@
     <string name="widget_header_date_format">Format de data de capçalera del giny</string>
     <string name="default_value">Predeterminat</string>
     <string name="single_line_layout">Tot a la mateixa fila</string>
+    <string name="above_multiline_layout">Temps per sobre del títol</string>
     <string name="two_rows_layout">Distribució a dues files</string>
     <string name="hidden">Ocult</string>
     <string name="appearance_day_header_alignment_desc">Establir l\'alineació de la capçalera del dia</string>

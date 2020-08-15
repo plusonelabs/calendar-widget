@@ -88,6 +88,7 @@
     <string name="show_date_on_widget_header">Vis datoen i moduloverskriften</string>
     <string name="default_value">Standard</string>
     <string name="single_line_layout">Alt på én rad</string>
+    <string name="above_multiline_layout">Tid over tittelen</string>
     <string name="two_rows_layout">To rader</string>
     <string name="hidden">Skjult</string>
     <string name="appearance_day_header_alignment_desc">Velg posisjonen til dag-linjen</string>

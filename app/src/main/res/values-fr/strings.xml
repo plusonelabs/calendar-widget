@@ -68,6 +68,7 @@
     <string name="widget_header_date_format">Format de date de l\'en-tête du widget</string>
     <string name="default_value">\"Par défaut\"</string>
     <string name="single_line_layout">Tout sur la même ligne</string>
+    <string name="above_multiline_layout">Temps au-dessus du titre</string>
     <string name="two_rows_layout">Présentation sur deux lignes</string>
     <string name="hidden">Masqué</string>
     <string name="appearance_day_header_alignment_desc">Choisir l\'alignement de la date dans l\'en-tête</string>

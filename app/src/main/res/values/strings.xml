@@ -75,6 +75,7 @@
     <string name="widget_header_date_format">Widget header date format</string>
     <string name="default_value">Default</string>
     <string name="single_line_layout">All in one row</string>
+    <string name="above_multiline_layout">Time above title</string>
     <string name="two_rows_layout">Two rows layout</string>
     <string name="hidden">Hidden</string>
     <string name="appearance_day_header_alignment_desc">Set the alignment of the day header</string>

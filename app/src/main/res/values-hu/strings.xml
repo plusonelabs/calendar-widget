@@ -43,6 +43,7 @@
     <!-- Preference header: Layout -->
     <string name="default_multiline_layout">Az idő a cím alatt</string>
     <string name="single_line_layout">Minden egy sorban</string>
+    <string name="above_multiline_layout">Idő a cím felett</string>
     <string name="appearance_day_header_alignment_desc">Igazítsa a nap fejlécét</string>
     <string name="appearance_day_header_alignment_title">Nap fejlécének igazítása</string>
     <string name="appearance_day_header_alignment_left">Balra</string>

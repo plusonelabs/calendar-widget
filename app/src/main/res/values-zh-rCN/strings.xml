@@ -89,6 +89,7 @@
     <string name="show_date_on_widget_header">在小部件标题上显示日期</string>
     <string name="default_value">默认</string>
     <string name="single_line_layout">全部显示在一行中</string>
+    <string name="above_multiline_layout">时间在标题上方</string>
     <string name="two_rows_layout">两行布局</string>
     <string name="hidden">隐藏</string>
     <string name="appearance_day_header_alignment_desc">设置日期标题的对齐方式</string>

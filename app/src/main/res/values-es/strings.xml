@@ -61,6 +61,7 @@
     <string name="default_multiline_layout">Hora debajo del título</string>
     <string name="default_value">Predeterminado</string>
     <string name="single_line_layout">Todo en una sola línea</string>
+    <string name="above_multiline_layout">Tiempo por encima del título</string>
     <string name="two_rows_layout">Disposición de dos filas</string>
     <string name="hidden">Oculto</string>
     <string name="appearance_day_header_alignment_desc">Establecer la alineación del encabezado en el día</string>

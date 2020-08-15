@@ -55,6 +55,7 @@
     <string name="pref_event_entry_layout_title">Upplägg av händelsen</string>
     <string name="default_multiline_layout">Tid under titel</string>
     <string name="single_line_layout">Alla i en rad</string>
+    <string name="above_multiline_layout">Tid över titeln</string>
     <string name="hidden">Dold</string>
     <string name="appearance_day_header_alignment_desc">Ställ in rubrikens orientering</string>
     <string name="appearance_day_header_alignment_title">Dagrubrikens orientering</string>

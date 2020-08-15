@@ -111,10 +111,12 @@
     <string-array name="pref_event_entry_layout_entries">
         <item>@string/default_multiline_layout</item>
         <item>@string/single_line_layout</item>
+        <item>@string/above_multiline_layout</item>
     </string-array>
     <string-array name="pref_event_entry_layout_values" tools:ignore="MissingTranslation">
         <item>DEFAULT</item>
         <item>ONE_LINE</item>
+        <item>ABOVE_TITLE</item>
     </string-array>
     <integer-array name="task_list_colors">
         <item>@color/task_list_0</item>

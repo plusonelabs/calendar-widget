@@ -87,6 +87,7 @@ Ogni widget ha le proprie impostazioni e mostra le liste e le attività come con
     <string name="show_date_on_widget_header">Mostra la data in testata</string>
     <string name="default_value">Default</string>
     <string name="single_line_layout">Tutto in una riga</string>
+    <string name="above_multiline_layout">Tempo sopra il titolo</string>
     <string name="two_rows_layout">Mostra su due righe</string>
     <string name="hidden">Nascosto</string>
     <string name="appearance_day_header_alignment_desc">Imposta l\'allineamento dell\'intestazione del giorno</string>

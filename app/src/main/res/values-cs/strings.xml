@@ -67,6 +67,7 @@
     <string name="show_date_on_widget_header">Zobrazit datum v záhlaví widgetu</string>
     <string name="default_value">Výchozí</string>
     <string name="single_line_layout">Vše v jednom řádku</string>
+    <string name="above_multiline_layout">Čas nad titulem</string>
     <string name="two_rows_layout">Dvouřádkové rozložení</string>
     <string name="hidden">Skryté</string>
     <string name="appearance_day_header_alignment_desc">Nastaví zarovnání pro záhlaví dne</string>

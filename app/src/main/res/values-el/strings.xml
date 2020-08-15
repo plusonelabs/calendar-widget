@@ -44,6 +44,7 @@
     <string name="pref_event_entry_layout_title">Η εμφάνιση της καταχώρησης των συμβάντων</string>
     <string name="default_multiline_layout">Ώρα κάτω από τον τίτλο</string>
     <string name="single_line_layout">Όλα σε μία γραμμή</string>
+    <string name="above_multiline_layout">Ώρα πάνω από τον τίτλο</string>
     <string name="appearance_day_header_alignment_desc">Ορίστε την στοίχιση της κεφαλίδας της ημέρας</string>
     <string name="appearance_day_header_alignment_title">Στοίχιση κεφαλίδας ημέρας</string>
     <string name="appearance_day_header_alignment_left">Αριστερά</string>

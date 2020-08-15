@@ -43,6 +43,7 @@
     <string name="pref_event_entry_layout_title">ईवेंट प्रविष्टि लेआउट</string>
     <string name="default_multiline_layout">शीर्षक के नीचे का समय</string>
     <string name="single_line_layout">सभी एक पंक्ति में</string>
+    <string name="above_multiline_layout">शीर्षक से ऊपर का समय</string>
     <string name="appearance_day_header_alignment_desc">दिन शीर्षणी का संरेखण सेट करें</string>
     <string name="appearance_day_header_alignment_title">दिन शीर्षणी संरेखण</string>
     <string name="appearance_day_header_alignment_left">बायां</string>

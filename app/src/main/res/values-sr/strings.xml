@@ -36,6 +36,7 @@
     <!-- Preference header: Layout -->
     <string name="default_multiline_layout">Време испод наслова</string>
     <string name="single_line_layout">Све у једном реду</string>
+    <string name="above_multiline_layout">Време изнад наслова</string>
     <string name="appearance_day_header_alignment_left">Лево</string>
     <string name="appearance_day_header_alignment_center">Центар</string>
     <string name="appearance_day_header_alignment_right">Десно</string>

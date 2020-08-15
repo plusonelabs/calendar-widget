@@ -64,6 +64,7 @@
     <string name="pref_event_entry_layout_title">Sự kiện mục bố cục</string>
     <string name="default_multiline_layout">Thời gian bên dưới tiêu đề</string>
     <string name="single_line_layout">Tất cả trong một hàng</string>
+    <string name="above_multiline_layout">Thời gian trên tiêu đềк</string>
     <string name="appearance_day_header_alignment_desc">Căn lề tiêu đề ngày</string>
     <string name="appearance_day_header_alignment_title">Căn lề tiêu đề ngày</string>
     <string name="appearance_day_header_alignment_left">Trái</string>

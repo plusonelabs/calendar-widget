@@ -95,6 +95,7 @@
     <string name="show_date_on_widget_header">Datum im Widget-Header anzeigen</string>
     <string name="default_value">Standard</string>
     <string name="single_line_layout">Alles in einer Zeile</string>
+    <string name="above_multiline_layout">Zeit über dem Titel</string>
     <string name="two_rows_layout">Zweizeiliges Layout</string>
     <string name="hidden">Verborgen</string>
     <string name="appearance_day_header_alignment_desc">Bestimme die Ausrichtung des Tagesdatums</string>

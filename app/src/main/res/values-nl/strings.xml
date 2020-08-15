@@ -40,6 +40,7 @@
     <string name="pref_event_entry_layout_title">Gebeurtenis item uiterlijk</string>
     <string name="default_multiline_layout">Tijd onder de titel</string>
     <string name="single_line_layout">Alles op één rij</string>
+    <string name="above_multiline_layout">Tijd boven titel</string>
     <string name="appearance_day_header_alignment_desc">De uitlijning van de dag koptekst instellen</string>
     <string name="appearance_day_header_alignment_title">Dag koptekst uitlijning</string>
     <string name="appearance_day_header_alignment_left">Links</string>

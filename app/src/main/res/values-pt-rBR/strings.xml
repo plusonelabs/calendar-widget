@@ -68,6 +68,7 @@
     <string name="widget_header_date_format">Formato data do cabeçalho do widget</string>
     <string name="default_value">Padrão</string>
     <string name="single_line_layout">Tudo em uma linha</string>
+    <string name="above_multiline_layout">Tempo acima do título</string>
     <string name="two_rows_layout">Layout com 2 linhas</string>
     <string name="hidden">Oculto</string>
     <string name="appearance_day_header_alignment_desc">Ajustar alinhamento do Dia no cabeçalho</string>

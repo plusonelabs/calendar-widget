@@ -59,6 +59,7 @@
     <string name="widget_header_date_format">Формат даты Заголовка виджета</string>
     <string name="default_value">По умолчанию</string>
     <string name="single_line_layout">Всё - в один ряд</string>
+    <string name="above_multiline_layout">Время над заголовком</string>
     <string name="two_rows_layout">Раскладка в две строки</string>
     <string name="hidden">Скрытый</string>
     <string name="appearance_day_header_alignment_desc">Установить выравнивание заголовка дня</string>

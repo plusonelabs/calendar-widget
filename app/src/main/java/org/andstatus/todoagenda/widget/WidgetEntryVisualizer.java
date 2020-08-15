@@ -75,7 +75,7 @@ public abstract class WidgetEntryVisualizer<T extends WidgetEntry<T>> {
     }
 
     protected CharSequence getTitleString(WidgetEntry event) {
-        return getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT
+        return getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT || getSettings().getEventEntryLayout() == EventEntryLayout.ABOVE_TITLE
             ? event.getTitle()
             : MyStringBuilder.of(event.getTitle())
                 .withSeparator(event.getLocationString(), SPACE_PIPE_SPACE);
@@ -102,7 +102,7 @@ public abstract class WidgetEntryVisualizer<T extends WidgetEntry<T>> {
     }
 
     protected void setDate(WidgetEntry entry, RemoteViews rv) {
-        if (getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT) return;
+        if (getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT || getSettings().getEventEntryLayout() == EventEntryLayout.ABOVE_TITLE) return;
 
         if (getSettings().getEntryDateFormat().type == DateFormatType.HIDDEN) {
             rv.setViewVisibility(R.id.event_entry_days, View.GONE);
@@ -128,7 +128,7 @@ public abstract class WidgetEntryVisualizer<T extends WidgetEntry<T>> {
     }
 
     protected void setTime(WidgetEntry entry, RemoteViews rv) {
-        if (getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT) return;
+        if (getSettings().getEventEntryLayout() == EventEntryLayout.DEFAULT || getSettings().getEventEntryLayout() == EventEntryLayout.ABOVE_TITLE) return;
 
         int viewId = R.id.event_entry_time;
         RemoteViewsUtil.setMultiline(rv, viewId, getSettings().getShowEndTime());

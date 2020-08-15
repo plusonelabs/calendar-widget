@@ -68,6 +68,7 @@
     <string name="widget_header_date_format">ウィジェットヘッダーの日付形式</string>
     <string name="default_value">デフォルト</string>
     <string name="single_line_layout">1 行にすべて</string>
+    <string name="above_multiline_layout">タイトルより上の時間</string>
     <string name="two_rows_layout">２行レイアウト</string>
     <string name="hidden">非表示</string>
     <string name="appearance_day_header_alignment_desc">日ヘッダーの配置を設定します</string>

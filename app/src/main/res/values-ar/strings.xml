@@ -67,6 +67,7 @@
     <string name="show_date_on_widget_header">إظهار التاريخ في عنوان عنصر واجهة المستخدم</string>
     <string name="default_value">الإفتراضي</string>
     <string name="single_line_layout">جميعا في صف واحد</string>
+    <string name="above_multiline_layout">الوقت فوق العنوان</string>
     <string name="two_rows_layout">تخطيط ذو سطرين</string>
     <string name="hidden">مخفي</string>
     <string name="appearance_day_header_alignment_desc">تحديد محاذاة عنوان اليوم</string>

@@ -44,6 +44,7 @@
     <string name="pref_event_entry_layout_title">Tapahtumanäkymä</string>
     <string name="default_multiline_layout">Aika tapahtuman nimen alla</string>
     <string name="single_line_layout">Yksirivinen</string>
+    <string name="above_multiline_layout">Aika tapahtuman nimen yläpuolella</string>
     <string name="appearance_day_header_alignment_desc">Aseta päiväysotsikon tasaus</string>
     <string name="appearance_day_header_alignment_title">Päiväysotsikon tasaus</string>
     <string name="appearance_day_header_alignment_left">Vasen</string>

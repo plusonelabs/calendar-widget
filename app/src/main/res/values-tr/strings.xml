@@ -76,6 +76,7 @@ Randevularınıza kolayca göz atmanız için yaklaşan takvim etkinliklerinin b
     <string name="default_multiline_layout">Zaman alt başlığı</string>
     <string name="default_value">Varsayılan</string>
     <string name="single_line_layout">Tümü bir sırada</string>
+    <string name="above_multiline_layout">Başlığın üzerindeki zaman</string>
     <string name="two_rows_layout">İki satır katmanı</string>
     <string name="hidden">Gizli</string>
     <string name="appearance_day_header_alignment_desc">Gün başlıklarının hizasını ayarla</string>

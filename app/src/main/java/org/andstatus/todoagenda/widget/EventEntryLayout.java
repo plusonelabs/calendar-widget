@@ -10,7 +10,8 @@ import org.andstatus.todoagenda.R;
  */
 public enum EventEntryLayout {
     DEFAULT(R.layout.event_entry, "DEFAULT", R.string.default_multiline_layout),
-    ONE_LINE(R.layout.event_entry_one_line, "ONE_LINE", R.string.single_line_layout);
+    ONE_LINE(R.layout.event_entry_one_line, "ONE_LINE", R.string.single_line_layout),
+    ABOVE_TITLE(R.layout.event_entry_above, "ABOVE_TITLE", R.string.above_multiline_layout);
     public static final String SPACE_PIPE_SPACE = "  |  ";
 
     @LayoutRes

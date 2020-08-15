@@ -58,6 +58,7 @@
     <string name="default_multiline_layout">Час нижче заголовку</string>
     <string name="default_value">Стандарт</string>
     <string name="single_line_layout">Все в один рядок</string>
+    <string name="above_multiline_layout">Час вище заголовок</string>
     <string name="hidden">Прихований</string>
     <string name="appearance_day_header_alignment_desc">Встановити вирівнювання шапки дня</string>
     <string name="appearance_day_header_alignment_title">Вирівнювання шапки дня</string>

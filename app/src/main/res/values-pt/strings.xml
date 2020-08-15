@@ -44,6 +44,7 @@
     <string name="pref_event_entry_layout_title">Layout de entrada do evento</string>
     <string name="default_multiline_layout">Tempo abaixo do título</string>
     <string name="single_line_layout">Tudo em uma única linha</string>
+    <string name="above_multiline_layout">Tempo acima do título</string>
     <string name="appearance_day_header_alignment_desc">Definir o alinhamento do cabeçalho do dia</string>
     <string name="appearance_day_header_alignment_title">Alinhamento do cabeçalho do dia</string>
     <string name="appearance_day_header_alignment_left">Esquerda</string>

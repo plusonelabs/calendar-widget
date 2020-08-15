@@ -43,6 +43,7 @@
     <!-- Preference header: Layout -->
     <string name="default_multiline_layout">Vrijeme ispod naslova</string>
     <string name="single_line_layout">Sve u jednom redu</string>
+    <string name="above_multiline_layout">Vreme iznad naslova</string>
     <string name="appearance_day_header_alignment_desc">Postavi poravnanje za zaglavlje dana</string>
     <string name="appearance_day_header_alignment_title">Poravnanje za zaglavlje dana</string>
     <string name="appearance_day_header_alignment_left">Lijevo</string>

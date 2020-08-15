@@ -54,6 +54,7 @@
     <string name="pref_event_entry_layout_title">Tədbir giriş tərtibatı</string>
     <string name="default_multiline_layout">Vaxt alt başlığı</string>
     <string name="single_line_layout">Hamısı bir sətirdə</string>
+    <string name="above_multiline_layout">Başlıqdan yuxarı vaxt</string>
     <string name="appearance_day_header_alignment_desc">Gün başlığı qruplaşmasını tənzimlə</string>
     <string name="appearance_day_header_alignment_title">Gün başlığı qruplaşması</string>
     <string name="appearance_day_header_alignment_left">Sol</string>

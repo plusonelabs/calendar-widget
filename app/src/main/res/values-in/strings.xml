@@ -62,6 +62,7 @@
     <string name="pref_event_entry_layout_title">Tata letak entri acara</string>
     <string name="default_multiline_layout">Waktu di bawah judul</string>
     <string name="single_line_layout">Semua dalam satu baris</string>
+    <string name="above_multiline_layout">Waktu di atas judul</string>
     <string name="appearance_day_header_alignment_desc">Atur keselarasan dari hari margin atas</string>
     <string name="appearance_day_header_alignment_title">Penyelarasan hari margin atas</string>
     <string name="appearance_day_header_alignment_left">Kiri</string>
